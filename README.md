@@ -19,6 +19,7 @@ Descargar el codigo
 MySQL
 + Crear Base de Datos "test"
 + Crear tabla employee
+
  CREATE TABLE `employee` (
 	`ID` INT(11) NOT NULL AUTO_INCREMENT,
 	`FIRSTNAME` VARCHAR(50) NULL DEFAULT '0',
