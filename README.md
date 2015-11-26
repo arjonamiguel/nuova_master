@@ -12,7 +12,7 @@ Instalar
 
 
 Descargar el codigo
-> git clone 
+> git clone https://github.com/arjonamiguel/nuova_master.git
 
 > git pull
 
