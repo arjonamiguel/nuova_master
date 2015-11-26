@@ -35,3 +35,15 @@ AUTO_INCREMENT=11
 
 Configurar Base de Datos en Nuova:
 nuova_master/src/main/webapp/WEB-INF/jdbc.properties
+
+Compilar el proyecto
+> mvn clean install
+
+Deployar el proyecto
+> mvn tomcat7:run
+
+Levantar el proyecto en browser
+http://localhost:8080/nuova/login
+user: lokesh
+pass: password
+
