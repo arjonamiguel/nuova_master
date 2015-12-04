@@ -11,16 +11,20 @@
 		<intercept-url pattern="/login" access="permitAll" />
 		<intercept-url pattern="/logout" access="permitAll" />
 		<intercept-url pattern="/accessdenied" access="permitAll" />
-		<intercept-url pattern="/**" access="hasRole('ROLE_USER')" />
-		<form-login login-page="/login" default-target-url="/list" authentication-failure-url="/accessdenied" />
+        <intercept-url pattern="/**" access="hasRole('ROLE_USER') OR hasRole('ROLE_ADMIN')" />
+		<form-login login-page="/login" default-target-url="/home" authentication-failure-url="/accessdenied" />
 		<logout logout-success-url="/logout" />
 	</http>
 
 	<authentication-manager alias="authenticationManager">
 		<authentication-provider>
-			<user-service>
-				<user name="lokesh" password="password" authorities="ROLE_USER" />
-			</user-service>
+			<user-service>				
+                <user name="administrador@nuova.com" password="1234" authorities="ROLE_ADMIN" />           
+                <user name="miguel.arjona@nuova.com" password="1234" authorities="ROLE_USER" />
+                <user name="gustavo.valdez@nuova.com" password="1234" authorities="ROLE_USER" />
+            </user-service>
+            
+            
 		</authentication-provider>
 	</authentication-manager>
 

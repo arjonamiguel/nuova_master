@@ -33,7 +33,8 @@ public class EditEmployeeController {
         map.addAttribute("employee", new EmployeeEntity());
         map.addAttribute("employeeList", employeeManager.getAllEmployees());
 
-        return "editEmployeeList";
+        // return "editEmployeeList";
+        return "home";
     }
 
     @RequestMapping(value = "/add", method = RequestMethod.POST)
