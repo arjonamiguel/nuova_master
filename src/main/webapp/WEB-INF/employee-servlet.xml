@@ -64,11 +64,13 @@
     <!-- DAO -->
     <bean id="employeeDAO" class="com.nuova.dao.EmployeeDaoImpl"></bean>
     <bean id="profesionalDAO" class="com.nuova.dao.ProfesionalDAOImpl"></bean>
-    
+    <bean id="especialidadDAO" class="com.nuova.dao.EspecialidadDAOImpl"></bean>
     
     <!-- Manager -->
     <bean id="employeeManager" class="com.nuova.service.EmployeeManagerImpl"></bean>
     <bean id="profesionalManager" class="com.nuova.service.ProfesionalManagerImpl"></bean>
+    <bean id="especialidadManager" class="com.nuova.service.EspecialidadManagerImpl"></bean>
+    
  
     <tx:annotation-driven />
     <bean id="transactionManager"

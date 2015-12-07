@@ -6,4 +6,7 @@ public class ConstantRedirect {
 
     // Profesional
     public final static String VIEW_MAIN_PROFESIONAL = "/profesional/mainProfesional";
+
+    // Especialidad
+    public final static String VIEW_MAIN_ESPECIALIDAD = "/especialidad/mainEspecialidad";
 }
