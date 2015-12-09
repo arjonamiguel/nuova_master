@@ -14,9 +14,9 @@ public class EspecialidadManagerImpl implements EspecialidadManager {
     @Autowired
     EspecialidadDAO especialidadDAO;
 
-    public void add(Especialidad especalidad) {
-        // TODO Auto-generated method stub
-
+    @Transactional
+    public void add(Especialidad especialidad) {
+        especialidadDAO.add(especialidad);
     }
 
     @Transactional
@@ -27,6 +27,11 @@ public class EspecialidadManagerImpl implements EspecialidadManager {
     public void delete(Integer id) {
         // TODO Auto-generated method stub
 
+    }
+
+    @Transactional
+    public Especialidad findEspecialidadById(Integer id) {
+        return especialidadDAO.findEspecialidadById(id);
     }
 
 }

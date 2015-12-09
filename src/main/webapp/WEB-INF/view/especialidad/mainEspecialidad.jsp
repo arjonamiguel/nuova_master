@@ -13,7 +13,7 @@
 	<jsp:include page="../sec_menu.jsp"></jsp:include>
 	   
 	<h3>Administracion de Especialidades</h3>
-	<a href="#" >Nueva Especialidad</a>
+	<a href="formAddEspecialidad" >Nueva Especialidad</a>
 	</br> 
 	<c:if  test="${!empty especialidadList}">
 	<table class="data" border="1">
@@ -25,7 +25,7 @@
 	    <tr>
 	        <td>${e.nombre}</td>        
 	        <td>
-	        	<a href="edit/${e.especialidadId}">editar</a>|
+	        	<a href="formEditEspecialidad/${e.especialidadId}">editar</a>|
 	        	<a href="delete/${e.especialidadId}">eliminar</a>
 	       	</td>
 	    </tr>

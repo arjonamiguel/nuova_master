@@ -14,8 +14,7 @@ public class EspecialidadDAOImpl implements EspecialidadDAO {
     private SessionFactory sessionFactory;
 
     public void add(Especialidad especialidad) {
-        // TODO Auto-generated method stub
-
+        this.sessionFactory.getCurrentSession().save(especialidad);
     }
 
     @SuppressWarnings("unchecked")
@@ -26,6 +25,11 @@ public class EspecialidadDAOImpl implements EspecialidadDAO {
     public void delete(Integer id) {
         // TODO Auto-generated method stub
 
+    }
+
+    public Especialidad findEspecialidadById(Integer especialidadId) {
+        return (Especialidad) this.sessionFactory.
+                getCurrentSession().get(Especialidad.class, especialidadId);
     }
 
 }

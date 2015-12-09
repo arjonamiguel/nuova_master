@@ -9,4 +9,6 @@ public class ConstantRedirect {
 
     // Especialidad
     public final static String VIEW_MAIN_ESPECIALIDAD = "/especialidad/mainEspecialidad";
+    public final static String VIEW_FORM_ADD_ESPECIALIDAD = "/especialidad/formAddEspecialidad";
+    public final static String VIEW_FORM_EDIT_ESPECIALIDAD = "/especialidad/formEditEspecialidad";
 }
