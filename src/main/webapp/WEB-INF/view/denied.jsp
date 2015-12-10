@@ -2,18 +2,18 @@
 <html>
 	<body>
 	
-		<h1 id="banner">Unauthorized Access !!</h1>
+		<h1 id="banner">Acceso no autorizado !!</h1>
 	
 		<hr />
 	
 		<c:if test="${not empty error}">
 			<div style="color:red">
-				Your fake login attempt was bursted, dare again !!<br /> 
-				Caused : ${sessionScope["SPRING_SECURITY_LAST_EXCEPTION"].message}
+				Los datos ingresados son invalidos, intente de nuevo !!<br /> 
+				Causa : ${sessionScope["SPRING_SECURITY_LAST_EXCEPTION"].message}
 			</div>
 		</c:if>
 	
-		<p class="message">Access denied!</p>
-		<a href="/nuova/login">Go back to login page</a> 
+		<p class="message">Acceso denegado !</p>
+		<a href="/nuova/login">Ir a la pagina de login</a> 
 	</body>
 </html>

@@ -24,6 +24,10 @@
 <sec:authorize access="hasRole('ROLE_ADMIN')">
 <a href="mainEspecialidad">Administracion de Especialidades</a>
 </sec:authorize>
+|
+<sec:authorize access="hasRole('ROLE_ADMIN')">
+<a href="mainEspecialidad">Administracion de Pacientes</a>
+</sec:authorize>
 </div>
 
 <sec:authorize access="hasRole('ROLE_USER')">
