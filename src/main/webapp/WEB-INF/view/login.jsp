@@ -4,12 +4,12 @@
 
 <html>
 	<body>
-		<h1 id="banner">Login to Security Demo</h1>  
+		<h1 id="banner">Acceso a Nuova</h1>  
 		<form name="f" action="<c:url value='j_spring_security_check'/>"
 					method="POST">
 			<table>
 				<tr>
-					<td>Username:</td>
+					<td>Usuario:</td>
 					<td><input type='text' name='j_username' /></td>
 				</tr>
 				<tr>

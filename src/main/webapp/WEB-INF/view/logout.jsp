@@ -1,4 +1,4 @@
 <% session.invalidate(); %>
-You are now logged out!!
+Tu sesion a finalizado !
 
-<a href="${pageContext.request.contextPath}/login">Regresar a la pantalla de Login</a>
+<a href="nuova/login">Regresar a la pantalla de Login</a>
