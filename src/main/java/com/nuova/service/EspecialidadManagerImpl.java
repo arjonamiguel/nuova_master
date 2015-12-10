@@ -24,14 +24,21 @@ public class EspecialidadManagerImpl implements EspecialidadManager {
         return especialidadDAO.findAll();
     }
 
+    @Transactional
     public void delete(Integer id) {
-        // TODO Auto-generated method stub
+        especialidadDAO.delete(id);
 
     }
 
     @Transactional
     public Especialidad findEspecialidadById(Integer id) {
         return especialidadDAO.findEspecialidadById(id);
+    }
+
+    @Transactional
+    public void edit(Especialidad especialidad) {
+        this.especialidadDAO.edit(especialidad);
+
     }
 
 }

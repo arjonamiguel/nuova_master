@@ -13,4 +13,5 @@ public interface EspecialidadManager {
 
     public void delete(Integer id);
 
+    public void edit(Especialidad especialidad);
 }

@@ -26,7 +26,7 @@
 	        <td>${e.nombre}</td>        
 	        <td>
 	        	<a href="formEditEspecialidad/${e.especialidadId}">editar</a>|
-	        	<a href="delete/${e.especialidadId}">eliminar</a>
+	        	<a href="formDeleteEspecialidad/${e.especialidadId}">eliminar</a>
 	       	</td>
 	    </tr>
 	</c:forEach>

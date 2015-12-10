@@ -35,6 +35,16 @@ public class EspecialidadController {
         return ConstantRedirect.VIEW_FORM_EDIT_ESPECIALIDAD;
     }
 
+    @RequestMapping(value = ConstantControllers.FORM_DELETE_ESPECIALIDAD, method = RequestMethod.GET)
+    public String formDeleteEspecialidad(ModelMap map,
+            @PathVariable("especialidadId") Integer especialidadId) {
+        if (especialidadId != null) {
+            map.addAttribute("especialidad", especialidadManager.findEspecialidadById(especialidadId));
+        }
+
+        return ConstantRedirect.VIEW_FORM_DELETE_ESPECIALIDAD;
+    }
+
     @RequestMapping(value = ConstantControllers.ADD_ESPECIALIDAD, method = RequestMethod.POST)
     public String addEspecialidad(
             @ModelAttribute(value = "especialidad") Especialidad especialidad,
@@ -44,6 +54,18 @@ public class EspecialidadController {
             especialidadManager.add(especialidad);
         }
 
+        return "redirect:" + ConstantControllers.MAIN_ESPECIALIDAD;
+    }
+
+    @RequestMapping(value = ConstantControllers.DELETE_ESPECIALIDAD, method = RequestMethod.POST)
+    public String deleteEspecialidad(@ModelAttribute(value = "especialidad") Especialidad especialidad) {
+        especialidadManager.delete(especialidad.getEspecialidadId());
+        return "redirect:" + ConstantControllers.MAIN_ESPECIALIDAD;
+    }
+
+    @RequestMapping(value = ConstantControllers.EDIT_ESPECIALIDAD, method = RequestMethod.POST)
+    public String editEspecialidad(@ModelAttribute(value = "especialidad") Especialidad especialidad) {
+        especialidadManager.edit(especialidad);
         return "redirect:" + ConstantControllers.MAIN_ESPECIALIDAD;
     }
 

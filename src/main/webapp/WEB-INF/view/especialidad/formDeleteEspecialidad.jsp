@@ -7,14 +7,15 @@
 </head>
 <body>
 <jsp:include page="../sec_menu.jsp"></jsp:include>
-<h3>Editar Especialidad</h3>
-<form:form method="post" action="/nuova/editEspecialidad" commandName="especialidad">
+<h3>Eliminar Especialidad</h3>
+<form:form method="POST" action="/nuova/deleteEspecialidad" commandName="especialidad">
  
     <table>
     <tr>
         <td><form:label path="nombre">Especialidad:</form:label></td>
         <td><form:input path="nombre" /></td>
     </tr>
+    
     <tr>
         <td></td>
         <td><form:hidden path="especialidadId" /></td>
@@ -22,7 +23,7 @@
    
     <tr>
         <td>
-            <input type="submit" value="Guardar"/>
+            <input type="submit" value="Eliminar"/>
         </td>
         <td>
             <input type="button" value="Cancelar" onclick="location.href='/nuova/mainEspecialidad';"/>

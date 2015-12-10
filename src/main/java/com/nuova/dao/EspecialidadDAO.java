@@ -11,5 +11,7 @@ public interface EspecialidadDAO {
 
     public List<Especialidad> findAll();
 
-    public void delete(Integer id);
+    public void delete(Integer especialidadId);
+
+    public void edit(Especialidad especialidad);
 }

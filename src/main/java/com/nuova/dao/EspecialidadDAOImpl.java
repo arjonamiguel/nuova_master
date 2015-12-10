@@ -22,14 +22,22 @@ public class EspecialidadDAOImpl implements EspecialidadDAO {
         return this.sessionFactory.getCurrentSession().createQuery("FROM Especialidad").list();
     }
 
-    public void delete(Integer id) {
-        // TODO Auto-generated method stub
+    public void delete(Integer especialidadId) {
+        this.sessionFactory.getCurrentSession().
+                createQuery(" DELETE FROM Especialidad e WHERE e.especialidadId = :especialidadId ").
+                setInteger("especialidadId", especialidadId).
+                executeUpdate();
 
     }
 
     public Especialidad findEspecialidadById(Integer especialidadId) {
         return (Especialidad) this.sessionFactory.
                 getCurrentSession().get(Especialidad.class, especialidadId);
+    }
+
+    public void edit(Especialidad especialidad) {
+        this.sessionFactory.getCurrentSession().update(especialidad);
+
     }
 
 }
