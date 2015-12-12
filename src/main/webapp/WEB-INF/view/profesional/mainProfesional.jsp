@@ -13,7 +13,7 @@
 	<jsp:include page="../sec_menu.jsp"></jsp:include>
 	   
 	<h3>Administracion de Profesionales</h3>
-	<a href="mainProfesional" >Nuevo Profesional</a>
+	<a href="formAddProfesional" >Nuevo Profesional</a>
 	</br> 
 	<c:if  test="${!empty profesionalList}">
 	<table class="data" border="1">
@@ -35,8 +35,8 @@
 	        <td>${p.habilitacionSiprosa}</td>
 	        <td>${p.fechaVencimientoHabilitacion}</td>
 	        <td>
-	        	<a href="edit/${p.profesionalId}">editar</a>|
-	        	<a href="delete/${p.profesionalId}">eliminar</a>
+	        	<a href="formEditProfesional/${p.profesionalId}">editar</a>|
+	        	<a href="formDeleteProfesional/${p.profesionalId}">eliminar</a>
 	       	</td>
 	    </tr>
 	</c:forEach>

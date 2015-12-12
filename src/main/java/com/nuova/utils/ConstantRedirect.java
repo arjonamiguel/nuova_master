@@ -6,6 +6,9 @@ public class ConstantRedirect {
 
     // Profesional
     public final static String VIEW_MAIN_PROFESIONAL = "/profesional/mainProfesional";
+    public final static String VIEW_FORM_ADD_PROFESIONAL = "/profesional/formAddProfesional";
+    public final static String VIEW_FORM_EDIT_PROFESIONAL = "/profesional/formEditProfesional";
+    public final static String VIEW_FORM_DELETE_PROFESIONAL = "/profesional/formDeleteProfesional";
 
     // Especialidad
     public final static String VIEW_MAIN_ESPECIALIDAD = "/especialidad/mainEspecialidad";

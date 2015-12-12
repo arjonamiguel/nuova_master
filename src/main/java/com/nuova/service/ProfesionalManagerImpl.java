@@ -14,9 +14,9 @@ public class ProfesionalManagerImpl implements ProfesionalManager {
     @Autowired
     ProfesionalDAO profesionalDAO;
 
+    @Transactional
     public void add(Profesional profesional) {
-        // TODO Auto-generated method stub
-
+        this.profesionalDAO.add(profesional);
     }
 
     @Transactional
@@ -24,9 +24,19 @@ public class ProfesionalManagerImpl implements ProfesionalManager {
         return profesionalDAO.findAll();
     }
 
+    @Transactional
     public void delete(Integer id) {
-        // TODO Auto-generated method stub
+        this.profesionalDAO.delete(id);
+    }
 
+    @Transactional
+    public Profesional findProfesionalById(Integer profesionalId) {
+        return profesionalDAO.findProfesionalById(profesionalId);
+    }
+
+    @Transactional
+    public void edit(Profesional profesional) {
+        this.profesionalDAO.edit(profesional);
     }
 
 }
