@@ -60,7 +60,10 @@ public class ProfesionalController {
     public String formDeleteEspecialidad(ModelMap map,
             @PathVariable("profesionalId") Integer profesionalId) {
         if (profesionalId != null) {
-            map.addAttribute("profesional", profesionalManager.findProfesionalById(profesionalId));
+            ProfesionalDTO dto = transformProfesionalToDto(profesionalManager.findProfesionalById(profesionalId));
+
+            map.addAttribute("especialidadListEdit", dto.getEspecialidadListEdit());
+            map.addAttribute("profesional", dto);
         }
         return ConstantRedirect.VIEW_FORM_DELETE_PROFESIONAL;
     }
@@ -75,13 +78,22 @@ public class ProfesionalController {
     }
 
     @RequestMapping(value = ConstantControllers.DELETE_PROFESIONAL, method = RequestMethod.POST)
-    public String deleteEspecialidad(@ModelAttribute(value = "profesional") Profesional profesional) {
-        profesionalManager.delete(profesional.getProfesionalId());
+    public String deleteEspecialidad(@ModelAttribute(value = "profesional") ProfesionalDTO dto) {
+        Profesional profesionalOld = profesionalManager.findProfesionalById(dto.getProfesionalId());
+        for (ProfesionalEspecialidad pe : profesionalOld.getProfesionalEspecialidads()) {
+            profesionalManager.deleteProfesionalEspecialidad(pe.getProfesional().getProfesionalId());
+        }
+        profesionalManager.delete(profesionalOld.getProfesionalId());
         return "redirect:" + ConstantControllers.MAIN_PROFESIONAL;
     }
 
     @RequestMapping(value = ConstantControllers.EDIT_PROFESIONAL, method = RequestMethod.POST)
-    public String editEspecialidad(@ModelAttribute(value = "profesional") Profesional profesional) {
+    public String editEspecialidad(@ModelAttribute(value = "profesional") ProfesionalDTO dto) {
+        Profesional profesionalOld = profesionalManager.findProfesionalById(dto.getProfesionalId());
+        Profesional profesional = transformDtoToProfesional(dto);
+        for (ProfesionalEspecialidad pe : profesionalOld.getProfesionalEspecialidads()) {
+            profesionalManager.deleteProfesionalEspecialidad(pe.getProfesional().getProfesionalId());
+        }
         profesionalManager.edit(profesional);
         return "redirect:" + ConstantControllers.MAIN_PROFESIONAL;
     }
@@ -107,6 +119,7 @@ public class ProfesionalController {
         Profesional profesional = new Profesional(p.getApellido(), p.getNombre(), p.getTelefono(), p.getMatricula(),
                 p.getRegistroNacional(), p.getTituloProfesional(), new Byte(p.getHabilitacionSiprosa()),
                 fechaHabilitacion, null);
+        profesional.setProfesionalId(p.getProfesionalId());
 
         for (Integer id : p.getEspecialidadList()) {
             Especialidad especialidad = especialidadManager.findEspecialidadById(id);
@@ -132,16 +145,16 @@ public class ProfesionalController {
 
         List<ProfesionalEspecialidad> listPE = p.getProfesionalEspecialidads();
         for (ProfesionalEspecialidad pe : listPE) {
-            Especialidad especialidad = especialidadManager.findEspecialidadById(pe.getEspecialidad()
-                    .getEspecialidadId());
+            Especialidad especialidad = especialidadManager.findEspecialidadById(
+                    pe.getEspecialidad().getEspecialidadId());
 
             ProfesionalDTO profesionalDto = new ProfesionalDTO();
             profesionalDto.setProfesionalId(pe.getProfesional().getProfesionalId());
             EspecialidadDTO especialidadDto = new EspecialidadDTO();
             especialidadDto.setId(pe.getEspecialidad().getEspecialidadId());
 
-            dto.getEspecialidadListOld().add(
-                    new ProfesionalEspecialidadDTO(pe.getId(), profesionalDto, especialidadDto));
+            dto.getEspecialidadListOld().add(new ProfesionalEspecialidadDTO(pe.getId(),
+                    profesionalDto, especialidadDto));
             dto.getEspecialidadListEdit().put(especialidad.getEspecialidadId(),
                     especialidad.getNombre());
         }

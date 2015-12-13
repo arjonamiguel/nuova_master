@@ -15,4 +15,6 @@ public interface ProfesionalDAO {
 
     public void edit(Profesional profesional);
 
+    public void deleteProfesionalEspecialidad(Integer profesionalId);
+
 }

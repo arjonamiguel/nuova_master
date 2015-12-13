@@ -39,4 +39,9 @@ public class ProfesionalManagerImpl implements ProfesionalManager {
         this.profesionalDAO.edit(profesional);
     }
 
+    @Transactional
+    public void deleteProfesionalEspecialidad(Integer profesionalId) {
+        this.profesionalDAO.deleteProfesionalEspecialidad(profesionalId);
+    }
+
 }

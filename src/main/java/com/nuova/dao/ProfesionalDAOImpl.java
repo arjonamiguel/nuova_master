@@ -28,7 +28,8 @@ public class ProfesionalDAOImpl implements ProfesionalDAO {
 
     public void delete(Integer profesionalId) {
         this.sessionFactory.getCurrentSession().
-                createQuery(" DELETE FROM Profesional p WHERE p.profesionalId = :profesionalId ").
+                createQuery(" DELETE FROM Profesional p "
+                        + " WHERE p.profesionalId = :profesionalId ").
                 setInteger("profesionalId", profesionalId).
                 executeUpdate();
     }
@@ -39,7 +40,21 @@ public class ProfesionalDAOImpl implements ProfesionalDAO {
     }
 
     public void edit(Profesional profesional) {
-        this.sessionFactory.getCurrentSession().update(profesional);
+
+        for (ProfesionalEspecialidad pe : profesional.getProfesionalEspecialidads()) {
+            this.sessionFactory.getCurrentSession().saveOrUpdate(pe);
+        }
+        this.sessionFactory.getCurrentSession().saveOrUpdate(profesional);
+
+    }
+
+    public void deleteProfesionalEspecialidad(Integer profesionalId) {
+        this.sessionFactory
+                .getCurrentSession().
+                createQuery(" DELETE FROM ProfesionalEspecialidad pe "
+                        + " WHERE pe.profesional.profesionalId = :profesionalId ").
+                setInteger("profesionalId", profesionalId).
+                executeUpdate();
 
     }
 

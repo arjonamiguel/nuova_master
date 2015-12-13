@@ -100,11 +100,6 @@
         <td><form:input path="fechaVencimientoHabilitacion" /></td>
     </tr>
     
-    <tr>
-        <td><form:label path="fechaVencimientoHabilitacion">Especialidad:</form:label></td>
-        
-    </tr>
-    
       <tr>
         <td><form:label path="especialidad">Especialidad:</form:label></td>
 	    <td>    
@@ -126,6 +121,14 @@
             <TD>Especialidad</TD>
             
         </TR>
+        
+        <c:forEach items="${especialidadListEdit}" var="esp">
+	    <tr>
+	    	<td><input type="checkbox" name="chkbox[]"><input type="hidden" name="especialidadList" value="${esp.key}"></td>
+	        <td>${esp.key} </td>
+	        <td>${esp.value}</td>        
+	    </tr>
+	</c:forEach>
     
     </TABLE>
     </td>

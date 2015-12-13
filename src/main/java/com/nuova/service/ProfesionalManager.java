@@ -14,4 +14,6 @@ public interface ProfesionalManager {
     public void delete(Integer id);
 
     public void edit(Profesional profesional);
+
+    public void deleteProfesionalEspecialidad(Integer profesionalId);
 }
