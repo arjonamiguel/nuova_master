@@ -84,6 +84,7 @@
 		</style>
         <SCRIPT language="javascript">
         var siprosa=0;
+
         
         function addRow(tableID) {
  
@@ -238,3 +239,8 @@
 
 </body>
 </html>
+
+<script>
+        document.getElementById("habilitacionSiprosa").value=0;
+        document.getElementById("fechaVencimientoHabilitacion").value='';
+</script>
