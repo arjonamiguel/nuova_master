@@ -36,7 +36,7 @@
 	   
 	<h3>Administracion de Profesionales</h3>
 	<div style="width: 82%;">
-	<a href="mainProfesional" class="btn btn-primary btn-xs pull-right"><b>+</b>Nuevo Profesional</a>
+	<a href="formAddProfesional" class="btn btn-primary btn-xs pull-right"><b>+</b>Nuevo Profesional</a>
 	</div>
 
 	<c:if  test="${!empty profesionalList}">
