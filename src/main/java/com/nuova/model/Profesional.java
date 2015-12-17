@@ -2,14 +2,15 @@ package com.nuova.model;
 
 // Generated Dec 7, 2015 4:39:53 PM by Hibernate Tools 3.4.0.CR1
 
+import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
-import static javax.persistence.GenerationType.IDENTITY;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
@@ -33,14 +34,14 @@ public class Profesional implements java.io.Serializable {
     private String tituloProfesional;
     private Byte habilitacionSiprosa;
     private Date fechaVencimientoHabilitacion;
-    private Set<ProfesionalEspecialidad> profesionalEspecialidads = new HashSet<ProfesionalEspecialidad>(0);
+    private List<ProfesionalEspecialidad> profesionalEspecialidads = new ArrayList<ProfesionalEspecialidad>();
 
     public Profesional() {
     }
 
     public Profesional(String apellido, String nombre, String telefono, String matricula, String registroNacional,
             String tituloProfesional, Byte habilitacionSiprosa, Date fechaVencimientoHabilitacion,
-            Set<ProfesionalEspecialidad> profesionalEspecialidads) {
+            List<ProfesionalEspecialidad> profesionalEspecialidades) {
         this.apellido = apellido;
         this.nombre = nombre;
         this.telefono = telefono;
@@ -49,11 +50,11 @@ public class Profesional implements java.io.Serializable {
         this.tituloProfesional = tituloProfesional;
         this.habilitacionSiprosa = habilitacionSiprosa;
         this.fechaVencimientoHabilitacion = fechaVencimientoHabilitacion;
-        this.profesionalEspecialidads = profesionalEspecialidads;
+        this.profesionalEspecialidads = profesionalEspecialidades;
     }
 
     @Id
-    @GeneratedValue(strategy = IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "profesional_id", unique = true, nullable = false)
     public Integer getProfesionalId() {
         return this.profesionalId;
@@ -136,12 +137,12 @@ public class Profesional implements java.io.Serializable {
         this.fechaVencimientoHabilitacion = fechaVencimientoHabilitacion;
     }
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "profesional")
-    public Set<ProfesionalEspecialidad> getProfesionalEspecialidads() {
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "profesional")
+    public List<ProfesionalEspecialidad> getProfesionalEspecialidads() {
         return this.profesionalEspecialidads;
     }
 
-    public void setProfesionalEspecialidads(Set<ProfesionalEspecialidad> profesionalEspecialidads) {
+    public void setProfesionalEspecialidads(List<ProfesionalEspecialidad> profesionalEspecialidads) {
         this.profesionalEspecialidads = profesionalEspecialidads;
     }
 

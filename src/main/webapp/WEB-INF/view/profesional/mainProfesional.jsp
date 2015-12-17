@@ -8,15 +8,42 @@
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 	<title>Nuova</title>
+	<link href="${pageContext.request.contextPath}/resources/css/bootstrap/bootstrap.min.css" rel="stylesheet"/>
+	<script src="<c:url value="/resources/js/jquery/jquery-2.0.3.min.js" />"></script>
+	<script src="<c:url value="/resources/js/bootstrap/bootstrap.min.js" />"></script>
+	<style>
+	.custab{
+    border: 1px solid #ccc;
+    padding: 5px;
+    margin: 5% 0;
+    box-shadow: 3px 3px 2px #ccc;
+    transition: 0.5s;
+    }
+.custab:hover{
+    box-shadow: 3px 3px 0px transparent;
+    transition: 0.5s;
+    }
+.table{
+	width: 80%;
+	}
+.row{
+	margin-left: 10%;
+}
+	</style>
 </head>
 <body>
 	<jsp:include page="../sec_menu.jsp"></jsp:include>
 	   
 	<h3>Administracion de Profesionales</h3>
-	<a href="mainProfesional" >Nuevo Profesional</a>
-	</br> 
+	<div style="width: 82%;">
+	<a href="formAddProfesional" class="btn btn-primary btn-xs pull-right"><b>+</b>Nuevo Profesional</a>
+	</div>
+
 	<c:if  test="${!empty profesionalList}">
-	<table class="data" border="1">
+	<div class="row col-md-6 col-md-offset-2 custyle">
+	<table class="table table-striped custab">
+
+	
 	<tr>
 	    <th>Apellido y Nombre</th>
 	    <th>Matricula</th>
@@ -24,7 +51,7 @@
 	    <th>Registro Nacional</th>
 	    <th>Habilitacion Siprosa</th>
 	    <th>Fecha Vencimiento</th>
-	    <th>&nbsp;</th>
+	    <th class="text-center">&nbsp;</th>
 	</tr>
 	<c:forEach items="${profesionalList}" var="p">
 	    <tr>
@@ -34,13 +61,14 @@
 	        <td>${p.registroNacional}</td>
 	        <td>${p.habilitacionSiprosa}</td>
 	        <td>${p.fechaVencimientoHabilitacion}</td>
-	        <td>
-	        	<a href="edit/${p.profesionalId}">editar</a>|
-	        	<a href="delete/${p.profesionalId}">eliminar</a>
+	        <td class="text-center">
+	        	<a class="btn btn-info btn-xs" href="formEditProfesional/${p.profesionalId}"><span class="icon icon-edit"></span>editar</a>
+	        	<a class="btn btn-danger btn-xs" href="formDeleteProfesional/${p.profesionalId}"><span class="icon icon-remove"></span>eliminar</a>
 	       	</td>
 	    </tr>
 	</c:forEach>
 	</table>
+	</div>
 	</c:if>
 	 
 </body>
