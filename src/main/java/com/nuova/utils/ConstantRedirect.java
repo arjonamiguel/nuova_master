@@ -15,4 +15,10 @@ public class ConstantRedirect {
     public final static String VIEW_FORM_ADD_ESPECIALIDAD = "/especialidad/formAddEspecialidad";
     public final static String VIEW_FORM_EDIT_ESPECIALIDAD = "/especialidad/formEditEspecialidad";
     public final static String VIEW_FORM_DELETE_ESPECIALIDAD = "/especialidad/formDeleteEspecialidad";
+
+    // Obra Social
+    public final static String VIEW_MAIN_OBRASOCIAL = "/obrasocial/mainObraSocial";
+    public final static String VIEW_FORM_ADD_OBRASOCIAL = "/obrasocial/formAddObraSocial";
+    public final static String VIEW_FORM_EDIT_OBRASOCIAL = "/obrasocial/formEditObraSocial";
+    public final static String VIEW_FORM_DELETE_OBRASOCIAL = "/obrasocial/formDeleteObraSocial";
 }

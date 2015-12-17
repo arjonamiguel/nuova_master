@@ -9,5 +9,8 @@
         <mapping class="com.nuova.model.Especialidad" />
         <mapping class="com.nuova.model.ProfesionalEspecialidad" />
         <mapping class="com.nuova.model.Profesional" />
+        <mapping class="com.nuova.model.Obrasocial" />
+        <mapping class="com.nuova.model.Paciente" />
+        <mapping class="com.nuova.model.PacienteObrasocial" />
     </session-factory>
 </hibernate-configuration>
