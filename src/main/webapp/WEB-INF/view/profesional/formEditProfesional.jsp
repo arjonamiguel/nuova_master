@@ -32,6 +32,7 @@
 		    margin: 0 0 1.5em 0 !important;
 		    -webkit-box-shadow:  0px 0px 0px 0px #000;
 		            box-shadow:  0px 0px 0px 0px #000;
+		            background-color:#f9f9f9;
 		}
 
 		legend.scheduler-border {
@@ -80,10 +81,33 @@
 	background-color:#E0F8F7;
 	color:black;
 }
+.badge{
+	box-shadow: inset 0px 0px 5px;
+}
+.mainContainer {
+  position: relative; /* or absolute */
+  top: 0%;
+  left: 2%;
+  right: 2%;
+  bottom:2%;
+  float:left;
+  width:95%;
+  margin-top:0%;
+  margin-bottom:5%;
+  background-color:#f5f5f5;
+  border-radius: 10px;
+}
+fieldset {
+-webkit-border-radius: 8px;
+-moz-border-radius: 8px;
+border-radius: 8px;
+}
 		
 		</style>
         <SCRIPT language="javascript">
         var siprosa=0;
+
+        
         function addRow(tableID) {
  
             var table = document.getElementById(tableID);
@@ -143,12 +167,15 @@
 		}
     </SCRIPT>
 </head>
-<body>
+<body style="background-color:#eee;">
 <jsp:include page="../sec_menu.jsp"></jsp:include>
-<h3>Nuevo Profesional</h3>
+<div class="mainContainer"> 
+<div style="padding-left:5%;padding-bottom:0%;">  
+<h3>Editar Profesional</h3>
+</div>	
 
 <form:form method="post" action="/nuova/editProfesional" commandName="profesional">
-<div class="row" style="padding-left:5%;padding-right:5%;width:45%;float:left;padding-top:3%;">
+<div style="padding-left:5%;width:50%;float:left;padding-top:0%;">
  <fieldset class="scheduler-border">
  <legend class="scheduler-border">Datos del Profesional</legend>
     	<div><form:hidden path="profesionalId" /></div>
@@ -176,17 +203,17 @@
 	        <div class="labelProf"><form:label path="tituloProfesional">Titulo Profesional:</form:label></div>
 	        <div class="inputProf"><form:input path="tituloProfesional" style="width:90%;float:left;"/></div>
         </div>
-        <div style="padding-top:5%;float:left;padding-left:2%;width:100%;">
-	        <div class="rowContainerProf" style="width:30%;padding-top:1%;">
+        <div style="padding-top:5%;float:left;padding-left:10%;width:100%;">
+	        <div class="rowContainerProf" style="width:20%;padding-top:1%;">
 		        <div style="visibility:hidden;height:0px;"><form:label path="habilitacionSiprosa">Habilitacion del Siprosa:</form:label></div>
 		        <div style="visibility:hidden;height:0px;"><form:input path="habilitacionSiprosa" /></div>
-		        <label for="info" class="btn btn-info">SIPROSA <input type="checkbox" id="info" class="badgebox" onchange="javascript:updateSiprosa();"><span class="badge">&check;</span></label>  
+		        <label for="info">SIPROSA <input type="checkbox" id="info" class="badgebox" onchange="javascript:updateSiprosa();"><span class="badge">&check;</span></label>  
 	        </div>
         
-	        <div id="labelDate" style="padding-top:2%;float:left;visibility:hidden;"><form:label path="fechaVencimientoHabilitacion">Fecha Vencimiento Habilitacion:</form:label></div>
+	        <div id="labelDate" style="padding-top:1%;float:left;visibility:hidden;"><form:label path="fechaVencimientoHabilitacion">Fecha Vencimiento Habilitacion:</form:label></div>
 	        <div style="visibility:hidden;height:0px;"><form:input class="date" path="fechaVencimientoHabilitacion" /></div>
-	        <div id="calendar" style="float:right;visibility:hidden;" class="btn btn-info">
-	            <div class="input-group registration-date-time" style="padding-top:5%;">
+	        <div id="calendar" style="float:left;visibility:hidden;padding-left:3%;">
+	            <div class="input-group registration-date-time" style="padding-top:0%;">
             		<span class="input-group-addon" id="basic-addon1"><span class="icon icon-calendar" aria-hidden="true"></span></span>
             		<input class="form-control" name="registration_date" id="registration-date" type="date" style="width:82%;" onchange="javascript:updateDate();">
             	</div>
@@ -199,10 +226,10 @@
         
         </fieldset>
 </div>
-<div class="row" style="float:none;padding-left:5%;padding-right:15%;padding-top:3%;width:45%;">
+<div style="float:none;padding-left:5%;padding-top:3%;width:50%;">
 <fieldset class="scheduler-border">
 <legend class="scheduler-border">Agregar Especialidades</legend>
-    <div>   
+    <div style="background-color:#f9f9f9;">   
     	<div style="visible:hidden;height:0px;"><form:label path="especialidad">Especialidad:</form:label></div>
     	<div>
 	    	<form:select path="especialidad">
@@ -211,17 +238,17 @@
 			</form:select>
 		</div>	
 		<div class="inputProf">
-			<INPUT type="button" value="Add Row" onclick="addRow('dataTable')" class="btn btn-primary"/>
+			<INPUT type="button" value="Add Row" onclick="addRow('dataTable')" class="btn btn-info"/>
 		</div>	
 	</div>
     <div>  
-	    <TABLE id="dataTable" class="table table-striped custab">
+	    <TABLE id="dataTable" class="table">
 	        <TR>
 	        	<TD></TD>
 	            <TD>Id</TD>
 	            <TD>Especialidad</TD>        
 	        </TR>
-	        <c:forEach items="${especialidadListEdit}" var="esp">
+	            <c:forEach items="${especialidadListEdit}" var="esp">
 	    <tr>
 	    	<td><input type="checkbox" name="chkbox[]"><input type="hidden" name="especialidadList" value="${esp.key}"></td>
 	        <td>${esp.key} </td>
@@ -234,16 +261,17 @@
 	    </div>
  	</div>
 </fieldset>
-<div style="float:right;">
-	 <input type="submit" value="Guardar" class="btn btn-primary"/> 
+<div style="float:left;padding-left:78%;width:95%;padding-bottom:2%;">
+	 <input type="submit" value="Guardar" class="btn btn-info"/> 
 	 <input type="button" value="Cancelar" onclick="location.href='/nuova/mainProfesional';" class="btn"/>
 </div>
 </div>
 </form:form>
 
-
+</div>
 </body>
 </html>
+
 <script language="javascript">
        
         var isSiprosa=$("#habilitacionSiprosa").val();

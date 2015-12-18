@@ -12,64 +12,79 @@
 	<script src="<c:url value="/resources/js/jquery/jquery-2.0.3.min.js" />"></script>
 	<script src="<c:url value="/resources/js/bootstrap/bootstrap.min.js" />"></script>
 	<style>
-	.custab{
+	.table{
     border: 1px solid #ccc;
     padding: 5px;
     margin: 5% 0;
     box-shadow: 3px 3px 2px #ccc;
     transition: 0.5s;
     }
-.custab:hover{
+.table:hover{
     box-shadow: 3px 3px 0px transparent;
     transition: 0.5s;
     }
-.table{
-	width: 80%;
-	}
 .row{
-	margin-left: 10%;
+	margin-left: 0%;
+}
+.mainContainer {
+  position: relative; /* or absolute */
+  top: 0%;
+  left: 2%;
+  right: 2%;
+  bottom:2%;
+  float:left;
+  width:95%;
+  margin-top:0%;
+  margin-bottom:5%;
+  background-color:#f5f5f5;
+  border-radius: 10px;
 }
 	</style>
 </head>
-<body>
-	<jsp:include page="../sec_menu.jsp"></jsp:include>
-	   
-	<h3>Administracion de Profesionales</h3>
-	<div style="width: 82%;">
-	<a href="formAddProfesional" class="btn btn-primary btn-xs pull-right"><b>+</b>Nuevo Profesional</a>
-	</div>
-
-	<c:if  test="${!empty profesionalList}">
-	<div class="row col-md-6 col-md-offset-2 custyle">
-	<table class="table table-striped custab">
-
+<body style="background-color:#eee;">
+<jsp:include page="../sec_menu.jsp"></jsp:include>
+<div class="mainContainer">   
 	
-	<tr>
-	    <th>Apellido y Nombre</th>
-	    <th>Matricula</th>
-	    <th>Telefono</th>
-	    <th>Registro Nacional</th>
-	    <th>Habilitacion Siprosa</th>
-	    <th>Fecha Vencimiento</th>
-	    <th class="text-center">&nbsp;</th>
-	</tr>
-	<c:forEach items="${profesionalList}" var="p">
-	    <tr>
-	        <td>${p.apellido}, ${p.nombre} </td>
-	        <td>${p.matricula}</td>
-	        <td>${p.telefono}</td>
-	        <td>${p.registroNacional}</td>
-	        <td>${p.habilitacionSiprosa}</td>
-	        <td>${p.fechaVencimientoHabilitacion}</td>
-	        <td class="text-center">
-	        	<a class="btn btn-info btn-xs" href="formEditProfesional/${p.profesionalId}"><span class="icon icon-edit"></span>editar</a>
-	        	<a class="btn btn-danger btn-xs" href="formDeleteProfesional/${p.profesionalId}"><span class="icon icon-remove"></span>eliminar</a>
-	       	</td>
-	    </tr>
-	</c:forEach>
-	</table>
+	<div style="padding-left:5%;">
+	<h3>Administracion de Profesionales</h3>
+	</div>
+	<div style="width:80%;padding-left:5%">
+		<div style="float:right;">
+		<a href="formAddProfesional" class="btn btn-info btn-xs pull-right"><b>+</b>&nbsp;&nbsp;Nuevo Profesional</a>
+		</div>	
+		<c:if  test="${!empty profesionalList}">
+		<table class="table" style="background-color:white;">
+		<tr>
+		    <th style="background-color:#f9f9f9;">Apellido y Nombre</th>
+		    <th style="background-color:#f9f9f9;">Matricula</th>
+		    <th style="background-color:#f9f9f9;">Telefono</th>
+		    <th style="background-color:#f9f9f9;">Registro Nacional</th>
+		    <th style="background-color:#f9f9f9;">Habilitacion Siprosa</th>
+		    <th style="background-color:#f9f9f9;">Fecha Vencimiento</th>
+		    <th style="background-color:#f9f9f9;" class="text-center"></th>
+		</tr>
+		<c:forEach items="${profesionalList}" var="p">
+		    <tr>
+		        <td>${p.apellido}, ${p.nombre} </td>
+		        <td>${p.matricula}</td>
+		        <td>${p.telefono}</td>
+		        <td>${p.registroNacional}</td>
+		   	     <td>${p.habilitacionSiprosa}</td>
+		        <td>${p.fechaVencimientoHabilitacion}</td>
+		        <td class="text-center">
+		        	<div style="float:right;">
+		        	<a class="btn btn-info btn-xs" href="formEditProfesional/${p.profesionalId}"><span class="icon icon-edit"></span>editar</a>
+		        	<a class="btn btn-danger btn-xs" href="formDeleteProfesional/${p.profesionalId}"><span class="icon icon-remove"></span>eliminar</a>
+		        	</div>
+		       	</td>
+		    </tr>
+		</c:forEach>
+		</table>
 	</div>
 	</c:if>
-	 
+</div>
 </body>
 </html>
+<script>
+document.getElementById("mainProfesional").parentNode.classList.add("active")
+</script>

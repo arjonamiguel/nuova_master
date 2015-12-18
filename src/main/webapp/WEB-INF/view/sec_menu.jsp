@@ -16,23 +16,54 @@
 <!-- header login -->
 
 <!-- Menu       -->
-<div style="background-color: orange">
+<div>
+<div class="navbar">
+<div class="navbar-inner">
+<div class="container">
+<div class="nav-collapse">
+ <ul class="nav">
 <sec:authorize access="hasRole('ROLE_ADMIN')">
-<a href="mainProfesional">Administracion de Profesionales</a>
+<li><a href="mainProfesional" id="mainProfesional">Administracion de Profesionales</a></li>
 </sec:authorize>
-|
+
 <sec:authorize access="hasRole('ROLE_ADMIN')">
-<a href="mainEspecialidad">Administracion de Especialidades</a>
+<li><a href="mainEspecialidad" id="mainEspecialidad">Administracion de Especialidades</a></li>
 </sec:authorize>
-|
+
 <sec:authorize access="hasRole('ROLE_ADMIN')">
-<a href="/nuova/mainObraSocial">Administracion de Obras Sociales</a>
+<li>
+<a href="/nuova/mainObraSocial" id="mainObraSocial">Administracion de Obras Sociales</a>
+</li>
 </sec:authorize>
-|
+
 <sec:authorize access="hasRole('ROLE_ADMIN')">
+<li>
 <a href="#">Administracion de Pacientes</a>
+</li>
 </sec:authorize>
+
+<li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown"><img style="height:7%;width:7%;" src="<c:url value="/resources/img/others/conf.ico"/>"><b class="caret"></b></a>
+            <ul class="dropdown-menu">
+              <li><a href="#">Action</a></li>
+              <li><a href="#">Another action</a></li>
+              <li><a href="#">Something else here</a></li>
+              <li class="divider"></li>
+              <li class="nav-header">Nav header</li>
+              <li><a href="#">Separated link</a></li>
+              <li><a href="#">One more separated link</a></li>
+            </ul>
+          </li>
+</ul>
 </div>
+</div>
+</div>
+</div>
+</div>
+
+
+
+
 <sec:authorize access="hasRole('ROLE_USER')">
 USER
 </sec:authorize>
