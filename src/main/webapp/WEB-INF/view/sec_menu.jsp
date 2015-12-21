@@ -3,7 +3,7 @@
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
 <!-- header login -->
-<div style="text-align:right;font-size:13px">
+<div style="text-align:right;font-size:13px;background-color: #353e4a; padding: 2px 2px; height: 53px; color: white">
 	Logueado como: 
 	<sec:authorize access="isAuthenticated()">
 	    <span style="color:blue;font-weight:bold;">
