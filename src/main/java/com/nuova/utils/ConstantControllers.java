@@ -31,4 +31,13 @@ public class ConstantControllers {
     public final static String DELETE_OBRASOCIAL = "/deleteObraSocial";
     public final static String EDIT_OBRASOCIAL = "/editObraSocial";
 
+    // Paciente
+    public final static String MAIN_PACIENTE = "/mainPaciente";
+    public final static String FORM_ADD_PACIENTE = "/formAddPaciente";
+    public final static String FORM_EDIT_PACIENTE = "/formEditPaciente/{pacienteId}";
+    public final static String FORM_DELETE_PACIENTE = "/formDeletePaciente/{pacienteId}";
+    public final static String ADD_PACIENTE = "/addPaciente";
+    public final static String DELETE_PACIENTE = "/deletePaciente";
+    public final static String EDIT_PACIENTE = "/editPaciente";
+
 }

@@ -38,7 +38,7 @@
 
 <sec:authorize access="hasRole('ROLE_ADMIN')">
 <li>
-<a href="#">Administracion de Pacientes</a>
+<a href="/nuova/mainPaciente">Administracion de Pacientes</a>
 </li>
 </sec:authorize>
 

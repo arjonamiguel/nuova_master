@@ -43,11 +43,21 @@
 	<table class="table table-striped custab">
 	<tr>
 	    <th>Apellido</th>	    
+	    <th>Nombre</th>
+	    <th>DNI</th>
+	    <th>Telefono</th>
+	    <th>Fecha Nacimiento</th>
+	    <th>Domicilio</th>
 	    <th>&nbsp;</th>
 	</tr>
 	<c:forEach items="${pacienteList}" var="pa">
 	    <tr>
 	        <td>${pa.apellido}</td>        
+	        <td>${pa.nombre}</td>
+	        <td>${pa.dni}</td>
+	        <td>${pa.telefono}</td>
+	        <td>${pa.fechaNacimiento}</td>
+	        <td>${pa.domicilio}</td>
 	        <td>
 	        <div style="float:right;">
 	        	<a class="btn btn-info btn-xs" href="formEditPaciente/${pa.pacienteId}"><span class="icon icon-edit"></span>editar</a>

@@ -21,4 +21,10 @@ public class ConstantRedirect {
     public final static String VIEW_FORM_ADD_OBRASOCIAL = "/obrasocial/formAddObraSocial";
     public final static String VIEW_FORM_EDIT_OBRASOCIAL = "/obrasocial/formEditObraSocial";
     public final static String VIEW_FORM_DELETE_OBRASOCIAL = "/obrasocial/formDeleteObraSocial";
+
+    // Paciente
+    public final static String VIEW_MAIN_PACIENTE = "/paciente/mainPaciente";
+    public final static String VIEW_FORM_ADD_PACIENTE = "/paciente/formAddPaciente";
+    public final static String VIEW_FORM_EDIT_PACIENTE = "/paciente/formEditPaciente";
+    public final static String VIEW_FORM_DELETE_PACIENTE = "/paciente/formDeletePaciente";
 }
