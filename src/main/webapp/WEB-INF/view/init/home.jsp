@@ -7,10 +7,25 @@
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
     <title>Nuova</title>
-        <link href="<%=request.getContextPath()%>/resources/css/bootstrap/bootstrap.min.css" rel="stylesheet"/>
-		<script src="<c:url value="/resources/js/jquery/jquery-2.0.3.min.js" />"></script>
-		<script src="<c:url value="/resources/js/bootstrap/bootstrap.min.js" />"></script>
-	<title>Nuova</title>
+        <link href="${pageContext.request.contextPath}/resources/css/bootstrap/bootstrap.min.css" rel="stylesheet"/>
+        <link href="${pageContext.request.contextPath}/resources/css/bootstrap/bootstrap-responsive.css" rel="stylesheet"/>
+		<script src="${pageContext.request.contextPath}/resources/js/jquery/jquery-2.0.3.min.js" />"></script>
+		<script src="${pageContext.request.contextPath}/resources/js/bootstrap/bootstrap.min.js" />"></script>
+		<script src="${pageContext.request.contextPath}/resources/js/jquery/bootstrap-collapse.js" />"></script>
+		<style>
+		    .navbar-brand-centered {
+        position: absolute;
+        left: 50%;
+        display: block;
+        width: 160px;
+        text-align: center;
+        background-color: transparent;
+    }
+    .navbar>.container .navbar-brand-centered, 
+    .navbar>.container-fluid .navbar-brand-centered {
+        margin-left: -80px;
+    }
+		</style>
 </head>
 <body style="background-color:#eee;">
 	<jsp:include page="../sec_menu.jsp"></jsp:include>

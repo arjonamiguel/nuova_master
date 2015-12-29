@@ -5,45 +5,24 @@
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <html>
 <head>
-    <title>Nuova</title>
-    <link href="<%=request.getContextPath()%>/resources/css/bootstrap/bootstrap.min.css" rel="stylesheet"/>
+	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+	<title>Nuova</title>
+	<link href="${pageContext.request.contextPath}/resources/css/bootstrap/bootstrap.min.css" rel="stylesheet"/>
+	<link href="${pageContext.request.contextPath}/resources/css/bootstrap/bootstrap-responsive.css" rel="stylesheet"/>
 	<script src="<c:url value="/resources/js/jquery/jquery-2.0.3.min.js" />"></script>
 	<script src="<c:url value="/resources/js/bootstrap/bootstrap.min.js" />"></script>
-	<style>
-	.table{
-    border: 1px solid #ccc;
-    padding: 5px;
-    margin: 5% 0;
-    box-shadow: 3px 3px 2px #ccc;
-    transition: 0.5s;
-    }
-.table:hover{
-    box-shadow: 3px 3px 0px transparent;
-    transition: 0.5s;
-    }
-.mainContainer {
-  position: relative; /* or absolute */
-  top: 0%;
-  left: 2%;
-  right: 2%;
-  bottom:2%;
-  float:left;
-  width:95%;
-  margin-top:0%;
-  margin-bottom:5%;
-  background-color:#f5f5f5;
-  border-radius: 10px;
-}
-	</style>
+	<script src="${pageContext.request.contextPath}/resources/js/jquery/bootstrap-collapse.js" />"></script>
+	<link href="${pageContext.request.contextPath}/resources/css/nuova.css" rel="stylesheet"/>
+
 </head>
 <body style="background-color:#eee;">
 <jsp:include page="../sec_menu.jsp"></jsp:include>
 <div class="mainContainer"> 
-	<div style="padding-left:5%;padding-bottom:0%;"> 
+	<div style=";padding-bottom:0%;"> 
 		<h3>Editar Especialidad</h3>
 	</div>
 	<form:form method="post" action="/nuova/editEspecialidad" commandName="especialidad">
-	 	<div style="padding-left:5%;">
+	 	<div>
 	    <table class="table" style="background-color:white;width:30%;">
 	    <tr>
 	        <td><form:label path="nombre">Especialidad:</form:label></td>

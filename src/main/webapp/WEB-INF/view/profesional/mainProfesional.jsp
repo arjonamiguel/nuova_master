@@ -8,60 +8,36 @@
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 	<title>Nuova</title>
-	<link href="<%=request.getContextPath()%>/resources/css/bootstrap/bootstrap.min.css" rel="stylesheet"/>
-	<script src="<c:url value="/resources/js/jquery/jquery-2.0.3.min.js" />"></script>
-	<script src="<c:url value="/resources/js/bootstrap/bootstrap.min.js" />"></script>
-	<style>
-	.table{
-    border: 1px solid #ccc;
-    padding: 5px;
-    margin: 5% 0;
-    box-shadow: 3px 3px 2px #ccc;
-    transition: 0.5s;
-    }
-.table:hover{
-    box-shadow: 3px 3px 0px transparent;
-    transition: 0.5s;
-    }
-.row{
-	margin-left: 0%;
-}
-.mainContainer {
-  position: relative; /* or absolute */
-  top: 0%;
-  left: 2%;
-  right: 2%;
-  bottom:2%;
-  float:left;
-  width:95%;
-  margin-top:0%;
-  margin-bottom:5%;
-  background-color:#f5f5f5;
-  border-radius: 10px;
-}
-	</style>
+        <link href="${pageContext.request.contextPath}/resources/css/bootstrap/bootstrap.min.css" rel="stylesheet"/>
+        <link href="${pageContext.request.contextPath}/resources/css/bootstrap/bootstrap-responsive.css" rel="stylesheet"/>
+		<script src="<c:url value="/resources/js/jquery/jquery-2.0.3.min.js" />"></script>
+		<script src="<c:url value="/resources/js/bootstrap/bootstrap.min.js" />"></script>
+		<script src="${pageContext.request.contextPath}/resources/js/jquery/bootstrap-collapse.js" />"></script>
+		<link href="${pageContext.request.contextPath}/resources/css/nuova.css" rel="stylesheet"/>
+
 </head>
 <body style="background-color:#eee;">
 <jsp:include page="../sec_menu.jsp"></jsp:include>
+<jsp:include page="../breadcrumb.jsp"></jsp:include>
 <div class="mainContainer">   
 	
-	<div style="padding-left:5%;">
+	<div>
 	<h3>Administracion de Profesionales</h3>
 	</div>
-	<div style="width:80%;padding-left:5%">
+	<div>
 		<div style="float:right;">
 		<a href="formAddProfesional" class="btn btn-info btn-xs pull-right"><b>+</b>&nbsp;&nbsp;Nuevo Profesional</a>
 		</div>	
 		<c:if  test="${!empty profesionalList}">
-		<table class="table" style="background-color:white;">
+		<table class="table" style="">
 		<tr>
-		    <th style="background-color:#f9f9f9;">Apellido y Nombre</th>
-		    <th style="background-color:#f9f9f9;">Matricula</th>
-		    <th style="background-color:#f9f9f9;">Telefono</th>
-		    <th style="background-color:#f9f9f9;">Registro Nacional</th>
-		    <th style="background-color:#f9f9f9;">Habilitacion Siprosa</th>
-		    <th style="background-color:#f9f9f9;">Fecha Vencimiento</th>
-		    <th style="background-color:#f9f9f9;" class="text-center"></th>
+		    <th class="tableHeader"">Apellido y Nombre</th>
+		    <th class="tableHeader"">Matricula</th>
+		    <th class="tableHeader"">Telefono</th>
+		    <th class="tableHeader"">Registro Nacional</th>
+		    <th class="tableHeader"">Habilitacion Siprosa</th>
+		    <th class="tableHeader"">Fecha Vencimiento</th>
+		    <th class="tableHeader"" class="text-center"></th>
 		</tr>
 		<c:forEach items="${profesionalList}" var="p">
 		    <tr>

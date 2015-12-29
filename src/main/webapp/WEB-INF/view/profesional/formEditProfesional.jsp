@@ -5,44 +5,17 @@
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-    <title>Nuova</title>
-        <link href="<%=request.getContextPath()%>/resources/css/bootstrap/bootstrap.min.css" rel="stylesheet"/>
-		<script src="<c:url value="/resources/js/jquery/jquery-2.0.3.min.js" />"></script>
-		<script src="<c:url value="/resources/js/bootstrap/bootstrap.min.js" />"></script>
+	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+	<title>Nuova</title>
+	<link href="${pageContext.request.contextPath}/resources/css/bootstrap/bootstrap.min.css" rel="stylesheet"/>
+	<link href="${pageContext.request.contextPath}/resources/css/bootstrap/bootstrap-responsive.css" rel="stylesheet"/>
+	<script src="<c:url value="/resources/js/jquery/jquery-2.0.3.min.js" />"></script>
+	<script src="<c:url value="/resources/js/bootstrap/bootstrap.min.js" />"></script>
+	<script src="${pageContext.request.contextPath}/resources/js/jquery/bootstrap-collapse.js" />"></script>
+	<link href="${pageContext.request.contextPath}/resources/css/nuova.css" rel="stylesheet"/>
 		<style>
-		.rowContainerProf{
-			float:left;
-			width:50%;
-			height:10%;
-			padding-left:0px;
-		}
-		.labelProf{
-		float:left;
-		padding-right:2%;
-		padding-left:5%;
-		}
-		.inputProf{
-		float:right;
-		padding-top:0%;
-		}
-		fieldset.scheduler-border {
-		    border: 1px groove #ddd !important;
-		    padding: 0 1.4em 1.4em 1.4em !important;
-		    margin: 0 0 1.5em 0 !important;
-		    -webkit-box-shadow:  0px 0px 0px 0px #000;
-		            box-shadow:  0px 0px 0px 0px #000;
-		            background-color:#f9f9f9;
-		}
-
-		legend.scheduler-border {
-		    font-size: 1.2em !important;
-		    font-weight: bold !important;
-		    text-align: left !important;
-		    width:inherit; /* Or auto */
-    		padding:0 10px; /* To give a bit of padding on the left and right */
-    		border-bottom:none;
-		}
+		
+		
 		.btn-info {
     color: #fff;
     background-color: #5bc0de;
@@ -84,19 +57,7 @@
 .badge{
 	box-shadow: inset 0px 0px 5px;
 }
-.mainContainer {
-  position: relative; /* or absolute */
-  top: 0%;
-  left: 2%;
-  right: 2%;
-  bottom:2%;
-  float:left;
-  width:95%;
-  margin-top:0%;
-  margin-bottom:5%;
-  background-color:#f5f5f5;
-  border-radius: 10px;
-}
+
 fieldset {
 -webkit-border-radius: 8px;
 -moz-border-radius: 8px;
@@ -170,12 +131,12 @@ border-radius: 8px;
 <body style="background-color:#eee;">
 <jsp:include page="../sec_menu.jsp"></jsp:include>
 <div class="mainContainer"> 
-<div style="padding-left:5%;padding-bottom:0%;">  
+<div style="padding-bottom:0%;">  
 <h3>Editar Profesional</h3>
 </div>	
 
 <form:form method="post" action="/nuova/editProfesional" commandName="profesional">
-<div style="padding-left:5%;width:50%;float:left;padding-top:0%;">
+<div style="width:50%;float:left;padding-top:0%;">
  <fieldset class="scheduler-border">
  <legend class="scheduler-border">Datos del Profesional</legend>
     	<div><form:hidden path="profesionalId" /></div>
@@ -226,7 +187,7 @@ border-radius: 8px;
         
         </fieldset>
 </div>
-<div style="float:none;padding-left:5%;padding-top:3%;width:50%;">
+<div style="padding-top:3%;width:50%;">
 <fieldset class="scheduler-border">
 <legend class="scheduler-border">Agregar Especialidades</legend>
     <div style="background-color:#f9f9f9;">   
@@ -261,7 +222,7 @@ border-radius: 8px;
 	    </div>
  	</div>
 </fieldset>
-<div style="float:left;padding-left:78%;width:95%;padding-bottom:2%;">
+<div style="float:left;padding-left:73%;width:95%;padding-bottom:2%;">
 	 <input type="submit" value="Guardar" class="btn btn-info"/> 
 	 <input type="button" value="Cancelar" onclick="location.href='/nuova/mainProfesional';" class="btn"/>
 </div>

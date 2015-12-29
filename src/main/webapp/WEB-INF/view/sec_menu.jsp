@@ -16,54 +16,65 @@
 <!-- header login -->
 
 <!-- Menu       -->
-<div>
-<div class="navbar">
+<nav class="navbar">
 <div class="navbar-inner">
+
 <div class="container">
-<div class="nav-collapse">
- <ul class="nav">
-<sec:authorize access="hasRole('ROLE_ADMIN')">
-<li><a href="mainProfesional" id="mainProfesional">Administracion de Profesionales</a></li>
-</sec:authorize>
 
-<sec:authorize access="hasRole('ROLE_ADMIN')">
-<li><a href="mainEspecialidad" id="mainEspecialidad">Administracion de Especialidades</a></li>
-</sec:authorize>
+		  <!-- .btn-navbar is used as the toggle for collapsed navbar content -->
+      		<a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+        		<span class="icon-bar"></span>
+       		 	<span class="icon-bar"></span>
+        		<span class="icon-bar"></span>
+      		</a>
+ 
+	      <!-- Be sure to leave the brand out there if you want it shown -->
+	
+			
+	<!-- Collect the nav links, forms, and other content for toggling -->
+	 	<div class="nav-collapse collapse">
+	
 
-<sec:authorize access="hasRole('ROLE_ADMIN')">
-<li>
-<a href="/nuova/mainObraSocial" id="mainObraSocial">Administracion de Obras Sociales</a>
-</li>
-</sec:authorize>
+		 <ul class="nav navbar-nav">
+		<sec:authorize access="hasRole('ROLE_ADMIN')">
+		<li><a href="mainProfesional" id="mainProfesional">Administracion de Profesionales</a></li>
+		</sec:authorize>
+		
+		<sec:authorize access="hasRole('ROLE_ADMIN')">
+		<li><a href="mainEspecialidad" id="mainEspecialidad">Administracion de Especialidades</a></li>
+		</sec:authorize>
+		
+		<sec:authorize access="hasRole('ROLE_ADMIN')">
+		<li>
+		<a href="/nuova/mainObraSocial" id="mainObraSocial">Administracion de Obras Sociales</a>
+		</li>
+		</sec:authorize>
+		
+		<sec:authorize access="hasRole('ROLE_ADMIN')">
+		<li>
+		<a href="/nuova/mainPaciente">Administracion de Pacientes</a>
+		</li>
+		</sec:authorize>
+		
+		<li class="dropdown">
+		            <a href="#" class="dropdown-toggle" data-toggle="dropdown"><img style="height:7%;width:7%;" src="<c:url value="/resources/img/others/conf.ico"/>"><b class="caret"></b></a>
+		            <ul class="dropdown-menu">
+		              <li><a href="#">Action</a></li>
+		              <li><a href="#">Another action</a></li>
+		              <li><a href="#">Something else here</a></li>
+		              <li class="divider"></li>
+		              <li class="nav-header">Nav header</li>
+		              <li><a href="#">Separated link</a></li>
+		              <li><a href="#">One more separated link</a></li>
+		            </ul>
+		          </li>
+		</ul>
 
-<sec:authorize access="hasRole('ROLE_ADMIN')">
-<li>
-<a href="/nuova/mainPaciente">Administracion de Pacientes</a>
-</li>
-</sec:authorize>
 
-<li class="dropdown">
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown"><img style="height:7%;width:7%;" src="<c:url value="/resources/img/others/conf.ico"/>"><b class="caret"></b></a>
-            <ul class="dropdown-menu">
-              <li><a href="#">Action</a></li>
-              <li><a href="#">Another action</a></li>
-              <li><a href="#">Something else here</a></li>
-              <li class="divider"></li>
-              <li class="nav-header">Nav header</li>
-              <li><a href="#">Separated link</a></li>
-              <li><a href="#">One more separated link</a></li>
-            </ul>
-          </li>
-</ul>
+		</div><!-- /.navbar-collapse -->
+</div><!-- /.container-fluid -->
 </div>
-</div>
-</div>
-</div>
-</div>
-
-
-
-
+</nav>
 <sec:authorize access="hasRole('ROLE_USER')">
 USER
 </sec:authorize>
