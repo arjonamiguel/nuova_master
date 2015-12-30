@@ -10,9 +10,11 @@ public class ObraSocialDTO {
     public ObraSocialDTO() {
     }
 
-    public ObraSocialDTO(Integer obrasocialId, String nombre) {
+    public ObraSocialDTO(Integer obrasocialId, String nombre, String credencial, String original) {
         this.obrasocialId = obrasocialId;
         this.nombre = nombre;
+        this.credencial = credencial;
+        this.original = original;
     }
 
     public Integer getObrasocialId() {

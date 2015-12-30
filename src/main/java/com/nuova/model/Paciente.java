@@ -39,15 +39,16 @@ public class Paciente implements java.io.Serializable {
     private String mail;
     private Byte liberado;
     private Integer dni;
-    private List<PacienteObrasocial> pacienteObrasocials = new ArrayList<PacienteObrasocial>(0);
-    private Set<Paciente> pacientes = new HashSet<Paciente>(0);
+    private List<PacienteObrasocial> pacienteObrasocials = new ArrayList<PacienteObrasocial>();
+    private Set<Paciente> pacientes = new HashSet<Paciente>();
+    private String provincia;
 
     public Paciente() {
     }
 
     public Paciente(Paciente paciente, String apellido, String nombre, Date fechaNacimiento, String domicilio,
             String telefono, String mail, Byte liberado, Integer dni, List<PacienteObrasocial> pacienteObrasocials,
-            Set<Paciente> pacientes) {
+            Set<Paciente> pacientes, String provincia) {
         this.paciente = paciente;
         this.apellido = apellido;
         this.nombre = nombre;
@@ -173,4 +174,12 @@ public class Paciente implements java.io.Serializable {
         this.pacientes = pacientes;
     }
 
+    @Column(name = "provincia", length = 156)
+    public String getProvincia() {
+        return this.provincia;
+    }
+
+    public void setProvincia(String provincia) {
+        this.provincia = provincia;
+    }
 }

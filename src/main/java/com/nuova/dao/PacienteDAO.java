@@ -17,4 +17,6 @@ public interface PacienteDAO {
 
     public void deleteAdherente(Integer pacienteId);
 
+    public void deletePacienteObrasocial(Integer pacienteId);
+
 }

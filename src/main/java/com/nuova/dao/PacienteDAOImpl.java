@@ -39,7 +39,10 @@ public class PacienteDAOImpl implements PacienteDAO {
     }
 
     public void edit(Paciente paciente) {
-        this.sessionFactory.getCurrentSession().update(paciente);
+        for (PacienteObrasocial po : paciente.getPacienteObrasocials()) {
+            this.sessionFactory.getCurrentSession().saveOrUpdate(po);
+        }
+        this.sessionFactory.getCurrentSession().saveOrUpdate(paciente);
     }
 
     public void deleteAdherente(Integer pacienteId) {
@@ -49,6 +52,16 @@ public class PacienteDAOImpl implements PacienteDAO {
                         + " WHERE po.paciente.pacienteId = :pacienteId ").
                 setInteger("pacienteId", pacienteId).
                 executeUpdate();
+    }
+
+    public void deletePacienteObrasocial(Integer pacienteId) {
+        this.sessionFactory
+                .getCurrentSession().
+                createQuery(" DELETE FROM PacienteObrasocial po "
+                        + " WHERE po.paciente.pacienteId = :pacienteId ").
+                setInteger("pacienteId", pacienteId).
+                executeUpdate();
+
     }
 
 }

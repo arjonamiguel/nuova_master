@@ -4,31 +4,214 @@
 <html>
 <head>
     <title>Nuova</title>
+    <link href="<%=request.getContextPath()%>/resources/css/bootstrap/bootstrap.min.css" rel="stylesheet"/>
+	<script src="<c:url value="/resources/js/jquery/jquery-2.0.3.min.js" />"></script>
+	<script src="<c:url value="/resources/js/bootstrap/bootstrap.min.js" />"></script>
+	<style>
+	.custab{
+    border: 1px solid #ccc;
+    padding: 5px;
+    margin: 5% 0;
+    box-shadow: 3px 3px 2px #ccc;
+    transition: 0.5s;
+    }
+.custab:hover{
+    box-shadow: 3px 3px 0px transparent;
+    transition: 0.5s;
+    }
+.table{
+	width: 30%;
+	}
+.row{
+	margin-left: 10%;
+}
+	</style>
+	
+	  <SCRIPT language="javascript">
+        var siprosa=0;
+		
+        
+        function addRow(tableID) {
+        	var index = document.getElementById('tb_paciente_obrasocial').getElementsByTagName('tr').length;
+        	index ++;	
+            var table = document.getElementById(tableID);
+ 
+            var rowCount = table.rows.length;
+            var row = table.insertRow(rowCount);
+ 
+            var cell1 = row.insertCell(0);
+            var element1 = document.createElement("input");
+            element1.type = "checkbox";
+            element1.name="chkbox[]";
+            cell1.appendChild(element1);
+ 
+            var cell2 = row.insertCell(1);                      
+            cell2.innerHTML = document.getElementById("obrasocial.nombre").value+"<input type='hidden' name='obrasocialListEdit["+index+"].obrasocialId' value='"+document.getElementById("obrasocial.nombre").value+"'>";
+            var cell3 = row.insertCell(2);
+            cell3.innerHTML = document.getElementById('obrasocial.nombre').options[document.getElementById('obrasocial.nombre').selectedIndex].text; 
+ 
+            var cell3 = row.insertCell(3);
+            var element2 = document.createElement("input");
+            element2.type = "text";
+            element2.name="obrasocialListEdit["+index+"].credencial";
+            cell3.appendChild(element2);
+
+            var cell4 = row.insertCell(4);
+            var element3 = document.createElement("input");
+            element3.type = "checkbox";
+            element3.name="obrasocialListEdit["+index+"].original";
+            cell4.appendChild(element3);
+
+            index ++;
+ 
+         }
+ 
+        function deleteRow(tableID) {
+            try {
+            var table = document.getElementById(tableID);
+            var rowCount = table.rows.length;
+ 
+            for(var i=0; i<rowCount; i++) {
+                var row = table.rows[i];
+                var chkbox = row.cells[0].childNodes[0];
+                if(null != chkbox && true == chkbox.checked) {
+                    table.deleteRow(i);
+                    rowCount--;
+                    i--;
+                }
+ 
+ 
+            }
+            }catch(e) {
+                alert(e);
+            }
+        }
+
+        </SCRIPT>
 </head>
 <body>
 <jsp:include page="../sec_menu.jsp"></jsp:include>
-<h3>Editar Paciente</h3>
+
+
 <form:form method="post" action="/nuova/editPaciente" commandName="paciente">
- 
-    <table>
+ 	<div class="row col-md-6 col-md-offset-2 custyle">
+    <table class="table table-striped custab">
     <tr>
-        <td><form:label path="nombre">nombre:</form:label></td>
+    <td colspan="6"><h4>Editar Paciente</h4></td>
+    </tr>
+    <tr>
+    	<td>
+    	<form:hidden path="pacienteId"/>
+    	<form:label path="dni">DNI:</form:label>
+    	</td>
+        <td><form:input path="dni" /></td>
+        <td><form:label path="apellido">Apellido:</form:label></td>
+        <td><form:input path="apellido" /></td>
+        <td><form:label path="nombre">Nombre:</form:label></td>
         <td><form:input path="nombre" /></td>
     </tr>
-    <tr>
-        <td></td>
-        <td><form:hidden path="pacienteId" /></td>
+   	<tr>
+        <td><form:label path="fechaNacimiento">Fecha de Nacimiento:</form:label></td>
+        <td><form:input path="fechaNacimiento" /></td>
+             <td><form:label path="telefono">Telefono:</form:label></td>
+        <td><form:input path="telefono" /></td>
+        <td><form:label path="mail">E-Mail:</form:label></td>
+        <td><form:input path="mail" /></td>
     </tr>
-   
+    <tr>
+    	
+    	<td><form:label path="provincia">Provincia:</form:label></td>
+    	<td>
+    	<form:select path="provincia" style="width:100%; margin-bottom:0px">
+			<form:option value="NONE" label="Seleccione Provincia ..."/>
+			<form:options items="${provinciaList}"  />			    
+		</form:select>
+		</td>
+        <td><form:label path="domicilio">Domicilio:</form:label></td>
+        <td colspan=""><form:textarea path="domicilio" cssStyle="width:100%"/></td>
+        <td><form:label path="liberado">Liberado:</form:label></td>
+        <td><form:input path="liberado" /></td>
+    </tr>
+    
+    <tr>
+         <td colspan="6"><h5>Obra Social</h5></td>         
+    </tr>
+    <tr>
+        <td colspan="6">
+           <div>   
+
+			<div class="inputProf">
+			<form:select path="obrasocial.nombre" style="width:70%; margin-bottom:0px">
+				   <form:option value="NONE" label="Seleccione Obra Social ..."/>
+				   <form:options items="${obrasocialList}" itemLabel="nombre" itemValue="obrasocialId" />			    
+				</form:select>
+				<INPUT type="button" value="Agregar" onclick="addRow('tb_paciente_obrasocial')" class="btn btn-primary"/>
+					    	<INPUT type="button" value="Eliminar" onclick="deleteRow('tb_paciente_obrasocial')" class="btn"/>
+				
+			</div>	
+			</div>
+    <div>  
+    
+	    <TABLE id="tb_paciente_obrasocial" class="table table-striped custab" style="width: 100%; margin: 2% 0">
+	        <TR>
+	        	<TD></TD>
+	            <TD>Id</TD>
+	            <TD>Obra Social</TD>        
+	            <TD>Nro Credencial</TD>
+	            <TD>Original/Provisoria</TD>
+	        </TR>
+	        
+	        <% int index = 0;%>
+	        <c:forEach items="${paciente.obrasocialList}" var="po" varStatus="loop" >
+	    	<tr>
+		    	<td><input type="checkbox" name = "chkbox[]" /></td>
+		        <td>${po.obrasocialId}<input type="hidden" name = "obrasocialListEdit[<%=index%>].obrasocialId" value = "${po.obrasocialId}" /> </td>
+		        <td>${po.nombre}</td>        
+		        <td><input type="text" value="${po.credencial}" name = "obrasocialListEdit[<%=index%>].credencial"></td>
+		        <td> <input type="checkbox" name="obrasocialListEdit[<%=index%>].original" ${po.original} /></td>
+		        <%index++;%>
+	    	</tr>
+	</c:forEach>
+	    </TABLE>
+	   	
+ 	</div>
+        
+        </td>
+    </tr>
+      <tr>
+         <td colspan="6"><h5>Adherentes</h5></td>         
+    </tr>
+    <tr>
+	    <td colspan="6">
+	    <div style="text-align: right;">
+	    <INPUT type="button" value="Add Row" onclick="addRowAdherente('dataTableAdherente')" class="btn btn-primary"/>
+		<INPUT type="button" value="Delete Row" onclick="deleteRowAdherente('dataTableAdherente')" class="btn"/>
+		</div>
+	     <TABLE id="dataTableAdherente" class="table table-striped custab" style="width: 100%; margin: 2% 0">
+	        <TR>
+	        	<TD></TD>
+	            <TD>Id</TD>
+	            <TD>DNI</TD>
+	            <TD>Apellido</TD>        
+	            <TD>Nombre</TD>
+	            <TD>Credencial</TD>
+	        </TR>
+	    </TABLE> 
+	    </td>
+    </tr>
+    
     <tr>
         <td>
-            <input type="submit" value="Guardar"/>
+            <input class="btn btn-lg btn-primary btn-block btn-signin" type="submit" value="Guardar"/>
         </td>
         <td>
-            <input type="button" value="Cancelar" onclick="location.href='/nuova/mainPaciente';"/>
+            <input type="button" value="Cancelar" onclick="location.href='/nuova/mainPaciente';" class="btn"/>
+        </td>
+        <td colspan="4">
         </td>
     </tr>
-</table> 
+	</table>
+	</div> 
 </form:form>
  
 

@@ -44,4 +44,9 @@ public class PacienteManagerImpl implements PacienteManager {
         pacienteDAO.deleteAdherente(pacienteId);
     }
 
+    @Transactional
+    public void deletePacienteObrasocial(Integer pacienteId) {
+        pacienteDAO.deletePacienteObrasocial(pacienteId);
+    }
+
 }

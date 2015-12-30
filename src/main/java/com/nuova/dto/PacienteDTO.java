@@ -18,7 +18,8 @@ public class PacienteDTO {
     private String mail;
     private Byte liberado;
     private ObraSocialDTO obrasocial;
-    private List<ObraSocialDTO> obrasocialList;
+    private List<ObraSocialDTO> obrasocialList = new ArrayList<ObraSocialDTO>();
+    private List<ObraSocialDTO> obrasocialListEdit = new ArrayList<ObraSocialDTO>();
     private String provincia;
     private List<String> provinciaList;
 
@@ -143,6 +144,14 @@ public class PacienteDTO {
 
     public void setProvinciaList(List<String> provinciaList) {
         this.provinciaList = provinciaList;
+    }
+
+    public List<ObraSocialDTO> getObrasocialListEdit() {
+        return obrasocialListEdit;
+    }
+
+    public void setObrasocialListEdit(List<ObraSocialDTO> obrasocialListEdit) {
+        this.obrasocialListEdit = obrasocialListEdit;
     }
 
 }

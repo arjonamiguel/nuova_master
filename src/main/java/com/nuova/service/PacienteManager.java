@@ -17,4 +17,6 @@ public interface PacienteManager {
 
     public void deleteAdherente(Integer pacienteId);
 
+    public void deletePacienteObrasocial(Integer pacienteId);
+
 }
