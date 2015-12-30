@@ -44,9 +44,9 @@ CREATE TABLE IF NOT EXISTS `obrasocial` (
   `nombre` varchar(256) COLLATE utf8_bin DEFAULT NULL,
   PRIMARY KEY (`obrasocial_id`),
   KEY `obrasocialId` (`obrasocial_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
--- Volcando datos para la tabla nuova.obrasocial: ~0 rows (aproximadamente)
+-- Volcando datos para la tabla nuova.obrasocial: ~4 rows (aproximadamente)
 DELETE FROM `obrasocial`;
 /*!40000 ALTER TABLE `obrasocial` DISABLE KEYS */;
 INSERT INTO `obrasocial` (`obrasocial_id`, `nombre`) VALUES
@@ -61,25 +61,29 @@ INSERT INTO `obrasocial` (`obrasocial_id`, `nombre`) VALUES
 CREATE TABLE IF NOT EXISTS `paciente` (
   `paciente_id` int(11) NOT NULL AUTO_INCREMENT,
   `apellido` varchar(256) COLLATE utf8_bin DEFAULT '0',
-  `nombe` varchar(256) COLLATE utf8_bin DEFAULT '0',
+  `nombre` varchar(256) COLLATE utf8_bin DEFAULT '0',
   `fecha_nacimiento` date DEFAULT '0000-00-00',
   `domicilio` varchar(512) COLLATE utf8_bin DEFAULT '0',
   `telefono` varchar(56) COLLATE utf8_bin DEFAULT '0',
   `mail` varchar(128) COLLATE utf8_bin DEFAULT '0',
   `liberado` tinyint(4) DEFAULT '0',
   `adherente_id` int(11) DEFAULT NULL,
+  `dni` int(11) DEFAULT NULL,
+  `provincia` varchar(156) COLLATE utf8_bin DEFAULT NULL,
   PRIMARY KEY (`paciente_id`),
   KEY `pacienteId` (`paciente_id`),
   KEY `FK_paciente_paciente` (`adherente_id`),
   CONSTRAINT `FK_paciente_paciente` FOREIGN KEY (`adherente_id`) REFERENCES `paciente` (`paciente_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
--- Volcando datos para la tabla nuova.paciente: ~0 rows (aproximadamente)
+-- Volcando datos para la tabla nuova.paciente: ~6 rows (aproximadamente)
 DELETE FROM `paciente`;
 /*!40000 ALTER TABLE `paciente` DISABLE KEYS */;
-INSERT INTO `paciente` (`paciente_id`, `apellido`, `nombe`, `fecha_nacimiento`, `domicilio`, `telefono`, `mail`, `liberado`, `adherente_id`) VALUES
-	(1, 'LOPEZ', 'JUAN RAMON', '0000-00-00', 'AS ASD AD ', '221321', 'ASDASD@SAD.COM', 0, NULL),
-	(2, 'LOPEZ', 'NENE', '0000-00-00', 'ASDA ADA', '2333', 'ASDADA@ASDA.COM', 0, 1);
+INSERT INTO `paciente` (`paciente_id`, `apellido`, `nombre`, `fecha_nacimiento`, `domicilio`, `telefono`, `mail`, `liberado`, `adherente_id`, `dni`, `provincia`) VALUES
+	(7, 'ARJONA', 'MIGUEL ANGEL', '1982-11-10', 'Barrio Malvinas', '0381155867919', 'arjonamiguel@gmail.com', 0, NULL, 29878065, 'Tucumán'),
+	(8, 'VALDEZ', 'GUSTAVO FEDERICO', '1920-01-01', 'Pje. Hola ', '0381155897889', 'gvaldez@gmail.com', 0, NULL, 25666555, 'Córdoba'),
+	(9, 'test', 'test name', '2015-01-01', 'asdasd', '54564654', 'asdasdad@asdad.com', 0, NULL, 30554445, 'Buenos Aires'),
+	(10, 'test 2', 'test name 2', '2015-01-01', 'asdasdasd', '565465464', 'asdasdad@asdad.com', 0, NULL, 654654646, 'Catamarca');
 /*!40000 ALTER TABLE `paciente` ENABLE KEYS */;
 
 
@@ -97,13 +101,15 @@ CREATE TABLE IF NOT EXISTS `paciente_obrasocial` (
   KEY `FK_paciente_obrasocial_paciente` (`paciente_id`),
   CONSTRAINT `FK_paciente_obrasocial_obrasocial` FOREIGN KEY (`obrasocial_id`) REFERENCES `obrasocial` (`obrasocial_id`),
   CONSTRAINT `FK_paciente_obrasocial_paciente` FOREIGN KEY (`paciente_id`) REFERENCES `paciente` (`paciente_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
--- Volcando datos para la tabla nuova.paciente_obrasocial: ~0 rows (aproximadamente)
+-- Volcando datos para la tabla nuova.paciente_obrasocial: ~1 rows (aproximadamente)
 DELETE FROM `paciente_obrasocial`;
 /*!40000 ALTER TABLE `paciente_obrasocial` DISABLE KEYS */;
 INSERT INTO `paciente_obrasocial` (`paciente_obrasocial_id`, `nro_credencial`, `provisorio`, `obrasocial_id`, `paciente_id`, `fecha`) VALUES
-	(1, '231123 213 21', 0, 1, 1, '0000-00-00');
+	(13, '', 0, 1, 8, '2015-12-30'),
+	(16, '33333', 1, 4, 9, '2015-12-30'),
+	(17, '565465465464', 1, 3, 10, '2015-12-30');
 /*!40000 ALTER TABLE `paciente_obrasocial` ENABLE KEYS */;
 
 
@@ -122,7 +128,7 @@ CREATE TABLE IF NOT EXISTS `profesional` (
   KEY `id` (`profesional_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
--- Volcando datos para la tabla nuova.profesional: ~1 rows (aproximadamente)
+-- Volcando datos para la tabla nuova.profesional: ~5 rows (aproximadamente)
 DELETE FROM `profesional`;
 /*!40000 ALTER TABLE `profesional` DISABLE KEYS */;
 INSERT INTO `profesional` (`profesional_id`, `apellido`, `nombre`, `telefono`, `matricula`, `registro_nacional`, `titulo_profesional`, `habilitacion_siprosa`, `fecha_vencimiento_habilitacion`) VALUES
@@ -146,7 +152,7 @@ CREATE TABLE IF NOT EXISTS `profesional_especialidad` (
   CONSTRAINT `FK_profesionales_especialidades_profesionales` FOREIGN KEY (`profesional_id`) REFERENCES `profesional` (`profesional_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=31 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
--- Volcando datos para la tabla nuova.profesional_especialidad: ~2 rows (aproximadamente)
+-- Volcando datos para la tabla nuova.profesional_especialidad: ~6 rows (aproximadamente)
 DELETE FROM `profesional_especialidad`;
 /*!40000 ALTER TABLE `profesional_especialidad` DISABLE KEYS */;
 INSERT INTO `profesional_especialidad` (`id`, `profesional_id`, `especialidad_id`) VALUES
