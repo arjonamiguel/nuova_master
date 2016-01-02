@@ -70,20 +70,26 @@ CREATE TABLE IF NOT EXISTS `paciente` (
   `adherente_id` int(11) DEFAULT NULL,
   `dni` int(11) DEFAULT NULL,
   `provincia` varchar(156) COLLATE utf8_bin DEFAULT NULL,
+  `titular` tinyint(4) DEFAULT NULL,
   PRIMARY KEY (`paciente_id`),
   KEY `pacienteId` (`paciente_id`),
   KEY `FK_paciente_paciente` (`adherente_id`),
   CONSTRAINT `FK_paciente_paciente` FOREIGN KEY (`adherente_id`) REFERENCES `paciente` (`paciente_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+) ENGINE=InnoDB AUTO_INCREMENT=34 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
--- Volcando datos para la tabla nuova.paciente: ~6 rows (aproximadamente)
+-- Volcando datos para la tabla nuova.paciente: ~9 rows (aproximadamente)
 DELETE FROM `paciente`;
 /*!40000 ALTER TABLE `paciente` DISABLE KEYS */;
-INSERT INTO `paciente` (`paciente_id`, `apellido`, `nombre`, `fecha_nacimiento`, `domicilio`, `telefono`, `mail`, `liberado`, `adherente_id`, `dni`, `provincia`) VALUES
-	(7, 'ARJONA', 'MIGUEL ANGEL', '1982-11-10', 'Barrio Malvinas', '0381155867919', 'arjonamiguel@gmail.com', 0, NULL, 29878065, 'Tucumán'),
-	(8, 'VALDEZ', 'GUSTAVO FEDERICO', '1920-01-01', 'Pje. Hola ', '0381155897889', 'gvaldez@gmail.com', 0, NULL, 25666555, 'Córdoba'),
-	(9, 'test', 'test name', '2015-01-01', 'asdasd', '54564654', 'asdasdad@asdad.com', 0, NULL, 30554445, 'Buenos Aires'),
-	(10, 'test 2', 'test name 2', '2015-01-01', 'asdasdasd', '565465464', 'asdasdad@asdad.com', 0, NULL, 654654646, 'Catamarca');
+INSERT INTO `paciente` (`paciente_id`, `apellido`, `nombre`, `fecha_nacimiento`, `domicilio`, `telefono`, `mail`, `liberado`, `adherente_id`, `dni`, `provincia`, `titular`) VALUES
+	(8, 'VALDEZ', 'GUSTAVO FEDERICO', '1920-01-01', 'Pje. Hola ', '0381155897889', 'gvaldez@gmail.com', 0, NULL, 25666555, 'Córdoba', 1),
+	(14, 'Valdez', 'Gustavito Hijo', '2015-01-01', 'Pje. Hola ', '0381155897889', 'gvaldez@gmail.com', 0, 8, 5555555, 'Córdoba', 0),
+	(15, 'Valdez', 'Gustavito Hijo 2', '2015-01-01', 'Pje. Hola ', '0381155897889', 'gvaldez@gmail.com', 0, 8, 2322434, 'Córdoba', 0),
+	(16, 'Valdez', 'Gustavito Hijo 3', '2015-01-01', 'Pje. Hola ', '0381155897889', 'gvaldez@gmail.com', 0, 8, 23424234, 'Córdoba', 0),
+	(17, 'Valdez', 'Gustavito Hijo 4', '2015-01-01', 'Pje. Hola ', '0381155897889', 'gvaldez@gmail.com', 0, 8, 2312131, 'Córdoba', 0),
+	(25, 'ARJONA', 'MIGUEL', '1920-01-01', 'SDASDASDASDA', '564646464', 'asdasdad@asdad.com', 0, NULL, 29878065, 'Tucumán', 1),
+	(31, 'ARJONA', 'MIGUELITO JR', '2015-01-01', 'SDASDASDASDA', '564646464', 'asdasdad@asdad.com', 0, 25, 23123134, 'Tucumán', 0),
+	(32, 'test', 'asdadha', '2015-01-01', 'asdada', '6546546', 'asdasdad@asdad.com', 0, NULL, 9989898, 'Buenos Aires', 0),
+	(33, 'qwe', 'wqwewe', '2016-01-02', 'weqweqew', '223333333', '', 0, NULL, NULL, 'NONE', 1);
 /*!40000 ALTER TABLE `paciente` ENABLE KEYS */;
 
 
@@ -101,15 +107,20 @@ CREATE TABLE IF NOT EXISTS `paciente_obrasocial` (
   KEY `FK_paciente_obrasocial_paciente` (`paciente_id`),
   CONSTRAINT `FK_paciente_obrasocial_obrasocial` FOREIGN KEY (`obrasocial_id`) REFERENCES `obrasocial` (`obrasocial_id`),
   CONSTRAINT `FK_paciente_obrasocial_paciente` FOREIGN KEY (`paciente_id`) REFERENCES `paciente` (`paciente_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+) ENGINE=InnoDB AUTO_INCREMENT=47 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
--- Volcando datos para la tabla nuova.paciente_obrasocial: ~1 rows (aproximadamente)
+-- Volcando datos para la tabla nuova.paciente_obrasocial: ~8 rows (aproximadamente)
 DELETE FROM `paciente_obrasocial`;
 /*!40000 ALTER TABLE `paciente_obrasocial` DISABLE KEYS */;
 INSERT INTO `paciente_obrasocial` (`paciente_obrasocial_id`, `nro_credencial`, `provisorio`, `obrasocial_id`, `paciente_id`, `fecha`) VALUES
-	(13, '', 0, 1, 8, '2015-12-30'),
-	(16, '33333', 1, 4, 9, '2015-12-30'),
-	(17, '565465465464', 1, 3, 10, '2015-12-30');
+	(22, '888888888888', 1, 1, 14, '2016-01-01'),
+	(23, '32424242', 1, 1, 15, '2016-01-01'),
+	(24, '6546546456464', 1, 1, 16, '2016-01-01'),
+	(25, '6465465464', 1, 1, 17, '2016-01-01'),
+	(35, '65465465465465464', 1, 2, 25, '2016-01-02'),
+	(41, '6666666666666666', 1, 2, 31, '2016-01-02'),
+	(42, '654654564654', 1, 3, 32, '2016-01-02'),
+	(46, '6546465464', 1, 1, 8, '2016-01-02');
 /*!40000 ALTER TABLE `paciente_obrasocial` ENABLE KEYS */;
 
 

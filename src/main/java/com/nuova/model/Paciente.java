@@ -42,6 +42,7 @@ public class Paciente implements java.io.Serializable {
     private List<PacienteObrasocial> pacienteObrasocials = new ArrayList<PacienteObrasocial>();
     private Set<Paciente> pacientes = new HashSet<Paciente>();
     private String provincia;
+    private Byte titular;
 
     public Paciente() {
     }
@@ -73,7 +74,7 @@ public class Paciente implements java.io.Serializable {
         this.pacienteId = pacienteId;
     }
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "adherente_id")
     public Paciente getPaciente() {
         return this.paciente;
@@ -181,5 +182,14 @@ public class Paciente implements java.io.Serializable {
 
     public void setProvincia(String provincia) {
         this.provincia = provincia;
+    }
+
+    @Column(name = "titular")
+    public Byte getTitular() {
+        return this.titular;
+    }
+
+    public void setTitular(Byte titular) {
+        this.titular = titular;
     }
 }

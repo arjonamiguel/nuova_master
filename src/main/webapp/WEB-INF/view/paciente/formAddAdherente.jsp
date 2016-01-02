@@ -97,20 +97,16 @@
 <jsp:include page="../sec_menu.jsp"></jsp:include>
 
 
-<form:form method="post" action="/nuova/editPaciente" commandName="paciente">
+<form:form method="post" action="/nuova/addAdherente" commandName="paciente">
  	<div class="row col-md-6 col-md-offset-2 custyle">
     <table class="table table-striped custab">
     <tr>
-    <td colspan="6">
-    	<h4>Editar Paciente</h4>
-    	<c:if test="${!isTitular}">
-    	<h4>Titular: <a href="/nuova/formEditPaciente/${paciente.pacienteTitular.pacienteId}">${paciente.pacienteTitular.apellido}, ${paciente.pacienteTitular.nombre}</a></h4>
-    	</c:if>
-    </td>
+    <td colspan="6"><h4>Nuevo Adherente</h4><h4>Titular: ${datosTitular}</h4></td>
     </tr>
     <tr>
     	<td>
     	<form:hidden path="pacienteId"/>
+    	<form:hidden path="titularId"/>
     	<form:label path="dni">DNI:</form:label>
     	</td>
         <td><form:input path="dni" /></td>
@@ -139,39 +135,18 @@
         <td><form:label path="domicilio">Domicilio:</form:label></td>
         <td colspan=""><form:textarea path="domicilio" cssStyle="width:100%"/></td>
         <td><form:label path="liberado">Liberado:</form:label></td>
-        <td><input type="checkbox" name="liberado"  ${paciente.checkedLiberado} /></td>
+        <td><form:input path="liberado" /></td>
     </tr>
-    <tr>
-    	<td colspan="4"></td>	
-	    	<td>
-	    	 	<form:label path="titular">Titular</form:label>
-	    	</td>
-	    	<td>
-	    		<input type="checkbox" name="titular"  ${paciente.checkedTitular} />
-	    	</td>        	
-    	</tr>    
+     
     <tr>
          <td colspan="6"><h5>Obra Social</h5></td>         
     </tr>
     <tr>
         <td colspan="6">
-           <div>   
-
-			<div class="inputProf">
-			<form:select path="obrasocial.nombre" style="width:70%; margin-bottom:0px">
-				   <form:option value="NONE" label="Seleccione Obra Social ..."/>
-				   <form:options items="${obrasocialList}" itemLabel="nombre" itemValue="obrasocialId" />			    
-				</form:select>
-				<INPUT type="button" value="Agregar" onclick="addRow('tb_paciente_obrasocial')" class="btn btn-success"/>
-					    	<INPUT type="button" value="Eliminar" onclick="deleteRow('tb_paciente_obrasocial')" class="btn"/>
-				
-			</div>	
-			</div>
-    <div>  
     
-	    <TABLE id="tb_paciente_obrasocial" class="table table-striped custab" style="width: 100%; margin: 2% 0">
+	    <TABLE id="tb_paciente_obrasocial" class="table table-striped custab" style="width: 100%; margin: 1% 0">
 	        <TR>
-	        	<TD></TD>
+	        	
 	            <TD>Id</TD>
 	            <TD>Obra Social</TD>        
 	            <TD>Nro Credencial</TD>
@@ -181,7 +156,7 @@
 	        <% int index = 0;%>
 	        <c:forEach items="${paciente.obrasocialList}" var="po" varStatus="loop" >
 	    	<tr>
-		    	<td><input type="checkbox" name = "chkbox[]" /></td>
+		    	
 		        <td>${po.obrasocialId}<input type="hidden" name = "obrasocialListEdit[<%=index%>].obrasocialId" value = "${po.obrasocialId}" /> </td>
 		        <td>${po.nombre}</td>        
 		        <td><input type="text" value="${po.credencial}" name = "obrasocialListEdit[<%=index%>].credencial"></td>
@@ -195,54 +170,13 @@
         
         </td>
     </tr>
-    
-     <c:if test="${isTitular}">
-	    <tr>
-	         <td colspan="6"><h5>Adherentes</h5></td>         
-	    </tr>
-	    <tr>
-		    <td colspan="6">
-		    <div style="text-align: right;">
-		    <INPUT type="button" value="Nuevo Adherente" onclick="nuevoAdherente()" class="btn btn-success"/>
-			</div>
-		     <TABLE id="dataTableAdherente" class="table table-striped custab" style="width: 100%; margin: 1% 0">
-		        <TR>
-		        	
-		            <TD>ID</TD>
-		            <TD>DNI</TD>
-		            <TD>Apellido</TD>        
-		            <TD>Nombre</TD>
-		            <TD>Credencial</TD>
-		            <TD></TD>
-		        </TR>
-		         <% int index2 = 0;%>
-		        <c:forEach items="${paciente.adherentes}" var="adh" varStatus="loop" >
-		    	<tr>
-			    	
-			        <td>${adh.pacienteId}<input type="hidden" name = "adherentesEditList[<%=index2%>].pacienteId" value = "${adh.pacienteId}" /> </td>
-			        <td>${adh.dni}</td>        
-			        <td>${adh.apellido}</td>
-			        <td>${adh.nombre}</td>
-			        <td>${adh.crdencial}</td>
-			        <td>
-			        	<a class="btn btn-info btn-xs" href="/nuova/formEditPaciente/${adh.pacienteId}" title="Editar Adherente">
-			        	<span class="icon icon-edit" title="Editar Adherente"></span></a>		        
-			    		<a class="btn btn-danger btn-xs" href="/nuova/formDeletePaciente/${adh.pacienteId}" title="Eliminar Adherente">
-			    		<span class="icon icon-remove" title="Eliminar Adherente"></span></a>
-			    	</td>
-			        <%index2++;%>
-		    	</tr>
-				</c:forEach>
-		    </TABLE> 
-		    </td>
-	    </tr>
-</c:if>
+  
     <tr>
         <td>
             <input class="btn btn-lg btn-primary btn-block btn-signin" type="submit" value="Guardar"/>
         </td>
         <td>
-            <input type="button" value="Cancelar" onclick="location.href='/nuova/mainPaciente';" class="btn"/>
+            <input type="button" value="Cancelar" onclick="location.href = document.referrer; return false;" class="btn"/>
         </td>
         <td colspan="4">
         </td>

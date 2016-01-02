@@ -8,6 +8,7 @@ import com.nuova.model.Paciente;
 public class PacienteDTO {
 
     private Integer pacienteId;
+    private Integer titularId;
     private Integer dni;
     private Paciente paciente;
     private String apellido;
@@ -16,15 +17,23 @@ public class PacienteDTO {
     private String domicilio;
     private String telefono;
     private String mail;
-    private Byte liberado;
+
     private ObraSocialDTO obrasocial;
     private List<ObraSocialDTO> obrasocialList = new ArrayList<ObraSocialDTO>();
     private List<ObraSocialDTO> obrasocialListEdit = new ArrayList<ObraSocialDTO>();
     private String provincia;
     private List<String> provinciaList;
+    private List<PacienteDTO> adherentes = new ArrayList<PacienteDTO>();
+    private List<PacienteDTO> adherentesEditList = new ArrayList<PacienteDTO>();
+    private String crdencial;
+    private boolean titular = false;
+    private String checkedTitular;
+    private PacienteDTO pacienteTitular;
+
+    private boolean liberado = false;
+    private String checkedLiberado;
 
     // private List<PacienteObrasocial> pacienteObrasocials = new ArrayList<PacienteObrasocial>(0);
-    private List<PacienteDTO> pacientes = new ArrayList<PacienteDTO>(0);
 
     public Integer getPacienteId() {
         return pacienteId;
@@ -90,20 +99,12 @@ public class PacienteDTO {
         this.mail = mail;
     }
 
-    public Byte getLiberado() {
+    public boolean getLiberado() {
         return liberado;
     }
 
-    public void setLiberado(Byte liberado) {
+    public void setLiberado(boolean liberado) {
         this.liberado = liberado;
-    }
-
-    public List<PacienteDTO> getPacientes() {
-        return pacientes;
-    }
-
-    public void setPacientes(List<PacienteDTO> pacientes) {
-        this.pacientes = pacientes;
     }
 
     public Integer getDni() {
@@ -152,6 +153,70 @@ public class PacienteDTO {
 
     public void setObrasocialListEdit(List<ObraSocialDTO> obrasocialListEdit) {
         this.obrasocialListEdit = obrasocialListEdit;
+    }
+
+    public Integer getTitularId() {
+        return titularId;
+    }
+
+    public void setTitularId(Integer titularId) {
+        this.titularId = titularId;
+    }
+
+    public List<PacienteDTO> getAdherentes() {
+        return adherentes;
+    }
+
+    public void setAdherentes(List<PacienteDTO> adherentes) {
+        this.adherentes = adherentes;
+    }
+
+    public List<PacienteDTO> getAdherentesEditList() {
+        return adherentesEditList;
+    }
+
+    public void setAdherentesEditList(List<PacienteDTO> adherentesEditList) {
+        this.adherentesEditList = adherentesEditList;
+    }
+
+    public String getCrdencial() {
+        return crdencial;
+    }
+
+    public void setCrdencial(String crdencial) {
+        this.crdencial = crdencial;
+    }
+
+    public boolean isTitular() {
+        return titular;
+    }
+
+    public void setTitular(boolean titular) {
+        this.titular = titular;
+    }
+
+    public String getCheckedTitular() {
+        return checkedTitular;
+    }
+
+    public void setCheckedTitular(String checkedTitular) {
+        this.checkedTitular = checkedTitular;
+    }
+
+    public PacienteDTO getPacienteTitular() {
+        return pacienteTitular;
+    }
+
+    public void setPacienteTitular(PacienteDTO pacienteTitular) {
+        this.pacienteTitular = pacienteTitular;
+    }
+
+    public String getCheckedLiberado() {
+        return checkedLiberado;
+    }
+
+    public void setCheckedLiberado(String checkedLiberado) {
+        this.checkedLiberado = checkedLiberado;
     }
 
 }

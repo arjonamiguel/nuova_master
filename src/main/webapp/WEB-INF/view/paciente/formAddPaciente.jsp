@@ -98,6 +98,7 @@
     	<tr>
     		<td colspan="6"><h4>Nuevo Paciente</h4></td>
     	</tr>
+    	
 	    <tr>
 	    	<td><form:label path="dni">DNI:</form:label></td>
 	        <td><form:input path="dni" /></td>
@@ -126,7 +127,17 @@
 	        <td colspan=""><form:textarea path="domicilio" cssStyle="width:100%"/></td>
 	        <td><form:label path="liberado">Liberado:</form:label></td>
 	        <td><form:input path="liberado" /></td>
-	    </tr>	    
+	    </tr>	  
+ 		<tr>
+    		<td colspan="4"></td>	
+	    	<td>
+	    	 	<form:label path="titular">Titular</form:label>
+	    	</td>
+	    	<td>
+	    		<form:checkbox path="titular"/>
+	    	</td>
+        	
+    	</tr> 
 	    <tr>
 	         <td colspan="6"><h5>Obra Social</h5></td>         
 	    </tr>
@@ -138,7 +149,7 @@
 					   <form:option value="NONE" label="Seleccione Obra Social ..."/>
 					   <form:options items="${obrasocialList}" itemLabel="nombre" itemValue="obrasocialId" />			    
 					</form:select>
-					<INPUT type="button" value="Agregar" onclick="addRow('dataTable')" class="btn btn-primary"/>
+					<INPUT type="button" value="Agregar" onclick="addRow('dataTable')" class="btn btn-success"/>
 						    	<INPUT type="button" value="Eliminar" onclick="deleteRow('dataTable')" class="btn"/>
 					
 				</div>	
@@ -157,27 +168,6 @@
  			</div>        
         	</td>
     	</tr>
-      	<tr>
-        	<td colspan="6"><h5>Adherentes</h5></td>         
-    	</tr>
-    	<tr>
-	    	<td colspan="6">
-	    	<div style="text-align: right;">
-	    		<INPUT type="button" value="Add Row" onclick="addRowAdherente('dataTableAdherente')" class="btn btn-primary"/>
-				<INPUT type="button" value="Delete Row" onclick="deleteRowAdherente('dataTableAdherente')" class="btn"/>
-			</div>
-	     	<TABLE id="dataTableAdherente" class="table table-striped custab" style="width: 100%; margin: 2% 0">
-	        <TR>
-	        	<TD></TD>
-	            <TD>Id</TD>
-	            <TD>DNI</TD>
-	            <TD>Apellido</TD>        
-	            <TD>Nombre</TD>
-	            <TD>Credencial</TD>
-	        </TR>
-	    	</TABLE> 
-	    	</td>
-    	</tr>    
     	<tr>
 	        <td>
 	            <input class="btn btn-lg btn-primary btn-block btn-signin" type="submit" value="Guardar"/>

@@ -27,4 +27,9 @@ public class ConstantRedirect {
     public final static String VIEW_FORM_ADD_PACIENTE = "/paciente/formAddPaciente";
     public final static String VIEW_FORM_EDIT_PACIENTE = "/paciente/formEditPaciente";
     public final static String VIEW_FORM_DELETE_PACIENTE = "/paciente/formDeletePaciente";
+
+    // Adherente
+    public final static String VIEW_FORM_ADD_ADHERENTE = "/paciente/formAddAdherente";
+    public final static String VIEW_FORM_EDIT_ADHERENTE = "/paciente/formEditAdherente";
+
 }
