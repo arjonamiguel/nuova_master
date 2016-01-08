@@ -15,9 +15,20 @@
 	<script src="<%=request.getContextPath()%>/resources/js/jquery/bootstrap-collapse.js" />"></script>
 	<link href="<%=request.getContextPath()%>/resources/css/nuova.css" rel="stylesheet"/>
 	<style>
-.table{
-	width: 40%;
-	}
+
+	.custab{
+    border: 1px solid #ccc;
+    padding: 5px;
+    margin: 5% 0;
+    box-shadow: 3px 3px 2px #ccc;
+    transition: 0.5s;
+    }
+.custab:hover{
+    box-shadow: 3px 3px 0px transparent;
+    transition: 0.5s;
+    }
+
+
 	</style>
 </head>
 <body style="background-color:#eee;">
@@ -31,8 +42,8 @@
 	<a href="formAddPaciente" class="btn btn-info btn-xs pull-right">Nuevo Paciente</a>
 	</div> 
 	<c:if  test="${!empty pacienteList}">
-	<div style="padding-left:2%;">
-	<table class="table" style="background-color:white;width:100%;">
+	<div class="row col-md-6 col-md-offset-2 custyle">
+	<table class="table table-striped custab" style ="width: 90%; margin-left: 2%;" >
 	<tr>
 	    <th>Apellido</th>	    
 	    <th>Nombre</th>
@@ -53,6 +64,7 @@
 	        <td>
 	        <div style="float:right;">
 	        	<a class="btn btn-info btn-xs" href="formEditPaciente/${pa.pacienteId}"><span class="icon icon-edit"></span>editar</a>
+	        	<a class="btn btn-success btn-xs" href="formAddOrden/${pa.pacienteId}"><span class="icon icon-plus-sign"></span>Practica</a>
 	        	<a class="btn btn-danger btn-xs" href="formDeletePaciente/${pa.pacienteId}"><span class="icon icon-remove"></span>eliminar</a>
 	       	</td>
 	       	</div>

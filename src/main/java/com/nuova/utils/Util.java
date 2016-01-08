@@ -7,8 +7,11 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import com.nuova.dto.ComboItemDTO;
 import com.nuova.dto.ObraSocialDTO;
+import com.nuova.dto.OrdenDTO;
 import com.nuova.model.Obrasocial;
+import com.nuova.model.Paciente;
 
 public class Util {
 
@@ -50,13 +53,42 @@ public class Util {
     static public Date parseToDate(String date) {
         DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
         Date fechaHabilitacion = null;
-        try {
-            fechaHabilitacion = formatter.parse(date);
-        } catch (ParseException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
+        if (date != null) {
+            try {
+                fechaHabilitacion = formatter.parse(date);
+            } catch (ParseException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
         }
         return fechaHabilitacion;
+    }
+
+    static public List<ComboItemDTO> getComboItems(List<?> list) {
+        List<ComboItemDTO> retorno = new ArrayList<ComboItemDTO>();
+        for (Object obj : list) {
+            if (obj instanceof Paciente) {
+                Paciente paciente = (Paciente) obj;
+                retorno.add(new ComboItemDTO(paciente.getPacienteId(), paciente.getApellido() + " "
+                        + paciente.getNombre()));
+            }
+        }
+        return retorno;
+    }
+
+    static public Byte getByteFlag(boolean flag) {
+        return flag ? new Byte("1") : new Byte("0");
+    }
+
+    static public String getEstadoInicial(OrdenDTO dto) {
+        String retorno = "";
+        if (dto.isReqCredecial() && dto.isReqReciboSueldo() && (dto.isReqMonotributista() || dto.isReqReciboSueldo())) {
+            retorno = ConstantOrdenEstado.PENDIENTE;
+        } else {
+            retorno = ConstantOrdenEstado.INCOMPLETA;
+        }
+
+        return retorno;
     }
 
 }

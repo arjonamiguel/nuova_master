@@ -62,6 +62,8 @@ public class PacienteController {
             map.addAttribute("provinciaList", Util.getProvincias());
             map.addAttribute("obrasocialList", obrasocialManager.findAll());
             map.addAttribute("paciente", dto);
+            map.addAttribute("isTitular", dto.isTitular());
+
         }
         return ConstantRedirect.VIEW_FORM_DELETE_PACIENTE;
     }
@@ -92,6 +94,7 @@ public class PacienteController {
                 pacienteManager.deletePacienteObrasocial(po.getPaciente().getPacienteId());
             }
         }
+        paciente.setPaciente(pacienteOld.getPaciente());
         pacienteManager.edit(paciente);
         return "redirect:" + ConstantControllers.MAIN_PACIENTE;
     }
@@ -147,40 +150,7 @@ public class PacienteController {
 
     // -------------------------------------------------------
 
-    private Paciente transformDtoToPaciente(PacienteDTO dto) {
-        Paciente paciente = new Paciente();
-        paciente.setPacienteId(dto.getPacienteId());
-        paciente.setDni(dto.getDni());
-        paciente.setApellido(dto.getApellido());
-        paciente.setNombre(dto.getNombre());
-        paciente.setDomicilio(dto.getDomicilio());
-        paciente.setFechaNacimiento(Util.parseToDate(dto.getFechaNacimiento()));
-        paciente.setLiberado(dto.getLiberado() ? new Byte("1") : new Byte("0"));
-        paciente.setMail(dto.getMail());
-        paciente.setTelefono(dto.getTelefono());
-        paciente.setProvincia(dto.getProvincia());
-        paciente.setTitular(dto.isTitular() ? new Byte("1") : new Byte("0"));
-
-        for (ObraSocialDTO os : dto.getObrasocialListEdit()) {
-            if (os.getObrasocialId() != null) {
-                Obrasocial obrasocial = obrasocialManager.findObraSocialById(os.getObrasocialId());
-                PacienteObrasocial po = new PacienteObrasocial();
-                po.setObrasocial(obrasocial);
-                po.setFecha(new Date());
-                po.setNroCredencial(os.getCredencial());
-                Byte isOriginalCredential = os.getOriginal().equals("on") ? new Byte("1") : new Byte("0");
-                po.setProvisorio(isOriginalCredential);
-                po.setPaciente(paciente);
-
-                paciente.getPacienteObrasocials().add(po);
-            }
-        }
-
-        return paciente;
-
-    }
-
-    private PacienteDTO transformPacienteToDto(Paciente p) {
+    public PacienteDTO transformPacienteToDto(Paciente p) {
         PacienteDTO dto = new PacienteDTO();
         dto.setPacienteId(p.getPacienteId());
         dto.setDni(p.getDni());
@@ -193,7 +163,7 @@ public class PacienteController {
         dto.setMail(p.getMail());
         dto.setTelefono(p.getTelefono());
         dto.setProvincia(p.getProvincia());
-        if (p.getPaciente() != null) {
+        if (p.getPaciente() != null && p.getPaciente().getPacienteId() != null) {
             dto.setPacienteTitular(transformPacienteToDto(pacienteManager
                     .fin1dPacienteById(p.getPaciente().getPacienteId())));
         }
@@ -236,7 +206,7 @@ public class PacienteController {
         return dto;
     }
 
-    private List<PacienteDTO> transformPacientesToDtoList(List<Paciente> listPacientes) {
+    public List<PacienteDTO> transformPacientesToDtoList(List<Paciente> listPacientes) {
         List<PacienteDTO> retorno = new ArrayList<PacienteDTO>();
         for (Paciente p : listPacientes) {
             PacienteDTO dto = new PacienteDTO();
@@ -267,6 +237,39 @@ public class PacienteController {
         }
 
         return retorno;
+    }
+
+    public Paciente transformDtoToPaciente(PacienteDTO dto) {
+        Paciente paciente = new Paciente();
+        paciente.setPacienteId(dto.getPacienteId());
+        paciente.setDni(dto.getDni());
+        paciente.setApellido(dto.getApellido());
+        paciente.setNombre(dto.getNombre());
+        paciente.setDomicilio(dto.getDomicilio());
+        paciente.setFechaNacimiento(Util.parseToDate(dto.getFechaNacimiento()));
+        paciente.setLiberado(dto.getLiberado() ? new Byte("1") : new Byte("0"));
+        paciente.setMail(dto.getMail());
+        paciente.setTelefono(dto.getTelefono());
+        paciente.setProvincia(dto.getProvincia());
+        paciente.setTitular(dto.isTitular() ? new Byte("1") : new Byte("0"));
+
+        for (ObraSocialDTO os : dto.getObrasocialListEdit()) {
+            if (os.getObrasocialId() != null) {
+                Obrasocial obrasocial = obrasocialManager.findObraSocialById(os.getObrasocialId());
+                PacienteObrasocial po = new PacienteObrasocial();
+                po.setObrasocial(obrasocial);
+                po.setFecha(new Date());
+                po.setNroCredencial(os.getCredencial());
+                Byte isOriginalCredential = os.getOriginal().equals("on") ? new Byte("1") : new Byte("0");
+                po.setProvisorio(isOriginalCredential);
+                po.setPaciente(paciente);
+
+                paciente.getPacienteObrasocials().add(po);
+            }
+        }
+
+        return paciente;
+
     }
 
 }

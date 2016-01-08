@@ -17,6 +17,10 @@
 <SCRIPT language="javascript">
        var siprosa=0;
 	var index = 0;
+	function Eliminar (i) {
+	    //document.getElementsByTagName("table")[0].setAttribute("id","tableid");
+	    document.getElementById("dataTable").deleteRow(i);
+	}
        
        function addRow(tableID) {
 			
@@ -25,28 +29,27 @@
            var rowCount = table.rows.length;
            var row = table.insertRow(rowCount);
 
-           var cell1 = row.insertCell(0);
-           var element1 = document.createElement("input");
-           element1.type = "checkbox";
-           element1.name="chkbox[]";
-           cell1.appendChild(element1);
-
-           var cell2 = row.insertCell(1);                      
+           var cell2 = row.insertCell(0);                      
            cell2.innerHTML = document.getElementById("obrasocial").value+"<input type='hidden' name='obrasocialListEdit["+index+"].obrasocialId' value='"+document.getElementById("obrasocial").value+"'>";
-           var cell3 = row.insertCell(2);
+
+            var cell3 = row.insertCell(1);
            cell3.innerHTML = document.getElementById('obrasocial').options[document.getElementById('obrasocial').selectedIndex].text; 
 
-           var cell3 = row.insertCell(3);
+           var cell3 = row.insertCell(2);
            var element2 = document.createElement("input");
            element2.type = "text";
            element2.name="obrasocialListEdit["+index+"].credencial";
            cell3.appendChild(element2);
 
-           var cell4 = row.insertCell(4);
+           var cell4 = row.insertCell(3);
            var element3 = document.createElement("input");
            element3.type = "checkbox";
            element3.name="obrasocialListEdit["+index+"].original";
            cell4.appendChild(element3);
+
+           var cell1 = row.insertCell(4);
+           row.valign = "BASELINE";
+           cell1.innerHTML = "<button type='button' class='btn btn-link' onClick='Eliminar(this.parentNode.parentNode.rowIndex)'>eliminar</button>"
 
            index ++;
 
@@ -82,9 +85,9 @@
 <div class="mainContainer"> 
 <form:form method="post" action="addPaciente" commandName="paciente">
 	<div>
-    	<table class="table" style="background-color:white;border-color:#bce8f1;margin-top:0px;">
+	   	<table class="table" style="background-color:white;border-color:#bce8f1;margin-top:2%;margin-left:2%;;width:80%;">
     	<tr style="background-color:#d9edf7;color:#31708f;">
-    		<td colspan="6"><h5>Nuevo Paciente</h5></td>
+    		<td colspan="6"><h4>Nuevo Paciente</h4></td>
     	</tr>
     	
 	    <tr>
@@ -114,7 +117,7 @@
 	        <td><form:label path="domicilio">Domicilio:</form:label></td>
 	        <td colspan=""><form:textarea path="domicilio" cssStyle="width:75%"/></td>
 	        <td><form:label path="liberado">Liberado:</form:label></td>
-	        <td><form:input path="liberado" /></td>
+	        <td><form:checkbox path="liberado"/></td>
 	    </tr>	  
  		<tr>
     		<td colspan="4"></td>	
@@ -145,55 +148,31 @@
     		<div>		    
 			    <TABLE id="dataTable" class="table table-striped custab" style="width: 100%; margin: 2% 0">
 			        <TR>
-			        	<TD></TD>
-			            <TD>Id</TD>
+			        	
+			            <TD>ID</TD>
 			            <TD>Obra Social</TD>        
-			            <TD>Nro Credencial</TD>
-			            <TD>Original/Provisoria</TD>
+			            <TD style="width: 20%">Nro Credencial</TD>
+			            <TD style="width: 15%">Original/Provisoria</TD>
+			            <td></td>
 			        </TR>
 			    </TABLE>
 	   	
  			</div>    
- 			<div style="float:right;">
- 			<INPUT type="button" value="Eliminar" onclick="deleteRow('dataTable')" class="btn"/>
- 			</div>    
+ 			
         	</td>
     	</tr>
-      	<tr style="background-color:#d9edf7;color:#31708f;">
-        	<td colspan="6"><h5>Adherentes</h5></td>         
-    	</tr>
+      	    
     	<tr>
-	    	<td colspan="6">
-	    	<div style="text-align: right;">
-	    		<INPUT type="button" value="Add Row" onclick="addRowAdherente('dataTableAdherente')" class="btn btn-info"/>
-				<INPUT type="button" value="Delete Row" onclick="deleteRowAdherente('dataTableAdherente')" class="btn"/>
-			</div>
-	     	<TABLE id="dataTableAdherente" class="table table-striped custab" style="width: 100%; margin: 2% 0">
-	        <TR>
-	        	<TD></TD>
-	            <TD>Id</TD>
-	            <TD>DNI</TD>
-	            <TD>Apellido</TD>        
-	            <TD>Nombre</TD>
-	            <TD>Credencial</TD>
-	        </TR>
-	    	</TABLE> 
-	    	</td>
-    	</tr>    
-    	<tr>
-	        <td>
-	            
-	        </td>
-	        <td>
-	            
-	        </td>
-	        <td colspan="4">
-	        
-	        </td>
-    	</tr>
+        <td>
+            <input class="btn btn-info" type="submit" value="Guardar"/>     
+        </td>
+        <td>
+            <input type="button" value="Cancelar" onclick="location.href='/nuova/mainPaciente';" class="btn"/>
+        </td>
+        <td colspan="4">
+        </td>
+    </tr>
 	</table>
-	<div style="float:left;padding-right:1%;padding-left:85%;"><input class="btn btn-info" type="submit" value="Guardar"/></div>
-	        <div><input type="button" value="Cancelar" onclick="location.href='mainPaciente';" class="btn"/></div>
 	</div> 
 </form:form>
  

@@ -59,6 +59,12 @@
 		 <ul class="nav navbar-nav">
 
 		
+		<sec:authorize access="hasRole('ROLE_ADMIN')">
+		<li>
+		<a href="/nuova/mainOrden">Administracion de Practicas</a>
+		</li>
+		</sec:authorize>
+		
 		<li class="dropdown">
 		            <a href="#" class="dropdown-toggle" data-toggle="dropdown"><img style="height:7%;width:7%;" src="<c:url value="/resources/img/others/conf.ico"/>"><b class="caret"></b></a>
 		            <ul class="dropdown-menu">

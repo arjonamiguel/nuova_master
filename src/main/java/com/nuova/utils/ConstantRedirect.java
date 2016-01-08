@@ -32,4 +32,11 @@ public class ConstantRedirect {
     public final static String VIEW_FORM_ADD_ADHERENTE = "/paciente/formAddAdherente";
     public final static String VIEW_FORM_EDIT_ADHERENTE = "/paciente/formEditAdherente";
 
+    // Orden
+    public final static String VIEW_MAIN_ORDEN = "/orden/mainOrden";
+    public final static String VIEW_FORM_ADD_ORDEN = "/orden/formAddOrden";
+    public final static String VIEW_FORM_ADD_ORDEN_BY_PACIENTE = "/orden/formAddOrdenByPaciente";
+    public final static String VIEW_FORM_EDIT_ORDEN = "/orden/formEditOrden";
+    public final static String VIEW_FORM_DELETE_ORDEN = "/orden/formDeleteOrden";
+
 }
