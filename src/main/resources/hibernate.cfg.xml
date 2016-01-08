@@ -12,5 +12,8 @@
         <mapping class="com.nuova.model.Obrasocial" />
         <mapping class="com.nuova.model.Paciente" />
         <mapping class="com.nuova.model.PacienteObrasocial" />
+        <mapping class="com.nuova.model.Orden" />
+        <mapping class="com.nuova.model.OrdenWorkflow" />
+        <mapping class="com.nuova.model.Observaciones" />
     </session-factory>
 </hibernate-configuration>
