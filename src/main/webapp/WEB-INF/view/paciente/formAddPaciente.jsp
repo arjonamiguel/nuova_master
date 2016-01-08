@@ -1,31 +1,18 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>  
 <%@taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 <%@taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <html>
 <head>
-    <title>Nuova</title>
-    	<link href="<%=request.getContextPath()%>/resources/css/bootstrap/bootstrap.min.css" rel="stylesheet"/>
+	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+	<title>Nuova</title>
+	<link href="<%=request.getContextPath()%>/resources/css/bootstrap/bootstrap.min.css" rel="stylesheet"/>
+	<link href="<%=request.getContextPath()%>/resources/css/bootstrap/bootstrap-responsive.css" rel="stylesheet"/>
 	<script src="<c:url value="/resources/js/jquery/jquery-2.0.3.min.js" />"></script>
 	<script src="<c:url value="/resources/js/bootstrap/bootstrap.min.js" />"></script>
-	<style>
-	.custab{
-    border: 1px solid #ccc;
-    padding: 5px;
-    margin: 5% 0;
-    box-shadow: 3px 3px 2px #ccc;
-    transition: 0.5s;
-    }
-.custab:hover{
-    box-shadow: 3px 3px 0px transparent;
-    transition: 0.5s;
-    }
-.table{
-	width: 30%;
-	}
-.row{
-	margin-left: 10%;
-}
-	</style>
+	<script src="<%=request.getContextPath()%>/resources/js/jquery/bootstrap-collapse.js" />"></script>
+	<link href="<%=request.getContextPath()%>/resources/css/nuova.css" rel="stylesheet"/>
 	
 <SCRIPT language="javascript">
        var siprosa=0;
@@ -88,15 +75,16 @@
 
        </SCRIPT>
 </head>
-<body>
-
+<body style="background-color:#eee;">
 <jsp:include page="../sec_menu.jsp"></jsp:include>
+<jsp:include page="../breadcrumb.jsp"></jsp:include>
 
+<div class="mainContainer"> 
 <form:form method="post" action="addPaciente" commandName="paciente">
-	<div class="row col-md-6 col-md-offset-2 custyle">
-    	<table class="table table-striped custab">
-    	<tr>
-    		<td colspan="6"><h4>Nuevo Paciente</h4></td>
+	<div>
+    	<table class="table" style="background-color:white;border-color:#bce8f1;margin-top:0px;">
+    	<tr style="background-color:#d9edf7;color:#31708f;">
+    		<td colspan="6"><h5>Nuevo Paciente</h5></td>
     	</tr>
     	
 	    <tr>
@@ -118,13 +106,13 @@
 	    <tr>	    	
 	    	<td><form:label path="provincia">Provincia:</form:label></td>
 	    	<td>
-	    		<form:select path="provincia" style="width:100%; margin-bottom:0px">
+	    		<form:select path="provincia" style="width:80%; margin-bottom:0px">
 					<form:option value="NONE" label="Seleccione Provincia ..."/>
 					<form:options items="${provinciaList}"  />			    
 				</form:select>
 			</td>
 	        <td><form:label path="domicilio">Domicilio:</form:label></td>
-	        <td colspan=""><form:textarea path="domicilio" cssStyle="width:100%"/></td>
+	        <td colspan=""><form:textarea path="domicilio" cssStyle="width:75%"/></td>
 	        <td><form:label path="liberado">Liberado:</form:label></td>
 	        <td><form:input path="liberado" /></td>
 	    </tr>	  
@@ -137,8 +125,8 @@
 	    		<form:checkbox path="titular"/>
 	    	</td>
         	
-    	</tr> 
-	    <tr>
+    	</tr>     
+	    <tr style="background-color:#d9edf7;color:#31708f;">
 	         <td colspan="6"><h5>Obra Social</h5></td>         
 	    </tr>
     	<tr>
@@ -149,8 +137,8 @@
 					   <form:option value="NONE" label="Seleccione Obra Social ..."/>
 					   <form:options items="${obrasocialList}" itemLabel="nombre" itemValue="obrasocialId" />			    
 					</form:select>
-					<INPUT type="button" value="Agregar" onclick="addRow('dataTable')" class="btn btn-success"/>
-						    	<INPUT type="button" value="Eliminar" onclick="deleteRow('dataTable')" class="btn"/>
+					<INPUT type="button" value="Agregar" onclick="addRow('dataTable')" class="btn btn-info"/>
+						    	
 					
 				</div>	
 			</div>
@@ -165,22 +153,50 @@
 			        </TR>
 			    </TABLE>
 	   	
- 			</div>        
+ 			</div>    
+ 			<div style="float:right;">
+ 			<INPUT type="button" value="Eliminar" onclick="deleteRow('dataTable')" class="btn"/>
+ 			</div>    
         	</td>
     	</tr>
+      	<tr style="background-color:#d9edf7;color:#31708f;">
+        	<td colspan="6"><h5>Adherentes</h5></td>         
+    	</tr>
+    	<tr>
+	    	<td colspan="6">
+	    	<div style="text-align: right;">
+	    		<INPUT type="button" value="Add Row" onclick="addRowAdherente('dataTableAdherente')" class="btn btn-info"/>
+				<INPUT type="button" value="Delete Row" onclick="deleteRowAdherente('dataTableAdherente')" class="btn"/>
+			</div>
+	     	<TABLE id="dataTableAdherente" class="table table-striped custab" style="width: 100%; margin: 2% 0">
+	        <TR>
+	        	<TD></TD>
+	            <TD>Id</TD>
+	            <TD>DNI</TD>
+	            <TD>Apellido</TD>        
+	            <TD>Nombre</TD>
+	            <TD>Credencial</TD>
+	        </TR>
+	    	</TABLE> 
+	    	</td>
+    	</tr>    
     	<tr>
 	        <td>
-	            <input class="btn btn-lg btn-primary btn-block btn-signin" type="submit" value="Guardar"/>
+	            
 	        </td>
 	        <td>
-	            <input type="button" value="Cancelar" onclick="location.href='mainPaciente';" class="btn"/>
+	            
 	        </td>
-	        <td colspan="4"></td>
+	        <td colspan="4">
+	        
+	        </td>
     	</tr>
 	</table>
+	<div style="float:left;padding-right:1%;padding-left:85%;"><input class="btn btn-info" type="submit" value="Guardar"/></div>
+	        <div><input type="button" value="Cancelar" onclick="location.href='mainPaciente';" class="btn"/></div>
 	</div> 
 </form:form>
  
-
+</div>
 </body>
 </html>

@@ -1,7 +1,7 @@
 <%@page import="org.springframework.security.core.context.SecurityContextHolder" %>
 <%@taglib uri="http://www.springframework.org/security/tags"  prefix="sec" %>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<link href="${pageContext.request.contextPath}/resources/css/breadcrumb.css" rel="stylesheet"/>
+<link href="<%=request.getContextPath()%>/resources/css/breadcrumb.css" rel="stylesheet"/>
 
 <div class="row" style="padding-left:11%;">
         <hr class="hr-primary" />
@@ -11,7 +11,7 @@
 </div>
 
 <script>
-var urlHome="${pageContext.request.contextPath}";
+var urlHome="<%=request.getContextPath()%>";
 var pathArray = window.location.pathname.split( '/' );
 var arrayLength = pathArray.length;
 var partialUrl="";

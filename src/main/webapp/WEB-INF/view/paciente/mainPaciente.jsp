@@ -9,38 +9,30 @@
 	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 	<title>Nuova</title>
 	<link href="<%=request.getContextPath()%>/resources/css/bootstrap/bootstrap.min.css" rel="stylesheet"/>
+	<link href="<%=request.getContextPath()%>/resources/css/bootstrap/bootstrap-responsive.css" rel="stylesheet"/>
 	<script src="<c:url value="/resources/js/jquery/jquery-2.0.3.min.js" />"></script>
 	<script src="<c:url value="/resources/js/bootstrap/bootstrap.min.js" />"></script>
+	<script src="<%=request.getContextPath()%>/resources/js/jquery/bootstrap-collapse.js" />"></script>
+	<link href="<%=request.getContextPath()%>/resources/css/nuova.css" rel="stylesheet"/>
 	<style>
-	.custab{
-    border: 1px solid #ccc;
-    padding: 5px;
-    margin: 5% 0;
-    box-shadow: 3px 3px 2px #ccc;
-    transition: 0.5s;
-    }
-.custab:hover{
-    box-shadow: 3px 3px 0px transparent;
-    transition: 0.5s;
-    }
 .table{
-	width: 30%;
+	width: 40%;
 	}
-.row{
-	margin-left: 10%;
-}
 	</style>
 </head>
-<body>
-	<jsp:include page="../sec_menu.jsp"></jsp:include>
-	   
+<body style="background-color:#eee;">
+<jsp:include page="../sec_menu.jsp"></jsp:include>
+<jsp:include page="../breadcrumb.jsp"></jsp:include>
+<div class="mainContainer"> 	  
+	<div style="padding-left:2%;"> 
 	<h3>Administracion de Pacientes</h3>
-	<div style="width: 37%;">
-	<a href="formAddPaciente" class="btn btn-primary btn-xs pull-right">Nuevo Paciente</a>
+	</div>
+	<div style="width: 100%;">
+	<a href="formAddPaciente" class="btn btn-info btn-xs pull-right">Nuevo Paciente</a>
 	</div> 
 	<c:if  test="${!empty pacienteList}">
-	<div class="row col-md-6 col-md-offset-2 custyle">
-	<table class="table table-striped custab">
+	<div style="padding-left:2%;">
+	<table class="table" style="background-color:white;width:100%;">
 	<tr>
 	    <th>Apellido</th>	    
 	    <th>Nombre</th>
@@ -69,6 +61,7 @@
 	</table>
 	</div>
 	</c:if>
-	 
+	
+</div>	 
 </body>
 </html>

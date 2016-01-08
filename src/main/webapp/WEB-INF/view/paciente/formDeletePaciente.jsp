@@ -33,6 +33,7 @@
 </head>
 <body>
 <jsp:include page="../sec_menu.jsp"></jsp:include>
+<jsp:include page="../breadcrumb.jsp"></jsp:include>
 
 
 <form:form method="post" action="/nuova/deletePaciente" commandName="paciente">

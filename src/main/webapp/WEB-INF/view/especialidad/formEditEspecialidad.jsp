@@ -7,22 +7,23 @@
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 	<title>Nuova</title>
-	<link href="${pageContext.request.contextPath}/resources/css/bootstrap/bootstrap.min.css" rel="stylesheet"/>
-	<link href="${pageContext.request.contextPath}/resources/css/bootstrap/bootstrap-responsive.css" rel="stylesheet"/>
+	<link href="<%=request.getContextPath()%>/resources/css/bootstrap/bootstrap.min.css" rel="stylesheet"/>
+	<link href="<%=request.getContextPath()%>/resources/css/bootstrap/bootstrap-responsive.css" rel="stylesheet"/>
 	<script src="<c:url value="/resources/js/jquery/jquery-2.0.3.min.js" />"></script>
 	<script src="<c:url value="/resources/js/bootstrap/bootstrap.min.js" />"></script>
-	<script src="${pageContext.request.contextPath}/resources/js/jquery/bootstrap-collapse.js" />"></script>
-	<link href="${pageContext.request.contextPath}/resources/css/nuova.css" rel="stylesheet"/>
+	<script src="<%=request.getContextPath()%>/resources/js/jquery/bootstrap-collapse.js" />"></script>
+	<link href="<%=request.getContextPath()%>/resources/css/nuova.css" rel="stylesheet"/>
 
 </head>
 <body style="background-color:#eee;">
 <jsp:include page="../sec_menu.jsp"></jsp:include>
+<jsp:include page="../breadcrumb.jsp"></jsp:include>
 <div class="mainContainer"> 
-	<div style=";padding-bottom:0%;"> 
+	<div style=";padding-bottom:0%;padding-left:2%;"> 
 		<h3>Editar Especialidad</h3>
 	</div>
 	<form:form method="post" action="/nuova/editEspecialidad" commandName="especialidad">
-	 	<div>
+	 	<div style="padding-left:2%;">
 	    <table class="table" style="background-color:white;width:30%;">
 	    <tr>
 	        <td><form:label path="nombre">Especialidad:</form:label></td>

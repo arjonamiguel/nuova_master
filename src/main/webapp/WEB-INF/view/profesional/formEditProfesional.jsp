@@ -7,12 +7,14 @@
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 	<title>Nuova</title>
-	<link href="${pageContext.request.contextPath}/resources/css/bootstrap/bootstrap.min.css" rel="stylesheet"/>
-	<link href="${pageContext.request.contextPath}/resources/css/bootstrap/bootstrap-responsive.css" rel="stylesheet"/>
-	<script src="<c:url value="/resources/js/jquery/jquery-2.0.3.min.js" />"></script>
-	<script src="<c:url value="/resources/js/bootstrap/bootstrap.min.js" />"></script>
-	<script src="${pageContext.request.contextPath}/resources/js/jquery/bootstrap-collapse.js" />"></script>
-	<link href="${pageContext.request.contextPath}/resources/css/nuova.css" rel="stylesheet"/>
+        <link href="<%=request.getContextPath()%>/resources/css/bootstrap/bootstrap.min.css" rel="stylesheet"/>
+        <link href="<%=request.getContextPath()%>/resources/css/bootstrap/bootstrap-responsive.css" rel="stylesheet"/>
+		<script src="<c:url value="/resources/js/jquery/jquery-2.0.3.min.js" />"></script>
+		<script src="<c:url value="/resources/js/bootstrap/bootstrap.min.js" />"></script>
+		<script src="<%=request.getContextPath()%>/resources/js/jquery/bootstrap-collapse.js" />"></script>
+		<link href="<%=request.getContextPath()%>/resources/css/nuova.css" rel="stylesheet"/>
+		<link href="<%=request.getContextPath()%>/resources/css/panel.css" rel="stylesheet"/>
+
 		<style>
 		
 		
@@ -130,66 +132,69 @@ border-radius: 8px;
 </head>
 <body style="background-color:#eee;">
 <jsp:include page="../sec_menu.jsp"></jsp:include>
+<jsp:include page="../breadcrumb.jsp"></jsp:include>
 <div class="mainContainer"> 
-<div style="padding-bottom:0%;">  
+<div class="textTitle">  
 <h3>Editar Profesional</h3>
 </div>	
-
+<div style="padding-left:2%;">
 <form:form method="post" action="/nuova/editProfesional" commandName="profesional">
-<div style="width:50%;float:left;padding-top:0%;">
- <fieldset class="scheduler-border">
- <legend class="scheduler-border">Datos del Profesional</legend>
+<div class="panel panel-info" style="width:40%;">
+	<div class="panel-heading">
+          <div class="panel-title">Datos del Profesional</div>
+    </div>     
+	<div style="padding-top:30px" class="panel-body" >
     	<div><form:hidden path="profesionalId" /></div>
-        <div class="rowContainerProf">
-        	<div class="labelProf"><form:label path="apellido">Apellido:</form:label></div>
-		    <div class="inputProf"><form:input path="apellido" style="width:90%;float:left;" /></div>
-        </div>
-        <div class="rowContainerProf">
-        	<div class="labelProf"><form:label path="nombre">Nombre:</form:label></div>
-        	<div class="inputProf"><form:input path="nombre" style="width:90%;float:left;"/></div>
-        </div>
-        <div class="rowContainerProf">
-	        <div class="labelProf"><form:label path="telefono">Telefono:</form:label></div>
-	        <div class="inputProf"><form:input path="telefono" style="width:90%;float:left;"/></div>
-        </div>
-        <div class="rowContainerProf">
-	        <div class="labelProf"><form:label path="matricula">Matricula:</form:label></div>
-	        <div class="inputProf"><form:input path="matricula" style="width:90%;float:left;"/></div>
-        </div>
-        <div class="rowContainerProf">
-	        <div class="labelProf"><form:label path="registroNacional">Registro Nacional:</form:label></div>
-	        <div class="inputProf"><form:input path="registroNacional" style="width:90%;float:left;"/></div>
-        </div>
-        <div class="rowContainerProf">
-	        <div class="labelProf"><form:label path="tituloProfesional">Titulo Profesional:</form:label></div>
-	        <div class="inputProf"><form:input path="tituloProfesional" style="width:90%;float:left;"/></div>
-        </div>
-        <div style="padding-top:5%;float:left;padding-left:10%;width:100%;">
-	        <div class="rowContainerProf" style="width:20%;padding-top:1%;">
-		        <div style="visibility:hidden;height:0px;"><form:label path="habilitacionSiprosa">Habilitacion del Siprosa:</form:label></div>
-		        <div style="visibility:hidden;height:0px;"><form:input path="habilitacionSiprosa" /></div>
-		        <label for="info">SIPROSA <input type="checkbox" id="info" class="badgebox" onchange="javascript:updateSiprosa();"><span class="badge">&check;</span></label>  
-	        </div>
+     		<div>
+        	<div class="formLabel"><form:label path="apellido">Apellido:</form:label></div>
+        	<div class="formInput"><form:input path="apellido" placeholder="Apellido"/></div>
+			</div>
+			<div>
+        	<div class="formLabel"><form:label path="nombre">Nombre:</form:label></div>
+        	<div class="formInput"><form:input path="nombre" placeholder="Nombre"/></div>
+      		</div>
+      		<div>
+	        <div class="formLabel"><form:label path="telefono">Telefono:</form:label></div>
+	        <div class="formInput"><form:input path="telefono" placeholder="Telefono"/></div>
+      		</div>
+  			<div>
+	        <div class="formLabel"><form:label path="matricula">Matricula:</form:label></div>
+	        <div class="formInput"><form:input path="matricula" placeholder="Matricula"/></div>
+      		</div>
+   			<div>
+	        <div class="formLabel"><form:label path="registroNacional">Registro Nacional:</form:label></div>
+	        <div class="formInput"><form:input path="registroNacional" placeholder="Registro Nacional"/></div>
+      		</div>
+      		<div>
+	        <div class="formLabel"><form:label path="tituloProfesional">Titulo Profesional:</form:label></div>
+	        <div class="formInput"><form:input path="tituloProfesional" placeholder="Titulo Profesional"/></div>
+        	</div>
         
-	        <div id="labelDate" style="padding-top:1%;float:left;visibility:hidden;"><form:label path="fechaVencimientoHabilitacion">Fecha Vencimiento Habilitacion:</form:label></div>
-	        <div style="visibility:hidden;height:0px;"><form:input class="date" path="fechaVencimientoHabilitacion" /></div>
-	        <div id="calendar" style="float:left;visibility:hidden;padding-left:3%;">
-	            <div class="input-group registration-date-time" style="padding-top:0%;">
-            		<span class="input-group-addon" id="basic-addon1"><span class="icon icon-calendar" aria-hidden="true"></span></span>
-            		<input class="form-control" name="registration_date" id="registration-date" type="date" style="width:82%;" onchange="javascript:updateDate();">
-            	</div>
-            </div>
-        </div>
+        	<div  style="width:40%;padding-top:1%;padding-left:1%;">
+			        <div style="visibility:hidden;height:0px;"><form:label path="habilitacionSiprosa">Habilitacion del Siprosa:</form:label></div>
+			        <div style="visibility:hidden;height:0px;"><form:input path="habilitacionSiprosa" /></div>
+			        <label for="info">SIPROSA <input type="checkbox" id="info" class="badgebox" onchange="javascript:updateSiprosa();"><span class="badge">&check;</span></label>  
+		        </div>
+	        
+		        <div id="labelDate" class="labelDate"><form:label path="fechaVencimientoHabilitacion">Fecha Vencimiento Habilitacion:</form:label></div>
+		        <div style="visibility:hidden;height:0px;"><form:input class="date" path="fechaVencimientoHabilitacion" /></div>
+		        <div id="calendar" style="visibility:hidden;">
+		            <div class="input-group registration-date-time" style="padding-top:0%;">
+	            		
+	            		<input class="form-control" name="registration_date" id="registration-date" type="date"  onchange="javascript:updateDate();">
+	            	</div>
+	            </div>
         
-        
+     </div>   
     
         
-        
-        </fieldset>
-</div>
-<div style="padding-top:3%;width:50%;">
-<fieldset class="scheduler-border">
-<legend class="scheduler-border">Agregar Especialidades</legend>
+</div>   
+
+<div class="panel panel-info" style="width:40%;">
+	<div class="panel-heading">
+	          <div class="panel-title">Agregar Especialidades</div>
+	</div>  
+<div style="padding-top:30px" class="panel-body" >
     <div style="background-color:#f9f9f9;">   
     	<div style="visible:hidden;height:0px;"><form:label path="especialidad">Especialidad:</form:label></div>
     	<div>
@@ -209,7 +214,7 @@ border-radius: 8px;
 	            <TD>Id</TD>
 	            <TD>Especialidad</TD>        
 	        </TR>
-	            <c:forEach items="${especialidadListEdit}" var="esp">
+	                <c:forEach items="${especialidadListEdit}" var="esp">
 	    <tr>
 	    	<td><input type="checkbox" name="chkbox[]"><input type="hidden" name="especialidadList" value="${esp.key}"></td>
 	        <td>${esp.key} </td>
@@ -217,18 +222,23 @@ border-radius: 8px;
 	    </tr>
 	</c:forEach>
 	    </TABLE>
-	   	<div class="inputProf">
+	   	<div style="padding-left:71%;">
 	    	<INPUT type="button" value="Delete Row" onclick="deleteRow('dataTable')" class="btn"/>
 	    </div>
  	</div>
-</fieldset>
-<div style="float:left;padding-left:73%;width:95%;padding-bottom:2%;">
-	 <input type="submit" value="Guardar" class="btn btn-info"/> 
-	 <input type="button" value="Cancelar" onclick="location.href='/nuova/mainProfesional';" class="btn"/>
-</div>
-</div>
-</form:form>
+		        
 
+</div>
+</div>   
+
+<div style="float:left;padding-left:27%;width:45%;padding-bottom:2%;">
+	 <div style="float:left;"><input type="submit" value="Guardar" class="btn btn-info"/></div> 
+	 <div style="float:left;"><input type="button" value="Cancelar" onclick="location.href='/nuova/mainProfesional';" class="btn"/></div>
+</div>
+
+</form:form>
+</div>
+</div>
 </div>
 </body>
 </html>

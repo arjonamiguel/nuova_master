@@ -3,15 +3,36 @@
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
 <!-- header login -->
-<div style="text-align:right;font-size:13px;background-color: #353e4a; padding: 2px 2px; height: 53px; color: white">
-	Logueado como: 
-	<sec:authorize access="isAuthenticated()">
-	    <span style="color:blue;font-weight:bold;">
+<div class="navbar navbar-inverse nav">
+    <div class="navbar-inner">
+        <div class="container">
+            <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </a>
+            <a class="brand" href="">NUOVA</a>
+    		
+          	<div class="nav-collapse collapse">
+              <div class="pull-right">
+                <ul class="nav pull-right">
+                    <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">Logueado como, <sec:authorize access="isAuthenticated()">
+	    <span>
 	    	<%=SecurityContextHolder.getContext().getAuthentication().getName()%>
 	    </span> 
-	    |<a href="#">Mi Perfil</a>
-	</sec:authorize>|
-	<span><a href="<c:url value='j_spring_security_logout'/>">Salir</a></span>
+	</sec:authorize> <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                            <li><a href=""><i class="icon-cog"></i> Preferencias</a></li>
+                            <li><a href=""><i class="icon-envelope"></i> Contacto Soporte</a></li>
+                            <li class="divider"></li>
+                            <li><a href="<c:url value='j_spring_security_logout'/>"><i class="icon-off"></i> Salir</a></li>
+                        </ul>
+                    </li>
+                </ul>
+              </div>
+            </div>
+        </div>
+    </div>
 </div>
 <!-- header login -->
 
@@ -36,36 +57,23 @@
 	
 
 		 <ul class="nav navbar-nav">
-		<sec:authorize access="hasRole('ROLE_ADMIN')">
-		<li><a href="mainProfesional" id="mainProfesional">Administracion de Profesionales</a></li>
-		</sec:authorize>
-		
-		<sec:authorize access="hasRole('ROLE_ADMIN')">
-		<li><a href="mainEspecialidad" id="mainEspecialidad">Administracion de Especialidades</a></li>
-		</sec:authorize>
-		
-		<sec:authorize access="hasRole('ROLE_ADMIN')">
-		<li>
-		<a href="/nuova/mainObraSocial" id="mainObraSocial">Administracion de Obras Sociales</a>
-		</li>
-		</sec:authorize>
-		
-		<sec:authorize access="hasRole('ROLE_ADMIN')">
-		<li>
-		<a href="/nuova/mainPaciente">Administracion de Pacientes</a>
-		</li>
-		</sec:authorize>
+
 		
 		<li class="dropdown">
 		            <a href="#" class="dropdown-toggle" data-toggle="dropdown"><img style="height:7%;width:7%;" src="<c:url value="/resources/img/others/conf.ico"/>"><b class="caret"></b></a>
 		            <ul class="dropdown-menu">
-		              <li><a href="#">Action</a></li>
-		              <li><a href="#">Another action</a></li>
-		              <li><a href="#">Something else here</a></li>
-		              <li class="divider"></li>
-		              <li class="nav-header">Nav header</li>
-		              <li><a href="#">Separated link</a></li>
-		              <li><a href="#">One more separated link</a></li>
+		            	<sec:authorize access="hasRole('ROLE_ADMIN')">
+						<li><a href="mainProfesional" id="mainProfesional">Administracion de Profesionales</a></li>
+						</sec:authorize>
+						<sec:authorize access="hasRole('ROLE_ADMIN')">
+						<li><a href="mainEspecialidad" id="mainEspecialidad">Administracion de Especialidades</a></li>
+						</sec:authorize>
+						<sec:authorize access="hasRole('ROLE_ADMIN')">
+						<li><a href="/nuova/mainObraSocial" id="mainObraSocial">Administracion de Obras Sociales</a></li>
+						</sec:authorize>
+						<sec:authorize access="hasRole('ROLE_ADMIN')">
+						<li><a href="/nuova/mainPaciente">Administracion de Pacientes</a></li>
+						</sec:authorize>
 		            </ul>
 		          </li>
 		</ul>
