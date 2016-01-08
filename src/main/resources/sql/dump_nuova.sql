@@ -57,6 +57,69 @@ INSERT INTO `obrasocial` (`obrasocial_id`, `nombre`) VALUES
 /*!40000 ALTER TABLE `obrasocial` ENABLE KEYS */;
 
 
+-- Volcando estructura para tabla nuova.observaciones
+CREATE TABLE IF NOT EXISTS `observaciones` (
+  `observacion_id` int(11) NOT NULL AUTO_INCREMENT,
+  `observacion` varchar(512) COLLATE utf8_bin DEFAULT NULL,
+  `orden_id` int(11) DEFAULT NULL,
+  `user_name` varchar(160) COLLATE utf8_bin DEFAULT NULL,
+  `fecha` datetime DEFAULT NULL,
+  PRIMARY KEY (`observacion_id`),
+  KEY `observacion_id` (`observacion_id`),
+  KEY `FK_observaciones_orden` (`orden_id`),
+  CONSTRAINT `FK_observaciones_orden` FOREIGN KEY (`orden_id`) REFERENCES `orden` (`orden_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
+-- Volcando datos para la tabla nuova.observaciones: ~2 rows (aproximadamente)
+DELETE FROM `observaciones`;
+/*!40000 ALTER TABLE `observaciones` DISABLE KEYS */;
+/*!40000 ALTER TABLE `observaciones` ENABLE KEYS */;
+
+
+-- Volcando estructura para tabla nuova.orden
+CREATE TABLE IF NOT EXISTS `orden` (
+  `orden_id` int(11) NOT NULL AUTO_INCREMENT,
+  `paciente_id` int(11) DEFAULT NULL,
+  `fecha` date DEFAULT '0000-00-00',
+  `req_orden_medico` tinyint(4) DEFAULT '0',
+  `req_credecial` tinyint(4) DEFAULT '0',
+  `req_recibo_sueldo` tinyint(4) DEFAULT '0',
+  `req_monotributista` tinyint(4) DEFAULT '0',
+  `estado` varchar(160) COLLATE utf8_bin DEFAULT '0',
+  PRIMARY KEY (`orden_id`),
+  KEY `orden_id` (`orden_id`),
+  KEY `FK_orden_paciente` (`paciente_id`),
+  CONSTRAINT `FK_orden_paciente` FOREIGN KEY (`paciente_id`) REFERENCES `paciente` (`paciente_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
+-- Volcando datos para la tabla nuova.orden: ~9 rows (aproximadamente)
+DELETE FROM `orden`;
+/*!40000 ALTER TABLE `orden` DISABLE KEYS */;
+INSERT INTO `orden` (`orden_id`, `paciente_id`, `fecha`, `req_orden_medico`, `req_credecial`, `req_recibo_sueldo`, `req_monotributista`, `estado`) VALUES
+	(11, 35, '2016-01-08', 1, 0, 0, 0, 'INCOMPLETA');
+/*!40000 ALTER TABLE `orden` ENABLE KEYS */;
+
+
+-- Volcando estructura para tabla nuova.orden_workflow
+CREATE TABLE IF NOT EXISTS `orden_workflow` (
+  `orden_workflow_id` int(11) NOT NULL AUTO_INCREMENT,
+  `orden_id` int(11) DEFAULT NULL,
+  `user_name` varchar(164) COLLATE utf8_bin DEFAULT NULL,
+  `estado` varchar(164) COLLATE utf8_bin DEFAULT NULL,
+  PRIMARY KEY (`orden_workflow_id`),
+  KEY `orden_workflow_id` (`orden_workflow_id`),
+  KEY `FK_orden_workflow_orden` (`orden_id`),
+  CONSTRAINT `FK_orden_workflow_orden` FOREIGN KEY (`orden_id`) REFERENCES `orden` (`orden_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
+-- Volcando datos para la tabla nuova.orden_workflow: ~5 rows (aproximadamente)
+DELETE FROM `orden_workflow`;
+/*!40000 ALTER TABLE `orden_workflow` DISABLE KEYS */;
+INSERT INTO `orden_workflow` (`orden_workflow_id`, `orden_id`, `user_name`, `estado`) VALUES
+	(7, 11, 'administrador@nuova.com', 'INCOMPLETA');
+/*!40000 ALTER TABLE `orden_workflow` ENABLE KEYS */;
+
+
 -- Volcando estructura para tabla nuova.paciente
 CREATE TABLE IF NOT EXISTS `paciente` (
   `paciente_id` int(11) NOT NULL AUTO_INCREMENT,
@@ -75,21 +138,15 @@ CREATE TABLE IF NOT EXISTS `paciente` (
   KEY `pacienteId` (`paciente_id`),
   KEY `FK_paciente_paciente` (`adherente_id`),
   CONSTRAINT `FK_paciente_paciente` FOREIGN KEY (`adherente_id`) REFERENCES `paciente` (`paciente_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=34 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+) ENGINE=InnoDB AUTO_INCREMENT=39 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 -- Volcando datos para la tabla nuova.paciente: ~9 rows (aproximadamente)
 DELETE FROM `paciente`;
 /*!40000 ALTER TABLE `paciente` DISABLE KEYS */;
 INSERT INTO `paciente` (`paciente_id`, `apellido`, `nombre`, `fecha_nacimiento`, `domicilio`, `telefono`, `mail`, `liberado`, `adherente_id`, `dni`, `provincia`, `titular`) VALUES
-	(8, 'VALDEZ', 'GUSTAVO FEDERICO', '1920-01-01', 'Pje. Hola ', '0381155897889', 'gvaldez@gmail.com', 0, NULL, 25666555, 'Córdoba', 1),
-	(14, 'Valdez', 'Gustavito Hijo', '2015-01-01', 'Pje. Hola ', '0381155897889', 'gvaldez@gmail.com', 0, 8, 5555555, 'Córdoba', 0),
-	(15, 'Valdez', 'Gustavito Hijo 2', '2015-01-01', 'Pje. Hola ', '0381155897889', 'gvaldez@gmail.com', 0, 8, 2322434, 'Córdoba', 0),
-	(16, 'Valdez', 'Gustavito Hijo 3', '2015-01-01', 'Pje. Hola ', '0381155897889', 'gvaldez@gmail.com', 0, 8, 23424234, 'Córdoba', 0),
-	(17, 'Valdez', 'Gustavito Hijo 4', '2015-01-01', 'Pje. Hola ', '0381155897889', 'gvaldez@gmail.com', 0, 8, 2312131, 'Córdoba', 0),
-	(25, 'ARJONA', 'MIGUEL', '1920-01-01', 'SDASDASDASDA', '564646464', 'asdasdad@asdad.com', 0, NULL, 29878065, 'Tucumán', 1),
-	(31, 'ARJONA', 'MIGUELITO JR', '2015-01-01', 'SDASDASDASDA', '564646464', 'asdasdad@asdad.com', 0, 25, 23123134, 'Tucumán', 0),
-	(32, 'test', 'asdadha', '2015-01-01', 'asdada', '6546546', 'asdasdad@asdad.com', 0, NULL, 9989898, 'Buenos Aires', 0),
-	(33, 'qwe', 'wqwewe', '2016-01-02', 'weqweqew', '223333333', '', 0, NULL, NULL, 'NONE', 1);
+	(35, 'ARJONA', 'MIGUEL ANGEL', '2015-01-01', 'Descripcion Domicilio', '4930332', 'arjonamiguel@gmail.com', 0, NULL, 29878065, 'Tucumán', 1),
+	(37, 'asdasd', 'asda', '2015-01-01', 'Descripcion Domicilio', '4930332', 'arjonamiguel@gmail.com', 0, 35, 654654, 'Tucumán', 0),
+	(38, 'asdasd', 'asda', '2015-01-01', 'Descripcion Domicilio', '4930332', 'arjonamiguel@gmail.com', 0, 35, 654654, 'Tucumán', 0);
 /*!40000 ALTER TABLE `paciente` ENABLE KEYS */;
 
 
@@ -107,20 +164,15 @@ CREATE TABLE IF NOT EXISTS `paciente_obrasocial` (
   KEY `FK_paciente_obrasocial_paciente` (`paciente_id`),
   CONSTRAINT `FK_paciente_obrasocial_obrasocial` FOREIGN KEY (`obrasocial_id`) REFERENCES `obrasocial` (`obrasocial_id`),
   CONSTRAINT `FK_paciente_obrasocial_paciente` FOREIGN KEY (`paciente_id`) REFERENCES `paciente` (`paciente_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=47 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+) ENGINE=InnoDB AUTO_INCREMENT=72 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 -- Volcando datos para la tabla nuova.paciente_obrasocial: ~8 rows (aproximadamente)
 DELETE FROM `paciente_obrasocial`;
 /*!40000 ALTER TABLE `paciente_obrasocial` DISABLE KEYS */;
 INSERT INTO `paciente_obrasocial` (`paciente_obrasocial_id`, `nro_credencial`, `provisorio`, `obrasocial_id`, `paciente_id`, `fecha`) VALUES
-	(22, '888888888888', 1, 1, 14, '2016-01-01'),
-	(23, '32424242', 1, 1, 15, '2016-01-01'),
-	(24, '6546546456464', 1, 1, 16, '2016-01-01'),
-	(25, '6465465464', 1, 1, 17, '2016-01-01'),
-	(35, '65465465465465464', 1, 2, 25, '2016-01-02'),
-	(41, '6666666666666666', 1, 2, 31, '2016-01-02'),
-	(42, '654654564654', 1, 3, 32, '2016-01-02'),
-	(46, '6546465464', 1, 1, 8, '2016-01-02');
+	(67, '65465456', 1, 4, 35, '2016-01-08'),
+	(70, '455', 0, 4, 37, '2016-01-08'),
+	(71, '4555', 0, 4, 38, '2016-01-08');
 /*!40000 ALTER TABLE `paciente_obrasocial` ENABLE KEYS */;
 
 
