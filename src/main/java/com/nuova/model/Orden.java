@@ -37,13 +37,15 @@ public class Orden implements java.io.Serializable {
     private Byte reqMonotributista;
     private String estado;
     private Set<Observaciones> observacioneses = new HashSet<Observaciones>(0);
+    private Set<OrdenPractica> ordenPracticas = new HashSet<OrdenPractica>(0);
     private Set<OrdenWorkflow> ordenWorkflows = new HashSet<OrdenWorkflow>(0);
 
     public Orden() {
     }
 
     public Orden(Paciente paciente, Date fecha, Byte reqOrdenMedico, Byte reqCredecial, Byte reqReciboSueldo,
-            Byte reqMonotributista, String estado, Set<Observaciones> observacioneses, Set<OrdenWorkflow> ordenWorkflows) {
+            Byte reqMonotributista, String estado, Set<Observaciones> observacioneses,
+            Set<OrdenWorkflow> ordenWorkflows, Set<OrdenPractica> ordenPracticas) {
         this.paciente = paciente;
         this.fecha = fecha;
         this.reqOrdenMedico = reqOrdenMedico;
@@ -53,6 +55,7 @@ public class Orden implements java.io.Serializable {
         this.estado = estado;
         this.observacioneses = observacioneses;
         this.ordenWorkflows = ordenWorkflows;
+        this.ordenPracticas = ordenPracticas;
     }
 
     @Id
@@ -66,7 +69,7 @@ public class Orden implements java.io.Serializable {
         this.ordenId = ordenId;
     }
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "paciente_id")
     public Paciente getPaciente() {
         return this.paciente;
@@ -131,7 +134,7 @@ public class Orden implements java.io.Serializable {
         this.estado = estado;
     }
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "orden", cascade = CascadeType.ALL)
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "orden", cascade = CascadeType.ALL)
     public Set<Observaciones> getObservacioneses() {
         return this.observacioneses;
     }
@@ -147,6 +150,15 @@ public class Orden implements java.io.Serializable {
 
     public void setOrdenWorkflows(Set<OrdenWorkflow> ordenWorkflows) {
         this.ordenWorkflows = ordenWorkflows;
+    }
+
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "orden", cascade = CascadeType.ALL)
+    public Set<OrdenPractica> getOrdenPracticas() {
+        return ordenPracticas;
+    }
+
+    public void setOrdenPracticas(Set<OrdenPractica> ordenPracticas) {
+        this.ordenPracticas = ordenPracticas;
     }
 
 }

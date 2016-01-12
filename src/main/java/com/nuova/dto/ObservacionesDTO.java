@@ -9,6 +9,13 @@ public class ObservacionesDTO {
     private String userName;
     private Date fecha;
 
+    public ObservacionesDTO(OrdenDTO orden, String observacion, String userName, Date fecha) {
+        this.orden = orden;
+        this.observacion = observacion;
+        this.userName = userName;
+        this.fecha = fecha;
+    }
+
     public Integer getObservacionId() {
         return observacionId;
     }

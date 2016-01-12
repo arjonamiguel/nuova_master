@@ -3,6 +3,7 @@ package com.nuova.controller;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import com.nuova.dto.ComboItemDTO;
 import com.nuova.dto.ObraSocialDTO;
 import com.nuova.dto.ObservacionesDTO;
 import com.nuova.dto.OrdenDTO;
@@ -23,12 +25,16 @@ import com.nuova.dto.PacienteDTO;
 import com.nuova.model.Obrasocial;
 import com.nuova.model.Observaciones;
 import com.nuova.model.Orden;
+import com.nuova.model.OrdenPractica;
 import com.nuova.model.OrdenWorkflow;
 import com.nuova.model.Paciente;
 import com.nuova.model.PacienteObrasocial;
+import com.nuova.model.Practica;
 import com.nuova.service.ObraSocialManager;
+import com.nuova.service.ObservacionManager;
 import com.nuova.service.OrdenManager;
 import com.nuova.service.PacienteManager;
+import com.nuova.service.PracticaManager;
 import com.nuova.utils.ConstantControllers;
 import com.nuova.utils.ConstantRedirect;
 import com.nuova.utils.Util;
@@ -41,6 +47,10 @@ public class OrdenController {
     PacienteManager pacienteManager;
     @Autowired
     ObraSocialManager obrasocialManager;
+    @Autowired
+    PracticaManager practicaManager;
+    @Autowired
+    ObservacionManager observacionManager;
 
     @RequestMapping(value = ConstantControllers.FORM_ADD_ORDEN, method = RequestMethod.GET)
     public String formAddOrden(ModelMap map) {
@@ -59,19 +69,27 @@ public class OrdenController {
         OrdenDTO ordenDto = new OrdenDTO();
         ordenDto.setPaciente(transformPacienteToDto(paciente));
 
+        List<ComboItemDTO> practicaList = new ArrayList<ComboItemDTO>();
         map.addAttribute("ordenDto", ordenDto);
+        map.addAttribute("practicaList", practicaList);
         return ConstantRedirect.VIEW_FORM_ADD_ORDEN_BY_PACIENTE;
     }
 
-    // @RequestMapping(value = ConstantControllers.FORM_EDIT_ORDEN, method = RequestMethod.GET)
-    // public String formEditObraSocial(ModelMap map,
-    // @PathVariable("obrasocialId") Integer obrasocialId) {
-    // if (obrasocialId != null) {
-    // map.addAttribute("obrasocial", obrasocialManager.findObraSocialById(obrasocialId));
-    // }
-    //
-    // return ConstantRedirect.VIEW_FORM_EDIT_ORDEN;
-    // }
+    @RequestMapping(value = ConstantControllers.FORM_EDIT_ORDEN, method = RequestMethod.GET)
+    public String formEditOrden(ModelMap map,
+            @PathVariable("ordenId") Integer ordenId) {
+        if (ordenId != null) {
+            OrdenDTO ordenDto = transformOrdenToDto(ordenManager.findOrdenById(ordenId));
+            int observacionCount = ordenDto.getObservacioneses().size();
+            map.addAttribute("ordenDto", ordenDto);
+            map.addAttribute("observacionCount", observacionCount);
+            map.addAttribute("practicasList", Util.getComboItems(practicaManager.findAll()));
+            map.addAttribute("estadosList", Util.getEstadosList());
+        }
+
+        return ConstantRedirect.VIEW_FORM_EDIT_ORDEN;
+    }
+
     //
     // @RequestMapping(value = ConstantControllers.FORM_DELETE_ORDEN, method = RequestMethod.GET)
     // public String formDeleteObraSocial(ModelMap map,
@@ -110,11 +128,39 @@ public class OrdenController {
     // return "redirect:" + ConstantControllers.MAIN_ORDEN;
     // }
     //
-    // @RequestMapping(value = ConstantControllers.EDIT_ORDEN, method = RequestMethod.POST)
-    // public String editObraSocial(@ModelAttribute(value = "obrasocial") ObraSocialDTO dto) {
-    // obrasocialManager.edit(Util.transformDtoToObraSocial(dto));
-    // return "redirect:" + ConstantControllers.MAIN_ORDEN;
-    // }
+    @RequestMapping(value = ConstantControllers.EDIT_ORDEN, method = RequestMethod.POST)
+    public String editObraSocial(@ModelAttribute(value = "ordenDto") OrdenDTO dto) {
+        Orden orden = ordenManager.findOrdenById(dto.getOrdenId());
+        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        List<Practica> practicas = dto.getPracticasListEdit();
+
+        // Persisto Observacion
+        if (!dto.getObservacion().trim().equals("")) {
+            // observacionManager.add(new Observaciones(orden, dto.getObservacion(), user.getUsername(), new Date()));
+            orden.getObservacioneses().add(
+                    new Observaciones(orden, dto.getObservacion(), user.getUsername(), new Date()));
+        }
+
+        // Persiste Practicas
+        for (Practica p : practicas) {
+            if (p.getPracticaId() != null) {
+                OrdenPractica op = new OrdenPractica();
+                op.setFecha(new Date());
+                op.setOrden(orden);
+                op.setPractica(p);
+
+                orden.getOrdenPracticas().add(op);
+            }
+        }
+
+        // Persiste Estado
+        OrdenWorkflow ow = new OrdenWorkflow(orden, user.getUsername(), dto.getEstado());
+        orden.getOrdenWorkflows().add(ow);
+        orden.setEstado(dto.getEstado());
+
+        ordenManager.edit(orden);
+        return "redirect:" + ConstantControllers.MAIN_ORDEN;
+    }
 
     @RequestMapping(value = ConstantControllers.MAIN_ORDEN, method = RequestMethod.GET)
     public String mainOrden(ModelMap map) {
@@ -196,9 +242,11 @@ public class OrdenController {
         }
 
         for (PacienteObrasocial po : p.getPacienteObrasocials()) {
-            dto.getObrasocialList().add(
-                    new ObraSocialDTO(po.getObrasocial().getObrasocialId(), po.getObrasocial().getNombre(),
-                            po.getNroCredencial(), po.getProvisorio() == 1 ? "checked" : ""));
+            ObraSocialDTO o = new ObraSocialDTO(po.getObrasocial().getObrasocialId(), po.getObrasocial().getNombre(),
+                    po.getNroCredencial(), po.getProvisorio() == 1 ? "checked" : "");
+            dto.getObrasocialList().add(o);
+            dto.setObrasocial(o);
+            break;
         }
 
         for (Paciente ad : p.getPacientes()) {
@@ -253,6 +301,47 @@ public class OrdenController {
 
             retorno.add(ow);
         }
+        return retorno;
+    }
+
+    private OrdenDTO transformOrdenToDto(Orden orden) {
+        OrdenDTO dto = new OrdenDTO();
+        dto.setEstado(orden.getEstado());
+        // dto.setFecha(orden.getFecha() + "");
+        dto.setObservacioneses(getObservacionesDto(orden.getObservacioneses()));
+        dto.setOrdenId(orden.getOrdenId());
+        dto.setOrdenWorkflows(getOrdenWorkflowToDto(orden.getOrdenWorkflows()));
+        dto.setPaciente(transformPacienteToDto(orden.getPaciente()));
+        dto.setReqCredecial(orden.getReqCredecial() == new Byte("1") ? true : false);
+        dto.setReqMonotributista(orden.getReqMonotributista() == new Byte("1") ? true : false);
+        dto.setReqOrdenMedico(orden.getReqOrdenMedico() == new Byte("1") ? true : false);
+        dto.setReqReciboSueldo(orden.getReqReciboSueldo() == new Byte("1") ? true : false);
+        return dto;
+    }
+
+    private List<ObservacionesDTO> getObservacionesDto(Set<Observaciones> list) {
+        List<ObservacionesDTO> retorno = new ArrayList<ObservacionesDTO>();
+        for (Observaciones o : list) {
+            OrdenDTO odto = new OrdenDTO();
+            odto.setOrdenId(o.getOrden().getOrdenId());
+            ObservacionesDTO dto = new ObservacionesDTO(odto, o.getObservacion(),
+                    o.getUserName(), o.getFecha());
+            retorno.add(dto);
+        }
+
+        return retorno;
+    }
+
+    private List<OrdenWorkflowDTO> getOrdenWorkflowToDto(Set<OrdenWorkflow> list) {
+        List<OrdenWorkflowDTO> retorno = new ArrayList<OrdenWorkflowDTO>();
+        for (OrdenWorkflow o : list) {
+            OrdenDTO odto = new OrdenDTO();
+            odto.setOrdenId(o.getOrden().getOrdenId());
+            OrdenWorkflowDTO dto = new OrdenWorkflowDTO(odto,
+                    o.getUserName(), o.getEstado());
+            retorno.add(dto);
+        }
+
         return retorno;
     }
 

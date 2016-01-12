@@ -45,7 +45,7 @@ public class OrdenWorkflow implements java.io.Serializable {
         this.ordenWorkflowId = ordenWorkflowId;
     }
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "orden_id")
     public Orden getOrden() {
         return this.orden;

@@ -176,16 +176,16 @@
 			            <td></td>
 			        </TR>
 			        <% int index = 0;%>
-	        <c:forEach items="${paciente.obrasocialList}" var="po" varStatus="loop" >
-	    	<tr>
-		        <td>${po.obrasocialId}<input type="hidden" name = "obrasocialListEdit[<%=index%>].obrasocialId" value = "${po.obrasocialId}" /> </td>
-		        <td>${po.nombre}</td>        
-		        <td><input type="text" value="${po.credencial}" name = "obrasocialListEdit[<%=index%>].credencial"></td>
-		        <td> <input type="checkbox" name="obrasocialListEdit[<%=index%>].original" ${po.original} /></td>
-		        <td><button type='button' class='btn btn-link' onClick='Eliminar(this.parentNode.parentNode.rowIndex)'>eliminar</button></td>
-		        <%index++;%>
-	    	</tr>
-	</c:forEach>
+			        <c:forEach items="${paciente.obrasocialList}" var="po" varStatus="loop" >
+			    	<tr>
+				        <td>${po.obrasocialId}<input type="hidden" name = "obrasocialListEdit[<%=index%>].obrasocialId" value = "${po.obrasocialId}" /> </td>
+				        <td>${po.nombre}</td>        
+				        <td><input type="text" value="${po.credencial}" name = "obrasocialListEdit[<%=index%>].credencial"></td>
+				        <td> <input type="checkbox" name="obrasocialListEdit[<%=index%>].original" ${po.original} /></td>
+				        <td><button type='button' class='btn btn-link' onClick='Eliminar(this.parentNode.parentNode.rowIndex)'>eliminar</button></td>
+				        <%index++;%>
+			    	</tr>
+					</c:forEach>
 			    </TABLE>
 	   	
  	</div>

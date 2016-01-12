@@ -6,6 +6,12 @@ public class OrdenWorkflowDTO {
     private String userName;
     private String estado;
 
+    public OrdenWorkflowDTO(OrdenDTO orden, String userName, String estado) {
+        this.orden = orden;
+        this.userName = userName;
+        this.estado = estado;
+    }
+
     public Integer getOrdenWorkflowId() {
         return ordenWorkflowId;
     }

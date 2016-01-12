@@ -2,23 +2,23 @@ package com.nuova.dto;
 
 public class ComboItemDTO {
 
-    private Integer id;
+    private String id;
     private String value;
 
     public ComboItemDTO() {
 
     }
 
-    public ComboItemDTO(Integer id, String value) {
+    public ComboItemDTO(String id, String value) {
         this.id = id;
         this.value = value;
     }
 
-    public Integer getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(String id) {
         this.id = id;
     }
 

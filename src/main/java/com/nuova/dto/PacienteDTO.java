@@ -26,6 +26,7 @@ public class PacienteDTO {
     private List<PacienteDTO> adherentes = new ArrayList<PacienteDTO>();
     private List<PacienteDTO> adherentesEditList = new ArrayList<PacienteDTO>();
     private String crdencial;
+
     private boolean titular = false;
     private String checkedTitular;
     private PacienteDTO pacienteTitular;

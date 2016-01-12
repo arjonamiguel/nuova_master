@@ -35,7 +35,7 @@ public class OrdenDAOImpl implements OrdenDAO {
     }
 
     public void edit(Orden orden) {
-        this.sessionFactory.getCurrentSession().update(orden);
+        this.sessionFactory.getCurrentSession().saveOrUpdate(orden);
     }
 
 }

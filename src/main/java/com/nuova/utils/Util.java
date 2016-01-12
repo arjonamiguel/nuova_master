@@ -12,6 +12,7 @@ import com.nuova.dto.ObraSocialDTO;
 import com.nuova.dto.OrdenDTO;
 import com.nuova.model.Obrasocial;
 import com.nuova.model.Paciente;
+import com.nuova.model.Practica;
 
 public class Util {
 
@@ -68,9 +69,13 @@ public class Util {
         List<ComboItemDTO> retorno = new ArrayList<ComboItemDTO>();
         for (Object obj : list) {
             if (obj instanceof Paciente) {
-                Paciente paciente = (Paciente) obj;
-                retorno.add(new ComboItemDTO(paciente.getPacienteId(), paciente.getApellido() + " "
-                        + paciente.getNombre()));
+                Paciente o = (Paciente) obj;
+                retorno.add(new ComboItemDTO(o.getPacienteId() + "", o.getApellido() + " "
+                        + o.getNombre()));
+            } else if (obj instanceof Practica) {
+                Practica o = (Practica) obj;
+                retorno.add(new ComboItemDTO(o.getPracticaId() + "", "[" + o.getCodigo() + "]-"
+                        + o.getNombre()));
             }
         }
         return retorno;
@@ -88,6 +93,17 @@ public class Util {
             retorno = ConstantOrdenEstado.INCOMPLETA;
         }
 
+        return retorno;
+    }
+
+    static public List<ComboItemDTO> getEstadosList() {
+        List<ComboItemDTO> retorno = new ArrayList<ComboItemDTO>();
+        retorno.add(new ComboItemDTO(ConstantOrdenEstado.PENDIENTE, ConstantOrdenEstado.PENDIENTE));
+        retorno.add(new ComboItemDTO(ConstantOrdenEstado.INCOMPLETA, ConstantOrdenEstado.INCOMPLETA));
+        retorno.add(new ComboItemDTO(ConstantOrdenEstado.AUTORIZADA, ConstantOrdenEstado.AUTORIZADA));
+        retorno.add(new ComboItemDTO(ConstantOrdenEstado.EN_OBSERVACION, ConstantOrdenEstado.EN_OBSERVACION));
+        retorno.add(new ComboItemDTO(ConstantOrdenEstado.CERRADA, ConstantOrdenEstado.CERRADA));
+        retorno.add(new ComboItemDTO(ConstantOrdenEstado.RECHAZADA, ConstantOrdenEstado.RECHAZADA));
         return retorno;
     }
 
