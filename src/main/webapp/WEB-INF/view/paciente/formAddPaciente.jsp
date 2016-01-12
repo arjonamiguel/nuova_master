@@ -5,18 +5,20 @@
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <html>
 <head>
-	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-	<title>Nuova</title>
-	<link href="<%=request.getContextPath()%>/resources/css/bootstrap/bootstrap.min.css" rel="stylesheet"/>
-	<link href="<%=request.getContextPath()%>/resources/css/bootstrap/bootstrap-responsive.css" rel="stylesheet"/>
-	<script src="<c:url value="/resources/js/jquery/jquery-2.0.3.min.js" />"></script>
-	<script src="<c:url value="/resources/js/bootstrap/bootstrap.min.js" />"></script>
-	<script src="<%=request.getContextPath()%>/resources/js/jquery/bootstrap-collapse.js" />"></script>
-	<link href="<%=request.getContextPath()%>/resources/css/nuova.css" rel="stylesheet"/>
+		<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+		<title>Nuova</title>
+        <link href="<%=request.getContextPath()%>/resources/css/bootstrap/bootstrap.min.css" rel="stylesheet"/>       
+		<script src="<c:url value="/resources/js/jquery/jquery-2.0.3.min.js" />"></script>
+		<script src="<c:url value="/resources/js/bootstrap/bootstrap.min.js" />"></script>
+		<script src="<%=request.getContextPath()%>/resources/js/jquery/bootstrap-collapse.js" />"></script>
+		<link href="<%=request.getContextPath()%>/resources/css/nuova.css" rel="stylesheet"/>
+		<link href="<%=request.getContextPath()%>/resources/css/panel.css" rel="stylesheet"/>
+		<link href="<%=request.getContextPath()%>/resources/css/bootstrap/bootstrap-responsive.css" rel="stylesheet"/>
 	
 <SCRIPT language="javascript">
-       var siprosa=0;
 	var index = 0;
+	var liberado=0;
+	var titular=0;
 	function Eliminar (i) {
 	    //document.getElementsByTagName("table")[0].setAttribute("id","tableid");
 	    document.getElementById("dataTable").deleteRow(i);
@@ -75,6 +77,30 @@
                alert(e);
            }
        }
+       
+       	function updateLiberado(){
+			if(liberado==0){
+				liberado=1;
+				document.getElementById("liberado").value=1;
+			}else{
+				liberado=0;
+				document.getElementById("liberado").value=0;
+			}
+		}
+		
+		function updateTitular(){
+			if(titular==0){
+				titular=1;
+				document.getElementById("titular").value=1;
+			}else{
+				titular=0;
+				document.getElementById("titular").value=0;
+			}
+		}
+		
+		function updateDate(){
+			document.getElementById("fechaNacimiento").value=document.getElementById("registration-date").value;
+		}
 
        </SCRIPT>
 </head>
@@ -84,98 +110,118 @@
 
 <div class="mainContainer"> 
 <form:form method="post" action="addPaciente" commandName="paciente">
-	<div>
-	   	<table class="table" style="background-color:white;border-color:#bce8f1;margin-top:2%;margin-left:2%;;width:80%;">
-    	<tr style="background-color:#d9edf7;color:#31708f;">
-    		<td colspan="6"><h4>Nuevo Paciente</h4></td>
-    	</tr>
-    	
-	    <tr>
-	    	<td><form:label path="dni">DNI:</form:label></td>
-	        <td><form:input path="dni" /></td>
-	        <td><form:label path="apellido">Apellido:</form:label></td>
-	        <td><form:input path="apellido" /></td>
-	        <td><form:label path="nombre">Nombre:</form:label></td>
-	        <td><form:input path="nombre" /></td>
-	    </tr>
-	   	<tr>
-	        <td><form:label path="fechaNacimiento">Fecha de Nacimiento:</form:label></td>
-	        <td><form:input path="fechaNacimiento" /></td>
-	        <td><form:label path="telefono">Telefono:</form:label></td>
-	        <td><form:input path="telefono" /></td>
-	        <td><form:label path="mail">E-Mail:</form:label></td>
-	        <td><form:input path="mail" /></td>
-	    </tr>
-	    <tr>	    	
-	    	<td><form:label path="provincia">Provincia:</form:label></td>
-	    	<td>
-	    		<form:select path="provincia" style="width:80%; margin-bottom:0px">
-					<form:option value="NONE" label="Seleccione Provincia ..."/>
-					<form:options items="${provinciaList}"  />			    
-				</form:select>
-			</td>
-	        <td><form:label path="domicilio">Domicilio:</form:label></td>
-	        <td colspan=""><form:textarea path="domicilio" cssStyle="width:75%"/></td>
-	        <td><form:label path="liberado">Liberado:</form:label></td>
-	        <td><form:checkbox path="liberado"/></td>
-	    </tr>	  
- 		<tr>
-    		<td colspan="4"></td>	
-	    	<td>
-	    	 	<form:label path="titular">Titular</form:label>
-	    	</td>
-	    	<td>
-	    		<form:checkbox path="titular"/>
-	    	</td>
-        	
-    	</tr>     
-	    <tr style="background-color:#d9edf7;color:#31708f;">
-	         <td colspan="6"><h5>Obra Social</h5></td>         
-	    </tr>
-    	<tr>
-        	<td colspan="6">
-           	<div>
-				<div class="inputProf">
-				<form:select path="obrasocial" style="width:70%; margin-bottom:0px">
-					   <form:option value="NONE" label="Seleccione Obra Social ..."/>
-					   <form:options items="${obrasocialList}" itemLabel="nombre" itemValue="obrasocialId" />			    
-					</form:select>
-					<INPUT type="button" value="Agregar" onclick="addRow('dataTable')" class="btn btn-info"/>
-						    	
-					
-				</div>	
-			</div>
-    		<div>		    
-			    <TABLE id="dataTable" class="table table-striped custab" style="width: 100%; margin: 2% 0">
-			        <TR>
-			        	
-			            <TD>ID</TD>
-			            <TD>Obra Social</TD>        
-			            <TD style="width: 20%">Nro Credencial</TD>
-			            <TD style="width: 15%">Original/Provisoria</TD>
-			            <td></td>
-			        </TR>
-			    </TABLE>
-	   	
- 			</div>    
- 			
-        	</td>
-    	</tr>
-      	    
-    	<tr>
-        <td>
-            <input class="btn btn-info" type="submit" value="Guardar"/>     
-        </td>
-        <td>
-            <input type="button" value="Cancelar" onclick="location.href='/nuova/mainPaciente';" class="btn"/>
-        </td>
-        <td colspan="4">
-        </td>
-    </tr>
-	</table>
-	</div> 
-</form:form>
- 
+	<div class="panel panel-info">
+	<div class="panel-heading">
+		<div class="panel-title">Nuevo Paciente</div>
+	</div>
+	<div class="panel-body">
+		<div class="container-fluid">
+		  		<div class="row-fluid">
+			   		<div class="span4">
+			   				<div class="formLabel"><form:label path="dni">DNI:</form:label></div>
+        					<div class="formInput"><form:input path="dni" /></div>
+			   		</div>
+			   		<div class="span4">
+			   				<div class="formLabel"><form:label path="apellido">Apellido:</form:label></div>
+        					<div class="formInput"><form:input path="apellido" /></div>
+			   		</div>
+			   		<div class="span4">
+			   				<div class="formLabel"><form:label path="nombre">Nombre:</form:label></div>
+        					<div class="formInput"><form:input path="nombre" /></div>
+			   		</div>
+			   	</div>
+			   	<div class="row-fluid">
+			   		<div class="span4">
+			   				<div id="labelDate" class="formLabel"><form:label path="fechaNacimiento">Fecha de Nacimiento:</form:label></div>
+							<div style="visibility:hidden;height:0px;"><form:input path="fechaNacimiento" class="date"/></div>
+							<div id="calendar">
+								<div class="input-group registration-date-time" style="padding-top:0%;">
+									<input class="form-control" name="registration_date" id="registration-date" type="date"  onchange="javascript:updateDate();">
+	            				</div>
+	            			</div>		
+			   		</div>
+			   		<div class="span4">
+			   				<div class="formLabel"><form:label path="telefono">Telefono:</form:label></div>
+        					<div class="formInput"><form:input path="telefono" /></div>
+			   		</div>
+			   		<div class="span4">
+			   				<div class="formLabel"><form:label path="mail">E-Mail:</form:label></div>
+        					<div class="formInput"><form:input path="mail" /></div>
+			   		</div>
+			   	</div>
+			   	<div class="row-fluid">
+			   		<div class="span4">
+			   				<div class="formLabel"><form:label path="provincia">Provincia:</form:label></div>
+        					<div class="formInput">
+        						<form:select path="provincia" style="width:68%; margin-bottom:0px">
+									<form:option value="NONE" label="Seleccione Provincia ..."/>
+									<form:options items="${provinciaList}"  />			    
+								</form:select>
+        					</div>
+			   		</div>
+			   		<div class="span4">
+			   				<div class="formLabel"><form:label path="domicilio">Domicilio:</form:label></div>
+        					<div class="formInput"><form:textarea path="domicilio" cssStyle="width:64%"/></div>
+			   		</div>
+			   		<div class="span2" style="margin-top:2%;">
+			   				<div class="formLabel"><form:label path="liberado">Liberado:</form:label></div>
+							<div style="visibility:hidden;height:0px;"><form:checkbox path="liberado" id="liberado"/></div>
+							<label for="infoLiberado" style="padding-left:28%;"><input type="checkbox" id="infoLiberado" class="badgebox" onchange="javascript:updateLiberado();"><span class="badge">&check;</span></label>
+			   		</div>
+			   		<div class="span2" style="margin-top:2%;">
+			   			<div class="formLabel"><form:label path="titular">Titular:</form:label></div>
+							<div style="visibility:hidden;height:0px;"><form:checkbox path="titular" id="titular"/></div>
+							<label for="infoTitular" style="padding-left:28%;"><input type="checkbox" id="infoTitular" class="badgebox" onchange="javascript:updateTitular();"><span class="badge">&check;</span></label>
+			   		</div>
+			   	</div>
+		 </div>
+	</div>	
 </div>
+
+<div class="panel panel-info">
+			<div class="panel-heading">
+				<div class="panel-title">Obra Social</div>
+			</div>
+			<div class="panel-body">
+				<div class="row-fluid">
+					<div class="span9">
+					</div>
+					<div class="span2">
+						<form:select path="obrasocial" style="width:88%; margin-bottom:0px">
+					   		<form:option value="NONE" label="Seleccione Obra Social ..."/>
+					   		<form:options items="${obrasocialList}" itemLabel="nombre" itemValue="obrasocialId" />			    
+						</form:select>
+					</div>
+					<div class="span1">
+						<div style="float:right;"><INPUT type="button" value="Agregar" onclick="addRow('dataTable')" class="btn btn-info"/></div>
+					</div>
+				</div>
+				<div class="row-fluid">
+					<div class="span12">
+							<TABLE id="dataTable" class="table" style="width: 100%; margin-top:0px;">
+						        <TR>
+						        	
+						            <TD>ID</TD>
+						            <TD>Obra Social</TD>        
+						            <TD style="width: 20%">Nro Credencial</TD>
+						            <TD style="width: 15%">Original/Provisoria</TD>
+						            <td></td>
+						        </TR>
+			    			</TABLE>
+					</div>
+				</div>
+				
+				<div class="row-fluid">
+					<div class="span8">
+					</div>
+					<div class="span4">
+						<div style="float:right;padding-right:2%;"><input type="submit" value="Guardar" class="btn btn-info"/></div> 
+			 			<div style="float:right;"><input type="button" value="Cancelar" onclick="location.href='/nuova/mainPaciente';" class="btn"/></div>
+					</div>
+				</div>
+			</div>
+</div>
+</form:form>
+
 </body>
 </html>

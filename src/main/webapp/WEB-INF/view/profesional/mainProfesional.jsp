@@ -25,10 +25,11 @@
 	<h3>Administracion de Profesionales</h3>
 	</div>
 	<div>
-		<div style="float:right;padding-right:2%;">
+		
+		<div class="tableContainer">
+		<div class="addButton">
 		<a href="formAddProfesional" class="btn btn-info btn-xs pull-right"><b>+</b>&nbsp;&nbsp;Nuevo Profesional</a>
-		</div>
-		<div style="padding-left:2%;padding-right:2%;">	
+		</div>	
 		<c:if  test="${!empty profesionalList}">
 		<table class="table" style="">
 		<tr>
@@ -63,5 +64,5 @@
 </body>
 </html>
 <script>
-document.getElementById("mainProfesional").parentNode.classList.add("active")
+document.getElementById("configuracion").parentNode.classList.add("active")
 </script>

@@ -21,17 +21,17 @@
 	<jsp:include page="../sec_menu.jsp"></jsp:include>
 	<jsp:include page="../breadcrumb.jsp"></jsp:include>
 <div class="mainContainer">     
-	<div style="padding-bottom:2%;padding-left:2%;">   
+	<div class="textTitle">   
 		<h3>Administracion de Especialidades</h3>
 	</div>
 	
-	<div style="width:38%;padding-left:2%;">
-		<div style="float:left;padding-left:65%;">
+	<div class="tableContainer">
+		<div class="buttonAdd">
 			<a href="formAddEspecialidad" class="btn btn-info btn-xs pull-right"><b>+</b>&nbsp;&nbsp;Nueva Especialidad</a>
 		</div> 
 	<c:if  test="${!empty especialidadList}">
 	
-	<table class="table" style="background-color:white;">
+	<table class="table">
 	<tr>
 	    <th style="background-color:#f9f9f9;">Nombre</th>	    
 	    <th style="background-color:#f9f9f9;"s>&nbsp;</th>
@@ -48,12 +48,13 @@
 	    </tr>
 	</c:forEach>
 	</table>
-	</div>
+	
 	</c:if>
+	</div>
 
 </div>	 
 </body>
 </html>
 <script>
-document.getElementById("mainEspecialidad").parentNode.classList.add("active")
+document.getElementById("configuracion").parentNode.classList.add("active")
 </script>

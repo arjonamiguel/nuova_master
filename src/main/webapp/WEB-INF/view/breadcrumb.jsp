@@ -3,7 +3,7 @@
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <link href="<%=request.getContextPath()%>/resources/css/breadcrumb.css" rel="stylesheet"/>
 
-<div class="row" style="padding-left:11%;">
+<div class="row" style="padding-left:2%;">
         <hr class="hr-primary" />
         <ol id="breadcrumbList"class="breadcrumb bread-primary ">
           <button id="breadButton" href="" class="btn btn-info" onclick="javascript:window.location.href = '/nuova'"><i class="ico icon-home"></i>Home</button>

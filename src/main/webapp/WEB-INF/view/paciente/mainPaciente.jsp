@@ -38,12 +38,13 @@
 	<div style="padding-left:2%;"> 
 	<h3>Administracion de Pacientes</h3>
 	</div>
-	<div style="width: 100%;">
-	<a href="formAddPaciente" class="btn btn-info btn-xs pull-right">Nuevo Paciente</a>
-	</div> 
+ 
 	<c:if  test="${!empty pacienteList}">
-	<div class="row col-md-6 col-md-offset-2 custyle">
-	<table class="table table-striped custab" style ="width: 90%; margin-left: 2%;" >
+	<div class="tableContainer">
+		<div class="addButton">
+			<a href="formAddPaciente" class="btn btn-info btn-xs pull-right"><b>+</b>&nbsp;&nbsp;Nuevo Paciente</a>
+		</div>
+	<table class="table table-striped custab">
 	<tr>
 	    <th>Apellido</th>	    
 	    <th>Nombre</th>
@@ -77,3 +78,6 @@
 </div>	 
 </body>
 </html>
+<script>
+document.getElementById("mainPaciente").parentNode.classList.add("active")
+</script>

@@ -16,7 +16,7 @@
           	<div class="nav-collapse collapse">
               <div class="pull-right">
                 <ul class="nav pull-right">
-                    <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">Logueado como, <sec:authorize access="isAuthenticated()">
+                    <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon-user"></i>&nbsp;&nbsp;Logueado como, <sec:authorize access="isAuthenticated()">
 	    <span>
 	    	<%=SecurityContextHolder.getContext().getAuthentication().getName()%>
 	    </span> 
@@ -61,12 +61,17 @@
 		
 		<sec:authorize access="hasRole('ROLE_ADMIN')">
 		<li>
-		<a href="/nuova/mainOrden">Administracion de Practicas</a>
+		<a href="/nuova/mainOrden" id="mainOrden">Administracion de Practicas</a>
 		</li>
 		</sec:authorize>
-		
-		<li class="dropdown">
-		            <a href="#" class="dropdown-toggle" data-toggle="dropdown"><img style="height:7%;width:7%;" src="<c:url value="/resources/img/others/conf.ico"/>"><b class="caret"></b></a>
+		<sec:authorize access="hasRole('ROLE_ADMIN')">
+		<li><a href="/nuova/mainPaciente" id="mainPaciente">Administracion de Pacientes</a></li>
+		</sec:authorize>
+		<li>
+		<a href="" id="reportes">Reportes</a>
+		</li>
+		<li class="dropdown" style="width:30%;">
+		            <a href="#" id="configuracion" class="dropdown-toggle" data-toggle="dropdown"><img style="height:7%;width:7%;" src="<c:url value="/resources/img/others/conf.ico"/>">&nbsp;&nbsp;&nbsp;&nbsp;Configuracion</a>
 		            <ul class="dropdown-menu">
 		            	<sec:authorize access="hasRole('ROLE_ADMIN')">
 						<li><a href="mainProfesional" id="mainProfesional">Administracion de Profesionales</a></li>
@@ -77,11 +82,10 @@
 						<sec:authorize access="hasRole('ROLE_ADMIN')">
 						<li><a href="/nuova/mainObraSocial" id="mainObraSocial">Administracion de Obras Sociales</a></li>
 						</sec:authorize>
-						<sec:authorize access="hasRole('ROLE_ADMIN')">
-						<li><a href="/nuova/mainPaciente">Administracion de Pacientes</a></li>
-						</sec:authorize>
 		            </ul>
-		          </li>
+		</li>
+								
+
 		</ul>
 
 

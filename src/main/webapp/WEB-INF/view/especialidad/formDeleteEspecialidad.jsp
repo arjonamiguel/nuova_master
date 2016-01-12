@@ -6,41 +6,48 @@
 <html>
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-	<title>Nuova</title>
-	<link href="<%=request.getContextPath()%>/resources/css/bootstrap/bootstrap.min.css" rel="stylesheet"/>
-	<link href="<%=request.getContextPath()%>/resources/css/bootstrap/bootstrap-responsive.css" rel="stylesheet"/>
-	<script src="<c:url value="/resources/js/jquery/jquery-2.0.3.min.js" />"></script>
-	<script src="<c:url value="/resources/js/bootstrap/bootstrap.min.js" />"></script>
-	<script src="<%=request.getContextPath()%>/resources/js/jquery/bootstrap-collapse.js" />"></script>
-	<link href="<%=request.getContextPath()%>/resources/css/nuova.css" rel="stylesheet"/>
+		<title>Nuova</title>
+        <link href="<%=request.getContextPath()%>/resources/css/bootstrap/bootstrap.min.css" rel="stylesheet"/>       
+		<script src="<c:url value="/resources/js/jquery/jquery-2.0.3.min.js" />"></script>
+		<script src="<c:url value="/resources/js/bootstrap/bootstrap.min.js" />"></script>
+		<script src="<%=request.getContextPath()%>/resources/js/jquery/bootstrap-collapse.js" />"></script>
+		<link href="<%=request.getContextPath()%>/resources/css/nuova.css" rel="stylesheet"/>
+		<link href="<%=request.getContextPath()%>/resources/css/panel.css" rel="stylesheet"/>
+		<link href="<%=request.getContextPath()%>/resources/css/bootstrap/bootstrap-responsive.css" rel="stylesheet"/>
 	
 </head>
 <body style="background-color:#eee;">
 <jsp:include page="../sec_menu.jsp"></jsp:include>
 <jsp:include page="../breadcrumb.jsp"></jsp:include>
 <div class="mainContainer"> 
-	<div style="padding-bottom:0%;padding-left:2%;"> 
-		<h3>Eliminar Especialidad</h3>
-	</div>
 	<form:form method="post" action="/nuova/deleteEspecialidad" commandName="especialidad">
-	 	<div style="padding-left:2%;">
-	    <table class="table" style="background-color:white;width:30%;">
-	    <tr>
-	        <td><form:label path="nombre">Especialidad:</form:label></td>
-	        <td><form:input path="nombre" class="input-block-level" disabled="true"/></td>
-	    </tr>
-	    <tr>
-	        <td>   
-	        </td>
-	        <td>
-	        <div style="float:right;">
-	         	<input class="btn btn-info" type="submit" value="Eliminar"/> 
-	         	<input class="btn" type="button" value="Cancelar" onclick="location.href='/nuova/mainEspecialidad';"/>
-	        </div>
-	        </td>
-	    </tr>
-		</table>
-		</div> 
+	<div class="panel panel-info">
+			<div class="panel-heading">
+				<div class="panel-title">Eliminar Especialidad</div>
+			</div>
+			<div class="panel-body" >
+				<div class="container-fluid">
+						<div class="row-fluid">
+							<div class="span6">
+								<div class="formLabel"><form:label path="nombre">Especialidad:</form:label></div>
+        						<div class="formInput"><form:input path="nombre" class="input-block-level" disabled="true"/></div>
+							</div>
+							<div class="span6">
+								<div class="formLabel"></div>
+        						<div class="formInput"></div>
+							</div>
+						</div>
+						<div class="row-fluid">
+							<div class="span12">
+									        <div style="float:right;">
+	         									<input class="btn btn-danger btn-xs" type="submit" value="Eliminar"/> 
+	         									<input class="btn" type="button" value="Cancelar" onclick="location.href='/nuova/mainEspecialidad';"/>
+	        								</div>
+							</div>
+						</div>
+				</div>
+			</div>
+	</div>
 	</form:form>
 </div>
 </body>

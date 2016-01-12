@@ -7,43 +7,45 @@
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 	<title>Nuova</title>
-	<link href="<%=request.getContextPath()%>/resources/css/bootstrap/bootstrap.min.css" rel="stylesheet"/>
-	<link href="<%=request.getContextPath()%>/resources/css/bootstrap/bootstrap-responsive.css" rel="stylesheet"/>
-	<script src="<c:url value="/resources/js/jquery/jquery-2.0.3.min.js" />"></script>
-	<script src="<c:url value="/resources/js/bootstrap/bootstrap.min.js" />"></script>
-	<script src="<%=request.getContextPath()%>/resources/js/jquery/bootstrap-collapse.js" />"></script>
-	<link href="<%=request.getContextPath()%>/resources/css/nuova.css" rel="stylesheet"/>
-	
+        <link href="<%=request.getContextPath()%>/resources/css/bootstrap/bootstrap.min.css" rel="stylesheet"/>     
+		<script src="<c:url value="/resources/js/jquery/jquery-2.0.3.min.js" />"></script>
+		<script src="<c:url value="/resources/js/bootstrap/bootstrap.min.js" />"></script>
+		<script src="<%=request.getContextPath()%>/resources/js/jquery/bootstrap-collapse.js" />"></script>
+		<link href="<%=request.getContextPath()%>/resources/css/nuova.css" rel="stylesheet"/>
+		<link href="<%=request.getContextPath()%>/resources/css/panel.css" rel="stylesheet"/>
+		<link href="<%=request.getContextPath()%>/resources/css/bootstrap/bootstrap-responsive.css" rel="stylesheet"/>
+
+
 </head>
 <body style="background-color:#eee;">
 <jsp:include page="../sec_menu.jsp"></jsp:include>
 <jsp:include page="../breadcrumb.jsp"></jsp:include>
 <div class="mainContainer"> 
-		<div style="padding-bottom:0%;padding-left:2%;">
-			<h3>Editar Obra Social</h3>
+<form:form method="post" action="/nuova/editObraSocial" commandName="obrasocial">
+<div class="panel panel-info">
+		<div class="panel-heading">
+			 <div class="panel-title">Editar Obra Social</div>
 		</div>
-		<form:form method="post" action="/nuova/editObraSocial" commandName="obrasocial">
-		 	<div style="padding-left:2%;">
-		    <table class="table" style="background-color:white;width:30%;">
-		    <tr>
-		        <td><form:label path="nombre">Obra Social:</form:label></td>
-		        <td><form:input path="nombre" /></td>
-		    </tr>
-		   
-		    <tr>
-		        <td>
-		        </td>
-		        <td>
-		            <div style="float:right;">
+		<div class="panel-body" >
+				<div class="container-fluid">
+						<div class="row-fluid">
+							<div class="span6">
+								<div class="formLabel"><form:label path="nombre">Obra Social:</form:label></div>
+        						<div class="formInput"><form:input path="nombre" /></div>
+							</div>
+						</div>
+				</div>
+		</div>
+		<div class="row-fluid">
+			<div class="span12">
+				<div style="float:right;padding-bottom:1%;padding-right:1%;">
 	         			<input class="btn btn-info" type="submit" value="Guardar"/> 
 	         			<input class="btn" type="button" value="Cancelar" onclick="location.href='/nuova/mainObraSocial';"/>
-	        		</div>
-		        </td>
-		    </tr>
-			</table>
-			</div> 
-		</form:form>
- 
+	        	</div>
+			</div>
+		</div>
+</div>
+</form:form> 
 </div>
 </body>
 </html>

@@ -21,15 +21,15 @@
 <jsp:include page="../breadcrumb.jsp"></jsp:include>
 <div class="mainContainer">   
 	
-	<div>
+	<div class="pageTitle">
 	<h3>Administracion de Practicas</h3>
 	</div>
-	<div>
-		<div style="float:right;">
+	<div class="tableContainer">
+		<div class="addButton">
 		<a href="formAddOrden" class="btn btn-info btn-xs pull-right"><b>+</b>&nbsp;&nbsp;Nueva Practica</a>
 		</div>	
 		<c:if  test="${!empty ordenList}">
-		<table class="table" style="">
+		<table class="table">
 		<tr>
 		    <th class="tableHeader"">Paciente</th>
 		    <th class="tableHeader"">Nro Orden</th>
@@ -70,5 +70,5 @@
 </body>
 </html>
 <script>
-document.getElementById("mainProfesional").parentNode.classList.add("active")
+document.getElementById("mainOrden").parentNode.classList.add("active")
 </script>
