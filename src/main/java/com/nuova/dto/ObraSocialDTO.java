@@ -4,13 +4,17 @@ public class ObraSocialDTO {
 
     private Integer obrasocialId;
     private String nombre;
+    private String credencial;
+    private String original = "1";
 
     public ObraSocialDTO() {
     }
 
-    public ObraSocialDTO(Integer obrasocialId, String nombre) {
+    public ObraSocialDTO(Integer obrasocialId, String nombre, String credencial, String original) {
         this.obrasocialId = obrasocialId;
         this.nombre = nombre;
+        this.credencial = credencial;
+        this.original = original;
     }
 
     public Integer getObrasocialId() {
@@ -27,6 +31,22 @@ public class ObraSocialDTO {
 
     public void setNombre(String nombre) {
         this.nombre = nombre;
+    }
+
+    public String getCredencial() {
+        return credencial;
+    }
+
+    public void setCredencial(String credencial) {
+        this.credencial = credencial;
+    }
+
+    public String getOriginal() {
+        return original;
+    }
+
+    public void setOriginal(String original) {
+        this.original = original;
     }
 
 }

@@ -8,10 +8,14 @@
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 	<title>Nuova</title>
-	<link href="${pageContext.request.contextPath}/resources/css/bootstrap/bootstrap.min.css" rel="stylesheet"/>
+	<link href="<%=request.getContextPath()%>/resources/css/bootstrap/bootstrap.min.css" rel="stylesheet"/>
+	<link href="<%=request.getContextPath()%>/resources/css/bootstrap/bootstrap-responsive.css" rel="stylesheet"/>
 	<script src="<c:url value="/resources/js/jquery/jquery-2.0.3.min.js" />"></script>
 	<script src="<c:url value="/resources/js/bootstrap/bootstrap.min.js" />"></script>
+	<script src="<%=request.getContextPath()%>/resources/js/jquery/bootstrap-collapse.js" />"></script>
+	<link href="<%=request.getContextPath()%>/resources/css/nuova.css" rel="stylesheet"/>
 	<style>
+
 	.custab{
     border: 1px solid #ccc;
     padding: 5px;
@@ -23,34 +27,45 @@
     box-shadow: 3px 3px 0px transparent;
     transition: 0.5s;
     }
-.table{
-	width: 30%;
-	}
-.row{
-	margin-left: 10%;
-}
+
+
 	</style>
 </head>
-<body>
-	<jsp:include page="../sec_menu.jsp"></jsp:include>
-	   
+<body style="background-color:#eee;">
+<jsp:include page="../sec_menu.jsp"></jsp:include>
+<jsp:include page="../breadcrumb.jsp"></jsp:include>
+<div class="mainContainer"> 	  
+	<div style="padding-left:2%;"> 
 	<h3>Administracion de Pacientes</h3>
-	<div style="width: 37%;">
-	<a href="formAddPaciente" class="btn btn-primary btn-xs pull-right">Nuevo Paciente</a>
-	</div> 
+	</div>
+ 
 	<c:if  test="${!empty pacienteList}">
-	<div class="row col-md-6 col-md-offset-2 custyle">
+	<div class="tableContainer">
+		<div class="addButton">
+			<a href="formAddPaciente" class="btn btn-info btn-xs pull-right"><b>+</b>&nbsp;&nbsp;Nuevo Paciente</a>
+		</div>
 	<table class="table table-striped custab">
 	<tr>
 	    <th>Apellido</th>	    
+	    <th>Nombre</th>
+	    <th>DNI</th>
+	    <th>Telefono</th>
+	    <th>Fecha Nacimiento</th>
+	    <th>Domicilio</th>
 	    <th>&nbsp;</th>
 	</tr>
 	<c:forEach items="${pacienteList}" var="pa">
 	    <tr>
 	        <td>${pa.apellido}</td>        
+	        <td>${pa.nombre}</td>
+	        <td>${pa.dni}</td>
+	        <td>${pa.telefono}</td>
+	        <td>${pa.fechaNacimiento}</td>
+	        <td>${pa.domicilio}</td>
 	        <td>
 	        <div style="float:right;">
 	        	<a class="btn btn-info btn-xs" href="formEditPaciente/${pa.pacienteId}"><span class="icon icon-edit"></span>editar</a>
+	        	<a class="btn btn-success btn-xs" href="formAddOrden/${pa.pacienteId}"><span class="icon icon-plus-sign"></span>Practica</a>
 	        	<a class="btn btn-danger btn-xs" href="formDeletePaciente/${pa.pacienteId}"><span class="icon icon-remove"></span>eliminar</a>
 	       	</td>
 	       	</div>
@@ -59,6 +74,10 @@
 	</table>
 	</div>
 	</c:if>
-	 
+	
+</div>	 
 </body>
 </html>
+<script>
+document.getElementById("mainPaciente").parentNode.classList.add("active")
+</script>

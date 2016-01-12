@@ -54,7 +54,7 @@ public class PacienteObrasocial implements java.io.Serializable {
         this.pacienteObrasocialId = pacienteObrasocialId;
     }
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "paciente_id")
     public Paciente getPaciente() {
         return this.paciente;
@@ -64,7 +64,7 @@ public class PacienteObrasocial implements java.io.Serializable {
         this.paciente = paciente;
     }
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "obrasocial_id")
     public Obrasocial getObrasocial() {
         return this.obrasocial;

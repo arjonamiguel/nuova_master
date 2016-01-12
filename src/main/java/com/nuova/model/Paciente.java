@@ -1,10 +1,12 @@
 package com.nuova.model;
 
-// Generated Dec 14, 2015 8:20:12 PM by Hibernate Tools 3.4.0.CR1
+// Generated Dec 17, 2015 7:14:16 PM by Hibernate Tools 3.4.0.CR1
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -30,29 +32,33 @@ public class Paciente implements java.io.Serializable {
     private Integer pacienteId;
     private Paciente paciente;
     private String apellido;
-    private String nombe;
+    private String nombre;
     private Date fechaNacimiento;
     private String domicilio;
     private String telefono;
     private String mail;
     private Byte liberado;
-    private List<PacienteObrasocial> pacienteObrasocials = new ArrayList<PacienteObrasocial>(0);
-    private List<Paciente> pacientes = new ArrayList<Paciente>(0);
+    private Integer dni;
+    private List<PacienteObrasocial> pacienteObrasocials = new ArrayList<PacienteObrasocial>();
+    private Set<Paciente> pacientes = new HashSet<Paciente>();
+    private String provincia;
+    private Byte titular;
 
     public Paciente() {
     }
 
-    public Paciente(Paciente paciente, String apellido, String nombe, Date fechaNacimiento, String domicilio,
-            String telefono, String mail, Byte liberado, List<PacienteObrasocial> pacienteObrasocials,
-            List<Paciente> pacientes) {
+    public Paciente(Paciente paciente, String apellido, String nombre, Date fechaNacimiento, String domicilio,
+            String telefono, String mail, Byte liberado, Integer dni, List<PacienteObrasocial> pacienteObrasocials,
+            Set<Paciente> pacientes, String provincia) {
         this.paciente = paciente;
         this.apellido = apellido;
-        this.nombe = nombe;
+        this.nombre = nombre;
         this.fechaNacimiento = fechaNacimiento;
         this.domicilio = domicilio;
         this.telefono = telefono;
         this.mail = mail;
         this.liberado = liberado;
+        this.dni = dni;
         this.pacienteObrasocials = pacienteObrasocials;
         this.pacientes = pacientes;
     }
@@ -68,7 +74,7 @@ public class Paciente implements java.io.Serializable {
         this.pacienteId = pacienteId;
     }
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "adherente_id")
     public Paciente getPaciente() {
         return this.paciente;
@@ -87,13 +93,13 @@ public class Paciente implements java.io.Serializable {
         this.apellido = apellido;
     }
 
-    @Column(name = "nombe", length = 256)
-    public String getNombe() {
-        return this.nombe;
+    @Column(name = "nombre", length = 256)
+    public String getNombre() {
+        return this.nombre;
     }
 
-    public void setNombe(String nombe) {
-        this.nombe = nombe;
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
     }
 
     @Temporal(TemporalType.DATE)
@@ -142,7 +148,16 @@ public class Paciente implements java.io.Serializable {
         this.liberado = liberado;
     }
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "paciente")
+    @Column(name = "dni")
+    public Integer getDni() {
+        return this.dni;
+    }
+
+    public void setDni(Integer dni) {
+        this.dni = dni;
+    }
+
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "paciente")
     public List<PacienteObrasocial> getPacienteObrasocials() {
         return this.pacienteObrasocials;
     }
@@ -152,12 +167,29 @@ public class Paciente implements java.io.Serializable {
     }
 
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "paciente")
-    public List<Paciente> getPacientes() {
+    public Set<Paciente> getPacientes() {
         return this.pacientes;
     }
 
-    public void setPacientes(List<Paciente> pacientes) {
+    public void setPacientes(Set<Paciente> pacientes) {
         this.pacientes = pacientes;
     }
 
+    @Column(name = "provincia", length = 156)
+    public String getProvincia() {
+        return this.provincia;
+    }
+
+    public void setProvincia(String provincia) {
+        this.provincia = provincia;
+    }
+
+    @Column(name = "titular")
+    public Byte getTitular() {
+        return this.titular;
+    }
+
+    public void setTitular(Byte titular) {
+        this.titular = titular;
+    }
 }

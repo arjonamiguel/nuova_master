@@ -8,42 +8,33 @@
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 	<title>Nuova</title>
-	<link href="${pageContext.request.contextPath}/resources/css/bootstrap/bootstrap.min.css" rel="stylesheet"/>
+
+	<link href="<%=request.getContextPath()%>/resources/css/bootstrap/bootstrap.min.css" rel="stylesheet"/>
+	<link href="<%=request.getContextPath()%>/resources/css/bootstrap/bootstrap-responsive.css" rel="stylesheet"/>
 	<script src="<c:url value="/resources/js/jquery/jquery-2.0.3.min.js" />"></script>
 	<script src="<c:url value="/resources/js/bootstrap/bootstrap.min.js" />"></script>
-	<style>
-	.custab{
-    border: 1px solid #ccc;
-    padding: 5px;
-    margin: 5% 0;
-    box-shadow: 3px 3px 2px #ccc;
-    transition: 0.5s;
-    }
-.custab:hover{
-    box-shadow: 3px 3px 0px transparent;
-    transition: 0.5s;
-    }
-.table{
-	width: 30%;
-	}
-.row{
-	margin-left: 10%;
-}
-	</style>
+	<script src="<%=request.getContextPath()%>/resources/js/jquery/bootstrap-collapse.js" />"></script>
+	<link href="<%=request.getContextPath()%>/resources/css/nuova.css" rel="stylesheet"/>
+	
 </head>
-<body>
+<body style="background-color:#eee;">
 	<jsp:include page="../sec_menu.jsp"></jsp:include>
-	   
-	<h3>Administracion de Especialidades</h3>
-	<div style="width: 37%;">
-	<a href="formAddEspecialidad" class="btn btn-primary btn-xs pull-right">Nueva Especialidad</a>
-	</div> 
+	<jsp:include page="../breadcrumb.jsp"></jsp:include>
+<div class="mainContainer">     
+	<div class="textTitle">   
+		<h3>Administracion de Especialidades</h3>
+	</div>
+	
+	<div class="tableContainer">
+		<div class="buttonAdd">
+			<a href="formAddEspecialidad" class="btn btn-info btn-xs pull-right"><b>+</b>&nbsp;&nbsp;Nueva Especialidad</a>
+		</div> 
 	<c:if  test="${!empty especialidadList}">
-	<div class="row col-md-6 col-md-offset-2 custyle">
-	<table class="table table-striped custab">
+	
+	<table class="table">
 	<tr>
-	    <th>Nombre</th>	    
-	    <th>&nbsp;</th>
+	    <th style="background-color:#f9f9f9;">Nombre</th>	    
+	    <th style="background-color:#f9f9f9;"s>&nbsp;</th>
 	</tr>
 	<c:forEach items="${especialidadList}" var="e">
 	    <tr>
@@ -57,8 +48,13 @@
 	    </tr>
 	</c:forEach>
 	</table>
-	</div>
+	
 	</c:if>
-	 
+	</div>
+
+</div>	 
 </body>
 </html>
+<script>
+document.getElementById("configuracion").parentNode.classList.add("active")
+</script>

@@ -1,56 +1,51 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>  
 <%@taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 <%@taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <html>
 <head>
-    <title>Nuova</title>
-    	<link href="${pageContext.request.contextPath}/resources/css/bootstrap/bootstrap.min.css" rel="stylesheet"/>
-	<script src="<c:url value="/resources/js/jquery/jquery-2.0.3.min.js" />"></script>
-	<script src="<c:url value="/resources/js/bootstrap/bootstrap.min.js" />"></script>
-	<style>
-	.custab{
-    border: 1px solid #ccc;
-    padding: 5px;
-    margin: 5% 0;
-    box-shadow: 3px 3px 2px #ccc;
-    transition: 0.5s;
-    }
-.custab:hover{
-    box-shadow: 3px 3px 0px transparent;
-    transition: 0.5s;
-    }
-.table{
-	width: 30%;
-	}
-.row{
-	margin-left: 10%;
-}
-	</style>
+	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+	<title>Nuova</title>
+        <link href="<%=request.getContextPath()%>/resources/css/bootstrap/bootstrap.min.css" rel="stylesheet"/>     
+		<script src="<c:url value="/resources/js/jquery/jquery-2.0.3.min.js" />"></script>
+		<script src="<c:url value="/resources/js/bootstrap/bootstrap.min.js" />"></script>
+		<script src="<%=request.getContextPath()%>/resources/js/jquery/bootstrap-collapse.js" />"></script>
+		<link href="<%=request.getContextPath()%>/resources/css/nuova.css" rel="stylesheet"/>
+		<link href="<%=request.getContextPath()%>/resources/css/panel.css" rel="stylesheet"/>
+		<link href="<%=request.getContextPath()%>/resources/css/bootstrap/bootstrap-responsive.css" rel="stylesheet"/>
+
+
 </head>
-<body>
+<body style="background-color:#eee;">
 <jsp:include page="../sec_menu.jsp"></jsp:include>
-
-<h3>Nueva Obra Social
+<jsp:include page="../breadcrumb.jsp"></jsp:include>
+<div class="mainContainer"> 
 <form:form method="post" action="addObraSocial" commandName="obrasocial">
- 	<div class="row col-md-6 col-md-offset-2 custyle">
-    <table class="table table-striped custab">
-    <tr>
-        <td><form:label path="nombre">Obra Social:</form:label></td>
-        <td><form:input path="nombre" /></td>
-    </tr>
-   
-    <tr>
-        <td>
-            <input class="btn btn-lg btn-primary btn-block btn-signin" type="submit" value="Guardar"/>
-        </td>
-        <td>
-            <input type="button" value="Cancelar" onclick="location.href='mainObraSocial';"/>
-        </td>
-    </tr>
-	</table>
-	</div> 
-</form:form>
- 
-
+<div class="panel panel-info">
+		<div class="panel-heading">
+			 <div class="panel-title">Nueva Obra Social</div>
+		</div>
+		<div class="panel-body" >
+				<div class="container-fluid">
+						<div class="row-fluid">
+							<div class="span6">
+								<div class="formLabel"><form:label path="nombre">Obra Social:</form:label></div>
+        						<div class="formInput"><form:input path="nombre" /></div>
+							</div>
+						</div>
+				</div>
+		</div>
+		<div class="row-fluid">
+			<div class="span12">
+				<div style="float:right;padding-bottom:1%;padding-right:1%;">
+	         			<input class="btn btn-info" type="submit" value="Guardar"/> 
+	         			<input class="btn" type="button" value="Cancelar" onclick="location.href='mainObraSocial';"/>
+	        	</div>
+			</div>
+		</div>
+</div>
+</form:form> 
+</div>
 </body>
 </html>
