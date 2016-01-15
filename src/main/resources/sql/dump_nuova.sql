@@ -68,23 +68,17 @@ CREATE TABLE IF NOT EXISTS `observaciones` (
   KEY `observacion_id` (`observacion_id`),
   KEY `FK_observaciones_orden` (`orden_id`),
   CONSTRAINT `FK_observaciones_orden` FOREIGN KEY (`orden_id`) REFERENCES `orden` (`orden_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+) ENGINE=InnoDB AUTO_INCREMENT=30 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
--- Volcando datos para la tabla nuova.observaciones: ~7 rows (aproximadamente)
+-- Volcando datos para la tabla nuova.observaciones: ~5 rows (aproximadamente)
 DELETE FROM `observaciones`;
 /*!40000 ALTER TABLE `observaciones` DISABLE KEYS */;
 INSERT INTO `observaciones` (`observacion_id`, `observacion`, `orden_id`, `user_name`, `fecha`) VALUES
-	(1, 'El HTML plano para el componente del panel es mucho más sencillo en comparación con el componente de la barra e navegación. Tenemos que utilizar sólo tres div, con un total de cuatro clases requeridas para agregar el estilo correcto', 14, 'administrador@nuova.com', '2016-01-08 16:52:03'),
-	(2, 'Nuevamente, eche un vistazo rápido a las 30 líneas originales de código HTML plano necesarias para el componente de la barra de navegación y observe cómo se construye un menú mucho más rápido (después de crear mixins reutilizables infinitamente) cuando se acorta el código a sólo 12 líneas con Jade en lugar de 30.', 14, 'administrador@nuova.com', '2016-01-11 16:37:49'),
-	(3, 'asdsa as dasdasdas dasd asd ad', 14, 'administrador@nuova.com', '2016-01-12 11:02:55'),
-	(4, '65465464 654sd6sa4ds5d4 5as65d4as4d a', 14, 'administrador@nuova.com', '2016-01-12 13:20:27'),
-	(7, 'asd asd as da', 11, 'administrador@nuova.com', '2016-01-12 13:56:32'),
-	(10, 'asdasd', 14, 'administrador@nuova.com', '2016-01-12 14:08:02'),
-	(13, 'sad ada sad ', 12, 'administrador@nuova.com', '2016-01-12 14:31:44'),
-	(14, 'soy muy pete', 13, 'administrador@nuova.com', '2016-01-12 15:43:47'),
-	(15, 'esto es una orden completa puede realizar todo sin problemas asad asd as das dasd ad asd a asdasdsa dasdasd asjdnask jdaskd asjkdn akjsdjkasdas dajldkasjldkajsdlaksjdalksjdlaksj dlaskj dalkjdalkdjalsk jdalsj dalsjdlakjs dlajlasjdlajdlaksjdla sd ', 15, 'administrador@nuova.com', '2016-01-12 16:04:48'),
-	(16, 'kskñadk asñdkasñdk asñldk añslk dañkd añsk dñask dña sñd', 15, 'administrador@nuova.com', '2016-01-12 16:06:51'),
-	(17, 'asdasdasdasdasd', 15, 'administrador@nuova.com', '2016-01-12 16:07:18');
+	(25, 'inicio', 17, 'administrador@nuova.com', '2016-01-13 15:02:25'),
+	(26, 'agrego practicas y cambio de estado en observacion', 17, 'administrador@nuova.com', '2016-01-13 15:03:42'),
+	(27, 'agrego otra practica con el mismo estado', 17, 'administrador@nuova.com', '2016-01-13 15:06:37'),
+	(28, '66666', 17, 'administrador@nuova.com', '2016-01-14 14:37:09'),
+	(29, 'Le fata presentar recibo de sueldo', 18, 'administrador@nuova.com', '2016-01-14 14:48:32');
 /*!40000 ALTER TABLE `observaciones` ENABLE KEYS */;
 
 
@@ -102,17 +96,14 @@ CREATE TABLE IF NOT EXISTS `orden` (
   KEY `orden_id` (`orden_id`),
   KEY `FK_orden_paciente` (`paciente_id`),
   CONSTRAINT `FK_orden_paciente` FOREIGN KEY (`paciente_id`) REFERENCES `paciente` (`paciente_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
--- Volcando datos para la tabla nuova.orden: ~3 rows (aproximadamente)
+-- Volcando datos para la tabla nuova.orden: ~0 rows (aproximadamente)
 DELETE FROM `orden`;
 /*!40000 ALTER TABLE `orden` DISABLE KEYS */;
 INSERT INTO `orden` (`orden_id`, `paciente_id`, `fecha`, `req_orden_medico`, `req_credecial`, `req_recibo_sueldo`, `req_monotributista`, `estado`) VALUES
-	(11, 35, '2016-01-08', 1, 0, 0, 0, 'AUTORIZADA'),
-	(12, 38, '2016-01-08', 0, 0, 0, 0, 'AUTORIZADA'),
-	(13, 38, '2016-01-08', 0, 0, 0, 0, 'EN_OBSERVACION'),
-	(14, 35, '2016-01-08', 1, 1, 0, 1, 'AUTORIZADA'),
-	(15, 35, '2016-01-12', 1, 1, 1, 1, 'AUTORIZADA');
+	(17, 35, '2016-01-13', 1, 1, 1, 1, 'RECHAZADA'),
+	(18, 35, '2016-01-14', 1, 1, 0, 0, 'INCOMPLETA');
 /*!40000 ALTER TABLE `orden` ENABLE KEYS */;
 
 
@@ -128,17 +119,15 @@ CREATE TABLE IF NOT EXISTS `orden_practica` (
   KEY `FK__practica` (`practica_id`),
   CONSTRAINT `FK__orden` FOREIGN KEY (`orden_id`) REFERENCES `orden` (`orden_id`),
   CONSTRAINT `FK__practica` FOREIGN KEY (`practica_id`) REFERENCES `practica` (`practica_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
--- Volcando datos para la tabla nuova.orden_practica: ~0 rows (aproximadamente)
+-- Volcando datos para la tabla nuova.orden_practica: ~3 rows (aproximadamente)
 DELETE FROM `orden_practica`;
 /*!40000 ALTER TABLE `orden_practica` DISABLE KEYS */;
 INSERT INTO `orden_practica` (`ordden_practica_id`, `orden_id`, `practica_id`, `fecha`) VALUES
-	(1, 12, 3, '2016-01-12'),
-	(2, 13, 5, '2016-01-12'),
-	(3, 15, 6, '2016-01-12'),
-	(4, 15, 5, '2016-01-12'),
-	(5, 15, 3, '2016-01-12');
+	(14, 17, 10, '2016-01-14'),
+	(15, 17, 9, '2016-01-14'),
+	(16, 17, 6, '2016-01-14');
 /*!40000 ALTER TABLE `orden_practica` ENABLE KEYS */;
 
 
@@ -148,28 +137,21 @@ CREATE TABLE IF NOT EXISTS `orden_workflow` (
   `orden_id` int(11) DEFAULT NULL,
   `user_name` varchar(164) COLLATE utf8_bin DEFAULT NULL,
   `estado` varchar(164) COLLATE utf8_bin DEFAULT NULL,
+  `fecha` datetime DEFAULT NULL,
   PRIMARY KEY (`orden_workflow_id`),
   KEY `orden_workflow_id` (`orden_workflow_id`),
   KEY `FK_orden_workflow_orden` (`orden_id`),
   CONSTRAINT `FK_orden_workflow_orden` FOREIGN KEY (`orden_id`) REFERENCES `orden` (`orden_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=27 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+) ENGINE=InnoDB AUTO_INCREMENT=36 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
--- Volcando datos para la tabla nuova.orden_workflow: ~7 rows (aproximadamente)
+-- Volcando datos para la tabla nuova.orden_workflow: ~4 rows (aproximadamente)
 DELETE FROM `orden_workflow`;
 /*!40000 ALTER TABLE `orden_workflow` DISABLE KEYS */;
-INSERT INTO `orden_workflow` (`orden_workflow_id`, `orden_id`, `user_name`, `estado`) VALUES
-	(7, 11, 'administrador@nuova.com', 'INCOMPLETA'),
-	(8, 12, 'administrador@nuova.com', 'INCOMPLETA'),
-	(9, 13, 'administrador@nuova.com', 'INCOMPLETA'),
-	(10, 14, 'administrador@nuova.com', 'INCOMPLETA'),
-	(15, 11, 'administrador@nuova.com', 'AUTORIZADA'),
-	(18, 14, 'administrador@nuova.com', 'AUTORIZADA'),
-	(21, 12, 'administrador@nuova.com', 'AUTORIZADA'),
-	(22, 13, 'administrador@nuova.com', 'EN_OBSERVACION'),
-	(23, 15, 'administrador@nuova.com', 'PENDIENTE'),
-	(24, 15, 'administrador@nuova.com', 'AUTORIZADA'),
-	(25, 15, 'administrador@nuova.com', 'AUTORIZADA'),
-	(26, 15, 'administrador@nuova.com', 'AUTORIZADA');
+INSERT INTO `orden_workflow` (`orden_workflow_id`, `orden_id`, `user_name`, `estado`, `fecha`) VALUES
+	(32, 17, 'administrador@nuova.com', 'PENDIENTE', '2016-01-13 15:02:25'),
+	(33, 17, 'administrador@nuova.com', 'EN_OBSERVACION', '2016-01-13 15:03:42'),
+	(34, 17, 'administrador@nuova.com', 'RECHAZADA', '2016-01-14 14:37:10'),
+	(35, 18, 'administrador@nuova.com', 'INCOMPLETA', '2016-01-14 14:48:32');
 /*!40000 ALTER TABLE `orden_workflow` ENABLE KEYS */;
 
 

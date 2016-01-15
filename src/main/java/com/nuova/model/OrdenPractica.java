@@ -49,7 +49,7 @@ public class OrdenPractica implements java.io.Serializable {
         this.orddenPracticaId = orddenPracticaId;
     }
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "orden_id")
     public Orden getOrden() {
         return this.orden;
@@ -59,7 +59,7 @@ public class OrdenPractica implements java.io.Serializable {
         this.orden = orden;
     }
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "practica_id")
     public Practica getPractica() {
         return this.practica;

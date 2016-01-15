@@ -3,8 +3,6 @@ package com.nuova.dto;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.nuova.model.Practica;
-
 public class OrdenDTO {
     private Integer ordenId;
     private PacienteDTO paciente;
@@ -20,7 +18,8 @@ public class OrdenDTO {
 
     private String pacienteSelected;
     private String practica;
-    private List<Practica> practicasListEdit = new ArrayList<Practica>();
+    private List<OrdenPracticaDTO> practicasListEdit = new ArrayList<OrdenPracticaDTO>();
+    private List<OrdenPracticaDTO> ordenpracticaListEdit = new ArrayList<OrdenPracticaDTO>();
 
     public Integer getOrdenId() {
         return ordenId;
@@ -126,12 +125,20 @@ public class OrdenDTO {
         this.practica = practica;
     }
 
-    public List<Practica> getPracticasListEdit() {
+    public List<OrdenPracticaDTO> getPracticasListEdit() {
         return practicasListEdit;
     }
 
-    public void setPracticasListEdit(List<Practica> practicasListEdit) {
+    public void setPracticasListEdit(List<OrdenPracticaDTO> practicasListEdit) {
         this.practicasListEdit = practicasListEdit;
+    }
+
+    public List<OrdenPracticaDTO> getOrdenpracticaListEdit() {
+        return ordenpracticaListEdit;
+    }
+
+    public void setOrdenpracticaListEdit(List<OrdenPracticaDTO> ordenpracticaListEdit) {
+        this.ordenpracticaListEdit = ordenpracticaListEdit;
     }
 
 }

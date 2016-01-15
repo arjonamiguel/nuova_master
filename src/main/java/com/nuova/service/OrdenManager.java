@@ -13,5 +13,7 @@ public interface OrdenManager {
 
     public void delete(Integer ordenId);
 
+    public void deleteOrdenPractica(Integer id);
+
     public void edit(Orden orden);
 }

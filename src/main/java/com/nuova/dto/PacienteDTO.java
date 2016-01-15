@@ -25,7 +25,9 @@ public class PacienteDTO {
     private List<String> provinciaList;
     private List<PacienteDTO> adherentes = new ArrayList<PacienteDTO>();
     private List<PacienteDTO> adherentesEditList = new ArrayList<PacienteDTO>();
+
     private String crdencial;
+    private boolean original = false;
 
     private boolean titular = false;
     private String checkedTitular;
@@ -218,6 +220,14 @@ public class PacienteDTO {
 
     public void setCheckedLiberado(String checkedLiberado) {
         this.checkedLiberado = checkedLiberado;
+    }
+
+    public boolean isOriginal() {
+        return original;
+    }
+
+    public void setOriginal(boolean original) {
+        this.original = original;
     }
 
 }

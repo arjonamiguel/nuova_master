@@ -13,5 +13,7 @@ public interface OrdenDAO {
 
     public void delete(Integer ordenId);
 
+    public void deleteOrdenPractica(Integer ordenId);
+
     public void edit(Orden orden);
 }

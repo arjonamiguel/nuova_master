@@ -14,29 +14,23 @@
   	    document.getElementById("tb_practicas").deleteRow(i);
   	}
   	
-      function addRow(tableID) {
-      	var index = document.getElementById(tableID).getElementsByTagName('tr').length;
-      	index ++;	
-          var table = document.getElementById(tableID);
-
-          var rowCount = table.rows.length;
-          var row = table.insertRow(rowCount);
-
-          var cell2 = row.insertCell(0);                      
-          cell2.innerHTML = document.getElementById("practica").value+"<input type='hidden' name='practicasListEdit["+index+"].practicaId' value='"+document.getElementById("practica").value+"'>";
-
-          var cell3 = row.insertCell(1);
-          cell3.innerHTML = document.getElementById('practica').options[document.getElementById('practica').selectedIndex].text; 
-
-
-          var cell1 = row.insertCell(2);
-          row.valign = "BASELINE";
-          cell1.innerHTML = "<button type='button' class='btn btn-link' onClick='Eliminar(this.parentNode.parentNode.rowIndex)'>eliminar</button>"
-           
-          index ++;
-
-       }
-
+	  function addRow(tableID) {
+	      	var index = document.getElementById(tableID).getElementsByTagName('tr').length;
+	      	index ++;	
+	          var table = document.getElementById(tableID);
+	          var rowCount = table.rows.length;
+	          var row = table.insertRow(rowCount);
+	          var cell2 = row.insertCell(0);                      
+	          cell2.innerHTML = document.getElementById("practica").value+"<input type='hidden' name='ordenpracticaListEdit[" + index + "].orddenPracticaId'> "
+	          + "<input type='hidden' name='ordenpracticaListEdit[" + index + "].practicaId' value='" + document.getElementById("practica").value + "'>";
+	          var cell3 = row.insertCell(1);
+	          cell3.innerHTML = document.getElementById('practica').options[document.getElementById('practica').selectedIndex].text; 
+	          var cell1 = row.insertCell(2);
+	          row.valign = "BASELINE";
+	          cell1.innerHTML = "<button type='button' class='btn btn-link' onClick='Eliminar(this.parentNode.parentNode.rowIndex)'>eliminar</button>"
+	           
+	          index ++;
+	       }
 	</script>
 	
 	<style>
@@ -81,7 +75,7 @@
      	</c:if>
 	  	</a>
 	  </li>
-	  <li><a data-toggle="tab" href="#tb_flujo">Flujo</a></li>
+	  <li><a data-toggle="tab" href="#tb_flujo">Flujo de Estados</a></li>
 	</ul>
 
 	<div class="tab-content" style="height: 350px">
@@ -90,23 +84,23 @@
 			
 			<tr>
 				<td><form:label path="paciente.dni">DNI</form:label></td>
-				<td><form:input path="paciente.dni"/></td>
+				<td><form:input path="paciente.dni" disabled="true"/></td>
 				<td><form:label path="paciente.apellido">Apellido</form:label></td>
 				<td>
 					<form:hidden path="paciente.pacienteId"/>
-					<form:input path="paciente.apellido"/>
+					<form:input path="paciente.apellido" disabled="true"/>
 				</td>
 				<td><form:label path="paciente.nombre">Nombre</form:label></td>
-				<td><form:input path="paciente.nombre"/></td>
+				<td><form:input path="paciente.nombre" disabled="true"/></td>
 			</tr>
 			
 			<tr>
 				<td><form:label path="paciente.obrasocial.nombre">Obra Social</form:label></td>
-				<td><form:input path="paciente.obrasocial.nombre"/></td>	
+				<td><form:input path="paciente.obrasocial.nombre" disabled="true"/></td>	
 				<td><form:label path="paciente.obrasocial.credencial">Credencial</form:label></td>			
-				<td><form:input path="paciente.obrasocial.credencial"/></td>
+				<td><form:input path="paciente.obrasocial.credencial" disabled="true"/></td>
 				<td><form:label path="paciente.obrasocial.original">Original</form:label></td>			
-				<td><input type="checkbox" /> </td>
+				<td><form:checkbox path="paciente.original" disabled="true"/> </td>
 			</tr>
 			
 		</table>  		   
@@ -120,8 +114,8 @@
 				<td colspan="4">
 					<b>Presentó la orden original del médico solicitante?</b>
 				</td>
-				<td  style="text-align:left" colspan="2">			
-				    <input type="checkbox" id="reqOrdenMedico" name = "reqOrdenMedico"  />
+				<td  style="text-align:left" colspan="2">			    
+				    <form:checkbox path="reqOrdenMedico" />
 				</td>
 			</tr>
 			<tr>
@@ -129,8 +123,8 @@
 				<td colspan="4">
 					<b>Presentó fotocopia de la credencial de la prestadora OSPSIP?</b>
 				</td>
-				<td  style="text-align:left" colspan="2">			
-				    <input type="checkbox" id="reqCredecial" name="reqCredecial"  />
+				<td  style="text-align:left" colspan="2">				    
+				    <form:checkbox path="reqCredecial" />
 				</td>
 			</tr>
 
@@ -141,8 +135,8 @@
 				<td colspan="4">
 					<b>Presentó fotocopia del último recibo Monotributista?</b>
 				</td>
-				<td  style="text-align:left" colspan="2">			
-				    <input type="checkbox" id="reqMonotributista" name="reqMonotributista" />
+				<td  style="text-align:left" colspan="2">				    
+				    <form:checkbox path="reqMonotributista" />
 				</td>
 			</tr>	
 			<tr>
@@ -150,8 +144,8 @@
 				<td colspan="4">
 					<b>Presentó fotocopia del último recibo de sueldo?</b>
 				</td>
-				<td  style="text-align:left" colspan="2">			
-				    <input type="checkbox" id="reqReciboSueldo" name="reqReciboSueldo" />
+				<td  style="text-align:left" colspan="2">				    
+				    <form:checkbox path="reqReciboSueldo" />
 				</td>
 			</tr>
 
@@ -194,6 +188,18 @@
 			            <TD style="width: 100%">Practica</TD>
 			            <td></td>
 			        </TR>
+			        <% int index = 0;%>
+			        <c:forEach items="${ordenDto.practicasListEdit}" var="pa" varStatus="loop" >
+			    	<tr>
+				        <td>${pa.practicaId}
+				        <input type="hidden" name = "ordenpracticaListEdit[<%=index%>].orddenPracticaId" value = "${pa.orddenPracticaId}" />
+				        <input type="hidden" name = "ordenpracticaListEdit[<%=index%>].practicaId" value = "${pa.practicaId}" /> 
+				        </td>
+				        <td>${pa.nombre}</td>				        
+				        <td><button type='button' class='btn btn-link' onClick='Eliminar(this.parentNode.parentNode.rowIndex)'>eliminar</button></td>
+				        <%index++;%>
+			    	</tr>
+					</c:forEach>
 			    </thead>
 			   
 			    </TABLE>
@@ -210,7 +216,7 @@
 			<c:forEach items="${ordenDto.observacioneses}" var="obs" varStatus="loop" >
 			<table class="table table-striped custab"  style="width: 60%">	
 			<tr>
-				<td style="width: 80%; padding: 1px 1px;border-left: 1px solid orange">
+				<td style="width: 80%; padding: 1px 1px;border-left: 2px solid orange">
 	    		<b>${obs.userName}</b> <span style="font-size: 12px">${obs.fecha}</span>
 	    		</td>
 	    		<td style="padding: 1px 1px; text-align: right;">
@@ -222,7 +228,7 @@
 				</a>
 				
 	    	</tr>
-	    	<tr style="border-left: 1px solid orange">	    		
+	    	<tr style="border-left: 2px solid orange">	    		
 		        <td align="justify" colspan="2">${obs.observacion}</td>		      
 	    	</tr>
 	
@@ -239,14 +245,22 @@
 			</table>
   		</div>
   		<div id="tb_flujo" class="tab-pane fade">  					
-			<c:forEach items="${ordenDto.ordenWorkflows}" var="ow" varStatus="loop" >
+			<c:forEach items="${ordenDto.ordenWorkflows}" var="ow" varStatus="loop" >			
 			<table class="table table-striped custab"  style="width: 60%">	
-	    	<tr style="border-left: 1px solid orange">
-	    		<td>
-	    		<b>${ow.userName}</b>
+	    	<tr style="border-left: 2px solid orange">
+	    		<td style="width: 60%">
+	    		<b>${ow.userName}</b><br>
+	    		<span style="font-size: 12px">${ow.fecha}</span>
 	    		</td>
-		        <td align="justify">${ow.estado}</td>		      
-	    	</tr>	
+	    		<td align="left">
+		    		<c:if test="${loop.index < 1}">
+			        	<span style="color: orange; font-weight: bold">${ow.estado}</span>
+			        </c:if>
+			        <c:if test="${loop.index  > 0}">
+			        	${ow.estado}
+			        </c:if>
+		        </td>
+	    	</tr>
 	    	</table>
 	    	</c:forEach>   		
   		</div>

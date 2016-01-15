@@ -39,4 +39,9 @@ public class OrdenManagerImpl implements OrdenManager {
         ordenDAO.edit(orden);
     }
 
+    @Transactional
+    public void deleteOrdenPractica(Integer id) {
+        ordenDAO.deleteOrdenPractica(id);
+    }
+
 }

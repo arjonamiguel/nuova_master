@@ -38,4 +38,12 @@ public class OrdenDAOImpl implements OrdenDAO {
         this.sessionFactory.getCurrentSession().saveOrUpdate(orden);
     }
 
+    public void deleteOrdenPractica(Integer ordenId) {
+        this.sessionFactory.getCurrentSession().
+                createQuery(" DELETE FROM OrdenPractica o WHERE o.orden.ordenId = :ordenId ").
+                setInteger("ordenId", ordenId).
+                executeUpdate();
+
+    }
+
 }

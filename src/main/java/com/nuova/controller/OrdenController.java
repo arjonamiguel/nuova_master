@@ -1,7 +1,10 @@
 package com.nuova.controller;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -20,6 +23,7 @@ import com.nuova.dto.ComboItemDTO;
 import com.nuova.dto.ObraSocialDTO;
 import com.nuova.dto.ObservacionesDTO;
 import com.nuova.dto.OrdenDTO;
+import com.nuova.dto.OrdenPracticaDTO;
 import com.nuova.dto.OrdenWorkflowDTO;
 import com.nuova.dto.PacienteDTO;
 import com.nuova.model.Obrasocial;
@@ -84,6 +88,7 @@ public class OrdenController {
             map.addAttribute("ordenDto", ordenDto);
             map.addAttribute("observacionCount", observacionCount);
             map.addAttribute("practicasList", Util.getComboItems(practicaManager.findAll()));
+
             map.addAttribute("estadosList", Util.getEstadosList());
         }
 
@@ -109,7 +114,8 @@ public class OrdenController {
         ordenDto.setEstado(Util.getEstadoInicial(ordenDto));
         Orden orden = transformDtoToOrden(ordenDto);
         orden.setFecha(new Date());
-        orden.getOrdenWorkflows().add(new OrdenWorkflow(orden, user.getUsername(), orden.getEstado()));
+        orden.getOrdenWorkflows().add(new OrdenWorkflow(orden, user.getUsername()
+                , orden.getEstado(), new Date()));
         if (!ordenDto.getObservacion().trim().equals("")) {
             orden.getObservacioneses().add(
                     new Observaciones(orden, ordenDto.getObservacion(), user.getUsername(), new Date()));
@@ -129,10 +135,10 @@ public class OrdenController {
     // }
     //
     @RequestMapping(value = ConstantControllers.EDIT_ORDEN, method = RequestMethod.POST)
-    public String editObraSocial(@ModelAttribute(value = "ordenDto") OrdenDTO dto) {
+    public String editOrden(@ModelAttribute(value = "ordenDto") OrdenDTO dto) {
         Orden orden = ordenManager.findOrdenById(dto.getOrdenId());
         User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        List<Practica> practicas = dto.getPracticasListEdit();
+        List<OrdenPracticaDTO> practicas = dto.getOrdenpracticaListEdit();
 
         // Persisto Observacion
         if (!dto.getObservacion().trim().equals("")) {
@@ -142,21 +148,32 @@ public class OrdenController {
         }
 
         // Persiste Practicas
-        for (Practica p : practicas) {
-            if (p.getPracticaId() != null) {
+        for (OrdenPractica o : orden.getOrdenPracticas()) {
+            ordenManager.deleteOrdenPractica(o.getOrden().getOrdenId());
+        }
+
+        Set<OrdenPractica> persistOrdenPracticaList = new HashSet<OrdenPractica>();
+        for (OrdenPracticaDTO opdto : practicas) {
+            if (opdto.getPracticaId() != null) {
+                Practica p = new Practica();
+                p.setPracticaId(opdto.getPracticaId());
                 OrdenPractica op = new OrdenPractica();
                 op.setFecha(new Date());
                 op.setOrden(orden);
                 op.setPractica(p);
 
-                orden.getOrdenPracticas().add(op);
+                persistOrdenPracticaList.add(op);
             }
         }
+        orden.setOrdenPracticas(persistOrdenPracticaList);
 
         // Persiste Estado
-        OrdenWorkflow ow = new OrdenWorkflow(orden, user.getUsername(), dto.getEstado());
-        orden.getOrdenWorkflows().add(ow);
-        orden.setEstado(dto.getEstado());
+        if (!orden.getEstado().equals(dto.getEstado())) {
+            OrdenWorkflow ow = new OrdenWorkflow(orden, user.getUsername()
+                    , dto.getEstado(), new Date());
+            orden.getOrdenWorkflows().add(ow);
+            orden.setEstado(dto.getEstado());
+        }
 
         ordenManager.edit(orden);
         return "redirect:" + ConstantControllers.MAIN_ORDEN;
@@ -246,6 +263,7 @@ public class OrdenController {
                     po.getNroCredencial(), po.getProvisorio() == 1 ? "checked" : "");
             dto.getObrasocialList().add(o);
             dto.setObrasocial(o);
+            dto.setOriginal(po.getProvisorio().intValue() == 1 ? true : false);
             break;
         }
 
@@ -306,16 +324,27 @@ public class OrdenController {
 
     private OrdenDTO transformOrdenToDto(Orden orden) {
         OrdenDTO dto = new OrdenDTO();
-        dto.setEstado(orden.getEstado());
-        // dto.setFecha(orden.getFecha() + "");
-        dto.setObservacioneses(getObservacionesDto(orden.getObservacioneses()));
         dto.setOrdenId(orden.getOrdenId());
-        dto.setOrdenWorkflows(getOrdenWorkflowToDto(orden.getOrdenWorkflows()));
+
+        // Paciente
         dto.setPaciente(transformPacienteToDto(orden.getPaciente()));
-        dto.setReqCredecial(orden.getReqCredecial() == new Byte("1") ? true : false);
-        dto.setReqMonotributista(orden.getReqMonotributista() == new Byte("1") ? true : false);
-        dto.setReqOrdenMedico(orden.getReqOrdenMedico() == new Byte("1") ? true : false);
-        dto.setReqReciboSueldo(orden.getReqReciboSueldo() == new Byte("1") ? true : false);
+
+        // requisitos
+        dto.setReqCredecial(orden.getReqCredecial().intValue() == 1 ? true : false);
+        dto.setReqMonotributista(orden.getReqMonotributista().intValue() == 1 ? true : false);
+        dto.setReqOrdenMedico(orden.getReqOrdenMedico().intValue() == 1 ? true : false);
+        dto.setReqReciboSueldo(orden.getReqReciboSueldo().intValue() == 1 ? true : false);
+
+        // Autorizacion
+        dto.setEstado(orden.getEstado());
+        dto.setPracticasListEdit(getPracticaDto(orden.getOrdenPracticas()));
+
+        // Observaciones
+        dto.setObservacioneses(getObservacionesDto(orden.getObservacioneses()));
+
+        // Flujo de Estados
+        dto.setOrdenWorkflows(getOrdenWorkflowToDto(orden.getOrdenWorkflows()));
+
         return dto;
     }
 
@@ -329,6 +358,11 @@ public class OrdenController {
             retorno.add(dto);
         }
 
+        Collections.sort(retorno, new Comparator<ObservacionesDTO>() {
+            public int compare(ObservacionesDTO a1, ObservacionesDTO a2) {
+                return a2.getFecha().compareTo(a1.getFecha());
+            }
+        });
         return retorno;
     }
 
@@ -338,7 +372,28 @@ public class OrdenController {
             OrdenDTO odto = new OrdenDTO();
             odto.setOrdenId(o.getOrden().getOrdenId());
             OrdenWorkflowDTO dto = new OrdenWorkflowDTO(odto,
-                    o.getUserName(), o.getEstado());
+                    o.getUserName(), o.getEstado(), o.getFecha());
+            retorno.add(dto);
+        }
+
+        Collections.sort(retorno, new Comparator<OrdenWorkflowDTO>() {
+            public int compare(OrdenWorkflowDTO a1, OrdenWorkflowDTO a2) {
+                return a2.getFecha().compareTo(a1.getFecha());
+            }
+        });
+
+        return retorno;
+    }
+
+    private List<OrdenPracticaDTO> getPracticaDto(Set<OrdenPractica> list) {
+        List<OrdenPracticaDTO> retorno = new ArrayList<OrdenPracticaDTO>(0);
+        for (OrdenPractica op : list) {
+            Practica p = op.getPractica();
+            p.setNombre("[" + p.getCodigo() + "]-" + p.getNombre());
+            Orden o = op.getOrden();
+            // PracticaDTO dto = new PracticaDTO(p.getPracticaId(), "[" + p.getCodigo() + "]-" + p.getNombre());
+            OrdenPracticaDTO dto = new OrdenPracticaDTO(o.getOrdenId(), p.getNombre(), p.getPracticaId());
+            dto.setOrddenPracticaId(op.getOrddenPracticaId());
             retorno.add(dto);
         }
 
