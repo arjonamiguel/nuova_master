@@ -21,7 +21,7 @@
 <jsp:include page="../breadcrumb.jsp"></jsp:include>
 <div class="mainContainer">   
 	
-	<div class="pageTitle">
+	<div class="textTitle">
 	<h3>Administracion de Practicas</h3>
 	</div>
 	<div class="tableContainer">

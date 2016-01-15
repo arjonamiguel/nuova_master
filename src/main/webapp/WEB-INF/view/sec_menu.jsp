@@ -6,14 +6,14 @@
 <div class="navbar navbar-inverse nav">
     <div class="navbar-inner">
         <div class="container">
-            <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+            <a class="btn btn-navbar" data-toggle="collapse" data-target="#collapse1">
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </a>
             <a class="brand" href="">NUOVA</a>
     		
-          	<div class="nav-collapse collapse">
+          	<div class="nav-collapse collapse" id="collapse1">S
               <div class="pull-right">
                 <ul class="nav pull-right">
                     <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon-user"></i>&nbsp;&nbsp;Logueado como, <sec:authorize access="isAuthenticated()">
@@ -57,35 +57,55 @@
 	
 
 		 <ul class="nav navbar-nav">
-
-		
-		<sec:authorize access="hasRole('ROLE_ADMIN')">
-		<li>
-		<a href="/nuova/mainOrden" id="mainOrden">Administracion de Practicas</a>
-		</li>
-		</sec:authorize>
-		<sec:authorize access="hasRole('ROLE_ADMIN')">
-		<li><a href="/nuova/mainPaciente" id="mainPaciente">Administracion de Pacientes</a></li>
-		</sec:authorize>
-		<li>
-		<a href="" id="reportes">Reportes</a>
-		</li>
-		<li class="dropdown" style="width:30%;">
-		            <a href="#" id="configuracion" class="dropdown-toggle" data-toggle="dropdown"><img style="height:7%;width:7%;" src="<c:url value="/resources/img/others/conf.ico"/>">&nbsp;&nbsp;&nbsp;&nbsp;Configuracion</a>
+		 		<li class="dropdown">
+		            <a href="#" id="configuracion" class="dropdown-toggle" data-toggle="dropdown"><i class="icon-cog"></i>&nbsp;&nbsp;Configuracion<span class="caret"></a>
 		            <ul class="dropdown-menu">
 		            	<sec:authorize access="hasRole('ROLE_ADMIN')">
-						<li><a href="mainProfesional" id="mainProfesional">Administracion de Profesionales</a></li>
+						<li><a href="mainProfesional" id="mainProfesional">Administrar Profesionales</a></li>
+						<li><a href="/nuova/formAddProfesional" id="formAddProfesional">Agregar Profesionales</a></li>
+						<li class="divider"></li>
 						</sec:authorize>
 						<sec:authorize access="hasRole('ROLE_ADMIN')">
-						<li><a href="mainEspecialidad" id="mainEspecialidad">Administracion de Especialidades</a></li>
+						<li><a href="mainEspecialidad" id="mainEspecialidad">Administrar Especialidades</a></li>
+						<li><a href="/nuova/formAddEspecialidad" id="formAddEspecialidad">Agregar Especialidades</a></li>
+						<li class="divider"></li>
 						</sec:authorize>
 						<sec:authorize access="hasRole('ROLE_ADMIN')">
-						<li><a href="/nuova/mainObraSocial" id="mainObraSocial">Administracion de Obras Sociales</a></li>
+						<li><a href="/nuova/mainObraSocial" id="mainObraSocial">Administrar Obras Sociales</a></li>
+						<li><a href="/nuova/formAddObraSocial" id="formAddObraSocial">Agregar Obras Sociales</a></li>
 						</sec:authorize>
 		            </ul>
-		</li>
-								
+				</li>
 
+				
+				<sec:authorize access="hasRole('ROLE_ADMIN')">
+				<li class="dropdown">
+				<a href="#" id="mainOrden" class="dropdown-toggle" data-toggle="dropdown"><i class="icon-briefcase"></i>&nbsp;&nbsp;Administracion de Practicas<span class="caret"></span></a>			
+			  		<ul class="dropdown-menu" role="menu">
+			  			<li><a href="/nuova/mainOrden">Administrar Practicas</a></li>
+		                <li><a href="/nuova/formAddOrden">Agregar Practicas</a></li>
+              		</ul>                
+				</li>
+				</sec:authorize>
+				<sec:authorize access="hasRole('ROLE_ADMIN')">
+				<li class="dropdown" >
+					<a href="#" id="mainPaciente"  class="dropdown-toggle" data-toggle="dropdown"><i class="icon-wrench"></i>&nbsp;&nbsp;Administracion de Pacientes</a>
+					<ul class="dropdown-menu" role="menu">
+		                <li><a href="/nuova/mainPaciente">Administrar Pacientes</a></li>
+		                <li><a href="/nuova/formAddPaciente">Agregar Pacientes</a></li>
+              		</ul>  
+				</li>
+				</sec:authorize>
+				<li class="dropdown" >
+				<a href="#" id="reportes"  class="dropdown-toggle" data-toggle="dropdown"><i class="icon-th-list"></i>&nbsp;&nbsp;Reportes</a>
+				<ul class="dropdown-menu" role="menu">
+		                <li><a href="#">Action</a></li>
+		                <li><a href="#">Another action</a></li>
+		                <li><a href="#">Something else here</a></li>
+		                <li class="divider"></li>
+		                <li><a href="#">Separated link</a></li>
+              	</ul>
+				</li>
 		</ul>
 
 
@@ -100,3 +120,17 @@ USER
 RECEPCION
 </sec:authorize>
 <!-- Menu       -->
+<script>
+$(document).ready(function(){
+    $(".dropdown").hover(            
+        function() {
+            $('.dropdown-menu', this).not('.in .dropdown-menu').stop( true, true ).slideDown("fast");
+            $(this).toggleClass('open');        
+        },
+        function() {
+            $('.dropdown-menu', this).not('.in .dropdown-menu').stop( true, true ).slideUp("fast");
+            $(this).toggleClass('open');       
+        }
+    );
+});
+</script>

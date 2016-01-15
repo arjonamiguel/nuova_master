@@ -35,7 +35,7 @@
 <jsp:include page="../sec_menu.jsp"></jsp:include>
 <jsp:include page="../breadcrumb.jsp"></jsp:include>
 <div class="mainContainer"> 	  
-	<div style="padding-left:2%;"> 
+	<div class="textTitle"> 
 	<h3>Administracion de Pacientes</h3>
 	</div>
  

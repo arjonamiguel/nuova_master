@@ -20,6 +20,7 @@
 <jsp:include page="../sec_menu.jsp"></jsp:include>
 <jsp:include page="../breadcrumb.jsp"></jsp:include>
 <div class="mainContainer"> 
+<div class="panelContainer">
 	<form:form method="post" action="addEspecialidad" commandName="especialidad">
 	<div class="panel panel-info">
 			<div class="panel-heading">
@@ -49,6 +50,7 @@
 			</div>
 	</div>
 	</form:form>
+</div>
 </div>
 </body>
 </html>

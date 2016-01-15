@@ -1,7 +1,7 @@
 .table{
     border: 1px solid #ccc;
     padding: 5px;
-    margin: 5% 0;
+    margin: 5 5 5 5;
     box-shadow: 3px 3px 2px #ccc;
     transition: 0.5s;
     background-color:white;
@@ -13,7 +13,7 @@
 }
 .mainContainer {
 	  position: relative; /* or absolute */
-	  top: 0%;
+	  top: 5%;
 	  left: 0%;
 	  right: 2%;
 	  bottom:2%;
@@ -21,8 +21,8 @@
 	  width:98%;
 	  margin-left:1%;
 	  margin-right:1%;
-	  margin-top:0%;
-	  margin-bottom:5%;
+	  margin-top:1%;
+	  margin-bottom:1%;
 	  background-color:#f5f5f5;
 	  border-radius: 10px;
 }
@@ -87,16 +87,21 @@
 .badge{
 	box-shadow: inset 0px 0px 5px;
 }
-}
 
 .navbar{
 	margin-bottom:0px;
 }
 .navbar-inner{
 	padding-left:1%;
+	margin-bottom:0px;
+	margin-top:0px;
+}
+.navbar-inverse{
+	margin-bottom:0px;
+	
 }
 .textTitle{
-	padding-left:0%;
+	padding-left:1%;
 }
 .formLabel{
 	float:left;
@@ -156,7 +161,8 @@
 	padding-left:0%;
 }
 .tableContainer{
-	padding-left:0%;
+	padding-left:1%;
+	padding-right:1%;
 }
 .addButton{
 	float:right;
@@ -164,4 +170,9 @@
 }
 -bodyStyle{
 	background-color:#eee;
+}
+.panelContainer{
+	padding-left:2%;
+	padding-right:0%;
+	padding-top:2%;
 }
