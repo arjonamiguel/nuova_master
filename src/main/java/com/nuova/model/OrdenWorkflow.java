@@ -24,6 +24,10 @@ import javax.persistence.TemporalType;
         , catalog = "nuova")
 public class OrdenWorkflow implements java.io.Serializable {
 
+    /**
+     * 
+     */
+    private static final long serialVersionUID = 8573147199509529573L;
     private Integer ordenWorkflowId;
     private Orden orden;
     private String userName;

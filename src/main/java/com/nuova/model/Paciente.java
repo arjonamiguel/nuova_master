@@ -2,10 +2,8 @@ package com.nuova.model;
 
 // Generated Dec 17, 2015 7:14:16 PM by Hibernate Tools 3.4.0.CR1
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 import javax.persistence.Column;
@@ -29,6 +27,10 @@ import javax.persistence.TemporalType;
         , catalog = "nuova")
 public class Paciente implements java.io.Serializable {
 
+    /**
+     * 
+     */
+    private static final long serialVersionUID = 1623880535481351173L;
     private Integer pacienteId;
     private Paciente paciente;
     private String apellido;
@@ -39,7 +41,7 @@ public class Paciente implements java.io.Serializable {
     private String mail;
     private Byte liberado;
     private Integer dni;
-    private List<PacienteObrasocial> pacienteObrasocials = new ArrayList<PacienteObrasocial>();
+    private Set<PacienteObrasocial> pacienteObrasocials = new HashSet<PacienteObrasocial>();
     private Set<Paciente> pacientes = new HashSet<Paciente>();
     private String provincia;
     private Byte titular;
@@ -48,7 +50,7 @@ public class Paciente implements java.io.Serializable {
     }
 
     public Paciente(Paciente paciente, String apellido, String nombre, Date fechaNacimiento, String domicilio,
-            String telefono, String mail, Byte liberado, Integer dni, List<PacienteObrasocial> pacienteObrasocials,
+            String telefono, String mail, Byte liberado, Integer dni, Set<PacienteObrasocial> pacienteObrasocials,
             Set<Paciente> pacientes, String provincia) {
         this.paciente = paciente;
         this.apellido = apellido;
@@ -158,11 +160,11 @@ public class Paciente implements java.io.Serializable {
     }
 
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "paciente")
-    public List<PacienteObrasocial> getPacienteObrasocials() {
+    public Set<PacienteObrasocial> getPacienteObrasocials() {
         return this.pacienteObrasocials;
     }
 
-    public void setPacienteObrasocials(List<PacienteObrasocial> pacienteObrasocials) {
+    public void setPacienteObrasocials(Set<PacienteObrasocial> pacienteObrasocials) {
         this.pacienteObrasocials = pacienteObrasocials;
     }
 

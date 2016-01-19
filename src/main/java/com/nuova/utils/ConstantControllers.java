@@ -39,6 +39,8 @@ public class ConstantControllers {
     public final static String ADD_PACIENTE = "/addPaciente";
     public final static String DELETE_PACIENTE = "/deletePaciente";
     public final static String EDIT_PACIENTE = "/editPaciente";
+    public final static String AJAX_GET_PACIENTES_PAGINADOS = "/ajaxGetPacientesPaginados";
+    public final static String AJAX_GET_SEARCH_PACIENTES_PAGINADOS = "/ajaxGetSearchPacientesPaginados";
 
     // Adherente
     public final static String FORM_ADD_ADHERENTE = "/formAddAdherente/{titularId}";
@@ -55,4 +57,6 @@ public class ConstantControllers {
     public final static String DELETE_ORDEN = "/deleteOrden";
     public final static String EDIT_ORDEN = "/editOrden";
 
+    // Reportes
+    public final static String REPORT_ORDEN_EMITIDA = "/reportOrdenEmitida/{ordenId}";
 }

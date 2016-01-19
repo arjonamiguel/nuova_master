@@ -36,6 +36,8 @@ public class PacienteDTO {
     private boolean liberado = false;
     private String checkedLiberado;
 
+    private String acciones;
+
     // private List<PacienteObrasocial> pacienteObrasocials = new ArrayList<PacienteObrasocial>(0);
 
     public Integer getPacienteId() {
@@ -230,4 +232,22 @@ public class PacienteDTO {
         this.original = original;
     }
 
+    public String getAcciones() {
+        String botonEdit = "<a class='btn btn-info btn-xs' href='formEditPaciente/" + getPacienteId()
+                + "'><span class='icon icon-edit'></span>editar</a>&nbsp;";
+
+        String botonPractica = "<a class='btn btn-success btn-xs' href='formAddOrden/" + getPacienteId()
+                + "'><span class='icon icon-plus-sign'></span>Practica</a>&nbsp;";
+
+        String botonDelete = "<a class='btn btn-danger btn-xs' href='formDeletePaciente/" + getPacienteId()
+                + "'><span class='icon icon-remove'></span>eliminar</a>";
+
+        this.acciones = botonEdit + botonPractica + botonDelete;
+
+        return acciones;
+    }
+
+    public void setAcciones(String acciones) {
+        this.acciones = acciones;
+    }
 }

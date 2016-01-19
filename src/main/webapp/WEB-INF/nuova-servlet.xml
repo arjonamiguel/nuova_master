@@ -61,7 +61,7 @@
         <property name="hibernateProperties">
            <value>
             hibernate.connection.provider_class=org.hibernate.connection.C3P0ConnectionProvider
-            hibernate.dialect=org.hibernate.dialect.SQLServer2008Dialect
+            hibernate.dialect=org.hibernate.dialect.MySQLDialect
             hibernate.show_sql=true
        		</value>
         </property>

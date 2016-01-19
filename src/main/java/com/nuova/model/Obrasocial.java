@@ -22,6 +22,10 @@ import javax.persistence.Table;
         , catalog = "nuova")
 public class Obrasocial implements java.io.Serializable {
 
+    /**
+     * 
+     */
+    private static final long serialVersionUID = -6064833297447829489L;
     private Integer obrasocialId;
     private String nombre;
     private List<PacienteObrasocial> pacienteObrasocials = new ArrayList<PacienteObrasocial>(0);

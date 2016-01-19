@@ -24,6 +24,10 @@ import javax.persistence.TemporalType;
         , catalog = "nuova")
 public class OrdenPractica implements java.io.Serializable {
 
+    /**
+     * 
+     */
+    private static final long serialVersionUID = 8742454053094013763L;
     private Integer orddenPracticaId;
     private Orden orden;
     private Practica practica;

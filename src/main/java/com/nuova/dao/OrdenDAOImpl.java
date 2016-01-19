@@ -22,6 +22,7 @@ public class OrdenDAOImpl implements OrdenDAO {
                 getCurrentSession().get(Orden.class, ordenId);
     }
 
+    @SuppressWarnings("unchecked")
     public List<Orden> findAll() {
         return this.sessionFactory.getCurrentSession().createQuery("FROM Orden").list();
     }
