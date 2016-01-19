@@ -99,13 +99,18 @@
 <jsp:include page="../breadcrumb.jsp"></jsp:include>
 <div class="mainContainer">
         <section id="main">        
-			<div class="container-fluid">			
+			<div class="container-fluid">	
+				<div>		
 			    <input type="text" 
 			    	style="width: 50%"
 			    	name="search" 
 			    	id="search"			    	 
 			    	class="form-control input-lg"  
-			    	placeholder="USTED PUEDE FILTRAR POR DNI, APELLIDO Y NOMBRE SEPARADOS CON ESPACIOS"/>			
+			    	placeholder="USTED PUEDE FILTRAR POR DNI, APELLIDO Y NOMBRE SEPARADOS CON ESPACIOS"/>
+			     <button type="submit" class="btn btn-warning" onclick="location.href='/nuova/formAddPaciente';" 
+			     	style="margin-bottom: 10px;float:right;">
+			     	<span class="icon icon-plus"></span>Nuevo Paciente</button>				
+				</div>
 				<div class="row-fluid">
 					<div id="pacienteGrid"></div>
 				</div>
