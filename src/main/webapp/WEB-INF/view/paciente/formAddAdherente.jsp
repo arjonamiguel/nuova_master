@@ -96,7 +96,7 @@ function updateDate(){
 		}
         </SCRIPT>
 </head>
-<body style="background-color:#eee;"class="bodyStyle">
+<body style="background-color:#e5e5e5;">
 <jsp:include page="../sec_menu.jsp"></jsp:include>
 
 <div class="mainContainer" style="padding-top:1%;"> 

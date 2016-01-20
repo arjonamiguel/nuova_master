@@ -1947,11 +1947,11 @@ table td[class*="span"], table th[class*="span"], .row-fluid table td[class*="sp
 }
 
 .icon-ok {
-    background-position: -288px 0
+    background-position: -288px 0;
 }
 
 .icon-remove {
-    background-position: -312px 0
+    background-position: -312px 0;
 }
 
 .icon-zoom-in {
@@ -2165,7 +2165,8 @@ table td[class*="span"], table th[class*="span"], .row-fluid table td[class*="sp
 }
 
 .icon-check {
-    background-position: -144px -72px
+    background-position: -144px -72px;
+    background-image: url("../../img/bootstrap/glyphicons-halflings.png");
 }
 
 .icon-move {
@@ -2229,11 +2230,13 @@ table td[class*="span"], table th[class*="span"], .row-fluid table td[class*="sp
 }
 
 .icon-remove-sign {
-    background-position: -48px -96px
+    background-position: -48px -96px;
+    background-image: url("../../img/bootstrap/glyphicons-halflings.png");
 }
 
 .icon-ok-sign {
-    background-position: -72px -96px
+    background-position: -72px -96px;
+    background-image: url("../../img/bootstrap/glyphicons-halflings.png");
 }
 
 .icon-question-sign {

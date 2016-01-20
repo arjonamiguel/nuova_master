@@ -10,47 +10,62 @@
 	<title>Nuova</title>
 
 	<link href="<%=request.getContextPath()%>/resources/css/bootstrap/bootstrap.min.css" rel="stylesheet"/>
-	<link href="<%=request.getContextPath()%>/resources/css/bootstrap/bootstrap-responsive.css" rel="stylesheet"/>
 	<script src="<c:url value="/resources/js/jquery/jquery-2.0.3.min.js" />"></script>
 	<script src="<c:url value="/resources/js/bootstrap/bootstrap.min.js" />"></script>
 	<script src="<%=request.getContextPath()%>/resources/js/jquery/bootstrap-collapse.js" />"></script>
 	<link href="<%=request.getContextPath()%>/resources/css/nuova.css" rel="stylesheet"/>
+	<link href="<%=request.getContextPath()%>/resources/css/panel.css" rel="stylesheet"/>
+	<link href="<%=request.getContextPath()%>/resources/css/bootstrap/bootstrap-responsive.css" rel="stylesheet"/>
 	
 </head>
-<body style="background-color:#eee;">
+<body style="background-color:#e5e5e5;">
 	<jsp:include page="../sec_menu.jsp"></jsp:include>
 	<jsp:include page="../breadcrumb.jsp"></jsp:include>
 <div class="mainContainer">     
-	<div class="textTitle">   
-		<h3>Administracion de Especialidades</h3>
-	</div>
 	
-	<div class="tableContainer">
-		<div class="buttonAdd">
-			<a href="formAddEspecialidad" class="btn btn-info btn-xs pull-right"><b>+</b>&nbsp;&nbsp;Nueva Especialidad</a>
-		</div> 
-	<c:if  test="${!empty especialidadList}">
 	
-	<table class="table">
-	<tr>
-	    <th style="background-color:#f9f9f9;">Nombre</th>	    
-	    <th style="background-color:#f9f9f9;"s>&nbsp;</th>
-	</tr>
-	<c:forEach items="${especialidadList}" var="e">
-	    <tr>
-	        <td>${e.nombre}</td>        
-	        <td>
-	        <div style="float:right;">
-	        	<a class="btn btn-info btn-xs" href="formEditEspecialidad/${e.especialidadId}"><span class="icon icon-edit"></span>editar</a>
-	        	<a class="btn btn-danger btn-xs" href="formDeleteEspecialidad/${e.especialidadId}"><span class="icon icon-remove"></span>eliminar</a>
-	       	</td>
-	       	</div>
-	    </tr>
-	</c:forEach>
-	</table>
+	<div class="panelContainer">		
+		<div class="panel panel-info">
+			<div class="panel-heading">
+          			<div class="panel-title">
+	          			Administracion de Especialidades
+	           			<a href="formAddEspecialidad" class="pull-right"><b>+</b>&nbsp;&nbsp;Nueva Especialidad</a>
+          			</div>
+    		</div>     
+			<div  class="panel-body" >
+				<div class="container-fluid" >
+	  				<div class="row-fluid" >
+		    				<div class="span12">
+		    					<div class="tableContainer">	
+									<c:if  test="${!empty especialidadList}">
 	
-	</c:if>
-	</div>
+									<table class="table">
+									<tr>
+									    <th style="background-color:#f9f9f9;">Nombre</th>	    
+									    <th style="background-color:#f9f9f9;"s>&nbsp;</th>
+									</tr>
+									<c:forEach items="${especialidadList}" var="e">
+									    <tr>
+									        <td>${e.nombre}</td>        
+									        <td>
+									        <div style="float:right;">
+									        	<a class="btn btn-info btn-xs" href="formEditEspecialidad/${e.especialidadId}"><span class="icon icon-edit"></span>editar</a>
+									        	<a class="btn btn-danger btn-xs" href="formDeleteEspecialidad/${e.especialidadId}"><span class="icon icon-remove"></span>eliminar</a>
+									       	</td>
+									       	</div>
+									    </tr>
+									</c:forEach>
+									</table>
+									
+									</c:if>
+								</div>
+		    				</div>
+		    		</div>
+		    	</div>
+	    	</div>
+	    </div>
+</div>
+	
 
 </div>	 
 </body>
