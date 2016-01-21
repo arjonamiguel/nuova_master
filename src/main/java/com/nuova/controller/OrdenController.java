@@ -9,6 +9,10 @@ import java.util.List;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
@@ -18,6 +22,8 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.nuova.dto.ComboItemDTO;
 import com.nuova.dto.ObraSocialDTO;
@@ -40,6 +46,7 @@ import com.nuova.service.OrdenManager;
 import com.nuova.service.PacienteManager;
 import com.nuova.service.PracticaManager;
 import com.nuova.utils.ConstantControllers;
+import com.nuova.utils.ConstantOrdenEstado;
 import com.nuova.utils.ConstantRedirect;
 import com.nuova.utils.Util;
 
@@ -55,6 +62,13 @@ public class OrdenController {
     PracticaManager practicaManager;
     @Autowired
     ObservacionManager observacionManager;
+
+    private String rechazada = "<span class='label-important' style='color:white;'>RECHAZADA</span>";
+    private String incompleta = "<span class='label-warning' style='color:white;'>INCOMPLETA</span>";
+    private String autorizada = " <span class='label-success' style='color:white;'>AUTORIZADA</span>";
+    private String pendiente = "<span class='label-warning' style='color:white;'>PENDIETE</span>";
+    private String cerrada = "<span class='label-warning' style='color:white;'>CERRADA</span>";
+    private String enobservacion = "<span class='label-warning' style='color:white;'>EN OBSERVACION</span>";
 
     @RequestMapping(value = ConstantControllers.FORM_ADD_ORDEN, method = RequestMethod.GET)
     public String formAddOrden(ModelMap map) {
@@ -93,6 +107,46 @@ public class OrdenController {
         }
 
         return ConstantRedirect.VIEW_FORM_EDIT_ORDEN;
+    }
+
+    // Ajax --------------------------------------------
+    @RequestMapping(value = ConstantControllers.AJAX_GET_ORDENES_PAGINADOS, method = RequestMethod.GET)
+    public @ResponseBody Page<OrdenDTO> getProfesionalesPaginados(
+            @RequestParam(required = false, defaultValue = "0") Integer start,
+            @RequestParam(required = false, defaultValue = "50") Integer limit) {
+
+        // Sort and Pagination
+        // Sort sort = new Sort(Sort.Direction.DESC, "creationDate");
+        Pageable pageable = new PageRequest(start, limit);
+
+        Page<Orden> ordenes = ordenManager.findOrdenesByPageable(pageable);
+        List<OrdenDTO> dtos = new ArrayList<OrdenDTO>();
+        for (Orden o : ordenes) {
+            OrdenDTO dto = transformOrdenToDto(o);
+            dtos.add(dto);
+        }
+
+        return new PageImpl<OrdenDTO>(dtos, pageable, ordenes.getTotalElements());
+    }
+
+    @RequestMapping(value = ConstantControllers.AJAX_GET_SEARCH_ORDENES_PAGINADOS, method = RequestMethod.GET)
+    public @ResponseBody Page<OrdenDTO> getSearchProfesionalesPaginados(
+            @RequestParam(required = false, defaultValue = "") String search,
+            @RequestParam(required = false, defaultValue = "0") Integer start,
+            @RequestParam(required = false, defaultValue = "50") Integer limit) {
+
+        // Sort and Pagination
+        // Sort sort = new Sort(Sort.Direction.DESC, "creationDate");
+        Pageable pageable = new PageRequest(start, limit);
+
+        Page<Orden> ordenes = ordenManager.findOrdenesBySearch(search, pageable);
+        List<OrdenDTO> dtos = new ArrayList<OrdenDTO>();
+        for (Orden o : ordenes) {
+            OrdenDTO dto = transformOrdenToDto(o);
+            dtos.add(dto);
+        }
+
+        return new PageImpl<OrdenDTO>(dtos, pageable, ordenes.getTotalElements());
     }
 
     //
@@ -181,24 +235,8 @@ public class OrdenController {
 
     @RequestMapping(value = ConstantControllers.MAIN_ORDEN, method = RequestMethod.GET)
     public String mainOrden(ModelMap map) {
-        map.addAttribute("ordenList", ordenManager.findAll());
+        // map.addAttribute("ordenList", ordenManager.findAll());
         return ConstantRedirect.VIEW_MAIN_ORDEN;
-    }
-
-    public Orden transformDtoToOrden(OrdenDTO dto) {
-        Orden orden = new Orden();
-        orden.setEstado(dto.getEstado());
-        orden.setFecha(Util.parseToDate(dto.getFecha()));
-        orden.setOrdenId(dto.getOrdenId());
-        orden.setReqCredecial(Util.getByteFlag(dto.isReqCredecial()));
-        orden.setReqMonotributista(Util.getByteFlag(dto.isReqMonotributista()));
-        orden.setReqOrdenMedico(Util.getByteFlag(dto.isReqOrdenMedico()));
-        orden.setReqReciboSueldo(Util.getByteFlag(dto.isReqReciboSueldo()));
-        orden.setPaciente(transformDtoToPaciente(dto.getPaciente()));
-        // orden.setObservacioneses(getObservacionesFromDto(dto.getObservacioneses()));
-        // orden.setOrdenWorkflows(getOrdenWorkflowFromDto(dto.getOrdenWorkflows()));
-
-        return orden;
     }
 
     public Paciente transformDtoToPaciente(PacienteDTO dto) {
@@ -325,6 +363,8 @@ public class OrdenController {
     private OrdenDTO transformOrdenToDto(Orden orden) {
         OrdenDTO dto = new OrdenDTO();
         dto.setOrdenId(orden.getOrdenId());
+        dto.setFecha(orden.getFecha() + "");
+        dto.setEstado(orden.getEstado());
 
         // Paciente
         dto.setPaciente(transformPacienteToDto(orden.getPaciente()));
@@ -336,7 +376,6 @@ public class OrdenController {
         dto.setReqReciboSueldo(orden.getReqReciboSueldo().intValue() == 1 ? true : false);
 
         // Autorizacion
-        dto.setEstado(orden.getEstado());
         dto.setPracticasListEdit(getPracticaDto(orden.getOrdenPracticas()));
 
         // Observaciones
@@ -344,6 +383,20 @@ public class OrdenController {
 
         // Flujo de Estados
         dto.setOrdenWorkflows(getOrdenWorkflowToDto(orden.getOrdenWorkflows()));
+
+        if (orden.getEstado().equals(ConstantOrdenEstado.AUTORIZADA)) {
+            dto.setEtiqestado(autorizada);
+        } else if (orden.getEstado().equals(ConstantOrdenEstado.CERRADA)) {
+            dto.setEtiqestado(cerrada);
+        } else if (orden.getEstado().equals(ConstantOrdenEstado.EN_OBSERVACION)) {
+            dto.setEtiqestado(enobservacion);
+        } else if (orden.getEstado().equals(ConstantOrdenEstado.INCOMPLETA)) {
+            dto.setEtiqestado(incompleta);
+        } else if (orden.getEstado().equals(ConstantOrdenEstado.PENDIENTE)) {
+            dto.setEtiqestado(pendiente);
+        } else if (orden.getEstado().equals(ConstantOrdenEstado.RECHAZADA)) {
+            dto.setEtiqestado(rechazada);
+        }
 
         return dto;
     }
@@ -398,6 +451,22 @@ public class OrdenController {
         }
 
         return retorno;
+    }
+
+    public Orden transformDtoToOrden(OrdenDTO dto) {
+        Orden orden = new Orden();
+        orden.setEstado(dto.getEstado());
+        orden.setFecha(Util.parseToDate(dto.getFecha()));
+        orden.setOrdenId(dto.getOrdenId());
+        orden.setReqCredecial(Util.getByteFlag(dto.isReqCredecial()));
+        orden.setReqMonotributista(Util.getByteFlag(dto.isReqMonotributista()));
+        orden.setReqOrdenMedico(Util.getByteFlag(dto.isReqOrdenMedico()));
+        orden.setReqReciboSueldo(Util.getByteFlag(dto.isReqReciboSueldo()));
+        orden.setPaciente(transformDtoToPaciente(dto.getPaciente()));
+        // orden.setObservacioneses(getObservacionesFromDto(dto.getObservacioneses()));
+        // orden.setOrdenWorkflows(getOrdenWorkflowFromDto(dto.getOrdenWorkflows()));
+
+        return orden;
     }
 
 }

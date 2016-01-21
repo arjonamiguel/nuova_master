@@ -22,9 +22,8 @@
 <script type="text/javascript" src="<%=request.getContextPath()%>/resources/simplepaginggrid/script/simplePagingGrid-0.5.0.2.js"></script>
 
 <script type="text/javascript">
-	$(document)
-			.ready(
-					function() {
+	$(document).ready(function() {
+												
 						var rows = [];
 
 						rows = callPaciente();
@@ -71,7 +70,7 @@
 
 											}
 										});
-
+						
 					});
 </script>
 <!-- 	Fin Configuracion del paginador -->
@@ -119,8 +118,9 @@
 										    	name="search" 
 										    	id="search"			    	 
 										    	class="form-control input-lg"  
-										    	placeholder="USTED PUEDE FILTRAR POR DNI, APELLIDO Y NOMBRE SEPARADOS CON ESPACIOS"/>
-										   				
+										    	placeholder="USTED PUEDE FILTRAR POR DNI, APELLIDO Y NOMBRE SEPARADOS CON ESPACIOS"										    	
+										   	/>
+										   	<span id = "wait" style="visibility: hidden; padding-left: 5px">Buscando ...</span>			
 											</div>
 											<div class="row-fluid">
 												<div id="pacienteGrid"></div>
@@ -143,7 +143,7 @@
 <script type="text/javascript">
 
 	document.getElementById("mainPaciente").parentNode.classList.add("active");
-
+	 
 	function callPaciente() {
 		var retorno;
 		$.ajax({
@@ -173,11 +173,19 @@
 			async : false, //Cross-domain requests and dataType: "jsonp" requests do not support synchronous operation
 			cache : false, //This will force requested pages not to be cached by the browser          
 			processData : false, //To avoid making query String instead of JSON
+			 beforeSend: loadStart,
+			 complete: loadStop,		
 			success : function(pagesearch) {
 				retorno = pagesearch.content;
 			}
 		});
 
 		return retorno;
+	}
+	function loadStart() {
+		$('#wait').css("visibility","visible");
+	}
+	function loadStop() {
+		$('#wait').css("visibility","hidden");
 	}
 </script>

@@ -2,8 +2,12 @@ package com.nuova.dao;
 
 import java.util.List;
 
+import org.hibernate.Query;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
 
 import com.nuova.model.Profesional;
@@ -56,6 +60,25 @@ public class ProfesionalDAOImpl implements ProfesionalDAO {
                 setInteger("profesionalId", profesionalId).
                 executeUpdate();
 
+    }
+
+    public Page<Profesional> findProfesionalesByPageable(Pageable pageable) {
+        Query query = this.sessionFactory.getCurrentSession().createQuery("FROM Profesional");
+        // query.setFirstResult(pageable.getOffset());
+        // query.setMaxResults(pageable.getPageNumber());
+        List<Profesional> result = query.list();
+        return new PageImpl<Profesional>(result, pageable, result.size());
+    }
+
+    public Page<Profesional> findProfesionalesBySearch(String search, Pageable pageable) {
+        Query query = this.sessionFactory.getCurrentSession()
+                .createQuery("FROM Profesional p "
+                        + " WHERE upper(p.apellido) LIKE '%" + search.toUpperCase() + "%' "
+                        + " OR upper(p.nombre) LIKE '%" + search.toUpperCase() + "%' ");
+        // query.setFirstResult(pageable.getOffset());
+        // query.setMaxResults(pageable.getPageNumber());
+        List<Profesional> result = query.list();
+        return new PageImpl<Profesional>(result, pageable, result.size());
     }
 
 }

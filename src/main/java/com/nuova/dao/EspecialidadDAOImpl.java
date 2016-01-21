@@ -2,8 +2,12 @@ package com.nuova.dao;
 
 import java.util.List;
 
+import org.hibernate.Query;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
 
 import com.nuova.model.Especialidad;
@@ -40,4 +44,22 @@ public class EspecialidadDAOImpl implements EspecialidadDAO {
 
     }
 
+    public Page<Especialidad> findEspecialidadesByPageable(Pageable pageable) {
+        Query query = this.sessionFactory.getCurrentSession().createQuery("FROM Especialidad");
+        // query.setFirstResult(pageable.getOffset());
+        // query.setMaxResults(pageable.getPageNumber());
+        List<Especialidad> result = query.list();
+        return new PageImpl<Especialidad>(result, pageable, result.size());
+    }
+
+    public Page<Especialidad> findEspecialidadesBySearch(String search, Pageable pageable) {
+        Query query = this.sessionFactory.getCurrentSession()
+                .createQuery("FROM Especialidad e "
+                        + " WHERE upper(e.nombre) LIKE '%" + search.toUpperCase() + "%' ");
+
+        // query.setFirstResult(pageable.getOffset());
+        // query.setMaxResults(pageable.getPageNumber());
+        List<Especialidad> result = query.list();
+        return new PageImpl<Especialidad>(result, pageable, result.size());
+    }
 }

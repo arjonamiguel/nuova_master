@@ -3,6 +3,8 @@ package com.nuova.service;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -42,6 +44,16 @@ public class ProfesionalManagerImpl implements ProfesionalManager {
     @Transactional
     public void deleteProfesionalEspecialidad(Integer profesionalId) {
         this.profesionalDAO.deleteProfesionalEspecialidad(profesionalId);
+    }
+
+    @Transactional
+    public Page<Profesional> findProfesionalesByPageable(Pageable pageable) {
+        return profesionalDAO.findProfesionalesByPageable(pageable);
+    }
+
+    @Transactional
+    public Page<Profesional> findProfesionalesBySearch(String search, Pageable pageable) {
+        return profesionalDAO.findProfesionalesBySearch(search, pageable);
     }
 
 }

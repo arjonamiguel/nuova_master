@@ -7,6 +7,8 @@ public class ObraSocialDTO {
     private String credencial;
     private String original = "1";
 
+    private String acciones;
+
     public ObraSocialDTO() {
     }
 
@@ -47,6 +49,22 @@ public class ObraSocialDTO {
 
     public void setOriginal(String original) {
         this.original = original;
+    }
+
+    public String getAcciones() {
+        String botonEdit = "<a class='btn btn-info btn-xs' href='formEditObraSocial/" + getObrasocialId()
+                + "'><span class='icon icon-edit'></span>editar</a>&nbsp;";
+
+        String botonDelete = "<a class='btn btn-danger btn-xs' href='formDeleteObraSocial/" + getObrasocialId()
+                + "'><span class='icon icon-remove'></span>eliminar</a>";
+
+        this.acciones = botonEdit + botonDelete;
+
+        return acciones;
+    }
+
+    public void setAcciones(String acciones) {
+        this.acciones = acciones;
     }
 
 }

@@ -80,7 +80,7 @@ public class PacienteDAOImpl implements PacienteDAO {
         Query query = this.sessionFactory.getCurrentSession()
                 .createQuery("FROM Paciente p "
                         + " WHERE upper(p.apellido) LIKE '%" + search.toUpperCase() + "%' "
-                        + " OR upper(p.apellido) LIKE '%" + search.toUpperCase() + "%' ");
+                        + " OR upper(p.nombre) LIKE '%" + search.toUpperCase() + "%' ");
         // query.setFirstResult(pageable.getOffset());
         // query.setMaxResults(pageable.getPageNumber());
         List<Paciente> result = query.list();

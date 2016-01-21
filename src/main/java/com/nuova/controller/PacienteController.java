@@ -108,12 +108,12 @@ public class PacienteController {
     @RequestMapping(value = ConstantControllers.MAIN_PACIENTE, method = RequestMethod.GET)
     public String mainPaciente(ModelMap map) {
 
-        map.addAttribute("pacienteList", transformPacientesToDtoList(pacienteManager.findAll()));
+        // map.addAttribute("pacienteList", transformPacientesToDtoList(pacienteManager.findAll()));
 
         return ConstantRedirect.VIEW_MAIN_PACIENTE;
     }
 
-    // Search --------------------------------------------
+    // Ajax --------------------------------------------
 
     @RequestMapping(value = ConstantControllers.AJAX_GET_PACIENTES_PAGINADOS, method = RequestMethod.GET)
     public @ResponseBody Page<PacienteDTO> getPacientesPaginados(

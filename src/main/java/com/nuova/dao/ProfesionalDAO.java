@@ -2,6 +2,9 @@ package com.nuova.dao;
 
 import java.util.List;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+
 import com.nuova.model.Profesional;
 
 public interface ProfesionalDAO {
@@ -16,5 +19,9 @@ public interface ProfesionalDAO {
     public void edit(Profesional profesional);
 
     public void deleteProfesionalEspecialidad(Integer profesionalId);
+
+    public Page<Profesional> findProfesionalesByPageable(Pageable pageable);
+
+    public Page<Profesional> findProfesionalesBySearch(String search, Pageable pageable);
 
 }
