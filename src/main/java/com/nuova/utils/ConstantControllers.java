@@ -66,5 +66,6 @@ public class ConstantControllers {
     public final static String AJAX_GET_SEARCH_ORDENES_PAGINADOS = "/ajaxGetSearchOrdenesPaginados";
 
     // Reportes
+    public final static String SHOW_REPORT_ORDEN_EMITIDA = "/showReportOrdenEmitida/{ordenId}";
     public final static String REPORT_ORDEN_EMITIDA = "/reportOrdenEmitida/{ordenId}";
 }

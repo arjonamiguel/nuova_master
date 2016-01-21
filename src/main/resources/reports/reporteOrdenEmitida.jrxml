@@ -2,27 +2,27 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="reporteOrdenEmitida" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="863c5a1a-ff63-4ec5-9d35-c4a00e5423ed">
 	<property name="ireport.zoom" value="1.5"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="527"/>
+	<property name="ireport.y" value="0"/>
 	<parameter name="nro_orden" class="java.lang.String" isForPrompting="false">
-		<defaultValueExpression><![CDATA["00002999"]]></defaultValueExpression>
+		<defaultValueExpression><![CDATA[""]]></defaultValueExpression>
 	</parameter>
 	<parameter name="dni" class="java.lang.String" isForPrompting="false">
-		<defaultValueExpression><![CDATA["29878065"]]></defaultValueExpression>
+		<defaultValueExpression><![CDATA[""]]></defaultValueExpression>
 	</parameter>
 	<parameter name="apellido" class="java.lang.String" isForPrompting="false">
-		<defaultValueExpression><![CDATA["Arjona"]]></defaultValueExpression>
+		<defaultValueExpression><![CDATA[""]]></defaultValueExpression>
 	</parameter>
 	<parameter name="nombre" class="java.lang.String" isForPrompting="false">
-		<defaultValueExpression><![CDATA["Miguel Angel"]]></defaultValueExpression>
+		<defaultValueExpression><![CDATA[""]]></defaultValueExpression>
 	</parameter>
 	<parameter name="telefono" class="java.lang.String" isForPrompting="false">
-		<defaultValueExpression><![CDATA["0381155867919"]]></defaultValueExpression>
+		<defaultValueExpression><![CDATA[""]]></defaultValueExpression>
 	</parameter>
 	<parameter name="nombre_obrasocial" class="java.lang.String" isForPrompting="false">
-		<defaultValueExpression><![CDATA["SWISS MEDICAL"]]></defaultValueExpression>
+		<defaultValueExpression><![CDATA[""]]></defaultValueExpression>
 	</parameter>
 	<parameter name="credencial_obrasocial" class="java.lang.String" isForPrompting="false">
-		<defaultValueExpression><![CDATA["2222-3333-4444-5555"]]></defaultValueExpression>
+		<defaultValueExpression><![CDATA[""]]></defaultValueExpression>
 	</parameter>
 	<background>
 		<band splitType="Stretch"/>

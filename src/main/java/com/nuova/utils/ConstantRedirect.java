@@ -39,4 +39,8 @@ public class ConstantRedirect {
     public final static String VIEW_FORM_EDIT_ORDEN = "/orden/formEditOrden";
     public final static String VIEW_FORM_DELETE_ORDEN = "/orden/formDeleteOrden";
 
+    // Reporte
+    public final static String VIEW_SHOW_REPORTE_ORDEN_EMITIDA = "/reporte/reporteOrdenEmitida";
+    public final static String VIEW_REPORTE_ORDEN_EMITIDA = "/reporte/reporteOrdenEmitida";
+
 }

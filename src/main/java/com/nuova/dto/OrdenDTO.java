@@ -212,12 +212,15 @@ public class OrdenDTO {
 
     public String getAcciones() {
         String botonEdit = "<a class='btn btn-info btn-xs' href='formEditOrden/" + getOrdenId()
-                + "'><span class='icon icon-edit'></span>editar</a>&nbsp;";
+                + "'><span class='icon icon-edit'></span>Editar  </a>";
 
         String botonDelete = "<a class='btn btn-danger btn-xs' href='formDeleteOrden/" + getOrdenId()
-                + "'><span class='icon icon-remove'></span>eliminar</a>";
+                + "'><span class='icon icon-remove'></span>Eliminar</a>";
 
-        this.acciones = botonEdit + botonDelete;
+        String botonPrint = "<a class='btn btn-default btn-xs' href='showReportOrdenEmitida/" + getOrdenId()
+                + "'><span class='icon icon-print'></span>Imprimir</a>";
+
+        this.acciones = botonEdit + botonDelete + botonPrint;
 
         return acciones;
     }
