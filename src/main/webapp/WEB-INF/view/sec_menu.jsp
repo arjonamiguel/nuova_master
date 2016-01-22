@@ -61,13 +61,16 @@
 		            <a href="#" id="configuracion" class="dropdown-toggle" data-toggle="dropdown"><i class="icon-cog"></i>&nbsp;&nbsp;Configuracion<span class="caret"></a>
 		            <ul class="dropdown-menu">
 		            	<sec:authorize access="hasRole('ROLE_ADMIN')">
-						<li><a href="mainProfesional" id="mainProfesional">Administrar Profesionales</a></li>
-						<li><a href="/nuova/formAddProfesional" id="formAddProfesional">Agregar Profesionales</a></li>
+						<li><a href="/nuova/mainProfesional" id="mainProfesional">Administrar Profesionales</a></li>
+						<li><a href="/nuova/formAddProfesional" id="formAddProfesional">Agregar Profesional</a></li>
+						<li><a href="/nuova/showReporteProfesionales" id="showReporteProfesionales">Reporte de Profesionales</a></li>
+						
 						<li class="divider"></li>
 						</sec:authorize>
 						<sec:authorize access="hasRole('ROLE_ADMIN')">
-						<li><a href="mainEspecialidad" id="mainEspecialidad">Administrar Especialidades</a></li>
+						<li><a href="/nuova/mainEspecialidad" id="mainEspecialidad">Administrar Especialidades</a></li>
 						<li><a href="/nuova/formAddEspecialidad" id="formAddEspecialidad">Agregar Especialidades</a></li>
+						<li><a href="/nuova/showReporteEspecialidades" id="showReporteEspecialidades">Reporte de Especialidades</a></li>
 						<li class="divider"></li>
 						</sec:authorize>
 						<sec:authorize access="hasRole('ROLE_ADMIN')">

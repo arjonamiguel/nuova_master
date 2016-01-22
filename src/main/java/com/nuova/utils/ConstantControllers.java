@@ -66,6 +66,14 @@ public class ConstantControllers {
     public final static String AJAX_GET_SEARCH_ORDENES_PAGINADOS = "/ajaxGetSearchOrdenesPaginados";
 
     // Reportes
-    public final static String SHOW_REPORT_ORDEN_EMITIDA = "/showReportOrdenEmitida/{ordenId}";
-    public final static String REPORT_ORDEN_EMITIDA = "/reportOrdenEmitida/{ordenId}";
+    public final static String SHOW_REPORT_ORDEN_EMITIDA = "/showReporteOrdenEmitida/{ordenId}";
+    public final static String SHOW_REPORT_PROFESIONALES = "/showReporteProfesionales";
+    public final static String SHOW_REPORT_ESPECIALIDADES = "/showReporteEspecialidades";
+    public final static String SHOW_REPORT_OBRASSOCIALES = "/showReporteObrasSociales";
+
+    public final static String REPORT_ORDEN_EMITIDA = "/reporteOrdenEmitida/{ordenId}";
+    public final static String REPORT_PROFESIONALES = "/reporteProfesionales";
+    public final static String REPORT_ESPECIALIDADES = "/reporteEspecialidades";
+    public final static String REPORT_OBRASSOCIALES = "/reporteObrasSociales";
+
 }

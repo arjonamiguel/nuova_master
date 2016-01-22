@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="reporteProfesionales" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="2ff07269-4ac4-4b5b-8fd2-46f5d19821d2">
+	<property name="ireport.zoom" value="2.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<field name="profesionalId" class="java.lang.Integer"/>
+	<field name="apellido" class="java.lang.String"/>
+	<field name="nombre" class="java.lang.String"/>
+	<field name="telefono" class="java.lang.String"/>
+	<field name="matricula" class="java.lang.String"/>
+	<field name="registroNacional" class="java.lang.String"/>
+	<field name="tituloProfesional" class="java.lang.String"/>
+	<field name="habilitacionSiprosa" class="java.lang.String"/>
+	<field name="fechaVencimientoHabilitacion" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="73" splitType="Stretch">
+			<staticText>
+				<reportElement x="110" y="36" width="313" height="20" uuid="d9abf548-8ac6-4a10-99c3-471b8da8ad4a"/>
+				<textElement textAlignment="Center">
+					<font size="12" isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[Listado de profesionales registrados en Nuova]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="357" y="0" width="139" height="20" uuid="6e6c1389-20e9-4462-82bf-2361e021b827"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA["Página "+$V{PAGE_NUMBER}+"  "]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement x="497" y="0" width="58" height="20" uuid="346946b4-b397-42d6-915b-ac613c5842cd"/>
+				<textFieldExpression><![CDATA["De " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="21" splitType="Stretch">
+			<line>
+				<reportElement x="0" y="19" width="555" height="1" uuid="b7caf15f-3f34-44fb-8d65-64f27fd4d219"/>
+			</line>
+			<staticText>
+				<reportElement mode="Opaque" x="0" y="3" width="44" height="15" backcolor="#CCCCCC" uuid="3f5bc1cb-ad55-4f1f-a5a2-5d1c4f845dd1"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[ ID]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="45" y="3" width="123" height="15" backcolor="#CCCCCC" uuid="09ba5ba4-0190-496a-8d92-c7a9ca177071"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[APELLIDO]]></text>
+			</staticText>
+			<line>
+				<reportElement x="0" y="2" width="555" height="1" uuid="adba755c-ef66-4a95-8944-166a79eeac75"/>
+			</line>
+			<staticText>
+				<reportElement x="169" y="3" width="100" height="15" uuid="f3abbb6d-df17-4d6d-ab66-3dafa77feab2"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[NOMBRE]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="270" y="3" width="73" height="15" uuid="e33a245a-4c6c-4b2e-ac09-3c5c34b39144"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[TELEFONO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="345" y="3" width="60" height="15" uuid="2e6a49a7-d5e7-4659-a54b-2dd437f3336f"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[MATRICULA]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="407" y="3" width="77" height="15" uuid="0d622643-a8f6-4c0a-a5ae-42f50cccac69"/>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[HABILITADO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="485" y="3" width="70" height="15" uuid="b93e4557-415a-4e74-98c5-51f089cc6095"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[FECHA VENC.]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="17" splitType="Stretch">
+			<textField>
+				<reportElement mode="Opaque" x="0" y="0" width="44" height="15" backcolor="#CCCCCC" uuid="9e533e88-6601-4532-9476-9fcde7eda366"/>
+				<textFieldExpression><![CDATA[ $F{profesionalId}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement mode="Opaque" x="45" y="0" width="123" height="15" backcolor="#CCCCCC" uuid="7b4d83cf-c4df-4a52-bf63-3171f2fbd67a"/>
+				<textFieldExpression><![CDATA[$F{apellido}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="0" y="16" width="555" height="1" uuid="22d4f29e-f760-45f2-bf91-d407ae09af96"/>
+			</line>
+			<textField>
+				<reportElement x="169" y="0" width="100" height="15" uuid="6d455ab3-9e3f-4780-9140-f40c67dda411"/>
+				<textFieldExpression><![CDATA[$F{nombre}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="270" y="0" width="73" height="15" uuid="24fd7e08-7b87-4d07-a2e6-780788ffa149"/>
+				<textFieldExpression><![CDATA[$F{telefono}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="345" y="0" width="60" height="15" uuid="a8801e50-5924-4997-94f8-f9fa2d349980"/>
+				<textFieldExpression><![CDATA[$F{matricula}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="407" y="0" width="77" height="15" uuid="e2dee375-d427-47d2-9b3f-c2ffa4fb763d"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{habilitacionSiprosa}.equals("1") ? "SI" : "NO"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="485" y="0" width="70" height="15" uuid="d99aac76-868f-4716-9bb1-defdb8ca94e4"/>
+				<textFieldExpression><![CDATA[$F{fechaVencimientoHabilitacion}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="21" splitType="Stretch"/>
+	</summary>
+</jasperReport>

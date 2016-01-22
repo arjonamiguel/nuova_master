@@ -1,8 +1,12 @@
 package com.nuova.dto;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class EspecialidadDTO {
     private Integer id;
     private String nombre;
+    private List<ProfesionalDTO> profesionales = new ArrayList<ProfesionalDTO>();
 
     private String acciones;
 
@@ -36,6 +40,14 @@ public class EspecialidadDTO {
 
     public void setAcciones(String acciones) {
         this.acciones = acciones;
+    }
+
+    public List<ProfesionalDTO> getProfesionales() {
+        return profesionales;
+    }
+
+    public void setProfesionales(List<ProfesionalDTO> profesionales) {
+        this.profesionales = profesionales;
     }
 
 }
