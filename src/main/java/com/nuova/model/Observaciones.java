@@ -24,6 +24,10 @@ import javax.persistence.TemporalType;
         , catalog = "nuova")
 public class Observaciones implements java.io.Serializable {
 
+    /**
+     * 
+     */
+    private static final long serialVersionUID = -6889234745482352474L;
     private Integer observacionId;
     private Orden orden;
     private String observacion;

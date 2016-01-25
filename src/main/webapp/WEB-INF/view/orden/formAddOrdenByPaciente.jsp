@@ -38,8 +38,7 @@
 <div class="row col-md-6 col-md-offset-2 custyle">
 	<ul class="nav nav-tabs">
 	  <li class="active"><a data-toggle="tab" href="#tb_paciente">Paciente</a></li>
-	  <li><a data-toggle="tab" href="#tb_requisitos">Requisitos</a></li>
-	  <li><a data-toggle="tab" href="#tb_autorizacion">Autorizacion</a></li>
+	  <li><a data-toggle="tab" href="#tb_requisitos">Requisitos</a></li>	  
 	  <li><a data-toggle="tab" href="#tb_observacion">Observaciones</a></li>
 	</ul>
 
@@ -114,48 +113,13 @@
 				</td>
 			</tr>
 
-		</table>  		   
-		  		   
-		
+		</table>	
   		</div>
-  		<div id="tb_autorizacion" class="tab-pane fade">
-    	<table class="table table-striped custab"  style="width: 60%">			
-			<tr>
-        	<td colspan="2">
-           	<div>
-				<div class="inputProf">
-				<form:select path="practica" style="width:70%; margin-bottom:0px">
-					   <form:option value="NONE" label="Seleccione Práctica ..."/>
-					   <form:options items="${practicaList}" itemLabel="value" itemValue="id" />			    
-					</form:select>
-					<INPUT type="button" value="Agregar" onclick="addRow('dataTable')" class="btn btn-info"/>
-						    	
-					
-				</div>	
-			</div>
-    		<div>		    
-			    <TABLE id="dataTable" class="table table-striped custab" style="width: 100%; margin: 2% 0">
-			        <TR>
-			        	
-			            <TD style="width: 10%">ID</TD>
-			            <TD style="width: 15%">Código</TD>        
-			            <TD style="width: 100%">Practica</TD>
-			            <td></td>
-			        </TR>
-			    </TABLE>
-	   	
- 			</div>    
- 			
-        	</td>
-    	</tr>
-			
-		</table>
-  		</div>
-  		
+  		 		
   		<div id="tb_observacion" class="tab-pane fade">
     		<table class="table table-striped custab"  style="width: 60%">			
 			<tr>		
-				<td style="width: 15%"><form:label path="observacion">Observacion</form:label></td>
+				<td style="width: 15%"><form:label path="observacion">Observación</form:label></td>
 				<td  style="text-align:left" colspan="5">			
 				    <form:textarea path="observacion" cssStyle="width:100%"/>
 				</td>

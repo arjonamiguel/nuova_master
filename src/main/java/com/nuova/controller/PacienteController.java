@@ -5,6 +5,10 @@ import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
@@ -12,6 +16,8 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.nuova.dto.ObraSocialDTO;
 import com.nuova.dto.PacienteDTO;
@@ -102,9 +108,54 @@ public class PacienteController {
     @RequestMapping(value = ConstantControllers.MAIN_PACIENTE, method = RequestMethod.GET)
     public String mainPaciente(ModelMap map) {
 
-        map.addAttribute("pacienteList", transformPacientesToDtoList(pacienteManager.findAll()));
+        // map.addAttribute("pacienteList", transformPacientesToDtoList(pacienteManager.findAll()));
 
         return ConstantRedirect.VIEW_MAIN_PACIENTE;
+    }
+
+    // Ajax --------------------------------------------
+
+    @RequestMapping(value = ConstantControllers.AJAX_GET_PACIENTES_PAGINADOS, method = RequestMethod.GET)
+    public @ResponseBody Page<PacienteDTO> getPacientesPaginados(
+            @RequestParam(required = false, defaultValue = "0") Integer start,
+            @RequestParam(required = false, defaultValue = "50") Integer limit) {
+
+        // Sort and Pagination
+        // Sort sort = new Sort(Sort.Direction.DESC, "creationDate");
+        Pageable pageable = new PageRequest(start, limit);
+
+        Page<Paciente> pacientes = pacienteManager.findPacientesByPageable(pageable);
+        // Page<Paciente> batches = new Pa
+        // enrollImportBatchService.getBatches(pageable);
+        List<PacienteDTO> dtos = new ArrayList<PacienteDTO>();
+        for (Paciente p : pacientes) {
+            PacienteDTO dto = transformPacienteToDto(p);
+            dtos.add(dto);
+        }
+
+        return new PageImpl<PacienteDTO>(dtos, pageable, pacientes.getTotalElements());
+    }
+
+    @RequestMapping(value = ConstantControllers.AJAX_GET_SEARCH_PACIENTES_PAGINADOS, method = RequestMethod.GET)
+    public @ResponseBody Page<PacienteDTO> getSearchPacientesPaginados(
+            @RequestParam(required = false, defaultValue = "") String search,
+            @RequestParam(required = false, defaultValue = "0") Integer start,
+            @RequestParam(required = false, defaultValue = "50") Integer limit) {
+
+        // Sort and Pagination
+        // Sort sort = new Sort(Sort.Direction.DESC, "creationDate");
+        Pageable pageable = new PageRequest(start, limit);
+
+        Page<Paciente> pacientes = pacienteManager.findPacientesBySearch(search, pageable);
+        // Page<Paciente> batches = new Pa
+        // enrollImportBatchService.getBatches(pageable);
+        List<PacienteDTO> dtos = new ArrayList<PacienteDTO>();
+        for (Paciente p : pacientes) {
+            PacienteDTO dto = transformPacienteToDto(p);
+            dtos.add(dto);
+        }
+
+        return new PageImpl<PacienteDTO>(dtos, pageable, pacientes.getTotalElements());
     }
 
     // Adherentes --------------------------------------------

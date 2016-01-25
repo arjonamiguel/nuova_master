@@ -89,131 +89,127 @@
 		}
     </SCRIPT>
 </head>
-<body style="background-color:#eee;">
+<body style="background-color:#e5e5e5;">
 <jsp:include page="../sec_menu.jsp"></jsp:include>
 <jsp:include page="../breadcrumb.jsp"></jsp:include>
 <div class="mainContainer"> 	
-<div style="padding-left:0%;">
+<div class="panelContainer">
 <form:form method="post" action="/nuova/deleteProfesional" commandName="profesional">
 <div class="panel panel-info">
 	<div class="panel-heading">
           <div class="panel-title">EliminarDatos del Profesional</div>
     </div>     
 	<div style="padding-top:30px" class="panel-body" >
-	
-<div class="container-fluid">
-  <div class="row-fluid">
-	    <div class="span4">
-	      <div><form:hidden path="profesionalId" /></div>
-        	<div class="formLabel"><form:label path="apellido" >Apellido:</form:label></div>
-        	<div class="formInput"><form:input path="apellido" placeholder="Apellido" disabled="true"/></div>
-	    </div>
-	    <div class="span4">
-			<div class="formLabel"><form:label path="nombre">Nombre:</form:label></div>
-        	<div class="formInput"><form:input path="nombre" placeholder="Nombre" disabled="true"/></div>
-	    </div>
-	    <div class="span4">
-			<div class="formLabel"><form:label path="telefono">Telefono:</form:label></div>
-	        <div class="formInput"><form:input path="telefono" placeholder="Telefono" disabled="true"/></div>
-	    </div>
-  </div>
-    <div class="row-fluid">
-	    <div class="span4">
-			<div class="formLabel"><form:label path="matricula">Matricula:</form:label></div>
-	        <div class="formInput"><form:input path="matricula" placeholder="Matricula" disabled="true"/></div>
-	    </div>
-	    <div class="span4">
-	       <div class="formLabel"><form:label path="registroNacional">Registro Nacional:</form:label></div>
-	       <div class="formInput"><form:input path="registroNacional" placeholder="Registro Nacional" disabled="true"/></div>
-	    </div>
-	    <div class="span4">
-	     	<div class="formLabel"><form:label path="tituloProfesional">Titulo Profesional:</form:label></div>
-	        <div class="formInput"><form:input path="tituloProfesional" placeholder="Titulo Profesional" disabled="true"/></div>
-	    </div>
-  </div>
-    <div class="row-fluid">
-	    <div class="span4"">	
-	    </div>
-	    <div class="span2">
-			<div style="visibility:hidden;height:0px;"><form:label path="habilitacionSiprosa">Habilitacion del Siprosa:</form:label></div>
-			<div style="visibility:hidden;height:0px;"><form:input path="habilitacionSiprosa" /></div>
-			<label for="info">SIPROSA <input type="checkbox" id="info" class="badgebox" onchange="javascript:updateSiprosa();"><span class="badge">&check;</span></label>
-	    </div>
-	    <div class="span6">
-	        <div style="padding-left:23%;">
-	    		<div id="labelDate" class="labelDate"><form:label path="fechaVencimientoHabilitacion">Fecha Vencimiento Habilitacion:</form:label></div>
-				<div style="visibility:hidden;height:0px;"><form:input class="date" path="fechaVencimientoHabilitacion" /></div>
-				<div id="calendar" style="visibility:hidden;">
-					<div class="input-group registration-date-time" style="padding-top:0%;">
-						<input class="form-control" name="registration_date" id="registration-date" type="date"  onchange="javascript:updateDate();">
-	            	</div>
-	        	</div>  
-	    	</div>
-	    </div>
-  </div>
-</div>        
-        
-     </div>   
-    
-        
+		<div class="container-fluid">
+	  		<div class="row-fluid">
+			    <div class="span4">
+			      <div><form:hidden path="profesionalId" /></div>
+		        	<div class="formLabel"><form:label path="apellido" >Apellido:</form:label></div>
+		        	<div class="formInput"><form:input path="apellido" placeholder="Apellido" disabled="true"/></div>
+			    </div>
+			    <div class="span4">
+					<div class="formLabel"><form:label path="nombre">Nombre:</form:label></div>
+		        	<div class="formInput"><form:input path="nombre" placeholder="Nombre" disabled="true"/></div>
+			    </div>
+			    <div class="span4">
+					<div class="formLabel"><form:label path="telefono">Telefono:</form:label></div>
+			        <div class="formInput"><form:input path="telefono" placeholder="Telefono" disabled="true"/></div>
+			    </div>
+		  		</div>
+			    <div class="row-fluid">
+				    <div class="span4">
+						<div class="formLabel"><form:label path="matricula">Matricula:</form:label></div>
+				        <div class="formInput"><form:input path="matricula" placeholder="Matricula" disabled="true"/></div>
+				    </div>
+				    <div class="span4">
+				       <div class="formLabel"><form:label path="registroNacional">Registro Nacional:</form:label></div>
+				       <div class="formInput"><form:input path="registroNacional" placeholder="Registro Nacional" disabled="true"/></div>
+				    </div>
+				    <div class="span4">
+				     	<div class="formLabel"><form:label path="tituloProfesional">Titulo Profesional:</form:label></div>
+				        <div class="formInput"><form:input path="tituloProfesional" placeholder="Titulo Profesional" disabled="true"/></div>
+				    </div>
+			  	</div>
+			    <div class="row-fluid">
+				    <div class="span4"">	
+				    	<div style="visibility:hidden;height:0px;"><form:label path="habilitacionSiprosa">Habilitacion del Siprosa:</form:label></div>
+						<div style="visibility:hidden;height:0px;"><form:input path="habilitacionSiprosa" /></div>
+						<div>
+							<div class="formLabel"><form:label path="fechaVencimientoHabilitacion">SIPROSA:</form:label></div>
+							<div style="visibility:hidden;height:0px;"><form:input class="date" path="fechaVencimientoHabilitacion" /></div>
+							<div class="formInput">
+							<div id="calendar">
+								<div class="input-group registration-date-time" style="padding-top:0%;">
+									<input class="form-control" name="registration_date" id="registration-date" type="date"  onchange="javascript:updateDate();">
+				            	</div>
+				        	</div>  
+				        	</div>
+						</div>
+				</div>
+			    <div class="span4">	
+			    </div>
+			    <div class="span4">
+			    </div>
+	  	</div>
+	</div>            
+</div>       
 </div>   
 
 <div class="panel panel-info">
 	<div class="panel-heading">
 	          <div class="panel-title">Eliminar Especialidades</div>
 	</div>  
-<div style="padding-top:30px" class="panel-body" >
+	<div style="padding-top:30px;" class="panel-body" >
 
-	<div class="row-fluid" style="background-color:#f9f9f9;;width:98%;padding-left:2%;pointer-events:none;">
-		<div class="span1">
-			<form:label path="especialidad">Especialidad:</form:label>
-		</div>
-		<div class="span4">
-			    	<form:select path="especialidad">
+	<div class="row-fluid">
+			<div class="span9">
+			</div>
+			<div class="span2">
+			 	<form:select path="especialidad" disabled="true">
 				   <form:option value="NONE" label="Seleccione Especialidad ..."/>
 				   <form:options items="${especialidadList}" itemLabel="nombre" itemValue="especialidadId" />			    
 				</form:select>
-		</div>
-		<div class="span2">
-		</div>
-	</div>
-	
-	<div class="row-fluid">
-    		<div class="span12">
-    			<div style="float:right;"><INPUT type="button" value="Add Row" onclick="addRow('dataTable')" class="btn btn-info"/></div>
-    			<div style="float:right;"><INPUT type="button" value="Delete Row" onclick="deleteRow('dataTable')" class="btn"/></div>
+			</div>
+    		<div class="span1">
+    			<div style="float:left;"><INPUT type="button" value="Agregar" onclick="addRow('dataTable')" class="btn btn-info" disabled="true"/></div>
     		</div>
     </div>
-    <div class="tableContainer"> 
+    <div class="tableContainer" style="pointer-events:none;"> 
 
 	    <TABLE id="dataTable" class="table"  style="margin-top:0px;">
 	        <TR>
-	        	<TD></TD>
+	        <TR>      	
 	            <TD>Id</TD>
-	            <TD>Especialidad</TD>        
+	            <TD>Especialidad</TD> 
+	            <TD></TD>       
+	        </TR>       
 	        </TR>
 	       	<c:forEach items="${especialidadListEdit}" var="esp">
 		    <tr>
-		    	<td><input type="checkbox" name="chkbox[]"><input type="hidden" name="especialidadList" value="${esp.key}"></td>
+
 		        <td>${esp.key} </td>
-		        <td>${esp.value}</td>        
+		        <td>${esp.value}</td>       
+		        <td>
+		        <button type='button' class='btn btn-danger btn-xs' onClick='Eliminar(this.parentNode.parentNode.rowIndex)'><span class='icon icon-remove' title='Eliminar'></span></button>
+		        </td> 
 		    </tr>
 	</c:forEach>
 	    </TABLE>
 	   	
- 	</div>
-	<div class="row-fluid">
-		<div class="span8">
-		</div>
-		<div class="span4">
-			<div style="float:right;padding-right:2%;"><input type="submit" value="Eliminar" class="btn btn-danger btn-xs"/></div> 
-	 		<div style="float:right;"><input type="button" value="Cancelar" onclick="location.href='/nuova/mainProfesional';" class="btn"/></div>
-		</div>
-	</div>	        
+ 	</div>        
 
 </div>
 </div>  
+<div class="panel panel-info">
+	<div style="padding-top:30px;" class="panel-body" >
 
+	<div class="row-fluid">
+			<div class="span12">
+			<div style="float:right;padding-right:2%;"><input type="submit" value="Eliminar" class="btn btn-danger btn-xs"/></div> 
+	 		<div style="float:right;"><input type="button" value="Cancelar" onclick="location.href='/nuova/mainProfesional';" class="btn"/></div>
+			</div>
+	</div>
+</div>
 </form:form>
 </div>
 </div>

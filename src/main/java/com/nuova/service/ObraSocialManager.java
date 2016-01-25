@@ -2,6 +2,9 @@ package com.nuova.service;
 
 import java.util.List;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+
 import com.nuova.model.Obrasocial;
 
 public interface ObraSocialManager {
@@ -16,4 +19,7 @@ public interface ObraSocialManager {
 
     public void edit(Obrasocial obrasocial);
 
+    public Page<Obrasocial> findObrasocialesByPageable(Pageable pageable);
+
+    public Page<Obrasocial> findObrasocialesBySearch(String search, Pageable pageable);
 }

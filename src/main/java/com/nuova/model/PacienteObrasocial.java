@@ -24,6 +24,10 @@ import javax.persistence.TemporalType;
         , catalog = "nuova")
 public class PacienteObrasocial implements java.io.Serializable {
 
+    /**
+     * 
+     */
+    private static final long serialVersionUID = -7857985275016808163L;
     private Integer pacienteObrasocialId;
     private Paciente paciente;
     private Obrasocial obrasocial;

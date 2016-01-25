@@ -3,6 +3,8 @@ package com.nuova.service;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -38,7 +40,15 @@ public class EspecialidadManagerImpl implements EspecialidadManager {
     @Transactional
     public void edit(Especialidad especialidad) {
         this.especialidadDAO.edit(especialidad);
-
     }
 
+    @Transactional
+    public Page<Especialidad> findEspecialidadesByPageable(Pageable pageable) {
+        return especialidadDAO.findEspecialidadesByPageable(pageable);
+    }
+
+    @Transactional
+    public Page<Especialidad> findEspecialidadesBySearch(String search, Pageable pageable) {
+        return especialidadDAO.findEspecialidadesBySearch(search, pageable);
+    }
 }

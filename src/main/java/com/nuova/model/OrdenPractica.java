@@ -24,6 +24,10 @@ import javax.persistence.TemporalType;
         , catalog = "nuova")
 public class OrdenPractica implements java.io.Serializable {
 
+    /**
+     * 
+     */
+    private static final long serialVersionUID = 8742454053094013763L;
     private Integer orddenPracticaId;
     private Orden orden;
     private Practica practica;
@@ -49,7 +53,7 @@ public class OrdenPractica implements java.io.Serializable {
         this.orddenPracticaId = orddenPracticaId;
     }
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "orden_id")
     public Orden getOrden() {
         return this.orden;
@@ -59,7 +63,7 @@ public class OrdenPractica implements java.io.Serializable {
         this.orden = orden;
     }
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "practica_id")
     public Practica getPractica() {
         return this.practica;

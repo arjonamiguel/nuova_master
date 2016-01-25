@@ -8,6 +8,10 @@ import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
@@ -15,6 +19,8 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.nuova.dto.EspecialidadDTO;
 import com.nuova.dto.ProfesionalDTO;
@@ -104,6 +110,46 @@ public class ProfesionalController {
         map.addAttribute("profesionalList", profesionalManager.findAll());
 
         return ConstantRedirect.VIEW_MAIN_PROFESIONAL;
+    }
+
+    // Ajax --------------------------------------------
+    @RequestMapping(value = ConstantControllers.AJAX_GET_PROFESIONALES_PAGINADOS, method = RequestMethod.GET)
+    public @ResponseBody Page<ProfesionalDTO> getProfesionalesPaginados(
+            @RequestParam(required = false, defaultValue = "0") Integer start,
+            @RequestParam(required = false, defaultValue = "50") Integer limit) {
+
+        // Sort and Pagination
+        // Sort sort = new Sort(Sort.Direction.DESC, "creationDate");
+        Pageable pageable = new PageRequest(start, limit);
+
+        Page<Profesional> profesionales = profesionalManager.findProfesionalesByPageable(pageable);
+        List<ProfesionalDTO> dtos = new ArrayList<ProfesionalDTO>();
+        for (Profesional p : profesionales) {
+            ProfesionalDTO dto = transformProfesionalToDto(p);
+            dtos.add(dto);
+        }
+
+        return new PageImpl<ProfesionalDTO>(dtos, pageable, profesionales.getTotalElements());
+    }
+
+    @RequestMapping(value = ConstantControllers.AJAX_GET_SEARCH_PROFESIONALES_PAGINADOS, method = RequestMethod.GET)
+    public @ResponseBody Page<ProfesionalDTO> getSearchProfesionalesPaginados(
+            @RequestParam(required = false, defaultValue = "") String search,
+            @RequestParam(required = false, defaultValue = "0") Integer start,
+            @RequestParam(required = false, defaultValue = "50") Integer limit) {
+
+        // Sort and Pagination
+        // Sort sort = new Sort(Sort.Direction.DESC, "creationDate");
+        Pageable pageable = new PageRequest(start, limit);
+
+        Page<Profesional> profesionales = profesionalManager.findProfesionalesBySearch(search, pageable);
+        List<ProfesionalDTO> dtos = new ArrayList<ProfesionalDTO>();
+        for (Profesional p : profesionales) {
+            ProfesionalDTO dto = transformProfesionalToDto(p);
+            dtos.add(dto);
+        }
+
+        return new PageImpl<ProfesionalDTO>(dtos, pageable, profesionales.getTotalElements());
     }
 
     private Profesional transformDtoToProfesional(ProfesionalDTO p) {

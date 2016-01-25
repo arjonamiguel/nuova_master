@@ -1,15 +1,19 @@
 package com.nuova.dto;
 
+import java.util.Date;
+
 public class OrdenWorkflowDTO {
     private Integer ordenWorkflowId;
     private OrdenDTO orden;
     private String userName;
     private String estado;
+    private Date fecha;
 
-    public OrdenWorkflowDTO(OrdenDTO orden, String userName, String estado) {
+    public OrdenWorkflowDTO(OrdenDTO orden, String userName, String estado, Date fecha) {
         this.orden = orden;
         this.userName = userName;
         this.estado = estado;
+        this.fecha = fecha;
     }
 
     public Integer getOrdenWorkflowId() {
@@ -42,6 +46,14 @@ public class OrdenWorkflowDTO {
 
     public void setEstado(String estado) {
         this.estado = estado;
+    }
+
+    public Date getFecha() {
+        return fecha;
+    }
+
+    public void setFecha(Date fecha) {
+        this.fecha = fecha;
     }
 
 }

@@ -23,7 +23,9 @@
 		</style>
         <SCRIPT language="javascript">
         var siprosa=0;
-
+        function Eliminar (i) {    	 
+    	    document.getElementById("dataTable").deleteRow(i);
+    	}
         
         function addRow(tableID) {
  
@@ -32,16 +34,15 @@
             var rowCount = table.rows.length;
             var row = table.insertRow(rowCount);
  
-            var cell1 = row.insertCell(0);
-            var element1 = document.createElement("input");
-            element1.type = "checkbox";
-            element1.name="chkbox[]";
-            cell1.appendChild(element1);
+
  
-            var cell2 = row.insertCell(1);                      
+            var cell2 = row.insertCell(0);                      
             cell2.innerHTML = document.getElementById("especialidad").value+"<input type='hidden' name='especialidadList' value='"+document.getElementById("especialidad").value+"'>";
-            var cell3 = row.insertCell(2);
-            cell3.innerHTML = document.getElementById('especialidad').options[document.getElementById('especialidad').selectedIndex].text; 
+            var cell3 = row.insertCell(1);
+            cell3.innerHTML = document.getElementById('especialidad').options[document.getElementById('especialidad').selectedIndex].text;
+            
+           	var cell4 = row.insertCell(2);
+            cell4.innerHTML=  "<button type='button' class='btn btn-danger btn-xs' onClick='Eliminar(this.parentNode.parentNode.rowIndex)'><span class='icon icon-remove' title='Eliminar'></span></button>";
  
         }
  
@@ -84,17 +85,17 @@
 		}
     </SCRIPT>
 </head>
-<body style="background-color:#eee;">
+<body style="background-color:#e5e5e5;">
 <jsp:include page="../sec_menu.jsp"></jsp:include>
 <jsp:include page="../breadcrumb.jsp"></jsp:include>
 <div class="mainContainer"> 	
-<div style="padding-left:0%;">
+<div class="panelContainer">
 <form:form method="post" action="/nuova/addProfesional" commandName="profesional">
 <div class="panel panel-info">
 	<div class="panel-heading">
           <div class="panel-title">Agregar Datos del Profesional</div>
     </div>     
-	<div style="padding-top:30px" class="panel-body" >
+	<div  class="panel-body">
 	
 <div class="container-fluid">
   <div class="row-fluid">
@@ -127,24 +128,26 @@
 	    </div>
   </div>
     <div class="row-fluid">
-	    <div class="span4"">	
-	    </div>
-	    <div class="span2">
+	    <div class="span4">	
 			<div style="visibility:hidden;height:0px;"><form:label path="habilitacionSiprosa">Habilitacion del Siprosa:</form:label></div>
 			<div style="visibility:hidden;height:0px;"><form:input path="habilitacionSiprosa" /></div>
-			<label for="info">SIPROSA <input type="checkbox" id="info" class="badgebox" onchange="javascript:updateSiprosa();"><span class="badge">&check;</span></label>
-	    </div>
-	    <div class="span6">
-	        <div style="padding-left:23%;">
-	    		<div id="labelDate" class="labelDate"><form:label path="fechaVencimientoHabilitacion">Fecha Vencimiento Habilitacion:</form:label></div>
+			<div>
+				<div class="formLabel"><form:label path="fechaVencimientoHabilitacion">SIPROSA:</form:label></div>
 				<div style="visibility:hidden;height:0px;"><form:input class="date" path="fechaVencimientoHabilitacion" /></div>
-				<div id="calendar" style="visibility:hidden;">
+				<div class="formInput">
+				<div id="calendar">
 					<div class="input-group registration-date-time" style="padding-top:0%;">
 						<input class="form-control" name="registration_date" id="registration-date" type="date"  onchange="javascript:updateDate();">
 	            	</div>
 	        	</div>  
-	    	</div>
+	        	</div>
+			</div>
 	    </div>
+		<div class="span4">	
+	    </div>
+		<div class="span4">	
+	    </div>
+
   </div>
 </div>        
         
@@ -158,31 +161,26 @@
 	          <div class="panel-title">Agregar Especialidades</div>
 	</div>  
 <div style="padding-top:30px" class="panel-body" >
-   	<div class="row-fluid" style="background-color:#f9f9f9;;width:98%;padding-left:2%;">
-		<div class="span1">
-			<form:label path="especialidad">Especialidad:</form:label>
-		</div>
-		<div class="span4">
-			    	<form:select path="especialidad">
+   	
+	<div class="row-fluid">
+			<div class="span9">
+			</div>
+			<div class="span2">
+			 	<form:select path="especialidad">
 				   <form:option value="NONE" label="Seleccione Especialidad ..."/>
 				   <form:options items="${especialidadList}" itemLabel="nombre" itemValue="especialidadId" />			    
 				</form:select>
-		</div>
-		<div class="span2">
-		</div>
-	</div>
-	<div class="row-fluid">
-    		<div class="span12">
-    			<div style="float:right;"><INPUT type="button" value="Add Row" onclick="addRow('dataTable')" class="btn btn-info"/></div>
-    			<div style="float:right;"><INPUT type="button" value="Delete Row" onclick="deleteRow('dataTable')" class="btn"/></div>
+			</div>
+    		<div class="span1">
+    			<div style="float:left;"><INPUT type="button" value="Agregar" onclick="addRow('dataTable')" class="btn btn-info"/></div>
     		</div>
     </div>
     <div class="tableContainer">
 	    <TABLE id="dataTable" class="table"  style="margin-top:0px;">
-	        <TR>
-	        	<TD></TD>
+	        <TR>      	
 	            <TD>Id</TD>
-	            <TD>Especialidad</TD>        
+	            <TD>Especialidad</TD> 
+	            <TD></TD>       
 	        </TR>
 	    </TABLE>
 	   	
@@ -199,15 +197,11 @@
 </div>
 </div>   
 
-<div style="float:left;padding-left:27%;width:45%;padding-bottom:2%;">
-	 
-</div>
 
 </form:form>
 </div>
 </div>
 </div>
-
 
 </body>
 </html>
@@ -215,4 +209,5 @@
 <script>
         document.getElementById("habilitacionSiprosa").value=0;
         document.getElementById("fechaVencimientoHabilitacion").value='';
+		document.getElementById("configuracion").parentNode.classList.add("active")
 </script>

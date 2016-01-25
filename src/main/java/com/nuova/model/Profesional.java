@@ -25,6 +25,10 @@ import javax.persistence.TemporalType;
         , catalog = "nuova")
 public class Profesional implements java.io.Serializable {
 
+    /**
+     * 
+     */
+    private static final long serialVersionUID = -940210575738056861L;
     private Integer profesionalId;
     private String apellido;
     private String nombre;

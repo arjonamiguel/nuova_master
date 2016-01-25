@@ -1908,7 +1908,8 @@ table td[class*="span"], table th[class*="span"], .row-fluid table td[class*="sp
 }
 
 .icon-envelope {
-    background-position: -72px 0
+    background-position: -72px 0;
+    background-image: url("../../img/bootstrap/glyphicons-halflings.png");
 }
 
 .icon-heart {
@@ -1924,7 +1925,8 @@ table td[class*="span"], table th[class*="span"], .row-fluid table td[class*="sp
 }
 
 .icon-user {
-    background-position: -168px 0
+    background-position: -168px 0;
+    
 }
 
 .icon-film {
@@ -1940,15 +1942,16 @@ table td[class*="span"], table th[class*="span"], .row-fluid table td[class*="sp
 }
 
 .icon-th-list {
-    background-position: -264px 0
+    background-position: -264px 0;
+    background-image: url("../../img/bootstrap/glyphicons-halflings.png");
 }
 
 .icon-ok {
-    background-position: -288px 0
+    background-position: -288px 0;
 }
 
 .icon-remove {
-    background-position: -312px 0
+    background-position: -312px 0;
 }
 
 .icon-zoom-in {
@@ -1960,7 +1963,8 @@ table td[class*="span"], table th[class*="span"], .row-fluid table td[class*="sp
 }
 
 .icon-off {
-    background-position: -384px 0
+    background-position: -384px 0;
+    background-image: url("../../img/bootstrap/glyphicons-halflings.png");
 }
 
 .icon-signal {
@@ -1968,7 +1972,8 @@ table td[class*="span"], table th[class*="span"], .row-fluid table td[class*="sp
 }
 
 .icon-cog {
-    background-position: -432px 0
+    background-position: -432px 0;
+    background-image: url("../../img/bootstrap/glyphicons-halflings.png");
 }
 
 .icon-trash {
@@ -2160,7 +2165,8 @@ table td[class*="span"], table th[class*="span"], .row-fluid table td[class*="sp
 }
 
 .icon-check {
-    background-position: -144px -72px
+    background-position: -144px -72px;
+    background-image: url("../../img/bootstrap/glyphicons-halflings.png");
 }
 
 .icon-move {
@@ -2224,11 +2230,13 @@ table td[class*="span"], table th[class*="span"], .row-fluid table td[class*="sp
 }
 
 .icon-remove-sign {
-    background-position: -48px -96px
+    background-position: -48px -96px;
+    background-image: url("../../img/bootstrap/glyphicons-halflings.png");
 }
 
 .icon-ok-sign {
-    background-position: -72px -96px
+    background-position: -72px -96px;
+    background-image: url("../../img/bootstrap/glyphicons-halflings.png");
 }
 
 .icon-question-sign {
@@ -2439,7 +2447,8 @@ table td[class*="span"], table th[class*="span"], .row-fluid table td[class*="sp
 }
 
 .icon-wrench {
-    background-position: -360px -144px
+    background-position: -360px -144px;
+    background-image: url("../../img/bootstrap/glyphicons-halflings.png");
 }
 
 .icon-tasks {
@@ -2451,7 +2460,8 @@ table td[class*="span"], table th[class*="span"], .row-fluid table td[class*="sp
 }
 
 .icon-briefcase {
-    background-position: -432px -144px
+    background-position: -432px -144px;
+    background-image: url("../../img/bootstrap/glyphicons-halflings.png");
 }
 
 .icon-fullscreen {

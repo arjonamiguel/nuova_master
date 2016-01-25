@@ -21,6 +21,8 @@ public class ProfesionalDTO {
     private Map<Integer, String> especialidadListEdit = new HashMap<Integer, String>();
     private List<ProfesionalEspecialidadDTO> especialidadListOld = new ArrayList<ProfesionalEspecialidadDTO>();
 
+    private String acciones;
+
     public Integer getProfesionalId() {
         return profesionalId;
     }
@@ -123,6 +125,23 @@ public class ProfesionalDTO {
 
     public void setEspecialidadListOld(List<ProfesionalEspecialidadDTO> especialidadListOld) {
         this.especialidadListOld = especialidadListOld;
+    }
+
+    public String getAcciones() {
+        String botonEdit = "<a class='btn btn-info btn-xs' href='formEditProfesional/" + getProfesionalId()
+                + "'><span class='icon icon-edit'></span>editar</a>&nbsp;";
+
+        String botonDelete = "<a class='btn btn-danger btn-xs' href='formDeleteProfesional/" + getProfesionalId()
+                + "'><span class='icon icon-remove'></span>eliminar</a>";
+
+        this.acciones = botonEdit + botonDelete;
+
+        return acciones;
+
+    }
+
+    public void setAcciones(String acciones) {
+        this.acciones = acciones;
     }
 
 }

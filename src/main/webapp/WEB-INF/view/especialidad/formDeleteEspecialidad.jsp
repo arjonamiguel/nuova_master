@@ -16,10 +16,11 @@
 		<link href="<%=request.getContextPath()%>/resources/css/bootstrap/bootstrap-responsive.css" rel="stylesheet"/>
 	
 </head>
-<body style="background-color:#eee;">
+<body style="background-color:#e5e5e5;">
 <jsp:include page="../sec_menu.jsp"></jsp:include>
 <jsp:include page="../breadcrumb.jsp"></jsp:include>
 <div class="mainContainer"> 
+<div class="panelContainer">
 	<form:form method="post" action="/nuova/deleteEspecialidad" commandName="especialidad">
 	<div class="panel panel-info">
 			<div class="panel-heading">
@@ -49,6 +50,7 @@
 			</div>
 	</div>
 	</form:form>
+</div>
 </div>
 </body>
 </html>

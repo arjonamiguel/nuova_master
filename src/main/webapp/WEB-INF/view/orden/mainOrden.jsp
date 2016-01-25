@@ -8,67 +8,205 @@
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 	<title>Nuova</title>
-        <link href="<%=request.getContextPath()%>/resources/css/bootstrap/bootstrap.min.css" rel="stylesheet"/>
-        <link href="<%=request.getContextPath()%>/resources/css/bootstrap/bootstrap-responsive.css" rel="stylesheet"/>
+        <link href="<%=request.getContextPath()%>/resources/css/bootstrap/bootstrap.min.css" rel="stylesheet"/>   
 		<script src="<c:url value="/resources/js/jquery/jquery-2.0.3.min.js" />"></script>
 		<script src="<c:url value="/resources/js/bootstrap/bootstrap.min.js" />"></script>
 		<script src="<%=request.getContextPath()%>/resources/js/jquery/bootstrap-collapse.js" />"></script>
 		<link href="<%=request.getContextPath()%>/resources/css/nuova.css" rel="stylesheet"/>
+		<link href="<%=request.getContextPath()%>/resources/css/panel.css" rel="stylesheet"/>
+		<link href="<%=request.getContextPath()%>/resources/css/bootstrap/bootstrap-responsive.css" rel="stylesheet"/>
+		<!-- 	Configuracion del paginador -->
+<link href="<%=request.getContextPath()%>/resources/simplepaginggrid/css/simplePagingGrid-0.4.css" rel="stylesheet">
+<script type="text/javascript" src="<%=request.getContextPath()%>/resources/simplepaginggrid/examples/pageNumbers/script/handlebars-1.0.rc.1.js"></script>
+<script type="text/javascript" src="<%=request.getContextPath()%>/resources/simplepaginggrid/script/simplePagingGrid-0.5.0.2.js"></script>
 
+<script type="text/javascript">
+	$(document).ready(function() {
+												
+						var rows = [];
+
+						rows = callPaciente();
+
+						$("#ordenGrid").simplePagingGrid(
+								{
+									columnNames : [ "PACIENTE", "NRO.ORDEN", "FECHA", "ORDEN MEDICA", "CREDENCIAL",
+													"MONOTRIBUTISTA", "RECIBO SUELDO", "ESTADO","" ],
+									columnKeys : [ "botonpaciente", "nroOrden", "fecha","iconordenmedica"
+													, "iconcredencial", "iconmonotributista", "iconrecibo"
+													, "etiqestado", "acciones"],
+									columnWidths : [ "5%", "10%", , , , , , , "5%"],
+									sortable : [ false, true ],
+									data : rows
+								});
+
+						$('input#search')
+								.bind(
+										'keypress',
+										function(event) {
+											var keycode = (event.keyCode ? event.keyCode
+													: event.which);
+											if (keycode == '13') {
+												var search = document
+														.getElementById("search").value;
+												// rows = callSearchPaciente(search);
+												rows.length = [];
+												$("#ordenGrid")
+														.simplePagingGrid(
+																"refresh");
+												// rows.push(callSearchPaciente(search));
+												// rows = rows[0];
+												var arr = callSearchPaciente(search);
+												$.each(arr, function(index,
+														value) {
+													rows.splice(0, 0, value);
+
+												});
+												$("#ordenGrid")
+														.simplePagingGrid(
+																"refresh");
+
+											}
+										});
+						
+					});
+</script>
+<!-- 	Fin Configuracion del paginador -->
+
+<script>
+function editColumnEstado() {
+	var text="";
+    //run through each row
+    $('.table tr').each(function (i, row) {
+    	if(i>0){
+    		    // reference all the stuff you need first
+		        var $row = $(row);
+		        $row.find('.label');
+		        text=$row.find('.label')[0].innerHTML;
+		        if(text=='RECHAZADA'){
+		        	$row.find('.label')[0].className="label-important";
+		        }else if(text=='INCOMPLETA'){
+		        	$row.find('.label')[0].className="label-warning";
+		        }else if(text=='PENDIENTE'){
+		        	$row.find('.label')[0].className="label-warning";
+		        }else if(text=='AUTORIZADA'){
+		        	$row.find('.label')[0].className="label-success";
+		  		}     
+    	}
+    });
+}
+
+function editColumnsChecked() {
+	var text="";
+	
+    //run through each row
+    $('.table tr').each(function (i, row) {
+    	if(i>0){
+    		    // reference all the stuff you need first
+		        var $row = $(row);
+				var group= $row.find('.icon-ok-sign')
+				for(var j=0;j<group.length;j++){
+					if(group[j].innerHTML==0){
+						group[j].className="icon-remove-sign";
+					}
+					group[j].innerHTML="";
+				}
+    	}
+
+    });
+}
+</script>
 </head>
-<body style="background-color:#eee;">
+<body style="background-color:#e5e5e5;">
 <jsp:include page="../sec_menu.jsp"></jsp:include>
 <jsp:include page="../breadcrumb.jsp"></jsp:include>
 <div class="mainContainer">   
+	<div class="panelContainer">		
+		<div class="panel panel-info">
+			<div class="panel-heading">
+          			<div class="panel-title">
+	          			Administracion de Practicas
+	           			<a href="formAddOrden" class="pull-right"><b>+</b>&nbsp;&nbsp;Nueva Practica</a>
+          			</div>
+    		</div>     
+			<div  class="panel-body" >
+				<div class="container-fluid" >
+	  				<div class="row-fluid" >
+		    				<div class="span12">
+		    					<section id="main">        
+										<div class="container-fluid">	
+											<div>		
+										    <input type="text" 
+										    	style="width: 50%"
+										    	name="search" 
+										    	id="search"			    	 
+										    	class="form-control input-lg"  
+										    	placeholder="USTED PUEDE FILTRAR POR EL NRO. DE ORDEN ..."										    	
+										   	/>
+										   	<span id = "wait" style="visibility: hidden; padding-left: 5px">Buscando ...</span>			
+											</div>
+											<div class="row-fluid">
+												<div id="ordenGrid"></div>
+											</div>
+										</div>
+							    </section>	
+		    				</div>
+		    		</div>
+		    	</div>
+	    	</div>
+	    </div>
+</div>
 	
-	<div class="pageTitle">
-	<h3>Administracion de Practicas</h3>
-	</div>
-	<div class="tableContainer">
-		<div class="addButton">
-		<a href="formAddOrden" class="btn btn-info btn-xs pull-right"><b>+</b>&nbsp;&nbsp;Nueva Practica</a>
-		</div>	
-		<c:if  test="${!empty ordenList}">
-		<table class="table">
-		<tr>
-		    <th class="tableHeader"">Paciente</th>
-		    <th class="tableHeader"">Nro Orden</th>
-		    <th class="tableHeader"">Fecha</th>
-		    <th class="tableHeader"">Orden Medica</th>
-		    <th class="tableHeader"">Credencial</th>
-		    <th class="tableHeader"">Monotributista</th>
-		    <th class="tableHeader"">Recibo Sueldo</th>
-		    <th class="tableHeader"">Estado</th>
-		    <th class="tableHeader""></th>
-		    <th class="tableHeader"" class="text-center"></th>
-		</tr>
-		<c:forEach items="${ordenList}" var="o">
-		    <tr>
-		        <td> 
-			        <a class="btn btn-success btn-xs" href="formViewPaciente/${o.paciente.pacienteId}">
-			        <span class="icon icon-user"></span>Ver...</a>
-		        </td>
-		        <td>${o.ordenId}</td>
-		        <td>${o.fecha}</td>
-		        <td>${o.reqOrdenMedico}</td>
-		   	    <td>${o.reqCredecial}</td>
-		        <td>${o.reqMonotributista}</td>
-		        <td>${o.reqReciboSueldo}</td>
-		        <td>${o.estado}</td>
-		        <td class="text-center">
-		        	<div style="float:right;">
-		        	<a class="btn btn-info btn-xs" href="formEditOrden/${o.ordenId}"><span class="icon icon-edit"></span>editar</a>
-		        	<a class="btn btn-danger btn-xs" href="formDeleteOrden/${o.ordenId}"><span class="icon icon-remove"></span>eliminar</a>
-		        	</div>
-		       	</td>
-		    </tr>
-		</c:forEach>
-		</table>
-	</div>
-	</c:if>
+	
 </div>
 </body>
 </html>
 <script>
-document.getElementById("mainOrden").parentNode.classList.add("active")
+document.getElementById("mainOrden").parentNode.classList.add("active");
+editColumnEstado();
+editColumnsChecked();
+
+function callPaciente() {
+	var retorno;
+	$.ajax({
+		url : "ajaxGetOrdenesPaginados",
+		type : "GET",
+		contentType : "application/json; charset=utf-8",
+		//    data: jsonString, //Stringified Json Object
+		async : false, //Cross-domain requests and dataType: "jsonp" requests do not support synchronous operation
+		cache : false, //This will force requested pages not to be cached by the browser          
+		processData : false, //To avoid making query String instead of JSON
+		success : function(page) {
+			// Success Message Handler
+			retorno = page.content;
+		}
+	});
+
+	return retorno;
+}
+
+function callSearchPaciente(search) {
+	var retorno;
+	$.ajax({
+		url : "ajaxGetSearchOrdenesPaginados?search=" + search,
+		type : "GET",
+		contentType : "application/json; charset=utf-8",
+		//    data: jsonString, //Stringified Json Object
+		async : false, //Cross-domain requests and dataType: "jsonp" requests do not support synchronous operation
+		cache : false, //This will force requested pages not to be cached by the browser          
+		processData : false, //To avoid making query String instead of JSON
+		 beforeSend: loadStart,
+		 complete: loadStop,		
+		success : function(pagesearch) {
+			retorno = pagesearch.content;
+		}
+	});
+
+	return retorno;
+}
+function loadStart() {
+	$('#wait').css("visibility","visible");
+}
+function loadStop() {
+	$('#wait').css("visibility","hidden");
+}
 </script>

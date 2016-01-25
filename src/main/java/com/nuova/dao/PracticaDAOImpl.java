@@ -4,6 +4,8 @@ import java.util.List;
 
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
 
 import com.nuova.model.Practica;
@@ -37,6 +39,16 @@ public class PracticaDAOImpl implements PracticaDAO {
                         + " WHERE p.practicaId = :practicaId ").
                 setInteger("practicaId", practicaId).
                 executeUpdate();
+    }
+
+    public Page<Practica> findPracticaByPageable(Pageable pageable) {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    public Page<Practica> findPracticaBySearch(String search, Pageable pageable) {
+        // TODO Auto-generated method stub
+        return null;
     }
 
 }

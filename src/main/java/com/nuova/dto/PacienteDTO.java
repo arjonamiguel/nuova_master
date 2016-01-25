@@ -25,7 +25,9 @@ public class PacienteDTO {
     private List<String> provinciaList;
     private List<PacienteDTO> adherentes = new ArrayList<PacienteDTO>();
     private List<PacienteDTO> adherentesEditList = new ArrayList<PacienteDTO>();
+
     private String crdencial;
+    private boolean original = false;
 
     private boolean titular = false;
     private String checkedTitular;
@@ -33,6 +35,8 @@ public class PacienteDTO {
 
     private boolean liberado = false;
     private String checkedLiberado;
+
+    private String acciones;
 
     // private List<PacienteObrasocial> pacienteObrasocials = new ArrayList<PacienteObrasocial>(0);
 
@@ -220,4 +224,30 @@ public class PacienteDTO {
         this.checkedLiberado = checkedLiberado;
     }
 
+    public boolean isOriginal() {
+        return original;
+    }
+
+    public void setOriginal(boolean original) {
+        this.original = original;
+    }
+
+    public String getAcciones() {
+        String botonEdit = "<a class='btn btn-info btn-xs' href='formEditPaciente/" + getPacienteId()
+                + "'><span class='icon icon-edit'></span>editar</a>&nbsp;";
+
+        String botonPractica = "<a class='btn btn-success btn-xs' href='formAddOrden/" + getPacienteId()
+                + "'><span class='icon icon-plus-sign'></span>Practica</a>&nbsp;";
+
+        String botonDelete = "<a class='btn btn-danger btn-xs' href='formDeletePaciente/" + getPacienteId()
+                + "'><span class='icon icon-remove'></span>eliminar</a>";
+
+        this.acciones = botonEdit + botonPractica + botonDelete;
+
+        return acciones;
+    }
+
+    public void setAcciones(String acciones) {
+        this.acciones = acciones;
+    }
 }

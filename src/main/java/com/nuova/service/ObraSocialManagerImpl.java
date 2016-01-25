@@ -3,6 +3,8 @@ package com.nuova.service;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -37,6 +39,16 @@ public class ObraSocialManagerImpl implements ObraSocialManager {
     @Transactional
     public void edit(Obrasocial obrasocial) {
         obrasocialDAO.edit(obrasocial);
+    }
+
+    @Transactional
+    public Page<Obrasocial> findObrasocialesByPageable(Pageable pageable) {
+        return obrasocialDAO.findObrasocialesByPageable(pageable);
+    }
+
+    @Transactional
+    public Page<Obrasocial> findObrasocialesBySearch(String search, Pageable pageable) {
+        return obrasocialDAO.findObrasocialesBySearch(search, pageable);
     }
 
 }

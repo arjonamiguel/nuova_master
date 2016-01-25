@@ -20,6 +20,10 @@ import javax.persistence.Table;
         , catalog = "nuova")
 public class ProfesionalEspecialidad implements java.io.Serializable {
 
+    /**
+     * 
+     */
+    private static final long serialVersionUID = 523798534579190522L;
     private Integer id;
     private Profesional profesional;
     private Especialidad especialidad;

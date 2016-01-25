@@ -2,13 +2,15 @@ package com.nuova.model;
 
 // Generated Jan 11, 2016 12:33:30 PM by Hibernate Tools 3.4.0.CR1
 
+import static javax.persistence.GenerationType.IDENTITY;
+
 import java.util.HashSet;
 import java.util.Set;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
-import static javax.persistence.GenerationType.IDENTITY;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
@@ -21,6 +23,10 @@ import javax.persistence.Table;
         , catalog = "nuova")
 public class Practica implements java.io.Serializable {
 
+    /**
+     * 
+     */
+    private static final long serialVersionUID = -4203163712257195563L;
     private Integer practicaId;
     private String codigo;
     private String nombre;

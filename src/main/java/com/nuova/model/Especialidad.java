@@ -22,6 +22,10 @@ import javax.persistence.Table;
         , catalog = "nuova")
 public class Especialidad implements java.io.Serializable {
 
+    /**
+     * 
+     */
+    private static final long serialVersionUID = 1L;
     private Integer especialidadId;
     private String nombre;
     private Set<ProfesionalEspecialidad> profesionalEspecialidads = new HashSet<ProfesionalEspecialidad>(0);
@@ -54,7 +58,7 @@ public class Especialidad implements java.io.Serializable {
         this.nombre = nombre;
     }
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "especialidad")
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "especialidad")
     public Set<ProfesionalEspecialidad> getProfesionalEspecialidads() {
         return this.profesionalEspecialidads;
     }

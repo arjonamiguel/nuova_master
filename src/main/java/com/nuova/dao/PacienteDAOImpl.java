@@ -2,8 +2,12 @@ package com.nuova.dao;
 
 import java.util.List;
 
+import org.hibernate.Query;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
 
 import com.nuova.model.Paciente;
@@ -64,4 +68,22 @@ public class PacienteDAOImpl implements PacienteDAO {
 
     }
 
+    public Page<Paciente> findPacientesByPageable(Pageable pageable) {
+        Query query = this.sessionFactory.getCurrentSession().createQuery("FROM Paciente");
+        // query.setFirstResult(pageable.getOffset());
+        // query.setMaxResults(pageable.getPageNumber());
+        List<Paciente> result = query.list();
+        return new PageImpl<Paciente>(result, pageable, result.size());
+    }
+
+    public Page<Paciente> findPacientesBySearch(String search, Pageable pageable) {
+        Query query = this.sessionFactory.getCurrentSession()
+                .createQuery("FROM Paciente p "
+                        + " WHERE upper(p.apellido) LIKE '%" + search.toUpperCase() + "%' "
+                        + " OR upper(p.nombre) LIKE '%" + search.toUpperCase() + "%' ");
+        // query.setFirstResult(pageable.getOffset());
+        // query.setMaxResults(pageable.getPageNumber());
+        List<Paciente> result = query.list();
+        return new PageImpl<Paciente>(result, pageable, result.size());
+    }
 }

@@ -2,6 +2,9 @@ package com.nuova.dao;
 
 import java.util.List;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+
 import com.nuova.model.Paciente;
 
 public interface PacienteDAO {
@@ -18,5 +21,9 @@ public interface PacienteDAO {
     public void deleteAdherente(Integer pacienteId);
 
     public void deletePacienteObrasocial(Integer pacienteId);
+
+    public Page<Paciente> findPacientesByPageable(Pageable pageable);
+
+    public Page<Paciente> findPacientesBySearch(String search, Pageable pageable);
 
 }

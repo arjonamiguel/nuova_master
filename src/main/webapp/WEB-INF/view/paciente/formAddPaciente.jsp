@@ -78,24 +78,37 @@
            }
        }
        
-       	function updateLiberado(){
-			if(liberado==0){
-				liberado=1;
-				document.getElementById("liberado").value=1;
+	function updateLiberado(){
+			if(document.getElementById("liberado").value=="true" && liberadoFlag==0){
+			//validacion on load
+				$("#infoLiberado").click();
+				liberadoFlag=1;
 			}else{
-				liberado=0;
-				document.getElementById("liberado").value=0;
-			}
+			//validacion on change
+				if(liberadoFlag==1){
+					document.getElementById("liberado").value="false";
+					liberadoFlag=0;
+				}else{
+					document.getElementById("liberado").value="true";
+					liberadoFlag=1;
+				}
+			}	
 		}
-		
 		function updateTitular(){
-			if(titular==0){
-				titular=1;
-				document.getElementById("titular").value=1;
+			if(document.getElementById("titular").value=="true" && titularFlag==0){
+			//validacion on load
+				$("#infoTitular").click();
+				titularFlag=1;
 			}else{
-				titular=0;
-				document.getElementById("titular").value=0;
-			}
+			//validacion on change
+				if(titularFlag==1){
+					document.getElementById("titular").value="false";
+					titularFlag=0;
+				}else{
+					document.getElementById("titular").value="true";
+					titularFlag=1;
+				}
+			}	
 		}
 		
 		function updateDate(){
@@ -104,11 +117,12 @@
 
        </SCRIPT>
 </head>
-<body style="background-color:#eee;">
+<body style="background-color:#e5e5e5;">
 <jsp:include page="../sec_menu.jsp"></jsp:include>
 <jsp:include page="../breadcrumb.jsp"></jsp:include>
 
 <div class="mainContainer"> 
+<div class="panelContainer">
 <form:form method="post" action="addPaciente" commandName="paciente">
 	<div class="panel panel-info">
 	<div class="panel-heading">
@@ -132,12 +146,14 @@
 			   	</div>
 			   	<div class="row-fluid">
 			   		<div class="span4">
-			   				<div id="labelDate" class="formLabel"><form:label path="fechaNacimiento">Fecha de Nacimiento:</form:label></div>
+			   				<div id="labelDate" class="formLabel"><form:label path="fechaNacimiento">Nacimiento:</form:label></div>
 							<div style="visibility:hidden;height:0px;"><form:input path="fechaNacimiento" class="date"/></div>
+							<div class="formInput">
 							<div id="calendar">
 								<div class="input-group registration-date-time" style="padding-top:0%;">
 									<input class="form-control" name="registration_date" id="registration-date" type="date"  onchange="javascript:updateDate();">
 	            				</div>
+	            			</div>
 	            			</div>		
 			   		</div>
 			   		<div class="span4">
@@ -183,43 +199,44 @@
 				<div class="panel-title">Obra Social</div>
 			</div>
 			<div class="panel-body">
-				<div class="row-fluid">
-					<div class="span9">
-					</div>
-					<div class="span2">
-						<form:select path="obrasocial" style="width:88%; margin-bottom:0px">
-					   		<form:option value="NONE" label="Seleccione Obra Social ..."/>
-					   		<form:options items="${obrasocialList}" itemLabel="nombre" itemValue="obrasocialId" />			    
-						</form:select>
-					</div>
-					<div class="span1">
-						<div style="float:right;"><INPUT type="button" value="Agregar" onclick="addRow('dataTable')" class="btn btn-info"/></div>
-					</div>
-				</div>
+						<div class="row-fluid">
+							<div class="span9">
+							</div>
+							<div class="span2">
+								<form:select path="obrasocial" style="width:88%; margin-bottom:0px">
+							   		<form:option value="NONE" label="Seleccione Obra Social ..."/>
+							   		<form:options items="${obrasocialList}" itemLabel="nombre" itemValue="obrasocialId" />			    
+								</form:select>
+							</div>
+							<div class="span1">
+								<div style="float:right;"><INPUT type="button" value="Agregar" onclick="addRow('dataTable')" class="btn btn-info"/></div>
+							</div>
+						</div>
+						<div class="row-fluid">
+							<div class="span12">
+									<TABLE id="dataTable" class="table" style="width: 100%; margin-top:0px;">
+								        <TR>
+								            <TD>ID</TD>
+								            <TD>Obra Social</TD>        
+								            <TD style="width: 20%">Nro Credencial</TD>
+								            <TD style="width: 15%">Original/Provisoria</TD>
+								            <td></td>
+								        </TR>
+					    			</TABLE>
+							</div>
+						</div>
+			</div>		
+</div>
+<div class="panel panel-info">
+			<div class="panel-body">
 				<div class="row-fluid">
 					<div class="span12">
-							<TABLE id="dataTable" class="table" style="width: 100%; margin-top:0px;">
-						        <TR>
-						        	
-						            <TD>ID</TD>
-						            <TD>Obra Social</TD>        
-						            <TD style="width: 20%">Nro Credencial</TD>
-						            <TD style="width: 15%">Original/Provisoria</TD>
-						            <td></td>
-						        </TR>
-			    			</TABLE>
-					</div>
-				</div>
-				
-				<div class="row-fluid">
-					<div class="span8">
-					</div>
-					<div class="span4">
 						<div style="float:right;padding-right:2%;"><input type="submit" value="Guardar" class="btn btn-info"/></div> 
 			 			<div style="float:right;"><input type="button" value="Cancelar" onclick="location.href='/nuova/mainPaciente';" class="btn"/></div>
 					</div>
 				</div>
 			</div>
+</div>	
 </div>
 </form:form>
 
