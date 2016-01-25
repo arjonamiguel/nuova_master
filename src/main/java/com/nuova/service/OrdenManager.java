@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
+import com.nuova.dto.OrdenAlarmaDTO;
 import com.nuova.model.Orden;
 
 public interface OrdenManager {
@@ -23,4 +24,7 @@ public interface OrdenManager {
     public Page<Orden> findOrdenesByPageable(Pageable pageable);
 
     public Page<Orden> findOrdenesBySearch(String search, Pageable pageable);
+
+    public List<OrdenAlarmaDTO> findAlarmaOrdenes();
+
 }

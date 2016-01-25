@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.nuova.dao.OrdenDAO;
+import com.nuova.dto.OrdenAlarmaDTO;
 import com.nuova.model.Orden;
 
 @Service
@@ -54,6 +55,11 @@ public class OrdenManagerImpl implements OrdenManager {
     @Transactional
     public Page<Orden> findOrdenesBySearch(String search, Pageable pageable) {
         return ordenDAO.findOrdenesBySearch(search, pageable);
+    }
+
+    @Transactional
+    public List<OrdenAlarmaDTO> findAlarmaOrdenes() {
+        return ordenDAO.findAlarmaOrdenes();
     }
 
 }

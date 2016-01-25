@@ -70,10 +70,12 @@ public class ConstantControllers {
     public final static String SHOW_REPORT_PROFESIONALES = "/showReporteProfesionales";
     public final static String SHOW_REPORT_ESPECIALIDADES = "/showReporteEspecialidades";
     public final static String SHOW_REPORT_OBRASSOCIALES = "/showReporteObrasSociales";
+    public final static String SHOW_REPORT_PACIENTES = "/showReportePacientes";
 
     public final static String REPORT_ORDEN_EMITIDA = "/reporteOrdenEmitida/{ordenId}";
     public final static String REPORT_PROFESIONALES = "/reporteProfesionales";
     public final static String REPORT_ESPECIALIDADES = "/reporteEspecialidades";
     public final static String REPORT_OBRASSOCIALES = "/reporteObrasSociales";
+    public final static String REPORT_PACIENTES = "/reportePacientes";
 
 }

@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sf.jasperreports.engine.JREmptyDataSource;
@@ -51,6 +52,7 @@ import com.nuova.model.Profesional;
 import com.nuova.model.ProfesionalEspecialidad;
 import com.nuova.service.EspecialidadManager;
 import com.nuova.service.OrdenManager;
+import com.nuova.service.PacienteManager;
 import com.nuova.service.ProfesionalManager;
 import com.nuova.utils.ConstantControllers;
 import com.nuova.utils.ConstantRedirect;
@@ -66,13 +68,19 @@ public class ReportController {
     private static final String ORDEN_EMITIDA_REPORT_JRXML = "reports/reporteOrdenEmitida.jrxml";
     private static final String PROFESIONALES_REPORT_JRXML = "reports/reporteProfesionales.jrxml";
     private static final String ESPECIALIDADES_REPORT_JRXML = "reports/reporteEspecialidades.jrxml";
+    private static final String PACIENTES_REPORT_JRXML = "reports/reportePacientes.jrxml";
+    private static final String ESPECIALIDADES_SUBREPORT_JRXML = "reports/reporteEspecialidades_Profesionales.jrxml";
 
+    @Autowired
+    ServletContext context;
     @Autowired
     OrdenManager ordenManager;
     @Autowired
     ProfesionalManager profesionalManager;
     @Autowired
     EspecialidadManager especialidadManager;
+    @Autowired
+    PacienteManager pacienteManager;
 
     // Viewer Reports
     @RequestMapping(value = ConstantControllers.SHOW_REPORT_PROFESIONALES, method = RequestMethod.GET)
@@ -86,6 +94,13 @@ public class ReportController {
     public String showReportEspecialidades(ModelMap map) {
         map.addAttribute("titulo", "Reporte de Especialidades registradas en Nuova");
         map.addAttribute("URL_ACTION", ConstantControllers.REPORT_ESPECIALIDADES);
+        return ConstantRedirect.VIEWER_REPORTE;
+    }
+
+    @RequestMapping(value = ConstantControllers.SHOW_REPORT_PACIENTES, method = RequestMethod.GET)
+    public String showReportPacientes(ModelMap map) {
+        map.addAttribute("titulo", "Reporte de Pacientes registrados en Nuova");
+        map.addAttribute("URL_ACTION", ConstantControllers.REPORT_PACIENTES);
         return ConstantRedirect.VIEWER_REPORTE;
     }
 
@@ -146,10 +161,30 @@ public class ReportController {
             HttpServletResponse response) throws IOException {
         List<EspecialidadDTO> especialidades = getEspecialidadesDto(especialidadManager.findAll());
         JRBeanCollectionDataSource beanCollectionDataSource = new JRBeanCollectionDataSource(especialidades);
+        String SUBREPORT_DIR = context.getRealPath(ESPECIALIDADES_SUBREPORT_JRXML);
+        Map<String, Object> parameters = new HashMap<String, Object>();
+        parameters.put("SUBREPORT_DIR", SUBREPORT_DIR);
+
+        ByteSource source = ByteSource.wrap(createReport(ESPECIALIDADES_REPORT_JRXML, parameters,
+                beanCollectionDataSource));
+        source.copyTo(response.getOutputStream());
+        response.setContentType("application/pdf");
+        response.getOutputStream().write(source.read());
+        response.getOutputStream().flush();
+        response.getOutputStream().close();
+
+        return ConstantRedirect.VIEWER_REPORTE;
+    }
+
+    @RequestMapping(value = ConstantControllers.REPORT_PACIENTES, method = RequestMethod.GET)
+    public String reportPacientes(ModelMap map,
+            HttpServletResponse response) throws IOException {
+        List<PacienteDTO> pacientes = getPacientesDto(pacienteManager.findAll());
+        JRBeanCollectionDataSource beanCollectionDataSource = new JRBeanCollectionDataSource(pacientes);
 
         Map<String, Object> parameters = new HashMap<String, Object>();
 
-        ByteSource source = ByteSource.wrap(createReport(ESPECIALIDADES_REPORT_JRXML, parameters,
+        ByteSource source = ByteSource.wrap(createReport(PACIENTES_REPORT_JRXML, parameters,
                 beanCollectionDataSource));
         source.copyTo(response.getOutputStream());
         response.setContentType("application/pdf");
@@ -394,4 +429,12 @@ public class ReportController {
         return retorno;
     }
 
+    private List<PacienteDTO> getPacientesDto(List<Paciente> list) {
+        List<PacienteDTO> retorno = new ArrayList<PacienteDTO>();
+        for (Paciente p : list) {
+            retorno.add(transformPacienteToDto(p));
+        }
+
+        return retorno;
+    }
 }

@@ -10,6 +10,7 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
 
+import com.nuova.dto.OrdenAlarmaDTO;
 import com.nuova.model.Orden;
 
 @Repository
@@ -69,6 +70,14 @@ public class OrdenDAOImpl implements OrdenDAO {
         // query.setMaxResults(pageable.getPageNumber());
         List<Orden> result = query.list();
         return new PageImpl<Orden>(result, pageable, result.size());
+    }
+
+    @SuppressWarnings("unchecked")
+    public List<OrdenAlarmaDTO> findAlarmaOrdenes() {
+        return this.sessionFactory.getCurrentSession()
+                .createQuery(" SELECT NEW com.nuova.dto.OrdenAlarmaDTO(COUNT(o.estado) , o.estado) "
+                        + " FROM Orden o "
+                        + " GROUP BY o.estado").list();
     }
 
 }
