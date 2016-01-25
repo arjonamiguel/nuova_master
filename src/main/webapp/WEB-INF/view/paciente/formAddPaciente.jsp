@@ -14,6 +14,17 @@
 		<link href="<%=request.getContextPath()%>/resources/css/nuova.css" rel="stylesheet"/>
 		<link href="<%=request.getContextPath()%>/resources/css/panel.css" rel="stylesheet"/>
 		<link href="<%=request.getContextPath()%>/resources/css/bootstrap/bootstrap-responsive.css" rel="stylesheet"/>
+		<script src="<c:url value="/resources/js/jquery/jquery.validate.min.js" />"></script>
+		
+<style>
+label.error {
+  color: #a94442;
+  background-color: #f2dede;
+  border-color: #ebccd1;
+  padding:1px 20px 1px 20px;
+  width:58%;
+}
+</style>		
 	
 <SCRIPT language="javascript">
 	var index = 0;
@@ -133,15 +144,15 @@
 		  		<div class="row-fluid">
 			   		<div class="span4">
 			   				<div class="formLabel"><form:label path="dni">DNI:</form:label></div>
-        					<div class="formInput"><form:input path="dni" /></div>
+        					<div class="formInput"><form:input path="dni" type="number"/></div>
 			   		</div>
 			   		<div class="span4">
 			   				<div class="formLabel"><form:label path="apellido">Apellido:</form:label></div>
-        					<div class="formInput"><form:input path="apellido" /></div>
+        					<div class="formInput"><form:input path="apellido" type="text"/></div>
 			   		</div>
 			   		<div class="span4">
 			   				<div class="formLabel"><form:label path="nombre">Nombre:</form:label></div>
-        					<div class="formInput"><form:input path="nombre" /></div>
+        					<div class="formInput"><form:input path="nombre" type="text"/></div>
 			   		</div>
 			   	</div>
 			   	<div class="row-fluid">
@@ -158,11 +169,11 @@
 			   		</div>
 			   		<div class="span4">
 			   				<div class="formLabel"><form:label path="telefono">Telefono:</form:label></div>
-        					<div class="formInput"><form:input path="telefono" /></div>
+        					<div class="formInput"><form:input path="telefono" type="number"/></div>
 			   		</div>
 			   		<div class="span4">
 			   				<div class="formLabel"><form:label path="mail">E-Mail:</form:label></div>
-        					<div class="formInput"><form:input path="mail" /></div>
+        					<div class="formInput"><form:input path="mail" type="email"/></div>
 			   		</div>
 			   	</div>
 			   	<div class="row-fluid">
@@ -242,3 +253,45 @@
 
 </body>
 </html>
+<script>
+			$("#paciente").validate({
+    
+        // Specify the validation rules
+        rules: {
+        	 dni: {
+                required: true,
+                minlength: 7
+            },
+            apellido: "required",
+            nombre: "required",
+            telefono: {
+                required: true,
+                minlength: 5
+            },
+            email: {
+                required: true,
+                email: true
+            }
+        },
+        
+        // Specify the validation error messages
+        messages: {
+        	 dni: {
+                required: "Ingrese DNI",
+                minlength: "DNI debe tener al menos 7 caracteres de largo"
+            },
+            apellido: "Ingrese apellido",
+            nombre: "Ingrese nombre",
+            telefono: {
+                required: "Ingrese telefono",
+                minlength: "Telefono debe tener al menos 5 caracteres de largo"
+            },
+            matricula: "Ingrese matricula",
+            registroNacional: "Ingrese Registro Nacional"
+        },
+                submitHandler: function(form) {
+            form.submit();
+        }
+    });
+
+</script>

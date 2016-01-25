@@ -14,6 +14,17 @@
 		<link href="<%=request.getContextPath()%>/resources/css/nuova.css" rel="stylesheet"/>
 		<link href="<%=request.getContextPath()%>/resources/css/panel.css" rel="stylesheet"/>
 		<link href="<%=request.getContextPath()%>/resources/css/bootstrap/bootstrap-responsive.css" rel="stylesheet"/>
+		<script src="<c:url value="/resources/js/jquery/jquery.validate.min.js" />"></script>
+		
+<style>
+label.error {
+  color: #a94442;
+  background-color: #f2dede;
+  border-color: #ebccd1;
+  padding:1px 20px 1px 20px;
+  width:58%;
+}
+</style>		
 	
 <SCRIPT language="javascript">
     
@@ -324,4 +335,44 @@
         	document.getElementById("registration-date").value=document.getElementById("fechaNacimiento").value;
         	updateLiberado();
 			updateTitular();
+			
+		$("#paciente").validate({
+    
+        // Specify the validation rules
+        rules: {
+        	 dni: {
+                required: true,
+                minlength: 7
+            },
+            apellido: "required",
+            nombre: "required",
+            telefono: {
+                required: true,
+                minlength: 5
+            },
+            email: {
+                required: true,
+                email: true
+            }
+        },
+        
+        // Specify the validation error messages
+        messages: {
+        	 dni: {
+                required: "Ingrese DNI",
+                minlength: "DNI debe tener al menos 7 caracteres de largo"
+            },
+            apellido: "Ingrese apellido",
+            nombre: "Ingrese nombre",
+            telefono: {
+                required: "Ingrese telefono",
+                minlength: "Telefono debe tener al menos 5 caracteres de largo"
+            },
+            matricula: "Ingrese matricula",
+            registroNacional: "Ingrese Registro Nacional"
+        },
+                submitHandler: function(form) {
+            form.submit();
+        }
+    });
 </script>

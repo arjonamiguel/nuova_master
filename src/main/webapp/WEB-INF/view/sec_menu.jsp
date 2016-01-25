@@ -92,7 +92,7 @@
 				</sec:authorize>
 				<sec:authorize access="hasRole('ROLE_ADMIN')">
 				<li class="dropdown" >
-					<a href="#" id="mainPaciente"  class="dropdown-toggle" data-toggle="dropdown"><i class="icon-wrench"></i>&nbsp;&nbsp;Administracion de Pacientes</a>
+					<a href="#" id="mainPaciente"  class="dropdown-toggle" data-toggle="dropdown"><i class="icon-file"></i>&nbsp;&nbsp;Administracion de Pacientes</a>
 					<ul class="dropdown-menu" role="menu">
 		                <li><a href="/nuova/mainPaciente">Administrar Pacientes</a></li>
 		                <li><a href="/nuova/formAddPaciente">Agregar Pacientes</a></li>

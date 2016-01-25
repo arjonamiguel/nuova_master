@@ -35,7 +35,7 @@
 			  						<div class="span9">
 			  						</div>
 			  						<div class="span2">
-				  						<form:select path="pacienteSelected" style="width:70%; margin-bottom:0px">
+				  						<form:select path="pacienteSelected" style="width:100%; margin-bottom:0px">
 																   <form:option value="NONE" label="Seleccione Paciente ..."/>
 																   <form:options items="${pacienteList}" itemLabel="value" itemValue="id" />			    
 										</form:select>

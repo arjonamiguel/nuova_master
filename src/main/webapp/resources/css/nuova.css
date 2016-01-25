@@ -176,3 +176,9 @@
 	padding-right:0%;
 	padding-top:2%;
 }
+.navbar-inner{
+	border-radius:0px;
+}
+.pagenumber{
+	height:15px;	
+}

@@ -14,6 +14,7 @@
 		<link href="<%=request.getContextPath()%>/resources/css/nuova.css" rel="stylesheet"/>
 		<link href="<%=request.getContextPath()%>/resources/css/panel.css" rel="stylesheet"/>
 		<link href="<%=request.getContextPath()%>/resources/css/bootstrap/bootstrap-responsive.css" rel="stylesheet"/>
+		<script src="<c:url value="/resources/js/jquery/jquery.validate.min.js" />"></script>
 
 		<style>
 		
@@ -22,6 +23,13 @@
     color: #fff;
     background-color: #5bc0de;
     border-color: #46b8da;
+}
+label.error {
+  color: #a94442;
+  background-color: #f2dede;
+  border-color: #ebccd1;
+  padding:1px 20px 1px 20px;
+  width:58%;
 }
 		
 		</style>
@@ -229,4 +237,35 @@
         	document.getElementById("registration-date").value=document.getElementById("fechaVencimientoHabilitacion").value;
 			$(".badge").click();
         }
+        
+      $("#profesional").validate({
+    
+        // Specify the validation rules
+        rules: {
+            apellido: "required",
+            nombre: "required",
+            telefono: {
+                required: true,
+                minlength: 5
+            },
+            matricula: "required",
+            registroNacional: "required",
+            tituloNacional: "required"
+        },
+        
+        // Specify the validation error messages
+        messages: {
+            apellido: "Ingrese apellido",
+            nombre: "Ingrese nombre",
+            telefono: {
+                required: "Ingrese telefono",
+                minlength: "Telefono debe tener al menos 5 caracteres de largo"
+            },
+            matricula: "Ingrese matricula",
+            registroNacional: "Ingrese Registro Nacional"
+        },
+                submitHandler: function(form) {
+            form.submit();
+        }
+    });
 </script>
