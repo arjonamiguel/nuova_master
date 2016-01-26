@@ -2079,7 +2079,8 @@ table td[class*="span"], table th[class*="span"], .row-fluid table td[class*="sp
 }
 
 .icon-print {
-    background-position: -96px -48px
+    background-position: -96px -48px;
+    background-image: url("../../img/bootstrap/glyphicons-halflings.png");;
 }
 
 .icon-camera {

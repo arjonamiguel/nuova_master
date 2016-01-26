@@ -196,13 +196,13 @@
 			   		</div>
 			   		<div class="span2" style="margin-top:2%;" >
 			   				<div class="formLabel"><form:label path="liberado">Liberado:</form:label></div>
-							<div style="visibility:hidden;height:0px;"><form:checkbox path="liberado" id="liberado"/></div>
-							<label for="infoLiberado" style="padding-left:28%;" class="not-active"><input type="checkbox" id="infoLiberado" class="badgebox" onchange="javascript:updateLiberado();"><span class="badge">&check;</span></label>
+							<div style="visibility:visible;height:0px;"><form:checkbox path="liberado" id="liberado"/></div>
+					<!--		<label for="infoLiberado" style="padding-left:28%;" class="not-active"><input type="checkbox" id="infoLiberado" class="badgebox" onchange="javascript:updateLiberado();"><span class="badge">&check;</span></label> -->
 			   		</div>
 			   		<div class="span2" style="margin-top:2%;">
 			   			<div class="formLabel"><form:label path="titular">Titular:</form:label></div>
-							<div style="visibility:hidden;height:0px;"><form:checkbox path="titular" id="titular"/></div>
-							<label for="infoTitular" style="padding-left:28%;" class="not-active"><input type="checkbox" id="infoTitular" class="badgebox" onchange="javascript:updateTitular();"><span class="badge">&check;</span></label>
+							<div style="visibility:visible;height:0px;"><form:checkbox path="titular" id="titular"/></div>
+				<!--			<label for="infoTitular" style="padding-left:28%;" class="not-active"><input type="checkbox" id="infoTitular" class="badgebox" onchange="javascript:updateTitular();"><span class="badge">&check;</span></label> -->
 			   		</div>
 			   	</div>
 		 </div>
@@ -314,8 +314,9 @@
 				<div class="panel-body">
 					<div class="row-fluid">
 						<div class="span12">
+							<div style="float:right;"><input type="button" value="Cancelar" onclick="location.href='/nuova/mainPaciente';" class="btn"/></div>
 							<div style="float:right;padding-right:2%;"><input type="submit" value="Eliminar" class="btn btn-danger btn-xs"/></div> 
-			 				<div style="float:right;"><input type="button" value="Cancelar" onclick="location.href='/nuova/mainPaciente';" class="btn"/></div>
+			 			
 						</div>
 					</div>
 				</div>
