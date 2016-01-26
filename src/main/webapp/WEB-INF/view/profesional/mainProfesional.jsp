@@ -33,14 +33,13 @@
 								{
 									columnNames : [ "ID", "APELLIDO", "NOMBRE",
 											"TELEFONO", "MATRIULA", "REGISTRO",
-											 "TITULO", "HABILITACION", "VENCIMIENTO", ""],
+											 "TITULO", "VENCIMIENTO", ""],
 									columnKeys : [ "profesionalId", "nombre",
 											"apellido", "telefono", "matricula",
 											"registroNacional", "tituloProfesional", 
-											"habilitacionSiprosa", "fechaVencimientoHabilitacion", "acciones" ],
+											"fechaVencimientoHabilitacion", "acciones" ],
 									columnWidths : [ "5%", "20%", "20%", "11%", "11%" ],
 									sortable : [ false, true, true, true ],
-									initialSortColumn : "nombre",
 									data : rows
 								});
 

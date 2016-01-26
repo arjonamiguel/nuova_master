@@ -11,9 +11,9 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </a>
-            <a class="brand" href="">NUOVA</a>
+            <a class="brand" href=""><b style="font-size: 30px">NUOVA</b></a>
     		
-          	<div class="nav-collapse collapse" id="collapse1">S
+          	<div class="nav-collapse collapse" id="collapse1">
               <div class="pull-right">
                 <ul class="nav pull-right">
                     <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon-user"></i>&nbsp;&nbsp;Logueado como, <sec:authorize access="isAuthenticated()">

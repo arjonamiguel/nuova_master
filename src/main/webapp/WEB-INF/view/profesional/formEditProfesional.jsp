@@ -16,88 +16,90 @@
 		<link href="<%=request.getContextPath()%>/resources/css/bootstrap/bootstrap-responsive.css" rel="stylesheet"/>
 		<script src="<c:url value="/resources/js/jquery/jquery.validate.min.js" />"></script>
 
-		<style>
-		
-		
-		.btn-info {
-    color: #fff;
-    background-color: #5bc0de;
-    border-color: #46b8da;
+<style>
+.btn-info {
+	color: #fff;
+	background-color: #5bc0de;
+	border-color: #46b8da;
 }
+
 label.error {
-  color: #a94442;
-  background-color: #f2dede;
-  border-color: #ebccd1;
-  padding:1px 20px 1px 20px;
-  width:58%;
+	color: #a94442;
+	background-color: #f2dede;
+	border-color: #ebccd1;
+	padding: 1px 20px 1px 20px;
+	width: 58%;
 }
-		
-		</style>
-        <SCRIPT language="javascript">
-        var siprosa=0;
-        
-        function Eliminar (i) {    	 
-    	    document.getElementById("dataTable").deleteRow(i);
-    	}
-        
-       function addRow(tableID) {
- 
-            var table = document.getElementById(tableID);
-            var rowCount = table.rows.length;
-            var row = table.insertRow(rowCount);
+</style>
+<SCRIPT language="javascript">
+	var siprosa = 0;
 
-            var cell2 = row.insertCell(0);                      
-            cell2.innerHTML = document.getElementById("especialidad").value+"<input type='hidden' name='especialidadList' value='"+document.getElementById("especialidad").value+"'>";
-            var cell3 = row.insertCell(1);
-            cell3.innerHTML = document.getElementById('especialidad').options[document.getElementById('especialidad').selectedIndex].text;
-            
-           	var cell4 = row.insertCell(2);
-            cell4.innerHTML=  "<button type='button' class='btn btn-danger btn-xs' onClick='Eliminar(this.parentNode.parentNode.rowIndex)'><span class='icon icon-remove' title='Eliminar'></span></button>";
- 
-        }
- 
-        function deleteRow(tableID) {
-            try {
-            var table = document.getElementById(tableID);
-            var rowCount = table.rows.length;
- 
-            for(var i=0; i<rowCount; i++) {
-                var row = table.rows[i];
-                var chkbox = row.cells[0].childNodes[0];
-                if(null != chkbox && true == chkbox.checked) {
-                    table.deleteRow(i);
-                    rowCount--;
-                    i--;
-                }
- 
- 
-            }
-            }catch(e) {
-                alert(e);
-            }
-        }
+	function Eliminar(i) {
+		document.getElementById("dataTable").deleteRow(i);
+	}
 
-		function updateSiprosa(){
-			if(siprosa==0){
-				siprosa=1;
-				document.getElementById("habilitacionSiprosa").value=1;
-				document.getElementById("labelDate").style.visibility='visible';
-				document.getElementById("calendar").style.visibility='visible';
-			}else{
-				siprosa=0;
-				document.getElementById("habilitacionSiprosa").value=0;
-				document.getElementById("labelDate").style.visibility='hidden';
-				document.getElementById("calendar").style.visibility='hidden';
+	function addRow(tableID) {
+
+		var table = document.getElementById(tableID);
+		var rowCount = table.rows.length;
+		var row = table.insertRow(rowCount);
+
+		var cell2 = row.insertCell(0);
+		cell2.innerHTML = document.getElementById("especialidad").value
+				+ "<input type='hidden' name='especialidadList' value='"
+				+ document.getElementById("especialidad").value + "'>";
+		var cell3 = row.insertCell(1);
+		cell3.innerHTML = document.getElementById('especialidad').options[document
+				.getElementById('especialidad').selectedIndex].text;
+
+		var cell4 = row.insertCell(2);
+		cell4.innerHTML = "<button type='button' class='btn btn-danger btn-xs' onClick='Eliminar(this.parentNode.parentNode.rowIndex)'><span class='icon icon-remove' title='Eliminar'></span></button>";
+
+	}
+
+	function deleteRow(tableID) {
+		try {
+			var table = document.getElementById(tableID);
+			var rowCount = table.rows.length;
+
+			for (var i = 0; i < rowCount; i++) {
+				var row = table.rows[i];
+				var chkbox = row.cells[0].childNodes[0];
+				if (null != chkbox && true == chkbox.checked) {
+					table.deleteRow(i);
+					rowCount--;
+					i--;
+				}
+
 			}
+		} catch (e) {
+			alert(e);
 		}
-		function updateDate(){
-			document.getElementById("fechaVencimientoHabilitacion").value=document.getElementById("registration-date").value;
+	}
+
+	function updateSiprosa() {
+		if (siprosa == 0) {
+			siprosa = 1;
+			document.getElementById("habilitacionSiprosa").value = 1;
+			document.getElementById("labelDate").style.visibility = 'visible';
+			document.getElementById("calendar").style.visibility = 'visible';
+		} else {
+			siprosa = 0;
+			document.getElementById("habilitacionSiprosa").value = 0;
+			document.getElementById("labelDate").style.visibility = 'hidden';
+			document.getElementById("calendar").style.visibility = 'hidden';
 		}
-    </SCRIPT>
+	}
+	function updateDate() {
+		document.getElementById("fechaVencimientoHabilitacion").value = document
+				.getElementById("registration-date").value;
+	}
+</SCRIPT>
 </head>
 <body style="background-color:#e5e5e5;">
 <jsp:include page="../sec_menu.jsp"></jsp:include>
 <jsp:include page="../breadcrumb.jsp"></jsp:include>
+
 <div class="mainContainer"> 	
 <div class="panelContainer">
 <form:form method="post" action="/nuova/editProfesional" commandName="profesional">
@@ -147,7 +149,8 @@ label.error {
 				<div class="formInput">
 				<div id="calendar">
 					<div class="input-group registration-date-time" style="padding-top:0%;">
-						<input class="form-control" name="registration_date" id="registration-date" type="date"  onchange="javascript:updateDate();">
+						<input class="form-control" name="registration_date" id="registration-date" value="554" 
+						type="date"  onchange="javascript:updateDate();">
 	            	</div>
 	        	</div>  
 	        	</div>
@@ -199,7 +202,7 @@ label.error {
 	       	<c:forEach items="${especialidadListEdit}" var="esp">
 		    <tr>
 
-		        <td>${esp.key} </td>
+		        <td>${esp.key} <input type="hidden" name="especialidadList" value="${esp.key}"></td>
 		        <td>${esp.value}</td>       
 		        <td>
 		        <button type='button' class='btn btn-danger btn-xs' onClick='Eliminar(this.parentNode.parentNode.rowIndex)'><span class='icon icon-remove' title='Eliminar'></span></button>
@@ -232,8 +235,8 @@ label.error {
 
 <script language="javascript">
        
-        var isSiprosa=$("#habilitacionSiprosa").val();
-        if(isSiprosa==1){
+        //var isSiprosa=$("#habilitacionSiprosa").val();
+        if(true){
         	document.getElementById("registration-date").value=document.getElementById("fechaVencimientoHabilitacion").value;
 			$(".badge").click();
         }
