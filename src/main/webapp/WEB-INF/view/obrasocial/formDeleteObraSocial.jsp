@@ -23,6 +23,7 @@
 <div class="mainContainer"> 
 <div class="panelContainer">
 <form:form method="post" action="/nuova/deleteObraSocial" commandName="obrasocial">
+<form:hidden path="obrasocialId" />
 <div class="panel panel-info">
 		<div class="panel-heading">
 			 <div class="panel-title">Eliminar Obra Social</div>

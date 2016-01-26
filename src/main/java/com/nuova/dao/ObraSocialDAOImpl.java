@@ -29,7 +29,7 @@ public class ObraSocialDAOImpl implements ObraSocialDAO {
 
     @SuppressWarnings("unchecked")
     public List<Obrasocial> findAll() {
-        return this.sessionFactory.getCurrentSession().createQuery("FROM Obrasocial").list();
+        return this.sessionFactory.getCurrentSession().createQuery("FROM Obrasocial o ORDER BY o.nombre ASC").list();
     }
 
     public void delete(Integer obrasocialId) {
@@ -44,7 +44,8 @@ public class ObraSocialDAOImpl implements ObraSocialDAO {
     }
 
     public Page<Obrasocial> findObrasocialesByPageable(Pageable pageable) {
-        Query query = this.sessionFactory.getCurrentSession().createQuery("FROM Obrasocial");
+        Query query = this.sessionFactory.getCurrentSession().createQuery(
+                "FROM Obrasocial o ORDER BY o.obrasocialId DESC");
         // query.setFirstResult(pageable.getOffset());
         // query.setMaxResults(pageable.getPageNumber());
         List<Obrasocial> result = query.list();
@@ -54,7 +55,8 @@ public class ObraSocialDAOImpl implements ObraSocialDAO {
     public Page<Obrasocial> findObrasocialesBySearch(String search, Pageable pageable) {
         Query query = this.sessionFactory.getCurrentSession()
                 .createQuery("FROM Obrasocial o "
-                        + " WHERE upper(o.nombre) LIKE '%" + search.toUpperCase() + "%' ");
+                        + " WHERE upper(o.nombre) LIKE '%" + search.toUpperCase() + "%' "
+                        + " ORDER BY o.nombre ASC");
 
         // query.setFirstResult(pageable.getOffset());
         // query.setMaxResults(pageable.getPageNumber());
