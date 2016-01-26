@@ -398,6 +398,14 @@ public class OrdenController {
             dto.setEtiqestado(rechazada);
         }
 
+        // boton paciente
+        String botonpaciente = "<a class='btn btn-success btn-xs' href='/nuova/formEditPaciente/"
+                + dto.getPaciente().getPacienteId() + "' title='" +
+                dto.getPaciente().getApellido() + ", " + dto.getPaciente().getApellido()
+                + "'>"
+                + "<span class='icon icon-user'></span</a>";
+        dto.setBotonpaciente(botonpaciente);
+
         return dto;
     }
 

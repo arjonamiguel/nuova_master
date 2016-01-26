@@ -23,9 +23,9 @@
                 <user name="administrador@nuova.com" password="1234" authorities="ROLE_ADMIN" />           
                 <user name="miguel.arjona@nuova.com" password="1234" authorities="ROLE_USER" />
                 <user name="gustavo.valdez@nuova.com" password="1234" authorities="ROLE_USER" />
-            </user-service>
-            
-            
+                <user name="virginia.gottardi@nuova.com" password="1234" authorities="ROLE_ADMIN" />
+                <user name="usuario.autorizador@nuova.com" password="1234" authorities="ROLE_USER" />                
+            </user-service>           
 		</authentication-provider>
 	</authentication-manager>
 

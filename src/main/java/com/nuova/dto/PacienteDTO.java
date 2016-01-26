@@ -29,7 +29,7 @@ public class PacienteDTO {
     private String crdencial;
     private boolean original = false;
 
-    private boolean titular = true;
+    private boolean titular = false;
     private String checkedTitular;
     private PacienteDTO pacienteTitular;
 

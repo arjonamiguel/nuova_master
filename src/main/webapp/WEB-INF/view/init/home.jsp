@@ -73,9 +73,7 @@
 											id="ContainerGeneralOverWrite_ContainerGeneral_uploadpic"
 											style="display: none"> <a href="#" id="uploadImage">
 											<div class="img_cand icon men" id="up-img">
-
-												<span> <span class="icon camara"></span>
-												</span>
+											<img src="/nuova/resources/img/others/nuova3.png" height="20%" width="20%">											
 											</div>
 										</a>
 										<div class="cv_completed box_blue">
@@ -107,9 +105,9 @@
 												name="ctl00$ContainerGeneralOverWrite$ContainerGeneral$sq"
 												type="text"
 												id="ContainerGeneralOverWrite_ContainerGeneral_sq"
-												clplaceholder="Inicie la busqueda de pacientes ..."
+												placeholder="Inicie la busqueda de pacientes ..."
 												autocomplete="off"
-												style= "height: 30px">
+												style="height: 42px; width: 50%">
 										</div>
 
 										<input type="submit"
@@ -206,6 +204,7 @@
 												data-su="/ofertas-de-trabajo/"
 												class="js-cargos-suggest ui-autocomplete-input"
 												placeholder="Inicie la busqueda de pacientes ..."
+												style="height: 42px; width: 50%"
 												autocomplete="off">
 										</div>
 										<input type="submit"

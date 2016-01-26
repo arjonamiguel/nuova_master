@@ -37,7 +37,7 @@
 				<div class="container-fluid" >
 	  				<div class="row-fluid" >
 	  				<div class="span12">
-	  					<iframe src="/nuova/reportOrdenEmitida/${ordenId}"  width="100%" height="600" scrolling="auto">	  				
+	  					<iframe src="/nuova/reporteOrdenEmitida/${ordenId}"  width="100%" height="600" scrolling="auto">	  				
 					</div>
 		    		</div>
 		    	</div>
