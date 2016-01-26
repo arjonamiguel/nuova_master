@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
+import com.nuova.dto.OrdenAlarmaDTO;
 import com.nuova.model.Paciente;
 
 public interface PacienteManager {
@@ -26,4 +27,5 @@ public interface PacienteManager {
 
     public Page<Paciente> findPacientesBySearch(String search, Pageable pageable);
 
+    public OrdenAlarmaDTO countPacientes();
 }

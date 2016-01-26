@@ -10,6 +10,7 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
 
+import com.nuova.dto.OrdenAlarmaDTO;
 import com.nuova.model.Especialidad;
 
 @Repository
@@ -61,5 +62,12 @@ public class EspecialidadDAOImpl implements EspecialidadDAO {
         // query.setMaxResults(pageable.getPageNumber());
         List<Especialidad> result = query.list();
         return new PageImpl<Especialidad>(result, pageable, result.size());
+    }
+
+    @SuppressWarnings("unchecked")
+    public OrdenAlarmaDTO countEspecialidades() {
+        return (OrdenAlarmaDTO) this.sessionFactory.getCurrentSession()
+                .createQuery(" SELECT NEW com.nuova.dto.OrdenAlarmaDTO(COUNT(*)) "
+                        + " FROM Especialidad e ").list().get(0);
     }
 }

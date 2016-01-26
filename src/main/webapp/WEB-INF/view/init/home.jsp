@@ -3,6 +3,7 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>    
 <%@taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 <%@taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
 <html>
 <head>
@@ -21,6 +22,12 @@
 		<script src="<%=request.getContextPath()%>/resources/js/bootstrap/bootstrap.min.js" />"></script>
 		<script src="<%=request.getContextPath()%>/resources/js/jquery/bootstrap-collapse.js" />"></script>
 		<link href="<%=request.getContextPath()%>/resources/css/nuova.css" rel="stylesheet"/>
+		
+		<!-- 	Configuracion del paginador -->
+<link href="<%=request.getContextPath()%>/resources/simplepaginggrid/css/simplePagingGrid-0.4.css" rel="stylesheet">
+<script type="text/javascript" src="<%=request.getContextPath()%>/resources/simplepaginggrid/examples/pageNumbers/script/handlebars-1.0.rc.1.js"></script>
+<script type="text/javascript" src="<%=request.getContextPath()%>/resources/simplepaginggrid/script/simplePagingGrid-0.5.0.2.js"></script>
+
 		<style>
 		    .navbar-brand-centered {
         position: absolute;
@@ -85,7 +92,7 @@
                         </div>
                         <div class="info">
                             <h1>${usuario.username}</h1>
-                            <h2>Rol:</h2>
+                            <h2>ROL:</h2>
                             <a href="#">Visitanos en: www.nuova.com</a>
                             <a href="#" class="block_link">
                                 <span class="icon clip"></span>
@@ -95,35 +102,26 @@
                     </div>
                 </section>
                 <div onkeypress="javascript:return WebForm_FireDefaultButton(event, 'ContainerGeneralOverWrite_ContainerGeneral_btnSearchOffers')">
-	
+					
                     <div class="buscador buscador_mvl">
                         <h2>Busqueda de Pacientes</h2>
-                        <div class="input_text">
-                            <span class="icon palabra_clave"></span>
-                            <input name="ctl00$ContainerGeneralOverWrite$ContainerGeneral$sq" type="text" id="ContainerGeneralOverWrite_ContainerGeneral_sq" data-su="/ofertas-de-trabajo/" class="js-cargos-suggest ui-autocomplete-input" placeholder="Inicie la busqueda de pacientes ..." autocomplete="off">
+                        
+                        <div class="">
+                            <input name="ctl00$ContainerGeneralOverWrite$ContainerGeneral$sq" type="text" id="ContainerGeneralOverWrite_ContainerGeneral_sq"  clplaceholder="Inicie la busqueda de pacientes ..." autocomplete="off">
                         </div>
                         
                         <input type="submit" name="ctl00$ContainerGeneralOverWrite$ContainerGeneral$btnSearchOffers" value="Buscar Paciente" id="ContainerGeneralOverWrite_ContainerGeneral_btnSearchOffers" class="submit_n">
-
-                        <div class="box_tooltips ocultar" id="tooltip_search">
-                            Busca ofertas directamente a través de este buscador
-                            <span class="icon arrow"></span>
-                        </div>
+						
+						
                     </div>
                 
 </div>
                 <div class="offers_insc ">
                     <h3>Monitor de Practicas Realizadas</h3>
-                    
                     <ul>
-	                    <c:forEach items="${alarmas}" var="a">
-					      <li class="offers_process"><b>(${a.cantidad})</b> - <span>${a.descripcion}</span></li>					      
-					    </c:forEach>
-                        <li class="offers_apl"><a href="/Candidate/Match/?st=1">Te has postulado en <span>3</span>  ofertas</a></li>
-                        <li class="offers_see"><a href="/Candidate/Match/?st=2"><span>1</span> empresa ha visto tu curriculum</a></li>
-                        <li class="offers_process"><span>Empresas que te están evaluando</span></li>
-                        <li class="offers_fin"><span>Procesos de selección en  los que eres finalista</span></li>
-
+	                    <c:forEach items="${alarmas}" var="al">
+					      <li class="offers_apl"><span><b>(${al.cantidad})</b> ${al.descripcion}</span></li>					      
+					    </c:forEach>                   
                     </ul>
                     <a href="/nuova/mainOrden">Ir al Administrador de Practicas</a>
                     <div class="box_tooltips ocultar" id="tooltip_offers_insc">
@@ -176,23 +174,68 @@
 
             <div class="block_companies_courses">
                 <div onkeypress="javascript:return WebForm_FireDefaultButton(event, 'ContainerGeneralOverWrite_ContainerGeneral_btnSearchOffers1')">
-	
+				
                     <div class="buscador">
                         <h2>Busqueda de Pacientes</h2>
-                        <div class="input_text">
+                        <div class="">
                             <span class="icon palabra_clave"></span>
                             <input name="ctl00$ContainerGeneralOverWrite$ContainerGeneral$sq1" type="text" id="ContainerGeneralOverWrite_ContainerGeneral_sq1" data-su="/ofertas-de-trabajo/" class="js-cargos-suggest ui-autocomplete-input" placeholder="Inicie la busqueda de pacientes ..." autocomplete="off">
                         </div>
                         <input type="submit" name="ctl00$ContainerGeneralOverWrite$ContainerGeneral$btnSearchOffers1" value="Buscar Paciente" id="ContainerGeneralOverWrite_ContainerGeneral_btnSearchOffers1" class="submit_n">
 
-                        <div class="box_tooltips ocultar" id="tooltip_search">
-                            Busca ofertas directamente a través de este buscador
+                    </div>
+                
+				</div>
+				<div class="offers_suggest">
+                        <h3>Historial de Registros efectuados hasta el dia: </h3>
+                        
+                        <ul>
+                            
+                                    <li class="devclick cp">
+                                        <a href="/nuova/mainPaciente">
+                                        <b>(${cantPaciente})</b> - Pacientes Registrados en Nuova.</a>
+                                        <span>
+                                         <a href="/nuova/showReportePacientes">
+                                        Descargar</a>
+                                        </span>
+                                    </li>
+                                
+                                    <li class="devclick cp">
+                                        <a href="/nuova/mainProfesional">
+                                        <b>(${cantProfesional})</b> - Profesionales Registrados.</a>
+                                        <span>
+                                         <a href="/nuova/showReporteProfesionales">
+                                        Descargar</a>
+                                        </span>
+                                    </li>
+                                
+                                    <li class="devclick cp">
+                                        <a href="/nuova/mainEspecialidad">
+                                        <b>(${cantEspecialidad})</b> - Especialidades en Curso.</a>
+                                        <span>
+                                         <a href="/nuova/showReporteEspecialidades">
+                                        Descargar</a>
+                                        </span>
+                                    </li>
+                                    
+                                    <li class="devclick cp">
+                                        <a href="/nuova/mainObraSocial">
+                                        <b>(${cantObrasocial})</b> - Obras Sociales Registradas.</a>
+                                        <span>
+                                         <a href="/nuova/showReportesObraSociales">
+                                        Descargar</a>
+                                        </span>
+                                    </li>
+                                    
+                                
+                        </ul>
+                        <div class="box_tooltips ocultar" id="tooltip_offers_suggest">
+                            Listado de las ofertas que se ajustan a tu perfil profesional
                             <span class="icon arrow"></span>
                         </div>
                     </div>
-                
-</div>
-                            </div>
+				
+            </div>
         </div>
     </div>
 

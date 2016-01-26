@@ -10,6 +10,7 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
 
+import com.nuova.dto.OrdenAlarmaDTO;
 import com.nuova.model.Paciente;
 import com.nuova.model.PacienteObrasocial;
 
@@ -85,5 +86,12 @@ public class PacienteDAOImpl implements PacienteDAO {
         // query.setMaxResults(pageable.getPageNumber());
         List<Paciente> result = query.list();
         return new PageImpl<Paciente>(result, pageable, result.size());
+    }
+
+    @SuppressWarnings("unchecked")
+    public OrdenAlarmaDTO countPacientes() {
+        return (OrdenAlarmaDTO) this.sessionFactory.getCurrentSession()
+                .createQuery(" SELECT NEW com.nuova.dto.OrdenAlarmaDTO(COUNT(*)) "
+                        + " FROM Paciente p ").list().get(0);
     }
 }

@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.nuova.dao.ProfesionalDAO;
+import com.nuova.dto.OrdenAlarmaDTO;
 import com.nuova.model.Profesional;
 
 @Service
@@ -54,6 +55,11 @@ public class ProfesionalManagerImpl implements ProfesionalManager {
     @Transactional
     public Page<Profesional> findProfesionalesBySearch(String search, Pageable pageable) {
         return profesionalDAO.findProfesionalesBySearch(search, pageable);
+    }
+
+    @Transactional
+    public OrdenAlarmaDTO countProfesionales() {
+        return profesionalDAO.countProfesionales();
     }
 
 }

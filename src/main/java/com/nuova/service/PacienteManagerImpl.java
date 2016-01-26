@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.nuova.dao.PacienteDAO;
+import com.nuova.dto.OrdenAlarmaDTO;
 import com.nuova.model.Paciente;
 
 @Service
@@ -59,6 +60,11 @@ public class PacienteManagerImpl implements PacienteManager {
     @Transactional
     public Page<Paciente> findPacientesBySearch(String search, Pageable pageable) {
         return pacienteDAO.findPacientesBySearch(search, pageable);
+    }
+
+    @Transactional
+    public OrdenAlarmaDTO countPacientes() {
+        return pacienteDAO.countPacientes();
     }
 
 }

@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
+import com.nuova.dto.OrdenAlarmaDTO;
 import com.nuova.model.Profesional;
 
 public interface ProfesionalManager {
@@ -23,4 +24,6 @@ public interface ProfesionalManager {
     public Page<Profesional> findProfesionalesByPageable(Pageable pageable);
 
     public Page<Profesional> findProfesionalesBySearch(String search, Pageable pageable);
+
+    public OrdenAlarmaDTO countProfesionales();
 }

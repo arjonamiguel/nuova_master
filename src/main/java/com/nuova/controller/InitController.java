@@ -12,8 +12,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.nuova.dto.OrdenAlarmaDTO;
 import com.nuova.dto.UsuarioDTO;
+import com.nuova.service.EspecialidadManager;
+import com.nuova.service.ObraSocialManager;
 import com.nuova.service.OrdenManager;
 import com.nuova.service.PacienteManager;
+import com.nuova.service.ProfesionalManager;
 import com.nuova.utils.ConstantControllers;
 import com.nuova.utils.ConstantRedirect;
 
@@ -23,6 +26,12 @@ public class InitController {
     OrdenManager ordenManager;
     @Autowired
     PacienteManager pacienteManager;
+    @Autowired
+    EspecialidadManager especialidadManager;
+    @Autowired
+    ObraSocialManager obrasocialManager;
+    @Autowired
+    ProfesionalManager profesionalManager;
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public String defaultPage(ModelMap map) {
@@ -39,8 +48,18 @@ public class InitController {
         // Alarmas de practicas
         List<OrdenAlarmaDTO> alarmas = ordenManager.findAlarmaOrdenes();
 
-        map.put("usuario", usuario);
-        map.put("alarmas", alarmas);
+        // Cantidad
+        OrdenAlarmaDTO cantPaciente = pacienteManager.countPacientes();
+        OrdenAlarmaDTO cantProfesional = profesionalManager.countProfesionales();
+        OrdenAlarmaDTO cantEspecialidad = especialidadManager.countEspecialidades();
+        OrdenAlarmaDTO cantObrasocial = obrasocialManager.countObrasociales();
+
+        map.addAttribute("usuario", usuario);
+        map.addAttribute("alarmas", alarmas);
+        map.addAttribute("cantPaciente", cantPaciente.getCantidad());
+        map.addAttribute("cantProfesional", cantProfesional.getCantidad());
+        map.addAttribute("cantEspecialidad", cantEspecialidad.getCantidad());
+        map.addAttribute("cantObrasocial", cantObrasocial.getCantidad());
         return ConstantRedirect.VIEW_INIT_HOME;
     }
 }
