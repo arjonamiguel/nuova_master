@@ -139,6 +139,7 @@ label.error {
 <div class="mainContainer"> 
 <div class="panelContainer">
 <form:form method="post" action="/nuova/editPaciente" commandName="paciente">
+<form:hidden path="pacienteId"/>
 	<div class="panel panel-info">
 	<div class="panel-heading">
 		<div class="panel-title">

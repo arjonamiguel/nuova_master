@@ -54,7 +54,7 @@
 		    				<h4>Tu sesion a finalizado !</h4>
 			    				<br>
 	
-								Regresar a la pantalla de <a href="nuova/login">Login</a>
+								Regresar a la pantalla de <a href="/nuova/login">Login</a>
 		    				</div>
 		    		</div>
 		    	</div>

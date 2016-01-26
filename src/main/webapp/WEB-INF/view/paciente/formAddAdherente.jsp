@@ -112,7 +112,7 @@ function updateDate(){
 		 				<form:hidden path="pacienteId"/>
     					<form:hidden path="titularId"/>
     					<div class="formLabel"><form:label path="dni">DNI:</form:label></div>
-    					<div class="formInput"><form:input path="dni" /><form:input path="dni" /></div>
+    					<div class="formInput"><form:input path="dni" /></div>
 		 			</div>
 		 			<div class="span4">
 		 				<div class="formLabel"><form:label path="apellido">Apellido:</form:label></div>

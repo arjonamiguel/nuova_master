@@ -108,7 +108,8 @@
 												type="text"
 												id="ContainerGeneralOverWrite_ContainerGeneral_sq"
 												clplaceholder="Inicie la busqueda de pacientes ..."
-												autocomplete="off">
+												autocomplete="off"
+												style= "height: 30px">
 										</div>
 
 										<input type="submit"

@@ -134,6 +134,7 @@
 <div class="mainContainer"> 
 <div class="panelContainer">
 <form:form method="post" action="/nuova/deletePaciente" commandName="paciente">
+<form:hidden path="pacienteId"/>
 	<div class="panel panel-info">
 	<div class="panel-heading">
 		<div class="panel-title">

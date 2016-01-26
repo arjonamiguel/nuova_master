@@ -106,11 +106,11 @@
 				<li class="dropdown" >
 				<a href="#" id="reportes"  class="dropdown-toggle" data-toggle="dropdown"><i class="icon-th-list"></i>&nbsp;&nbsp;Reportes</a>
 				<ul class="dropdown-menu" role="menu">
-		                <li><a href="#">Action</a></li>
-		                <li><a href="#">Another action</a></li>
-		                <li><a href="#">Something else here</a></li>
+		                <li><a href="#">Reporte 1</a></li>
+		                <li><a href="#">Reporte 2</a></li>
+		                <li><a href="#">Reporte 3</a></li>
 		                <li class="divider"></li>
-		                <li><a href="#">Separated link</a></li>
+		                <li><a href="#">Reporte 4</a></li>
               	</ul>
 				</li>
 				</sec:authorize>
