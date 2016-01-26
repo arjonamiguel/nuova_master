@@ -216,8 +216,9 @@ label.error {
 		<div class="span8">
 		</div>
 		<div class="span4">
+		<div style="float:right;"><input type="button" value="Cancelar" onclick="location.href='/nuova/mainProfesional';" class="btn"/></div>
 			<div style="float:right;padding-right:2%;"><input type="submit" value="Guardar" class="btn btn-info"/></div> 
-	 		<div style="float:right;"><input type="button" value="Cancelar" onclick="location.href='/nuova/mainProfesional';" class="btn"/></div>
+	 		
 		</div>
 	</div>	        
 

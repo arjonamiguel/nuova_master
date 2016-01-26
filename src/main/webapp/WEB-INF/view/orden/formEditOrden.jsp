@@ -104,8 +104,8 @@
 														<td><form:input path="paciente.obrasocial.nombre" disabled="true"/></td>	
 														<td><form:label path="paciente.obrasocial.credencial">Credencial</form:label></td>			
 														<td><form:input path="paciente.obrasocial.credencial" disabled="true"/></td>
-														<td><form:label path="paciente.obrasocial.original">Original</form:label></td>			
-														<td><form:checkbox path="paciente.original" disabled="true"/> </td>
+														<td></td>			
+														<td> </td>
 													</tr>
 													
 												</table>  		   

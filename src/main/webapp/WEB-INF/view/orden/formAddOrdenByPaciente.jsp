@@ -64,23 +64,22 @@
 												
 												<tr>
 													<td><form:label path="paciente.dni">DNI</form:label></td>
-													<td><form:input path="paciente.dni"/></td>
+													<td><form:input path="paciente.dni" disabled="true"/></td>
 													<td><form:label path="paciente.apellido">Apellido</form:label></td>
 													<td>
 														<form:hidden path="paciente.pacienteId"/>
-														<form:input path="paciente.apellido"/>
+														<form:input path="paciente.apellido" disabled="true"/>
 													</td>
 													<td><form:label path="paciente.nombre">Nombre</form:label></td>
-													<td><form:input path="paciente.nombre"/></td>
+													<td><form:input path="paciente.nombre" disabled="true"/></td>
 												</tr>
 												
 												<tr>
 													<td><form:label path="paciente.obrasocial.nombre">Obra Social</form:label></td>
-													<td><form:input path="paciente.obrasocial.nombre"/></td>	
+													<td><form:input path="paciente.obrasocial.nombre" disabled="true"/></td>	
 													<td><form:label path="paciente.obrasocial.credencial">Credencial</form:label></td>			
-													<td><form:input path="paciente.obrasocial.credencial"/></td>
-													<td><form:label path="paciente.obrasocial.original">Original</form:label></td>			
-													<td><input type="checkbox" /> </td>
+													<td><form:input path="paciente.obrasocial.credencial" disabled="true"/></td>
+													<td></td><td></td>
 												</tr>
 												
 											</table>  		   

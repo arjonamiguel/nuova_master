@@ -93,7 +93,7 @@
 				</sec:authorize>
 				<sec:authorize access="hasRole('ROLE_ADMIN') OR hasRole('ROLE_USER')">
 				<li class="dropdown" >
-					<a href="#" id="mainPaciente"  class="dropdown-toggle" data-toggle="dropdown"><i class="icon-file"></i>&nbsp;&nbsp;Administracion de Pacientes</a>
+					<a href="#" id="mainPaciente"  class="dropdown-toggle" data-toggle="dropdown"><i class="icon-file"></i>&nbsp;&nbsp;Administracion de Pacientes<span class="caret"></a>
 					<ul class="dropdown-menu" role="menu">
 		                <li><a href="/nuova/mainPaciente">Administrar Pacientes</a></li>
 		                <li><a href="/nuova/formAddPaciente">Agregar Pacientes</a></li>
@@ -104,7 +104,7 @@
 				
 				<sec:authorize access="hasRole('ROLE_ADMIN')">
 				<li class="dropdown" >
-				<a href="#" id="reportes"  class="dropdown-toggle" data-toggle="dropdown"><i class="icon-th-list"></i>&nbsp;&nbsp;Reportes</a>
+				<a href="#" id="reportes"  class="dropdown-toggle" data-toggle="dropdown"><i class="icon-th-list"></i>&nbsp;&nbsp;Reportes<span class="caret"></a>
 				<ul class="dropdown-menu" role="menu">
 		                <li><a href="#">Reporte 1</a></li>
 		                <li><a href="#">Reporte 2</a></li>
