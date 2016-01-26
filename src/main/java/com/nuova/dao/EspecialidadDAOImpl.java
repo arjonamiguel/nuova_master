@@ -24,7 +24,7 @@ public class EspecialidadDAOImpl implements EspecialidadDAO {
 
     @SuppressWarnings("unchecked")
     public List<Especialidad> findAll() {
-        return this.sessionFactory.getCurrentSession().createQuery("FROM Especialidad").list();
+        return this.sessionFactory.getCurrentSession().createQuery("FROM Especialidad ORDER BY e.nombre ASC").list();
     }
 
     public void delete(Integer especialidadId) {
@@ -46,7 +46,8 @@ public class EspecialidadDAOImpl implements EspecialidadDAO {
     }
 
     public Page<Especialidad> findEspecialidadesByPageable(Pageable pageable) {
-        Query query = this.sessionFactory.getCurrentSession().createQuery("FROM Especialidad");
+        Query query = this.sessionFactory.getCurrentSession().createQuery(
+                "FROM Especialidad e ORDER BY e.especialidadId DESC");
         // query.setFirstResult(pageable.getOffset());
         // query.setMaxResults(pageable.getPageNumber());
         List<Especialidad> result = query.list();
@@ -56,7 +57,8 @@ public class EspecialidadDAOImpl implements EspecialidadDAO {
     public Page<Especialidad> findEspecialidadesBySearch(String search, Pageable pageable) {
         Query query = this.sessionFactory.getCurrentSession()
                 .createQuery("FROM Especialidad e "
-                        + " WHERE upper(e.nombre) LIKE '%" + search.toUpperCase() + "%' ");
+                        + " WHERE upper(e.nombre) LIKE '%" + search.toUpperCase() + "%' "
+                        + " ORDER BY e.nombre ASC");
 
         // query.setFirstResult(pageable.getOffset());
         // query.setMaxResults(pageable.getPageNumber());

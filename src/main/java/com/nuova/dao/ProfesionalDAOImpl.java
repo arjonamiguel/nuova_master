@@ -28,7 +28,7 @@ public class ProfesionalDAOImpl implements ProfesionalDAO {
 
     @SuppressWarnings("unchecked")
     public List<Profesional> findAll() {
-        return this.sessionFactory.getCurrentSession().createQuery("FROM Profesional p ORDER BY p.profesionalId DESC")
+        return this.sessionFactory.getCurrentSession().createQuery("FROM Profesional p ORDER BY p.apellido ASC")
                 .list();
     }
 
