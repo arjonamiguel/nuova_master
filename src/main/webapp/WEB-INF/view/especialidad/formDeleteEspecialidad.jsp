@@ -22,6 +22,7 @@
 <div class="mainContainer"> 
 <div class="panelContainer">
 	<form:form method="post" action="/nuova/deleteEspecialidad" commandName="especialidad">
+	<form:hidden path="especialidadId" />
 	<div class="panel panel-info">
 			<div class="panel-heading">
 				<div class="panel-title">Eliminar Especialidad</div>

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="reporteEspecialidades" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="2ff07269-4ac4-4b5b-8fd2-46f5d19821d2">
 	<property name="ireport.zoom" value="2.0"/>
-	<property name="ireport.x" value="523"/>
+	<property name="ireport.x" value="541"/>
 	<property name="ireport.y" value="0"/>
 	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
 		<defaultValueExpression><![CDATA["C:\\Users\\Miguel\\Desktop\\reports\\"]]></defaultValueExpression>
@@ -70,7 +70,7 @@
 		<band height="17" splitType="Stretch">
 			<textField>
 				<reportElement mode="Opaque" x="0" y="0" width="44" height="15" backcolor="#CCCCCC" uuid="8cd7a337-d191-4238-b819-704302729f4f"/>
-				<textFieldExpression><![CDATA[ $F{id}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{id}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement mode="Opaque" x="45" y="0" width="207" height="15" backcolor="#CCCCCC" uuid="1d000317-93cf-4d63-9b4f-5ed3e385ffdf"/>
@@ -81,9 +81,8 @@
 				<subreportParameter name="${profesionales}">
 					<subreportParameterExpression><![CDATA[$F{profesionales}]]></subreportParameterExpression>
 				</subreportParameter>
-				<dataSourceExpression><![CDATA[new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource($F{profesionales})
-]]></dataSourceExpression>
-				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "reporteEspecialidades_Profesionales.jasper"]]></subreportExpression>
+				<dataSourceExpression><![CDATA[new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource($F{profesionales})]]></dataSourceExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR}]]></subreportExpression>
 			</subreport>
 		</band>
 	</detail>

@@ -10,6 +10,7 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
 
+import com.nuova.dto.OrdenAlarmaDTO;
 import com.nuova.model.Orden;
 
 @Repository
@@ -52,7 +53,7 @@ public class OrdenDAOImpl implements OrdenDAO {
     }
 
     public Page<Orden> findOrdenesByPageable(Pageable pageable) {
-        Query query = this.sessionFactory.getCurrentSession().createQuery("FROM Orden o ORDER BY o.ordenId");
+        Query query = this.sessionFactory.getCurrentSession().createQuery("FROM Orden o ORDER BY o.ordenId DESC");
         // query.setFirstResult(pageable.getOffset());
         // query.setMaxResults(pageable.getPageNumber());
         List<Orden> result = query.list();
@@ -63,12 +64,20 @@ public class OrdenDAOImpl implements OrdenDAO {
         Query query = this.sessionFactory.getCurrentSession()
                 .createQuery("FROM Orden o "
                         + " WHERE CAST(o.ordenId AS string) LIKE '%" + search.toUpperCase() + "%' "
-                        + " ORDER BY o.ordenId");
+                        + " ORDER BY o.ordenId ASC");
 
         // query.setFirstResult(pageable.getOffset());
         // query.setMaxResults(pageable.getPageNumber());
         List<Orden> result = query.list();
         return new PageImpl<Orden>(result, pageable, result.size());
+    }
+
+    @SuppressWarnings("unchecked")
+    public List<OrdenAlarmaDTO> findAlarmaOrdenes() {
+        return this.sessionFactory.getCurrentSession()
+                .createQuery(" SELECT NEW com.nuova.dto.OrdenAlarmaDTO(COUNT(o.estado) , o.estado) "
+                        + " FROM Orden o "
+                        + " GROUP BY o.estado").list();
     }
 
 }

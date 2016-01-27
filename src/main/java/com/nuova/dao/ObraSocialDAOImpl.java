@@ -10,6 +10,7 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
 
+import com.nuova.dto.OrdenAlarmaDTO;
 import com.nuova.model.Obrasocial;
 
 @Repository
@@ -28,7 +29,7 @@ public class ObraSocialDAOImpl implements ObraSocialDAO {
 
     @SuppressWarnings("unchecked")
     public List<Obrasocial> findAll() {
-        return this.sessionFactory.getCurrentSession().createQuery("FROM Obrasocial").list();
+        return this.sessionFactory.getCurrentSession().createQuery("FROM Obrasocial o ORDER BY o.nombre ASC").list();
     }
 
     public void delete(Integer obrasocialId) {
@@ -43,7 +44,8 @@ public class ObraSocialDAOImpl implements ObraSocialDAO {
     }
 
     public Page<Obrasocial> findObrasocialesByPageable(Pageable pageable) {
-        Query query = this.sessionFactory.getCurrentSession().createQuery("FROM Obrasocial");
+        Query query = this.sessionFactory.getCurrentSession().createQuery(
+                "FROM Obrasocial o ORDER BY o.obrasocialId DESC");
         // query.setFirstResult(pageable.getOffset());
         // query.setMaxResults(pageable.getPageNumber());
         List<Obrasocial> result = query.list();
@@ -53,12 +55,20 @@ public class ObraSocialDAOImpl implements ObraSocialDAO {
     public Page<Obrasocial> findObrasocialesBySearch(String search, Pageable pageable) {
         Query query = this.sessionFactory.getCurrentSession()
                 .createQuery("FROM Obrasocial o "
-                        + " WHERE upper(o.nombre) LIKE '%" + search.toUpperCase() + "%' ");
+                        + " WHERE upper(o.nombre) LIKE '%" + search.toUpperCase() + "%' "
+                        + " ORDER BY o.nombre ASC");
 
         // query.setFirstResult(pageable.getOffset());
         // query.setMaxResults(pageable.getPageNumber());
         List<Obrasocial> result = query.list();
         return new PageImpl<Obrasocial>(result, pageable, result.size());
+    }
+
+    @SuppressWarnings("unchecked")
+    public OrdenAlarmaDTO countObrasociales() {
+        return (OrdenAlarmaDTO) this.sessionFactory.getCurrentSession()
+                .createQuery(" SELECT NEW com.nuova.dto.OrdenAlarmaDTO(COUNT(*)) "
+                        + " FROM Obrasocial o ").list().get(0);
     }
 
 }

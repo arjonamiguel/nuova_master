@@ -10,6 +10,7 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
 
+import com.nuova.dto.OrdenAlarmaDTO;
 import com.nuova.model.Profesional;
 import com.nuova.model.ProfesionalEspecialidad;
 
@@ -27,7 +28,8 @@ public class ProfesionalDAOImpl implements ProfesionalDAO {
 
     @SuppressWarnings("unchecked")
     public List<Profesional> findAll() {
-        return this.sessionFactory.getCurrentSession().createQuery("FROM Profesional").list();
+        return this.sessionFactory.getCurrentSession().createQuery("FROM Profesional p ORDER BY p.apellido ASC")
+                .list();
     }
 
     public void delete(Integer profesionalId) {
@@ -63,7 +65,8 @@ public class ProfesionalDAOImpl implements ProfesionalDAO {
     }
 
     public Page<Profesional> findProfesionalesByPageable(Pageable pageable) {
-        Query query = this.sessionFactory.getCurrentSession().createQuery("FROM Profesional");
+        Query query = this.sessionFactory.getCurrentSession().createQuery(
+                "FROM Profesional p ORDER BY p.profesionalId DESC");
         // query.setFirstResult(pageable.getOffset());
         // query.setMaxResults(pageable.getPageNumber());
         List<Profesional> result = query.list();
@@ -74,11 +77,18 @@ public class ProfesionalDAOImpl implements ProfesionalDAO {
         Query query = this.sessionFactory.getCurrentSession()
                 .createQuery("FROM Profesional p "
                         + " WHERE upper(p.apellido) LIKE '%" + search.toUpperCase() + "%' "
-                        + " OR upper(p.nombre) LIKE '%" + search.toUpperCase() + "%' ");
+                        + " OR upper(p.nombre) LIKE '%" + search.toUpperCase() + "%' "
+                        + " ORDER BY p.apellido ");
         // query.setFirstResult(pageable.getOffset());
         // query.setMaxResults(pageable.getPageNumber());
         List<Profesional> result = query.list();
         return new PageImpl<Profesional>(result, pageable, result.size());
     }
 
+    @SuppressWarnings("unchecked")
+    public OrdenAlarmaDTO countProfesionales() {
+        return (OrdenAlarmaDTO) this.sessionFactory.getCurrentSession()
+                .createQuery(" SELECT NEW com.nuova.dto.OrdenAlarmaDTO(COUNT(*)) "
+                        + " FROM Profesional p ").list().get(0);
+    }
 }

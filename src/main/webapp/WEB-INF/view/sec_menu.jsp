@@ -11,9 +11,9 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </a>
-            <a class="brand" href="">NUOVA</a>
+            <a class="brand" href=""><b style="font-size: 30px">NUOVA</b></a>
     		
-          	<div class="nav-collapse collapse" id="collapse1">S
+          	<div class="nav-collapse collapse" id="collapse1">
               <div class="pull-right">
                 <ul class="nav pull-right">
                     <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon-user"></i>&nbsp;&nbsp;Logueado como, <sec:authorize access="isAuthenticated()">
@@ -57,16 +57,17 @@
 	
 
 		 <ul class="nav navbar-nav">
+		 		<sec:authorize access="hasRole('ROLE_ADMIN')">
 		 		<li class="dropdown">
 		            <a href="#" id="configuracion" class="dropdown-toggle" data-toggle="dropdown"><i class="icon-cog"></i>&nbsp;&nbsp;Configuracion<span class="caret"></a>
 		            <ul class="dropdown-menu">
-		            	<sec:authorize access="hasRole('ROLE_ADMIN')">
+		            	
 						<li><a href="/nuova/mainProfesional" id="mainProfesional">Administrar Profesionales</a></li>
 						<li><a href="/nuova/formAddProfesional" id="formAddProfesional">Agregar Profesional</a></li>
 						<li><a href="/nuova/showReporteProfesionales" id="showReporteProfesionales">Reporte de Profesionales</a></li>
 						
 						<li class="divider"></li>
-						</sec:authorize>
+						
 						<sec:authorize access="hasRole('ROLE_ADMIN')">
 						<li><a href="/nuova/mainEspecialidad" id="mainEspecialidad">Administrar Especialidades</a></li>
 						<li><a href="/nuova/formAddEspecialidad" id="formAddEspecialidad">Agregar Especialidades</a></li>
@@ -79,9 +80,9 @@
 						</sec:authorize>
 		            </ul>
 				</li>
-
+				</sec:authorize>
 				
-				<sec:authorize access="hasRole('ROLE_ADMIN')">
+				<sec:authorize access="hasRole('ROLE_ADMIN') OR hasRole('ROLE_USER')">
 				<li class="dropdown">
 				<a href="#" id="mainOrden" class="dropdown-toggle" data-toggle="dropdown"><i class="icon-briefcase"></i>&nbsp;&nbsp;Administracion de Practicas<span class="caret"></span></a>			
 			  		<ul class="dropdown-menu" role="menu">
@@ -90,25 +91,29 @@
               		</ul>                
 				</li>
 				</sec:authorize>
-				<sec:authorize access="hasRole('ROLE_ADMIN')">
+				<sec:authorize access="hasRole('ROLE_ADMIN') OR hasRole('ROLE_USER')">
 				<li class="dropdown" >
-					<a href="#" id="mainPaciente"  class="dropdown-toggle" data-toggle="dropdown"><i class="icon-wrench"></i>&nbsp;&nbsp;Administracion de Pacientes</a>
+					<a href="#" id="mainPaciente"  class="dropdown-toggle" data-toggle="dropdown"><i class="icon-file"></i>&nbsp;&nbsp;Administracion de Pacientes<span class="caret"></a>
 					<ul class="dropdown-menu" role="menu">
 		                <li><a href="/nuova/mainPaciente">Administrar Pacientes</a></li>
 		                <li><a href="/nuova/formAddPaciente">Agregar Pacientes</a></li>
+		                <li><a href="/nuova/showReportePacientes">Reporte de Pacientes</a></li>
               		</ul>  
 				</li>
 				</sec:authorize>
+				
+				<sec:authorize access="hasRole('ROLE_ADMIN')">
 				<li class="dropdown" >
-				<a href="#" id="reportes"  class="dropdown-toggle" data-toggle="dropdown"><i class="icon-th-list"></i>&nbsp;&nbsp;Reportes</a>
+				<a href="#" id="reportes"  class="dropdown-toggle" data-toggle="dropdown"><i class="icon-th-list"></i>&nbsp;&nbsp;Reportes<span class="caret"></a>
 				<ul class="dropdown-menu" role="menu">
-		                <li><a href="#">Action</a></li>
-		                <li><a href="#">Another action</a></li>
-		                <li><a href="#">Something else here</a></li>
+		                <li><a href="#">Reporte 1</a></li>
+		                <li><a href="#">Reporte 2</a></li>
+		                <li><a href="#">Reporte 3</a></li>
 		                <li class="divider"></li>
-		                <li><a href="#">Separated link</a></li>
+		                <li><a href="#">Reporte 4</a></li>
               	</ul>
 				</li>
+				</sec:authorize>
 		</ul>
 
 
@@ -116,12 +121,12 @@
 </div><!-- /.container-fluid -->
 </div>
 </nav>
-<sec:authorize access="hasRole('ROLE_USER')">
-USER
-</sec:authorize>
-<sec:authorize access="hasRole('ROLE_RECEPTION')">
-RECEPCION
-</sec:authorize>
+<%-- <sec:authorize access="hasRole('ROLE_USER')"> --%>
+<!-- USER -->
+<%-- </sec:authorize> --%>
+<%-- <sec:authorize access="hasRole('ROLE_RECEPTION')"> --%>
+<!-- RECEPCION -->
+<%-- </sec:authorize> --%>
 <!-- Menu       -->
 <script>
 $(document).ready(function(){

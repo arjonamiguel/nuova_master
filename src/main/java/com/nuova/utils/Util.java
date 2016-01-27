@@ -87,7 +87,7 @@ public class Util {
 
     static public String getEstadoInicial(OrdenDTO dto) {
         String retorno = "";
-        if (dto.isReqCredecial() && dto.isReqReciboSueldo() && (dto.isReqMonotributista() || dto.isReqReciboSueldo())) {
+        if (dto.isReqCredecial() && dto.isReqOrdenMedico() && (dto.isReqMonotributista() || dto.isReqReciboSueldo())) {
             retorno = ConstantOrdenEstado.PENDIENTE;
         } else {
             retorno = ConstantOrdenEstado.INCOMPLETA;

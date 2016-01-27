@@ -14,6 +14,17 @@
 		<link href="<%=request.getContextPath()%>/resources/css/nuova.css" rel="stylesheet"/>
 		<link href="<%=request.getContextPath()%>/resources/css/panel.css" rel="stylesheet"/>
 		<link href="<%=request.getContextPath()%>/resources/css/bootstrap/bootstrap-responsive.css" rel="stylesheet"/>
+		<script src="<c:url value="/resources/js/jquery/jquery.validate.min.js" />"></script>
+		
+<style>
+label.error {
+  color: #a94442;
+  background-color: #f2dede;
+  border-color: #ebccd1;
+  padding:1px 20px 1px 20px;
+  width:58%;
+}
+</style>		
 	
 <SCRIPT language="javascript">
     
@@ -128,6 +139,7 @@
 <div class="mainContainer"> 
 <div class="panelContainer">
 <form:form method="post" action="/nuova/editPaciente" commandName="paciente">
+<form:hidden path="pacienteId"/>
 	<div class="panel panel-info">
 	<div class="panel-heading">
 		<div class="panel-title">
@@ -190,13 +202,13 @@
 			   		</div>
 			   		<div class="span2" style="margin-top:2%;">
 			   				<div class="formLabel"><form:label path="liberado">Liberado:</form:label></div>
-							<div style="visibility:hidden;height:0px;"><form:checkbox path="liberado" id="liberado"/></div>
-							<label for="infoLiberado" style="padding-left:28%;"><input type="checkbox" id="infoLiberado" class="badgebox" onchange="javascript:updateLiberado();"><span class="badge">&check;</span></label>
+							<div style="visibility:visible;height:0px;"><form:checkbox path="liberado" id="liberado"/></div>
+						<!--	<label for="infoLiberado" style="padding-left:28%;"><input type="checkbox" id="infoLiberado" class="badgebox" onchange="javascript:updateLiberado();"><span class="badge">&check;</span></label> -->
 			   		</div>
 			   		<div class="span2" style="margin-top:2%;">
 			   			<div class="formLabel"><form:label path="titular">Titular:</form:label></div>
-							<div style="visibility:hidden;height:0px;"><form:checkbox path="titular" id="titular"/></div>
-							<label for="infoTitular" style="padding-left:28%;"><input type="checkbox" id="infoTitular" class="badgebox" onchange="javascript:updateTitular();"><span class="badge">&check;</span></label>
+							<div style="visibility:visible;height:0px;"><form:checkbox path="titular" id="titular"/></div>
+						<!--	<label for="infoTitular" style="padding-left:28%;"><input type="checkbox" id="infoTitular" class="badgebox" onchange="javascript:updateTitular();"><span class="badge">&check;</span></label> -->
 			   		</div>
 			   	</div>
 		 </div>
@@ -308,8 +320,9 @@
 				<div class="panel-body">
 					<div class="row-fluid">
 						<div class="span12">
+						<div style="float:right;"><input type="button" value="Cancelar" onclick="location.href='/nuova/mainPaciente';" class="btn"/></div>
 							<div style="float:right;padding-right:2%;"><input type="submit" value="Guardar" class="btn btn-info"/></div> 
-			 				<div style="float:right;"><input type="button" value="Cancelar" onclick="location.href='/nuova/mainPaciente';" class="btn"/></div>
+			 				
 						</div>
 					</div>
 				</div>
@@ -321,7 +334,48 @@
 </body>
 </html>
 <script>
+			document.getElementById("mainPaciente").parentNode.classList.add("active");
         	document.getElementById("registration-date").value=document.getElementById("fechaNacimiento").value;
         	updateLiberado();
 			updateTitular();
+			
+		$("#paciente").validate({
+    
+        // Specify the validation rules
+        rules: {
+        	 dni: {
+                required: true,
+                minlength: 7
+            },
+            apellido: "required",
+            nombre: "required",
+            telefono: {
+                required: true,
+                minlength: 5
+            },
+            email: {
+                required: true,
+                email: true
+            }
+        },
+        
+        // Specify the validation error messages
+        messages: {
+        	 dni: {
+                required: "Ingrese DNI",
+                minlength: "DNI debe tener al menos 7 caracteres de largo"
+            },
+            apellido: "Ingrese apellido",
+            nombre: "Ingrese nombre",
+            telefono: {
+                required: "Ingrese telefono",
+                minlength: "Telefono debe tener al menos 5 caracteres de largo"
+            },
+            matricula: "Ingrese matricula",
+            registroNacional: "Ingrese Registro Nacional"
+        },
+                submitHandler: function(form) {
+            form.submit();
+        }
+    });
 </script>

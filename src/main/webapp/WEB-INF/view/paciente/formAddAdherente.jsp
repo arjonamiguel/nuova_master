@@ -112,7 +112,7 @@ function updateDate(){
 		 				<form:hidden path="pacienteId"/>
     					<form:hidden path="titularId"/>
     					<div class="formLabel"><form:label path="dni">DNI:</form:label></div>
-    					<div class="formInput"><form:input path="dni" /><form:input path="dni" /></div>
+    					<div class="formInput"><form:input path="dni" /></div>
 		 			</div>
 		 			<div class="span4">
 		 				<div class="formLabel"><form:label path="apellido">Apellido:</form:label></div>
@@ -125,7 +125,7 @@ function updateDate(){
 		 		</div>
 		 		<div class="row-fluid">
 		 			<div class="span4">
-		 				<div id="labelDate" class="formLabel"><form:label path="fechaNacimiento">Fecha de Nacimiento:</form:label></div>
+		 				<div id="labelDate" class="formLabel" style="width:30%"><form:label path="fechaNacimiento">Fecha de Nacimiento:</form:label></div>
 							<div style="visibility:hidden;height:0px;"><form:input path="fechaNacimiento" class="date"/></div>
 							<div id="calendar">
 							<div class="input-group registration-date-time" style="padding-top:0%;">

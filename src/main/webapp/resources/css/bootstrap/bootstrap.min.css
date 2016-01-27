@@ -1977,7 +1977,8 @@ table td[class*="span"], table th[class*="span"], .row-fluid table td[class*="sp
 }
 
 .icon-trash {
-    background-position: -456px 0
+    background-position: -456px 0;
+     background-image: url("../../img/bootstrap/glyphicons-halflings.png");
 }
 
 .icon-home {
@@ -1985,7 +1986,8 @@ table td[class*="span"], table th[class*="span"], .row-fluid table td[class*="sp
 }
 
 .icon-file {
-    background-position: -24px -24px
+    background-position: -24px -24px;
+     background-image: url("../../img/bootstrap/glyphicons-halflings.png");
 }
 
 .icon-time {
@@ -2077,7 +2079,8 @@ table td[class*="span"], table th[class*="span"], .row-fluid table td[class*="sp
 }
 
 .icon-print {
-    background-position: -96px -48px
+    background-position: -96px -48px;
+    background-image: url("../../img/bootstrap/glyphicons-halflings.png");;
 }
 
 .icon-camera {
@@ -2141,7 +2144,8 @@ table td[class*="span"], table th[class*="span"], .row-fluid table td[class*="sp
 }
 
 .icon-pencil {
-    background-position: 0 -72px
+    background-position: 0 -72px;
+     background-image: url("../../img/bootstrap/glyphicons-halflings.png");
 }
 
 .icon-map-marker {
@@ -2174,15 +2178,20 @@ table td[class*="span"], table th[class*="span"], .row-fluid table td[class*="sp
 }
 
 .icon-step-backward {
-    background-position: -192px -72px
+    background-position: -192px -72px;
+    background-image: url("../../img/bootstrap/glyphicons-halflings.png");
+    opacity: 0.5;
 }
 
 .icon-fast-backward {
-    background-position: -216px -72px
+    background-position: -216px -72px;
+    background-image: url("../../img/bootstrap/glyphicons-halflings.png");
+    opacity: 0.5;
 }
 
 .icon-backward {
-    background-position: -240px -72px
+    background-position: -240px -72px;
+    background-image: url("../../img/bootstrap/glyphicons-halflings.png");
 }
 
 .icon-play {
@@ -2198,15 +2207,20 @@ table td[class*="span"], table th[class*="span"], .row-fluid table td[class*="sp
 }
 
 .icon-forward {
-    background-position: -336px -72px
+    background-position: -336px -72px;
+    background-image: url("../../img/bootstrap/glyphicons-halflings.png");
 }
 
 .icon-fast-forward {
-    background-position: -360px -72px
+    background-position: -360px -72px;
+    background-image: url("../../img/bootstrap/glyphicons-halflings.png");
+    opacity: 0.5;
 }
 
 .icon-step-forward {
-    background-position: -384px -72px
+    background-position: -384px -72px;
+    background-image: url("../../img/bootstrap/glyphicons-halflings.png");
+    opacity: 0.5;
 }
 
 .icon-eject {

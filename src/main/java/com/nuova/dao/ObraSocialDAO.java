@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
+import com.nuova.dto.OrdenAlarmaDTO;
 import com.nuova.model.Obrasocial;
 
 public interface ObraSocialDAO {
@@ -22,4 +23,6 @@ public interface ObraSocialDAO {
     public Page<Obrasocial> findObrasocialesByPageable(Pageable pageable);
 
     public Page<Obrasocial> findObrasocialesBySearch(String search, Pageable pageable);
+
+    public OrdenAlarmaDTO countObrasociales();
 }

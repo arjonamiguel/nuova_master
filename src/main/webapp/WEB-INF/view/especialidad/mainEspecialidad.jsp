@@ -35,7 +35,6 @@
 									columnKeys : [ "id", "nombre", "acciones"],
 									columnWidths : [ "5%", "40%",],
 									sortable : [ false, true ],
-									initialSortColumn : "nombre",
 									data : rows
 								});
 

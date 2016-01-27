@@ -157,8 +157,7 @@ public class OrdenDTO {
     }
 
     public String getBotonpaciente() {
-        botonpaciente = "<a class='btn btn-success btn-xs' href='formViewPaciente/'" + getOrdenId() + ">"
-                + "<span class='icon icon-user'></span>Ver...</a>";
+
         return botonpaciente;
     }
 
@@ -211,14 +210,14 @@ public class OrdenDTO {
     }
 
     public String getAcciones() {
-        String botonEdit = "<a class='btn btn-info btn-xs' href='formEditOrden/" + getOrdenId()
-                + "'><span class='icon icon-edit'></span>Editar  </a>";
+        String botonEdit = "<a class='btn btn-info btn-xs' href='/nuova/formEditOrden/" + getOrdenId()
+                + "'><span class='icon icon-edit'></span></a>";
 
-        String botonDelete = "<a class='btn btn-danger btn-xs' href='formDeleteOrden/" + getOrdenId()
-                + "'><span class='icon icon-remove'></span>Eliminar</a>";
+        String botonDelete = "<a class='btn btn-danger btn-xs' href='/nuova/formDeleteOrden/" + getOrdenId()
+                + "'><span class='icon icon-remove'></span></a>";
 
-        String botonPrint = "<a class='btn btn-default btn-xs' href='showReportOrdenEmitida/" + getOrdenId()
-                + "'><span class='icon icon-print'></span>Imprimir</a>";
+        String botonPrint = "<a class='btn btn-default btn-xs' href='/nuova/showReporteOrdenEmitida/" + getOrdenId()
+                + "'><span class='icon icon-print'></span></a>";
 
         this.acciones = botonEdit + botonDelete + botonPrint;
 

@@ -10,6 +10,7 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
 
+import com.nuova.dto.OrdenAlarmaDTO;
 import com.nuova.model.Especialidad;
 
 @Repository
@@ -23,7 +24,7 @@ public class EspecialidadDAOImpl implements EspecialidadDAO {
 
     @SuppressWarnings("unchecked")
     public List<Especialidad> findAll() {
-        return this.sessionFactory.getCurrentSession().createQuery("FROM Especialidad").list();
+        return this.sessionFactory.getCurrentSession().createQuery("FROM Especialidad e ORDER BY e.nombre ASC").list();
     }
 
     public void delete(Integer especialidadId) {
@@ -45,7 +46,8 @@ public class EspecialidadDAOImpl implements EspecialidadDAO {
     }
 
     public Page<Especialidad> findEspecialidadesByPageable(Pageable pageable) {
-        Query query = this.sessionFactory.getCurrentSession().createQuery("FROM Especialidad");
+        Query query = this.sessionFactory.getCurrentSession().createQuery(
+                "FROM Especialidad e ORDER BY e.especialidadId DESC");
         // query.setFirstResult(pageable.getOffset());
         // query.setMaxResults(pageable.getPageNumber());
         List<Especialidad> result = query.list();
@@ -55,11 +57,19 @@ public class EspecialidadDAOImpl implements EspecialidadDAO {
     public Page<Especialidad> findEspecialidadesBySearch(String search, Pageable pageable) {
         Query query = this.sessionFactory.getCurrentSession()
                 .createQuery("FROM Especialidad e "
-                        + " WHERE upper(e.nombre) LIKE '%" + search.toUpperCase() + "%' ");
+                        + " WHERE upper(e.nombre) LIKE '%" + search.toUpperCase() + "%' "
+                        + " ORDER BY e.nombre ASC");
 
         // query.setFirstResult(pageable.getOffset());
         // query.setMaxResults(pageable.getPageNumber());
         List<Especialidad> result = query.list();
         return new PageImpl<Especialidad>(result, pageable, result.size());
+    }
+
+    @SuppressWarnings("unchecked")
+    public OrdenAlarmaDTO countEspecialidades() {
+        return (OrdenAlarmaDTO) this.sessionFactory.getCurrentSession()
+                .createQuery(" SELECT NEW com.nuova.dto.OrdenAlarmaDTO(COUNT(*)) "
+                        + " FROM Especialidad e ").list().get(0);
     }
 }

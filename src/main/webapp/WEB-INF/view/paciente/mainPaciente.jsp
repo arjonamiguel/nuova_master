@@ -38,7 +38,6 @@
 									columnWidths : [ "5%", "10%", "20%", "20%",
 											"15%" ],
 									sortable : [ false, true, true, true ],
-									initialSortColumn : "apellido",
 									data : rows
 								});
 
@@ -118,7 +117,7 @@
 										    	name="search" 
 										    	id="search"			    	 
 										    	class="form-control input-lg"  
-										    	placeholder="USTED PUEDE FILTRAR POR DNI, APELLIDO Y NOMBRE SEPARADOS CON ESPACIOS"										    	
+										    	placeholder="USTED PUEDE FILTRAR POR APELLIDO O NOMBRE ..."										    	
 										   	/>
 										   	<span id = "wait" style="visibility: hidden; padding-left: 5px">Buscando ...</span>			
 											</div>

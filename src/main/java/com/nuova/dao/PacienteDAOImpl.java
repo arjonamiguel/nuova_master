@@ -10,6 +10,7 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
 
+import com.nuova.dto.OrdenAlarmaDTO;
 import com.nuova.model.Paciente;
 import com.nuova.model.PacienteObrasocial;
 
@@ -69,7 +70,7 @@ public class PacienteDAOImpl implements PacienteDAO {
     }
 
     public Page<Paciente> findPacientesByPageable(Pageable pageable) {
-        Query query = this.sessionFactory.getCurrentSession().createQuery("FROM Paciente");
+        Query query = this.sessionFactory.getCurrentSession().createQuery("FROM Paciente p ORDER BY p.pacienteId DESC");
         // query.setFirstResult(pageable.getOffset());
         // query.setMaxResults(pageable.getPageNumber());
         List<Paciente> result = query.list();
@@ -80,10 +81,18 @@ public class PacienteDAOImpl implements PacienteDAO {
         Query query = this.sessionFactory.getCurrentSession()
                 .createQuery("FROM Paciente p "
                         + " WHERE upper(p.apellido) LIKE '%" + search.toUpperCase() + "%' "
-                        + " OR upper(p.nombre) LIKE '%" + search.toUpperCase() + "%' ");
+                        + " OR upper(p.nombre) LIKE '%" + search.toUpperCase() + "%' "
+                        + " ORDER BY p.apellido ASC");
         // query.setFirstResult(pageable.getOffset());
         // query.setMaxResults(pageable.getPageNumber());
         List<Paciente> result = query.list();
         return new PageImpl<Paciente>(result, pageable, result.size());
+    }
+
+    @SuppressWarnings("unchecked")
+    public OrdenAlarmaDTO countPacientes() {
+        return (OrdenAlarmaDTO) this.sessionFactory.getCurrentSession()
+                .createQuery(" SELECT NEW com.nuova.dto.OrdenAlarmaDTO(COUNT(*)) "
+                        + " FROM Paciente p ").list().get(0);
     }
 }

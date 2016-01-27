@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.nuova.dao.ObraSocialDAO;
+import com.nuova.dto.OrdenAlarmaDTO;
 import com.nuova.model.Obrasocial;
 
 @Service
@@ -49,6 +50,11 @@ public class ObraSocialManagerImpl implements ObraSocialManager {
     @Transactional
     public Page<Obrasocial> findObrasocialesBySearch(String search, Pageable pageable) {
         return obrasocialDAO.findObrasocialesBySearch(search, pageable);
+    }
+
+    @Transactional
+    public OrdenAlarmaDTO countObrasociales() {
+        return obrasocialDAO.countObrasociales();
     }
 
 }

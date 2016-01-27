@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
+import com.nuova.dto.OrdenAlarmaDTO;
 import com.nuova.model.Especialidad;
 
 public interface EspecialidadManager {
@@ -21,4 +22,6 @@ public interface EspecialidadManager {
     public Page<Especialidad> findEspecialidadesByPageable(Pageable pageable);
 
     public Page<Especialidad> findEspecialidadesBySearch(String search, Pageable pageable);
+
+    public OrdenAlarmaDTO countEspecialidades();
 }

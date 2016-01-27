@@ -14,12 +14,20 @@
 		<link href="<%=request.getContextPath()%>/resources/css/nuova.css" rel="stylesheet"/>
 		<link href="<%=request.getContextPath()%>/resources/css/panel.css" rel="stylesheet"/>
 		<link href="<%=request.getContextPath()%>/resources/css/bootstrap/bootstrap-responsive.css" rel="stylesheet"/>
+		<script src="<c:url value="/resources/js/jquery/jquery.validate.min.js" />"></script>
 		<style>	
 		.btn-info {
     		color: #fff;
     		background-color: #5bc0de;
     		border-color: #46b8da;
 		}		
+		label.error {
+		  color: #a94442;
+		  background-color: #f2dede;
+		  border-color: #ebccd1;
+		  padding:1px 20px 1px 20px;
+		  width:58%;
+		}
 		</style>
         <SCRIPT language="javascript">
         var siprosa=0;
@@ -59,8 +67,6 @@
                     rowCount--;
                     i--;
                 }
- 
- 
             }
             }catch(e) {
                 alert(e);
@@ -102,29 +108,29 @@
 	    <div class="span4">
 	      <div><form:hidden path="profesionalId" /></div>
         	<div class="formLabel"><form:label path="apellido">Apellido:</form:label></div>
-        	<div class="formInput"><form:input path="apellido" placeholder="Apellido" /></div>
+        	<div class="formInput"><form:input path="apellido" type="text"/></div>
 	    </div>
 	    <div class="span4">
 			<div class="formLabel"><form:label path="nombre">Nombre:</form:label></div>
-        	<div class="formInput"><form:input path="nombre" placeholder="Nombre"/></div>
+        	<div class="formInput"><form:input path="nombre" type="text"/></div>
 	    </div>
 	    <div class="span4">
 			<div class="formLabel"><form:label path="telefono">Telefono:</form:label></div>
-	        <div class="formInput"><form:input path="telefono" placeholder="Telefono"/></div>
+	        <div class="formInput"><form:input path="telefono" type="number"/></div>
 	    </div>
   </div>
     <div class="row-fluid">
 	    <div class="span4">
 			<div class="formLabel"><form:label path="matricula">Matricula:</form:label></div>
-	        <div class="formInput"><form:input path="matricula" placeholder="Matricula"/></div>
+	        <div class="formInput"><form:input path="matricula" type="number"/></div>
 	    </div>
 	    <div class="span4">
 	       <div class="formLabel"><form:label path="registroNacional">Registro Nacional:</form:label></div>
-	       <div class="formInput"><form:input path="registroNacional" placeholder="Registro Nacional"/></div>
+	       <div class="formInput"><form:input path="registroNacional" type="number"/></div>
 	    </div>
 	    <div class="span4">
 	     	<div class="formLabel"><form:label path="tituloProfesional">Titulo Profesional:</form:label></div>
-	        <div class="formInput"><form:input path="tituloProfesional" placeholder="Titulo Profesional"/></div>
+	        <div class="formInput"><form:input path="tituloProfesional" type="text"/></div>
 	    </div>
   </div>
     <div class="row-fluid">
@@ -209,5 +215,37 @@
 <script>
         document.getElementById("habilitacionSiprosa").value=0;
         document.getElementById("fechaVencimientoHabilitacion").value='';
-		document.getElementById("configuracion").parentNode.classList.add("active")
+		document.getElementById("configuracion").parentNode.classList.add("active");
+			$("#profesional").validate({
+    
+		        // Specify the validation rules
+		        rules: {
+		            apellido: "required",
+		            nombre: "required",
+		            telefono: {
+		                required: true,
+		                minlength: 5
+		            },
+		            matricula: "required",
+		            registroNacional: "required",
+		            tituloNacional: "required"
+		        },
+		        
+		        // Specify the validation error messages
+		        messages: {
+		            apellido: "Ingrese apellido",
+		            nombre: "Ingrese nombre",
+		            telefono: {
+		                required: "Ingrese telefono",
+		                minlength: "Telefono debe tener al menos 5 caracteres de largo"
+		            },
+		            matricula: "Ingrese matricula",
+		            registroNacional: "Ingrese Registro Nacional"
+		        },
+		                submitHandler: function(form) {
+		            form.submit();
+		        }
+		    });
+		
+	
 </script>

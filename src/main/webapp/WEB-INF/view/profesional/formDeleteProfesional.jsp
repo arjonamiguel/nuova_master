@@ -165,7 +165,7 @@
 			<div class="span9">
 			</div>
 			<div class="span2">
-			 	<form:select path="especialidad" disabled="true">
+			 	<form:select path="especialidad" disabled="true" >
 				   <form:option value="NONE" label="Seleccione Especialidad ..."/>
 				   <form:options items="${especialidadList}" itemLabel="nombre" itemValue="especialidadId" />			    
 				</form:select>
@@ -187,7 +187,9 @@
 	       	<c:forEach items="${especialidadListEdit}" var="esp">
 		    <tr>
 
-		        <td>${esp.key} </td>
+		        <td>${esp.key}
+		        <input type="hidden" name="especialidadList" value="${esp.key}">
+		         </td>
 		        <td>${esp.value}</td>       
 		        <td>
 		        <button type='button' class='btn btn-danger btn-xs' onClick='Eliminar(this.parentNode.parentNode.rowIndex)'><span class='icon icon-remove' title='Eliminar'></span></button>
@@ -205,8 +207,9 @@
 
 	<div class="row-fluid">
 			<div class="span12">
+			<div style="float:right;"><input type="button" value="Cancelar" onclick="location.href='/nuova/mainProfesional';" class="btn"/></div>
 			<div style="float:right;padding-right:2%;"><input type="submit" value="Eliminar" class="btn btn-danger btn-xs"/></div> 
-	 		<div style="float:right;"><input type="button" value="Cancelar" onclick="location.href='/nuova/mainProfesional';" class="btn"/></div>
+	 		
 			</div>
 	</div>
 </div>
@@ -221,8 +224,8 @@
 
 <script language="javascript">
        
-        var isSiprosa=$("#habilitacionSiprosa").val();
-        if(isSiprosa==1){
+       // var isSiprosa=$("#habilitacionSiprosa").val();
+        if(true){
         	document.getElementById("registration-date").value=document.getElementById("fechaVencimientoHabilitacion").value;
 			$(".badge").click();
 			$("#calendar").css("pointer-events","none");

@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.nuova.dao.EspecialidadDAO;
+import com.nuova.dto.OrdenAlarmaDTO;
 import com.nuova.model.Especialidad;
 
 @Service
@@ -50,5 +51,10 @@ public class EspecialidadManagerImpl implements EspecialidadManager {
     @Transactional
     public Page<Especialidad> findEspecialidadesBySearch(String search, Pageable pageable) {
         return especialidadDAO.findEspecialidadesBySearch(search, pageable);
+    }
+
+    @Transactional
+    public OrdenAlarmaDTO countEspecialidades() {
+        return especialidadDAO.countEspecialidades();
     }
 }
