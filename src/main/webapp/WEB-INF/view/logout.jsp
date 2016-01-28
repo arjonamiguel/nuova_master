@@ -8,6 +8,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 		<title>Nuova</title>
+		<link rel="shortcut icon" href="<%=request.getContextPath()%>/resources/img/favicon/favicon.ico">
         <link href="<%=request.getContextPath()%>/resources/css/bootstrap/bootstrap.min.css" rel="stylesheet"/>   
 		<script src="<c:url value="/resources/js/jquery/jquery-2.0.3.min.js" />"></script>
 		<script src="<c:url value="/resources/js/bootstrap/bootstrap.min.js" />"></script>

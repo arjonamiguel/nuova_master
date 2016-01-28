@@ -10,6 +10,8 @@
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <link rel="shortcut icon" href="<%=request.getContextPath()%>/resources/img/favicon/favicon.ico">
+    
 	
 	    <title>Nuova</title>
         <link href="<%=request.getContextPath()%>/resources/css/pcan43e1.css" rel="stylesheet"/>
@@ -73,14 +75,14 @@
 											id="ContainerGeneralOverWrite_ContainerGeneral_uploadpic"
 											style="display: none"> <a href="#" id="uploadImage">
 											<div class="img_cand icon men" id="up-img">
-											<img src="/nuova/resources/img/others/nuova3.png" height="20%" width="20%">											
+											<img src="/nuova/resources/img/others/android-icon-72x72.png" height="20%" width="20%">											
 											</div>
 										</a>
 										<div class="cv_completed box_blue">
 											<div class="cv_100">
 												<span class="cv_user_complete" style="width: 80px;"></span>
 											</div>
-											<span class="txt">NUOVA</span>
+											<span class="txt"></span>
 
 										</div>
 									</div>
@@ -224,25 +226,25 @@
 										<li class="devclick cp"><a href="/nuova/mainPaciente">
 												<b>(${cantPaciente})</b> - Pacientes Registrados en Nuova.
 										</a> <span> <a href="/nuova/showReportePacientes">
-													Descargar</a>
+										<img src="/nuova/resources/img/others/export_excel_32x32.png"></a>
 										</span></li>
 
 										<li class="devclick cp"><a href="/nuova/mainProfesional">
 												<b>(${cantProfesional})</b> - Profesionales Registrados.
 										</a> <span> <a href="/nuova/showReporteProfesionales">
-													Descargar</a>
+										<img src="/nuova/resources/img/others/export_excel_32x32.png"></a>
 										</span></li>
 
 										<li class="devclick cp"><a href="/nuova/mainEspecialidad">
 												<b>(${cantEspecialidad})</b> - Especialidades en Curso.
 										</a> <span> <a href="/nuova/showReporteEspecialidades">
-													Descargar</a>
+										<img src="/nuova/resources/img/others/export_excel_32x32.png"></a>
 										</span></li>
 
 										<li class="devclick cp"><a href="/nuova/mainObraSocial">
 												<b>(${cantObrasocial})</b> - Obras Sociales Registradas.
 										</a> <span> <a href="/nuova/showReportesObraSociales">
-													Descargar</a>
+										<img src="/nuova/resources/img/others/export_excel_32x32.png"></a>
 										</span></li>
 
 
