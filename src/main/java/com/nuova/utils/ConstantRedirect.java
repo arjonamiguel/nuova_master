@@ -43,4 +43,7 @@ public class ConstantRedirect {
     public final static String VIEWER_REPORTE_ORDEN_EMITIDA = "/reporte/viewerReporteOrdenEmitida";
     public final static String VIEWER_REPORTE = "/reporte/viewerReportes";
 
+    // Calendario
+    public final static String VIEW_MAIN_CALENDARIO = "/calendario/mainCalendario";
+
 }

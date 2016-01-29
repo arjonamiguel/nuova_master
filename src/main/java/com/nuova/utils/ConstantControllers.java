@@ -78,4 +78,7 @@ public class ConstantControllers {
     public final static String REPORT_OBRASSOCIALES = "/reporteObrasSociales";
     public final static String REPORT_PACIENTES = "/reportePacientes";
 
+    // Calendario
+    public final static String MAIN_CALENDARIO = "/mainCalendario";
+
 }
