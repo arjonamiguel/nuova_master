@@ -19,7 +19,7 @@
 	
 <SCRIPT language="javascript">
     
-        var liberadoFlag=0;
+        var coseguroFlag=0;
         var titularFlag=0;
    
 		
@@ -89,19 +89,19 @@
 		function updateDate(){
 			document.getElementById("fechaNacimiento").value=document.getElementById("registration-date").value;
 		}
-		function updateLiberado(){
-			if(document.getElementById("liberado").value=="true" && liberadoFlag==0){
+		function updatecoseguro(){
+			if(document.getElementById("coseguro").value=="true" && coseguroFlag==0){
 			//validacion on load
-				$("#infoLiberado").click();
-				liberadoFlag=1;
+				$("#infocoseguro").click();
+				coseguroFlag=1;
 			}else{
 			//validacion on change
-				if(liberadoFlag==1){
-					document.getElementById("liberado").value="false";
-					liberadoFlag=0;
+				if(coseguroFlag==1){
+					document.getElementById("coseguro").value="false";
+					coseguroFlag=0;
 				}else{
-					document.getElementById("liberado").value="true";
-					liberadoFlag=1;
+					document.getElementById("coseguro").value="true";
+					coseguroFlag=1;
 				}
 			}	
 		}
@@ -187,7 +187,7 @@
 			   		<div class="span4">
 			   				<div class="formLabel"><form:label path="provincia">Provincia:</form:label></div>
         					<div class="formInput">
-        						<form:select path="provincia" style="width:68%; margin-bottom:0px" disabled="true">
+        						<form:select path="provincia" style="width:83%; margin-bottom:0px" disabled="true">
 									<form:option value="NONE" label="Seleccione Provincia ..."/>
 									<form:options items="${provinciaList}"  />			    
 								</form:select>
@@ -195,18 +195,26 @@
 			   		</div>
 			   		<div class="span4">
 			   				<div class="formLabel"><form:label path="domicilio">Domicilio:</form:label></div>
-        					<div class="formInput"><form:textarea path="domicilio" cssStyle="width:64%" disabled="true"/></div>
+        					<div class="formInput"><form:textarea path="domicilio" cssStyle="width:78%" disabled="true"/></div>
 			   		</div>
-			   		<div class="span2" style="margin-top:2%;" >
-			   				<div class="formLabel"><form:label path="liberado">Liberado:</form:label></div>
-							<div style="visibility:visible;height:0px;"><form:checkbox path="liberado" id="liberado"/></div>
-					<!--		<label for="infoLiberado" style="padding-left:28%;" class="not-active"><input type="checkbox" id="infoLiberado" class="badgebox" onchange="javascript:updateLiberado();"><span class="badge">&check;</span></label> -->
+			   		<div class="span4" style="margin-top:2%;" >
+			   				<div class="formLabel"><form:label path="coseguro">Coseguro:</form:label></div>
+							<div class="formInput""><form:checkbox path="coseguro" id="coseguro" disabled="true"/></div>
+					<!--		<label for="infocoseguro" style="padding-left:28%;" class="not-active"><input type="checkbox" id="infocoseguro" class="badgebox" onchange="javascript:updatecoseguro();"><span class="badge">&check;</span></label> -->
 			   		</div>
-			   		<div class="span2" style="margin-top:2%;">
-			   			<div class="formLabel"><form:label path="titular">Titular:</form:label></div>
-							<div style="visibility:visible;height:0px;"><form:checkbox path="titular" id="titular"/></div>
-				<!--			<label for="infoTitular" style="padding-left:28%;" class="not-active"><input type="checkbox" id="infoTitular" class="badgebox" onchange="javascript:updateTitular();"><span class="badge">&check;</span></label> -->
+			   		
+			   	</div>
+			   		<div class="row-fluid">
+			   		<div class="span4">
+			   				<div class="formLabel"><form:label path="titular">Parentesco:</form:label></div>
+							<div  class="formInput">
+								<form:select path="parentesco" style="width:83%; margin-bottom:0px" disabled="true">
+									<form:option value="-1" label="Seleccione Parentesco ..."/>
+									<form:options items="${parentescosList}"  itemLabel="value" itemValue="id"/>			    
+								</form:select>
+							</div>
 			   		</div>
+			   		
 			   	</div>
 		 </div>
 	</div>	
@@ -332,6 +340,6 @@
 </html>
 <script>
         	document.getElementById("registration-date").value=document.getElementById("fechaNacimiento").value;
-        	updateLiberado();
+        	updatecoseguro();
 			updateTitular();
 </script>

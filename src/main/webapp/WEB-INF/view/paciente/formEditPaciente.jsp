@@ -30,7 +30,7 @@ label.error {
 	
 <SCRIPT language="javascript">
     
-        var liberadoFlag=0;
+        var coseguroFlag=0;
         var titularFlag=0;
    
 		
@@ -100,19 +100,19 @@ label.error {
 		function updateDate(){
 			document.getElementById("fechaNacimiento").value=document.getElementById("registration-date").value;
 		}
-		function updateLiberado(){
-			if(document.getElementById("liberado").value=="true" && liberadoFlag==0){
+		function updatecoseguro(){
+			if(document.getElementById("coseguro").value=="true" && coseguroFlag==0){
 			//validacion on load
-				$("#infoLiberado").click();
-				liberadoFlag=1;
+				$("#infocoseguro").click();
+				coseguroFlag=1;
 			}else{
 			//validacion on change
-				if(liberadoFlag==1){
-					document.getElementById("liberado").value="false";
-					liberadoFlag=0;
+				if(coseguroFlag==1){
+					document.getElementById("coseguro").value="false";
+					coseguroFlag=0;
 				}else{
-					document.getElementById("liberado").value="true";
-					liberadoFlag=1;
+					document.getElementById("coseguro").value="true";
+					coseguroFlag=1;
 				}
 			}	
 		}
@@ -146,7 +146,7 @@ label.error {
 	<div class="panel-heading">
 		<div class="panel-title">
 		Editar Paciente
-    	 	<c:if test="${!isTitular}">
+    	 	<c:if test="${paciente.parentesco > 0}">
      			<h4>Titular: <a href="/nuova/formEditPaciente/${paciente.pacienteTitular.pacienteId}">${paciente.pacienteTitular.apellido}, ${paciente.pacienteTitular.nombre}</a></h4>
      		</c:if>
      	</div>
@@ -192,7 +192,7 @@ label.error {
 			   		<div class="span4">
 			   				<div class="formLabel"><form:label path="provincia">Provincia:</form:label></div>
         					<div class="formInput">
-        						<form:select path="provincia" style="width:68%; margin-bottom:0px">
+        						<form:select path="provincia" style="width:83%; margin-bottom:0px">
 									<form:option value="NONE" label="Seleccione Provincia ..."/>
 									<form:options items="${provinciaList}"  />			    
 								</form:select>
@@ -200,18 +200,25 @@ label.error {
 			   		</div>
 			   		<div class="span4">
 			   				<div class="formLabel"><form:label path="domicilio">Domicilio:</form:label></div>
-        					<div class="formInput"><form:textarea path="domicilio" cssStyle="width:64%"/></div>
+        					<div class="formInput"><form:textarea path="domicilio" cssStyle="width:78%"/></div>
 			   		</div>
-			   		<div class="span2" style="margin-top:2%;">
-			   				<div class="formLabel"><form:label path="liberado">Liberado:</form:label></div>
-							<div style="visibility:visible;height:0px;"><form:checkbox path="liberado" id="liberado"/></div>
-						<!--	<label for="infoLiberado" style="padding-left:28%;"><input type="checkbox" id="infoLiberado" class="badgebox" onchange="javascript:updateLiberado();"><span class="badge">&check;</span></label> -->
+			   		<div class="span4" style="margin-top:2%;">
+			   				<div class="formLabel"><form:label path="coseguro">Coseguro:</form:label></div>
+							<div class="formInput"><form:checkbox path="coseguro" id="coseguro"/></div>
+						<!--	<label for="infocoseguro" style="padding-left:28%;"><input type="checkbox" id="infocoseguro" class="badgebox" onchange="javascript:updatecoseguro();"><span class="badge">&check;</span></label> -->
+			   		</div>			   
+			   	</div>
+			   	<div class="row-fluid">
+			   		<div class="span4">
+			   				<div class="formLabel"><form:label path="titular">Parentesco:</form:label></div>
+							<div class="formInput">
+								<form:select path="parentesco" style="width:83%; margin-bottom:0px">
+									<form:option value="-1" label="Seleccione Parentesco ..."/>
+									<form:options items="${parentescosList}"  itemLabel="value" itemValue="id"/>			    
+								</form:select>
+							</div>
 			   		</div>
-			   		<div class="span2" style="margin-top:2%;">
-			   			<div class="formLabel"><form:label path="titular">Titular:</form:label></div>
-							<div style="visibility:visible;height:0px;"><form:checkbox path="titular" id="titular"/></div>
-						<!--	<label for="infoTitular" style="padding-left:28%;"><input type="checkbox" id="infoTitular" class="badgebox" onchange="javascript:updateTitular();"><span class="badge">&check;</span></label> -->
-			   		</div>
+			   		
 			   	</div>
 		 </div>
 	</div>	
@@ -273,7 +280,7 @@ label.error {
 			</div>
 			
 </div>
-<c:if test="${isTitular}">
+<c:if test="${paciente.parentesco == 0}">
 <div class="panel panel-info">
 				<div class="panel-heading">
 					<div class="panel-title">Adherentes</div>
@@ -338,7 +345,7 @@ label.error {
 <script>
 			document.getElementById("mainPaciente").parentNode.classList.add("active");
         	document.getElementById("registration-date").value=document.getElementById("fechaNacimiento").value;
-        	updateLiberado();
+        	updatecoseguro();
 			updateTitular();
 			
 		$("#paciente").validate({

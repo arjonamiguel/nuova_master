@@ -12,13 +12,13 @@
         <link href="<%=request.getContextPath()%>/resources/css/bootstrap/bootstrap.min.css" rel="stylesheet"/>
 		<script src="<c:url value="/resources/js/jquery/jquery-2.0.3.min.js" />"></script>
 		<script src="<c:url value="/resources/js/bootstrap/bootstrap.min.js" />"></script>
-		<script src="<%=request.getContextPath()%>/resources/js/jquery/bootstrap-collapse.js" />"></script>
+		<script src="<%=request.getContextPath()%>/resources/js/jquery/bootstrap-collapse.js" /></script>
 		<link href="<%=request.getContextPath()%>/resources/css/nuova.css" rel="stylesheet"/>
 		<link href="<%=request.getContextPath()%>/resources/css/panel.css" rel="stylesheet"/>
 		<link href="<%=request.getContextPath()%>/resources/css/bootstrap/bootstrap-responsive.css" rel="stylesheet"/>
 	
 	  <SCRIPT language="javascript">
-        var liberado=0;
+        var coseguro=0;
 		
         
         function addRow(tableID) {
@@ -85,14 +85,14 @@ function updateDate(){
 			document.getElementById("fechaNacimiento").value=document.getElementById("registration-date").value;
 }
 		
-		function updateLiberado(){
-			if(liberado==0){
-				liberado=1;
-				document.getElementById("liberado").value=1;
+		function updatecoseguro(){
+			if(coseguro==0){
+				coseguro=1;
+				document.getElementById("coseguro").value=1;
 
 			}else{
-				liberado=0;
-				document.getElementById("liberado").value=0;
+				coseguro=0;
+				document.getElementById("coseguro").value=0;
 
 			}
 		}
@@ -100,6 +100,7 @@ function updateDate(){
 </head>
 <body style="background-color:#e5e5e5;">
 <jsp:include page="../sec_menu.jsp"></jsp:include>
+<jsp:include page="../breadcrumb.jsp"></jsp:include>
 
 <div class="mainContainer" style="padding-top:1%;"> 
 <form:form method="post" action="/nuova/addAdherente" commandName="paciente">
@@ -150,7 +151,7 @@ function updateDate(){
 		 		<div class="row-fluid">
 		 			<div class="span4">
 		 				<div class="formLabel"><form:label path="provincia">Provincia:</form:label></div>
-		 				<div class="formInput">	<form:select path="provincia" style="width:70%; margin-bottom:0px">
+		 				<div class="formInput">	<form:select path="provincia" style="width:78%; margin-bottom:0px">
 							<form:option value="NONE" label="Seleccione Provincia ..."/>
 								<form:options items="${provinciaList}"  />			    
 							</form:select>
@@ -161,12 +162,24 @@ function updateDate(){
 		 				<div class="formInput"><form:textarea path="domicilio" cssStyle="width:65%"/></div>
 		 			</div>
 		 			<div class="span4">
-		 				<div class="formLabel"><form:label path="liberado">Liberado:</form:label></div>
-						<div style="visibility:hidden;height:0px;"><form:input path="liberado" /></div>
-						<label for="info" style="padding-left:28%;"><input type="checkbox" id="info" class="badgebox" onchange="javascript:updateLiberado();"><span class="badge">&check;</span></label>
+		 				<div class="formLabel"><form:label path="coseguro">Coseguro:</form:label></div>
+						<div style="visibility:hidden;height:0px;"><form:input path="coseguro" /></div>
+						<label for="info" style="padding-left:28%;"><input type="checkbox" id="info" class="badgebox" onchange="javascript:updatecoseguro();"><span class="badge">&check;</span></label>
 		 				
 		 			</div>
 		 		</div>
+		 		<div class="row-fluid">
+			   		<div class="span4">
+			   				<div class="formLabel"><form:label path="titular">Parentesco:</form:label></div>
+							<div class="formInput">
+								<form:select path="parentesco" style="width:83%; margin-bottom:0px">
+									<form:option value="-1" label="Seleccione Parentesco ..."/>
+									<form:options items="${parentescosList}"  itemLabel="value" itemValue="id"/>			    
+								</form:select>
+							</div>
+			   		</div>
+			   		
+			   	</div>
 		 	</div>
 	 	</div>
 	 </div>

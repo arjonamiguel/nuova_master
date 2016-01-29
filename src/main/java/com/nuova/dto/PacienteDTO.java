@@ -33,10 +33,11 @@ public class PacienteDTO {
     private String checkedTitular;
     private PacienteDTO pacienteTitular;
 
-    private boolean liberado = false;
+    private boolean coseguro = false;
     private String checkedLiberado;
 
     private String acciones;
+    private int parentesco;
 
     // private List<PacienteObrasocial> pacienteObrasocials = new ArrayList<PacienteObrasocial>(0);
 
@@ -104,12 +105,12 @@ public class PacienteDTO {
         this.mail = mail;
     }
 
-    public boolean getLiberado() {
-        return liberado;
+    public boolean getCoseguro() {
+        return coseguro;
     }
 
-    public void setLiberado(boolean liberado) {
-        this.liberado = liberado;
+    public void setCoseguro(boolean coseguro) {
+        this.coseguro = coseguro;
     }
 
     public Integer getDni() {
@@ -250,4 +251,13 @@ public class PacienteDTO {
     public void setAcciones(String acciones) {
         this.acciones = acciones;
     }
+
+    public int getParentesco() {
+        return parentesco;
+    }
+
+    public void setParentesco(int parentesco) {
+        this.parentesco = parentesco;
+    }
+
 }

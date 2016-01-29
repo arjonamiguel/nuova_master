@@ -41,6 +41,7 @@ public class PacienteController {
     public String formAddPaciente(ModelMap map) {
         List<Obrasocial> obrasocialList = obrasocialManager.findAll();
         map.addAttribute("provinciaList", Util.getProvincias());
+        map.addAttribute("parentescosList", Util.getParentescos());
         map.addAttribute("obrasocialList", obrasocialList);
         map.addAttribute("obrasocialDTOList", new ArrayList<ObraSocialDTO>());
         map.addAttribute("paciente", new PacienteDTO());
@@ -53,6 +54,7 @@ public class PacienteController {
         if (pacienteId != null) {
             PacienteDTO dto = transformPacienteToDto(pacienteManager.fin1dPacienteById(pacienteId));
             map.addAttribute("provinciaList", Util.getProvincias());
+            map.addAttribute("parentescosList", Util.getParentescos());
             map.addAttribute("obrasocialList", obrasocialManager.findAll());
             map.addAttribute("paciente", dto);
             map.addAttribute("isTitular", dto.isTitular());
@@ -66,6 +68,7 @@ public class PacienteController {
         if (pacienteId != null) {
             PacienteDTO dto = transformPacienteToDto(pacienteManager.fin1dPacienteById(pacienteId));
             map.addAttribute("provinciaList", Util.getProvincias());
+            map.addAttribute("parentescosList", Util.getParentescos());
             map.addAttribute("obrasocialList", obrasocialManager.findAll());
             map.addAttribute("paciente", dto);
             map.addAttribute("isTitular", dto.isTitular());
@@ -181,6 +184,7 @@ public class PacienteController {
 
         List<Obrasocial> obrasocialList = obrasocialManager.findAll();
         map.addAttribute("datosTitular", titular.getApellido() + " " + titular.getNombre());
+        map.addAttribute("parentescosList", Util.getParentescos());
         map.addAttribute("provinciaList", Util.getProvincias());
         map.addAttribute("obrasocialList", obrasocialList);
         map.addAttribute("obrasocialDTOList", new ArrayList<ObraSocialDTO>());
@@ -209,8 +213,8 @@ public class PacienteController {
         dto.setNombre(p.getNombre());
         dto.setDomicilio(p.getDomicilio());
         dto.setFechaNacimiento("" + p.getFechaNacimiento());
-        dto.setLiberado(p.getLiberado().intValue() == 1 ? true : false);
-        dto.setCheckedLiberado(p.getLiberado().intValue() == 1 ? "checked" : "");
+        dto.setCoseguro(p.getCoseguro().intValue() == 1 ? true : false);
+        dto.setCheckedLiberado(p.getCoseguro().intValue() == 1 ? "checked" : "");
         dto.setMail(p.getMail());
         dto.setTelefono(p.getTelefono());
         dto.setProvincia(p.getProvincia());
@@ -219,11 +223,13 @@ public class PacienteController {
                     .fin1dPacienteById(p.getPaciente().getPacienteId())));
         }
 
-        if (p.getTitular() != null) {
-            dto.setTitular(p.getTitular().intValue() == 1 ? true : false);
-            dto.setCheckedTitular(p.getTitular().intValue() == 1 ? "checked" : "");
+        dto.setParentesco(p.getParentesco().intValue());
 
-        }
+        // if (p.getTitular() != null) {
+        // dto.setTitular(p.getTitular().intValue() == 1 ? true : false);
+        // dto.setCheckedTitular(p.getTitular().intValue() == 1 ? "checked" : "");
+        //
+        // }
 
         for (PacienteObrasocial po : p.getPacienteObrasocials()) {
             dto.getObrasocialList().add(
@@ -238,14 +244,14 @@ public class PacienteController {
             dtoad.setNombre(ad.getNombre());
             dtoad.setDomicilio(ad.getDomicilio());
             dtoad.setFechaNacimiento("" + ad.getFechaNacimiento());
-            dtoad.setLiberado(ad.getLiberado().intValue() == 1 ? true : false);
-            dtoad.setCheckedLiberado(p.getLiberado().intValue() == 1 ? "checked" : "");
+            dtoad.setCoseguro(ad.getCoseguro().intValue() == 1 ? true : false);
+            dtoad.setCheckedLiberado(p.getCoseguro().intValue() == 1 ? "checked" : "");
             dtoad.setMail(ad.getMail());
             dtoad.setTelefono(ad.getTelefono());
             dtoad.setDni(ad.getDni());
-            if (ad.getTitular() != null) {
-                dtoad.setTitular(ad.getTitular().equals(1) ? true : false);
-            }
+            // if (ad.getTitular() != null) {
+            // dtoad.setTitular(ad.getTitular().equals(1) ? true : false);
+            // }
             for (PacienteObrasocial poo : ad.getPacienteObrasocials()) {
                 dtoad.setCrdencial(poo.getNroCredencial());
                 break;
@@ -267,8 +273,8 @@ public class PacienteController {
             dto.setNombre(p.getNombre());
             dto.setDomicilio(p.getDomicilio());
             dto.setFechaNacimiento("" + p.getFechaNacimiento());
-            dto.setLiberado(p.getLiberado().intValue() == 1 ? true : false);
-            dto.setCheckedLiberado(p.getLiberado().intValue() == 1 ? "checked" : "");
+            dto.setCoseguro(p.getCoseguro().intValue() == 1 ? true : false);
+            dto.setCheckedLiberado(p.getCoseguro().intValue() == 1 ? "checked" : "");
             dto.setMail(p.getMail());
             dto.setTelefono(p.getTelefono());
             for (Paciente ad : p.getPacientes()) {
@@ -278,8 +284,8 @@ public class PacienteController {
                 dtoad.setNombre(ad.getNombre());
                 dtoad.setDomicilio(ad.getDomicilio());
                 dtoad.setFechaNacimiento("" + ad.getFechaNacimiento());
-                dtoad.setLiberado(ad.getLiberado().intValue() == 1 ? true : false);
-                dtoad.setCheckedLiberado(p.getLiberado().intValue() == 1 ? "checked" : "");
+                dtoad.setCoseguro(ad.getCoseguro().intValue() == 1 ? true : false);
+                dtoad.setCheckedLiberado(p.getCoseguro().intValue() == 1 ? "checked" : "");
                 dtoad.setMail(ad.getMail());
                 dtoad.setTelefono(ad.getTelefono());
                 dto.getAdherentes().add(dtoad);
@@ -298,11 +304,11 @@ public class PacienteController {
         paciente.setNombre(dto.getNombre());
         paciente.setDomicilio(dto.getDomicilio());
         paciente.setFechaNacimiento(Util.parseToDate(dto.getFechaNacimiento()));
-        paciente.setLiberado(dto.getLiberado() ? new Byte("1") : new Byte("0"));
+        paciente.setCoseguro(dto.getCoseguro() ? new Byte("1") : new Byte("0"));
         paciente.setMail(dto.getMail());
         paciente.setTelefono(dto.getTelefono());
         paciente.setProvincia(dto.getProvincia());
-        paciente.setTitular(dto.isTitular() ? new Byte("1") : new Byte("0"));
+        paciente.setParentesco(new Byte(dto.getParentesco() + ""));
 
         for (ObraSocialDTO os : dto.getObrasocialListEdit()) {
             if (os.getObrasocialId() != null) {
