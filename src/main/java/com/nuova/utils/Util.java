@@ -15,15 +15,15 @@ import com.nuova.model.Paciente;
 import com.nuova.model.Practica;
 
 public class Util {
-    static public String PARENTESCO_TITULAR = "00-Titular";
-    static public String PARENTESCO_CONYUGE = "01-Esposo/a";
-    static public String PARENTESCO_CONCUVINO = "02-Concuvino/a";
-    static public String PARENTESCO_HIJOSOLTEROMENOR = "03-Hijo soltero menor de 21 años";
-    static public String PARENTESCO_HIJOSOLTEROESTUDIANTE = "04-Hijo soltero de 21 a 25 años cursando estudios regulares";
-    static public String PARENTESCO_HIJOCONYUGESOLTEROMENOR = "05-Hijo de cónyuge soltero menor de 21 años";
-    static public String PARENTESCO_HIJOCONYUGESOLTEROESTUDIANTE = "06-Hijo de cónyuge soltero de 21 a 25 años cursando estudios regulares";
-    static public String PARENTESCO_MENORBAJOTUTELA = "07-Menor bajo guarda o tutela";
-    static public String PARENTESCO_HIJODISCAPACITADO = "08-Hijo discapacitado";
+    static public String PARENTESCO_TITULAR = "[00]-Titular";
+    static public String PARENTESCO_CONYUGE = "[01]-Esposo/a";
+    static public String PARENTESCO_CONCUVINO = "[02]-Concuvino/a";
+    static public String PARENTESCO_HIJOSOLTEROMENOR = "[03]-Hijo soltero menor de 21 años";
+    static public String PARENTESCO_HIJOSOLTEROESTUDIANTE = "[04]-Hijo soltero de 21 a 25 años cursando estudios regulares";
+    static public String PARENTESCO_HIJOCONYUGESOLTEROMENOR = "[05]-Hijo de cónyuge soltero menor de 21 años";
+    static public String PARENTESCO_HIJOCONYUGESOLTEROESTUDIANTE = "[06]-Hijo de cónyuge soltero de 21 a 25 años cursando estudios regulares";
+    static public String PARENTESCO_MENORBAJOTUTELA = "[07]-Menor bajo guarda o tutela";
+    static public String PARENTESCO_HIJODISCAPACITADO = "[08]-Hijo discapacitado";
 
     static public List<ComboItemDTO> getParentescos() {
         List<ComboItemDTO> parentescos = new ArrayList<ComboItemDTO>();

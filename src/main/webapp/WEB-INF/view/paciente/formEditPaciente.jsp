@@ -299,6 +299,7 @@ label.error {
 		            <TD>Apellido</TD>        
 		            <TD>Nombre</TD>
 		            <TD>Credencial</TD>
+		            <TD>Parentesco</TD>
 		            <TD></TD>
 		        </TR>
 		         <% int index2 = 0;%>
@@ -310,6 +311,7 @@ label.error {
 			        <td>${adh.apellido}</td>
 			        <td>${adh.nombre}</td>
 			        <td>${adh.crdencial}</td>
+			        <td>${adh.parentescoDescription}</td>
 			        <td>
 			        	<a class="btn btn-info btn-xs" href="/nuova/formEditPaciente/${adh.pacienteId}" title="Editar Adherente">
 			        	<span class="icon icon-edit" title="Editar Adherente"></span></a>		        

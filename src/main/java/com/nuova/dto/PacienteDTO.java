@@ -38,6 +38,7 @@ public class PacienteDTO {
 
     private String acciones;
     private int parentesco;
+    private String parentescoDescription;
 
     // private List<PacienteObrasocial> pacienteObrasocials = new ArrayList<PacienteObrasocial>(0);
 
@@ -258,6 +259,14 @@ public class PacienteDTO {
 
     public void setParentesco(int parentesco) {
         this.parentesco = parentesco;
+    }
+
+    public String getParentescoDescription() {
+        return parentescoDescription;
+    }
+
+    public void setParentescoDescription(String parentescoDescription) {
+        this.parentescoDescription = parentescoDescription;
     }
 
 }

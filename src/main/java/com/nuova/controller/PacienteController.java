@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.nuova.dto.ComboItemDTO;
 import com.nuova.dto.ObraSocialDTO;
 import com.nuova.dto.PacienteDTO;
 import com.nuova.model.Obrasocial;
@@ -167,6 +168,7 @@ public class PacienteController {
             @PathVariable("titularId") Integer titularId) {
         Paciente titular = pacienteManager.fin1dPacienteById(titularId);
         PacienteDTO dto = new PacienteDTO();
+        dto.setApellido(titular.getApellido());
         dto.setProvincia(titular.getProvincia());
         dto.setTelefono(titular.getTelefono());
         dto.setMail(titular.getMail());
@@ -249,12 +251,15 @@ public class PacienteController {
             dtoad.setMail(ad.getMail());
             dtoad.setTelefono(ad.getTelefono());
             dtoad.setDni(ad.getDni());
-            // if (ad.getTitular() != null) {
-            // dtoad.setTitular(ad.getTitular().equals(1) ? true : false);
-            // }
+            dtoad.setParentesco(ad.getParentesco().intValue());
             for (PacienteObrasocial poo : ad.getPacienteObrasocials()) {
                 dtoad.setCrdencial(poo.getNroCredencial());
                 break;
+            }
+
+            for (ComboItemDTO item : Util.getParentescos()) {
+                if (dtoad.getParentesco() == Integer.valueOf(item.getId()).intValue())
+                    dtoad.setParentescoDescription(item.getValue());
             }
 
             dto.getAdherentes().add(dtoad);
