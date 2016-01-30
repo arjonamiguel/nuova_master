@@ -45,7 +45,7 @@
 		<div class="panel panel-info">
 			<div class="panel-heading">
           			<div class="panel-title">
-	          			Editar Practica de Paciente
+	          			Nueva Orden
           			</div>
     		</div>     
 			<div  class="panel-body" >
@@ -92,7 +92,7 @@
 												
 												<tr>
 													
-													<td colspan="4">
+													<td colspan="4" style="width:60%">
 														<b>Presentó la orden original del médico solicitante?</b>
 													</td>
 													<td  style="text-align:left" colspan="2">			
@@ -113,7 +113,7 @@
 											
 											<table class="table" style="width: 100%">
 												<tr>			
-													<td colspan="4">
+													<td colspan="4" style="width:60%">
 														<b>Presentó fotocopia del último recibo Monotributista?</b>
 													</td>
 													<td  style="text-align:left" colspan="2">			

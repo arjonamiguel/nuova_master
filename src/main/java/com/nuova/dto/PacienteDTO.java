@@ -241,10 +241,17 @@ public class PacienteDTO {
         String botonPractica = "<a class='btn btn-success btn-xs' href='formAddOrden/" + getPacienteId()
                 + "'><span class='icon icon-plus-sign'></span>Practica</a>&nbsp;";
 
+        String botonConsulta = "<a class='btn btn-success btn-xs' href='formAddConsulta/" + getPacienteId()
+                + "'><span class='icon icon-plus-sign'></span>Consulta</a>&nbsp;";
+
+        String botonConsultaOdontologica = "<a class='btn btn-success btn-xs' href='formAddConsultaOdontologica/"
+                + getPacienteId()
+                + "'><span class='icon icon-plus-sign'></span>Odontologia</a>&nbsp;";
+
         String botonDelete = "<a class='btn btn-danger btn-xs' href='formDeletePaciente/" + getPacienteId()
                 + "'><span class='icon icon-remove'></span>eliminar</a>";
 
-        this.acciones = botonEdit + botonPractica + botonDelete;
+        this.acciones = botonEdit + botonPractica + botonConsulta + botonConsultaOdontologica + botonDelete;
 
         return acciones;
     }

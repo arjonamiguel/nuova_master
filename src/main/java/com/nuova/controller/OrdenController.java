@@ -401,7 +401,7 @@ public class OrdenController {
         // boton paciente
         String botonpaciente = "<a class='btn btn-success btn-xs' href='/nuova/formEditPaciente/"
                 + dto.getPaciente().getPacienteId() + "' title='" +
-                dto.getPaciente().getApellido() + ", " + dto.getPaciente().getApellido()
+                dto.getPaciente().getApellido().toUpperCase() + ", " + dto.getPaciente().getNombre()
                 + "'>"
                 + "<span class='icon icon-user'></span</a>";
         dto.setBotonpaciente(botonpaciente);
