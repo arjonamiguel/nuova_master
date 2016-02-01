@@ -17,7 +17,7 @@ import com.nuova.model.Practica;
 public class Util {
     static public String PARENTESCO_TITULAR = "[00]-Titular";
     static public String PARENTESCO_CONYUGE = "[01]-Esposo/a";
-    static public String PARENTESCO_CONCUVINO = "[02]-Concuvino/a";
+    static public String PARENTESCO_CONCUBINO = "[02]-Concubino/a";
     static public String PARENTESCO_HIJOSOLTEROMENOR = "[03]-Hijo soltero menor de 21 años";
     static public String PARENTESCO_HIJOSOLTEROESTUDIANTE = "[04]-Hijo soltero de 21 a 25 años cursando estudios regulares";
     static public String PARENTESCO_HIJOCONYUGESOLTEROMENOR = "[05]-Hijo de cónyuge soltero menor de 21 años";
@@ -29,7 +29,7 @@ public class Util {
         List<ComboItemDTO> parentescos = new ArrayList<ComboItemDTO>();
         parentescos.add(new ComboItemDTO("0", PARENTESCO_TITULAR));
         parentescos.add(new ComboItemDTO("1", PARENTESCO_CONYUGE));
-        parentescos.add(new ComboItemDTO("2", PARENTESCO_CONCUVINO));
+        parentescos.add(new ComboItemDTO("2", PARENTESCO_CONCUBINO));
         parentescos.add(new ComboItemDTO("3", PARENTESCO_HIJOSOLTEROMENOR));
         parentescos.add(new ComboItemDTO("4", PARENTESCO_HIJOSOLTEROESTUDIANTE));
         parentescos.add(new ComboItemDTO("5", PARENTESCO_HIJOCONYUGESOLTEROMENOR));

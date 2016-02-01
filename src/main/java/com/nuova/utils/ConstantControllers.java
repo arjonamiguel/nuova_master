@@ -47,6 +47,7 @@ public class ConstantControllers {
     public final static String EDIT_PACIENTE = "/editPaciente";
     public final static String AJAX_GET_PACIENTES_PAGINADOS = "/ajaxGetPacientesPaginados";
     public final static String AJAX_GET_SEARCH_PACIENTES_PAGINADOS = "/ajaxGetSearchPacientesPaginados";
+    public final static String AJAX_GET_AUTOCOMPLETE_PACIENTES = "/ajaxGetAutoCompletePacientes";
 
     // Adherente
     public final static String FORM_ADD_ADHERENTE = "/formAddAdherente/{titularId}";

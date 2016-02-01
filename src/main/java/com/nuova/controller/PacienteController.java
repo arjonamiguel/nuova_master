@@ -162,6 +162,17 @@ public class PacienteController {
         return new PageImpl<PacienteDTO>(dtos, pageable, pacientes.getTotalElements());
     }
 
+    @RequestMapping(value = ConstantControllers.AJAX_GET_AUTOCOMPLETE_PACIENTES, method = RequestMethod.POST)
+    public @ResponseBody List<ComboItemDTO> getAutocompletePaciente(
+            @RequestParam(required = false, defaultValue = "") String query) {
+        List<ComboItemDTO> retorno = new ArrayList<ComboItemDTO>();
+        for (Paciente p : pacienteManager.findPacienteAutocomplete(query)) {
+            retorno.add(new ComboItemDTO(p.getPacienteId() + "", p.getApellido() + ", " + p.getNombre()));
+        }
+
+        return retorno;
+    }
+
     // Adherentes --------------------------------------------
     @RequestMapping(value = ConstantControllers.FORM_ADD_ADHERENTE, method = RequestMethod.GET)
     public String formAddAdherente(ModelMap map,

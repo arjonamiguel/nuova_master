@@ -20,9 +20,10 @@
         <link href="<%=request.getContextPath()%>/resources/css/bootstrap/bootstrap-responsive.css" rel="stylesheet"/>
         <link href="<%=request.getContextPath()%>/resources/css/panel.css" rel="stylesheet"/>
         
-		<script src="<%=request.getContextPath()%>/resources/js/jquery/jquery-2.0.3.min.js" />"></script>
-		<script src="<%=request.getContextPath()%>/resources/js/bootstrap/bootstrap.min.js" />"></script>
-		<script src="<%=request.getContextPath()%>/resources/js/jquery/bootstrap-collapse.js" />"></script>
+		<script src="<%=request.getContextPath()%>/resources/js/jquery/jquery-2.0.3.min.js" /></script>
+		<script src="<%=request.getContextPath()%>/resources/js/bootstrap/bootstrap.min.js" /></script>
+		<script src="<%=request.getContextPath()%>/resources/js/jquery/bootstrap-collapse.js" /></script>
+		<script src="<%=request.getContextPath()%>/resources/js/autocomplete/bootstrap-typeahead.js" /></script>
 		<link href="<%=request.getContextPath()%>/resources/css/nuova.css" rel="stylesheet"/>
 		
 		<!-- 	Configuracion del paginador -->
@@ -44,7 +45,41 @@
 	{
 	margin-left: -80px;
 }
+
 </style>
+
+ <script type="text/javascript">
+      $(document).ready(function() {
+    	  var map = new Object();
+    	  var objects = [];
+    	  
+        $('input.typeahead').typeahead({
+          source: function (query, process) {
+            $.ajax({
+              url: '/nuova/ajaxGetAutoCompletePacientes',
+              type: 'POST',
+              dataType: 'JSON',              
+              data: 'query=' + query,
+              success: function(data) {
+                console.log(data);
+                $.each(data, function(i, object) {
+                    map[object.value] = object;
+                    if (objects[i] == null) {
+                    	objects.push(object.value);
+                    }
+                });
+                process(objects);
+              }
+            });
+          },
+          updater: function(item) {
+              $('#pacienteId').val(map[item].id);
+              return item;
+          }
+        });
+      });
+    </script>
+ 
 </head>
 
 <body style="background-color: #e5e5e5;">
@@ -58,13 +93,7 @@
 						<div class="home_ac_v2">
 
 							<div class="bg_tooltips"></div>
-							<div class="close_tooltips">
-								<div class="container">
-									<div class="close">
-										<span>Cerrar</span> <span class="icon_close">✕</span>
-									</div>
-								</div>
-							</div>
+							
 
 							<div class="block_cand_offers">
 								<section class="user_info">
@@ -96,27 +125,30 @@
 									</div>
 								</div>
 								</section>
-								<div
-									onkeypress="javascript:return WebForm_FireDefaultButton(event, 'ContainerGeneralOverWrite_ContainerGeneral_btnSearchOffers')">
+								<div>
+<!-- 									onkeypress="javascript:return WebForm_FireDefaultButton(event, 'ContainerGeneralOverWrite_ContainerGeneral_btnSearchOffers')"> -->
 
 									<div class="buscador buscador_mvl">
 										<h2>Busqueda de Pacientes</h2>
 
-										<div class="">
+										<div class="">										
+										<input type="hidden" name="pacienteId" id="pacienteId" value="">										
 											<input
+												data-provide="typeahead" 
+												class="typeahead"
 												name="ctl00$ContainerGeneralOverWrite$ContainerGeneral$sq"
 												type="text"
 												id="ContainerGeneralOverWrite_ContainerGeneral_sq"
 												placeholder="Inicie la busqueda de pacientes ..."
 												autocomplete="off"
-												style="height: 42px; width: 50%">
+												style="height: 40px; width: 50%">
 										</div>
 
 										<input type="submit"
 											name="ctl00$ContainerGeneralOverWrite$ContainerGeneral$btnSearchOffers"
 											value="Buscar Paciente"
 											id="ContainerGeneralOverWrite_ContainerGeneral_btnSearchOffers"
-											class="submit_n">
+											class="submit_n" style="margin-top: 2px;">
 
 
 									</div>
@@ -137,76 +169,26 @@
 									</div>
 								</div>
 
-								<div class="offers_insc no_offers ocultar">
-									<h3>Resumen del estado de tus postulaciones</h3>
-									<span>En esta sección podrás ver toda la información
-										relacionada con tus postulaciones</span>
-									<ul>
-										<li class="offers_apl"><span>Ofertas a las que te
-												has postulado</span></li>
-										<li class="offers_see"><span>Empresas que han
-												visto tu curriculum</span></li>
-										<li class="offers_process"><span>Empresas que te
-												están evaluando</span></li>
-										<li class="offers_fin"><span>Procesos de selección
-												en los que eres finalista</span></li>
-									</ul>
-									<a href="/Candidate/Match/">Ver todas mis postulaciones</a>
-									<div class="box_tooltips ocultar" id="tooltip_offers_insc">
-										Aquí podrás ver toda la información relacionada con tus
-										postulaciones <span class="icon arrow"></span>
-									</div>
-								</div>
-
-
-								<div class="box_test_competencias devclick cp info  ocultar">
-									<div class="box ">
-
-										<span class="icon_test start"></span>
-										<h3>Evalúa tus competencias</h3>
-										<p>
-											<span>Destaca</span> entre los candidatos
-										</p>
-										<p>
-											<span>Descubre</span> tus puntos fuertes
-										</p>
-										<p>
-											<span>Crece</span> profesionalmente
-										</p>
-										<a href="/Candidate/Competences/" class="submit_n boton">Empezar
-											el test</a>
-
-									</div>
-								</div>
-
-								<div class="box_test_competencias ocultar">
-									<h3>Test Comportamental</h3>
-									<ul class="list_results_test">
-
-									</ul>
-									<a href="/Candidate/Competences/result.aspx">Ver resultados
-										del test</a>
-								</div>
-
-
-
 							</div>
 
 							<div class="block_companies_courses">
-								<div
-									onkeypress="javascript:return WebForm_FireDefaultButton(event, 'ContainerGeneralOverWrite_ContainerGeneral_btnSearchOffers1')">
+								<div>
+<!-- 									onkeypress="javascript:return WebForm_FireDefaultButton(event, 'ContainerGeneralOverWrite_ContainerGeneral_btnSearchOffers1')"> -->
 
 									<div class="buscador">
 										<h2>Busqueda de Pacientes</h2>
 										<div class="">
-											<span class="icon palabra_clave"></span> <input
+										<input type="hidden" name="pacienteId" id="pacienteId" value="">
+											<span class="icon palabra_clave"></span> 
+												<input
+												data-provide="typeahead" 
 												name="ctl00$ContainerGeneralOverWrite$ContainerGeneral$sq1"
 												type="text"
 												id="ContainerGeneralOverWrite_ContainerGeneral_sq1"
 												data-su="/ofertas-de-trabajo/"
-												class="js-cargos-suggest ui-autocomplete-input"
+												class="js-cargos-suggest typeahead"
 												placeholder="Inicie la busqueda de pacientes ..."
-												style="height: 42px; width: 50%"
+												style="height: 40px; width: 50%"
 												autocomplete="off">
 										</div>
 										<input type="submit"
