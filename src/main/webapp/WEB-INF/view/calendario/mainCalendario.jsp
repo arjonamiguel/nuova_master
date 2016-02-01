@@ -4,9 +4,9 @@
 <%@taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
-<html>
+<html lang="es">
 <head>
-	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 	<title>Nuova</title>
 	<link rel="shortcut icon" href="<%=request.getContextPath()%>/resources/img/favicon/favicon.ico">
 	
@@ -20,15 +20,76 @@
 	
 	<link href='<%=request.getContextPath()%>/resources/fullcalendar-2.6.0/fullcalendar.css' rel='stylesheet' />
 	<link href='<%=request.getContextPath()%>/resources/fullcalendar-2.6.0/fullcalendar.print.css' rel='stylesheet' media='print'/>
-	<link href="<%=request.getContextPath()%>/resources/fullcalendar-2.6.0//scheduler.min.css" rel="stylesheet">
-	<script src='<%=request.getContextPath()%>/resources/fullcalendar-2.6.0//lib/moment.min.js'></script>
-	<script src='<%=request.getContextPath()%>/resources/fullcalendar-2.6.0//lib/jquery.min.js'></script>
-	<script src='<%=request.getContextPath()%>/resources/fullcalendar-2.6.0//fullcalendar.min.js'></script>
-	<script src="<%=request.getContextPath()%>/resources/fullcalendar-2.6.0//scheduler.min.js"></script>
+	<link href="<%=request.getContextPath()%>/resources/fullcalendar-2.6.0/scheduler.min.css" rel="stylesheet">
+	<script src='<%=request.getContextPath()%>/resources/fullcalendar-2.6.0/lib/moment.min.js'></script>
+	<script src='<%=request.getContextPath()%>/resources/fullcalendar-2.6.0/lib/jquery.min.js'></script>
+	<script src='<%=request.getContextPath()%>/resources/fullcalendar-2.6.0/fullcalendar.min.js'></script>
+	<script src="<%=request.getContextPath()%>/resources/fullcalendar-2.6.0/scheduler.min.js"></script>
+	<script src='<%=request.getContextPath()%>/resources/fullcalendar-2.6.0/lang/es.js'></script>
 	
 	<script>
+	
+	function simpleStringify (object){
+		var container="["
+	    var simpleObject = "";
+	    var returnString="";
+	    for (var prop in object ){
+	        if (!object.hasOwnProperty(prop)){
+	            continue;
+	        }
+	        if (typeof(object[prop]) == 'object'){
+	        
+	        	//{ id: '1', resourceId: 'b', start: '2016-01-07T02:00:00', end: '2016-01-07T07:00:00', title: 'Dr. Lizarraga' },
+	        	simpleObject=simpleObject+"{ id:" + object[prop].id + ", resourceId: '" + object[prop].resourceId + "', start: '" + object[prop].start._i + "', end: '" + object[prop].end._i + " ', title: '" + object[prop].title + "'}";
+	        	if(prop<object.length-1)
+	        	{
+	        		simpleObject= simpleObject + ",";
+	        	}  
+	            continue;
+	        }
+	    }
+	    returnString = container + simpleObject + "]";
+	    
+		return returnString; 
+	};
+	
+	function sendingInfo(){
+		var object=$("#calendar").fullCalendar( 'clientEvents' );
+		
+		
+		
+	
+		alert(simpleStringify(object));
+	}
+	
+	var myVar = setInterval(function(){ myTimer() }, 1000);
+
+	function myTimer() {
+		$(".fc-license-message").hide();
+	}
+	
+	var currentDate='';
+	
+		function getDate(){
+		var today = new Date();
+		var dd = today.getDate();
+		var mm = today.getMonth()+1; //January is 0!
+		var yyyy = today.getFullYear();
+
+		if(dd<10) {
+		    dd='0'+dd
+		} 
+		
+		if(mm<10) {
+		    mm='0'+mm
+		} 
+		
+		return yyyy +'-'+ mm+'-'+dd;
+	}
+	
 
 		$(function() { // dom ready
+			currentDate=getDate();
 
 			$('#calendar').fullCalendar({
 				resourceAreaWidth: 230,
@@ -43,9 +104,9 @@
 				},
 				customButtons: {
 					promptResource: {
-						text: '+ room',
+						text: '+ sala',
 						click: function() {
-							var title = prompt('Room name');
+							var title = prompt('Nombre Sala');
 							if (title) {
 								$('#calendar').fullCalendar(
 									'addResource',
@@ -69,8 +130,8 @@
 					{ id: 'b', title: 'Consultorio B', eventColor: 'green' },
 					{ id: 'c', title: 'Consultorio C', eventColor: 'orange' },
 					{ id: 'd', title: 'Consultorio D', children: [
-						{ id: 'd1', title: 'Room D1' },
-						{ id: 'd2', title: 'Room D2' }
+						{ id: 'd1', title: 'Sala D1' },
+						{ id: 'd2', title: 'Sala D2' }
 					] },
 					{ id: 'e', title: 'Consultorio E' },
 					{ id: 'f', title: 'Consultorio F', eventColor: 'red' },
@@ -115,12 +176,7 @@
 	</script>
 	<style>
 
-	body {
-		margin: 0;
-		padding: 0;
-		font-family: "Lucida Grande",Helvetica,Arial,Verdana,sans-serif;
-		font-size: 14px;
-	}
+
 
 	#script-warning {
 		display: none;
@@ -142,7 +198,7 @@
 	}
 
 	#calendar {
-		max-width: 900px;
+		max-width: 100%;
 		margin: 50px auto;
 	}
 
@@ -173,6 +229,15 @@
 								<div id="calendar"></div>
 		    				</div>
 		    		</div>
+		    			<div class="row-fluid">
+		<div class="span8">
+		</div>
+		<div class="span4">
+		<div style="float:right;"><input type="button" value="Cancelar" onclick="location.href='/nuova/mainProfesional';" class="btn"/></div>
+			<div style="float:right;padding-right:2%;"><input type="submit" value="Guardar" class="btn btn-info" onclick="sendingInfo();"/></div> 
+	 		
+		</div>
+	</div>
 		    	</div>
 	    	</div>
 	    </div>

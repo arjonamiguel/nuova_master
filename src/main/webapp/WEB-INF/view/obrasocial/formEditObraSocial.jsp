@@ -16,6 +16,16 @@
 		<link href="<%=request.getContextPath()%>/resources/css/nuova.css" rel="stylesheet"/>
 		<link href="<%=request.getContextPath()%>/resources/css/panel.css" rel="stylesheet"/>
 		<link href="<%=request.getContextPath()%>/resources/css/bootstrap/bootstrap-responsive.css" rel="stylesheet"/>
+		<script src="<c:url value="/resources/js/jquery/jquery.validate.min.js" />"></script>
+		<style>
+			label.error {
+				  color: #a94442;
+				  background-color: #f2dede;
+				  border-color: #ebccd1;
+				  padding:1px 20px 1px 20px;
+				  width:58%;
+				}
+		</style>
 
 
 </head>
@@ -54,3 +64,20 @@
 </div>
 </body>
 </html>
+<script>
+	$("#obrasocial").validate({
+    
+		        // Specify the validation rules
+		        rules: {
+		            nombre: "required",
+		        },
+		        
+		        // Specify the validation error messages
+		        messages: {
+		            nombre: "Ingrese Obra Social",
+		        },
+		                submitHandler: function(form) {
+		            form.submit();
+		        }
+		    });
+</script>

@@ -45,6 +45,10 @@ label.error {
 		var table = document.getElementById(tableID);
 		var rowCount = table.rows.length;
 		var row = table.insertRow(rowCount);
+		
+		if(document.getElementById("especialidad").value=="NONE"){
+            	return;
+        } 
 
 		var cell2 = row.insertCell(0);
 		cell2.innerHTML = document.getElementById("especialidad").value

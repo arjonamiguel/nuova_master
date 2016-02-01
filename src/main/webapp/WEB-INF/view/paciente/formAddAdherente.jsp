@@ -16,6 +16,7 @@
 		<link href="<%=request.getContextPath()%>/resources/css/nuova.css" rel="stylesheet"/>
 		<link href="<%=request.getContextPath()%>/resources/css/panel.css" rel="stylesheet"/>
 		<link href="<%=request.getContextPath()%>/resources/css/bootstrap/bootstrap-responsive.css" rel="stylesheet"/>
+		<script src="<c:url value="/resources/js/jquery/jquery.validate.min.js" />"></script>
 	
 	  <SCRIPT language="javascript">
         var coseguro=0;
@@ -97,6 +98,15 @@ function updateDate(){
 			}
 		}
         </SCRIPT>
+        <style>
+label.error {
+  color: #a94442;
+  background-color: #f2dede;
+  border-color: #ebccd1;
+  padding:1px 20px 1px 20px;
+  width:58%;
+}
+</style>
 </head>
 <body style="background-color:#e5e5e5;">
 <jsp:include page="../sec_menu.jsp"></jsp:include>
@@ -115,7 +125,7 @@ function updateDate(){
 		 				<form:hidden path="pacienteId"/>
     					<form:hidden path="titularId"/>
     					<div class="formLabel"><form:label path="dni">DNI:</form:label></div>
-    					<div class="formInput"><form:input path="dni" /></div>
+    					<div class="formInput"><form:input path="dni" type="number"/></div>
 		 			</div>
 		 			<div class="span4">
 		 				<div class="formLabel"><form:label path="apellido">Apellido:</form:label></div>
@@ -145,7 +155,7 @@ function updateDate(){
 		 			</div>
 		 			<div class="span4">
 		 				<div class="formLabel"><form:label path="mail">E-Mail:</form:label></div>
-		 				<div class="formInput"><form:input path="mail" /></div>
+		 				<div class="formInput"><form:input path="mail" type="email"/></div>
 		 			</div>
 		 		</div>
 		 		<div class="row-fluid">
@@ -163,9 +173,9 @@ function updateDate(){
 		 			</div>
 		 			<div class="span4">
 		 				<div class="formLabel"><form:label path="coseguro">Coseguro:</form:label></div>
-						<div style="visibility:hidden;height:0px;"><form:input path="coseguro" /></div>
-						<label for="info" style="padding-left:28%;"><input type="checkbox" id="info" class="badgebox" onchange="javascript:updatecoseguro();"><span class="badge">&check;</span></label>
-		 				
+		 				<div class="formInput">
+								<form:checkbox path="coseguro" id="coseguro"/>
+						</div>
 		 			</div>
 		 		</div>
 		 		<div class="row-fluid">
@@ -217,8 +227,9 @@ function updateDate(){
 			<div class="span8">
 			</div>
 			<div class="span4">
+			<div style="float:right;"><input type="button" value="Cancelar" onclick="location.href = document.referrer; return false;" class="btn"/></div>
 				<div style="float:right;padding-right:2%;"><input type="submit" value="Guardar" class="btn btn-info"/></div> 
-	 			<div style="float:right;"><input type="button" value="Cancelar" onclick="location.href = document.referrer; return false;" class="btn"/></div>
+	 			
 			</div>
 		</div>
 	 </div>
@@ -229,3 +240,44 @@ function updateDate(){
 
 </body>
 </html>
+<script>
+			$("#paciente").validate({
+    
+        // Specify the validation rules
+        rules: {
+        	 dni: {
+                required: true,
+                minlength: 7
+            },
+            apellido: "required",
+            nombre: "required",
+            telefono: {
+                required: true,
+                minlength: 5
+            },
+            email: {
+                required: true,
+                email: true
+            }
+        },
+        
+        // Specify the validation error messages
+        messages: {
+        	 dni: {
+                required: "Ingrese DNI",
+                minlength: "DNI debe tener al menos 7 caracteres de largo"
+            },
+            apellido: "Ingrese apellido",
+            nombre: "Ingrese nombre",
+            telefono: {
+                required: "Ingrese telefono",
+                minlength: "Telefono debe tener al menos 5 caracteres de largo"
+            },
+           
+        },
+                submitHandler: function(form) {
+            form.submit();
+        }
+    });
+
+</script>

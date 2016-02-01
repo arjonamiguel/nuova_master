@@ -19,6 +19,13 @@
 	
 	<script type="text/javascript">
 	
+	function setObservacionVisible(){
+		$("#addObservacion").css("visibility","visible");
+	}
+	function setObservacionInvisible(){
+		$("#addObservacion").css("visibility","hidden");
+	}
+	
 	  function Eliminar (i) {    	 
   	    document.getElementById("tb_practicas").deleteRow(i);
   	}
@@ -71,18 +78,18 @@
 		    					<div class="tableContainer">
 		    					
 		    								<ul class="nav nav-tabs">
-											  <li class="active"><a data-toggle="tab" href="#tb_paciente">Paciente</a></li>
-											  <li><a data-toggle="tab" href="#tb_requisitos">Requisitos</a></li>
-											  <li><a data-toggle="tab" href="#tb_autorizacion">Autorizacion</a></li>
+											  <li class="active"><a data-toggle="tab" href="#tb_paciente" onclick="setObservacionInvisible()">Paciente</a></li>
+											  <li><a data-toggle="tab" href="#tb_requisitos" onclick="setObservacionInvisible()">Requisitos</a></li>
+											  <li><a data-toggle="tab" href="#tb_autorizacion" onclick="setObservacionInvisible()">Autorizacion</a></li>
 											  <li>
-											  	<a data-toggle="tab" href="#tb_observacion">
+											  	<a data-toggle="tab" href="#tb_observacion" onclick="setObservacionVisible()">
 											  	Observaciones 
 											  	<c:if test="${observacionCount > 0}">
 										     		<span class="badge">${observacionCount}</span>
 										     	</c:if>
 											  	</a>
 											  </li>
-											  <li><a data-toggle="tab" href="#tb_flujo">Flujo de Estados</a></li>
+											  <li><a data-toggle="tab" href="#tb_flujo" onclick="setObservacionInvisible()">Flujo de Estados</a></li>
 											</ul>
 										
 											<div class="tab-content" style="height: 350px">
@@ -252,15 +259,7 @@
 											
 											    	</table>
 											    	</c:forEach>	
-													
-										    		<table class="table"  style="width: 100%">    					
-													<tr>		
-														<td style="width: 15%"><form:label path="observacion">Observacion</form:label></td>
-														<td  style="text-align:left" colspan="5">			
-														    <form:textarea path="observacion" cssStyle="width:90%"/>
-														</td>
-													</tr>		
-													</table>
+
 										  		</div>
 										  		<div id="tb_flujo" class="tab-pane fade">  					
 													<c:forEach items="${ordenDto.ordenWorkflows}" var="ow" varStatus="loop" >			
@@ -284,7 +283,19 @@
 										  		</div>
 										  		
 											</div>
+												<div id="addObservacion" style="visibility:hidden;">
+													
+										    		<table class="table"  style="width: 100%">    					
+													<tr>		
+														<td style="width: 15%"><form:label path="observacion">Observacion</form:label></td>
+														<td  style="text-align:left" colspan="5">			
+														    <form:textarea path="observacion" cssStyle="width:90%"/>
+														</td>
+													</tr>		
+													</table>
+													</div>
 											<div style="float:right;">
+											
 											<table>
 										 		<tr>
 													<td style="width: 50%">

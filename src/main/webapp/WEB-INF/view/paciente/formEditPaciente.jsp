@@ -46,7 +46,9 @@ label.error {
             var rowCount = table.rows.length;
             var row = table.insertRow(rowCount);
  
-
+			if(document.getElementById("obrasocial.nombre").value=="NONE"){
+            	return;
+        	}
  
             var cell1 = row.insertCell(0);                      
             cell1.innerHTML = document.getElementById("obrasocial.nombre").value+"<input type='hidden' name='obrasocialListEdit["+index+"].obrasocialId' value='"+document.getElementById("obrasocial.nombre").value+"'>";
@@ -348,7 +350,7 @@ label.error {
 			document.getElementById("mainPaciente").parentNode.classList.add("active");
         	document.getElementById("registration-date").value=document.getElementById("fechaNacimiento").value;
         	updatecoseguro();
-			updateTitular();
+			//updateTitular();
 			
 		$("#paciente").validate({
     

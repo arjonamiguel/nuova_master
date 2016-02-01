@@ -43,6 +43,10 @@ label.error {
 
            var rowCount = table.rows.length;
            var row = table.insertRow(rowCount);
+           
+           	if(document.getElementById("obrasocial").value=="NONE"){
+            	return;
+        	} 
 
            var cell2 = row.insertCell(0);                      
            cell2.innerHTML = document.getElementById("obrasocial").value+"<input type='hidden' name='obrasocialListEdit["+index+"].obrasocialId' value='"+document.getElementById("obrasocial").value+"'>";
@@ -284,7 +288,8 @@ label.error {
             email: {
                 required: true,
                 email: true
-            }
+            },
+            fechaNacimiento: "required"
         },
         
         // Specify the validation error messages
@@ -299,8 +304,7 @@ label.error {
                 required: "Ingrese telefono",
                 minlength: "Telefono debe tener al menos 5 caracteres de largo"
             },
-            matricula: "Ingrese matricula",
-            registroNacional: "Ingrese Registro Nacional"
+			fechaNacimiento : "Ingrese fecha de nacimiento"
         },
                 submitHandler: function(form) {
             form.submit();

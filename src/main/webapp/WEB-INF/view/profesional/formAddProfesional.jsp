@@ -30,6 +30,7 @@
 		  padding:1px 20px 1px 20px;
 		  width:58%;
 		}
+
 		</style>
         <SCRIPT language="javascript">
         var siprosa=0;
@@ -44,9 +45,12 @@
             var rowCount = table.rows.length;
             var row = table.insertRow(rowCount);
  
-
+            if(document.getElementById("especialidad").value=="NONE"){
+            	return;
+            }  
  
-            var cell2 = row.insertCell(0);                      
+            var cell2 = row.insertCell(0);      
+              
             cell2.innerHTML = document.getElementById("especialidad").value+"<input type='hidden' name='especialidadList' value='"+document.getElementById("especialidad").value+"'>";
             var cell3 = row.insertCell(1);
             cell3.innerHTML = document.getElementById('especialidad').options[document.getElementById('especialidad').selectedIndex].text;
@@ -171,7 +175,10 @@
 <div style="padding-top:30px" class="panel-body" >
    	
 	<div class="row-fluid">
-			<div class="span9">
+			<div class="span7">
+			</div>
+			<div class="span2">
+				
 			</div>
 			<div class="span2">
 			 	<form:select path="especialidad">
@@ -197,8 +204,9 @@
 		<div class="span8">
 		</div>
 		<div class="span4">
+		<div style="float:right;"><input type="button" value="Cancelar" onclick="location.href='/nuova/mainProfesional';" class="btn"/></div>
 			<div style="float:right;padding-right:2%;"><input type="submit" value="Guardar" class="btn btn-info"/></div> 
-	 		<div style="float:right;"><input type="button" value="Cancelar" onclick="location.href='/nuova/mainProfesional';" class="btn"/></div>
+	 		
 		</div>
 	</div>	        
 

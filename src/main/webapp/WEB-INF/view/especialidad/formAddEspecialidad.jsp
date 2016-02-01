@@ -16,6 +16,16 @@
 		<link href="<%=request.getContextPath()%>/resources/css/nuova.css" rel="stylesheet"/>
 		<link href="<%=request.getContextPath()%>/resources/css/panel.css" rel="stylesheet"/>
 		<link href="<%=request.getContextPath()%>/resources/css/bootstrap/bootstrap-responsive.css" rel="stylesheet"/>
+		<script src="<c:url value="/resources/js/jquery/jquery.validate.min.js" />"></script>
+	<style>
+	label.error {
+		  color: #a94442;
+		  background-color: #f2dede;
+		  border-color: #ebccd1;
+		  padding:1px 20px 1px 20px;
+		  width:58%;
+		}
+	</style>
 	
 </head>
 <body style="background-color:#e5e5e5;">
@@ -33,7 +43,7 @@
 						<div class="row-fluid">
 							<div class="span6">
 								<div class="formLabel"><form:label path="nombre">Especialidad:</form:label></div>
-        						<div class="formInput"><form:input path="nombre" class="input-block-level"/></div>
+        						<div class="formInput"><form:input path="nombre" class="input-block-level" type="text"/></div>
 							</div>
 							<div class="span6">
 								<div class="formLabel"></div>
@@ -56,3 +66,20 @@
 </div>
 </body>
 </html>
+<script>
+	$("#especialidad").validate({
+    
+		        // Specify the validation rules
+		        rules: {
+		            nombre: "required",
+		        },
+		        
+		        // Specify the validation error messages
+		        messages: {
+		            nombre: "Ingrese especialidad",
+		        },
+		                submitHandler: function(form) {
+		            form.submit();
+		        }
+		    });
+</script>

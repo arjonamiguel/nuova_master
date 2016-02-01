@@ -104,7 +104,7 @@
 				
 				<sec:authorize access="hasRole('ROLE_ADMIN')">
 				<li class="dropdown" >
-				<a href="#" id="calendario"  class="dropdown-toggle" data-toggle="dropdown"><i class="icon-th-calendar"></i>&nbsp;&nbsp;Calendario<span class="caret"></a>
+				<a href="#" id="calendario"  class="dropdown-toggle" data-toggle="dropdown"><i class="icon-calendar"></i>&nbsp;&nbsp;Calendario<span class="caret"></a>
 				<ul class="dropdown-menu" role="menu">
 		                <li><a href="/nuova/mainCalendario">Visualizar Calendario</a></li>		               
               	</ul>

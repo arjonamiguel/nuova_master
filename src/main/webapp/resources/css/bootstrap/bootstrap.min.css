@@ -2350,7 +2350,8 @@ table td[class*="span"], table th[class*="span"], .row-fluid table td[class*="sp
 }
 
 .icon-calendar {
-    background-position: -192px -120px
+    background-position: -192px -120px;
+    background-image: url("../../img/bootstrap/glyphicons-halflings.png");
 }
 
 .icon-random {
