@@ -17,5 +17,6 @@
         <mapping class="com.nuova.model.Observaciones" />
         <mapping class="com.nuova.model.OrdenPractica" />
         <mapping class="com.nuova.model.Practica" />
+        <mapping class="com.nuova.model.Prestadores" />        
     </session-factory>
 </hibernate-configuration>

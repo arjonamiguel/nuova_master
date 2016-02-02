@@ -154,7 +154,7 @@
 									</div>
 
 								</div>
-								<div class="offers_insc ">
+								<div class="offers_insc">
 									<h3>Monitor de Practicas Realizadas</h3>
 									<ul>
 										<c:forEach items="${alarmas}" var="al">

@@ -464,6 +464,34 @@ INSERT INTO `practica` (`practica_id`, `codigo`, `nombre`) VALUES
 /*!40000 ALTER TABLE `practica` ENABLE KEYS */;
 
 
+-- Volcando estructura para tabla nuova.prestadores
+CREATE TABLE IF NOT EXISTS `prestadores` (
+  `prestador_id` int(11) NOT NULL AUTO_INCREMENT,
+  `nombre` varchar(256) COLLATE utf8_bin DEFAULT NULL,
+  `domicilio` varchar(512) COLLATE utf8_bin DEFAULT NULL,
+  `telefono` varchar(15) COLLATE utf8_bin DEFAULT NULL,
+  `provincia` varchar(256) COLLATE utf8_bin DEFAULT NULL,
+  PRIMARY KEY (`prestador_id`),
+  KEY `prestador_id` (`prestador_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
+-- Volcando datos para la tabla nuova.prestadores: ~2 rows (aproximadamente)
+DELETE FROM `prestadores`;
+/*!40000 ALTER TABLE `prestadores` DISABLE KEYS */;
+INSERT INTO `prestadores` (`prestador_id`, `nombre`, `domicilio`, `telefono`, `provincia`) VALUES
+	(1, 'MENDEZ COLLADO', ' Muñecas 444, San Miguel de Tucumán, Tucumán', '0381 421-7000', 'Tucumán'),
+	(2, 'DIAGNOSTICO GAMA', 'Maipú 749, 4000 San Miguel de Tucumán, Tucumán', '0381 439-5555', 'Tucumán'),
+	(4, 'Prestador Test 1', 'asd adad asd ad ad asd ad ad ad ad ad a dad asdsa daad adsa d ad adsa aasdada adsd ', '444444444', 'Tucumán'),
+	(6, 'Prestador Test 3', 'asdasd ad asd as d dd ad a ', '46546465', 'Tucumán'),
+	(7, 'Prestador Test 4', 'asdas dasd asd sad asdad ada d sad sada ', '6465465', 'Tucumán'),
+	(8, 'Prestador Test 5', 'asdsa dasd asd asd ada sda d asd asd asdad ad adad ada d da da ', '0381155867919', 'Tucumán'),
+	(9, 'Prestador Test 6', 'asdas das dasd asdsa dadsadsa dasasdasdasdsa dasd as', '4454545454', 'Tucumán'),
+	(10, 'Prestador Test 7', 'adsdsdas dsa ad asdadasd asd asd ads a', '654654654654', 'Tucumán'),
+	(11, 'Prestador Test 9', 'asdsa ad asd adads asda dad ad ', '6654654', 'Tucumán'),
+	(12, 'Prestador Test 8', 'sadasdsadasdad asd asd asd adsa sa asd ad ada a', '546546464', 'Tucumán');
+/*!40000 ALTER TABLE `prestadores` ENABLE KEYS */;
+
+
 -- Volcando estructura para tabla nuova.profesional
 CREATE TABLE IF NOT EXISTS `profesional` (
   `profesional_id` int(11) NOT NULL AUTO_INCREMENT,

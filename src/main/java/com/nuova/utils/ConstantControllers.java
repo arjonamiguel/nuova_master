@@ -82,4 +82,15 @@ public class ConstantControllers {
     // Calendario
     public final static String MAIN_CALENDARIO = "/mainCalendario";
 
+    // Prestadores
+    public final static String MAIN_PRESTADOR = "/mainPrestador";
+    public final static String FORM_ADD_PRESTADOR = "/formAddPrestador";
+    public final static String FORM_EDIT_PRESTADOR = "/formEditPrestador/{prestadorId}";
+    public final static String FORM_DELETE_PRESTADOR = "/formDeletePrestador/{prestadorId}";
+    public final static String ADD_PRESTADOR = "/addPrestador";
+    public final static String DELETE_PRESTADOR = "/deletePrestador";
+    public final static String EDIT_PRESTADOR = "/editPrestador";
+    public final static String AJAX_GET_PRESTADORES_PAGINADOS = "/ajaxGetPrestadoresPaginados";
+    public final static String AJAX_GET_SEARCH_PRESTADORES_PAGINADOS = "/ajaxGetSearchPrestadoresPaginados";
+
 }

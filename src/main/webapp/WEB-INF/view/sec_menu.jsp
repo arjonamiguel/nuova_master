@@ -77,6 +77,12 @@
 						<sec:authorize access="hasRole('ROLE_ADMIN')">
 						<li><a href="/nuova/mainObraSocial" id="mainObraSocial">Administrar Obras Sociales</a></li>
 						<li><a href="/nuova/formAddObraSocial" id="formAddObraSocial">Agregar Obras Sociales</a></li>
+						<li class="divider"></li>
+						</sec:authorize>
+						<sec:authorize access="hasRole('ROLE_ADMIN')">
+						<li><a href="/nuova/mainPrestador" id="mainPrestador">Administrar Prestadores</a></li>
+						<li><a href="/nuova/formAddPrestador" id="formAddPrestador">Agregar Prestadores</a></li>
+						<li><a href="/nuova/showReportePrestadores" id="showReportePrestador">Reporte de Prestadores</a></li>						
 						</sec:authorize>
 		            </ul>
 				</li>
