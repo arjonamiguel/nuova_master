@@ -82,7 +82,13 @@
 						<sec:authorize access="hasRole('ROLE_ADMIN')">
 						<li><a href="/nuova/mainPrestador" id="mainPrestador">Administrar Prestadores</a></li>
 						<li><a href="/nuova/formAddPrestador" id="formAddPrestador">Agregar Prestadores</a></li>
-						<li><a href="/nuova/showReportePrestadores" id="showReportePrestador">Reporte de Prestadores</a></li>						
+						<li><a href="/nuova/showReportePrestadores" id="showReportePrestador">Reporte de Prestadores</a></li>
+						<li class="divider"></li>						
+						</sec:authorize>						
+						<sec:authorize access="hasRole('ROLE_ADMIN')">
+						<li><a href="/nuova/mainPractica" id="mainPractica">Administrar Nomenclador</a></li>
+						<li><a href="/nuova/formAddPractica" id="formAddPractica">Agregar Practica</a></li>
+						<li><a href="/nuova/showReportePractica" id="showReportePractica">Reporte Nomenclador</a></li>
 						</sec:authorize>
 		            </ul>
 				</li>

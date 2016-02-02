@@ -52,4 +52,9 @@ public class ConstantRedirect {
     public final static String VIEW_FORM_EDIT_PRESTADOR = "/prestador/formEditPrestador";
     public final static String VIEW_FORM_DELETE_PRESTADOR = "/prestador/formDeletePrestador";
 
+    // Practicas
+    public final static String VIEW_MAIN_PRACTICA = "/practica/mainPractica";
+    public final static String VIEW_FORM_ADD_PRACTICA = "/practica/formAddPractica";
+    public final static String VIEW_FORM_EDIT_PRACTICA = "/practica/formEditPractica";
+    public final static String VIEW_FORM_DELETE_PRACTICA = "/practica/formDeletePractica";
 }

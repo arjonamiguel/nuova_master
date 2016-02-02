@@ -93,4 +93,14 @@ public class ConstantControllers {
     public final static String AJAX_GET_PRESTADORES_PAGINADOS = "/ajaxGetPrestadoresPaginados";
     public final static String AJAX_GET_SEARCH_PRESTADORES_PAGINADOS = "/ajaxGetSearchPrestadoresPaginados";
 
+    // Practicas
+    public final static String MAIN_PRACTICA = "/mainPractica";
+    public final static String FORM_ADD_PRACTICA = "/formAddPractica";
+    public final static String FORM_EDIT_PRACTICA = "/formEditPractica/{practicaId}";
+    public final static String FORM_DELETE_PRACTICA = "/formDeletePractica/{practicaId}";
+    public final static String ADD_PRACTICA = "/addPractica";
+    public final static String DELETE_PRACTICA = "/deletePractica";
+    public final static String EDIT_PRACTICA = "/editPractica";
+    public final static String AJAX_GET_PRACTICAS_PAGINADOS = "/ajaxGetPracticasPaginados";
+    public final static String AJAX_GET_SEARCH_PRACTICAS_PAGINADOS = "/ajaxGetSearchPracticasPaginados";
 }

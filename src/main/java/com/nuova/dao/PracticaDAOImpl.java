@@ -2,9 +2,11 @@ package com.nuova.dao;
 
 import java.util.List;
 
+import org.hibernate.Query;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
 
@@ -42,13 +44,24 @@ public class PracticaDAOImpl implements PracticaDAO {
     }
 
     public Page<Practica> findPracticaByPageable(Pageable pageable) {
-        // TODO Auto-generated method stub
-        return null;
+        Query query = this.sessionFactory.getCurrentSession().createQuery(
+                "FROM Practica p ORDER BY p.practicaId DESC");
+        // query.setFirstResult(pageable.getOffset());
+        // query.setMaxResults(pageable.getPageNumber());
+        List<Practica> result = query.list();
+        return new PageImpl<Practica>(result, pageable, result.size());
     }
 
     public Page<Practica> findPracticaBySearch(String search, Pageable pageable) {
-        // TODO Auto-generated method stub
-        return null;
+        Query query = this.sessionFactory.getCurrentSession()
+                .createQuery("FROM Practica p "
+                        + " WHERE upper(p.nombre) LIKE '%" + search.toUpperCase() + "%' "
+                        + " OR upper(p.codigo) LIKE '%" + search.toUpperCase() + "%' "
+                        + " ORDER BY p.codigo ");
+        // query.setFirstResult(pageable.getOffset());
+        // query.setMaxResults(pageable.getPageNumber());
+        List<Practica> result = query.list();
+        return new PageImpl<Practica>(result, pageable, result.size());
     }
 
 }
