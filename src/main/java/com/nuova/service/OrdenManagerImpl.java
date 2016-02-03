@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.nuova.dao.OrdenDAO;
 import com.nuova.dto.OrdenAlarmaDTO;
 import com.nuova.model.Orden;
+import com.nuova.model.OrdenTipo;
 
 @Service
 public class OrdenManagerImpl implements OrdenManager {
@@ -60,6 +61,16 @@ public class OrdenManagerImpl implements OrdenManager {
     @Transactional
     public List<OrdenAlarmaDTO> findAlarmaOrdenes() {
         return ordenDAO.findAlarmaOrdenes();
+    }
+
+    @Transactional
+    public List<OrdenTipo> finAllOrdenTipo() {
+        return ordenDAO.finAllOrdenTipo();
+    }
+
+    @Transactional
+    public OrdenTipo findOrdenTipoByCodigo(Integer codigo) {
+        return ordenDAO.findOrdenTipoByCodigo(codigo);
     }
 
 }

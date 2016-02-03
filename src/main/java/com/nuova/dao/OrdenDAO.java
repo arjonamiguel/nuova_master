@@ -7,6 +7,7 @@ import org.springframework.data.domain.Pageable;
 
 import com.nuova.dto.OrdenAlarmaDTO;
 import com.nuova.model.Orden;
+import com.nuova.model.OrdenTipo;
 
 public interface OrdenDAO {
     public void add(Orden orden);
@@ -26,5 +27,9 @@ public interface OrdenDAO {
     public Page<Orden> findOrdenesBySearch(String search, Pageable pageable);
 
     public List<OrdenAlarmaDTO> findAlarmaOrdenes();
+
+    public List<OrdenTipo> finAllOrdenTipo();
+
+    public OrdenTipo findOrdenTipoByCodigo(Integer codigo);
 
 }

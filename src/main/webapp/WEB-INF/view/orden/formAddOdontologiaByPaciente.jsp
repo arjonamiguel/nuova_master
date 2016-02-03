@@ -45,7 +45,7 @@
 		<div class="panel panel-info">
 			<div class="panel-heading">
           			<div class="panel-title">
-	          			Nueva Práctica
+	          			Nueva Consulta Odontológica
           			</div>
     		</div>     
 			<div  class="panel-body" >

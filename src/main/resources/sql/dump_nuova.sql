@@ -86,9 +86,9 @@ CREATE TABLE IF NOT EXISTS `observaciones` (
   KEY `observacion_id` (`observacion_id`),
   KEY `FK_observaciones_orden` (`orden_id`),
   CONSTRAINT `FK_observaciones_orden` FOREIGN KEY (`orden_id`) REFERENCES `orden` (`orden_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=44 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+) ENGINE=InnoDB AUTO_INCREMENT=45 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
--- Volcando datos para la tabla nuova.observaciones: ~13 rows (aproximadamente)
+-- Volcando datos para la tabla nuova.observaciones: ~14 rows (aproximadamente)
 DELETE FROM `observaciones`;
 /*!40000 ALTER TABLE `observaciones` DISABLE KEYS */;
 INSERT INTO `observaciones` (`observacion_id`, `observacion`, `orden_id`, `user_name`, `fecha`) VALUES
@@ -110,7 +110,8 @@ INSERT INTO `observaciones` (`observacion_id`, `observacion`, `orden_id`, `user_
 	(40, 'SE GENERA LA ORDEN DEBE TRAER RECIBO DE SUELDO', 24, 'virginia.gottardi@nuova.com', '2016-01-26 19:27:28'),
 	(41, 'iajdaiosjdoiasjd oasij doaisjdaoisjdaosidj aosidj asoijd aoisjd aoisj doais jdas doias diajso jasodaso djasj doas doia sdod', 24, 'virginia.gottardi@nuova.com', '2016-01-26 19:54:43'),
 	(42, 'asd as dasd as', 25, 'administrador@nuova.com', '2016-01-27 13:19:00'),
-	(43, 'asd asda sd asdasdasdsad asdasd asdas dasdas da sdas dasdasdasdasdas dasdada sdas daa da dada sd adas a dasdasdas dasa sd asd asdasd asd adasd asd adasda sad asd asdasas ad adasd a ad asdasdas dasdasda sdasd asdasd asdsadas das das dasdasd asd as as asadad', 26, 'administrador@nuova.com', '2016-01-29 16:51:49');
+	(43, 'asd asda sd asdasdasdsad asdasd asdas dasdas da sdas dasdasdasdasdas dasdada sdas daa da dada sd adas a dasdasdas dasa sd asd asdasd asd adasd asd adasda sad asd asdasas ad adasd a ad asdasdas dasdasda sdasd asdasd asdsadas das das dasdasd asd as as asadad', 26, 'administrador@nuova.com', '2016-01-29 16:51:49'),
+	(44, 'testtt', 27, 'administrador@nuova.com', '2016-02-03 15:22:14');
 /*!40000 ALTER TABLE `observaciones` ENABLE KEYS */;
 
 
@@ -119,6 +120,7 @@ CREATE TABLE IF NOT EXISTS `orden` (
   `orden_id` int(11) NOT NULL AUTO_INCREMENT,
   `paciente_id` int(11) DEFAULT NULL,
   `fecha` date DEFAULT '0000-00-00',
+  `orden_tipo` int(11) DEFAULT NULL,
   `req_orden_medico` tinyint(4) DEFAULT '0',
   `req_credecial` tinyint(4) DEFAULT '0',
   `req_recibo_sueldo` tinyint(4) DEFAULT '0',
@@ -127,23 +129,26 @@ CREATE TABLE IF NOT EXISTS `orden` (
   PRIMARY KEY (`orden_id`),
   KEY `orden_id` (`orden_id`),
   KEY `FK_orden_paciente` (`paciente_id`),
+  KEY `FK_orden_orden_tipo` (`orden_tipo`),
+  CONSTRAINT `FK_orden_orden_tipo` FOREIGN KEY (`orden_tipo`) REFERENCES `orden_tipo` (`orden_tipo_id`),
   CONSTRAINT `FK_orden_paciente` FOREIGN KEY (`paciente_id`) REFERENCES `paciente` (`paciente_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=27 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+) ENGINE=InnoDB AUTO_INCREMENT=28 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
--- Volcando datos para la tabla nuova.orden: ~7 rows (aproximadamente)
+-- Volcando datos para la tabla nuova.orden: ~11 rows (aproximadamente)
 DELETE FROM `orden`;
 /*!40000 ALTER TABLE `orden` DISABLE KEYS */;
-INSERT INTO `orden` (`orden_id`, `paciente_id`, `fecha`, `req_orden_medico`, `req_credecial`, `req_recibo_sueldo`, `req_monotributista`, `estado`) VALUES
-	(17, 35, '2016-01-13', 1, 1, 1, 1, 'RECHAZADA'),
-	(18, 35, '2016-01-14', 1, 1, 0, 0, 'EN_OBSERVACION'),
-	(19, 35, '2016-01-15', 1, 1, 1, 1, 'RECHAZADA'),
-	(20, 35, '2016-01-20', 1, 1, 0, 1, 'AUTORIZADA'),
-	(21, 163, '2016-01-21', 1, 1, 1, 1, 'PENDIENTE'),
-	(22, 169, '2016-01-26', 1, 1, 0, 1, 'AUTORIZADA'),
-	(23, 172, '2016-01-26', 1, 1, 1, 0, 'PENDIENTE'),
-	(24, 174, '2016-01-26', 1, 1, 0, 0, 'CERRADA'),
-	(25, 175, '2016-01-27', 0, 0, 0, 0, 'INCOMPLETA'),
-	(26, 180, '2016-01-29', 1, 1, 1, 0, 'AUTORIZADA');
+INSERT INTO `orden` (`orden_id`, `paciente_id`, `fecha`, `orden_tipo`, `req_orden_medico`, `req_credecial`, `req_recibo_sueldo`, `req_monotributista`, `estado`) VALUES
+	(17, 35, '2016-01-13', NULL, 1, 1, 1, 1, 'RECHAZADA'),
+	(18, 35, '2016-01-14', NULL, 1, 1, 0, 0, 'EN_OBSERVACION'),
+	(19, 35, '2016-01-15', NULL, 1, 1, 1, 1, 'RECHAZADA'),
+	(20, 35, '2016-01-20', NULL, 1, 1, 0, 1, 'AUTORIZADA'),
+	(21, 163, '2016-01-21', NULL, 1, 1, 1, 1, 'PENDIENTE'),
+	(22, 169, '2016-01-26', NULL, 1, 1, 0, 1, 'AUTORIZADA'),
+	(23, 172, '2016-01-26', NULL, 1, 1, 1, 0, 'PENDIENTE'),
+	(24, 174, '2016-01-26', NULL, 1, 1, 0, 0, 'CERRADA'),
+	(25, 175, '2016-01-27', NULL, 0, 0, 0, 0, 'INCOMPLETA'),
+	(26, 180, '2016-01-29', NULL, 1, 1, 1, 0, 'AUTORIZADA'),
+	(27, 180, '2016-02-03', NULL, 1, 1, 0, 1, 'PENDIENTE');
 /*!40000 ALTER TABLE `orden` ENABLE KEYS */;
 
 
@@ -184,6 +189,28 @@ INSERT INTO `orden_practica` (`ordden_practica_id`, `orden_id`, `practica_id`, `
 /*!40000 ALTER TABLE `orden_practica` ENABLE KEYS */;
 
 
+-- Volcando estructura para tabla nuova.orden_tipo
+CREATE TABLE IF NOT EXISTS `orden_tipo` (
+  `orden_tipo_id` int(11) NOT NULL AUTO_INCREMENT,
+  `nombre` varchar(256) COLLATE utf8_bin DEFAULT NULL,
+  `monto_1` double(10,2) DEFAULT '0.00',
+  `monto_2` double(10,2) DEFAULT '0.00',
+  `monto_3` double(10,2) DEFAULT '0.00',
+  `codigo` int(11) DEFAULT NULL,
+  PRIMARY KEY (`orden_tipo_id`),
+  KEY `orden_tipo_id` (`orden_tipo_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
+-- Volcando datos para la tabla nuova.orden_tipo: ~3 rows (aproximadamente)
+DELETE FROM `orden_tipo`;
+/*!40000 ALTER TABLE `orden_tipo` DISABLE KEYS */;
+INSERT INTO `orden_tipo` (`orden_tipo_id`, `nombre`, `monto_1`, `monto_2`, `monto_3`, `codigo`) VALUES
+	(1, 'CONSULTA', 45.22, 0.00, 0.00, 100),
+	(2, 'ODONTOLÓGICA', 20.00, 15.00, 10.00, 101),
+	(3, 'PRÁCTICA', 0.00, 0.00, 0.00, 102);
+/*!40000 ALTER TABLE `orden_tipo` ENABLE KEYS */;
+
+
 -- Volcando estructura para tabla nuova.orden_workflow
 CREATE TABLE IF NOT EXISTS `orden_workflow` (
   `orden_workflow_id` int(11) NOT NULL AUTO_INCREMENT,
@@ -195,9 +222,9 @@ CREATE TABLE IF NOT EXISTS `orden_workflow` (
   KEY `orden_workflow_id` (`orden_workflow_id`),
   KEY `FK_orden_workflow_orden` (`orden_id`),
   CONSTRAINT `FK_orden_workflow_orden` FOREIGN KEY (`orden_id`) REFERENCES `orden` (`orden_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=56 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+) ENGINE=InnoDB AUTO_INCREMENT=57 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
--- Volcando datos para la tabla nuova.orden_workflow: ~19 rows (aproximadamente)
+-- Volcando datos para la tabla nuova.orden_workflow: ~20 rows (aproximadamente)
 DELETE FROM `orden_workflow`;
 /*!40000 ALTER TABLE `orden_workflow` DISABLE KEYS */;
 INSERT INTO `orden_workflow` (`orden_workflow_id`, `orden_id`, `user_name`, `estado`, `fecha`) VALUES
@@ -224,7 +251,8 @@ INSERT INTO `orden_workflow` (`orden_workflow_id`, `orden_id`, `user_name`, `est
 	(52, 24, 'virginia.gottardi@nuova.com', 'CERRADA', '2016-01-26 19:55:32'),
 	(53, 25, 'administrador@nuova.com', 'INCOMPLETA', '2016-01-27 13:19:00'),
 	(54, 26, 'administrador@nuova.com', 'PENDIENTE', '2016-01-29 16:49:48'),
-	(55, 26, 'administrador@nuova.com', 'AUTORIZADA', '2016-01-29 16:52:05');
+	(55, 26, 'administrador@nuova.com', 'AUTORIZADA', '2016-01-29 16:52:05'),
+	(56, 27, 'administrador@nuova.com', 'PENDIENTE', '2016-02-03 15:22:14');
 /*!40000 ALTER TABLE `orden_workflow` ENABLE KEYS */;
 
 
@@ -242,158 +270,159 @@ CREATE TABLE IF NOT EXISTS `paciente` (
   `dni` int(11) DEFAULT NULL,
   `provincia` varchar(156) COLLATE utf8_bin DEFAULT NULL,
   `parentesco` tinyint(4) DEFAULT NULL,
+  `zona_afiliacion` varchar(156) COLLATE utf8_bin DEFAULT NULL,
   PRIMARY KEY (`paciente_id`),
   KEY `pacienteId` (`paciente_id`),
   KEY `FK_paciente_paciente` (`adherente_id`),
   CONSTRAINT `FK_paciente_paciente` FOREIGN KEY (`adherente_id`) REFERENCES `paciente` (`paciente_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=181 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
--- Volcando datos para la tabla nuova.paciente: ~139 rows (aproximadamente)
+-- Volcando datos para la tabla nuova.paciente: ~142 rows (aproximadamente)
 DELETE FROM `paciente`;
 /*!40000 ALTER TABLE `paciente` DISABLE KEYS */;
-INSERT INTO `paciente` (`paciente_id`, `apellido`, `nombre`, `fecha_nacimiento`, `domicilio`, `telefono`, `mail`, `coseguro`, `adherente_id`, `dni`, `provincia`, `parentesco`) VALUES
-	(35, 'ARJONA', 'MIGUEL ANGEL', '2015-01-01', 'Descripcion Domicilio', '4930332', 'arjonamiguel@gmail.com', 0, NULL, 29878065, 'Tucumán', 1),
-	(37, 'asdasd', 'asda', '2015-01-01', 'Descripcion Domicilio', '4930332', 'arjonamiguel@gmail.com', 0, 35, 654654, 'Tucumán', 0),
-	(38, 'asdasd', 'asda', '2015-01-01', 'Descripcion Domicilio', '4930332', 'arjonamiguel@gmail.com', 0, 35, 654654, 'Tucumán', 0),
-	(39, 'as', 'as', '2016-01-14', 'asdasda', '5555', 'sdasd', 0, NULL, 44, 'San Juan', 0),
-	(40, 'as', 'as', '2016-01-14', 'asdasda', '5555', 'sdasd', 0, NULL, 44, 'San Juan', 0),
-	(41, 'as', 'as', '2016-01-14', 'asdasda', '5555', 'sdasd', 0, NULL, 44, 'San Juan', 0),
-	(42, 'as', 'as', '2016-01-14', 'asdasda', '5555', 'sdasd', 0, NULL, 44, 'San Juan', 0),
-	(43, 'as', 'as', '2016-01-14', 'asdasda', '5555', 'sdasd', 0, NULL, 44, 'San Juan', 0),
-	(44, 'as', 'as', '2016-01-14', 'asdasda', '5555', 'sdasd', 0, NULL, 44, 'San Juan', 0),
-	(45, 'as', 'as', '2016-01-14', 'asdasda', '5555', 'sdasd', 0, NULL, 44, 'San Juan', 0),
-	(46, 'as', 'as', '2016-01-14', 'asdasda', '5555', 'sdasd', 0, NULL, 44, 'San Juan', 0),
-	(47, 'as', 'as', '2016-01-14', 'asdasda', '5555', 'sdasd', 0, NULL, 44, 'San Juan', 0),
-	(48, 'as', 'as', '2016-01-14', 'asdasda', '5555', 'sdasd', 0, NULL, 44, 'San Juan', 0),
-	(49, 'as', 'as', '2016-01-14', 'asdasda', '5555', 'sdasd', 0, NULL, 44, 'San Juan', 0),
-	(50, 'as', 'as', '2016-01-14', 'asdasda', '5555', 'sdasd', 0, NULL, 44, 'San Juan', 0),
-	(51, 'as', 'as', '2016-01-14', 'asdasda', '5555', 'sdasd', 0, NULL, 44, 'San Juan', 0),
-	(52, 'as', 'as', '2016-01-14', 'asdasda', '5555', 'sdasd', 0, NULL, 44, 'San Juan', 0),
-	(53, 'as', 'as', '2016-01-14', 'asdasda', '5555', 'sdasd', 0, NULL, 44, 'San Juan', 0),
-	(54, 'as', 'as', '2016-01-14', 'asdasda', '5555', 'sdasd', 0, NULL, 44, 'San Juan', 0),
-	(55, 'as', 'as', '2016-01-14', 'asdasda', '5555', 'sdasd', 0, NULL, 44, 'San Juan', 0),
-	(56, 'as', 'as', '2016-01-14', 'asdasda', '5555', 'sdasd', 0, NULL, 44, 'San Juan', 0),
-	(57, 'as', 'as', '2016-01-14', 'asdasda', '5555', 'sdasd', 0, NULL, 44, 'San Juan', 0),
-	(58, 'as', 'as', '2016-01-14', 'asdasda', '5555', 'sdasd', 0, NULL, 44, 'San Juan', 0),
-	(59, 'as', 'as', '2016-01-14', 'asdasda', '5555', 'sdasd', 0, NULL, 44, 'San Juan', 0),
-	(60, 'as', 'as', '2016-01-14', 'asdasda', '5555', 'sdasd', 0, NULL, 44, 'San Juan', 0),
-	(61, 'as', 'as', '2016-01-14', 'asdasda', '5555', 'sdasd', 0, NULL, 44, 'San Juan', 0),
-	(62, 'as', 'as', '2016-01-14', 'asdasda', '5555', 'sdasd', 0, NULL, 44, 'San Juan', 0),
-	(63, 'as', 'as', '2016-01-14', 'asdasda', '5555', 'sdasd', 0, NULL, 44, 'San Juan', 0),
-	(64, 'as', 'as', '2016-01-14', 'asdasda', '5555', 'sdasd', 0, NULL, 44, 'San Juan', 0),
-	(65, 'as', 'as', '2016-01-14', 'asdasda', '5555', 'sdasd', 0, NULL, 44, 'San Juan', 0),
-	(66, 'as', 'as', '2016-01-14', 'asdasda', '5555', 'sdasd', 0, NULL, 44, 'San Juan', 0),
-	(67, 'as', 'as', '2016-01-14', 'asdasda', '5555', 'sdasd', 0, NULL, 44, 'San Juan', 0),
-	(68, 'as', 'as', '2016-01-14', 'asdasda', '5555', 'sdasd', 0, NULL, 44, 'San Juan', 0),
-	(69, 'as', 'as', '2016-01-14', 'asdasda', '5555', 'sdasd', 0, NULL, 44, 'San Juan', 0),
-	(70, 'as', 'as', '2016-01-14', 'asdasda', '5555', 'sdasd', 0, NULL, 44, 'San Juan', 0),
-	(71, 'as', 'as', '2016-01-14', 'asdasda', '5555', 'sdasd', 0, NULL, 44, 'San Juan', 0),
-	(72, 'as', 'as', '2016-01-14', 'asdasda', '5555', 'sdasd', 0, NULL, 44, 'San Juan', 0),
-	(73, 'as', 'as', '2016-01-14', 'asdasda', '5555', 'sdasd', 0, NULL, 44, 'San Juan', 0),
-	(74, 'as', 'as', '2016-01-14', 'asdasda', '5555', 'sdasd', 0, NULL, 44, 'San Juan', 0),
-	(75, 'as', 'as', '2016-01-14', 'asdasda', '5555', 'sdasd', 0, NULL, 44, 'San Juan', 0),
-	(76, 'as', 'as', '2016-01-14', 'asdasda', '5555', 'sdasd', 0, NULL, 44, 'San Juan', 0),
-	(77, 'as', 'as', '2016-01-14', 'asdasda', '5555', 'sdasd', 0, NULL, 44, 'San Juan', 0),
-	(78, 'as', 'as', '2016-01-14', 'asdasda', '5555', 'sdasd', 0, NULL, 44, 'San Juan', 0),
-	(79, 'as', 'as', '2016-01-14', 'asdasda', '5555', 'sdasd', 0, NULL, 44, 'San Juan', 0),
-	(80, 'as', 'as', '2016-01-14', 'asdasda', '5555', 'sdasd', 0, NULL, 44, 'San Juan', 0),
-	(81, 'as', 'as', '2016-01-14', 'asdasda', '5555', 'sdasd', 0, NULL, 44, 'San Juan', 0),
-	(82, 'as', 'as', '2016-01-14', 'asdasda', '5555', 'sdasd', 0, NULL, 44, 'San Juan', 0),
-	(83, 'as', 'as', '2016-01-14', 'asdasda', '5555', 'sdasd', 0, NULL, 44, 'San Juan', 0),
-	(84, 'as', 'as', '2016-01-14', 'asdasda', '5555', 'sdasd', 0, NULL, 44, 'San Juan', 0),
-	(85, 'as', 'as', '2016-01-14', 'asdasda', '5555', 'sdasd', 0, NULL, 44, 'San Juan', 0),
-	(86, 'as', 'as', '2016-01-14', 'asdasda', '5555', 'sdasd', 0, NULL, 44, 'San Juan', 0),
-	(87, 'as', 'as', '2016-01-14', 'asdasda', '5555', 'sdasd', 0, NULL, 44, 'San Juan', 0),
-	(88, 'as', 'as', '2016-01-14', 'asdasda', '5555', 'sdasd', 0, NULL, 44, 'San Juan', 0),
-	(89, 'as', 'as', '2016-01-14', 'asdasda', '5555', 'sdasd', 0, NULL, 44, 'San Juan', 0),
-	(90, 'as', 'as', '2016-01-14', 'asdasda', '5555', 'sdasd', 0, NULL, 44, 'San Juan', 0),
-	(91, 'as', 'as', '2016-01-14', 'asdasda', '5555', 'sdasd', 0, NULL, 44, 'San Juan', 0),
-	(92, 'as', 'as', '2016-01-14', 'asdasda', '5555', 'sdasd', 0, NULL, 44, 'San Juan', 0),
-	(93, 'as', 'as', '2016-01-14', 'asdasda', '5555', 'sdasd', 0, NULL, 44, 'San Juan', 0),
-	(94, 'as', 'as', '2016-01-14', 'asdasda', '5555', 'sdasd', 0, NULL, 44, 'San Juan', 0),
-	(95, 'as', 'as', '2016-01-14', 'asdasda', '5555', 'sdasd', 0, NULL, 44, 'San Juan', 0),
-	(96, 'as', 'as', '2016-01-14', 'asdasda', '5555', 'sdasd', 0, NULL, 44, 'San Juan', 0),
-	(97, 'as', 'as', '2016-01-14', 'asdasda', '5555', 'sdasd', 0, NULL, 44, 'San Juan', 0),
-	(98, 'as', 'as', '2016-01-14', 'asdasda', '5555', 'sdasd', 0, NULL, 44, 'San Juan', 0),
-	(99, 'as', 'as', '2016-01-14', 'asdasda', '5555', 'sdasd', 0, NULL, 44, 'San Juan', 0),
-	(100, 'as', 'as', '2016-01-14', 'asdasda', '5555', 'sdasd', 0, NULL, 44, 'San Juan', 0),
-	(101, 'as', 'as', '2016-01-14', 'asdasda', '5555', 'sdasd', 0, NULL, 44, 'San Juan', 0),
-	(102, 'as', 'as', '2016-01-14', 'asdasda', '5555', 'sdasd', 0, NULL, 44, 'San Juan', 0),
-	(103, 'as', 'as', '2016-01-14', 'asdasda', '5555', 'sdasd', 0, NULL, 44, 'San Juan', 0),
-	(104, 'as', 'as', '2016-01-14', 'asdasda', '5555', 'sdasd', 0, NULL, 44, 'San Juan', 0),
-	(105, 'as', 'as', '2016-01-14', 'asdasda', '5555', 'sdasd', 0, NULL, 44, 'San Juan', 0),
-	(106, 'as', 'as', '2016-01-14', 'asdasda', '5555', 'sdasd', 0, NULL, 44, 'San Juan', 0),
-	(107, 'as', 'as', '2016-01-14', 'asdasda', '5555', 'sdasd', 0, NULL, 44, 'San Juan', 0),
-	(108, 'as', 'as', '2016-01-14', 'asdasda', '5555', 'sdasd', 0, NULL, 44, 'San Juan', 0),
-	(109, 'as', 'as', '2016-01-14', 'asdasda', '5555', 'sdasd', 0, NULL, 44, 'San Juan', 0),
-	(110, 'as', 'as', '2016-01-14', 'asdasda', '5555', 'sdasd', 0, NULL, 44, 'San Juan', 0),
-	(111, 'as', 'as', '2016-01-14', 'asdasda', '5555', 'sdasd', 0, NULL, 44, 'San Juan', 0),
-	(112, 'as', 'as', '2016-01-14', 'asdasda', '5555', 'sdasd', 0, NULL, 44, 'San Juan', 0),
-	(113, 'as', 'as', '2016-01-14', 'asdasda', '5555', 'sdasd', 0, NULL, 44, 'San Juan', 0),
-	(114, 'as', 'as', '2016-01-14', 'asdasda', '5555', 'sdasd', 0, NULL, 44, 'San Juan', 0),
-	(115, 'as', 'as', '2016-01-14', 'asdasda', '5555', 'sdasd', 0, NULL, 44, 'San Juan', 0),
-	(116, 'as', 'as', '2016-01-14', 'asdasda', '5555', 'sdasd', 0, NULL, 44, 'San Juan', 0),
-	(117, 'as', 'as', '2016-01-14', 'asdasda', '5555', 'sdasd', 0, NULL, 44, 'San Juan', 0),
-	(118, 'as', 'as', '2016-01-14', 'asdasda', '5555', 'sdasd', 0, NULL, 44, 'San Juan', 0),
-	(119, 'as', 'as', '2016-01-14', 'asdasda', '5555', 'sdasd', 0, NULL, 44, 'San Juan', 0),
-	(120, 'as', 'as', '2016-01-14', 'asdasda', '5555', 'sdasd', 0, NULL, 44, 'San Juan', 0),
-	(121, 'as', 'as', '2016-01-14', 'asdasda', '5555', 'sdasd', 0, NULL, 44, 'San Juan', 0),
-	(122, 'as', 'as', '2016-01-14', 'asdasda', '5555', 'sdasd', 0, NULL, 44, 'San Juan', 0),
-	(123, 'as', 'as', '2016-01-14', 'asdasda', '5555', 'sdasd', 0, NULL, 44, 'San Juan', 0),
-	(124, 'as', 'as', '2016-01-14', 'asdasda', '5555', 'sdasd', 0, NULL, 44, 'San Juan', 0),
-	(125, 'as', 'as', '2016-01-14', 'asdasda', '5555', 'sdasd', 0, NULL, 44, 'San Juan', 0),
-	(126, 'as', 'as', '2016-01-14', 'asdasda', '5555', 'sdasd', 0, NULL, 44, 'San Juan', 0),
-	(127, 'as', 'as', '2016-01-14', 'asdasda', '5555', 'sdasd', 0, NULL, 44, 'San Juan', 0),
-	(128, 'as', 'as', '2016-01-14', 'asdasda', '5555', 'sdasd', 0, NULL, 44, 'San Juan', 0),
-	(129, 'as', 'as', '2016-01-14', 'asdasda', '5555', 'sdasd', 0, NULL, 44, 'San Juan', 0),
-	(130, 'as', 'as', '2016-01-14', 'asdasda', '5555', 'sdasd', 0, NULL, 44, 'San Juan', 0),
-	(131, 'as', 'as', '2016-01-14', 'asdasda', '5555', 'sdasd', 0, NULL, 44, 'San Juan', 0),
-	(132, 'as', 'as', '2016-01-14', 'asdasda', '5555', 'sdasd', 0, NULL, 44, 'San Juan', 0),
-	(133, 'as', 'as', '2016-01-14', 'asdasda', '5555', 'sdasd', 0, NULL, 44, 'San Juan', 0),
-	(134, 'as', 'as', '2016-01-14', 'asdasda', '5555', 'sdasd', 0, NULL, 44, 'San Juan', 0),
-	(135, 'as', 'as', '2016-01-14', 'asdasda', '5555', 'sdasd', 0, NULL, 44, 'San Juan', 0),
-	(136, 'as', 'as', '2016-01-14', 'asdasda', '5555', 'sdasd', 0, NULL, 44, 'San Juan', 0),
-	(137, 'as', 'as', '2016-01-14', 'asdasda', '5555', 'sdasd', 0, NULL, 44, 'San Juan', 0),
-	(138, 'as', 'as', '2016-01-14', 'asdasda', '5555', 'sdasd', 0, NULL, 44, 'San Juan', 0),
-	(139, 'as', 'as', '2016-01-14', 'asdasda', '5555', 'sdasd', 0, NULL, 44, 'San Juan', 0),
-	(140, 'as', 'as', '2016-01-14', 'asdasda', '5555', 'sdasd', 0, NULL, 44, 'San Juan', 0),
-	(141, 'as', 'as', '2016-01-14', 'asdasda', '5555', 'sdasd', 0, NULL, 44, 'San Juan', 0),
-	(142, 'as', 'as', '2016-01-14', 'asdasda', '5555', 'sdasd', 0, NULL, 44, 'San Juan', 0),
-	(143, 'as', 'as', '2016-01-14', 'asdasda', '5555', 'sdasd', 0, NULL, 44, 'San Juan', 0),
-	(144, 'as', 'as', '2016-01-14', 'asdasda', '5555', 'sdasd', 0, NULL, 44, 'San Juan', 0),
-	(145, 'as', 'as', '2016-01-14', 'asdasda', '5555', 'sdasd', 0, NULL, 44, 'San Juan', 0),
-	(146, 'as', 'as', '2016-01-14', 'asdasda', '5555', 'sdasd', 0, NULL, 44, 'San Juan', 0),
-	(147, 'as', 'as', '2016-01-14', 'asdasda', '5555', 'sdasd', 0, NULL, 44, 'San Juan', 0),
-	(148, 'as', 'as', '2016-01-14', 'asdasda', '5555', 'sdasd', 0, NULL, 44, 'San Juan', 0),
-	(149, 'as', 'as', '2016-01-14', 'asdasda', '5555', 'sdasd', 0, NULL, 44, 'San Juan', 0),
-	(150, 'as', 'as', '2016-01-14', 'asdasda', '5555', 'sdasd', 0, NULL, 44, 'San Juan', 0),
-	(151, 'as', 'as', '2016-01-14', 'asdasda', '5555', 'sdasd', 0, NULL, 44, 'San Juan', 0),
-	(152, 'as', 'as', '2016-01-14', 'asdasda', '5555', 'sdasd', 0, NULL, 44, 'San Juan', 0),
-	(153, 'as', 'as', '2016-01-14', 'asdasda', '5555', 'sdasd', 0, NULL, 44, 'San Juan', 0),
-	(154, 'as', 'as', '2016-01-14', 'asdasda', '5555', 'sdasd', 0, NULL, 44, 'San Juan', 0),
-	(155, 'as', 'as', '2016-01-14', 'asdasda', '5555', 'sdasd', 0, NULL, 44, 'San Juan', 0),
-	(156, 'as', 'as', '2016-01-14', 'asdasda', '5555', 'sdasd', 0, NULL, 44, 'San Juan', 0),
-	(157, 'as', 'as', '2016-01-14', 'asdasda', '5555', 'sdasd', 0, NULL, 44, 'San Juan', 0),
-	(158, 'as', 'as', '2016-01-14', 'asdasda', '5555', 'sdasd', 0, NULL, 44, 'San Juan', 0),
-	(159, 'as', 'as', '2016-01-14', 'asdasda', '5555', 'sdasd', 0, NULL, 44, 'San Juan', 0),
-	(160, 'as', 'as', '2016-01-14', 'asdasda', '5555', 'sdasd', 0, NULL, 44, 'San Juan', 0),
-	(161, 'as', 'as', '2016-01-14', 'asdasda', '5555', 'sdasd', 0, NULL, 44, 'San Juan', 0),
-	(162, 'as', 'as', '2016-01-14', 'asdasda', '5555', 'sdasd', 0, NULL, 44, 'San Juan', 0),
-	(163, 'as', 'as', '2016-01-14', 'asdasda', '5555', 'sdasd', 0, NULL, 44, 'San Juan', 0),
-	(165, 'asdad', 'asda', '2016-01-26', 'asda', '22223333', 'asdasdad@asdad.com', 0, NULL, 5456465, 'Río Negro', 1),
-	(166, 'test', 'test', '2016-01-13', 'asdsada', '33333', 'asdasdad@asdad.com', 0, NULL, 29878065, 'Neuquén', 1),
-	(169, 'ARJONA 5', 'MIGUEL 5', '2016-01-14', 'ASDASDAS', '34444', 'asdasdad@asdad.com', 0, NULL, 54545454, 'Neuquén', 1),
-	(170, 'add', 'add', '2016-01-21', 'ASDASDAS', '34444', 'asdasdad@asdad.com', 0, 169, 444444444, 'Neuquén', 0),
-	(171, 'gggg', 'gggggg', '2016-01-22', 'ASDASDAS', '344445555', 'asdasdad@asdad.com', 0, 169, 29878022, 'Neuquén', 0),
-	(172, 'sdasdasdad', 'asdasd', '2016-01-06', 'ASDASDAS', '34444', 'asdasdad@asdad.com', 0, 169, 5555555, 'Neuquén', 0),
-	(173, 'test', 'test', '2016-01-12', 'ASDASDAS', '34444', 'asdasdad@asdad.com', 0, 169, 334444444, 'Neuquén', 0),
-	(174, 'VALDEZ', 'JUNIOR', '2014-02-11', 'ASDASDAS', '34444', 'asdasdad@asdad.com', 0, 169, 29878889, 'Neuquén', 0),
-	(175, 'PEREZ', 'JUAN PEDRO', '1982-01-27', 'SD SDASDADADASD ASDADASDAD', '3815966987', '454545454@asda.com', 0, NULL, 29878065, 'Salta', 1),
-	(176, 'test 555', 'test nombre 555', '2016-01-05', 'asd asd asd as', '546546546', 'asdasdad@asdad.com', 1, NULL, NULL, 'Catamarca', 1),
-	(177, 'asdasd', 'asda', '2013-10-30', 'asdas asd asd', '546546545646', 'asdasdad@asdad.com', 1, NULL, 29878055, 'Buenos Aires', 1),
-	(178, 'ARJONA 100', 'MIGUEL 100', '2015-11-29', 'ASDAS AS DA', '546545646', 'asdasdad@asdad.com', 0, NULL, 29878065, 'Buenos Aires', 0),
-	(179, 'ARJONA 100', 'MIGUEL JR', '2016-12-30', 'ASDAS AS DA', '546545646', 'asdasdad@asdad.com', 0, 178, 33878065, 'Buenos Aires', 3),
-	(180, 'ARJONA 100', 'Jr uuuu', '2016-12-30', 'ASDAS AS DA', '546545646', 'asdasdad@asdad.com', 0, 178, 29878088, 'Catamarca', 6);
+INSERT INTO `paciente` (`paciente_id`, `apellido`, `nombre`, `fecha_nacimiento`, `domicilio`, `telefono`, `mail`, `coseguro`, `adherente_id`, `dni`, `provincia`, `parentesco`, `zona_afiliacion`) VALUES
+	(35, 'ARJONA', 'MIGUEL ANGEL', '2015-01-01', 'Descripcion Domicilio', '4930332', 'arjonamiguel@gmail.com', 0, NULL, 29878065, 'Tucumán', 1, NULL),
+	(37, 'asdasd', 'asda', '2015-01-01', 'Descripcion Domicilio', '4930332', 'arjonamiguel@gmail.com', 0, 35, 654654, 'Tucumán', 0, NULL),
+	(38, 'asdasd', 'asda', '2015-01-01', 'Descripcion Domicilio', '4930332', 'arjonamiguel@gmail.com', 0, 35, 654654, 'Tucumán', 0, NULL),
+	(39, 'as', 'as', '2016-01-14', 'asdasda', '5555', 'sdasd', 0, NULL, 44, 'San Juan', 0, NULL),
+	(40, 'as', 'as', '2016-01-14', 'asdasda', '5555', 'sdasd', 0, NULL, 44, 'San Juan', 0, NULL),
+	(41, 'as', 'as', '2016-01-14', 'asdasda', '5555', 'sdasd', 0, NULL, 44, 'San Juan', 0, NULL),
+	(42, 'as', 'as', '2016-01-14', 'asdasda', '5555', 'sdasd', 0, NULL, 44, 'San Juan', 0, NULL),
+	(43, 'as', 'as', '2016-01-14', 'asdasda', '5555', 'sdasd', 0, NULL, 44, 'San Juan', 0, NULL),
+	(44, 'as', 'as', '2016-01-14', 'asdasda', '5555', 'sdasd', 0, NULL, 44, 'San Juan', 0, NULL),
+	(45, 'as', 'as', '2016-01-14', 'asdasda', '5555', 'sdasd', 0, NULL, 44, 'San Juan', 0, NULL),
+	(46, 'as', 'as', '2016-01-14', 'asdasda', '5555', 'sdasd', 0, NULL, 44, 'San Juan', 0, NULL),
+	(47, 'as', 'as', '2016-01-14', 'asdasda', '5555', 'sdasd', 0, NULL, 44, 'San Juan', 0, NULL),
+	(48, 'as', 'as', '2016-01-14', 'asdasda', '5555', 'sdasd', 0, NULL, 44, 'San Juan', 0, NULL),
+	(49, 'as', 'as', '2016-01-14', 'asdasda', '5555', 'sdasd', 0, NULL, 44, 'San Juan', 0, NULL),
+	(50, 'as', 'as', '2016-01-14', 'asdasda', '5555', 'sdasd', 0, NULL, 44, 'San Juan', 0, NULL),
+	(51, 'as', 'as', '2016-01-14', 'asdasda', '5555', 'sdasd', 0, NULL, 44, 'San Juan', 0, NULL),
+	(52, 'as', 'as', '2016-01-14', 'asdasda', '5555', 'sdasd', 0, NULL, 44, 'San Juan', 0, NULL),
+	(53, 'as', 'as', '2016-01-14', 'asdasda', '5555', 'sdasd', 0, NULL, 44, 'San Juan', 0, NULL),
+	(54, 'as', 'as', '2016-01-14', 'asdasda', '5555', 'sdasd', 0, NULL, 44, 'San Juan', 0, NULL),
+	(55, 'as', 'as', '2016-01-14', 'asdasda', '5555', 'sdasd', 0, NULL, 44, 'San Juan', 0, NULL),
+	(56, 'as', 'as', '2016-01-14', 'asdasda', '5555', 'sdasd', 0, NULL, 44, 'San Juan', 0, NULL),
+	(57, 'as', 'as', '2016-01-14', 'asdasda', '5555', 'sdasd', 0, NULL, 44, 'San Juan', 0, NULL),
+	(58, 'as', 'as', '2016-01-14', 'asdasda', '5555', 'sdasd', 0, NULL, 44, 'San Juan', 0, NULL),
+	(59, 'as', 'as', '2016-01-14', 'asdasda', '5555', 'sdasd', 0, NULL, 44, 'San Juan', 0, NULL),
+	(60, 'as', 'as', '2016-01-14', 'asdasda', '5555', 'sdasd', 0, NULL, 44, 'San Juan', 0, NULL),
+	(61, 'as', 'as', '2016-01-14', 'asdasda', '5555', 'sdasd', 0, NULL, 44, 'San Juan', 0, NULL),
+	(62, 'as', 'as', '2016-01-14', 'asdasda', '5555', 'sdasd', 0, NULL, 44, 'San Juan', 0, NULL),
+	(63, 'as', 'as', '2016-01-14', 'asdasda', '5555', 'sdasd', 0, NULL, 44, 'San Juan', 0, NULL),
+	(64, 'as', 'as', '2016-01-14', 'asdasda', '5555', 'sdasd', 0, NULL, 44, 'San Juan', 0, NULL),
+	(65, 'as', 'as', '2016-01-14', 'asdasda', '5555', 'sdasd', 0, NULL, 44, 'San Juan', 0, NULL),
+	(66, 'as', 'as', '2016-01-14', 'asdasda', '5555', 'sdasd', 0, NULL, 44, 'San Juan', 0, NULL),
+	(67, 'as', 'as', '2016-01-14', 'asdasda', '5555', 'sdasd', 0, NULL, 44, 'San Juan', 0, NULL),
+	(68, 'as', 'as', '2016-01-14', 'asdasda', '5555', 'sdasd', 0, NULL, 44, 'San Juan', 0, NULL),
+	(69, 'as', 'as', '2016-01-14', 'asdasda', '5555', 'sdasd', 0, NULL, 44, 'San Juan', 0, NULL),
+	(70, 'as', 'as', '2016-01-14', 'asdasda', '5555', 'sdasd', 0, NULL, 44, 'San Juan', 0, NULL),
+	(71, 'as', 'as', '2016-01-14', 'asdasda', '5555', 'sdasd', 0, NULL, 44, 'San Juan', 0, NULL),
+	(72, 'as', 'as', '2016-01-14', 'asdasda', '5555', 'sdasd', 0, NULL, 44, 'San Juan', 0, NULL),
+	(73, 'as', 'as', '2016-01-14', 'asdasda', '5555', 'sdasd', 0, NULL, 44, 'San Juan', 0, NULL),
+	(74, 'as', 'as', '2016-01-14', 'asdasda', '5555', 'sdasd', 0, NULL, 44, 'San Juan', 0, NULL),
+	(75, 'as', 'as', '2016-01-14', 'asdasda', '5555', 'sdasd', 0, NULL, 44, 'San Juan', 0, NULL),
+	(76, 'as', 'as', '2016-01-14', 'asdasda', '5555', 'sdasd', 0, NULL, 44, 'San Juan', 0, NULL),
+	(77, 'as', 'as', '2016-01-14', 'asdasda', '5555', 'sdasd', 0, NULL, 44, 'San Juan', 0, NULL),
+	(78, 'as', 'as', '2016-01-14', 'asdasda', '5555', 'sdasd', 0, NULL, 44, 'San Juan', 0, NULL),
+	(79, 'as', 'as', '2016-01-14', 'asdasda', '5555', 'sdasd', 0, NULL, 44, 'San Juan', 0, NULL),
+	(80, 'as', 'as', '2016-01-14', 'asdasda', '5555', 'sdasd', 0, NULL, 44, 'San Juan', 0, NULL),
+	(81, 'as', 'as', '2016-01-14', 'asdasda', '5555', 'sdasd', 0, NULL, 44, 'San Juan', 0, NULL),
+	(82, 'as', 'as', '2016-01-14', 'asdasda', '5555', 'sdasd', 0, NULL, 44, 'San Juan', 0, NULL),
+	(83, 'as', 'as', '2016-01-14', 'asdasda', '5555', 'sdasd', 0, NULL, 44, 'San Juan', 0, NULL),
+	(84, 'as', 'as', '2016-01-14', 'asdasda', '5555', 'sdasd', 0, NULL, 44, 'San Juan', 0, NULL),
+	(85, 'as', 'as', '2016-01-14', 'asdasda', '5555', 'sdasd', 0, NULL, 44, 'San Juan', 0, NULL),
+	(86, 'as', 'as', '2016-01-14', 'asdasda', '5555', 'sdasd', 0, NULL, 44, 'San Juan', 0, NULL),
+	(87, 'as', 'as', '2016-01-14', 'asdasda', '5555', 'sdasd', 0, NULL, 44, 'San Juan', 0, NULL),
+	(88, 'as', 'as', '2016-01-14', 'asdasda', '5555', 'sdasd', 0, NULL, 44, 'San Juan', 0, NULL),
+	(89, 'as', 'as', '2016-01-14', 'asdasda', '5555', 'sdasd', 0, NULL, 44, 'San Juan', 0, NULL),
+	(90, 'as', 'as', '2016-01-14', 'asdasda', '5555', 'sdasd', 0, NULL, 44, 'San Juan', 0, NULL),
+	(91, 'as', 'as', '2016-01-14', 'asdasda', '5555', 'sdasd', 0, NULL, 44, 'San Juan', 0, NULL),
+	(92, 'as', 'as', '2016-01-14', 'asdasda', '5555', 'sdasd', 0, NULL, 44, 'San Juan', 0, NULL),
+	(93, 'as', 'as', '2016-01-14', 'asdasda', '5555', 'sdasd', 0, NULL, 44, 'San Juan', 0, NULL),
+	(94, 'as', 'as', '2016-01-14', 'asdasda', '5555', 'sdasd', 0, NULL, 44, 'San Juan', 0, NULL),
+	(95, 'as', 'as', '2016-01-14', 'asdasda', '5555', 'sdasd', 0, NULL, 44, 'San Juan', 0, NULL),
+	(96, 'as', 'as', '2016-01-14', 'asdasda', '5555', 'sdasd', 0, NULL, 44, 'San Juan', 0, NULL),
+	(97, 'as', 'as', '2016-01-14', 'asdasda', '5555', 'sdasd', 0, NULL, 44, 'San Juan', 0, NULL),
+	(98, 'as', 'as', '2016-01-14', 'asdasda', '5555', 'sdasd', 0, NULL, 44, 'San Juan', 0, NULL),
+	(99, 'as', 'as', '2016-01-14', 'asdasda', '5555', 'sdasd', 0, NULL, 44, 'San Juan', 0, NULL),
+	(100, 'as', 'as', '2016-01-14', 'asdasda', '5555', 'sdasd', 0, NULL, 44, 'San Juan', 0, NULL),
+	(101, 'as', 'as', '2016-01-14', 'asdasda', '5555', 'sdasd', 0, NULL, 44, 'San Juan', 0, NULL),
+	(102, 'as', 'as', '2016-01-14', 'asdasda', '5555', 'sdasd', 0, NULL, 44, 'San Juan', 0, NULL),
+	(103, 'as', 'as', '2016-01-14', 'asdasda', '5555', 'sdasd', 0, NULL, 44, 'San Juan', 0, NULL),
+	(104, 'as', 'as', '2016-01-14', 'asdasda', '5555', 'sdasd', 0, NULL, 44, 'San Juan', 0, NULL),
+	(105, 'as', 'as', '2016-01-14', 'asdasda', '5555', 'sdasd', 0, NULL, 44, 'San Juan', 0, NULL),
+	(106, 'as', 'as', '2016-01-14', 'asdasda', '5555', 'sdasd', 0, NULL, 44, 'San Juan', 0, NULL),
+	(107, 'as', 'as', '2016-01-14', 'asdasda', '5555', 'sdasd', 0, NULL, 44, 'San Juan', 0, NULL),
+	(108, 'as', 'as', '2016-01-14', 'asdasda', '5555', 'sdasd', 0, NULL, 44, 'San Juan', 0, NULL),
+	(109, 'as', 'as', '2016-01-14', 'asdasda', '5555', 'sdasd', 0, NULL, 44, 'San Juan', 0, NULL),
+	(110, 'as', 'as', '2016-01-14', 'asdasda', '5555', 'sdasd', 0, NULL, 44, 'San Juan', 0, NULL),
+	(111, 'as', 'as', '2016-01-14', 'asdasda', '5555', 'sdasd', 0, NULL, 44, 'San Juan', 0, NULL),
+	(112, 'as', 'as', '2016-01-14', 'asdasda', '5555', 'sdasd', 0, NULL, 44, 'San Juan', 0, NULL),
+	(113, 'as', 'as', '2016-01-14', 'asdasda', '5555', 'sdasd', 0, NULL, 44, 'San Juan', 0, NULL),
+	(114, 'as', 'as', '2016-01-14', 'asdasda', '5555', 'sdasd', 0, NULL, 44, 'San Juan', 0, NULL),
+	(115, 'as', 'as', '2016-01-14', 'asdasda', '5555', 'sdasd', 0, NULL, 44, 'San Juan', 0, NULL),
+	(116, 'as', 'as', '2016-01-14', 'asdasda', '5555', 'sdasd', 0, NULL, 44, 'San Juan', 0, NULL),
+	(117, 'as', 'as', '2016-01-14', 'asdasda', '5555', 'sdasd', 0, NULL, 44, 'San Juan', 0, NULL),
+	(118, 'as', 'as', '2016-01-14', 'asdasda', '5555', 'sdasd', 0, NULL, 44, 'San Juan', 0, NULL),
+	(119, 'as', 'as', '2016-01-14', 'asdasda', '5555', 'sdasd', 0, NULL, 44, 'San Juan', 0, NULL),
+	(120, 'as', 'as', '2016-01-14', 'asdasda', '5555', 'sdasd', 0, NULL, 44, 'San Juan', 0, NULL),
+	(121, 'as', 'as', '2016-01-14', 'asdasda', '5555', 'sdasd', 0, NULL, 44, 'San Juan', 0, NULL),
+	(122, 'as', 'as', '2016-01-14', 'asdasda', '5555', 'sdasd', 0, NULL, 44, 'San Juan', 0, NULL),
+	(123, 'as', 'as', '2016-01-14', 'asdasda', '5555', 'sdasd', 0, NULL, 44, 'San Juan', 0, NULL),
+	(124, 'as', 'as', '2016-01-14', 'asdasda', '5555', 'sdasd', 0, NULL, 44, 'San Juan', 0, NULL),
+	(125, 'as', 'as', '2016-01-14', 'asdasda', '5555', 'sdasd', 0, NULL, 44, 'San Juan', 0, NULL),
+	(126, 'as', 'as', '2016-01-14', 'asdasda', '5555', 'sdasd', 0, NULL, 44, 'San Juan', 0, NULL),
+	(127, 'as', 'as', '2016-01-14', 'asdasda', '5555', 'sdasd', 0, NULL, 44, 'San Juan', 0, NULL),
+	(128, 'as', 'as', '2016-01-14', 'asdasda', '5555', 'sdasd', 0, NULL, 44, 'San Juan', 0, NULL),
+	(129, 'as', 'as', '2016-01-14', 'asdasda', '5555', 'sdasd', 0, NULL, 44, 'San Juan', 0, NULL),
+	(130, 'as', 'as', '2016-01-14', 'asdasda', '5555', 'sdasd', 0, NULL, 44, 'San Juan', 0, NULL),
+	(131, 'as', 'as', '2016-01-14', 'asdasda', '5555', 'sdasd', 0, NULL, 44, 'San Juan', 0, NULL),
+	(132, 'as', 'as', '2016-01-14', 'asdasda', '5555', 'sdasd', 0, NULL, 44, 'San Juan', 0, NULL),
+	(133, 'as', 'as', '2016-01-14', 'asdasda', '5555', 'sdasd', 0, NULL, 44, 'San Juan', 0, NULL),
+	(134, 'as', 'as', '2016-01-14', 'asdasda', '5555', 'sdasd', 0, NULL, 44, 'San Juan', 0, NULL),
+	(135, 'as', 'as', '2016-01-14', 'asdasda', '5555', 'sdasd', 0, NULL, 44, 'San Juan', 0, NULL),
+	(136, 'as', 'as', '2016-01-14', 'asdasda', '5555', 'sdasd', 0, NULL, 44, 'San Juan', 0, NULL),
+	(137, 'as', 'as', '2016-01-14', 'asdasda', '5555', 'sdasd', 0, NULL, 44, 'San Juan', 0, NULL),
+	(138, 'as', 'as', '2016-01-14', 'asdasda', '5555', 'sdasd', 0, NULL, 44, 'San Juan', 0, NULL),
+	(139, 'as', 'as', '2016-01-14', 'asdasda', '5555', 'sdasd', 0, NULL, 44, 'San Juan', 0, NULL),
+	(140, 'as', 'as', '2016-01-14', 'asdasda', '5555', 'sdasd', 0, NULL, 44, 'San Juan', 0, NULL),
+	(141, 'as', 'as', '2016-01-14', 'asdasda', '5555', 'sdasd', 0, NULL, 44, 'San Juan', 0, NULL),
+	(142, 'as', 'as', '2016-01-14', 'asdasda', '5555', 'sdasd', 0, NULL, 44, 'San Juan', 0, NULL),
+	(143, 'as', 'as', '2016-01-14', 'asdasda', '5555', 'sdasd', 0, NULL, 44, 'San Juan', 0, NULL),
+	(144, 'as', 'as', '2016-01-14', 'asdasda', '5555', 'sdasd', 0, NULL, 44, 'San Juan', 0, NULL),
+	(145, 'as', 'as', '2016-01-14', 'asdasda', '5555', 'sdasd', 0, NULL, 44, 'San Juan', 0, NULL),
+	(146, 'as', 'as', '2016-01-14', 'asdasda', '5555', 'sdasd', 0, NULL, 44, 'San Juan', 0, NULL),
+	(147, 'as', 'as', '2016-01-14', 'asdasda', '5555', 'sdasd', 0, NULL, 44, 'San Juan', 0, NULL),
+	(148, 'as', 'as', '2016-01-14', 'asdasda', '5555', 'sdasd', 0, NULL, 44, 'San Juan', 0, NULL),
+	(149, 'as', 'as', '2016-01-14', 'asdasda', '5555', 'sdasd', 0, NULL, 44, 'San Juan', 0, NULL),
+	(150, 'as', 'as', '2016-01-14', 'asdasda', '5555', 'sdasd', 0, NULL, 44, 'San Juan', 0, NULL),
+	(151, 'as', 'as', '2016-01-14', 'asdasda', '5555', 'sdasd', 0, NULL, 44, 'San Juan', 0, NULL),
+	(152, 'as', 'as', '2016-01-14', 'asdasda', '5555', 'sdasd', 0, NULL, 44, 'San Juan', 0, NULL),
+	(153, 'as', 'as', '2016-01-14', 'asdasda', '5555', 'sdasd', 0, NULL, 44, 'San Juan', 0, NULL),
+	(154, 'as', 'as', '2016-01-14', 'asdasda', '5555', 'sdasd', 0, NULL, 44, 'San Juan', 0, NULL),
+	(155, 'as', 'as', '2016-01-14', 'asdasda', '5555', 'sdasd', 0, NULL, 44, 'San Juan', 0, NULL),
+	(156, 'as', 'as', '2016-01-14', 'asdasda', '5555', 'sdasd', 0, NULL, 44, 'San Juan', 0, NULL),
+	(157, 'as', 'as', '2016-01-14', 'asdasda', '5555', 'sdasd', 0, NULL, 44, 'San Juan', 0, NULL),
+	(158, 'as', 'as', '2016-01-14', 'asdasda', '5555', 'sdasd', 0, NULL, 44, 'San Juan', 0, NULL),
+	(159, 'as', 'as', '2016-01-14', 'asdasda', '5555', 'sdasd', 0, NULL, 44, 'San Juan', 0, NULL),
+	(160, 'as', 'as', '2016-01-14', 'asdasda', '5555', 'sdasd', 0, NULL, 44, 'San Juan', 0, NULL),
+	(161, 'as', 'as', '2016-01-14', 'asdasda', '5555', 'sdasd', 0, NULL, 44, 'San Juan', 0, NULL),
+	(162, 'as', 'as', '2016-01-14', 'asdasda', '5555', 'sdasd', 0, NULL, 44, 'San Juan', 0, NULL),
+	(163, 'as', 'as', '2016-01-14', 'asdasda', '5555', 'sdasd', 0, NULL, 44, 'San Juan', 0, NULL),
+	(165, 'asdad', 'asda', '2016-01-26', 'asda', '22223333', 'asdasdad@asdad.com', 0, NULL, 5456465, 'Río Negro', 1, NULL),
+	(166, 'test', 'test', '2016-01-13', 'asdsada', '33333', 'asdasdad@asdad.com', 0, NULL, 29878065, 'Neuquén', 1, NULL),
+	(169, 'ARJONA 5', 'MIGUEL 5', '2016-01-14', 'ASDASDAS', '34444', 'asdasdad@asdad.com', 0, NULL, 54545454, 'Neuquén', 1, NULL),
+	(170, 'add', 'add', '2016-01-21', 'ASDASDAS', '34444', 'asdasdad@asdad.com', 0, 169, 444444444, 'Neuquén', 0, NULL),
+	(171, 'gggg', 'gggggg', '2016-01-22', 'ASDASDAS', '344445555', 'asdasdad@asdad.com', 0, 169, 29878022, 'Neuquén', 0, NULL),
+	(172, 'sdasdasdad', 'asdasd', '2016-01-06', 'ASDASDAS', '34444', 'asdasdad@asdad.com', 0, 169, 5555555, 'Neuquén', 0, NULL),
+	(173, 'test', 'test', '2016-01-12', 'ASDASDAS', '34444', 'asdasdad@asdad.com', 0, 169, 334444444, 'Neuquén', 0, NULL),
+	(174, 'VALDEZ', 'JUNIOR', '2014-02-11', 'ASDASDAS', '34444', 'asdasdad@asdad.com', 0, 169, 29878889, 'Neuquén', 3, NULL),
+	(175, 'PEREZ', 'JUAN PEDRO', '1982-01-27', 'SD SDASDADADASD ASDADASDAD', '3815966987', '454545454@asda.com', 0, NULL, 29878065, 'Salta', 1, NULL),
+	(176, 'test 555', 'test nombre 555', '2016-01-05', 'asd asd asd as', '546546546', 'asdasdad@asdad.com', 1, NULL, NULL, 'Catamarca', 1, NULL),
+	(177, 'asdasd', 'asda', '2013-10-30', 'asdas asd asd', '546546545646', 'asdasdad@asdad.com', 1, NULL, 29878055, 'Buenos Aires', 1, NULL),
+	(178, 'ARJONA 100', 'MIGUEL 100', '2015-11-29', 'ASDAS AS DA', '546545646', 'asdasdad@asdad.com', 0, NULL, 29878065, 'Buenos Aires', 0, NULL),
+	(179, 'ARJONA 100', 'MIGUEL JR', '2016-12-30', 'ASDAS AS DA', '546545646', 'asdasdad@asdad.com', 0, 178, 33878065, 'Buenos Aires', 3, NULL),
+	(180, 'ARJONA 100', 'Jr uuuu', '2016-12-30', 'ASDAS AS DA', '546545646', 'asdasdad@asdad.com', 0, 178, 29878088, 'Catamarca', 6, NULL);
 /*!40000 ALTER TABLE `paciente` ENABLE KEYS */;
 
 
@@ -411,7 +440,7 @@ CREATE TABLE IF NOT EXISTS `paciente_obrasocial` (
   KEY `FK_paciente_obrasocial_paciente` (`paciente_id`),
   CONSTRAINT `FK_paciente_obrasocial_obrasocial` FOREIGN KEY (`obrasocial_id`) REFERENCES `obrasocial` (`obrasocial_id`),
   CONSTRAINT `FK_paciente_obrasocial_paciente` FOREIGN KEY (`paciente_id`) REFERENCES `paciente` (`paciente_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=106 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+) ENGINE=InnoDB AUTO_INCREMENT=107 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 -- Volcando datos para la tabla nuova.paciente_obrasocial: ~17 rows (aproximadamente)
 DELETE FROM `paciente_obrasocial`;
@@ -428,13 +457,13 @@ INSERT INTO `paciente_obrasocial` (`paciente_obrasocial_id`, `nro_credencial`, `
 	(85, '666666666667', 1, 12, 171, '2016-01-26'),
 	(88, '42323232323', 0, 12, 173, '2016-01-26'),
 	(89, '4444444444444', 1, 12, 172, '2016-01-26'),
-	(90, '432424242342342', 0, 12, 174, '2016-01-26'),
 	(92, '5555-4444-8888-9999', 1, 2, 175, '2016-01-28'),
 	(93, '32342432', 1, 11, 176, '2016-01-28'),
 	(94, '332 423 4232', 1, 14, 177, '2016-01-28'),
 	(98, '5555-4444-8888-9999', 1, 13, 178, '2016-01-29'),
 	(104, '5555-4444-8888-9999', 1, 13, 179, '2016-01-29'),
-	(105, '5555-4444-8888-9933', 1, 13, 180, '2016-01-29');
+	(105, '5555-4444-8888-9933', 1, 13, 180, '2016-01-29'),
+	(106, '432424242342342', 0, 12, 174, '2016-02-03');
 /*!40000 ALTER TABLE `paciente_obrasocial` ENABLE KEYS */;
 
 
@@ -447,7 +476,7 @@ CREATE TABLE IF NOT EXISTS `practica` (
   KEY `practica_id` (`practica_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
--- Volcando datos para la tabla nuova.practica: ~8 rows (aproximadamente)
+-- Volcando datos para la tabla nuova.practica: ~10 rows (aproximadamente)
 DELETE FROM `practica`;
 /*!40000 ALTER TABLE `practica` DISABLE KEYS */;
 INSERT INTO `practica` (`practica_id`, `codigo`, `nombre`) VALUES
@@ -475,7 +504,7 @@ CREATE TABLE IF NOT EXISTS `prestadores` (
   KEY `prestador_id` (`prestador_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
--- Volcando datos para la tabla nuova.prestadores: ~2 rows (aproximadamente)
+-- Volcando datos para la tabla nuova.prestadores: ~9 rows (aproximadamente)
 DELETE FROM `prestadores`;
 /*!40000 ALTER TABLE `prestadores` DISABLE KEYS */;
 INSERT INTO `prestadores` (`prestador_id`, `nombre`, `domicilio`, `telefono`, `provincia`) VALUES

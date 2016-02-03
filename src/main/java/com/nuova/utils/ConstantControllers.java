@@ -63,6 +63,8 @@ public class ConstantControllers {
     public final static String ADD_ORDEN = "/addOrden";
     public final static String DELETE_ORDEN = "/deleteOrden";
     public final static String EDIT_ORDEN = "/editOrden";
+    public final static String TIPO_ORDEN = "/tipoOrden/{pacienteId}";
+    public final static String REDIRECT_ORDEN = "/redirectOrden";
     public final static String AJAX_GET_ORDENES_PAGINADOS = "/ajaxGetOrdenesPaginados";
     public final static String AJAX_GET_SEARCH_ORDENES_PAGINADOS = "/ajaxGetSearchOrdenesPaginados";
 

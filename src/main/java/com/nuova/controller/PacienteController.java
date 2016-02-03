@@ -21,11 +21,14 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.nuova.dto.ComboItemDTO;
 import com.nuova.dto.ObraSocialDTO;
+import com.nuova.dto.OrdenTipoDTO;
 import com.nuova.dto.PacienteDTO;
 import com.nuova.model.Obrasocial;
+import com.nuova.model.OrdenTipo;
 import com.nuova.model.Paciente;
 import com.nuova.model.PacienteObrasocial;
 import com.nuova.service.ObraSocialManager;
+import com.nuova.service.OrdenManager;
 import com.nuova.service.PacienteManager;
 import com.nuova.utils.ConstantControllers;
 import com.nuova.utils.ConstantRedirect;
@@ -37,6 +40,22 @@ public class PacienteController {
     PacienteManager pacienteManager;
     @Autowired
     ObraSocialManager obrasocialManager;
+    @Autowired
+    OrdenManager ordenManager;
+
+    @RequestMapping(value = ConstantControllers.TIPO_ORDEN, method = RequestMethod.GET)
+    public String tipoOrden(ModelMap map,
+            @PathVariable("pacienteId") Integer pacienteId) {
+        List<OrdenTipo> ordenestipo = ordenManager.finAllOrdenTipo();
+        Paciente paciente = pacienteManager.fin1dPacienteById(pacienteId);
+        OrdenTipoDTO ordenTipo = new OrdenTipoDTO();
+        ordenTipo.setPacienteId(paciente.getPacienteId());
+
+        map.addAttribute("ordenestipo", getOrdenesTipoDTO(ordenestipo));
+        map.addAttribute("paciente", transformPacienteToDto(paciente));
+        map.addAttribute("ordenTipo", ordenTipo);
+        return ConstantRedirect.VIEW_FORM_TIPO_ORDEN;
+    }
 
     @RequestMapping(value = ConstantControllers.FORM_ADD_PACIENTE, method = RequestMethod.GET)
     public String formAddPaciente(ModelMap map) {
@@ -237,6 +256,10 @@ public class PacienteController {
         }
 
         dto.setParentesco(p.getParentesco().intValue());
+        for (ComboItemDTO item : Util.getParentescos()) {
+            if (dto.getParentesco() == Integer.valueOf(item.getId()).intValue())
+                dto.setParentescoDescription(item.getValue());
+        }
 
         // if (p.getTitular() != null) {
         // dto.setTitular(p.getTitular().intValue() == 1 ? true : false);
@@ -343,6 +366,27 @@ public class PacienteController {
 
         return paciente;
 
+    }
+
+    private OrdenTipoDTO transformOrdenTipoToDto(OrdenTipo ot) {
+        OrdenTipoDTO retorno = new OrdenTipoDTO();
+        retorno.setOrdenTipoId(ot.getOrdenTipoId());
+        retorno.setNombre(ot.getNombre());
+        retorno.setMonto1(ot.getMonto1());
+        retorno.setMonto2(ot.getMonto2());
+        retorno.setMonto3(ot.getMonto3());
+        retorno.setCodigo(ot.getCodigo());
+
+        return retorno;
+    }
+
+    private List<OrdenTipoDTO> getOrdenesTipoDTO(List<OrdenTipo> list) {
+        List<OrdenTipoDTO> retorno = new ArrayList<OrdenTipoDTO>();
+        for (OrdenTipo ot : list) {
+            retorno.add(transformOrdenTipoToDto(ot));
+        }
+
+        return retorno;
     }
 
 }

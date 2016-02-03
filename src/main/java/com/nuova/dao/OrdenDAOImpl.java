@@ -12,6 +12,7 @@ import org.springframework.stereotype.Repository;
 
 import com.nuova.dto.OrdenAlarmaDTO;
 import com.nuova.model.Orden;
+import com.nuova.model.OrdenTipo;
 
 @Repository
 public class OrdenDAOImpl implements OrdenDAO {
@@ -78,6 +79,19 @@ public class OrdenDAOImpl implements OrdenDAO {
                 .createQuery(" SELECT NEW com.nuova.dto.OrdenAlarmaDTO(COUNT(o.estado) , o.estado) "
                         + " FROM Orden o "
                         + " GROUP BY o.estado").list();
+    }
+
+    @SuppressWarnings("unchecked")
+    public List<OrdenTipo> finAllOrdenTipo() {
+        return this.sessionFactory.getCurrentSession().createQuery("FROM OrdenTipo").list();
+    }
+
+    public OrdenTipo findOrdenTipoByCodigo(Integer codigo) {
+        return (OrdenTipo) this.sessionFactory.getCurrentSession()
+                .createQuery(" SELECT ot "
+                        + " FROM OrdenTipo ot "
+                        + " WHERE ot.codigo = " + codigo
+                ).list().get(0);
     }
 
 }

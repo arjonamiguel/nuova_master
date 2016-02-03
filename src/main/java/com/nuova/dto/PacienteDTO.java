@@ -236,22 +236,16 @@ public class PacienteDTO {
 
     public String getAcciones() {
         String botonEdit = "<a class='btn btn-info btn-xs' href='formEditPaciente/" + getPacienteId()
-                + "'><span class='icon icon-edit'></span>editar</a>&nbsp;";
+                + "'><span class='icon icon-edit'></span>Editar</a>&nbsp;";
 
-        String botonPractica = "<a class='btn btn-success btn-xs' href='formAddOrden/" + getPacienteId()
-                + "'><span class='icon icon-plus-sign'></span>Practica</a>&nbsp;";
-
-        String botonConsulta = "<a class='btn btn-success btn-xs' href='formAddConsulta/" + getPacienteId()
-                + "'><span class='icon icon-plus-sign'></span>Consulta</a>&nbsp;";
-
-        String botonConsultaOdontologica = "<a class='btn btn-success btn-xs' href='formAddConsultaOdontologica/"
+        String botonTipoOrden = "<a class='btn btn-success btn-xs' href='tipoOrden/"
                 + getPacienteId()
-                + "'><span class='icon icon-plus-sign'></span>Odontologia</a>&nbsp;";
+                + "'><span class='icon icon-plus-sign'></span>Orden</a>&nbsp;";
 
         String botonDelete = "<a class='btn btn-danger btn-xs' href='formDeletePaciente/" + getPacienteId()
-                + "'><span class='icon icon-remove'></span>eliminar</a>";
+                + "'><span class='icon icon-remove'></span>Eliminar</a>";
 
-        this.acciones = botonEdit + botonPractica + botonConsulta + botonConsultaOdontologica + botonDelete;
+        this.acciones = botonEdit + botonTipoOrden + botonDelete;
 
         return acciones;
     }

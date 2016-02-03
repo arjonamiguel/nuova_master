@@ -15,6 +15,11 @@ import com.nuova.model.Paciente;
 import com.nuova.model.Practica;
 
 public class Util {
+
+    static public int ORDEN_CONSULTA = 100;
+    static public int ORDEN_ODONTOLOGICA = 101;
+    static public int ORDEN_PRACTICA = 102;
+
     static public String PARENTESCO_TITULAR = "[00]-Titular";
     static public String PARENTESCO_CONYUGE = "[01]-Esposo/a";
     static public String PARENTESCO_CONCUBINO = "[02]-Concubino/a";

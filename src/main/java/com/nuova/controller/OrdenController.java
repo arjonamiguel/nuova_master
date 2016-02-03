@@ -30,12 +30,14 @@ import com.nuova.dto.ObraSocialDTO;
 import com.nuova.dto.ObservacionesDTO;
 import com.nuova.dto.OrdenDTO;
 import com.nuova.dto.OrdenPracticaDTO;
+import com.nuova.dto.OrdenTipoDTO;
 import com.nuova.dto.OrdenWorkflowDTO;
 import com.nuova.dto.PacienteDTO;
 import com.nuova.model.Obrasocial;
 import com.nuova.model.Observaciones;
 import com.nuova.model.Orden;
 import com.nuova.model.OrdenPractica;
+import com.nuova.model.OrdenTipo;
 import com.nuova.model.OrdenWorkflow;
 import com.nuova.model.Paciente;
 import com.nuova.model.PacienteObrasocial;
@@ -69,6 +71,33 @@ public class OrdenController {
     private String pendiente = "<span class='label-warning' style='color:white;'>PENDIETE</span>";
     private String cerrada = "<span class='label-warning' style='color:white;'>CERRADA</span>";
     private String enobservacion = "<span class='label-warning' style='color:white;'>EN OBSERVACION</span>";
+
+    @RequestMapping(value = ConstantControllers.REDIRECT_ORDEN, method = RequestMethod.POST)
+    public String redirectOrden(ModelMap map,
+            @ModelAttribute(value = "ordenTipo") OrdenTipoDTO ordenTipo) {
+        String redirect = "";
+        int codigo = ordenTipo.getCodigo().intValue();
+        Paciente paciente = pacienteManager.fin1dPacienteById(ordenTipo.getPacienteId());
+        OrdenDTO ordenDto = new OrdenDTO();
+        ordenDto.setPaciente(transformPacienteToDto(paciente));
+
+        if (codigo == Util.ORDEN_CONSULTA) {
+            OrdenTipo ot = ordenManager.findOrdenTipoByCodigo(codigo);
+            map.addAttribute("ordenTipoDto", transformOrdenTipoToDto(ot));
+            redirect = ConstantRedirect.VIEW_FORM_CONSULTA_BY_PACIENTE;
+
+        } else if (codigo == Util.ORDEN_ODONTOLOGICA) {
+            OrdenTipo ot = ordenManager.findOrdenTipoByCodigo(codigo);
+            map.addAttribute("ordenTipoDto", transformOrdenTipoToDto(ot));
+            redirect = ConstantRedirect.VIEW_FORM_ODONTOLOGIA_BY_PACIENTE;
+
+        } else if (codigo == Util.ORDEN_PRACTICA) {
+            redirect = ConstantRedirect.VIEW_FORM_ADD_ORDEN_BY_PACIENTE;
+        }
+
+        map.addAttribute("ordenDto", ordenDto);
+        return redirect;
+    }
 
     @RequestMapping(value = ConstantControllers.FORM_ADD_ORDEN, method = RequestMethod.GET)
     public String formAddOrden(ModelMap map) {
@@ -475,6 +504,18 @@ public class OrdenController {
         // orden.setOrdenWorkflows(getOrdenWorkflowFromDto(dto.getOrdenWorkflows()));
 
         return orden;
+    }
+
+    private OrdenTipoDTO transformOrdenTipoToDto(OrdenTipo ot) {
+        OrdenTipoDTO retorno = new OrdenTipoDTO();
+        retorno.setOrdenTipoId(ot.getOrdenTipoId());
+        retorno.setNombre(ot.getNombre());
+        retorno.setMonto1(ot.getMonto1());
+        retorno.setMonto2(ot.getMonto2());
+        retorno.setMonto3(ot.getMonto3());
+        retorno.setCodigo(ot.getCodigo());
+
+        return retorno;
     }
 
 }

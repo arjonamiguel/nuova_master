@@ -13,6 +13,7 @@
         <mapping class="com.nuova.model.Paciente" />
         <mapping class="com.nuova.model.PacienteObrasocial" />
         <mapping class="com.nuova.model.Orden" />
+        <mapping class="com.nuova.model.OrdenTipo" />        
         <mapping class="com.nuova.model.OrdenWorkflow" />
         <mapping class="com.nuova.model.Observaciones" />
         <mapping class="com.nuova.model.OrdenPractica" />
