@@ -86,3 +86,35 @@
 </div>
 </body>
 </html>
+<script>
+document.getElementById("configuracion").parentNode.classList.add("active");
+			$("#prestador").validate({
+    
+		        // Specify the validation rules
+		        rules: {
+		            nombre: "required",
+		            provincia: "required",
+		            domicilio: "required",
+		            telefono: {
+		                required: true,
+		                minlength: 5
+		            }
+
+		        },
+		        
+		        // Specify the validation error messages
+		        messages: {
+		            nombre: "Ingrese nombre",
+		            telefono: {
+		                required: "Ingrese telefono",
+		                minlength: "Telefono debe tener al menos 5 caracteres de largo"
+		            },
+		            provincia: "Ingrese Provincia",
+		            domicilio: "Ingrese domicilio"
+
+		        },
+		                submitHandler: function(form) {
+		            form.submit();
+		        }
+		    });
+</script>

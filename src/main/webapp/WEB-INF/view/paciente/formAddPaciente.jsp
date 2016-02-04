@@ -271,6 +271,7 @@ label.error {
 </body>
 </html>
 <script>
+		document.getElementById("mainPaciente").parentNode.classList.add("active");
 			$("#paciente").validate({
     
         // Specify the validation rules

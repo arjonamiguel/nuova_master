@@ -2742,10 +2742,10 @@ table td[class*="span"], table th[class*="span"], .row-fluid table td[class*="sp
 
 .fade {
     opacity: 0;
-    -webkit-transition: opacity .15s linear;
-    -moz-transition: opacity .15s linear;
-    -o-transition: opacity .15s linear;
-    transition: opacity .15s linear
+    -webkit-transition: opacity .5s linear;
+    -moz-transition: opacity .5s linear;
+    -o-transition: opacity .5s linear;
+    transition: opacity .5s linear
 }
 
 .fade.in {

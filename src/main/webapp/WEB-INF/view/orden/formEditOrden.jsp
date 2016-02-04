@@ -31,6 +31,10 @@
   	}
   	
 	  function addRow(tableID) {
+	  					if(document.getElementById("practica").value=="NONE"){
+            	return;
+        	}
+	  
 	      	var index = document.getElementById(tableID).getElementsByTagName('tr').length;
 	      	index ++;	
 	          var table = document.getElementById(tableID);

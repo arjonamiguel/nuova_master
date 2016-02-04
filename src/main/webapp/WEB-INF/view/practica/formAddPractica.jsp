@@ -66,3 +66,24 @@
 </div>
 </body>
 </html>
+<script>
+document.getElementById("configuracion").parentNode.classList.add("active");
+			$("#practica").validate({
+    
+		        // Specify the validation rules
+		        rules: {
+		            nombre: "required",
+		            codigo: "required",
+		        },
+		        
+		        // Specify the validation error messages
+		        messages: {
+		            nombre: "Ingrese nombre de practica",
+		            codigo: "Ingrese codigo"
+		        },
+		                submitHandler: function(form) {
+		            form.submit();
+		        }
+		    });
+</script>
+
