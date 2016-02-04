@@ -29,6 +29,7 @@
 	<script src='<%=request.getContextPath()%>/resources/fullcalendar-2.6.0/lang/es.js'></script>
 	
 	<script>
+	var currentDate='';
 	var fistTimeFlag=1;
 	var eventos=[{ id: '1', resourceId: 'b', start: '2016-01-07T02:00:00', end: '2016-01-07T07:00:00', title: 'Dr. Lizarraga' },{ id: '2', resourceId: 'c', start: '2016-01-07T05:00:00', end: '2016-01-07T22:00:00', title: 'Dr. Gordillo' },{ id: '3', resourceId: 'd', start: '2016-01-06', end: '2016-01-08', title: 'Dr Sotelo' },{ id: '4', resourceId: 'e', start: '2016-01-07T03:00:00', end: '2016-01-07T08:00:00', title: 'Dr Roldan' },{ id: '5', resourceId: 'f', start: '2016-01-07T00:30:00', end: '2016-01-07T02:30:00', title: 'Dr Brandan' }];
 	var eventosOut=[];
@@ -79,7 +80,7 @@
 		$(".fc-license-message").hide();
 	}
 	
-	var currentDate='';
+	
 	
 		function getDate(){
 		var today = new Date();
@@ -162,26 +163,8 @@
 					] },
 					{ id: 'e', title: 'Consultorio E' },
 					{ id: 'f', title: 'Consultorio F', eventColor: 'red' },
-					{ id: 'g', title: 'Consultorio G' },
-					{ id: 'h', title: 'Consultorio H' },
-					{ id: 'i', title: 'Consultorio I' },
-					{ id: 'j', title: 'Consultorio J' },
-					{ id: 'k', title: 'Consultorio K' },
-					{ id: 'l', title: 'Consultorio L' },
-					{ id: 'm', title: 'Consultorio M' },
-					{ id: 'n', title: 'Consultorio N' },
-					{ id: 'o', title: 'Consultorio O' },
-					{ id: 'p', title: 'Consultorio P' },
-					{ id: 'q', title: 'Consultorio Q' },
-					{ id: 'r', title: 'Consultorio R' },
-					{ id: 's', title: 'Consultorio S' },
-					{ id: 't', title: 'Consultorio T' },
-					{ id: 'u', title: 'Consultorio U' },
-					{ id: 'v', title: 'Consultorio V' },
-					{ id: 'w', title: 'Consultorio W' },
-					{ id: 'x', title: 'Consultorio X' },
-					{ id: 'y', title: 'Consultorio Y' },
-					{ id: 'z', title: 'Consultorio Z' }
+					{ id: 'g', title: 'Consultorio G' }
+			
 				],
 				events:eventos,
 				eventAfterRender: function(cal_event, js_event, view){calendar_event_clicked(cal_event, js_event, view);},
@@ -287,12 +270,12 @@
 	  				<div id="wrap">
 	  						<div class="span2">
 		    					<div id='external-events'>
-									<h4>Draggable Events</h4>
-									<div class='fc-event'>My Event 1</div>
-									<div class='fc-event'>My Event 2</div>
-									<div class='fc-event'>My Event 3</div>
-									<div class='fc-event'>My Event 4</div>
-									<div class='fc-event'>My Event 5</div>
+									<h4>Profesionales</h4>
+									<div class='fc-event'>Dr Lopez</div>
+									<div class='fc-event'>Dr Gonzalezt 2</div>
+									<div class='fc-event'>Dr Perez</div>
+									<div class='fc-event'>Dr Martinez</div>
+									<div class='fc-event'>Dr Rodriguez</div>
 									<p>
 										<input type='checkbox' id='drop-remove' />
 										<label for='drop-remove'>remove after drop</label>
