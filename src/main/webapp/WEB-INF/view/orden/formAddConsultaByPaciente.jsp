@@ -38,14 +38,17 @@
 <body style="background-color:#e5e5e5;">
 <jsp:include page="../sec_menu.jsp"></jsp:include>
 <form:form method="post" action="/nuova/addOrden" commandName="ordenDto">
-
-
-
+<form:hidden path="ordenTipo.ordenTipoId"/>
 <div class="panelContainer">		
 		<div class="panel panel-info">
 			<div class="panel-heading">
           			<div class="panel-title">
-	          			Nueva Consulta
+	          			Nueva Consulta	   
+	          		<form:select path="monto" style="width:25%; margin-bottom:0px">
+						<form:option value="NONE" label="Seleccione Monto de Coseguro $"/>
+						<form:options items="${montosorden}"/>			    
+					</form:select>
+
           			</div>
     		</div>     
 			<div  class="panel-body" >
@@ -57,7 +60,7 @@
 										<ul class="nav nav-tabs">
 										  <li class="active"><a data-toggle="tab" href="#tb_paciente">Paciente</a></li>
 										  <li><a data-toggle="tab" href="#tb_requisitos">Requisitos</a></li>	  
-										  <li><a data-toggle="tab" href="#tb_observacion">Observaciones</a></li>
+										  <li><a data-toggle="tab" href="#tb_observacion">Profesional</a></li>
 										</ul>
 									
 										<div class="tab-content" style="height: 350px">
@@ -114,7 +117,7 @@
 											<table class="table" style="width: 100%">
 												<tr>			
 													<td colspan="4" style="width:60%">
-														<b>Presentó fotocopia del último recibo Monotributista?</b>
+														<b>Presentó fotocopia de los 3 último recibos como Monotributista o Ama de Casa?</b>
 													</td>
 													<td  style="text-align:left" colspan="2">			
 													    <input type="checkbox" id="reqMonotributista" name="reqMonotributista" />
@@ -136,9 +139,12 @@
 									  		<div id="tb_observacion" class="tab-pane fade">
 									    		<table class="table"  style="width: 100%">			
 												<tr>		
-													<td style="width: 15%"><form:label path="observacion">Observación</form:label></td>
+													<td style="width: 15%"><form:label path="profesionalId">Profesional</form:label></td>
 													<td  style="text-align:left" colspan="5">			
-													    <form:textarea path="observacion" cssStyle="width:60%"/>
+													    <form:select path="profesionalId" style="width:30%; margin-bottom:0px">
+															   <form:option value="NONE" label="Seleccione Profesional ..."/>
+															   <form:options items="${profesionales}" itemLabel="value" itemValue="id" />			    
+															</form:select>
 													</td>
 												</tr>		
 												</table>

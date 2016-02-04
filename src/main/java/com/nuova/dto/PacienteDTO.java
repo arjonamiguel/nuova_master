@@ -40,6 +40,8 @@ public class PacienteDTO {
     private int parentesco;
     private String parentescoDescription;
 
+    private String zonaAfiliacion;
+
     // private List<PacienteObrasocial> pacienteObrasocials = new ArrayList<PacienteObrasocial>(0);
 
     public Integer getPacienteId() {
@@ -268,6 +270,14 @@ public class PacienteDTO {
 
     public void setParentescoDescription(String parentescoDescription) {
         this.parentescoDescription = parentescoDescription;
+    }
+
+    public String getZonaAfiliacion() {
+        return zonaAfiliacion;
+    }
+
+    public void setZonaAfiliacion(String zonaAfiliacion) {
+        this.zonaAfiliacion = zonaAfiliacion;
     }
 
 }

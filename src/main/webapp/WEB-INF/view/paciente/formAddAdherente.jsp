@@ -160,7 +160,7 @@ label.error {
 		 		</div>
 		 		<div class="row-fluid">
 		 			<div class="span4">
-		 				<div class="formLabel"><form:label path="provincia">Provincia:</form:label></div>
+		 				<div class="formLabel"><form:label path="provincia">Provincia Origen:</form:label></div>
 		 				<div class="formInput">	<form:select path="provincia" style="width:78%; margin-bottom:0px">
 							<form:option value="NONE" label="Seleccione Provincia ..."/>
 								<form:options items="${provinciaList}"  />			    

@@ -12,7 +12,7 @@
         <link href="<%=request.getContextPath()%>/resources/css/bootstrap/bootstrap.min.css" rel="stylesheet"/>     
 		<script src="<c:url value="/resources/js/jquery/jquery-2.0.3.min.js" />"></script>
 		<script src="<c:url value="/resources/js/bootstrap/bootstrap.min.js" />"></script>
-		<script src="<%=request.getContextPath()%>/resources/js/jquery/bootstrap-collapse.js" />"></script>
+		<script src="<%=request.getContextPath()%>/resources/js/jquery/bootstrap-collapse.js" /></script>
 		<link href="<%=request.getContextPath()%>/resources/css/nuova.css" rel="stylesheet"/>
 		<link href="<%=request.getContextPath()%>/resources/css/panel.css" rel="stylesheet"/>
 		<link href="<%=request.getContextPath()%>/resources/css/bootstrap/bootstrap-responsive.css" rel="stylesheet"/>
@@ -77,7 +77,7 @@
 		<div class="row-fluid">
 			<div class="span12">
 				<div style="float:right;padding-bottom:1%;padding-right:1%;">
-	         			<input class="btn btn-info" value="Siguiente >>" onclick="continueButton();"/> 
+	         			<input class="btn btn-success" value="Siguiente >>" onclick="continueButton();"/>
 	         			<input class="btn" type="button" value="Cancelar" onclick="location.href='/nuova/mainPaciente';"/>
 	        	</div>
 			</div>

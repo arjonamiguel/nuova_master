@@ -38,9 +38,7 @@
 <body style="background-color:#e5e5e5;">
 <jsp:include page="../sec_menu.jsp"></jsp:include>
 <form:form method="post" action="/nuova/addOrden" commandName="ordenDto">
-
-
-
+<form:hidden path="ordenTipo.ordenTipoId"/>
 <div class="panelContainer">		
 		<div class="panel panel-info">
 			<div class="panel-heading">
@@ -114,7 +112,7 @@
 											<table class="table" style="width: 100%">
 												<tr>			
 													<td colspan="4" style="width:60%">
-														<b>Presentó fotocopia del último recibo Monotributista?</b>
+														<b>Presentó fotocopia de los 3 último recibos como Monotributista o Ama de Casa?</b>
 													</td>
 													<td  style="text-align:left" colspan="2">			
 													    <input type="checkbox" id="reqMonotributista" name="reqMonotributista" />

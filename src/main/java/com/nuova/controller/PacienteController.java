@@ -250,6 +250,8 @@ public class PacienteController {
         dto.setMail(p.getMail());
         dto.setTelefono(p.getTelefono());
         dto.setProvincia(p.getProvincia());
+        dto.setZonaAfiliacion(p.getZonaAfiliacion());
+
         if (p.getPaciente() != null && p.getPaciente().getPacienteId() != null) {
             dto.setPacienteTitular(transformPacienteToDto(pacienteManager
                     .fin1dPacienteById(p.getPaciente().getPacienteId())));
@@ -285,6 +287,7 @@ public class PacienteController {
             dtoad.setMail(ad.getMail());
             dtoad.setTelefono(ad.getTelefono());
             dtoad.setDni(ad.getDni());
+            dtoad.setZonaAfiliacion(p.getZonaAfiliacion());
             dtoad.setParentesco(ad.getParentesco().intValue());
             for (PacienteObrasocial poo : ad.getPacienteObrasocials()) {
                 dtoad.setCrdencial(poo.getNroCredencial());
@@ -348,6 +351,7 @@ public class PacienteController {
         paciente.setTelefono(dto.getTelefono());
         paciente.setProvincia(dto.getProvincia());
         paciente.setParentesco(new Byte(dto.getParentesco() + ""));
+        paciente.setZonaAfiliacion(dto.getZonaAfiliacion());
 
         for (ObraSocialDTO os : dto.getObrasocialListEdit()) {
             if (os.getObrasocialId() != null) {

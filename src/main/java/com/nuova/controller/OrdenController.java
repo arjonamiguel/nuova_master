@@ -26,6 +26,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.nuova.dto.ComboItemDTO;
+import com.nuova.dto.EspecialidadDTO;
 import com.nuova.dto.ObraSocialDTO;
 import com.nuova.dto.ObservacionesDTO;
 import com.nuova.dto.OrdenDTO;
@@ -33,20 +34,28 @@ import com.nuova.dto.OrdenPracticaDTO;
 import com.nuova.dto.OrdenTipoDTO;
 import com.nuova.dto.OrdenWorkflowDTO;
 import com.nuova.dto.PacienteDTO;
+import com.nuova.dto.ProfesionalDTO;
+import com.nuova.dto.ProfesionalEspecialidadDTO;
+import com.nuova.model.Especialidad;
 import com.nuova.model.Obrasocial;
 import com.nuova.model.Observaciones;
 import com.nuova.model.Orden;
 import com.nuova.model.OrdenPractica;
+import com.nuova.model.OrdenProfesional;
 import com.nuova.model.OrdenTipo;
 import com.nuova.model.OrdenWorkflow;
 import com.nuova.model.Paciente;
 import com.nuova.model.PacienteObrasocial;
 import com.nuova.model.Practica;
+import com.nuova.model.Profesional;
+import com.nuova.model.ProfesionalEspecialidad;
+import com.nuova.service.EspecialidadManager;
 import com.nuova.service.ObraSocialManager;
 import com.nuova.service.ObservacionManager;
 import com.nuova.service.OrdenManager;
 import com.nuova.service.PacienteManager;
 import com.nuova.service.PracticaManager;
+import com.nuova.service.ProfesionalManager;
 import com.nuova.utils.ConstantControllers;
 import com.nuova.utils.ConstantOrdenEstado;
 import com.nuova.utils.ConstantRedirect;
@@ -64,6 +73,10 @@ public class OrdenController {
     PracticaManager practicaManager;
     @Autowired
     ObservacionManager observacionManager;
+    @Autowired
+    ProfesionalManager profesionalManager;
+    @Autowired
+    EspecialidadManager especialidadManager;
 
     private String rechazada = "<span class='label-important' style='color:white;'>RECHAZADA</span>";
     private String incompleta = "<span class='label-warning' style='color:white;'>INCOMPLETA</span>";
@@ -80,15 +93,22 @@ public class OrdenController {
         Paciente paciente = pacienteManager.fin1dPacienteById(ordenTipo.getPacienteId());
         OrdenDTO ordenDto = new OrdenDTO();
         ordenDto.setPaciente(transformPacienteToDto(paciente));
+        OrdenTipo ot = ordenManager.findOrdenTipoByCodigo(codigo);
+        ordenDto.setOrdenTipo(transformOrdenTipoToDto(ot));
 
         if (codigo == Util.ORDEN_CONSULTA) {
-            OrdenTipo ot = ordenManager.findOrdenTipoByCodigo(codigo);
-            map.addAttribute("ordenTipoDto", transformOrdenTipoToDto(ot));
+            OrdenTipoDTO otdto = transformOrdenTipoToDto(ot);
+            List<Profesional> profesionales = profesionalManager.findAll();
+            map.addAttribute("profesionales", getProfesionalDTOList(profesionales));
+            map.addAttribute("ordenTipoDto", otdto);
+            map.addAttribute("montosorden", getMontosOrden(otdto));
             redirect = ConstantRedirect.VIEW_FORM_CONSULTA_BY_PACIENTE;
 
         } else if (codigo == Util.ORDEN_ODONTOLOGICA) {
-            OrdenTipo ot = ordenManager.findOrdenTipoByCodigo(codigo);
-            map.addAttribute("ordenTipoDto", transformOrdenTipoToDto(ot));
+            OrdenTipoDTO otdto = transformOrdenTipoToDto(ot);
+            map.addAttribute("montosorden", getMontosOrden(otdto));
+            map.addAttribute("ordenTipoDto", otdto);
+            map.addAttribute("montosorden", getMontosOrden(otdto));
             redirect = ConstantRedirect.VIEW_FORM_ODONTOLOGIA_BY_PACIENTE;
 
         } else if (codigo == Util.ORDEN_PRACTICA) {
@@ -178,17 +198,6 @@ public class OrdenController {
         return new PageImpl<OrdenDTO>(dtos, pageable, ordenes.getTotalElements());
     }
 
-    //
-    // @RequestMapping(value = ConstantControllers.FORM_DELETE_ORDEN, method = RequestMethod.GET)
-    // public String formDeleteObraSocial(ModelMap map,
-    // @PathVariable("obrasocialId") Integer obrasocialId) {
-    // if (obrasocialId != null) {
-    // map.addAttribute("obrasocial", obrasocialManager.findObraSocialById(obrasocialId));
-    // }
-    //
-    // return ConstantRedirect.VIEW_FORM_DELETE_ORDEN;
-    // }
-    //
     @RequestMapping(value = ConstantControllers.ADD_ORDEN, method = RequestMethod.POST)
     public String addOrden(@ModelAttribute(value = "ordenDto") OrdenDTO ordenDto,
             BindingResult result) {
@@ -199,24 +208,15 @@ public class OrdenController {
         orden.setFecha(new Date());
         orden.getOrdenWorkflows().add(new OrdenWorkflow(orden, user.getUsername()
                 , orden.getEstado(), new Date()));
-        if (!ordenDto.getObservacion().trim().equals("")) {
+        if (ordenDto.getObservacion() != null && !ordenDto.getObservacion().trim().equals("")) {
             orden.getObservacioneses().add(
                     new Observaciones(orden, ordenDto.getObservacion(), user.getUsername(), new Date()));
         }
+
         ordenManager.add(orden);
         return "redirect:" + ConstantControllers.MAIN_ORDEN;
     }
 
-    //
-    // return "redirect:" + ConstantControllers.MAIN_ORDEN;
-    // }
-    //
-    // @RequestMapping(value = ConstantControllers.DELETE_ORDEN, method = RequestMethod.POST)
-    // public String deleteObraSocial(@ModelAttribute(value = "obrasocial") ObraSocialDTO dto) {
-    // obrasocialManager.delete(dto.getObrasocialId());
-    // return "redirect:" + ConstantControllers.MAIN_ORDEN;
-    // }
-    //
     @RequestMapping(value = ConstantControllers.EDIT_ORDEN, method = RequestMethod.POST)
     public String editOrden(@ModelAttribute(value = "ordenDto") OrdenDTO dto) {
         Orden orden = ordenManager.findOrdenById(dto.getOrdenId());
@@ -280,7 +280,6 @@ public class OrdenController {
         paciente.setMail(dto.getMail());
         paciente.setTelefono(dto.getTelefono());
         paciente.setProvincia(dto.getProvincia());
-        // paciente.setTitular(dto.isTitular() ? new Byte("1") : new Byte("0"));
 
         for (ObraSocialDTO os : dto.getObrasocialListEdit()) {
             if (os.getObrasocialId() != null) {
@@ -319,12 +318,6 @@ public class OrdenController {
                     .fin1dPacienteById(p.getPaciente().getPacienteId())));
         }
 
-        // if (p.getTitular() != null) {
-        // dto.setTitular(p.getTitular().intValue() == 1 ? true : false);
-        // dto.setCheckedTitular(p.getTitular().intValue() == 1 ? "checked" : "");
-        //
-        // }
-
         for (PacienteObrasocial po : p.getPacienteObrasocials()) {
             ObraSocialDTO o = new ObraSocialDTO(po.getObrasocial().getObrasocialId(), po.getObrasocial().getNombre(),
                     po.getNroCredencial(), po.getProvisorio() == 1 ? "checked" : "");
@@ -346,9 +339,7 @@ public class OrdenController {
             dtoad.setMail(ad.getMail());
             dtoad.setTelefono(ad.getTelefono());
             dtoad.setDni(ad.getDni());
-            // if (ad.getTitular() != null) {
-            // dtoad.setTitular(ad.getTitular().equals(1) ? true : false);
-            // }
+
             for (PacienteObrasocial poo : ad.getPacienteObrasocials()) {
                 dtoad.setCrdencial(poo.getNroCredencial());
                 break;
@@ -500,8 +491,16 @@ public class OrdenController {
         orden.setReqOrdenMedico(Util.getByteFlag(dto.isReqOrdenMedico()));
         orden.setReqReciboSueldo(Util.getByteFlag(dto.isReqReciboSueldo()));
         orden.setPaciente(transformDtoToPaciente(dto.getPaciente()));
-        // orden.setObservacioneses(getObservacionesFromDto(dto.getObservacioneses()));
-        // orden.setOrdenWorkflows(getOrdenWorkflowFromDto(dto.getOrdenWorkflows()));
+        orden.setOrdenTipo(transformDtoToOrdenTipo(dto.getOrdenTipo()));
+
+        if (dto.getProfesionalId() != null) {
+            Set<OrdenProfesional> ordenProfesionals = new HashSet<OrdenProfesional>();
+            Profesional profesional = new Profesional();
+            profesional.setProfesionalId(dto.getProfesionalId());
+            OrdenProfesional op = new OrdenProfesional(orden, profesional);
+            ordenProfesionals.add(op);
+            orden.setOrdenProfesionals(ordenProfesionals);
+        }
 
         return orden;
     }
@@ -518,4 +517,68 @@ public class OrdenController {
         return retorno;
     }
 
+    private OrdenTipo transformDtoToOrdenTipo(OrdenTipoDTO dto) {
+        OrdenTipo retorno = new OrdenTipo();
+        if (dto != null) {
+            retorno.setOrdenTipoId(dto.getOrdenTipoId());
+            retorno.setNombre(dto.getNombre());
+            retorno.setMonto1(dto.getMonto1());
+            retorno.setMonto2(dto.getMonto2());
+            retorno.setMonto3(dto.getMonto3());
+            retorno.setCodigo(dto.getCodigo());
+        }
+        return retorno;
+    }
+
+    private ProfesionalDTO transformProfesionalToDto(Profesional p) {
+        ProfesionalDTO dto = new ProfesionalDTO();
+        dto.setApellido(p.getApellido());
+        dto.setNombre(p.getNombre());
+        dto.setTelefono(p.getTelefono());
+        dto.setTituloProfesional(p.getTituloProfesional());
+        dto.setRegistroNacional(p.getRegistroNacional());
+        dto.setProfesionalId(p.getProfesionalId());
+        dto.setHabilitacionSiprosa(p.getHabilitacionSiprosa().toString());
+        dto.setMatricula(p.getMatricula());
+        dto.setFechaVencimientoHabilitacion(p.getFechaVencimientoHabilitacion() + "");
+
+        List<ProfesionalEspecialidad> listPE = p.getProfesionalEspecialidads();
+        for (ProfesionalEspecialidad pe : listPE) {
+            Especialidad especialidad = especialidadManager.findEspecialidadById(
+                    pe.getEspecialidad().getEspecialidadId());
+
+            ProfesionalDTO profesionalDto = new ProfesionalDTO();
+            profesionalDto.setProfesionalId(pe.getProfesional().getProfesionalId());
+            EspecialidadDTO especialidadDto = new EspecialidadDTO();
+            especialidadDto.setId(pe.getEspecialidad().getEspecialidadId());
+
+            dto.getEspecialidadListOld().add(new ProfesionalEspecialidadDTO(pe.getId(),
+                    profesionalDto, especialidadDto));
+            dto.getEspecialidadListEdit().put(especialidad.getEspecialidadId(),
+                    especialidad.getNombre());
+        }
+
+        return dto;
+    }
+
+    private List<ComboItemDTO> getProfesionalDTOList(List<Profesional> list) {
+        List<ComboItemDTO> retorno = new ArrayList<ComboItemDTO>();
+        for (Profesional p : list) {
+            retorno.add(new ComboItemDTO(p.getProfesionalId() + "", p.getApellido() + ", " + p.getNombre()));
+        }
+        return retorno;
+    }
+
+    private List<Double> getMontosOrden(OrdenTipoDTO dto) {
+        List<Double> retorno = new ArrayList<Double>();
+        if (!dto.getMonto1().equals(0.00)) {
+            retorno.add(dto.getMonto1());
+        } else if (!dto.getMonto2().equals(0.00)) {
+            retorno.add(dto.getMonto2());
+        } else if (!dto.getMonto3().equals(0.00)) {
+            retorno.add(dto.getMonto3());
+        }
+
+        return retorno;
+    }
 }

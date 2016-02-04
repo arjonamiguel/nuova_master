@@ -43,6 +43,8 @@ public class Orden implements java.io.Serializable {
     private Set<Observaciones> observacioneses = new HashSet<Observaciones>(0);
     private Set<OrdenPractica> ordenPracticas = new HashSet<OrdenPractica>(0);
     private Set<OrdenWorkflow> ordenWorkflows = new HashSet<OrdenWorkflow>(0);
+    private Set<OrdenProfesional> ordenProfesionals = new HashSet<OrdenProfesional>(0);
+
     private OrdenTipo ordenTipo;
 
     public Orden() {
@@ -176,4 +178,12 @@ public class Orden implements java.io.Serializable {
         this.ordenTipo = ordenTipo;
     }
 
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "orden", cascade = CascadeType.ALL)
+    public Set<OrdenProfesional> getOrdenProfesionals() {
+        return this.ordenProfesionals;
+    }
+
+    public void setOrdenProfesionals(Set<OrdenProfesional> ordenProfesionals) {
+        this.ordenProfesionals = ordenProfesionals;
+    }
 }

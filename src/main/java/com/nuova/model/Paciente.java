@@ -45,6 +45,7 @@ public class Paciente implements java.io.Serializable {
     private Set<Paciente> pacientes = new HashSet<Paciente>();
     private String provincia;
     private Byte parentesco;
+    private String zonaAfiliacion;
 
     public Paciente() {
     }
@@ -194,4 +195,14 @@ public class Paciente implements java.io.Serializable {
     public void setParentesco(Byte parentesco) {
         this.parentesco = parentesco;
     }
+
+    @Column(name = "zona_afiliacion")
+    public String getZonaAfiliacion() {
+        return zonaAfiliacion;
+    }
+
+    public void setZonaAfiliacion(String zonaAfiliacion) {
+        this.zonaAfiliacion = zonaAfiliacion;
+    }
+
 }

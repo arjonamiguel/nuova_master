@@ -86,9 +86,9 @@ CREATE TABLE IF NOT EXISTS `observaciones` (
   KEY `observacion_id` (`observacion_id`),
   KEY `FK_observaciones_orden` (`orden_id`),
   CONSTRAINT `FK_observaciones_orden` FOREIGN KEY (`orden_id`) REFERENCES `orden` (`orden_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=45 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+) ENGINE=InnoDB AUTO_INCREMENT=48 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
--- Volcando datos para la tabla nuova.observaciones: ~14 rows (aproximadamente)
+-- Volcando datos para la tabla nuova.observaciones: ~22 rows (aproximadamente)
 DELETE FROM `observaciones`;
 /*!40000 ALTER TABLE `observaciones` DISABLE KEYS */;
 INSERT INTO `observaciones` (`observacion_id`, `observacion`, `orden_id`, `user_name`, `fecha`) VALUES
@@ -111,7 +111,9 @@ INSERT INTO `observaciones` (`observacion_id`, `observacion`, `orden_id`, `user_
 	(41, 'iajdaiosjdoiasjd oasij doaisjdaoisjdaosidj aosidj asoijd aoisjd aoisj doais jdas doias diajso jasodaso djasj doas doia sdod', 24, 'virginia.gottardi@nuova.com', '2016-01-26 19:54:43'),
 	(42, 'asd as dasd as', 25, 'administrador@nuova.com', '2016-01-27 13:19:00'),
 	(43, 'asd asda sd asdasdasdsad asdasd asdas dasdas da sdas dasdasdasdasdas dasdada sdas daa da dada sd adas a dasdasdas dasa sd asd asdasd asd adasd asd adasda sad asd asdasas ad adasd a ad asdasdas dasdasda sdasd asdasd asdsadas das das dasdasd asd as as asadad', 26, 'administrador@nuova.com', '2016-01-29 16:51:49'),
-	(44, 'testtt', 27, 'administrador@nuova.com', '2016-02-03 15:22:14');
+	(44, 'testtt', 27, 'administrador@nuova.com', '2016-02-03 15:22:14'),
+	(46, 'asdasda', 35, 'administrador@nuova.com', '2016-02-04 15:13:57'),
+	(47, 'sada asdasd asd asd asd asdsaasd ', 36, 'administrador@nuova.com', '2016-02-04 15:14:28');
 /*!40000 ALTER TABLE `observaciones` ENABLE KEYS */;
 
 
@@ -132,9 +134,9 @@ CREATE TABLE IF NOT EXISTS `orden` (
   KEY `FK_orden_orden_tipo` (`orden_tipo`),
   CONSTRAINT `FK_orden_orden_tipo` FOREIGN KEY (`orden_tipo`) REFERENCES `orden_tipo` (`orden_tipo_id`),
   CONSTRAINT `FK_orden_paciente` FOREIGN KEY (`paciente_id`) REFERENCES `paciente` (`paciente_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=28 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+) ENGINE=InnoDB AUTO_INCREMENT=37 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
--- Volcando datos para la tabla nuova.orden: ~11 rows (aproximadamente)
+-- Volcando datos para la tabla nuova.orden: ~19 rows (aproximadamente)
 DELETE FROM `orden`;
 /*!40000 ALTER TABLE `orden` DISABLE KEYS */;
 INSERT INTO `orden` (`orden_id`, `paciente_id`, `fecha`, `orden_tipo`, `req_orden_medico`, `req_credecial`, `req_recibo_sueldo`, `req_monotributista`, `estado`) VALUES
@@ -148,7 +150,15 @@ INSERT INTO `orden` (`orden_id`, `paciente_id`, `fecha`, `orden_tipo`, `req_orde
 	(24, 174, '2016-01-26', NULL, 1, 1, 0, 0, 'CERRADA'),
 	(25, 175, '2016-01-27', NULL, 0, 0, 0, 0, 'INCOMPLETA'),
 	(26, 180, '2016-01-29', NULL, 1, 1, 1, 0, 'AUTORIZADA'),
-	(27, 180, '2016-02-03', NULL, 1, 1, 0, 1, 'PENDIENTE');
+	(27, 180, '2016-02-03', NULL, 1, 1, 0, 1, 'PENDIENTE'),
+	(28, 180, '2016-02-03', NULL, 1, 1, 0, 1, 'PENDIENTE'),
+	(29, 180, '2016-02-04', 1, 1, 1, 0, 1, 'PENDIENTE'),
+	(30, 180, '2016-02-04', 1, 1, 1, 1, 0, 'PENDIENTE'),
+	(31, 180, '2016-02-04', 1, 1, 1, 0, 1, 'PENDIENTE'),
+	(32, 180, '2016-02-04', 1, 1, 1, 0, 1, 'PENDIENTE'),
+	(33, 180, '2016-02-04', 1, 1, 1, 1, 0, 'PENDIENTE'),
+	(35, 180, '2016-02-04', 3, 1, 1, 1, 0, 'PENDIENTE'),
+	(36, 179, '2016-02-04', 2, 1, 1, 1, 0, 'PENDIENTE');
 /*!40000 ALTER TABLE `orden` ENABLE KEYS */;
 
 
@@ -189,6 +199,27 @@ INSERT INTO `orden_practica` (`ordden_practica_id`, `orden_id`, `practica_id`, `
 /*!40000 ALTER TABLE `orden_practica` ENABLE KEYS */;
 
 
+-- Volcando estructura para tabla nuova.orden_profesional
+CREATE TABLE IF NOT EXISTS `orden_profesional` (
+  `orden_profesional_id` int(11) NOT NULL AUTO_INCREMENT,
+  `orden_id` int(11) DEFAULT NULL,
+  `profesional_id` int(11) DEFAULT NULL,
+  PRIMARY KEY (`orden_profesional_id`),
+  KEY `orden_profesional_id` (`orden_profesional_id`),
+  KEY `FK__orden_profe` (`orden_id`),
+  KEY `FK__profesional_orden` (`profesional_id`),
+  CONSTRAINT `FK__orden_profe` FOREIGN KEY (`orden_id`) REFERENCES `orden` (`orden_id`),
+  CONSTRAINT `FK__profesional_orden` FOREIGN KEY (`profesional_id`) REFERENCES `profesional` (`profesional_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
+-- Volcando datos para la tabla nuova.orden_profesional: ~0 rows (aproximadamente)
+DELETE FROM `orden_profesional`;
+/*!40000 ALTER TABLE `orden_profesional` DISABLE KEYS */;
+INSERT INTO `orden_profesional` (`orden_profesional_id`, `orden_id`, `profesional_id`) VALUES
+	(1, 33, 4);
+/*!40000 ALTER TABLE `orden_profesional` ENABLE KEYS */;
+
+
 -- Volcando estructura para tabla nuova.orden_tipo
 CREATE TABLE IF NOT EXISTS `orden_tipo` (
   `orden_tipo_id` int(11) NOT NULL AUTO_INCREMENT,
@@ -205,7 +236,7 @@ CREATE TABLE IF NOT EXISTS `orden_tipo` (
 DELETE FROM `orden_tipo`;
 /*!40000 ALTER TABLE `orden_tipo` DISABLE KEYS */;
 INSERT INTO `orden_tipo` (`orden_tipo_id`, `nombre`, `monto_1`, `monto_2`, `monto_3`, `codigo`) VALUES
-	(1, 'CONSULTA', 45.22, 0.00, 0.00, 100),
+	(1, 'CONSULTAS', 15.00, 0.00, 0.00, 100),
 	(2, 'ODONTOLÓGICA', 20.00, 15.00, 10.00, 101),
 	(3, 'PRÁCTICA', 0.00, 0.00, 0.00, 102);
 /*!40000 ALTER TABLE `orden_tipo` ENABLE KEYS */;
@@ -222,9 +253,9 @@ CREATE TABLE IF NOT EXISTS `orden_workflow` (
   KEY `orden_workflow_id` (`orden_workflow_id`),
   KEY `FK_orden_workflow_orden` (`orden_id`),
   CONSTRAINT `FK_orden_workflow_orden` FOREIGN KEY (`orden_id`) REFERENCES `orden` (`orden_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=57 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+) ENGINE=InnoDB AUTO_INCREMENT=66 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
--- Volcando datos para la tabla nuova.orden_workflow: ~20 rows (aproximadamente)
+-- Volcando datos para la tabla nuova.orden_workflow: ~33 rows (aproximadamente)
 DELETE FROM `orden_workflow`;
 /*!40000 ALTER TABLE `orden_workflow` DISABLE KEYS */;
 INSERT INTO `orden_workflow` (`orden_workflow_id`, `orden_id`, `user_name`, `estado`, `fecha`) VALUES
@@ -252,7 +283,15 @@ INSERT INTO `orden_workflow` (`orden_workflow_id`, `orden_id`, `user_name`, `est
 	(53, 25, 'administrador@nuova.com', 'INCOMPLETA', '2016-01-27 13:19:00'),
 	(54, 26, 'administrador@nuova.com', 'PENDIENTE', '2016-01-29 16:49:48'),
 	(55, 26, 'administrador@nuova.com', 'AUTORIZADA', '2016-01-29 16:52:05'),
-	(56, 27, 'administrador@nuova.com', 'PENDIENTE', '2016-02-03 15:22:14');
+	(56, 27, 'administrador@nuova.com', 'PENDIENTE', '2016-02-03 15:22:14'),
+	(57, 28, 'administrador@nuova.com', 'PENDIENTE', '2016-02-03 18:34:40'),
+	(58, 29, 'administrador@nuova.com', 'PENDIENTE', '2016-02-04 10:59:16'),
+	(59, 30, 'administrador@nuova.com', 'PENDIENTE', '2016-02-04 11:52:58'),
+	(60, 31, 'administrador@nuova.com', 'PENDIENTE', '2016-02-04 12:10:12'),
+	(61, 32, 'administrador@nuova.com', 'PENDIENTE', '2016-02-04 13:55:51'),
+	(62, 33, 'administrador@nuova.com', 'PENDIENTE', '2016-02-04 13:56:21'),
+	(64, 35, 'administrador@nuova.com', 'PENDIENTE', '2016-02-04 15:13:57'),
+	(65, 36, 'administrador@nuova.com', 'PENDIENTE', '2016-02-04 15:14:28');
 /*!40000 ALTER TABLE `orden_workflow` ENABLE KEYS */;
 
 
@@ -270,7 +309,7 @@ CREATE TABLE IF NOT EXISTS `paciente` (
   `dni` int(11) DEFAULT NULL,
   `provincia` varchar(156) COLLATE utf8_bin DEFAULT NULL,
   `parentesco` tinyint(4) DEFAULT NULL,
-  `zona_afiliacion` varchar(156) COLLATE utf8_bin DEFAULT NULL,
+  `zona_afiliacion` varchar(156) COLLATE utf8_bin DEFAULT '-1',
   PRIMARY KEY (`paciente_id`),
   KEY `pacienteId` (`paciente_id`),
   KEY `FK_paciente_paciente` (`adherente_id`),
@@ -420,9 +459,9 @@ INSERT INTO `paciente` (`paciente_id`, `apellido`, `nombre`, `fecha_nacimiento`,
 	(175, 'PEREZ', 'JUAN PEDRO', '1982-01-27', 'SD SDASDADADASD ASDADASDAD', '3815966987', '454545454@asda.com', 0, NULL, 29878065, 'Salta', 1, NULL),
 	(176, 'test 555', 'test nombre 555', '2016-01-05', 'asd asd asd as', '546546546', 'asdasdad@asdad.com', 1, NULL, NULL, 'Catamarca', 1, NULL),
 	(177, 'asdasd', 'asda', '2013-10-30', 'asdas asd asd', '546546545646', 'asdasdad@asdad.com', 1, NULL, 29878055, 'Buenos Aires', 1, NULL),
-	(178, 'ARJONA 100', 'MIGUEL 100', '2015-11-29', 'ASDAS AS DA', '546545646', 'asdasdad@asdad.com', 0, NULL, 29878065, 'Buenos Aires', 0, NULL),
+	(178, 'ARJONA 100', 'MIGUEL 100', '2015-11-29', 'ASDAS AS DA', '546545646', 'asdasdad@asdad.com', 0, NULL, 29878065, 'Buenos Aires', 0, 'La Pampa'),
 	(179, 'ARJONA 100', 'MIGUEL JR', '2016-12-30', 'ASDAS AS DA', '546545646', 'asdasdad@asdad.com', 0, 178, 33878065, 'Buenos Aires', 3, NULL),
-	(180, 'ARJONA 100', 'Jr uuuu', '2016-12-30', 'ASDAS AS DA', '546545646', 'asdasdad@asdad.com', 0, 178, 29878088, 'Catamarca', 6, NULL);
+	(180, 'ARJONA 100', 'Jr uuuu', '2016-12-30', 'ASDAS AS DA', '546545646', 'asdasdad@asdad.com', 0, 178, 29878088, 'Catamarca', 6, 'Mendoza');
 /*!40000 ALTER TABLE `paciente` ENABLE KEYS */;
 
 
@@ -440,7 +479,7 @@ CREATE TABLE IF NOT EXISTS `paciente_obrasocial` (
   KEY `FK_paciente_obrasocial_paciente` (`paciente_id`),
   CONSTRAINT `FK_paciente_obrasocial_obrasocial` FOREIGN KEY (`obrasocial_id`) REFERENCES `obrasocial` (`obrasocial_id`),
   CONSTRAINT `FK_paciente_obrasocial_paciente` FOREIGN KEY (`paciente_id`) REFERENCES `paciente` (`paciente_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=107 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+) ENGINE=InnoDB AUTO_INCREMENT=111 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 -- Volcando datos para la tabla nuova.paciente_obrasocial: ~17 rows (aproximadamente)
 DELETE FROM `paciente_obrasocial`;
@@ -460,10 +499,10 @@ INSERT INTO `paciente_obrasocial` (`paciente_obrasocial_id`, `nro_credencial`, `
 	(92, '5555-4444-8888-9999', 1, 2, 175, '2016-01-28'),
 	(93, '32342432', 1, 11, 176, '2016-01-28'),
 	(94, '332 423 4232', 1, 14, 177, '2016-01-28'),
-	(98, '5555-4444-8888-9999', 1, 13, 178, '2016-01-29'),
-	(104, '5555-4444-8888-9999', 1, 13, 179, '2016-01-29'),
-	(105, '5555-4444-8888-9933', 1, 13, 180, '2016-01-29'),
-	(106, '432424242342342', 0, 12, 174, '2016-02-03');
+	(106, '432424242342342', 0, 12, 174, '2016-02-03'),
+	(108, '5555-4444-8888-9933', 1, 13, 180, '2016-02-03'),
+	(109, '5555-4444-8888-9999', 1, 13, 179, '2016-02-03'),
+	(110, '5555-4444-8888-9999', 1, 13, 178, '2016-02-03');
 /*!40000 ALTER TABLE `paciente_obrasocial` ENABLE KEYS */;
 
 

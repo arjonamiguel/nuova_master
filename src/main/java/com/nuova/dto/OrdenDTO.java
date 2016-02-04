@@ -36,6 +36,12 @@ public class OrdenDTO {
     private String iconOk = "<span class='icon-ok-sign'></span>";
     private String iconNotOk = "<span class='icon-remove-sign'></span>";
 
+    private OrdenTipoDTO ordenTipo;
+
+    private Integer profesionalId;
+
+    private Double monto;
+
     public Integer getOrdenId() {
         return ordenId;
     }
@@ -237,6 +243,30 @@ public class OrdenDTO {
 
     public void setNroOrden(String nroOrden) {
         this.nroOrden = nroOrden;
+    }
+
+    public OrdenTipoDTO getOrdenTipo() {
+        return ordenTipo;
+    }
+
+    public void setOrdenTipo(OrdenTipoDTO ordenTipo) {
+        this.ordenTipo = ordenTipo;
+    }
+
+    public Integer getProfesionalId() {
+        return profesionalId;
+    }
+
+    public void setProfesionalId(Integer profesionalId) {
+        this.profesionalId = profesionalId;
+    }
+
+    public Double getMonto() {
+        return monto;
+    }
+
+    public void setMonto(Double monto) {
+        this.monto = monto;
     }
 
 }
