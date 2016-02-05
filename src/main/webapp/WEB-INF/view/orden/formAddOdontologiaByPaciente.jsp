@@ -44,6 +44,10 @@
 			<div class="panel-heading">
           			<div class="panel-title">
 	          			Nueva Consulta Odontológica
+	          			<form:select path="monto" style="width:25%; margin-bottom:0px">
+						<form:option value="NONE" label="Seleccione Monto de Coseguro $"/>
+						<form:options items="${montosorden}"/>			    
+					</form:select>
           			</div>
     		</div>     
 			<div  class="panel-body" >

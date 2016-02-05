@@ -445,6 +445,8 @@ public class OrdenController {
                 + "<span class='icon icon-user'></span</a>";
         dto.setBotonpaciente(botonpaciente);
 
+        dto.setOrdenTipo(transformOrdenTipoToDto(orden.getOrdenTipo()));
+
         return dto;
     }
 
