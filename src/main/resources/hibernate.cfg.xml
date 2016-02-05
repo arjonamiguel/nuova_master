@@ -19,6 +19,9 @@
         <mapping class="com.nuova.model.OrdenPractica" />
         <mapping class="com.nuova.model.Practica" />
         <mapping class="com.nuova.model.Prestadores" />   
-        <mapping class="com.nuova.model.OrdenProfesional" />             
+        <mapping class="com.nuova.model.OrdenProfesional" />
+        <mapping class="com.nuova.model.Caja" />             
+        <mapping class="com.nuova.model.CajaOrden" />             
+                     
     </session-factory>
 </hibernate-configuration>

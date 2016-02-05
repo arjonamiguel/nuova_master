@@ -36,6 +36,8 @@ import com.nuova.dto.OrdenWorkflowDTO;
 import com.nuova.dto.PacienteDTO;
 import com.nuova.dto.ProfesionalDTO;
 import com.nuova.dto.ProfesionalEspecialidadDTO;
+import com.nuova.model.Caja;
+import com.nuova.model.CajaOrden;
 import com.nuova.model.Especialidad;
 import com.nuova.model.Obrasocial;
 import com.nuova.model.Observaciones;
@@ -49,6 +51,7 @@ import com.nuova.model.PacienteObrasocial;
 import com.nuova.model.Practica;
 import com.nuova.model.Profesional;
 import com.nuova.model.ProfesionalEspecialidad;
+import com.nuova.service.CajaManager;
 import com.nuova.service.EspecialidadManager;
 import com.nuova.service.ObraSocialManager;
 import com.nuova.service.ObservacionManager;
@@ -77,6 +80,8 @@ public class OrdenController {
     ProfesionalManager profesionalManager;
     @Autowired
     EspecialidadManager especialidadManager;
+    @Autowired
+    CajaManager cajaManager;
 
     private String rechazada = "<span class='label-important' style='color:white;'>RECHAZADA</span>";
     private String incompleta = "<span class='label-warning' style='color:white;'>INCOMPLETA</span>";
@@ -213,6 +218,20 @@ public class OrdenController {
                     new Observaciones(orden, ordenDto.getObservacion(), user.getUsername(), new Date()));
         }
 
+        // Caja
+        Caja caja = new Caja();
+        caja.setConcepto(Util.CONCEPTO_INGRESO_ORDENCONSULTA);
+        caja.setIngreso(ordenDto.getMonto());
+        caja.setEgreso(0.00);
+        caja.setFecha(new Date());
+
+        cajaManager.add(caja);
+        CajaOrden cajaorden = new CajaOrden(caja, orden);
+        Set<CajaOrden> cajaordenes = new HashSet<CajaOrden>();
+        cajaordenes.add(cajaorden);
+        orden.setCajaOrdens(cajaordenes);
+
+        // Orden
         ordenManager.add(orden);
         return "redirect:" + ConstantControllers.MAIN_ORDEN;
     }
@@ -571,11 +590,15 @@ public class OrdenController {
 
     private List<Double> getMontosOrden(OrdenTipoDTO dto) {
         List<Double> retorno = new ArrayList<Double>();
-        if (!dto.getMonto1().equals(0.00)) {
+        if (dto.getMonto1().doubleValue() > 0.00) {
             retorno.add(dto.getMonto1());
-        } else if (!dto.getMonto2().equals(0.00)) {
+        }
+
+        if (dto.getMonto2().doubleValue() > 0.00) {
             retorno.add(dto.getMonto2());
-        } else if (!dto.getMonto3().equals(0.00)) {
+        }
+
+        if (dto.getMonto3().doubleValue() > 0.00) {
             retorno.add(dto.getMonto3());
         }
 

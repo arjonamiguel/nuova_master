@@ -5,7 +5,9 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import com.nuova.dto.ComboItemDTO;
 import com.nuova.dto.ObraSocialDTO;
@@ -15,6 +17,30 @@ import com.nuova.model.Paciente;
 import com.nuova.model.Practica;
 
 public class Util {
+
+    static public int CONCEPTO_INGRESO_INICIOCAJA = 0;
+    static public int CONCEPTO_INGRESO_ORDENCONSULTA = 1;
+    static public int CONCEPTO_INGRESO_ORDENCONSULTAODONTOLOGICA = 2;
+    static public int CONCEPTO_EGRESO_ARTICULOLIBRERIA = 100;
+    static public int CONCEPTO_EGRESO_ARTICULOLIMIEZA = 101;
+    static public int CONCEPTO_EGRESO_SERVIMOTO = 102;
+    static public int CONCEPTO_EGRESO_GENERAL = 150;
+
+    @SuppressWarnings("unused")
+    public static final Map<Integer, String> CAJA_CONCEPTOS = prepareMap();
+
+    private static Map<Integer, String> prepareMap() {
+        Map<Integer, String> hashMap = new HashMap<Integer, String>();
+        hashMap.put(CONCEPTO_INGRESO_INICIOCAJA, "Inicio de Caja");
+        hashMap.put(CONCEPTO_INGRESO_ORDENCONSULTA, "Orden de Consulta");
+        hashMap.put(CONCEPTO_INGRESO_ORDENCONSULTAODONTOLOGICA, "Orden de Consulta Odontologica");
+        hashMap.put(CONCEPTO_EGRESO_ARTICULOLIBRERIA, "Articulo de Libreria");
+        hashMap.put(CONCEPTO_EGRESO_ARTICULOLIMIEZA, "Articulo de Limpieza");
+        hashMap.put(CONCEPTO_EGRESO_SERVIMOTO, "Servi Moto");
+        hashMap.put(CONCEPTO_EGRESO_GENERAL, "Egreso General");
+
+        return hashMap;
+    }
 
     static public int ORDEN_CONSULTA = 100;
     static public int ORDEN_ODONTOLOGICA = 101;

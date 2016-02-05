@@ -2027,7 +2027,8 @@ table td[class*="span"], table th[class*="span"], .row-fluid table td[class*="sp
 }
 
 .icon-list-alt {
-    background-position: -264px -24px
+    background-position: -264px -24px;
+    background-image: url("../../img/bootstrap/glyphicons-halflings.png");    
 }
 
 .icon-lock {

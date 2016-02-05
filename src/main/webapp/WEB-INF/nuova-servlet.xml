@@ -77,6 +77,7 @@
     <bean id="practicaDAO" class="com.nuova.dao.PracticaDAOImpl"></bean>
     <bean id="observacionDAO" class="com.nuova.dao.ObservacionDAOImpl"></bean>
     <bean id="prestadorDAO" class="com.nuova.dao.PrestadoresDAOImpl"></bean>
+    <bean id="cajaDAO" class="com.nuova.dao.CajaDAOImpl"></bean>
     
     <!-- Manager -->
     <bean id="employeeManager" class="com.nuova.service.EmployeeManagerImpl"></bean>
@@ -88,6 +89,7 @@
     <bean id="practicaManager" class="com.nuova.service.PracticaManagerImpl"></bean>
     <bean id="observacionManager" class="com.nuova.service.ObservacionManagerImpl"></bean>    
     <bean id="prestadorManager" class="com.nuova.service.PrestadoresManagerImpl"></bean>
+    <bean id="cajaManager" class="com.nuova.service.CajaManagerImpl"></bean>
     <tx:annotation-driven />
     
     <bean id="transactionManager"
