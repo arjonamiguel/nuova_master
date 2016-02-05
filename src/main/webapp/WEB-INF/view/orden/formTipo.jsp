@@ -56,8 +56,7 @@
 		<div class="panel-body" >
 				<div class="container-fluid">
 						<div class="row-fluid">
-							<div class="span6">
-							</div>
+							
 							<div class="span6">
 								<div class="formLabel"><form:label path="ordenTipoId">Orden a Emitir:</form:label></div>
         						<div class="formInput">
@@ -66,6 +65,7 @@
 								   <form:options items="${ordenestipo}" itemLabel="nombre" itemValue="codigo" />			    
 								</form:select>
         						</div>
+        						<div id="error" class="error">Seleccione Tipo de Orden...</div>
 							</div>
 						
 							
@@ -74,7 +74,7 @@
 						<div class="span6">
 						</div>
 						<div class="span6">
-						<div id="error" class="error">Seleccione Tipo de Orden...</div>
+						
 						</div>
 						</div>
 				</div>
