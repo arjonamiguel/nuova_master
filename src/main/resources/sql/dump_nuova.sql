@@ -15,6 +15,53 @@ CREATE DATABASE IF NOT EXISTS `nuova` /*!40100 DEFAULT CHARACTER SET utf8 COLLAT
 USE `nuova`;
 
 
+-- Volcando estructura para tabla nuova.caja
+CREATE TABLE IF NOT EXISTS `caja` (
+  `caja_id` int(11) NOT NULL AUTO_INCREMENT,
+  `concepto` int(11) DEFAULT NULL,
+  `ingreso` double(10,0) DEFAULT '0',
+  `egreso` double(10,0) DEFAULT '0',
+  `fecha` timestamp NULL DEFAULT NULL,
+  `numero_referencia` int(11) DEFAULT NULL,
+  PRIMARY KEY (`caja_id`),
+  KEY `caja_id` (`caja_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
+-- Volcando datos para la tabla nuova.caja: ~0 rows (aproximadamente)
+DELETE FROM `caja`;
+/*!40000 ALTER TABLE `caja` DISABLE KEYS */;
+INSERT INTO `caja` (`caja_id`, `concepto`, `ingreso`, `egreso`, `fecha`, `numero_referencia`) VALUES
+	(1, 1, 15, 0, '2016-02-05 11:43:59', NULL),
+	(2, 1, 30, 0, '2016-02-05 11:47:36', NULL),
+	(3, 1, 40, 0, '2016-02-05 12:22:13', NULL),
+	(4, 1, 40, 0, '2016-02-05 14:15:20', NULL);
+/*!40000 ALTER TABLE `caja` ENABLE KEYS */;
+
+
+-- Volcando estructura para tabla nuova.caja_orden
+CREATE TABLE IF NOT EXISTS `caja_orden` (
+  `caja_orden_id` int(11) NOT NULL AUTO_INCREMENT,
+  `orden_id` int(11) DEFAULT NULL,
+  `caja_id` int(11) DEFAULT NULL,
+  PRIMARY KEY (`caja_orden_id`),
+  KEY `caja_orden_id` (`caja_orden_id`),
+  KEY `FK_caja_orden_caja` (`caja_id`),
+  KEY `FK_caja_orden_orden` (`orden_id`),
+  CONSTRAINT `FK_caja_orden_caja` FOREIGN KEY (`caja_id`) REFERENCES `caja` (`caja_id`),
+  CONSTRAINT `FK_caja_orden_orden` FOREIGN KEY (`orden_id`) REFERENCES `orden` (`orden_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
+-- Volcando datos para la tabla nuova.caja_orden: ~0 rows (aproximadamente)
+DELETE FROM `caja_orden`;
+/*!40000 ALTER TABLE `caja_orden` DISABLE KEYS */;
+INSERT INTO `caja_orden` (`caja_orden_id`, `orden_id`, `caja_id`) VALUES
+	(1, 38, 1),
+	(2, 39, 2),
+	(3, 40, 3),
+	(4, 41, 4);
+/*!40000 ALTER TABLE `caja_orden` ENABLE KEYS */;
+
+
 -- Volcando estructura para tabla nuova.especialidad
 CREATE TABLE IF NOT EXISTS `especialidad` (
   `especialidad_id` int(11) NOT NULL AUTO_INCREMENT,
@@ -134,7 +181,7 @@ CREATE TABLE IF NOT EXISTS `orden` (
   KEY `FK_orden_orden_tipo` (`orden_tipo`),
   CONSTRAINT `FK_orden_orden_tipo` FOREIGN KEY (`orden_tipo`) REFERENCES `orden_tipo` (`orden_tipo_id`),
   CONSTRAINT `FK_orden_paciente` FOREIGN KEY (`paciente_id`) REFERENCES `paciente` (`paciente_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=37 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+) ENGINE=InnoDB AUTO_INCREMENT=42 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 -- Volcando datos para la tabla nuova.orden: ~19 rows (aproximadamente)
 DELETE FROM `orden`;
@@ -158,7 +205,12 @@ INSERT INTO `orden` (`orden_id`, `paciente_id`, `fecha`, `orden_tipo`, `req_orde
 	(32, 180, '2016-02-04', 1, 1, 1, 0, 1, 'PENDIENTE'),
 	(33, 180, '2016-02-04', 1, 1, 1, 1, 0, 'PENDIENTE'),
 	(35, 180, '2016-02-04', 3, 1, 1, 1, 0, 'PENDIENTE'),
-	(36, 179, '2016-02-04', 2, 1, 1, 1, 0, 'PENDIENTE');
+	(36, 179, '2016-02-04', 2, 1, 1, 1, 0, 'PENDIENTE'),
+	(37, 173, '2016-02-04', 1, 1, 1, 0, 1, 'PENDIENTE'),
+	(38, 179, '2016-02-05', 1, 1, 1, 0, 1, 'PENDIENTE'),
+	(39, 179, '2016-02-05', 1, 1, 1, 0, 0, 'INCOMPLETA'),
+	(40, 177, '2016-02-05', 1, 1, 1, 0, 1, 'PENDIENTE'),
+	(41, 175, '2016-02-05', 1, 1, 1, 0, 1, 'PENDIENTE');
 /*!40000 ALTER TABLE `orden` ENABLE KEYS */;
 
 
@@ -210,13 +262,18 @@ CREATE TABLE IF NOT EXISTS `orden_profesional` (
   KEY `FK__profesional_orden` (`profesional_id`),
   CONSTRAINT `FK__orden_profe` FOREIGN KEY (`orden_id`) REFERENCES `orden` (`orden_id`),
   CONSTRAINT `FK__profesional_orden` FOREIGN KEY (`profesional_id`) REFERENCES `profesional` (`profesional_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 -- Volcando datos para la tabla nuova.orden_profesional: ~0 rows (aproximadamente)
 DELETE FROM `orden_profesional`;
 /*!40000 ALTER TABLE `orden_profesional` DISABLE KEYS */;
 INSERT INTO `orden_profesional` (`orden_profesional_id`, `orden_id`, `profesional_id`) VALUES
-	(1, 33, 4);
+	(1, 33, 4),
+	(2, 37, 1),
+	(3, 38, 1),
+	(4, 39, 3),
+	(5, 40, 10),
+	(6, 41, 5);
 /*!40000 ALTER TABLE `orden_profesional` ENABLE KEYS */;
 
 
@@ -236,7 +293,7 @@ CREATE TABLE IF NOT EXISTS `orden_tipo` (
 DELETE FROM `orden_tipo`;
 /*!40000 ALTER TABLE `orden_tipo` DISABLE KEYS */;
 INSERT INTO `orden_tipo` (`orden_tipo_id`, `nombre`, `monto_1`, `monto_2`, `monto_3`, `codigo`) VALUES
-	(1, 'CONSULTAS', 15.00, 0.00, 0.00, 100),
+	(1, 'CONSULTAS', 0.00, 40.00, 50.00, 100),
 	(2, 'ODONTOLÓGICA', 20.00, 15.00, 10.00, 101),
 	(3, 'PRÁCTICA', 0.00, 0.00, 0.00, 102);
 /*!40000 ALTER TABLE `orden_tipo` ENABLE KEYS */;
@@ -253,9 +310,9 @@ CREATE TABLE IF NOT EXISTS `orden_workflow` (
   KEY `orden_workflow_id` (`orden_workflow_id`),
   KEY `FK_orden_workflow_orden` (`orden_id`),
   CONSTRAINT `FK_orden_workflow_orden` FOREIGN KEY (`orden_id`) REFERENCES `orden` (`orden_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=66 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+) ENGINE=InnoDB AUTO_INCREMENT=71 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
--- Volcando datos para la tabla nuova.orden_workflow: ~33 rows (aproximadamente)
+-- Volcando datos para la tabla nuova.orden_workflow: ~30 rows (aproximadamente)
 DELETE FROM `orden_workflow`;
 /*!40000 ALTER TABLE `orden_workflow` DISABLE KEYS */;
 INSERT INTO `orden_workflow` (`orden_workflow_id`, `orden_id`, `user_name`, `estado`, `fecha`) VALUES
@@ -291,7 +348,12 @@ INSERT INTO `orden_workflow` (`orden_workflow_id`, `orden_id`, `user_name`, `est
 	(61, 32, 'administrador@nuova.com', 'PENDIENTE', '2016-02-04 13:55:51'),
 	(62, 33, 'administrador@nuova.com', 'PENDIENTE', '2016-02-04 13:56:21'),
 	(64, 35, 'administrador@nuova.com', 'PENDIENTE', '2016-02-04 15:13:57'),
-	(65, 36, 'administrador@nuova.com', 'PENDIENTE', '2016-02-04 15:14:28');
+	(65, 36, 'administrador@nuova.com', 'PENDIENTE', '2016-02-04 15:14:28'),
+	(66, 37, 'administrador@nuova.com', 'PENDIENTE', '2016-02-04 21:46:05'),
+	(67, 38, 'administrador@nuova.com', 'PENDIENTE', '2016-02-05 11:43:59'),
+	(68, 39, 'administrador@nuova.com', 'INCOMPLETA', '2016-02-05 11:47:36'),
+	(69, 40, 'administrador@nuova.com', 'PENDIENTE', '2016-02-05 12:22:13'),
+	(70, 41, 'administrador@nuova.com', 'PENDIENTE', '2016-02-05 14:15:20');
 /*!40000 ALTER TABLE `orden_workflow` ENABLE KEYS */;
 
 
