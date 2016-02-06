@@ -68,7 +68,6 @@
     </bean>
     
     <!-- DAO -->
-    <bean id="employeeDAO" class="com.nuova.dao.EmployeeDaoImpl"></bean>
     <bean id="profesionalDAO" class="com.nuova.dao.ProfesionalDAOImpl"></bean>
     <bean id="especialidadDAO" class="com.nuova.dao.EspecialidadDAOImpl"></bean>
     <bean id="obrasocialDAO" class="com.nuova.dao.ObraSocialDAOImpl"></bean>
@@ -80,7 +79,6 @@
     <bean id="cajaDAO" class="com.nuova.dao.CajaDAOImpl"></bean>
     
     <!-- Manager -->
-    <bean id="employeeManager" class="com.nuova.service.EmployeeManagerImpl"></bean>
     <bean id="profesionalManager" class="com.nuova.service.ProfesionalManagerImpl"></bean>
     <bean id="especialidadManager" class="com.nuova.service.EspecialidadManagerImpl"></bean>
     <bean id="obrasocialManager" class="com.nuova.service.ObraSocialManagerImpl"></bean>
