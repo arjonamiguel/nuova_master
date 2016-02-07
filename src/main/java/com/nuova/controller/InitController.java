@@ -38,6 +38,22 @@ public class InitController {
         return "redirect:" + ConstantControllers.HOME;
     }
 
+    @RequestMapping(value = "/login", method = RequestMethod.GET)
+    public String login(ModelMap model) {
+        return "login";
+    }
+
+    @RequestMapping(value = "/accessdenied", method = RequestMethod.GET)
+    public String loginerror(ModelMap model) {
+        model.addAttribute("error", "true");
+        return "denied";
+    }
+
+    @RequestMapping(value = "/logout", method = RequestMethod.GET)
+    public String logout(ModelMap model) {
+        return "logout";
+    }
+
     @RequestMapping(value = ConstantControllers.HOME, method = RequestMethod.GET)
     public String init(ModelMap map) {
         // Datos del Usuario
