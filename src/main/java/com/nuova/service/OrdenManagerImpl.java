@@ -49,13 +49,13 @@ public class OrdenManagerImpl implements OrdenManager {
     }
 
     @Transactional
-    public Page<Orden> findOrdenesByPageable(Pageable pageable) {
-        return ordenDAO.findOrdenesByPageable(pageable);
+    public Page<Orden> findOrdenesByPageable(Pageable pageable, Integer codigoOrdenTipo) {
+        return ordenDAO.findOrdenesByPageable(pageable, codigoOrdenTipo);
     }
 
     @Transactional
-    public Page<Orden> findOrdenesBySearch(String search, Pageable pageable) {
-        return ordenDAO.findOrdenesBySearch(search, pageable);
+    public Page<Orden> findOrdenesBySearch(String search, Pageable pageable, Integer codigoOrdenTipo) {
+        return ordenDAO.findOrdenesBySearch(search, pageable, codigoOrdenTipo);
     }
 
     @Transactional

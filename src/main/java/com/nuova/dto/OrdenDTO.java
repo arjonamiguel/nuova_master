@@ -37,6 +37,7 @@ public class OrdenDTO {
     private String iconNotOk = "<span class='icon-remove-sign'></span>";
 
     private OrdenTipoDTO ordenTipo;
+    private String ordenTipoDesc;
 
     private Integer profesionalId;
 
@@ -267,6 +268,14 @@ public class OrdenDTO {
 
     public void setMonto(Double monto) {
         this.monto = monto;
+    }
+
+    public String getOrdenTipoDesc() {
+        return ordenTipoDesc;
+    }
+
+    public void setOrdenTipoDesc(String ordenTipoDesc) {
+        this.ordenTipoDesc = ordenTipoDesc;
     }
 
 }

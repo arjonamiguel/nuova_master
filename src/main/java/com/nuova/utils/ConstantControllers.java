@@ -55,7 +55,10 @@ public class ConstantControllers {
     public final static String ADD_ADHERENTE = "/addAdherente";
 
     // Orden
-    public final static String MAIN_ORDEN = "/mainOrden";
+    public final static String MAIN_ORDEN_PRACTICA = "/mainOrdenPractica";
+    public final static String MAIN_CONSULTA = "/mainConsulta";
+    public final static String MAIN_CONSULTA_ODONTOLOGICA = "/mainConsultaOdontologica";
+
     public final static String FORM_ADD_ORDEN = "/formAddOrden";
     public final static String FORM_ADD_ORDEN_BY_PACIENTE = "/formAddOrden/{pacienteId}";
     public final static String FORM_EDIT_ORDEN = "/formEditOrden/{ordenId}";
@@ -65,8 +68,8 @@ public class ConstantControllers {
     public final static String EDIT_ORDEN = "/editOrden";
     public final static String TIPO_ORDEN = "/tipoOrden/{pacienteId}";
     public final static String REDIRECT_ORDEN = "/redirectOrden";
-    public final static String AJAX_GET_ORDENES_PAGINADOS = "/ajaxGetOrdenesPaginados";
-    public final static String AJAX_GET_SEARCH_ORDENES_PAGINADOS = "/ajaxGetSearchOrdenesPaginados";
+    public final static String AJAX_GET_ORDENES_PAGINADOS = "/ajaxGetOrdenesPaginados/{codigoOrdenTipo}";
+    public final static String AJAX_GET_SEARCH_ORDENES_PAGINADOS = "/ajaxGetSearchOrdenesPaginados/{codigoOrdenTipo}";
 
     // Reportes
     public final static String SHOW_REPORT_ORDEN_EMITIDA = "/showReporteOrdenEmitida/{ordenId}";

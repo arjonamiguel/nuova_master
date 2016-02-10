@@ -53,9 +53,9 @@ public class OrdenDAOImpl implements OrdenDAO {
 
     }
 
-    public Page<Orden> findOrdenesByPageable(Pageable pageable) {
+    public Page<Orden> findOrdenesByPageable(Pageable pageable, Integer codigoOrdenTipo) {
         Query query = this.sessionFactory.getCurrentSession().createQuery("FROM Orden o "
-                + " WHERE o.ordenTipo.codigo IN (101,102)"
+                + " WHERE o.ordenTipo.codigo=" + codigoOrdenTipo
                 + " ORDER BY o.ordenId DESC");
         // query.setFirstResult(pageable.getOffset());
         // query.setMaxResults(pageable.getPageNumber());
@@ -63,10 +63,10 @@ public class OrdenDAOImpl implements OrdenDAO {
         return new PageImpl<Orden>(result, pageable, result.size());
     }
 
-    public Page<Orden> findOrdenesBySearch(String search, Pageable pageable) {
+    public Page<Orden> findOrdenesBySearch(String search, Pageable pageable, Integer codigoOrdenTipo) {
         Query query = this.sessionFactory.getCurrentSession()
                 .createQuery("FROM Orden o "
-                        + " WHERE o.ordenTipo.codigo IN (101,102)"
+                        + " WHERE o.ordenTipo.codigo=" + codigoOrdenTipo
                         + " AND CAST(o.ordenId AS string) LIKE '%" + search.toUpperCase() + "%' "
                         + " ORDER BY o.ordenId ASC");
 

@@ -166,6 +166,7 @@ public class OrdenController {
     // Ajax --------------------------------------------
     @RequestMapping(value = ConstantControllers.AJAX_GET_ORDENES_PAGINADOS, method = RequestMethod.GET)
     public @ResponseBody Page<OrdenDTO> getProfesionalesPaginados(
+            @PathVariable("codigoOrdenTipo") Integer codigoOrdenTipo,
             @RequestParam(required = false, defaultValue = "0") Integer start,
             @RequestParam(required = false, defaultValue = "50") Integer limit) {
 
@@ -173,7 +174,7 @@ public class OrdenController {
         // Sort sort = new Sort(Sort.Direction.DESC, "creationDate");
         Pageable pageable = new PageRequest(start, limit);
 
-        Page<Orden> ordenes = ordenManager.findOrdenesByPageable(pageable);
+        Page<Orden> ordenes = ordenManager.findOrdenesByPageable(pageable, codigoOrdenTipo);
         List<OrdenDTO> dtos = new ArrayList<OrdenDTO>();
         for (Orden o : ordenes) {
             OrdenDTO dto = transformOrdenToDto(o);
@@ -185,6 +186,7 @@ public class OrdenController {
 
     @RequestMapping(value = ConstantControllers.AJAX_GET_SEARCH_ORDENES_PAGINADOS, method = RequestMethod.GET)
     public @ResponseBody Page<OrdenDTO> getSearchProfesionalesPaginados(
+            @PathVariable("codigoOrdenTipo") Integer codigoOrdenTipo,
             @RequestParam(required = false, defaultValue = "") String search,
             @RequestParam(required = false, defaultValue = "0") Integer start,
             @RequestParam(required = false, defaultValue = "50") Integer limit) {
@@ -193,7 +195,7 @@ public class OrdenController {
         // Sort sort = new Sort(Sort.Direction.DESC, "creationDate");
         Pageable pageable = new PageRequest(start, limit);
 
-        Page<Orden> ordenes = ordenManager.findOrdenesBySearch(search, pageable);
+        Page<Orden> ordenes = ordenManager.findOrdenesBySearch(search, pageable, codigoOrdenTipo);
         List<OrdenDTO> dtos = new ArrayList<OrdenDTO>();
         for (Orden o : ordenes) {
             OrdenDTO dto = transformOrdenToDto(o);
@@ -233,7 +235,7 @@ public class OrdenController {
 
         // Orden
         ordenManager.add(orden);
-        return "redirect:" + ConstantControllers.MAIN_ORDEN;
+        return "redirect:" + ConstantControllers.MAIN_ORDEN_PRACTICA;
     }
 
     @RequestMapping(value = ConstantControllers.EDIT_ORDEN, method = RequestMethod.POST)
@@ -278,13 +280,25 @@ public class OrdenController {
         }
 
         ordenManager.edit(orden);
-        return "redirect:" + ConstantControllers.MAIN_ORDEN;
+        return "redirect:" + ConstantControllers.MAIN_ORDEN_PRACTICA;
     }
 
-    @RequestMapping(value = ConstantControllers.MAIN_ORDEN, method = RequestMethod.GET)
+    @RequestMapping(value = ConstantControllers.MAIN_ORDEN_PRACTICA, method = RequestMethod.GET)
     public String mainOrden(ModelMap map) {
         // map.addAttribute("ordenList", ordenManager.findAll());
         return ConstantRedirect.VIEW_MAIN_ORDEN;
+    }
+
+    @RequestMapping(value = ConstantControllers.MAIN_CONSULTA, method = RequestMethod.GET)
+    public String mainConsulta(ModelMap map) {
+        // map.addAttribute("ordenList", ordenManager.findAll());
+        return ConstantRedirect.VIEW_MAIN_CONSULTA;
+    }
+
+    @RequestMapping(value = ConstantControllers.MAIN_CONSULTA_ODONTOLOGICA, method = RequestMethod.GET)
+    public String mainConsultaOdontologica(ModelMap map) {
+        // map.addAttribute("ordenList", ordenManager.findAll());
+        return ConstantRedirect.VIEW_MAIN_CONSULTA_ODONTOLOGICA;
     }
 
     public Paciente transformDtoToPaciente(PacienteDTO dto) {
@@ -438,14 +452,15 @@ public class OrdenController {
         }
 
         // boton paciente
-        String botonpaciente = "<a class='btn btn-success btn-xs' href='/nuova/formEditPaciente/"
+        String botonpaciente = "<center><a class='btn btn-success btn-xs' href='/nuova/formEditPaciente/"
                 + dto.getPaciente().getPacienteId() + "' title='" +
                 dto.getPaciente().getApellido().toUpperCase() + ", " + dto.getPaciente().getNombre()
                 + "'>"
-                + "<span class='icon icon-user'></span</a>";
+                + "<span class='icon icon-user'></span</a> </center>";
         dto.setBotonpaciente(botonpaciente);
 
         dto.setOrdenTipo(transformOrdenTipoToDto(orden.getOrdenTipo()));
+        dto.setOrdenTipoDesc(dto.getOrdenTipo().getNombre());
 
         return dto;
     }

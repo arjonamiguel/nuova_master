@@ -128,8 +128,8 @@ function editColumnsChecked() {
 		<div class="panel panel-info">
 			<div class="panel-heading">
           			<div class="panel-title">
-	          			Administracion Orden de Practicas
-	           			<a href="formAddOrden" class="pull-right"><b>+</b>&nbsp;&nbsp;Nueva Orden de Practica</a>
+	          			Administracion de Consultas Odontologicas
+	           			<a href="formAddOrden" class="pull-right"><b>+</b>&nbsp;&nbsp;Nueva Consulta Odontologica</a>
           			</div>
     		</div>     
 			<div  class="panel-body" >
@@ -172,7 +172,7 @@ editColumnsChecked();
 function callPaciente() {
 	var retorno;
 	$.ajax({
-		url : "ajaxGetOrdenesPaginados/102",
+		url : "ajaxGetOrdenesPaginados/101",
 		type : "GET",
 		contentType : "application/json; charset=utf-8",
 		//    data: jsonString, //Stringified Json Object
@@ -191,7 +191,7 @@ function callPaciente() {
 function callSearchPaciente(search) {
 	var retorno;
 	$.ajax({
-		url : "ajaxGetSearchOrdenesPaginados/102/?search=" + search,
+		url : "ajaxGetSearchOrdenesPaginados/101/?search=" + search,
 		type : "GET",
 		contentType : "application/json; charset=utf-8",
 		//    data: jsonString, //Stringified Json Object

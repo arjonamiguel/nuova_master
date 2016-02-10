@@ -33,10 +33,10 @@
 						$("#ordenGrid").simplePagingGrid(
 								{
 									columnNames : [ "PACIENTE","TIPO" ,"NRO.ORDEN", "FECHA", "ORDEN MEDICA", "CREDENCIAL",
-													"MONOTRIBUTISTA", "RECIBO SUELDO", "ESTADO","" ],
+													"MONOTRIBUTISTA", "RECIBO SUELDO","" ],
 									columnKeys : [ "botonpaciente","ordenTipoDesc" ,"nroOrden", "fecha","iconordenmedica"
 													, "iconcredencial", "iconmonotributista", "iconrecibo"
-													, "etiqestado", "acciones"],
+													, "acciones"],
 									columnWidths : [ "5%", "10%", , , , , , , "5%"],
 									sortable : [ false, true ],
 									data : rows
@@ -128,8 +128,8 @@ function editColumnsChecked() {
 		<div class="panel panel-info">
 			<div class="panel-heading">
           			<div class="panel-title">
-	          			Administracion Orden de Practicas
-	           			<a href="formAddOrden" class="pull-right"><b>+</b>&nbsp;&nbsp;Nueva Orden de Practica</a>
+	          			Administracion de Consultas
+	           			<a href="formAddOrden" class="pull-right"><b>+</b>&nbsp;&nbsp;Nueva Consulta</a>
           			</div>
     		</div>     
 			<div  class="panel-body" >
@@ -172,7 +172,7 @@ editColumnsChecked();
 function callPaciente() {
 	var retorno;
 	$.ajax({
-		url : "ajaxGetOrdenesPaginados/102",
+		url : "ajaxGetOrdenesPaginados/100",
 		type : "GET",
 		contentType : "application/json; charset=utf-8",
 		//    data: jsonString, //Stringified Json Object
@@ -191,7 +191,7 @@ function callPaciente() {
 function callSearchPaciente(search) {
 	var retorno;
 	$.ajax({
-		url : "ajaxGetSearchOrdenesPaginados/102/?search=" + search,
+		url : "ajaxGetSearchOrdenesPaginados/100/?search=" + search,
 		type : "GET",
 		contentType : "application/json; charset=utf-8",
 		//    data: jsonString, //Stringified Json Object

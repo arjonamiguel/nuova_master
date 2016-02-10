@@ -96,10 +96,11 @@
 				
 				<sec:authorize access="hasRole('ROLE_ADMIN') OR hasRole('ROLE_USER')">
 				<li class="dropdown">
-				<a href="#" id="mainOrden" class="dropdown-toggle" data-toggle="dropdown"><i class="icon-briefcase"></i>&nbsp;&nbsp;Administracion de Practicas<span class="caret"></span></a>			
+				<a href="#" id="mainOrden" class="dropdown-toggle" data-toggle="dropdown"><i class="icon-briefcase"></i>&nbsp;&nbsp;Administracion de Ordenes<span class="caret"></span></a>			
 			  		<ul class="dropdown-menu" role="menu">
-			  			<li><a href="/nuova/mainOrden">Administrar Practicas</a></li>
-		                <li><a href="/nuova/formAddOrden">Agregar Practicas</a></li>
+			  			<li><a href="/nuova/mainConsulta">Administrar Consultas</a></li>
+			  			<li><a href="/nuova/mainOrdenPractica">Administrar Practicas</a></li>
+						<li><a href="/nuova/mainConsultaOdontologica">Administrar Consultas Odontologicas</a></li>						
               		</ul>                
 				</li>
 				</sec:authorize>
