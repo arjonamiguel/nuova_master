@@ -73,7 +73,7 @@
 		<div class="panel panel-info">
 			<div class="panel-heading">
           			<div class="panel-title">
-	          		Editar Practicas 
+	          		Editar Consultas 
           			</div>
     		</div>     
 			<div  class="panel-body" >
@@ -85,16 +85,8 @@
 		    								<ul class="nav nav-tabs">
 											  <li class="active"><a data-toggle="tab" href="#tb_paciente" onclick="setObservacionInvisible()">Paciente</a></li>
 											  <li><a data-toggle="tab" href="#tb_requisitos" onclick="setObservacionInvisible()">Requisitos</a></li>
-											  <li><a data-toggle="tab" href="#tb_autorizacion" onclick="setObservacionInvisible()">Autorizacion</a></li>
-											  <li>
-											  	<a data-toggle="tab" href="#tb_observacion" onclick="setObservacionVisible()">
-											  	Observaciones 
-											  	<c:if test="${observacionCount > 0}">
-										     		<span class="badge">${observacionCount}</span>
-										     	</c:if>
-											  	</a>
-											  </li>
-											  <li><a data-toggle="tab" href="#tb_flujo" onclick="setObservacionInvisible()">Flujo de Estados</a></li>
+											  <li><a data-toggle="tab" href="#tb_profesional">Profesional</a></li>											 
+											  <li><a data-toggle="tab" href="#tb_flujo" >Usuario Creador</a></li>
 											</ul>
 										
 											<div class="tab-content" style="height: 350px">
@@ -172,100 +164,19 @@
 												  		   
 												
 										  		</div>
-										  		<div id="tb_autorizacion" class="tab-pane fade">
-										  		<table class="table"  style="width: 100%">			
-													<tr>
-														<td style="width: 10%">Estado</td>
-										        		<td>
-										        			<form:select path="estado" style="width:30%; margin-bottom:0px">
-															   <form:option value="NONE" label="Seleccione Estado ..."/>
-															   <form:options items="${estadosList}" itemLabel="value" itemValue="id" />			    
+										  		<div id="tb_profesional" class="tab-pane fade">
+									    		<table class="table"  style="width: 100%">			
+												<tr>		
+													<td style="width: 15%"><form:label path="profesionalId">Profesional</form:label></td>
+													<td  style="text-align:left" colspan="5">			
+													    <form:select path="profesionalId" style="width:30%; margin-bottom:0px">
+															   <form:option value="-1" label="Seleccione Profesional ..."/>
+															   <form:options items="${profesionales}" itemLabel="value" itemValue="id" />			    
 															</form:select>
-														</td>
-										        	</tr>	
-										  		</table>
-										    	<table class="table"  style="width: 100%" height="100%">			
-													<tr>
-										        	<td colspan="2">
-										           	<div>
-														<div class="inputProf">
-														<form:select path="practica" style="width:70%; margin-bottom:0px">
-															   <form:option value="NONE" label="Seleccione Práctica ..."/>
-															   <form:options items="${practicasList}" itemLabel="value" itemValue="id" />			    
-															</form:select>
-															<INPUT type="button" value="Agregar" onclick="addRow('tb_practicas')" class="btn btn-info"/>
-																    	
-															
-														</div>	
-													</div>
-										    		<div>		    
-													    <TABLE id="tb_practicas" class="table" style="width: 100%; margin: 2% 0;" >
-													    <thead>
-													        <TR>
-													        	
-													            <TD style="width: 10%">ID</TD>			                    
-													            <TD style="width: 100%">Practica</TD>
-													            <td></td>
-													        </TR>
-													        <% int index = 0;%>
-													        <c:forEach items="${ordenDto.practicasListEdit}" var="pa" varStatus="loop" >
-													    	<tr>
-														        <td>${pa.practicaId}
-														        <input type="hidden" name = "ordenpracticaListEdit[<%=index%>].orddenPracticaId" value = "${pa.orddenPracticaId}" />
-														        <input type="hidden" name = "ordenpracticaListEdit[<%=index%>].practicaId" value = "${pa.practicaId}" /> 
-														        </td>
-														        <td>${pa.nombre}</td>				        
-														        <td><button type='button' class='btn btn-link' onClick='Eliminar(this.parentNode.parentNode.rowIndex)'>eliminar</button></td>
-														        <%index++;%>
-													    	</tr>
-															</c:forEach>
-													    </thead>
-													   
-													    </TABLE>
-											   	
-										 			</div>    
-										 			
-										        	</td>
-										    	</tr>
-													
+													</td>
+												</tr>		
 												</table>
-										  		</div>
-										  		
-										  		<div id="tb_observacion" class="tab-pane fade" style="">  					
-													<c:forEach items="${ordenDto.observacioneses}" var="obs" varStatus="loop" >
-													<table class="table"  style="width: 100%;">	
-													<tr style="background-color:#f5f5f5;">
-														<td></td><td></td><td></td><td></td>
-													</tr>
-													<tr>
-														<td style="background-color:#f5f5f5;border-top:none;"></td>
-														<td style="width: 80%; padding: 1px 1px;border-left: 2px solid orange;">
-											    			<b>${obs.userName}</b> <span style="font-size: 12px">${obs.fecha}</span>
-											    		</td>
-											    		<td style="padding: 1px 1px; text-align: right;">
-												    		<a class="btn btn-link" href="#">
-																<i class="icon-trash"></i>
-															</a>
-															<a class="btn btn-link" href="#">
-																<i class="icon-pencil"></i>
-															</a>
-														</td>
-														<td style="background-color:#f5f5f5;border-top:none;"></td>
-														
-											    	</tr>
-											    	<tr>	
-											    		<td style="background-color:#f5f5f5;border-top:none;"></td>    		
-												        <td align="justify" colspan="2" style="border-left: 2px solid orange;border-bottom: 1px solid orange;">${obs.observacion}</td>		  
-												        <td style="background-color:#f5f5f5;border-top:none;"></td>    
-											    	</tr>
-											    	<tr style="background-color:#f5f5f5;">
-														<td style="border-top:none;"></td><td></td><td></td><td style="border-top:none;"></td>
-													</tr>
-											
-											    	</table>
-											    	</c:forEach>	
-
-										  		</div>
+									  			</div>
 										  		<div id="tb_flujo" class="tab-pane fade">  					
 													<c:forEach items="${ordenDto.ordenWorkflows}" var="ow" varStatus="loop" >			
 													<table class="table"  style="width: 100%">	
@@ -275,12 +186,7 @@
 											    		<span style="font-size: 12px">${ow.fecha}</span>
 											    		</td>
 											    		<td align="left">
-												    		<c:if test="${loop.index < 1}">
-													        	<span style="color: orange; font-weight: bold">${ow.estado}</span>
-													        </c:if>
-													        <c:if test="${loop.index  > 0}">
-													        	${ow.estado}
-													        </c:if>
+												    		
 												        </td>
 											    	</tr>
 											    	</table>
@@ -288,19 +194,8 @@
 										  		</div>
 										  		
 											</div>
-												<div id="addObservacion" style="visibility:hidden;">
-													
-										    		<table class="table"  style="width: 100%">    					
-													<tr>		
-														<td style="width: 15%"><form:label path="observacion">Observacion</form:label></td>
-														<td  style="text-align:left" colspan="5">			
-														    <form:textarea path="observacion" cssStyle="width:90%"/>
-														</td>
-													</tr>		
-													</table>
-													</div>
+												
 											<div style="float:right;">
-											
 											<table>
 										 		<tr>
 													<td style="width: 50%">

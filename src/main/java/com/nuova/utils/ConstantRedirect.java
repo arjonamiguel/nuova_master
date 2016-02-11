@@ -42,6 +42,8 @@ public class ConstantRedirect {
     public final static String VIEW_FORM_CONSULTA_BY_PACIENTE = "/orden/formAddConsultaByPaciente";
     public final static String VIEW_FORM_ODONTOLOGIA_BY_PACIENTE = "/orden/formAddOdontologiaByPaciente";
     public final static String VIEW_FORM_EDIT_ORDEN = "/orden/formEditOrden";
+    public final static String VIEW_FORM_EDIT_CONSULTA = "/orden/formEditConsulta";
+
     public final static String VIEW_FORM_DELETE_ORDEN = "/orden/formDeleteOrden";
     public final static String VIEW_FORM_TIPO_ORDEN = "/orden/formTipo";
 

@@ -43,6 +43,8 @@ public class OrdenDTO {
 
     private Double monto;
 
+    private ProfesionalDTO profesional;
+
     public Integer getOrdenId() {
         return ordenId;
     }
@@ -217,17 +219,6 @@ public class OrdenDTO {
     }
 
     public String getAcciones() {
-        String botonEdit = "<a class='btn btn-info btn-xs' href='/nuova/formEditOrden/" + getOrdenId()
-                + "'><span class='icon icon-edit'></span></a>";
-
-        String botonDelete = "<a class='btn btn-danger btn-xs' href='/nuova/formDeleteOrden/" + getOrdenId()
-                + "'><span class='icon icon-remove'></span></a>";
-
-        String botonPrint = "<a class='btn btn-default btn-xs' href='/nuova/showReporteOrdenEmitida/" + getOrdenId()
-                + "'><span class='icon icon-print'></span></a>";
-
-        this.acciones = botonEdit + botonDelete + botonPrint;
-
         return acciones;
     }
 
@@ -276,6 +267,14 @@ public class OrdenDTO {
 
     public void setOrdenTipoDesc(String ordenTipoDesc) {
         this.ordenTipoDesc = ordenTipoDesc;
+    }
+
+    public ProfesionalDTO getProfesional() {
+        return profesional;
+    }
+
+    public void setProfesional(ProfesionalDTO profesional) {
+        this.profesional = profesional;
     }
 
 }

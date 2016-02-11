@@ -73,4 +73,9 @@ public class OrdenManagerImpl implements OrdenManager {
         return ordenDAO.findOrdenTipoByCodigo(codigo);
     }
 
+    @Transactional
+    public void deleteOrdenProfesional(Integer ordenId) {
+        ordenDAO.deleteOrdenProfesional(ordenId);
+    }
+
 }

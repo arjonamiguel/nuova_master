@@ -30,9 +30,8 @@
 			<div class="panel-heading">
           			<div class="panel-title">
 	          			Orden Emitida
-	          			<span lass="pull-right">
-	           			<a href="/nuova/formEditOrden/${ordenId}" class="pull-right">&nbsp;|<b></b>&nbsp;&nbsp;Editar Orden</a>
-	           			<a href="/nuova/mainOrden" class="pull-right"><b><<</b>&nbsp;&nbsp;Volver al Listado de Ordenes</a>
+	          			<span lass="pull-right">	           			
+	           			<a href="" class="pull-right" onclick="location.href = document.referrer; return false;"><b><<</b>&nbsp;&nbsp;Volver al Listado de Ordenes</a>
 	           			</span>
           			</div>
     		</div>     

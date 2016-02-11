@@ -61,7 +61,7 @@
 										<ul class="nav nav-tabs">
 										  <li class="active"><a data-toggle="tab" href="#tb_paciente">Paciente</a></li>
 										  <li><a data-toggle="tab" href="#tb_requisitos">Requisitos</a></li>	  
-										  <li><a data-toggle="tab" href="#tb_observacion">Profesional</a></li>
+										  <li><a data-toggle="tab" href="#tb_profesional">Profesional</a></li>
 										</ul>
 									
 										<div class="tab-content" style="height: 350px">
@@ -137,7 +137,7 @@
 											</table>	
 									  		</div>
 									  		 		
-									  		<div id="tb_observacion" class="tab-pane fade">
+									  		<div id="tb_profesional" class="tab-pane fade">
 									    		<table class="table"  style="width: 100%">			
 												<tr>		
 													<td style="width: 15%"><form:label path="profesionalId">Profesional</form:label></td>

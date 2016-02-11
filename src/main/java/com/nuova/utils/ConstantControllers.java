@@ -62,6 +62,8 @@ public class ConstantControllers {
     public final static String FORM_ADD_ORDEN = "/formAddOrden";
     public final static String FORM_ADD_ORDEN_BY_PACIENTE = "/formAddOrden/{pacienteId}";
     public final static String FORM_EDIT_ORDEN = "/formEditOrden/{ordenId}";
+    public final static String FORM_EDIT_CONSULTA = "/formEditConsulta/{ordenId}";
+
     public final static String FORM_DELETE_ORDEN = "/formDeleteOrden/{ordenId}";
     public final static String ADD_ORDEN = "/addOrden";
     public final static String DELETE_ORDEN = "/deleteOrden";

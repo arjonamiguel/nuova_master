@@ -81,6 +81,7 @@ public class OrdenDAOImpl implements OrdenDAO {
         return this.sessionFactory.getCurrentSession()
                 .createQuery(" SELECT NEW com.nuova.dto.OrdenAlarmaDTO(COUNT(o.estado) , o.estado) "
                         + " FROM Orden o "
+                        + " WHERE o.ordenTipo.codigo in (101,102)"
                         + " GROUP BY o.estado").list();
     }
 
@@ -95,6 +96,13 @@ public class OrdenDAOImpl implements OrdenDAO {
                         + " FROM OrdenTipo ot "
                         + " WHERE ot.codigo = " + codigo
                 ).list().get(0);
+    }
+
+    public void deleteOrdenProfesional(Integer ordenId) {
+        this.sessionFactory.getCurrentSession().
+                createQuery(" DELETE FROM OrdenProfesional o WHERE o.orden.ordenId = :ordenId ").
+                setInteger("ordenId", ordenId).
+                executeUpdate();
     }
 
 }

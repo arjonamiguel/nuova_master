@@ -32,4 +32,6 @@ public interface OrdenManager {
 
     public OrdenTipo findOrdenTipoByCodigo(Integer codigo);
 
+    public void deleteOrdenProfesional(Integer ordenId);
+
 }

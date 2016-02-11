@@ -7,7 +7,7 @@
 
 <html>
 <head>
-	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">	
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <link rel="shortcut icon" href="<%=request.getContextPath()%>/resources/img/favicon/favicon.ico">
@@ -162,7 +162,8 @@
 													${al.descripcion}</span></li>
 										</c:forEach>
 									</ul>
-									<a href="/nuova/mainOrden">Ir al Administrador de Practicas</a>
+									<a href="/nuova/mainOrden">Ir al Administrador Ordenes de Practicas</a>
+									<a href="/nuova/mainConsultaOdontologica">Ir al Administrador de Ordenes de Practicas Odontológicas</a>
 									<div class="box_tooltips ocultar" id="tooltip_offers_insc">
 										Aquí podrás ver toda la información relacionada con tus
 										postulaciones <span class="icon arrow"></span>

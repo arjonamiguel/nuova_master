@@ -100,7 +100,7 @@
 			  		<ul class="dropdown-menu" role="menu">
 			  			<li><a href="/nuova/mainConsulta">Administrar Consultas</a></li>
 			  			<li><a href="/nuova/mainOrdenPractica">Administrar Practicas</a></li>
-						<li><a href="/nuova/mainConsultaOdontologica">Administrar Consultas Odontologicas</a></li>						
+						<li><a href="/nuova/mainConsultaOdontologica">Administrar Practicas Odontologicas</a></li>						
               		</ul>                
 				</li>
 				</sec:authorize>
