@@ -7,15 +7,13 @@
 <html lang="es">
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">	
-	
 	<title>Nuova</title>
 	<link rel="shortcut icon" href="<%=request.getContextPath()%>/resources/img/favicon/favicon.ico">
 	
 	<link href="<%=request.getContextPath()%>/resources/css/bootstrap/bootstrap.min.css" rel="stylesheet"/>
 	<script src="<c:url value="/resources/js/jquery/jquery-2.0.3.min.js" />"></script>
 	<script src="<c:url value="/resources/js/bootstrap/bootstrap.min.js" />"></script>
-	<script src="<%=request.getContextPath()%>/resources/js/jquery/bootstrap-collapse.js" /></script>
+	<script src="<%=request.getContextPath()%>/resources/js/jquery/bootstrap-collapse.js" />"></script>
 	<link href="<%=request.getContextPath()%>/resources/css/nuova.css" rel="stylesheet"/>
 	<link href="<%=request.getContextPath()%>/resources/css/panel.css" rel="stylesheet"/>
 	<link href="<%=request.getContextPath()%>/resources/css/bootstrap/bootstrap-responsive.css" rel="stylesheet"/>
@@ -25,13 +23,11 @@
 	<link href="<%=request.getContextPath()%>/resources/fullcalendar-2.6.0/scheduler.min.css" rel="stylesheet">
 	<script src='<%=request.getContextPath()%>/resources/fullcalendar-2.6.0/lib/moment.min.js'></script>
 	<script src='<%=request.getContextPath()%>/resources/fullcalendar-2.6.0/lib/jquery.min.js'></script>
-	<script src='<%=request.getContextPath()%>/resources/fullcalendar-2.6.0/lib/jquery-ui.custom.min.js'></script>
 	<script src='<%=request.getContextPath()%>/resources/fullcalendar-2.6.0/fullcalendar.min.js'></script>
 	<script src="<%=request.getContextPath()%>/resources/fullcalendar-2.6.0/scheduler.min.js"></script>
 	<script src='<%=request.getContextPath()%>/resources/fullcalendar-2.6.0/lang/es.js'></script>
 	
 	<script>
-	var currentDate='';
 	var fistTimeFlag=1;
 	var eventos=[{ id: '1', resourceId: 'b', start: '2016-01-07T02:00:00', end: '2016-01-07T07:00:00', title: 'Dr. Lizarraga' },{ id: '2', resourceId: 'c', start: '2016-01-07T05:00:00', end: '2016-01-07T22:00:00', title: 'Dr. Gordillo' },{ id: '3', resourceId: 'd', start: '2016-01-06', end: '2016-01-08', title: 'Dr Sotelo' },{ id: '4', resourceId: 'e', start: '2016-01-07T03:00:00', end: '2016-01-07T08:00:00', title: 'Dr Roldan' },{ id: '5', resourceId: 'f', start: '2016-01-07T00:30:00', end: '2016-01-07T02:30:00', title: 'Dr Brandan' }];
 	var eventosOut=[];
@@ -82,7 +78,7 @@
 		$(".fc-license-message").hide();
 	}
 	
-	
+	var currentDate='';
 	
 		function getDate(){
 		var today = new Date();
@@ -104,22 +100,6 @@
 
 		$(function() { // dom ready
 			currentDate=getDate();
-			
-			$('#external-events .fc-event').each(function() {
-
-					// store data so the calendar knows to render an event upon drop
-					$(this).data('event', {
-						title: $.trim($(this).text()), // use the element's text as the event title
-						stick: true // maintain when user navigates (see docs on the renderEvent method)
-					});
-		
-					// make the event draggable using jQuery UI
-					$(this).draggable({
-						zIndex: 999,
-						revert: true,      // will cause the event to go back to its
-						revertDuration: 0  //  original position after the drag
-					});
-			});
 
 			$('#calendar').fullCalendar({
 				resourceAreaWidth: 230,
@@ -130,30 +110,11 @@
 				header: {
 					left: 'promptResource today prev,next',
 					center: 'title',
-					right: 'timelineDay,timelineThreeDays,agendaWeek,month'
+					right: ''
 				},
-				customButtons: {
-					promptResource: {
-						text: '+ consultorio',
-						click: function() {
-							var title = prompt('Nombre Consultorio');
-							if (title) {
-								$('#calendar').fullCalendar(
-									'addResource',
-									{ title: title },
-									true // scroll to the new resource?
-								);
-							}
-						}
-					}
-				},
-				defaultView: 'timelineDay',
-				views: {
-					timelineThreeDays: {
-						type: 'timeline',
-						duration: { days: 3 }
-					}
-				},
+
+				defaultView: 'month',
+
 				resourceLabelText: 'Consultorios',
 				resources: [
 					{ id: 'a', title: 'Consultorio A' },
@@ -165,24 +126,30 @@
 					] },
 					{ id: 'e', title: 'Consultorio E' },
 					{ id: 'f', title: 'Consultorio F', eventColor: 'red' },
-					{ id: 'g', title: 'Consultorio G' }
-			
+					{ id: 'g', title: 'Consultorio G' },
+					{ id: 'h', title: 'Consultorio H' },
+					{ id: 'i', title: 'Consultorio I' },
+					{ id: 'j', title: 'Consultorio J' },
+					{ id: 'k', title: 'Consultorio K' },
+					{ id: 'l', title: 'Consultorio L' },
+					{ id: 'm', title: 'Consultorio M' },
+					{ id: 'n', title: 'Consultorio N' },
+					{ id: 'o', title: 'Consultorio O' },
+					{ id: 'p', title: 'Consultorio P' },
+					{ id: 'q', title: 'Consultorio Q' },
+					{ id: 'r', title: 'Consultorio R' },
+					{ id: 's', title: 'Consultorio S' },
+					{ id: 't', title: 'Consultorio T' },
+					{ id: 'u', title: 'Consultorio U' },
+					{ id: 'v', title: 'Consultorio V' },
+					{ id: 'w', title: 'Consultorio W' },
+					{ id: 'x', title: 'Consultorio X' },
+					{ id: 'y', title: 'Consultorio Y' },
+					{ id: 'z', title: 'Consultorio Z' }
 				],
 				events:eventos,
-				eventAfterRender: function(cal_event, js_event, view){calendar_event_clicked(cal_event, js_event, view);},
-				droppable: true, // this allows things to be dropped onto the calendar
-				drop: function(cal_event, js_event, view) {
-				
-				//	var object="{ id:" + object[prop].id + ", resourceId: '" + object[prop].resourceId + "', start: '" + object[prop].start._d + "', end: '" + object[prop].end._d + " ', title: '" + object[prop].title + "'}";
-				var object="{ id: 6"  + ", resourceId: 'b" + "', start: '" + cal_event._d + "', end: '" + cal_event._d + " ', title: 'gus'}";
-					eventos.push(object);
-					// is the "remove after drop" checkbox checked?
-					if ($('#drop-remove').is(':checked')) {
-						// if so, remove the element from the "Draggable Events" list
-						$(this).remove();
-					}
-				}
-				});
+				eventAfterRender: function(cal_event, js_event, view){calendar_event_clicked(cal_event, js_event, view);}
+			});
 
 		});
 
@@ -194,36 +161,7 @@
 
 	</script>
 	<style>
-		#external-events {
-		float: left;
-		width: 150px;
-		padding: 0 10px;
-		border: 1px solid #ccc;
-		background: #eee;
-		text-align: left;
-	}
-		
-	#external-events h4 {
-		font-size: 16px;
-		margin-top: 0;
-		padding-top: 1em;
-	}
-		
-	#external-events .fc-event {
-		margin: 10px 0;
-		cursor: pointer;
-	}
-		
-	#external-events p {
-		margin: 1.5em 0;
-		font-size: 11px;
-		color: #666;
-	}
-		
-	#external-events p input {
-		margin: 0;
-		vertical-align: middle;
-	}
+
 
 
 	#script-warning {
@@ -269,31 +207,14 @@
 			<div  class="panel-body" >
 				<div class="container-fluid" >
 	  				<div class="row-fluid" >
-	  				<div id="wrap">
-	  						<div class="span2">
-		    					<div id='external-events'>
-									<h4>Profesionales</h4>
-									<div class='fc-event'>Dr Lopez</div>
-									<div class='fc-event'>Dr Gonzalezt 2</div>
-									<div class='fc-event'>Dr Perez</div>
-									<div class='fc-event'>Dr Martinez</div>
-									<div class='fc-event'>Dr Rodriguez</div>
-									<p>
-										<input type='checkbox' id='drop-remove' />
-										<label for='drop-remove'>remove after drop</label>
-									</p>
-							</div>
-		    				</div>
-		    				<div class="span10">
+		    				<div class="span12">
 		    					<input id="txt_current_event" type="hidden" value="" />
 		    					<div id="script-warning">
 									This page should be running from a webserver, to allow fetching from the <code>json/</code> directory.
 								</div>
 								<div id="loading">loading...</div>
 								<div id="calendar"></div>
-								<div style='clear:both'></div>
 		    				</div>
-		    		</div>
 		    		</div>
 		    			<div class="row-fluid">
 		<div class="span8">

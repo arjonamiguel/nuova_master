@@ -25,7 +25,7 @@
 		  background-color: #f2dede;
 		  border-color: #ebccd1;
 		  padding:1px 20px 1px 20px;
-		  width:58%;
+		  width:92%;
 		}
 	</style>
 	

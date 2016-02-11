@@ -31,7 +31,7 @@ label.error {
 	background-color: #f2dede;
 	border-color: #ebccd1;
 	padding: 1px 20px 1px 20px;
-	width: 58%;
+	width: 70%;
 }
 </style>
 <SCRIPT language="javascript">
@@ -98,8 +98,10 @@ label.error {
 		}
 	}
 	function updateDate() {
-		document.getElementById("fechaVencimientoHabilitacion").value = document
-				.getElementById("registration-date").value;
+
+			document.getElementById("fechaVencimientoHabilitacion").value = document.getElementById("registration-date").value;
+
+		
 	}
 </SCRIPT>
 </head>
@@ -156,7 +158,7 @@ label.error {
 				<div class="formInput">
 				<div id="calendar">
 					<div class="input-group registration-date-time" style="padding-top:0%;">
-						<input class="form-control" name="registration_date" id="registration-date" value="554" 
+						<input class="form-control" name="registration_date" id="registration-date" value="" 
 						type="date"  onchange="javascript:updateDate();">
 	            	</div>
 	        	</div>  
@@ -242,12 +244,7 @@ label.error {
 </html>
 
 <script language="javascript">
-       
-        //var isSiprosa=$("#habilitacionSiprosa").val();
-        if(true){
-        	document.getElementById("registration-date").value=document.getElementById("fechaVencimientoHabilitacion").value;
-			$(".badge").click();
-        }
+		document.getElementById("registration-date").value= document.getElementById("fechaVencimientoHabilitacion").value  ;
         
       $("#profesional").validate({
     
