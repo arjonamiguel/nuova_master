@@ -1,5 +1,6 @@
 package com.nuova.dao;
 
+import java.util.Date;
 import java.util.List;
 
 import org.hibernate.Query;
@@ -60,6 +61,21 @@ public class CajaDAOImpl implements CajaDAO {
         // query.setMaxResults(pageable.getPageNumber());
         List<Caja> result = query.list();
         return new PageImpl<Caja>(result, pageable, result.size());
+    }
+
+    public List<Caja> findAllByfecha(Date fecha) {
+        Query query = this.sessionFactory.getCurrentSession()
+                .createQuery("FROM Caja c "
+                        + " WHERE CAST(c.fecha as date) = :fecha"
+                        + " ORDER BY c.cajaId")
+
+                .setDate("fecha", fecha);
+
+        // query.setFirstResult(pageable.getOffset());
+        // query.setMaxResults(pageable.getPageNumber());
+        List<Caja> result = query.list();
+
+        return result;
     }
 
 }

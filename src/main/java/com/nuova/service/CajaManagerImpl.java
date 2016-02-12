@@ -1,5 +1,6 @@
 package com.nuova.service;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,6 +44,10 @@ public class CajaManagerImpl implements CajaManager {
 
     public Page<Caja> findCajaBySearch(String search, Pageable pageable) {
         return cajaDAO.findCajaBySearch(search, pageable);
+    }
+
+    public List<Caja> findAllByfecha(Date fecha) {
+        return cajaDAO.findAllByfecha(fecha);
     }
 
 }

@@ -105,4 +105,9 @@ public class OrdenDAOImpl implements OrdenDAO {
                 executeUpdate();
     }
 
+    public OrdenTipo findOrdenTipoById(Integer id) {
+        return (OrdenTipo) this.sessionFactory.
+                getCurrentSession().get(OrdenTipo.class, id);
+    }
+
 }

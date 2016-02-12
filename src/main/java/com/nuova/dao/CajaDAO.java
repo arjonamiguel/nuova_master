@@ -1,5 +1,6 @@
 package com.nuova.dao;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.data.domain.Page;
@@ -22,5 +23,7 @@ public interface CajaDAO {
     public Page<Caja> findCajaByPageable(Pageable pageable);
 
     public Page<Caja> findCajaBySearch(String search, Pageable pageable);
+
+    public List<Caja> findAllByfecha(Date fecha);
 
 }

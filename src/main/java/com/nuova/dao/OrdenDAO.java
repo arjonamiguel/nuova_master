@@ -34,4 +34,6 @@ public interface OrdenDAO {
 
     public void deleteOrdenProfesional(Integer ordenId);
 
+    public OrdenTipo findOrdenTipoById(Integer id);
+
 }

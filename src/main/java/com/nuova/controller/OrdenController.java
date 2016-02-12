@@ -646,12 +646,7 @@ public class OrdenController {
     private OrdenTipo transformDtoToOrdenTipo(OrdenTipoDTO dto) {
         OrdenTipo retorno = new OrdenTipo();
         if (dto != null) {
-            retorno.setOrdenTipoId(dto.getOrdenTipoId());
-            retorno.setNombre(dto.getNombre());
-            retorno.setMonto1(dto.getMonto1());
-            retorno.setMonto2(dto.getMonto2());
-            retorno.setMonto3(dto.getMonto3());
-            retorno.setCodigo(dto.getCodigo());
+            retorno = ordenManager.findOrdenTipoById(dto.getOrdenTipoId());
         }
         return retorno;
     }
