@@ -96,5 +96,5 @@
 </body>
 </html>
 <script>
-document.getElementById("configuracion").parentNode.classList.add("active");
+document.getElementById("caja").parentNode.classList.add("active");
 </script>

@@ -18,6 +18,8 @@
 		<link href="<%=request.getContextPath()%>/resources/css/panel.css" rel="stylesheet"/>
 		<link href="<%=request.getContextPath()%>/resources/css/bootstrap/bootstrap-responsive.css" rel="stylesheet"/>
 		<script src="<c:url value="/resources/js/jquery/jquery.validate.min.js" />"></script>
+		<link href="<%=request.getContextPath()%>/resources/montrezorro-bootstrap-checkbox-fa865ff/css/bootstrap-checkbox.css" rel="stylesheet"/>
+		<script src="<%=request.getContextPath()%>/resources/montrezorro-bootstrap-checkbox-fa865ff/js/bootstrap-checkbox.js" /></script>
 	
 	  <SCRIPT language="javascript">
         var coseguro=0;
@@ -88,15 +90,20 @@ function updateDate(){
 }
 		
 		function updatecoseguro(){
-			if(coseguro==0){
-				coseguro=1;
-				document.getElementById("coseguro").value=1;
-
+			if(document.getElementById("coseguro").value=="true" && coseguroFlag==0){
+			//validacion on load
+				coseguroFlag=1;
+				if($( "#coseguro").prop( "checked" )){
+					$("#coseguroAux").click();
+				}
 			}else{
-				coseguro=0;
-				document.getElementById("coseguro").value=0;
-
-			}
+			//validacion on change
+				if($( "#coseguro").prop( "checked" )){
+					 $("#coseguro").removeAttr("checked");
+				}else{
+					$("#coseguro").click();
+				}
+			}	
 		}
         </SCRIPT>
         <style>
@@ -139,16 +146,19 @@ label.error {
 		 		</div>
 		 		<div class="row-fluid">
 		 			<div class="span4">
-		 				<div id="labelDate" class="formLabel" style="width:30%"><form:label path="fechaNacimiento">Fecha de Nacimiento:</form:label></div>
-							<div style="visibility:hidden;height:0px;"><form:input path="fechaNacimiento" class="date"/></div>
-							<div id="calendar">
-							<div class="input-group registration-date-time" style="padding-top:0%;">
-							<input class="form-control" name="registration_date" id="registration-date" type="date"  onchange="javascript:updateDate();">
-	            		</div>
-	        	</div> 
-		 				
-		 				
-		 				
+		 				<div id="labelDate" class="formLabel" style="width:30%">
+		 					<form:label path="fechaNacimiento">Fecha de Nacimiento:</form:label>
+		 				</div>
+		 				<div class="formInput">
+						<div style="visibility:hidden;height:0px;">
+							<form:input path="fechaNacimiento" class="date"/>
+						</div>
+						<div id="calendar">
+							<div class="input-group registration-date-time" style="padding-top:0%;width:101%;">
+									<input class="form-control" name="registration_date" id="registration-date" type="date"  onchange="javascript:updateDate();">
+	            			</div>
+	        			</div> 
+	        			</div> 			
 		 			</div>
 		 			<div class="span4">
 		 				<div class="formLabel"><form:label path="telefono">Telefono:</form:label></div>
@@ -172,12 +182,18 @@ label.error {
 		 				<div class="formLabel"><form:label path="domicilio">Domicilio:</form:label></div>
 		 				<div class="formInput"><form:textarea path="domicilio" cssStyle="width:65%"/></div>
 		 			</div>
-		 			<div class="span4">
-		 				<div class="formLabel"><form:label path="coseguro">Coseguro:</form:label></div>
-		 				<div class="formInput">
-								<form:checkbox path="coseguro" id="coseguro"/>
-						</div>
-		 			</div>
+		 			<div class="span1" style="margin-top:2%;">
+			   				<div class="formLabel"><form:label path="coseguro">Coseguro:</form:label></div>
+			   				
+							
+			   		</div>
+			   		<div class="span3" style="margin-top:3%;">
+			   		
+							<div class="material-switch pull-left">
+								<input id="coseguro" name="coseguro" type="checkbox" value="true">
+								<label for="coseguro" class="label-info"></label>
+							</div>
+			   		</div>
 		 		</div>
 		 		<div class="row-fluid">
 			   		<div class="span4">
@@ -217,7 +233,7 @@ label.error {
 						        <td>${po.obrasocialId}<input type="hidden" name = "obrasocialListEdit[<%=index%>].obrasocialId" value = "${po.obrasocialId}" /> </td>
 						        <td>${po.nombre}</td>        
 						        <td><input type="text" value="${po.credencial}" name = "obrasocialListEdit[<%=index%>].credencial"></td>
-						        <td> <input type="checkbox" name="obrasocialListEdit[<%=index%>].original" ${po.original} /></td>
+						        <td> <input type="checkbox" name="obrasocialListEdit[<%=index%>].original" ${po.original} class="checkbox"/></td>
 						        <%index++;%>
 					    	</tr>
 							</c:forEach>
@@ -242,6 +258,7 @@ label.error {
 </body>
 </html>
 <script>
+			$(".checkbox").checkbox();
 			$("#paciente").validate({
     
         // Specify the validation rules

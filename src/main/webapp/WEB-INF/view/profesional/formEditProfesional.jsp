@@ -186,17 +186,21 @@ label.error {
 <div style="padding-top:30px" class="panel-body" >
 
 	<div class="row-fluid">
-			<div class="span9">
+			<div class="span6">
 			</div>
-			<div class="span2">
-			 	<form:select path="especialidad">
+			<div class="span6">
+				<div style="float:right;padding-right:2%;">
+						<INPUT type="button" value="Agregar" onclick="addRow('dataTable')" class="btn btn-info"/>
+				</div>
+				<div style="float:right;padding-right:2%;">
+					
+								 	<form:select path="especialidad">
 				   <form:option value="NONE" label="Seleccione Especialidad ..."/>
 				   <form:options items="${especialidadList}" itemLabel="nombre" itemValue="especialidadId" />			    
 				</form:select>
+				</div>
 			</div>
-    		<div class="span1">
-    			<div style="float:left;"><INPUT type="button" value="Agregar" onclick="addRow('dataTable')" class="btn btn-info"/></div>
-    		</div>
+    
     </div>
     <div class="tableContainer"> 
 

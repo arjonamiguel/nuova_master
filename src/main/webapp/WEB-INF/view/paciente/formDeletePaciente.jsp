@@ -17,6 +17,9 @@
 		<link href="<%=request.getContextPath()%>/resources/css/nuova.css" rel="stylesheet"/>
 		<link href="<%=request.getContextPath()%>/resources/css/panel.css" rel="stylesheet"/>
 		<link href="<%=request.getContextPath()%>/resources/css/bootstrap/bootstrap-responsive.css" rel="stylesheet"/>
+		<link href="<%=request.getContextPath()%>/resources/montrezorro-bootstrap-checkbox-fa865ff/css/bootstrap-checkbox.css" rel="stylesheet"/>
+		<script src="<%=request.getContextPath()%>/resources/montrezorro-bootstrap-checkbox-fa865ff/js/bootstrap-checkbox.js" /></script>
+		
 	
 <SCRIPT language="javascript">
     
@@ -93,16 +96,16 @@
 		function updatecoseguro(){
 			if(document.getElementById("coseguro").value=="true" && coseguroFlag==0){
 			//validacion on load
-				$("#infocoseguro").click();
 				coseguroFlag=1;
+				if($( "#coseguro").prop( "checked" )){
+					$("#coseguroAux").click();
+				}
 			}else{
 			//validacion on change
-				if(coseguroFlag==1){
-					document.getElementById("coseguro").value="false";
-					coseguroFlag=0;
+				if($( "#coseguro").prop( "checked" )){
+					 $("#coseguro").removeAttr("checked");
 				}else{
-					document.getElementById("coseguro").value="true";
-					coseguroFlag=1;
+					$("#coseguro").click();
 				}
 			}	
 		}
@@ -198,10 +201,13 @@
 			   				<div class="formLabel"><form:label path="domicilio">Domicilio:</form:label></div>
         					<div class="formInput"><form:textarea path="domicilio" cssStyle="width:78%" disabled="true"/></div>
 			   		</div>
-			   		<div class="span4" style="margin-top:2%;" >
-			   				<div class="formLabel"><form:label path="coseguro">Coseguro:</form:label></div>
-							<div class="formInput""><form:checkbox path="coseguro" id="coseguro" disabled="true"/></div>
-					<!--		<label for="infocoseguro" style="padding-left:28%;" class="not-active"><input type="checkbox" id="infocoseguro" class="badgebox" onchange="javascript:updatecoseguro();"><span class="badge">&check;</span></label> -->
+			   		<div class="span4">
+			   				<div class="formLabel" style="padding-top:6px;;"><form:label path="coseguro">Coseguro:</form:label></div>
+			   				<div style="visibility:hidden;"><form:checkbox path="coseguro" id="coseguro"/></div>
+								<div class="material-switch pull-left">
+									<input id="coseguroAux" name="coseguroAux" type="checkbox" value="true" disabled="true">
+									<label for="coseguroAux" class="label-info" onclick="updatecoseguro()"></label>
+								</div>
 			   		</div>
 			   		
 			   	</div>
@@ -267,7 +273,7 @@
 							        <td>${po.obrasocialId}<input type="hidden" name = "obrasocialListEdit[<%=index%>].obrasocialId" value = "${po.obrasocialId}" /> </td>
 							        <td>${po.nombre}</td>        
 							        <td><input type="text" value="${po.credencial}" name = "obrasocialListEdit[<%=index%>].credencial"></td>
-							        <td> <input type="checkbox" name="obrasocialListEdit[<%=index%>].original" ${po.original} /></td>
+							        <td> <input type="checkbox" name="obrasocialListEdit[<%=index%>].original" ${po.original} class="checkbox"/></td>
 							        <td><button type='button' class='btn btn-link' onClick='Eliminar(this.parentNode.parentNode.rowIndex)'>eliminar</button></td>
 							        <%index++;%>
 						    	</tr>
@@ -353,5 +359,6 @@
 <script>
         	document.getElementById("registration-date").value=document.getElementById("fechaNacimiento").value;
         	updatecoseguro();
-			updateTitular();
+			$(".checkbox").checkbox();
+			
 </script>

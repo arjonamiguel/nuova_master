@@ -83,8 +83,11 @@
 		<div class="row-fluid">
 			<div class="span12">
 				<div style="float:right;padding-bottom:1%;padding-right:1%;">
-	         			<input class="btn btn-success" value="Siguiente >>" onclick="continueButton();"/>
 	         			<input class="btn" type="button" value="Cancelar" onclick="location.href='/nuova/mainPaciente';"/>
+	        	</div>
+	        	<div style="float:right;padding-bottom:1%;padding-right:1%;">
+	         			
+	         			<input class="btn btn-success" value="Siguiente >>" onclick="continueButton();"/>
 	        	</div>
 			</div>
 		</div>

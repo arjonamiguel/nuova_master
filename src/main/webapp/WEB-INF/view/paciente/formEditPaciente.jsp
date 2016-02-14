@@ -19,6 +19,8 @@
 		<link href="<%=request.getContextPath()%>/resources/css/bootstrap/bootstrap-responsive.css" rel="stylesheet"/>
 		<script src="<c:url value="/resources/js/jquery/jquery.validate.min.js" />"></script>
 		
+		<link href="<%=request.getContextPath()%>/resources/montrezorro-bootstrap-checkbox-fa865ff/css/bootstrap-checkbox.css" rel="stylesheet"/>
+		<script src="<%=request.getContextPath()%>/resources/montrezorro-bootstrap-checkbox-fa865ff/js/bootstrap-checkbox.js" /></script>
 <style>
 label.error {
   color: #a94442;
@@ -66,6 +68,10 @@ label.error {
             var element2 = document.createElement("input");
             element2.type = "checkbox";
             element2.name="obrasocialListEdit["+index+"].original";
+            var att = document.createAttribute("class");
+            att.value = "checkbox";  
+       		element2.setAttributeNode(att);
+       	
             cell4.appendChild(element2);
             
             var cell5 = row.insertCell(4);
@@ -73,8 +79,9 @@ label.error {
 
             index ++;
  
+ 			$(".checkbox").checkbox();
          }
- 
+         
         function deleteRow(tableID) {
             try {
             var table = document.getElementById(tableID);
@@ -106,16 +113,16 @@ label.error {
 		function updatecoseguro(){
 			if(document.getElementById("coseguro").value=="true" && coseguroFlag==0){
 			//validacion on load
-				$("#infocoseguro").click();
 				coseguroFlag=1;
+				if($( "#coseguro").prop( "checked" )){
+					$("#coseguroAux").click();
+				}
 			}else{
 			//validacion on change
-				if(coseguroFlag==1){
-					document.getElementById("coseguro").value="false";
-					coseguroFlag=0;
+				if($( "#coseguro").prop( "checked" )){
+					 $("#coseguro").removeAttr("checked");
 				}else{
-					document.getElementById("coseguro").value="true";
-					coseguroFlag=1;
+					$("#coseguro").click();
 				}
 			}	
 		}
@@ -205,11 +212,17 @@ label.error {
 			   				<div class="formLabel"><form:label path="domicilio">Domicilio:</form:label></div>
         					<div class="formInput"><form:textarea path="domicilio" cssStyle="width:78%"/></div>
 			   		</div>
-			   		<div class="span4" style="margin-top:2%;">
-			   				<div class="formLabel"><form:label path="coseguro">Coseguro:</form:label></div>
-							<div class="formInput"><form:checkbox path="coseguro" id="coseguro"/></div>
-						<!--	<label for="infocoseguro" style="padding-left:28%;"><input type="checkbox" id="infocoseguro" class="badgebox" onchange="javascript:updatecoseguro();"><span class="badge">&check;</span></label> -->
-			   		</div>			   
+			   		<div class="span4">
+			   				<div class="formLabel" style="padding-top:6px;;"><form:label path="coseguro">Coseguro:</form:label></div>
+			   				<div style="visibility:hidden;"><form:checkbox path="coseguro" id="coseguro"/></div>
+							<div class="material-switch pull-left">
+									<input id="coseguroAux" name="coseguroAux" type="checkbox" value="true" >
+									<label for="coseguroAux" class="label-info" onclick="updatecoseguro()"></label>
+							</div>
+			   		</div>
+			   	
+						
+			   					   
 			   	</div>
 			   	<div class="row-fluid">
 			   		<div class="span4">
@@ -253,7 +266,7 @@ label.error {
 						</form:select>
 					</div>
 					<div class="span1">
-						<div style="float:right;"><INPUT type="button" value="Agregar" onclick="addRow('tb_paciente_obrasocial')" class="btn btn-info"/></div>
+						<div style="float:right;"><INPUT type="button" value="Agregar" onclick="addRow('tb_paciente_obrasocial');" class="btn btn-info"/></div>
 					</div>
 				</div>
 				<div class="row-fluid">
@@ -273,7 +286,10 @@ label.error {
 							        <td>${po.obrasocialId}<input type="hidden" name = "obrasocialListEdit[<%=index%>].obrasocialId" value = "${po.obrasocialId}" /> </td>
 							        <td>${po.nombre}</td>        
 							        <td><input type="text" value="${po.credencial}" name = "obrasocialListEdit[<%=index%>].credencial"></td>
-							        <td> <input type="checkbox" name="obrasocialListEdit[<%=index%>].original" ${po.original} /></td>
+							        <td>
+							        	 <input type="checkbox" name="obrasocialListEdit[<%=index%>].original" ${po.original} class="checkbox" />
+							        	 
+							        </td>
 							        <td>
 							        <button type='button' class='btn btn-danger btn-xs' onClick='Eliminar(this.parentNode.parentNode.rowIndex)'><span class="icon icon-remove" title="Eliminar"></span></button>
 							        </td>
@@ -362,7 +378,8 @@ label.error {
 			document.getElementById("mainPaciente").parentNode.classList.add("active");
         	document.getElementById("registration-date").value=document.getElementById("fechaNacimiento").value;
         	updatecoseguro();
-			//updateTitular();
+			$(".checkbox").checkbox();
+			
 			
 		$("#paciente").validate({
     

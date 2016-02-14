@@ -18,6 +18,9 @@
 		<link href="<%=request.getContextPath()%>/resources/css/panel.css" rel="stylesheet"/>
 		<link href="<%=request.getContextPath()%>/resources/css/bootstrap/bootstrap-responsive.css" rel="stylesheet"/>
 		<script src="<c:url value="/resources/js/jquery/jquery.validate.min.js" />"></script>
+		<link href="<%=request.getContextPath()%>/resources/montrezorro-bootstrap-checkbox-fa865ff/css/bootstrap-checkbox.css" rel="stylesheet"/>
+		<script src="<%=request.getContextPath()%>/resources/montrezorro-bootstrap-checkbox-fa865ff/js/bootstrap-checkbox.js" /></script>
+		
 	
 	<style>
 	.chkbox {
@@ -100,7 +103,7 @@
 														<b>Presentó la orden original del médico solicitante?</b>
 													</td>
 													<td  style="text-align:left" colspan="2">			
-													    <input type="checkbox" id="reqOrdenMedico" name = "reqOrdenMedico"  />
+													    <input type="checkbox" id="reqOrdenMedico" name = "reqOrdenMedico" class="checkbox" />
 													</td>
 												</tr>
 												<tr>
@@ -109,7 +112,7 @@
 														<b>Presentó fotocopia de la credencial de la prestadora OSPSIP?</b>
 													</td>
 													<td  style="text-align:left" colspan="2">			
-													    <input type="checkbox" id="reqCredecial" name="reqCredecial"  />
+													    <input type="checkbox" id="reqCredecial" name="reqCredecial" class="checkbox" />
 													</td>
 												</tr>
 									
@@ -121,7 +124,7 @@
 														<b>Presentó fotocopia de los 3 último recibos como Monotributista o Ama de Casa?</b>
 													</td>
 													<td  style="text-align:left" colspan="2">			
-													    <input type="checkbox" id="reqMonotributista" name="reqMonotributista" />
+													    <input type="checkbox" id="reqMonotributista" name="reqMonotributista" class="checkbox"/>
 													</td>
 												</tr>	
 												<tr>
@@ -130,7 +133,7 @@
 														<b>Presentó fotocopia del último recibo de sueldo?</b>
 													</td>
 													<td  style="text-align:left" colspan="2">			
-													    <input type="checkbox" id="reqReciboSueldo" name="reqReciboSueldo" />
+													    <input type="checkbox" id="reqReciboSueldo" name="reqReciboSueldo" class="checkbox"/>
 													</td>
 												</tr>
 									
@@ -180,6 +183,7 @@
 </html>
 <script>
 		document.getElementById("mainPaciente").parentNode.classList.add("active");
+		$(".checkbox").checkbox();
 			$("#ordenDto").validate({
     
 		        // Specify the validation rules

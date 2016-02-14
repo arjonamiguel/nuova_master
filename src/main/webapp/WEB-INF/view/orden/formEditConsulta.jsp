@@ -17,6 +17,9 @@
 		<link href="<%=request.getContextPath()%>/resources/css/nuova.css" rel="stylesheet"/>
 		<link href="<%=request.getContextPath()%>/resources/css/panel.css" rel="stylesheet"/>
 		<link href="<%=request.getContextPath()%>/resources/css/bootstrap/bootstrap-responsive.css" rel="stylesheet"/>
+		<link href="<%=request.getContextPath()%>/resources/montrezorro-bootstrap-checkbox-fa865ff/css/bootstrap-checkbox.css" rel="stylesheet"/>
+		<script src="<%=request.getContextPath()%>/resources/montrezorro-bootstrap-checkbox-fa865ff/js/bootstrap-checkbox.js" /></script>
+		
 	
 	<script type="text/javascript">
 	
@@ -128,7 +131,7 @@
 															<b>Presentó la orden original del médico solicitante?</b>
 														</td>
 														<td  style="text-align:left" colspan="2">			    
-														    <form:checkbox path="reqOrdenMedico" />
+														    <form:checkbox path="reqOrdenMedico" class="checkbox"/>
 														</td>
 													</tr>
 													<tr>
@@ -137,7 +140,7 @@
 															<b>Presentó fotocopia de la credencial de la prestadora OSPSIP?</b>
 														</td>
 														<td  style="text-align:left" colspan="2">				    
-														    <form:checkbox path="reqCredecial" />
+														    <form:checkbox path="reqCredecial" class="checkbox"/>
 														</td>
 													</tr>
 										
@@ -149,7 +152,7 @@
 															<b>Presentó fotocopia de los 3 último recibos como Monotributista o Ama de Casa?</b>
 														</td>
 														<td  style="text-align:left" colspan="2">				    
-														    <form:checkbox path="reqMonotributista" />
+														    <form:checkbox path="reqMonotributista" class="checkbox"/>
 														</td>
 													</tr>	
 													<tr>
@@ -158,7 +161,7 @@
 															<b>Presentó fotocopia del último recibo de sueldo?</b>
 														</td>
 														<td  style="text-align:left" colspan="2">				    
-														    <form:checkbox path="reqReciboSueldo" />
+														    <form:checkbox path="reqReciboSueldo" class="checkbox"/>
 														</td>
 													</tr>
 										
@@ -227,4 +230,5 @@
 </html>
 <script>
 document.getElementById("mainOrden").parentNode.classList.add("active");
+$(".checkbox").checkbox();
 </script>

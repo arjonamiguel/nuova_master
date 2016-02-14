@@ -18,6 +18,8 @@
 		<link href="<%=request.getContextPath()%>/resources/css/panel.css" rel="stylesheet"/>
 		<link href="<%=request.getContextPath()%>/resources/css/bootstrap/bootstrap-responsive.css" rel="stylesheet"/>
 		<script src="<c:url value="/resources/js/jquery/jquery.validate.min.js" />"></script>
+		<link href="<%=request.getContextPath()%>/resources/montrezorro-bootstrap-checkbox-fa865ff/css/bootstrap-checkbox.css" rel="stylesheet"/>
+		<script src="<%=request.getContextPath()%>/resources/montrezorro-bootstrap-checkbox-fa865ff/js/bootstrap-checkbox.js" /></script>
 		
 <style>
 label.error {
@@ -65,6 +67,9 @@ label.error {
            var element3 = document.createElement("input");
            element3.type = "checkbox";
            element3.name="obrasocialListEdit["+index+"].original";
+            var att = document.createAttribute("class");
+            att.value = "checkbox";  
+       		element3.setAttributeNode(att);
            cell4.appendChild(element3);
 
            var cell1 = row.insertCell(4);
@@ -72,6 +77,7 @@ label.error {
            cell1.innerHTML = "<button type='button' class='btn btn-link' onClick='Eliminar(this.parentNode.parentNode.rowIndex)'>eliminar</button>"
 
            index ++;
+           $(".checkbox").checkbox();
 
         }
 
@@ -197,10 +203,16 @@ label.error {
 			   				<div class="formLabel"><form:label path="domicilio">Domicilio:</form:label></div>
         					<div class="formInput"><form:textarea path="domicilio" cssStyle="width:78%"/></div>
 			   		</div>
-			   		<div class="span4" style="margin-top:2%;">
+			   		<div class="span1" style="margin-top:2%;">
 			   				<div class="formLabel"><form:label path="coseguro">Coseguro:</form:label></div>
-							<div class="formInput">
-								<form:checkbox path="coseguro" id="coseguro"/>
+			   				
+							
+			   		</div>
+			   		<div class="span3" style="margin-top:3%;">
+			   		
+							<div class="material-switch pull-left">
+								<input id="coseguro" name="coseguro" type="checkbox" value="true">
+								<label for="coseguro" class="label-success"></label>
 							</div>
 			   		</div>
 	

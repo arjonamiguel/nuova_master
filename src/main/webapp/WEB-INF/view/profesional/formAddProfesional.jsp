@@ -123,13 +123,13 @@
         	<div class="formInput"><form:input path="nombre" type="text"/></div>
 	    </div>
 	    <div class="span4">
-			<div class="formLabel"><form:label path="telefono">Telefono:</form:label></div>
+			<div class="formLabel"><form:label path="telefono">Tel&eacutefono:</form:label></div>
 	        <div class="formInput"><form:input path="telefono" type="number"/></div>
 	    </div>
   </div>
     <div class="row-fluid">
 	    <div class="span4">
-			<div class="formLabel"><form:label path="matricula">Matricula:</form:label></div>
+			<div class="formLabel"><form:label path="matricula">Matr&iacutecula:</form:label></div>
 	        <div class="formInput"><form:input path="matricula" type="number"/></div>
 	    </div>
 	    <div class="span4">
@@ -137,7 +137,7 @@
 	       <div class="formInput"><form:input path="registroNacional" type="number"/></div>
 	    </div>
 	    <div class="span4">
-	     	<div class="formLabel"><form:label path="tituloProfesional">Titulo Profesional:</form:label></div>
+	     	<div class="formLabel"><form:label path="tituloProfesional">T&iacutetulo Profesional:</form:label></div>
 	        <div class="formInput"><form:input path="tituloProfesional" type="text"/></div>
 	    </div>
   </div>
@@ -246,10 +246,10 @@
 		            apellido: "Ingrese apellido",
 		            nombre: "Ingrese nombre",
 		            telefono: {
-		                required: "Ingrese telefono",
-		                minlength: "Telefono debe tener al menos 5 caracteres de largo"
+		                required: "Ingrese tel&eacutefono",
+		                minlength: "T&eacutelefono debe tener al menos 5 caracteres de largo"
 		            },
-		            matricula: "Ingrese matricula",
+		            matricula: "Ingrese matr&iacutecula",
 		            registroNacional: "Ingrese Registro Nacional"
 		        },
 		                submitHandler: function(form) {
