@@ -87,7 +87,7 @@
 	        	</div>
 	        	<div style="float:right;padding-bottom:1%;padding-right:1%;">
 	         			
-	         			<input class="btn btn-success" value="Siguiente >>" onclick="continueButton();"/>
+	         			<input type="button" class="btn btn-success" value="Siguiente >>" onclick="continueButton();"/>
 	        	</div>
 			</div>
 		</div>

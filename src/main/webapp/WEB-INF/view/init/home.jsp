@@ -118,7 +118,7 @@
 									<div class="info">
 										<h1>${usuario.username}</h1>
 										<h2>ROL:</h2>
-										<a href="#">Visitanos en: www.nuova.com</a> <a href="#"
+										<a href="http://www.nuovamed.com">Visitanos en: www.nuovamed.com</a> <a href="http://www.nuovamed.com"
 											class="block_link"> <span class="icon clip"></span> <span>Bienvenido
 												a SYSNUOVA</span>
 										</a>
@@ -129,7 +129,7 @@
 <!-- 									onkeypress="javascript:return WebForm_FireDefaultButton(event, 'ContainerGeneralOverWrite_ContainerGeneral_btnSearchOffers')"> -->
 
 									<div class="buscador buscador_mvl">
-										<h2>Busqueda de Pacientes</h2>
+										<h2>B&uacute;squeda de Pacientes</h2>
 
 										<div class="">										
 										<input type="hidden" name="pacienteId" id="pacienteId" value="">										
@@ -139,7 +139,7 @@
 												name="ctl00$ContainerGeneralOverWrite$ContainerGeneral$sq"
 												type="text"
 												id="ContainerGeneralOverWrite_ContainerGeneral_sq"
-												placeholder="Inicie la busqueda de pacientes ..."
+												placeholder="Inicie la b&uacute;squeda de pacientes ..."
 												autocomplete="off"
 												style="height: 40px; width: 50%">
 										</div>
@@ -162,8 +162,8 @@
 													${al.descripcion}</span></li>
 										</c:forEach>
 									</ul>
-									<a href="/nuova/mainOrden">Ir al Administrador Ordenes de Practicas</a>
-									<a href="/nuova/mainConsultaOdontologica">Ir al Administrador de Ordenes de Practicas Odontológicas</a>
+									<a href="/nuova/mainOrdenPractica">Ir al Administrador Ordenes de Pr&aacute;cticas</a>
+									<a href="/nuova/mainConsultaOdontologica">Ir al Administrador de Ordenes de Pr&aacute;cticas Odontol&oacute;gicas</a>
 									<div class="box_tooltips ocultar" id="tooltip_offers_insc">
 										Aquí podrás ver toda la información relacionada con tus
 										postulaciones <span class="icon arrow"></span>
@@ -177,7 +177,7 @@
 <!-- 									onkeypress="javascript:return WebForm_FireDefaultButton(event, 'ContainerGeneralOverWrite_ContainerGeneral_btnSearchOffers1')"> -->
 
 									<div class="buscador">
-										<h2>Busqueda de Pacientes</h2>
+										<h2>B&uacute;squeda de Pacientes</h2>
 										<div class="">
 										<input type="hidden" name="pacienteId" id="pacienteId" value="">
 											<span class="icon palabra_clave"></span> 
@@ -188,7 +188,7 @@
 												id="ContainerGeneralOverWrite_ContainerGeneral_sq1"
 												data-su="/ofertas-de-trabajo/"
 												class="js-cargos-suggest typeahead"
-												placeholder="Inicie la busqueda de pacientes ..."
+												placeholder="Inicie la b&uacute;squeda de pacientes ..."
 												style="height: 40px; width: 50%"
 												autocomplete="off">
 										</div>
