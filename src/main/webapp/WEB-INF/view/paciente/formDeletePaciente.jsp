@@ -6,18 +6,24 @@
 <html>
 <head>
 		<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<title>Nuova</title>
+		<link rel="shortcut icon" href="<%=request.getContextPath()%>/resources/img/favicon/favicon.ico">
+		
         <link href="<%=request.getContextPath()%>/resources/css/bootstrap/bootstrap.min.css" rel="stylesheet"/>       
 		<script src="<c:url value="/resources/js/jquery/jquery-2.0.3.min.js" />"></script>
 		<script src="<c:url value="/resources/js/bootstrap/bootstrap.min.js" />"></script>
-		<script src="<%=request.getContextPath()%>/resources/js/jquery/bootstrap-collapse.js" />"></script>
+		<script src="<%=request.getContextPath()%>/resources/js/jquery/bootstrap-collapse.js" /></script>
 		<link href="<%=request.getContextPath()%>/resources/css/nuova.css" rel="stylesheet"/>
 		<link href="<%=request.getContextPath()%>/resources/css/panel.css" rel="stylesheet"/>
 		<link href="<%=request.getContextPath()%>/resources/css/bootstrap/bootstrap-responsive.css" rel="stylesheet"/>
+		<link href="<%=request.getContextPath()%>/resources/montrezorro-bootstrap-checkbox-fa865ff/css/bootstrap-checkbox.css" rel="stylesheet"/>
+		<script src="<%=request.getContextPath()%>/resources/montrezorro-bootstrap-checkbox-fa865ff/js/bootstrap-checkbox.js" /></script>
+		
 	
 <SCRIPT language="javascript">
     
-        var liberadoFlag=0;
+        var coseguroFlag=0;
         var titularFlag=0;
    
 		
@@ -87,19 +93,19 @@
 		function updateDate(){
 			document.getElementById("fechaNacimiento").value=document.getElementById("registration-date").value;
 		}
-		function updateLiberado(){
-			if(document.getElementById("liberado").value=="true" && liberadoFlag==0){
+		function updatecoseguro(){
+			if(document.getElementById("coseguro").value=="true" && coseguroFlag==0){
 			//validacion on load
-				$("#infoLiberado").click();
-				liberadoFlag=1;
+				coseguroFlag=1;
+				if($( "#coseguro").prop( "checked" )){
+					$("#coseguroAux").click();
+				}
 			}else{
 			//validacion on change
-				if(liberadoFlag==1){
-					document.getElementById("liberado").value="false";
-					liberadoFlag=0;
+				if($( "#coseguro").prop( "checked" )){
+					 $("#coseguro").removeAttr("checked");
 				}else{
-					document.getElementById("liberado").value="true";
-					liberadoFlag=1;
+					$("#coseguro").click();
 				}
 			}	
 		}
@@ -183,9 +189,9 @@
 			   	</div>
 			   	<div class="row-fluid">
 			   		<div class="span4">
-			   				<div class="formLabel"><form:label path="provincia">Provincia:</form:label></div>
+			   				<div class="formLabel"><form:label path="provincia">Provincia Origen:</form:label></div>
         					<div class="formInput">
-        						<form:select path="provincia" style="width:68%; margin-bottom:0px" disabled="true">
+        						<form:select path="provincia" style="width:83%; margin-bottom:0px" disabled="true">
 									<form:option value="NONE" label="Seleccione Provincia ..."/>
 									<form:options items="${provinciaList}"  />			    
 								</form:select>
@@ -193,18 +199,40 @@
 			   		</div>
 			   		<div class="span4">
 			   				<div class="formLabel"><form:label path="domicilio">Domicilio:</form:label></div>
-        					<div class="formInput"><form:textarea path="domicilio" cssStyle="width:64%" disabled="true"/></div>
+        					<div class="formInput"><form:textarea path="domicilio" cssStyle="width:78%" disabled="true"/></div>
 			   		</div>
-			   		<div class="span2" style="margin-top:2%;" >
-			   				<div class="formLabel"><form:label path="liberado">Liberado:</form:label></div>
-							<div style="visibility:visible;height:0px;"><form:checkbox path="liberado" id="liberado"/></div>
-					<!--		<label for="infoLiberado" style="padding-left:28%;" class="not-active"><input type="checkbox" id="infoLiberado" class="badgebox" onchange="javascript:updateLiberado();"><span class="badge">&check;</span></label> -->
+			   		<div class="span4">
+			   				<div class="formLabel" style="padding-top:6px;;"><form:label path="coseguro">Coseguro:</form:label></div>
+			   				<div style="visibility:hidden;"><form:checkbox path="coseguro" id="coseguro"/></div>
+								<div class="material-switch pull-left">
+									<input id="coseguroAux" name="coseguroAux" type="checkbox" value="true" disabled="true">
+									<label for="coseguroAux" class="label-info" onclick="updatecoseguro()"></label>
+								</div>
 			   		</div>
-			   		<div class="span2" style="margin-top:2%;">
-			   			<div class="formLabel"><form:label path="titular">Titular:</form:label></div>
-							<div style="visibility:visible;height:0px;"><form:checkbox path="titular" id="titular"/></div>
-				<!--			<label for="infoTitular" style="padding-left:28%;" class="not-active"><input type="checkbox" id="infoTitular" class="badgebox" onchange="javascript:updateTitular();"><span class="badge">&check;</span></label> -->
+			   		
+			   	</div>
+			   		<div class="row-fluid">
+			   		<div class="span4">
+			   				<div class="formLabel"><form:label path="titular">Parentesco:</form:label></div>
+							<div  class="formInput">
+								<form:select path="parentesco" style="width:83%; margin-bottom:0px" disabled="true">
+									<form:option value="-1" label="Seleccione Parentesco ..."/>
+									<form:options items="${parentescosList}"  itemLabel="value" itemValue="id"/>			    
+								</form:select>
+							</div>
 			   		</div>
+					
+					<c:if test="${paciente.parentesco == 0}">		   		
+			   		<div class="span4">
+			   				<div class="formLabel"><form:label path="zonaAfiliacion">Zona Afiliación:</form:label></div>
+        					<div class="formInput">
+        						<form:select path="zonaAfiliacion" style="width:83%; margin-bottom:0px">
+									<form:option value="NONE" label="Seleccione Zona Afiliación ..."/>
+									<form:options items="${provinciaList}"  />			    
+								</form:select>
+        					</div>
+			   		</div>
+			   		</c:if>
 			   	</div>
 		 </div>
 	</div>	
@@ -245,7 +273,7 @@
 							        <td>${po.obrasocialId}<input type="hidden" name = "obrasocialListEdit[<%=index%>].obrasocialId" value = "${po.obrasocialId}" /> </td>
 							        <td>${po.nombre}</td>        
 							        <td><input type="text" value="${po.credencial}" name = "obrasocialListEdit[<%=index%>].credencial"></td>
-							        <td> <input type="checkbox" name="obrasocialListEdit[<%=index%>].original" ${po.original} /></td>
+							        <td> <input type="checkbox" name="obrasocialListEdit[<%=index%>].original" ${po.original} class="checkbox"/></td>
 							        <td><button type='button' class='btn btn-link' onClick='Eliminar(this.parentNode.parentNode.rowIndex)'>eliminar</button></td>
 							        <%index++;%>
 						    	</tr>
@@ -330,6 +358,7 @@
 </html>
 <script>
         	document.getElementById("registration-date").value=document.getElementById("fechaNacimiento").value;
-        	updateLiberado();
-			updateTitular();
+        	updatecoseguro();
+			$(".checkbox").checkbox();
+			
 </script>

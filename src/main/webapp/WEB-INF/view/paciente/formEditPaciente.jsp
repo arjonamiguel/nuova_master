@@ -6,16 +6,21 @@
 <html>
 <head>
 		<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<title>Nuova</title>
+		<link rel="shortcut icon" href="<%=request.getContextPath()%>/resources/img/favicon/favicon.ico">
+		
         <link href="<%=request.getContextPath()%>/resources/css/bootstrap/bootstrap.min.css" rel="stylesheet"/>       
 		<script src="<c:url value="/resources/js/jquery/jquery-2.0.3.min.js" />"></script>
 		<script src="<c:url value="/resources/js/bootstrap/bootstrap.min.js" />"></script>
-		<script src="<%=request.getContextPath()%>/resources/js/jquery/bootstrap-collapse.js" />"></script>
+		<script src="<%=request.getContextPath()%>/resources/js/jquery/bootstrap-collapse.js" /></script>
 		<link href="<%=request.getContextPath()%>/resources/css/nuova.css" rel="stylesheet"/>
 		<link href="<%=request.getContextPath()%>/resources/css/panel.css" rel="stylesheet"/>
 		<link href="<%=request.getContextPath()%>/resources/css/bootstrap/bootstrap-responsive.css" rel="stylesheet"/>
 		<script src="<c:url value="/resources/js/jquery/jquery.validate.min.js" />"></script>
 		
+		<link href="<%=request.getContextPath()%>/resources/montrezorro-bootstrap-checkbox-fa865ff/css/bootstrap-checkbox.css" rel="stylesheet"/>
+		<script src="<%=request.getContextPath()%>/resources/montrezorro-bootstrap-checkbox-fa865ff/js/bootstrap-checkbox.js" /></script>
 <style>
 label.error {
   color: #a94442;
@@ -28,7 +33,7 @@ label.error {
 	
 <SCRIPT language="javascript">
     
-        var liberadoFlag=0;
+        var coseguroFlag=0;
         var titularFlag=0;
    
 		
@@ -44,7 +49,9 @@ label.error {
             var rowCount = table.rows.length;
             var row = table.insertRow(rowCount);
  
-
+			if(document.getElementById("obrasocial.nombre").value=="NONE"){
+            	return;
+        	}
  
             var cell1 = row.insertCell(0);                      
             cell1.innerHTML = document.getElementById("obrasocial.nombre").value+"<input type='hidden' name='obrasocialListEdit["+index+"].obrasocialId' value='"+document.getElementById("obrasocial.nombre").value+"'>";
@@ -61,6 +68,10 @@ label.error {
             var element2 = document.createElement("input");
             element2.type = "checkbox";
             element2.name="obrasocialListEdit["+index+"].original";
+            var att = document.createAttribute("class");
+            att.value = "checkbox";  
+       		element2.setAttributeNode(att);
+       	
             cell4.appendChild(element2);
             
             var cell5 = row.insertCell(4);
@@ -68,8 +79,9 @@ label.error {
 
             index ++;
  
+ 			$(".checkbox").checkbox();
          }
- 
+         
         function deleteRow(tableID) {
             try {
             var table = document.getElementById(tableID);
@@ -98,19 +110,19 @@ label.error {
 		function updateDate(){
 			document.getElementById("fechaNacimiento").value=document.getElementById("registration-date").value;
 		}
-		function updateLiberado(){
-			if(document.getElementById("liberado").value=="true" && liberadoFlag==0){
+		function updatecoseguro(){
+			if(document.getElementById("coseguro").value=="true" && coseguroFlag==0){
 			//validacion on load
-				$("#infoLiberado").click();
-				liberadoFlag=1;
+				coseguroFlag=1;
+				if($( "#coseguro").prop( "checked" )){
+					$("#coseguroAux").click();
+				}
 			}else{
 			//validacion on change
-				if(liberadoFlag==1){
-					document.getElementById("liberado").value="false";
-					liberadoFlag=0;
+				if($( "#coseguro").prop( "checked" )){
+					 $("#coseguro").removeAttr("checked");
 				}else{
-					document.getElementById("liberado").value="true";
-					liberadoFlag=1;
+					$("#coseguro").click();
 				}
 			}	
 		}
@@ -144,7 +156,7 @@ label.error {
 	<div class="panel-heading">
 		<div class="panel-title">
 		Editar Paciente
-    	 	<c:if test="${!isTitular}">
+    	 	<c:if test="${paciente.parentesco > 0}">
      			<h4>Titular: <a href="/nuova/formEditPaciente/${paciente.pacienteTitular.pacienteId}">${paciente.pacienteTitular.apellido}, ${paciente.pacienteTitular.nombre}</a></h4>
      		</c:if>
      	</div>
@@ -188,9 +200,9 @@ label.error {
 			   	</div>
 			   	<div class="row-fluid">
 			   		<div class="span4">
-			   				<div class="formLabel"><form:label path="provincia">Provincia:</form:label></div>
+			   				<div class="formLabel"><form:label path="provincia">Provincia Origen:</form:label></div>
         					<div class="formInput">
-        						<form:select path="provincia" style="width:68%; margin-bottom:0px">
+        						<form:select path="provincia" style="width:83%; margin-bottom:0px">
 									<form:option value="NONE" label="Seleccione Provincia ..."/>
 									<form:options items="${provinciaList}"  />			    
 								</form:select>
@@ -198,18 +210,42 @@ label.error {
 			   		</div>
 			   		<div class="span4">
 			   				<div class="formLabel"><form:label path="domicilio">Domicilio:</form:label></div>
-        					<div class="formInput"><form:textarea path="domicilio" cssStyle="width:64%"/></div>
+        					<div class="formInput"><form:textarea path="domicilio" cssStyle="width:78%"/></div>
 			   		</div>
-			   		<div class="span2" style="margin-top:2%;">
-			   				<div class="formLabel"><form:label path="liberado">Liberado:</form:label></div>
-							<div style="visibility:visible;height:0px;"><form:checkbox path="liberado" id="liberado"/></div>
-						<!--	<label for="infoLiberado" style="padding-left:28%;"><input type="checkbox" id="infoLiberado" class="badgebox" onchange="javascript:updateLiberado();"><span class="badge">&check;</span></label> -->
+			   		<div class="span4">
+			   				<div class="formLabel" style="padding-top:6px;;"><form:label path="coseguro">Coseguro:</form:label></div>
+			   				<div style="visibility:hidden;"><form:checkbox path="coseguro" id="coseguro"/></div>
+							<div class="material-switch pull-left">
+									<input id="coseguroAux" name="coseguroAux" type="checkbox" value="true" >
+									<label for="coseguroAux" class="label-info" onclick="updatecoseguro()"></label>
+							</div>
 			   		</div>
-			   		<div class="span2" style="margin-top:2%;">
-			   			<div class="formLabel"><form:label path="titular">Titular:</form:label></div>
-							<div style="visibility:visible;height:0px;"><form:checkbox path="titular" id="titular"/></div>
-						<!--	<label for="infoTitular" style="padding-left:28%;"><input type="checkbox" id="infoTitular" class="badgebox" onchange="javascript:updateTitular();"><span class="badge">&check;</span></label> -->
+			   	
+						
+			   					   
+			   	</div>
+			   	<div class="row-fluid">
+			   		<div class="span4">
+			   				<div class="formLabel"><form:label path="titular">Parentesco:</form:label></div>
+							<div class="formInput">
+								<form:select path="parentesco" style="width:83%; margin-bottom:0px">
+									<form:option value="-1" label="Seleccione Parentesco ..."/>
+									<form:options items="${parentescosList}"  itemLabel="value" itemValue="id"/>			    
+								</form:select>
+							</div>
 			   		</div>
+			   		
+			   		<c:if test="${paciente.parentesco == 0}">			   		
+			   		<div class="span4">
+			   				<div class="formLabel"><form:label path="zonaAfiliacion">Zona Afiliación:</form:label></div>
+        					<div class="formInput">
+        						<form:select path="zonaAfiliacion" style="width:83%; margin-bottom:0px">
+									<form:option value="NONE" label="Seleccione Zona Afiliación ..."/>
+									<form:options items="${provinciaList}"  />			    
+								</form:select>
+        					</div>
+			   		</div>
+			   		</c:if>
 			   	</div>
 		 </div>
 	</div>	
@@ -230,7 +266,7 @@ label.error {
 						</form:select>
 					</div>
 					<div class="span1">
-						<div style="float:right;"><INPUT type="button" value="Agregar" onclick="addRow('tb_paciente_obrasocial')" class="btn btn-info"/></div>
+						<div style="float:right;"><INPUT type="button" value="Agregar" onclick="addRow('tb_paciente_obrasocial');" class="btn btn-info"/></div>
 					</div>
 				</div>
 				<div class="row-fluid">
@@ -250,7 +286,10 @@ label.error {
 							        <td>${po.obrasocialId}<input type="hidden" name = "obrasocialListEdit[<%=index%>].obrasocialId" value = "${po.obrasocialId}" /> </td>
 							        <td>${po.nombre}</td>        
 							        <td><input type="text" value="${po.credencial}" name = "obrasocialListEdit[<%=index%>].credencial"></td>
-							        <td> <input type="checkbox" name="obrasocialListEdit[<%=index%>].original" ${po.original} /></td>
+							        <td>
+							        	 <input type="checkbox" name="obrasocialListEdit[<%=index%>].original" ${po.original} class="checkbox" />
+							        	 
+							        </td>
 							        <td>
 							        <button type='button' class='btn btn-danger btn-xs' onClick='Eliminar(this.parentNode.parentNode.rowIndex)'><span class="icon icon-remove" title="Eliminar"></span></button>
 							        </td>
@@ -271,7 +310,7 @@ label.error {
 			</div>
 			
 </div>
-<c:if test="${isTitular}">
+<c:if test="${paciente.parentesco == 0}">
 <div class="panel panel-info">
 				<div class="panel-heading">
 					<div class="panel-title">Adherentes</div>
@@ -290,6 +329,7 @@ label.error {
 		            <TD>Apellido</TD>        
 		            <TD>Nombre</TD>
 		            <TD>Credencial</TD>
+		            <TD>Parentesco</TD>
 		            <TD></TD>
 		        </TR>
 		         <% int index2 = 0;%>
@@ -301,6 +341,7 @@ label.error {
 			        <td>${adh.apellido}</td>
 			        <td>${adh.nombre}</td>
 			        <td>${adh.crdencial}</td>
+			        <td>${adh.parentescoDescription}</td>
 			        <td>
 			        	<a class="btn btn-info btn-xs" href="/nuova/formEditPaciente/${adh.pacienteId}" title="Editar Adherente">
 			        	<span class="icon icon-edit" title="Editar Adherente"></span></a>		        
@@ -336,8 +377,9 @@ label.error {
 <script>
 			document.getElementById("mainPaciente").parentNode.classList.add("active");
         	document.getElementById("registration-date").value=document.getElementById("fechaNacimiento").value;
-        	updateLiberado();
-			updateTitular();
+        	updatecoseguro();
+			$(".checkbox").checkbox();
+			
 			
 		$("#paciente").validate({
     

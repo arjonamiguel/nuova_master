@@ -41,12 +41,16 @@
     <bean id="propertyConfigurer"
         class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer"
         p:location="/WEB-INF/jdbc.properties" />
- 
-    <bean id="dataSource"
-        class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close"
-        p:driverClassName="${jdbc.driverClassName}"
-        p:url="${jdbc.databaseurl}" p:username="${jdbc.username}"
-        p:password="${jdbc.password}" />
+        
+    <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
+      <property name="driverClassName" value="${jdbc.driverClassName}" />
+      <property name="url" value="${jdbc.databaseurl}" />
+      <property name="username" value="${jdbc.username}" />
+      <property name="password" value="${jdbc.password}" />
+      <property name="validationQuery" value="select now()" />
+      <property name="testOnBorrow" value="true" />
+      <property name="testOnReturn" value="false" />
+    </bean>
  
  
     <bean id="sessionFactory"
@@ -68,7 +72,6 @@
     </bean>
     
     <!-- DAO -->
-    <bean id="employeeDAO" class="com.nuova.dao.EmployeeDaoImpl"></bean>
     <bean id="profesionalDAO" class="com.nuova.dao.ProfesionalDAOImpl"></bean>
     <bean id="especialidadDAO" class="com.nuova.dao.EspecialidadDAOImpl"></bean>
     <bean id="obrasocialDAO" class="com.nuova.dao.ObraSocialDAOImpl"></bean>
@@ -76,9 +79,10 @@
     <bean id="ordenDAO" class="com.nuova.dao.OrdenDAOImpl"></bean>
     <bean id="practicaDAO" class="com.nuova.dao.PracticaDAOImpl"></bean>
     <bean id="observacionDAO" class="com.nuova.dao.ObservacionDAOImpl"></bean>
+    <bean id="prestadorDAO" class="com.nuova.dao.PrestadoresDAOImpl"></bean>
+    <bean id="cajaDAO" class="com.nuova.dao.CajaDAOImpl"></bean>
     
     <!-- Manager -->
-    <bean id="employeeManager" class="com.nuova.service.EmployeeManagerImpl"></bean>
     <bean id="profesionalManager" class="com.nuova.service.ProfesionalManagerImpl"></bean>
     <bean id="especialidadManager" class="com.nuova.service.EspecialidadManagerImpl"></bean>
     <bean id="obrasocialManager" class="com.nuova.service.ObraSocialManagerImpl"></bean>
@@ -86,6 +90,8 @@
     <bean id="ordenManager" class="com.nuova.service.OrdenManagerImpl"></bean>
     <bean id="practicaManager" class="com.nuova.service.PracticaManagerImpl"></bean>
     <bean id="observacionManager" class="com.nuova.service.ObservacionManagerImpl"></bean>    
+    <bean id="prestadorManager" class="com.nuova.service.PrestadoresManagerImpl"></bean>
+    <bean id="cajaManager" class="com.nuova.service.CajaManagerImpl"></bean>
     <tx:annotation-driven />
     
     <bean id="transactionManager"

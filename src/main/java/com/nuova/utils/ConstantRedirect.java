@@ -34,13 +34,40 @@ public class ConstantRedirect {
 
     // Orden
     public final static String VIEW_MAIN_ORDEN = "/orden/mainOrden";
+    public final static String VIEW_MAIN_CONSULTA = "/orden/mainConsulta";
+    public final static String VIEW_MAIN_CONSULTA_ODONTOLOGICA = "/orden/mainConsultaOdontologica";
+
     public final static String VIEW_FORM_ADD_ORDEN = "/orden/formAddOrden";
     public final static String VIEW_FORM_ADD_ORDEN_BY_PACIENTE = "/orden/formAddOrdenByPaciente";
+    public final static String VIEW_FORM_CONSULTA_BY_PACIENTE = "/orden/formAddConsultaByPaciente";
+    public final static String VIEW_FORM_ODONTOLOGIA_BY_PACIENTE = "/orden/formAddOdontologiaByPaciente";
     public final static String VIEW_FORM_EDIT_ORDEN = "/orden/formEditOrden";
+    public final static String VIEW_FORM_EDIT_CONSULTA = "/orden/formEditConsulta";
+
     public final static String VIEW_FORM_DELETE_ORDEN = "/orden/formDeleteOrden";
+    public final static String VIEW_FORM_TIPO_ORDEN = "/orden/formTipo";
 
     // Reporte
     public final static String VIEWER_REPORTE_ORDEN_EMITIDA = "/reporte/viewerReporteOrdenEmitida";
     public final static String VIEWER_REPORTE = "/reporte/viewerReportes";
+
+    // Calendario
+    public final static String VIEW_MAIN_CALENDARIO = "/calendario/mainCalendario";
+
+    // Prestadores
+    public final static String VIEW_MAIN_PRESTADOR = "/prestador/mainPrestador";
+    public final static String VIEW_FORM_ADD_PRESTADOR = "/prestador/formAddPrestador";
+    public final static String VIEW_FORM_EDIT_PRESTADOR = "/prestador/formEditPrestador";
+    public final static String VIEW_FORM_DELETE_PRESTADOR = "/prestador/formDeletePrestador";
+
+    // Practicas
+    public final static String VIEW_MAIN_PRACTICA = "/practica/mainPractica";
+    public final static String VIEW_FORM_ADD_PRACTICA = "/practica/formAddPractica";
+    public final static String VIEW_FORM_EDIT_PRACTICA = "/practica/formEditPractica";
+    public final static String VIEW_FORM_DELETE_PRACTICA = "/practica/formDeletePractica";
+
+    // Caja
+    public final static String VIEW_MAIN_CAJA = "/caja/mainCaja";
+    public final static String VIEW_FORM_ADD_CAJA = "/caja/formAddCaja";
 
 }

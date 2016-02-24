@@ -67,4 +67,9 @@ public class PacienteManagerImpl implements PacienteManager {
         return pacienteDAO.countPacientes();
     }
 
+    @Transactional
+    public List<Paciente> findPacienteAutocomplete(String search) {
+        return pacienteDAO.findPacienteAutocomplete(search);
+    }
+
 }

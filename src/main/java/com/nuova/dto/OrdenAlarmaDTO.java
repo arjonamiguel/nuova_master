@@ -35,22 +35,26 @@ public class OrdenAlarmaDTO {
     }
 
     public String getDescripcion() {
-        if (descripcion.equals(ConstantOrdenEstado.AUTORIZADA)) {
+        if (descripcion != null && descripcion.equals(ConstantOrdenEstado.AUTORIZADA)) {
             return autorizada;
-        } else if (descripcion.equals(ConstantOrdenEstado.CERRADA)) {
+        }
+        if (descripcion != null && descripcion.equals(ConstantOrdenEstado.CERRADA)) {
             return cerrada;
-        } else if (descripcion.equals(ConstantOrdenEstado.EN_OBSERVACION)) {
+        }
+        if (descripcion != null && descripcion.equals(ConstantOrdenEstado.EN_OBSERVACION)) {
             return enobservacion;
-        } else if (descripcion.equals(ConstantOrdenEstado.INCOMPLETA)) {
+        }
+        if (descripcion != null && descripcion.equals(ConstantOrdenEstado.INCOMPLETA)) {
             return incompleta;
-        } else if (descripcion.equals(ConstantOrdenEstado.PENDIENTE)) {
+        }
+        if (descripcion != null && descripcion.equals(ConstantOrdenEstado.PENDIENTE)) {
             return pendiente;
-        } else if (descripcion.equals(ConstantOrdenEstado.RECHAZADA)) {
+        }
+        if (descripcion != null && descripcion.equals(ConstantOrdenEstado.RECHAZADA)) {
             return rechazada;
-        } else {
-            return "...";
         }
 
+        return "";
     }
 
     public void setDescripcion(String descripcion) {

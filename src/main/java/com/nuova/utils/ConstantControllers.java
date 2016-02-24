@@ -47,6 +47,7 @@ public class ConstantControllers {
     public final static String EDIT_PACIENTE = "/editPaciente";
     public final static String AJAX_GET_PACIENTES_PAGINADOS = "/ajaxGetPacientesPaginados";
     public final static String AJAX_GET_SEARCH_PACIENTES_PAGINADOS = "/ajaxGetSearchPacientesPaginados";
+    public final static String AJAX_GET_AUTOCOMPLETE_PACIENTES = "/ajaxGetAutoCompletePacientes";
 
     // Adherente
     public final static String FORM_ADD_ADHERENTE = "/formAddAdherente/{titularId}";
@@ -54,16 +55,23 @@ public class ConstantControllers {
     public final static String ADD_ADHERENTE = "/addAdherente";
 
     // Orden
-    public final static String MAIN_ORDEN = "/mainOrden";
+    public final static String MAIN_ORDEN_PRACTICA = "/mainOrdenPractica";
+    public final static String MAIN_CONSULTA = "/mainConsulta";
+    public final static String MAIN_CONSULTA_ODONTOLOGICA = "/mainConsultaOdontologica";
+
     public final static String FORM_ADD_ORDEN = "/formAddOrden";
     public final static String FORM_ADD_ORDEN_BY_PACIENTE = "/formAddOrden/{pacienteId}";
     public final static String FORM_EDIT_ORDEN = "/formEditOrden/{ordenId}";
+    public final static String FORM_EDIT_CONSULTA = "/formEditConsulta/{ordenId}";
+
     public final static String FORM_DELETE_ORDEN = "/formDeleteOrden/{ordenId}";
     public final static String ADD_ORDEN = "/addOrden";
     public final static String DELETE_ORDEN = "/deleteOrden";
     public final static String EDIT_ORDEN = "/editOrden";
-    public final static String AJAX_GET_ORDENES_PAGINADOS = "/ajaxGetOrdenesPaginados";
-    public final static String AJAX_GET_SEARCH_ORDENES_PAGINADOS = "/ajaxGetSearchOrdenesPaginados";
+    public final static String TIPO_ORDEN = "/tipoOrden/{pacienteId}";
+    public final static String REDIRECT_ORDEN = "/redirectOrden";
+    public final static String AJAX_GET_ORDENES_PAGINADOS = "/ajaxGetOrdenesPaginados/{codigoOrdenTipo}";
+    public final static String AJAX_GET_SEARCH_ORDENES_PAGINADOS = "/ajaxGetSearchOrdenesPaginados/{codigoOrdenTipo}";
 
     // Reportes
     public final static String SHOW_REPORT_ORDEN_EMITIDA = "/showReporteOrdenEmitida/{ordenId}";
@@ -78,4 +86,32 @@ public class ConstantControllers {
     public final static String REPORT_OBRASSOCIALES = "/reporteObrasSociales";
     public final static String REPORT_PACIENTES = "/reportePacientes";
 
+    // Calendario
+    public final static String MAIN_CALENDARIO = "/mainCalendario";
+
+    // Prestadores
+    public final static String MAIN_PRESTADOR = "/mainPrestador";
+    public final static String FORM_ADD_PRESTADOR = "/formAddPrestador";
+    public final static String FORM_EDIT_PRESTADOR = "/formEditPrestador/{prestadorId}";
+    public final static String FORM_DELETE_PRESTADOR = "/formDeletePrestador/{prestadorId}";
+    public final static String ADD_PRESTADOR = "/addPrestador";
+    public final static String DELETE_PRESTADOR = "/deletePrestador";
+    public final static String EDIT_PRESTADOR = "/editPrestador";
+    public final static String AJAX_GET_PRESTADORES_PAGINADOS = "/ajaxGetPrestadoresPaginados";
+    public final static String AJAX_GET_SEARCH_PRESTADORES_PAGINADOS = "/ajaxGetSearchPrestadoresPaginados";
+
+    // Practicas
+    public final static String MAIN_PRACTICA = "/mainPractica";
+    public final static String FORM_ADD_PRACTICA = "/formAddPractica";
+    public final static String FORM_EDIT_PRACTICA = "/formEditPractica/{practicaId}";
+    public final static String FORM_DELETE_PRACTICA = "/formDeletePractica/{practicaId}";
+    public final static String ADD_PRACTICA = "/addPractica";
+    public final static String DELETE_PRACTICA = "/deletePractica";
+    public final static String EDIT_PRACTICA = "/editPractica";
+    public final static String AJAX_GET_PRACTICAS_PAGINADOS = "/ajaxGetPracticasPaginados";
+    public final static String AJAX_GET_SEARCH_PRACTICAS_PAGINADOS = "/ajaxGetSearchPracticasPaginados";
+
+    // Caja
+    public final static String MAIN_CAJA = "/mainCaja";
+    public final static String FORM_ADD_CAJA = "/formAddCaja";
 }

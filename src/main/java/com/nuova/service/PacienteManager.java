@@ -28,4 +28,7 @@ public interface PacienteManager {
     public Page<Paciente> findPacientesBySearch(String search, Pageable pageable);
 
     public OrdenAlarmaDTO countPacientes();
+
+    public List<Paciente> findPacienteAutocomplete(String search);
+
 }

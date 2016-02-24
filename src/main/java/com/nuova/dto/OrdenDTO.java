@@ -36,6 +36,15 @@ public class OrdenDTO {
     private String iconOk = "<span class='icon-ok-sign'></span>";
     private String iconNotOk = "<span class='icon-remove-sign'></span>";
 
+    private OrdenTipoDTO ordenTipo;
+    private String ordenTipoDesc;
+
+    private Integer profesionalId;
+
+    private Double monto;
+
+    private ProfesionalDTO profesional;
+
     public Integer getOrdenId() {
         return ordenId;
     }
@@ -210,17 +219,6 @@ public class OrdenDTO {
     }
 
     public String getAcciones() {
-        String botonEdit = "<a class='btn btn-info btn-xs' href='/nuova/formEditOrden/" + getOrdenId()
-                + "'><span class='icon icon-edit'></span></a>";
-
-        String botonDelete = "<a class='btn btn-danger btn-xs' href='/nuova/formDeleteOrden/" + getOrdenId()
-                + "'><span class='icon icon-remove'></span></a>";
-
-        String botonPrint = "<a class='btn btn-default btn-xs' href='/nuova/showReporteOrdenEmitida/" + getOrdenId()
-                + "'><span class='icon icon-print'></span></a>";
-
-        this.acciones = botonEdit + botonDelete + botonPrint;
-
         return acciones;
     }
 
@@ -237,6 +235,46 @@ public class OrdenDTO {
 
     public void setNroOrden(String nroOrden) {
         this.nroOrden = nroOrden;
+    }
+
+    public OrdenTipoDTO getOrdenTipo() {
+        return ordenTipo;
+    }
+
+    public void setOrdenTipo(OrdenTipoDTO ordenTipo) {
+        this.ordenTipo = ordenTipo;
+    }
+
+    public Integer getProfesionalId() {
+        return profesionalId;
+    }
+
+    public void setProfesionalId(Integer profesionalId) {
+        this.profesionalId = profesionalId;
+    }
+
+    public Double getMonto() {
+        return monto;
+    }
+
+    public void setMonto(Double monto) {
+        this.monto = monto;
+    }
+
+    public String getOrdenTipoDesc() {
+        return ordenTipoDesc;
+    }
+
+    public void setOrdenTipoDesc(String ordenTipoDesc) {
+        this.ordenTipoDesc = ordenTipoDesc;
+    }
+
+    public ProfesionalDTO getProfesional() {
+        return profesional;
+    }
+
+    public void setProfesional(ProfesionalDTO profesional) {
+        this.profesional = profesional;
     }
 
 }

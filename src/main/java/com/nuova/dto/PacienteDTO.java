@@ -33,10 +33,14 @@ public class PacienteDTO {
     private String checkedTitular;
     private PacienteDTO pacienteTitular;
 
-    private boolean liberado = false;
+    private boolean coseguro = false;
     private String checkedLiberado;
 
     private String acciones;
+    private int parentesco;
+    private String parentescoDescription;
+
+    private String zonaAfiliacion;
 
     // private List<PacienteObrasocial> pacienteObrasocials = new ArrayList<PacienteObrasocial>(0);
 
@@ -104,12 +108,12 @@ public class PacienteDTO {
         this.mail = mail;
     }
 
-    public boolean getLiberado() {
-        return liberado;
+    public boolean getCoseguro() {
+        return coseguro;
     }
 
-    public void setLiberado(boolean liberado) {
-        this.liberado = liberado;
+    public void setCoseguro(boolean coseguro) {
+        this.coseguro = coseguro;
     }
 
     public Integer getDni() {
@@ -234,15 +238,16 @@ public class PacienteDTO {
 
     public String getAcciones() {
         String botonEdit = "<a class='btn btn-info btn-xs' href='formEditPaciente/" + getPacienteId()
-                + "'><span class='icon icon-edit'></span>editar</a>&nbsp;";
+                + "'><span class='icon icon-edit'></span>Editar</a>&nbsp;";
 
-        String botonPractica = "<a class='btn btn-success btn-xs' href='formAddOrden/" + getPacienteId()
-                + "'><span class='icon icon-plus-sign'></span>Practica</a>&nbsp;";
+        String botonTipoOrden = "<a class='btn btn-success btn-xs' href='tipoOrden/"
+                + getPacienteId()
+                + "'><span class='icon icon-plus-sign'></span>Orden</a>&nbsp;";
 
         String botonDelete = "<a class='btn btn-danger btn-xs' href='formDeletePaciente/" + getPacienteId()
-                + "'><span class='icon icon-remove'></span>eliminar</a>";
+                + "'><span class='icon icon-remove'></span>Eliminar</a>";
 
-        this.acciones = botonEdit + botonPractica + botonDelete;
+        this.acciones = botonEdit + botonTipoOrden + botonDelete;
 
         return acciones;
     }
@@ -250,4 +255,29 @@ public class PacienteDTO {
     public void setAcciones(String acciones) {
         this.acciones = acciones;
     }
+
+    public int getParentesco() {
+        return parentesco;
+    }
+
+    public void setParentesco(int parentesco) {
+        this.parentesco = parentesco;
+    }
+
+    public String getParentescoDescription() {
+        return parentescoDescription;
+    }
+
+    public void setParentescoDescription(String parentescoDescription) {
+        this.parentescoDescription = parentescoDescription;
+    }
+
+    public String getZonaAfiliacion() {
+        return zonaAfiliacion;
+    }
+
+    public void setZonaAfiliacion(String zonaAfiliacion) {
+        this.zonaAfiliacion = zonaAfiliacion;
+    }
+
 }

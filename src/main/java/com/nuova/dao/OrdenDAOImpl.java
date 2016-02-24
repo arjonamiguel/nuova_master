@@ -12,6 +12,7 @@ import org.springframework.stereotype.Repository;
 
 import com.nuova.dto.OrdenAlarmaDTO;
 import com.nuova.model.Orden;
+import com.nuova.model.OrdenTipo;
 
 @Repository
 public class OrdenDAOImpl implements OrdenDAO {
@@ -52,18 +53,21 @@ public class OrdenDAOImpl implements OrdenDAO {
 
     }
 
-    public Page<Orden> findOrdenesByPageable(Pageable pageable) {
-        Query query = this.sessionFactory.getCurrentSession().createQuery("FROM Orden o ORDER BY o.ordenId DESC");
+    public Page<Orden> findOrdenesByPageable(Pageable pageable, Integer codigoOrdenTipo) {
+        Query query = this.sessionFactory.getCurrentSession().createQuery("FROM Orden o "
+                + " WHERE o.ordenTipo.codigo=" + codigoOrdenTipo
+                + " ORDER BY o.ordenId DESC");
         // query.setFirstResult(pageable.getOffset());
         // query.setMaxResults(pageable.getPageNumber());
         List<Orden> result = query.list();
         return new PageImpl<Orden>(result, pageable, result.size());
     }
 
-    public Page<Orden> findOrdenesBySearch(String search, Pageable pageable) {
+    public Page<Orden> findOrdenesBySearch(String search, Pageable pageable, Integer codigoOrdenTipo) {
         Query query = this.sessionFactory.getCurrentSession()
                 .createQuery("FROM Orden o "
-                        + " WHERE CAST(o.ordenId AS string) LIKE '%" + search.toUpperCase() + "%' "
+                        + " WHERE o.ordenTipo.codigo=" + codigoOrdenTipo
+                        + " AND CAST(o.ordenId AS string) LIKE '%" + search.toUpperCase() + "%' "
                         + " ORDER BY o.ordenId ASC");
 
         // query.setFirstResult(pageable.getOffset());
@@ -77,7 +81,33 @@ public class OrdenDAOImpl implements OrdenDAO {
         return this.sessionFactory.getCurrentSession()
                 .createQuery(" SELECT NEW com.nuova.dto.OrdenAlarmaDTO(COUNT(o.estado) , o.estado) "
                         + " FROM Orden o "
+                        + " WHERE o.ordenTipo.codigo in (101,102)"
                         + " GROUP BY o.estado").list();
+    }
+
+    @SuppressWarnings("unchecked")
+    public List<OrdenTipo> finAllOrdenTipo() {
+        return this.sessionFactory.getCurrentSession().createQuery("FROM OrdenTipo").list();
+    }
+
+    public OrdenTipo findOrdenTipoByCodigo(Integer codigo) {
+        return (OrdenTipo) this.sessionFactory.getCurrentSession()
+                .createQuery(" SELECT ot "
+                        + " FROM OrdenTipo ot "
+                        + " WHERE ot.codigo = " + codigo
+                ).list().get(0);
+    }
+
+    public void deleteOrdenProfesional(Integer ordenId) {
+        this.sessionFactory.getCurrentSession().
+                createQuery(" DELETE FROM OrdenProfesional o WHERE o.orden.ordenId = :ordenId ").
+                setInteger("ordenId", ordenId).
+                executeUpdate();
+    }
+
+    public OrdenTipo findOrdenTipoById(Integer id) {
+        return (OrdenTipo) this.sessionFactory.
+                getCurrentSession().get(OrdenTipo.class, id);
     }
 
 }

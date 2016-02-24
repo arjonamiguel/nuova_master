@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.nuova.dao.OrdenDAO;
 import com.nuova.dto.OrdenAlarmaDTO;
 import com.nuova.model.Orden;
+import com.nuova.model.OrdenTipo;
 
 @Service
 public class OrdenManagerImpl implements OrdenManager {
@@ -48,18 +49,38 @@ public class OrdenManagerImpl implements OrdenManager {
     }
 
     @Transactional
-    public Page<Orden> findOrdenesByPageable(Pageable pageable) {
-        return ordenDAO.findOrdenesByPageable(pageable);
+    public Page<Orden> findOrdenesByPageable(Pageable pageable, Integer codigoOrdenTipo) {
+        return ordenDAO.findOrdenesByPageable(pageable, codigoOrdenTipo);
     }
 
     @Transactional
-    public Page<Orden> findOrdenesBySearch(String search, Pageable pageable) {
-        return ordenDAO.findOrdenesBySearch(search, pageable);
+    public Page<Orden> findOrdenesBySearch(String search, Pageable pageable, Integer codigoOrdenTipo) {
+        return ordenDAO.findOrdenesBySearch(search, pageable, codigoOrdenTipo);
     }
 
     @Transactional
     public List<OrdenAlarmaDTO> findAlarmaOrdenes() {
         return ordenDAO.findAlarmaOrdenes();
+    }
+
+    @Transactional
+    public List<OrdenTipo> finAllOrdenTipo() {
+        return ordenDAO.finAllOrdenTipo();
+    }
+
+    @Transactional
+    public OrdenTipo findOrdenTipoByCodigo(Integer codigo) {
+        return ordenDAO.findOrdenTipoByCodigo(codigo);
+    }
+
+    @Transactional
+    public void deleteOrdenProfesional(Integer ordenId) {
+        ordenDAO.deleteOrdenProfesional(ordenId);
+    }
+
+    @Transactional
+    public OrdenTipo findOrdenTipoById(Integer id) {
+        return ordenDAO.findOrdenTipoById(id);
     }
 
 }

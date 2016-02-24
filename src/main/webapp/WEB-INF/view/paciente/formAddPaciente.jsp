@@ -6,15 +6,20 @@
 <html>
 <head>
 		<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<title>Nuova</title>
+		<link rel="shortcut icon" href="<%=request.getContextPath()%>/resources/img/favicon/favicon.ico">
+		
         <link href="<%=request.getContextPath()%>/resources/css/bootstrap/bootstrap.min.css" rel="stylesheet"/>       
 		<script src="<c:url value="/resources/js/jquery/jquery-2.0.3.min.js" />"></script>
 		<script src="<c:url value="/resources/js/bootstrap/bootstrap.min.js" />"></script>
-		<script src="<%=request.getContextPath()%>/resources/js/jquery/bootstrap-collapse.js" />"></script>
+		<script src="<%=request.getContextPath()%>/resources/js/jquery/bootstrap-collapse.js" /></script>
 		<link href="<%=request.getContextPath()%>/resources/css/nuova.css" rel="stylesheet"/>
 		<link href="<%=request.getContextPath()%>/resources/css/panel.css" rel="stylesheet"/>
 		<link href="<%=request.getContextPath()%>/resources/css/bootstrap/bootstrap-responsive.css" rel="stylesheet"/>
 		<script src="<c:url value="/resources/js/jquery/jquery.validate.min.js" />"></script>
+		<link href="<%=request.getContextPath()%>/resources/montrezorro-bootstrap-checkbox-fa865ff/css/bootstrap-checkbox.css" rel="stylesheet"/>
+		<script src="<%=request.getContextPath()%>/resources/montrezorro-bootstrap-checkbox-fa865ff/js/bootstrap-checkbox.js" /></script>
 		
 <style>
 label.error {
@@ -28,7 +33,7 @@ label.error {
 	
 <SCRIPT language="javascript">
 	var index = 0;
-	var liberado=0;
+	var coseguro=0;
 	var titular=0;
 	function Eliminar (i) {
 	    //document.getElementsByTagName("table")[0].setAttribute("id","tableid");
@@ -41,6 +46,10 @@ label.error {
 
            var rowCount = table.rows.length;
            var row = table.insertRow(rowCount);
+           
+           	if(document.getElementById("obrasocial").value=="NONE"){
+            	return;
+        	} 
 
            var cell2 = row.insertCell(0);                      
            cell2.innerHTML = document.getElementById("obrasocial").value+"<input type='hidden' name='obrasocialListEdit["+index+"].obrasocialId' value='"+document.getElementById("obrasocial").value+"'>";
@@ -58,6 +67,9 @@ label.error {
            var element3 = document.createElement("input");
            element3.type = "checkbox";
            element3.name="obrasocialListEdit["+index+"].original";
+            var att = document.createAttribute("class");
+            att.value = "checkbox";  
+       		element3.setAttributeNode(att);
            cell4.appendChild(element3);
 
            var cell1 = row.insertCell(4);
@@ -65,6 +77,7 @@ label.error {
            cell1.innerHTML = "<button type='button' class='btn btn-link' onClick='Eliminar(this.parentNode.parentNode.rowIndex)'>eliminar</button>"
 
            index ++;
+           $(".checkbox").checkbox();
 
         }
 
@@ -89,19 +102,19 @@ label.error {
            }
        }
        
-	function updateLiberado(){
-			if(document.getElementById("liberado").value=="true" && liberadoFlag==0){
+	function updatecoseguro(){
+			if(document.getElementById("coseguro").value=="true" && coseguroFlag==0){
 			//validacion on load
-				$("#infoLiberado").click();
-				liberadoFlag=1;
+				$("#infocoseguro").click();
+				coseguroFlag=1;
 			}else{
 			//validacion on change
-				if(liberadoFlag==1){
-					document.getElementById("liberado").value="false";
-					liberadoFlag=0;
+				if(coseguroFlag==1){
+					document.getElementById("coseguro").value="false";
+					coseguroFlag=0;
 				}else{
-					document.getElementById("liberado").value="true";
-					liberadoFlag=1;
+					document.getElementById("coseguro").value="true";
+					coseguroFlag=1;
 				}
 			}	
 		}
@@ -178,9 +191,9 @@ label.error {
 			   	</div>
 			   	<div class="row-fluid">
 			   		<div class="span4">
-			   				<div class="formLabel"><form:label path="provincia">Provincia:</form:label></div>
+			   				<div class="formLabel"><form:label path="provincia">Provincia Origen:</form:label></div>
         					<div class="formInput">
-        						<form:select path="provincia" style="width:68%; margin-bottom:0px">
+        						<form:select path="provincia" style="width:83%; margin-bottom:0px">
 									<form:option value="NONE" label="Seleccione Provincia ..."/>
 									<form:options items="${provinciaList}"  />			    
 								</form:select>
@@ -188,19 +201,44 @@ label.error {
 			   		</div>
 			   		<div class="span4">
 			   				<div class="formLabel"><form:label path="domicilio">Domicilio:</form:label></div>
-        					<div class="formInput"><form:textarea path="domicilio" cssStyle="width:64%"/></div>
+        					<div class="formInput"><form:textarea path="domicilio" cssStyle="width:78%"/></div>
 			   		</div>
-			   		<div class="span2" style="margin-top:2%;">
-			   				<div class="formLabel"><form:label path="liberado">Liberado:</form:label></div>
-							<div style="visibility:visible;height:0px;"><form:checkbox path="liberado" id="liberado"/></div>
-					<!--		<label for="infoLiberado" style="padding-left:28%;"><input type="checkbox" id="infoLiberado" class="badgebox" onchange="javascript:updateLiberado();"><span class="badge">&check;</span></label> -->
+			   		<div class="span1" style="margin-top:2%;">
+			   				<div class="formLabel"><form:label path="coseguro">Coseguro:</form:label></div>
+			   				
+							
 			   		</div>
-			   		<div class="span2" style="margin-top:2%;">
-			   			<div class="formLabel"><form:label path="titular">Titular:</form:label></div>
-							<div style="visibility:visible;height:0px;"><form:checkbox path="titular" id="titular"/></div>
-					<!--		<label for="infoTitular" style="padding-left:28%;"><input type="checkbox" id="infoTitular" class="badgebox" onchange="javascript:updateTitular();"><span class="badge">&check;</span></label> -->
+			   		<div class="span3" style="margin-top:3%;">
+			   		
+							<div class="material-switch pull-left">
+								<input id="coseguro" name="coseguro" type="checkbox" value="true">
+								<label for="coseguro" class="label-success"></label>
+							</div>
 			   		</div>
+	
 			   	</div>
+			   	<div class="row-fluid">
+			   		<div class="span4">
+			   				<div class="formLabel"><form:label path="titular">Parentesco:</form:label></div>
+							<div  class="formInput">
+								<form:select path="parentesco" style="width:83%; margin-bottom:0px">
+									<form:option value="-1" label="Seleccione Parentesco ..."/>
+									<form:options items="${parentescosList}"  itemLabel="value" itemValue="id"/>			    
+								</form:select>
+							</div>
+			   		</div>
+			   		<div class="span4">
+			   				<div class="formLabel"><form:label path="zonaAfiliacion">Zona Afiliación:</form:label></div>
+        					<div class="formInput">
+        						<form:select path="zonaAfiliacion" style="width:83%; margin-bottom:0px">
+									<form:option value="NONE" label="Seleccione Zona Afiliación ..."/>
+									<form:options items="${provinciaList}"  />			    
+								</form:select>
+        					</div>
+			   		</div>
+			   		
+			   	</div>
+			   	
 		 </div>
 	</div>	
 </div>
@@ -255,6 +293,7 @@ label.error {
 </body>
 </html>
 <script>
+		document.getElementById("mainPaciente").parentNode.classList.add("active");
 			$("#paciente").validate({
     
         // Specify the validation rules
@@ -272,7 +311,8 @@ label.error {
             email: {
                 required: true,
                 email: true
-            }
+            },
+            fechaNacimiento: "required"
         },
         
         // Specify the validation error messages
@@ -287,8 +327,7 @@ label.error {
                 required: "Ingrese telefono",
                 minlength: "Telefono debe tener al menos 5 caracteres de largo"
             },
-            matricula: "Ingrese matricula",
-            registroNacional: "Ingrese Registro Nacional"
+			fechaNacimiento : "Ingrese fecha de nacimiento"
         },
                 submitHandler: function(form) {
             form.submit();

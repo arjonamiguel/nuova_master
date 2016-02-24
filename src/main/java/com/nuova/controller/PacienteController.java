@@ -19,12 +19,16 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.nuova.dto.ComboItemDTO;
 import com.nuova.dto.ObraSocialDTO;
+import com.nuova.dto.OrdenTipoDTO;
 import com.nuova.dto.PacienteDTO;
 import com.nuova.model.Obrasocial;
+import com.nuova.model.OrdenTipo;
 import com.nuova.model.Paciente;
 import com.nuova.model.PacienteObrasocial;
 import com.nuova.service.ObraSocialManager;
+import com.nuova.service.OrdenManager;
 import com.nuova.service.PacienteManager;
 import com.nuova.utils.ConstantControllers;
 import com.nuova.utils.ConstantRedirect;
@@ -36,11 +40,28 @@ public class PacienteController {
     PacienteManager pacienteManager;
     @Autowired
     ObraSocialManager obrasocialManager;
+    @Autowired
+    OrdenManager ordenManager;
+
+    @RequestMapping(value = ConstantControllers.TIPO_ORDEN, method = RequestMethod.GET)
+    public String tipoOrden(ModelMap map,
+            @PathVariable("pacienteId") Integer pacienteId) {
+        List<OrdenTipo> ordenestipo = ordenManager.finAllOrdenTipo();
+        Paciente paciente = pacienteManager.fin1dPacienteById(pacienteId);
+        OrdenTipoDTO ordenTipo = new OrdenTipoDTO();
+        ordenTipo.setPacienteId(paciente.getPacienteId());
+
+        map.addAttribute("ordenestipo", getOrdenesTipoDTO(ordenestipo));
+        map.addAttribute("paciente", transformPacienteToDto(paciente));
+        map.addAttribute("ordenTipo", ordenTipo);
+        return ConstantRedirect.VIEW_FORM_TIPO_ORDEN;
+    }
 
     @RequestMapping(value = ConstantControllers.FORM_ADD_PACIENTE, method = RequestMethod.GET)
     public String formAddPaciente(ModelMap map) {
         List<Obrasocial> obrasocialList = obrasocialManager.findAll();
         map.addAttribute("provinciaList", Util.getProvincias());
+        map.addAttribute("parentescosList", Util.getParentescos());
         map.addAttribute("obrasocialList", obrasocialList);
         map.addAttribute("obrasocialDTOList", new ArrayList<ObraSocialDTO>());
         map.addAttribute("paciente", new PacienteDTO());
@@ -53,6 +74,7 @@ public class PacienteController {
         if (pacienteId != null) {
             PacienteDTO dto = transformPacienteToDto(pacienteManager.fin1dPacienteById(pacienteId));
             map.addAttribute("provinciaList", Util.getProvincias());
+            map.addAttribute("parentescosList", Util.getParentescos());
             map.addAttribute("obrasocialList", obrasocialManager.findAll());
             map.addAttribute("paciente", dto);
             map.addAttribute("isTitular", dto.isTitular());
@@ -66,6 +88,7 @@ public class PacienteController {
         if (pacienteId != null) {
             PacienteDTO dto = transformPacienteToDto(pacienteManager.fin1dPacienteById(pacienteId));
             map.addAttribute("provinciaList", Util.getProvincias());
+            map.addAttribute("parentescosList", Util.getParentescos());
             map.addAttribute("obrasocialList", obrasocialManager.findAll());
             map.addAttribute("paciente", dto);
             map.addAttribute("isTitular", dto.isTitular());
@@ -158,12 +181,24 @@ public class PacienteController {
         return new PageImpl<PacienteDTO>(dtos, pageable, pacientes.getTotalElements());
     }
 
+    @RequestMapping(value = ConstantControllers.AJAX_GET_AUTOCOMPLETE_PACIENTES, method = RequestMethod.POST)
+    public @ResponseBody List<ComboItemDTO> getAutocompletePaciente(
+            @RequestParam(required = false, defaultValue = "") String query) {
+        List<ComboItemDTO> retorno = new ArrayList<ComboItemDTO>();
+        for (Paciente p : pacienteManager.findPacienteAutocomplete(query)) {
+            retorno.add(new ComboItemDTO(p.getPacienteId() + "", p.getApellido() + ", " + p.getNombre()));
+        }
+
+        return retorno;
+    }
+
     // Adherentes --------------------------------------------
     @RequestMapping(value = ConstantControllers.FORM_ADD_ADHERENTE, method = RequestMethod.GET)
     public String formAddAdherente(ModelMap map,
             @PathVariable("titularId") Integer titularId) {
         Paciente titular = pacienteManager.fin1dPacienteById(titularId);
         PacienteDTO dto = new PacienteDTO();
+        dto.setApellido(titular.getApellido());
         dto.setProvincia(titular.getProvincia());
         dto.setTelefono(titular.getTelefono());
         dto.setMail(titular.getMail());
@@ -181,6 +216,7 @@ public class PacienteController {
 
         List<Obrasocial> obrasocialList = obrasocialManager.findAll();
         map.addAttribute("datosTitular", titular.getApellido() + " " + titular.getNombre());
+        map.addAttribute("parentescosList", Util.getParentescos());
         map.addAttribute("provinciaList", Util.getProvincias());
         map.addAttribute("obrasocialList", obrasocialList);
         map.addAttribute("obrasocialDTOList", new ArrayList<ObraSocialDTO>());
@@ -209,21 +245,29 @@ public class PacienteController {
         dto.setNombre(p.getNombre());
         dto.setDomicilio(p.getDomicilio());
         dto.setFechaNacimiento("" + p.getFechaNacimiento());
-        dto.setLiberado(p.getLiberado().intValue() == 1 ? true : false);
-        dto.setCheckedLiberado(p.getLiberado().intValue() == 1 ? "checked" : "");
+        dto.setCoseguro(p.getCoseguro().intValue() == 1 ? true : false);
+        dto.setCheckedLiberado(p.getCoseguro().intValue() == 1 ? "checked" : "");
         dto.setMail(p.getMail());
         dto.setTelefono(p.getTelefono());
         dto.setProvincia(p.getProvincia());
+        dto.setZonaAfiliacion(p.getZonaAfiliacion());
+
         if (p.getPaciente() != null && p.getPaciente().getPacienteId() != null) {
             dto.setPacienteTitular(transformPacienteToDto(pacienteManager
                     .fin1dPacienteById(p.getPaciente().getPacienteId())));
         }
 
-        if (p.getTitular() != null) {
-            dto.setTitular(p.getTitular().intValue() == 1 ? true : false);
-            dto.setCheckedTitular(p.getTitular().intValue() == 1 ? "checked" : "");
-
+        dto.setParentesco(p.getParentesco().intValue());
+        for (ComboItemDTO item : Util.getParentescos()) {
+            if (dto.getParentesco() == Integer.valueOf(item.getId()).intValue())
+                dto.setParentescoDescription(item.getValue());
         }
+
+        // if (p.getTitular() != null) {
+        // dto.setTitular(p.getTitular().intValue() == 1 ? true : false);
+        // dto.setCheckedTitular(p.getTitular().intValue() == 1 ? "checked" : "");
+        //
+        // }
 
         for (PacienteObrasocial po : p.getPacienteObrasocials()) {
             dto.getObrasocialList().add(
@@ -238,17 +282,21 @@ public class PacienteController {
             dtoad.setNombre(ad.getNombre());
             dtoad.setDomicilio(ad.getDomicilio());
             dtoad.setFechaNacimiento("" + ad.getFechaNacimiento());
-            dtoad.setLiberado(ad.getLiberado().intValue() == 1 ? true : false);
-            dtoad.setCheckedLiberado(p.getLiberado().intValue() == 1 ? "checked" : "");
+            dtoad.setCoseguro(ad.getCoseguro().intValue() == 1 ? true : false);
+            dtoad.setCheckedLiberado(p.getCoseguro().intValue() == 1 ? "checked" : "");
             dtoad.setMail(ad.getMail());
             dtoad.setTelefono(ad.getTelefono());
             dtoad.setDni(ad.getDni());
-            if (ad.getTitular() != null) {
-                dtoad.setTitular(ad.getTitular().equals(1) ? true : false);
-            }
+            dtoad.setZonaAfiliacion(p.getZonaAfiliacion());
+            dtoad.setParentesco(ad.getParentesco().intValue());
             for (PacienteObrasocial poo : ad.getPacienteObrasocials()) {
                 dtoad.setCrdencial(poo.getNroCredencial());
                 break;
+            }
+
+            for (ComboItemDTO item : Util.getParentescos()) {
+                if (dtoad.getParentesco() == Integer.valueOf(item.getId()).intValue())
+                    dtoad.setParentescoDescription(item.getValue());
             }
 
             dto.getAdherentes().add(dtoad);
@@ -267,8 +315,8 @@ public class PacienteController {
             dto.setNombre(p.getNombre());
             dto.setDomicilio(p.getDomicilio());
             dto.setFechaNacimiento("" + p.getFechaNacimiento());
-            dto.setLiberado(p.getLiberado().intValue() == 1 ? true : false);
-            dto.setCheckedLiberado(p.getLiberado().intValue() == 1 ? "checked" : "");
+            dto.setCoseguro(p.getCoseguro().intValue() == 1 ? true : false);
+            dto.setCheckedLiberado(p.getCoseguro().intValue() == 1 ? "checked" : "");
             dto.setMail(p.getMail());
             dto.setTelefono(p.getTelefono());
             for (Paciente ad : p.getPacientes()) {
@@ -278,8 +326,8 @@ public class PacienteController {
                 dtoad.setNombre(ad.getNombre());
                 dtoad.setDomicilio(ad.getDomicilio());
                 dtoad.setFechaNacimiento("" + ad.getFechaNacimiento());
-                dtoad.setLiberado(ad.getLiberado().intValue() == 1 ? true : false);
-                dtoad.setCheckedLiberado(p.getLiberado().intValue() == 1 ? "checked" : "");
+                dtoad.setCoseguro(ad.getCoseguro().intValue() == 1 ? true : false);
+                dtoad.setCheckedLiberado(p.getCoseguro().intValue() == 1 ? "checked" : "");
                 dtoad.setMail(ad.getMail());
                 dtoad.setTelefono(ad.getTelefono());
                 dto.getAdherentes().add(dtoad);
@@ -298,11 +346,12 @@ public class PacienteController {
         paciente.setNombre(dto.getNombre());
         paciente.setDomicilio(dto.getDomicilio());
         paciente.setFechaNacimiento(Util.parseToDate(dto.getFechaNacimiento()));
-        paciente.setLiberado(dto.getLiberado() ? new Byte("1") : new Byte("0"));
+        paciente.setCoseguro(dto.getCoseguro() ? new Byte("1") : new Byte("0"));
         paciente.setMail(dto.getMail());
         paciente.setTelefono(dto.getTelefono());
         paciente.setProvincia(dto.getProvincia());
-        paciente.setTitular(dto.isTitular() ? new Byte("1") : new Byte("0"));
+        paciente.setParentesco(new Byte(dto.getParentesco() + ""));
+        paciente.setZonaAfiliacion(dto.getZonaAfiliacion());
 
         for (ObraSocialDTO os : dto.getObrasocialListEdit()) {
             if (os.getObrasocialId() != null) {
@@ -321,6 +370,27 @@ public class PacienteController {
 
         return paciente;
 
+    }
+
+    private OrdenTipoDTO transformOrdenTipoToDto(OrdenTipo ot) {
+        OrdenTipoDTO retorno = new OrdenTipoDTO();
+        retorno.setOrdenTipoId(ot.getOrdenTipoId());
+        retorno.setNombre(ot.getNombre());
+        retorno.setMonto1(ot.getMonto1());
+        retorno.setMonto2(ot.getMonto2());
+        retorno.setMonto3(ot.getMonto3());
+        retorno.setCodigo(ot.getCodigo());
+
+        return retorno;
+    }
+
+    private List<OrdenTipoDTO> getOrdenesTipoDTO(List<OrdenTipo> list) {
+        List<OrdenTipoDTO> retorno = new ArrayList<OrdenTipoDTO>();
+        for (OrdenTipo ot : list) {
+            retorno.add(transformOrdenTipoToDto(ot));
+        }
+
+        return retorno;
     }
 
 }

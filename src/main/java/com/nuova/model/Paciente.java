@@ -39,18 +39,19 @@ public class Paciente implements java.io.Serializable {
     private String domicilio;
     private String telefono;
     private String mail;
-    private Byte liberado;
+    private Byte coseguro;
     private Integer dni;
     private Set<PacienteObrasocial> pacienteObrasocials = new HashSet<PacienteObrasocial>();
     private Set<Paciente> pacientes = new HashSet<Paciente>();
     private String provincia;
-    private Byte titular;
+    private Byte parentesco;
+    private String zonaAfiliacion;
 
     public Paciente() {
     }
 
     public Paciente(Paciente paciente, String apellido, String nombre, Date fechaNacimiento, String domicilio,
-            String telefono, String mail, Byte liberado, Integer dni, Set<PacienteObrasocial> pacienteObrasocials,
+            String telefono, String mail, Byte coseguro, Integer dni, Set<PacienteObrasocial> pacienteObrasocials,
             Set<Paciente> pacientes, String provincia) {
         this.paciente = paciente;
         this.apellido = apellido;
@@ -59,7 +60,7 @@ public class Paciente implements java.io.Serializable {
         this.domicilio = domicilio;
         this.telefono = telefono;
         this.mail = mail;
-        this.liberado = liberado;
+        this.coseguro = coseguro;
         this.dni = dni;
         this.pacienteObrasocials = pacienteObrasocials;
         this.pacientes = pacientes;
@@ -141,13 +142,13 @@ public class Paciente implements java.io.Serializable {
         this.mail = mail;
     }
 
-    @Column(name = "liberado")
-    public Byte getLiberado() {
-        return this.liberado;
+    @Column(name = "coseguro")
+    public Byte getCoseguro() {
+        return this.coseguro;
     }
 
-    public void setLiberado(Byte liberado) {
-        this.liberado = liberado;
+    public void setCoseguro(Byte coseguro) {
+        this.coseguro = coseguro;
     }
 
     @Column(name = "dni")
@@ -186,12 +187,22 @@ public class Paciente implements java.io.Serializable {
         this.provincia = provincia;
     }
 
-    @Column(name = "titular")
-    public Byte getTitular() {
-        return this.titular;
+    @Column(name = "parentesco")
+    public Byte getParentesco() {
+        return this.parentesco;
     }
 
-    public void setTitular(Byte titular) {
-        this.titular = titular;
+    public void setParentesco(Byte parentesco) {
+        this.parentesco = parentesco;
     }
+
+    @Column(name = "zona_afiliacion")
+    public String getZonaAfiliacion() {
+        return zonaAfiliacion;
+    }
+
+    public void setZonaAfiliacion(String zonaAfiliacion) {
+        this.zonaAfiliacion = zonaAfiliacion;
+    }
+
 }

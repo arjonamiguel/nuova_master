@@ -95,4 +95,14 @@ public class PacienteDAOImpl implements PacienteDAO {
                 .createQuery(" SELECT NEW com.nuova.dto.OrdenAlarmaDTO(COUNT(*)) "
                         + " FROM Paciente p ").list().get(0);
     }
+
+    public List<Paciente> findPacienteAutocomplete(String search) {
+        Query query = this.sessionFactory.getCurrentSession().createQuery("FROM Paciente p "
+                + " WHERE upper(p.apellido) LIKE '%" + search.toUpperCase() + "%'"
+                + " ORDER BY p.apellido ASC");
+        // query.setFirstResult(pageable.getOffset());
+        query.setMaxResults(20);
+        List<Paciente> result = query.list();
+        return result;
+    }
 }

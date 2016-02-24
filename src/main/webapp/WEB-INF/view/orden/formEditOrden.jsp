@@ -6,22 +6,39 @@
 <html>
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<title>Nuova</title>
+		<link rel="shortcut icon" href="<%=request.getContextPath()%>/resources/img/favicon/favicon.ico">
+		
         <link href="<%=request.getContextPath()%>/resources/css/bootstrap/bootstrap.min.css" rel="stylesheet"/>   
 		<script src="<c:url value="/resources/js/jquery/jquery-2.0.3.min.js" />"></script>
 		<script src="<c:url value="/resources/js/bootstrap/bootstrap.min.js" />"></script>
-		<script src="<%=request.getContextPath()%>/resources/js/jquery/bootstrap-collapse.js" />"></script>
+		<script src="<%=request.getContextPath()%>/resources/js/jquery/bootstrap-collapse.js" /></script>
 		<link href="<%=request.getContextPath()%>/resources/css/nuova.css" rel="stylesheet"/>
 		<link href="<%=request.getContextPath()%>/resources/css/panel.css" rel="stylesheet"/>
 		<link href="<%=request.getContextPath()%>/resources/css/bootstrap/bootstrap-responsive.css" rel="stylesheet"/>
+		<link href="<%=request.getContextPath()%>/resources/montrezorro-bootstrap-checkbox-fa865ff/css/bootstrap-checkbox.css" rel="stylesheet"/>
+		<script src="<%=request.getContextPath()%>/resources/montrezorro-bootstrap-checkbox-fa865ff/js/bootstrap-checkbox.js" /></script>
+		
 	
 	<script type="text/javascript">
+	
+	function setObservacionVisible(){
+		$("#addObservacion").css("visibility","visible");
+	}
+	function setObservacionInvisible(){
+		$("#addObservacion").css("visibility","hidden");
+	}
 	
 	  function Eliminar (i) {    	 
   	    document.getElementById("tb_practicas").deleteRow(i);
   	}
   	
 	  function addRow(tableID) {
+	  					if(document.getElementById("practica").value=="NONE"){
+            	return;
+        	}
+	  
 	      	var index = document.getElementById(tableID).getElementsByTagName('tr').length;
 	      	index ++;	
 	          var table = document.getElementById(tableID);
@@ -69,18 +86,18 @@
 		    					<div class="tableContainer">
 		    					
 		    								<ul class="nav nav-tabs">
-											  <li class="active"><a data-toggle="tab" href="#tb_paciente">Paciente</a></li>
-											  <li><a data-toggle="tab" href="#tb_requisitos">Requisitos</a></li>
-											  <li><a data-toggle="tab" href="#tb_autorizacion">Autorizacion</a></li>
+											  <li class="active"><a data-toggle="tab" href="#tb_paciente" onclick="setObservacionInvisible()">Paciente</a></li>
+											  <li><a data-toggle="tab" href="#tb_requisitos" onclick="setObservacionInvisible()">Requisitos</a></li>
+											  <li><a data-toggle="tab" href="#tb_autorizacion" onclick="setObservacionInvisible()">Autorizacion</a></li>
 											  <li>
-											  	<a data-toggle="tab" href="#tb_observacion">
+											  	<a data-toggle="tab" href="#tb_observacion" onclick="setObservacionVisible()">
 											  	Observaciones 
 											  	<c:if test="${observacionCount > 0}">
 										     		<span class="badge">${observacionCount}</span>
 										     	</c:if>
 											  	</a>
 											  </li>
-											  <li><a data-toggle="tab" href="#tb_flujo">Flujo de Estados</a></li>
+											  <li><a data-toggle="tab" href="#tb_flujo" onclick="setObservacionInvisible()">Flujo de Estados</a></li>
 											</ul>
 										
 											<div class="tab-content" style="height: 350px">
@@ -116,11 +133,11 @@
 													
 													<tr>
 														
-														<td colspan="4">
+														<td colspan="4" style="width:60%">
 															<b>Presentó la orden original del médico solicitante?</b>
 														</td>
 														<td  style="text-align:left" colspan="2">			    
-														    <form:checkbox path="reqOrdenMedico" />
+														    <form:checkbox path="reqOrdenMedico" class="checkbox"/>
 														</td>
 													</tr>
 													<tr>
@@ -129,7 +146,7 @@
 															<b>Presentó fotocopia de la credencial de la prestadora OSPSIP?</b>
 														</td>
 														<td  style="text-align:left" colspan="2">				    
-														    <form:checkbox path="reqCredecial" />
+														    <form:checkbox path="reqCredecial" class="checkbox"/>
 														</td>
 													</tr>
 										
@@ -137,11 +154,11 @@
 												
 												<table class="table" style="width: 100%">
 													<tr>			
-														<td colspan="4">
-															<b>Presentó fotocopia del último recibo Monotributista?</b>
+														<td colspan="4" style="width:60%">
+															<b>Presentó fotocopia de los 3 último recibos como Monotributista o Ama de Casa?</b>
 														</td>
 														<td  style="text-align:left" colspan="2">				    
-														    <form:checkbox path="reqMonotributista" />
+														    <form:checkbox path="reqMonotributista" class="checkbox"/>
 														</td>
 													</tr>	
 													<tr>
@@ -150,7 +167,7 @@
 															<b>Presentó fotocopia del último recibo de sueldo?</b>
 														</td>
 														<td  style="text-align:left" colspan="2">				    
-														    <form:checkbox path="reqReciboSueldo" />
+														    <form:checkbox path="reqReciboSueldo" class="checkbox"/>
 														</td>
 													</tr>
 										
@@ -250,15 +267,7 @@
 											
 											    	</table>
 											    	</c:forEach>	
-													
-										    		<table class="table"  style="width: 100%">    					
-													<tr>		
-														<td style="width: 15%"><form:label path="observacion">Observacion</form:label></td>
-														<td  style="text-align:left" colspan="5">			
-														    <form:textarea path="observacion" cssStyle="width:90%"/>
-														</td>
-													</tr>		
-													</table>
+
 										  		</div>
 										  		<div id="tb_flujo" class="tab-pane fade">  					
 													<c:forEach items="${ordenDto.ordenWorkflows}" var="ow" varStatus="loop" >			
@@ -282,7 +291,19 @@
 										  		</div>
 										  		
 											</div>
+												<div id="addObservacion" style="visibility:hidden;">
+													
+										    		<table class="table"  style="width: 100%">    					
+													<tr>		
+														<td style="width: 15%"><form:label path="observacion">Observacion</form:label></td>
+														<td  style="text-align:left" colspan="5">			
+														    <form:textarea path="observacion" cssStyle="width:90%"/>
+														</td>
+													</tr>		
+													</table>
+													</div>
 											<div style="float:right;">
+											
 											<table>
 										 		<tr>
 													<td style="width: 50%">
@@ -312,4 +333,5 @@
 </html>
 <script>
 document.getElementById("mainOrden").parentNode.classList.add("active");
+$(".checkbox").checkbox();
 </script>

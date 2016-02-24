@@ -6,11 +6,14 @@
 <html>
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>Nuova</title>
+	<link rel="shortcut icon" href="<%=request.getContextPath()%>/resources/img/favicon/favicon.ico">
+	
         <link href="<%=request.getContextPath()%>/resources/css/bootstrap/bootstrap.min.css" rel="stylesheet"/>     
 		<script src="<c:url value="/resources/js/jquery/jquery-2.0.3.min.js" />"></script>
 		<script src="<c:url value="/resources/js/bootstrap/bootstrap.min.js" />"></script>
-		<script src="<%=request.getContextPath()%>/resources/js/jquery/bootstrap-collapse.js" />"></script>
+		<script src="<%=request.getContextPath()%>/resources/js/jquery/bootstrap-collapse.js" /></script>
 		<link href="<%=request.getContextPath()%>/resources/css/nuova.css" rel="stylesheet"/>
 		<link href="<%=request.getContextPath()%>/resources/css/panel.css" rel="stylesheet"/>
 		<link href="<%=request.getContextPath()%>/resources/css/bootstrap/bootstrap-responsive.css" rel="stylesheet"/>
@@ -28,7 +31,7 @@ label.error {
 	background-color: #f2dede;
 	border-color: #ebccd1;
 	padding: 1px 20px 1px 20px;
-	width: 58%;
+	width: 70%;
 }
 </style>
 <SCRIPT language="javascript">
@@ -43,6 +46,10 @@ label.error {
 		var table = document.getElementById(tableID);
 		var rowCount = table.rows.length;
 		var row = table.insertRow(rowCount);
+		
+		if(document.getElementById("especialidad").value=="NONE"){
+            	return;
+        } 
 
 		var cell2 = row.insertCell(0);
 		cell2.innerHTML = document.getElementById("especialidad").value
@@ -91,8 +98,10 @@ label.error {
 		}
 	}
 	function updateDate() {
-		document.getElementById("fechaVencimientoHabilitacion").value = document
-				.getElementById("registration-date").value;
+
+			document.getElementById("fechaVencimientoHabilitacion").value = document.getElementById("registration-date").value;
+
+		
 	}
 </SCRIPT>
 </head>
@@ -149,7 +158,7 @@ label.error {
 				<div class="formInput">
 				<div id="calendar">
 					<div class="input-group registration-date-time" style="padding-top:0%;">
-						<input class="form-control" name="registration_date" id="registration-date" value="554" 
+						<input class="form-control" name="registration_date" id="registration-date" value="" 
 						type="date"  onchange="javascript:updateDate();">
 	            	</div>
 	        	</div>  
@@ -177,17 +186,21 @@ label.error {
 <div style="padding-top:30px" class="panel-body" >
 
 	<div class="row-fluid">
-			<div class="span9">
+			<div class="span6">
 			</div>
-			<div class="span2">
-			 	<form:select path="especialidad">
+			<div class="span6">
+				<div style="float:right;padding-right:2%;">
+						<INPUT type="button" value="Agregar" onclick="addRow('dataTable')" class="btn btn-info"/>
+				</div>
+				<div style="float:right;padding-right:2%;">
+					
+								 	<form:select path="especialidad">
 				   <form:option value="NONE" label="Seleccione Especialidad ..."/>
 				   <form:options items="${especialidadList}" itemLabel="nombre" itemValue="especialidadId" />			    
 				</form:select>
+				</div>
 			</div>
-    		<div class="span1">
-    			<div style="float:left;"><INPUT type="button" value="Agregar" onclick="addRow('dataTable')" class="btn btn-info"/></div>
-    		</div>
+    
     </div>
     <div class="tableContainer"> 
 
@@ -235,12 +248,7 @@ label.error {
 </html>
 
 <script language="javascript">
-       
-        //var isSiprosa=$("#habilitacionSiprosa").val();
-        if(true){
-        	document.getElementById("registration-date").value=document.getElementById("fechaVencimientoHabilitacion").value;
-			$(".badge").click();
-        }
+		document.getElementById("registration-date").value= document.getElementById("fechaVencimientoHabilitacion").value  ;
         
       $("#profesional").validate({
     

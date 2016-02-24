@@ -77,6 +77,18 @@
 						<sec:authorize access="hasRole('ROLE_ADMIN')">
 						<li><a href="/nuova/mainObraSocial" id="mainObraSocial">Administrar Obras Sociales</a></li>
 						<li><a href="/nuova/formAddObraSocial" id="formAddObraSocial">Agregar Obras Sociales</a></li>
+						<li class="divider"></li>
+						</sec:authorize>
+						<sec:authorize access="hasRole('ROLE_ADMIN')">
+						<li><a href="/nuova/mainPrestador" id="mainPrestador">Administrar Prestadores</a></li>
+						<li><a href="/nuova/formAddPrestador" id="formAddPrestador">Agregar Prestadores</a></li>
+						<li><a href="/nuova/showReportePrestadores" id="showReportePrestador">Reporte de Prestadores</a></li>
+						<li class="divider"></li>						
+						</sec:authorize>						
+						<sec:authorize access="hasRole('ROLE_ADMIN')">
+						<li><a href="/nuova/mainPractica" id="mainPractica">Administrar Nomenclador</a></li>
+						<li><a href="/nuova/formAddPractica" id="formAddPractica">Agregar Practica</a></li>
+						<li><a href="/nuova/showReportePractica" id="showReportePractica">Reporte Nomenclador</a></li>
 						</sec:authorize>
 		            </ul>
 				</li>
@@ -84,10 +96,11 @@
 				
 				<sec:authorize access="hasRole('ROLE_ADMIN') OR hasRole('ROLE_USER')">
 				<li class="dropdown">
-				<a href="#" id="mainOrden" class="dropdown-toggle" data-toggle="dropdown"><i class="icon-briefcase"></i>&nbsp;&nbsp;Administracion de Practicas<span class="caret"></span></a>			
+				<a href="#" id="mainOrden" class="dropdown-toggle" data-toggle="dropdown"><i class="icon-briefcase"></i>&nbsp;&nbsp;Administracion de Ordenes<span class="caret"></span></a>			
 			  		<ul class="dropdown-menu" role="menu">
-			  			<li><a href="/nuova/mainOrden">Administrar Practicas</a></li>
-		                <li><a href="/nuova/formAddOrden">Agregar Practicas</a></li>
+			  			<li><a href="/nuova/mainConsulta">Administrar Consultas</a></li>
+			  			<li><a href="/nuova/mainOrdenPractica">Administrar Practicas</a></li>
+						<li><a href="/nuova/mainConsultaOdontologica">Administrar Practicas Odontologicas</a></li>						
               		</ul>                
 				</li>
 				</sec:authorize>
@@ -101,6 +114,25 @@
               		</ul>  
 				</li>
 				</sec:authorize>
+				
+				<sec:authorize access="hasRole('ROLE_ADMIN')">
+				<li class="dropdown" >
+				<a href="#" id="calendario"  class="dropdown-toggle" data-toggle="dropdown"><i class="icon-calendar"></i>&nbsp;&nbsp;Calendario<span class="caret"></a>
+				<ul class="dropdown-menu" role="menu">
+		                <li><a href="/nuova/mainCalendario">Visualizar Calendario</a></li>		               
+              	</ul>
+				</li>
+				</sec:authorize>
+				
+				<sec:authorize access="hasRole('ROLE_ADMIN')">
+				<li class="dropdown" >
+				<a href="#" id="caja"  class="dropdown-toggle" data-toggle="dropdown"><i class="icon-list-alt"></i>&nbsp;&nbsp;Caja<span class="caret"></a>
+				<ul class="dropdown-menu" role="menu">
+		                <li><a href="/nuova/mainCaja">Administracion de Caja</a></li>		               
+              	</ul>
+				</li>
+				</sec:authorize>
+				
 				
 				<sec:authorize access="hasRole('ROLE_ADMIN')">
 				<li class="dropdown" >

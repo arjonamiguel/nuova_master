@@ -7,11 +7,14 @@
 <html>
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>Nuova</title>
+	<link rel="shortcut icon" href="<%=request.getContextPath()%>/resources/img/favicon/favicon.ico">
+	
         <link href="<%=request.getContextPath()%>/resources/css/bootstrap/bootstrap.min.css" rel="stylesheet"/>   
 		<script src="<c:url value="/resources/js/jquery/jquery-2.0.3.min.js" />"></script>
 		<script src="<c:url value="/resources/js/bootstrap/bootstrap.min.js" />"></script>
-		<script src="<%=request.getContextPath()%>/resources/js/jquery/bootstrap-collapse.js" />"></script>
+		<script src="<%=request.getContextPath()%>/resources/js/jquery/bootstrap-collapse.js" /></script>
 		<link href="<%=request.getContextPath()%>/resources/css/nuova.css" rel="stylesheet"/>
 		<link href="<%=request.getContextPath()%>/resources/css/panel.css" rel="stylesheet"/>
 		<link href="<%=request.getContextPath()%>/resources/css/bootstrap/bootstrap-responsive.css" rel="stylesheet"/>
@@ -29,9 +32,9 @@
 
 						$("#ordenGrid").simplePagingGrid(
 								{
-									columnNames : [ "PACIENTE", "NRO.ORDEN", "FECHA", "ORDEN MEDICA", "CREDENCIAL",
+									columnNames : [ "PACIENTE","TIPO" ,"NRO.ORDEN", "FECHA", "ORDEN MEDICA", "CREDENCIAL",
 													"MONOTRIBUTISTA", "RECIBO SUELDO", "ESTADO","" ],
-									columnKeys : [ "botonpaciente", "nroOrden", "fecha","iconordenmedica"
+									columnKeys : [ "botonpaciente","ordenTipoDesc" ,"nroOrden", "fecha","iconordenmedica"
 													, "iconcredencial", "iconmonotributista", "iconrecibo"
 													, "etiqestado", "acciones"],
 									columnWidths : [ "5%", "10%", , , , , , , "5%"],
@@ -73,6 +76,7 @@
 <!-- 	Fin Configuracion del paginador -->
 
 <script>
+
 function editColumnEstado() {
 	var text="";
     //run through each row
@@ -124,8 +128,8 @@ function editColumnsChecked() {
 		<div class="panel panel-info">
 			<div class="panel-heading">
           			<div class="panel-title">
-	          			Administracion de Practicas
-	           			<a href="formAddOrden" class="pull-right"><b>+</b>&nbsp;&nbsp;Nueva Practica</a>
+	          			Administracion Orden de Practicas
+	           			<a href="formAddOrden" class="pull-right"><b>+</b>&nbsp;&nbsp;Nueva Orden de Practica</a>
           			</div>
     		</div>     
 			<div  class="panel-body" >
@@ -168,7 +172,7 @@ editColumnsChecked();
 function callPaciente() {
 	var retorno;
 	$.ajax({
-		url : "ajaxGetOrdenesPaginados",
+		url : "ajaxGetOrdenesPaginados/102",
 		type : "GET",
 		contentType : "application/json; charset=utf-8",
 		//    data: jsonString, //Stringified Json Object
@@ -187,7 +191,7 @@ function callPaciente() {
 function callSearchPaciente(search) {
 	var retorno;
 	$.ajax({
-		url : "ajaxGetSearchOrdenesPaginados?search=" + search,
+		url : "ajaxGetSearchOrdenesPaginados/102/?search=" + search,
 		type : "GET",
 		contentType : "application/json; charset=utf-8",
 		//    data: jsonString, //Stringified Json Object
@@ -209,4 +213,7 @@ function loadStart() {
 function loadStop() {
 	$('#wait').css("visibility","hidden");
 }
+
+
+
 </script>
