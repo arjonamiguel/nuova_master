@@ -94,8 +94,25 @@
 				document.getElementById("calendar").style.visibility='hidden';
 			}
 		}
+
 		function updateDate(){
 			document.getElementById("fechaVencimientoHabilitacion").value=document.getElementById("registration-date").value;
+		}
+
+		function updateDateValidoHasta() {
+			document.getElementById("validoHasta").value=document.getElementById("valido-hasta").value;
+		}
+
+		function updateDateFechaMatricula() {
+			document.getElementById("fechaEmisionMatricula").value=document.getElementById("fecha-matricula").value;
+		}
+
+		function updateDateFechaDesde() {
+			document.getElementById("vigenciaDesde").value=document.getElementById("fecha-desde").value;
+		}
+
+		function updateDateFechaHasta() {
+			document.getElementById("vigenciaHasta").value=document.getElementById("fecha-hasta").value;
 		}
     </SCRIPT>
 </head>
@@ -107,7 +124,7 @@
 <form:form method="post" action="/nuova/addProfesional" commandName="profesional">
 <div class="panel panel-info">
 	<div class="panel-heading">
-          <div class="panel-title">Agregar Datos del Profesional</div>
+          <div class="panel-title">Datos del Profesional</div>
     </div>     
 	<div  class="panel-body">
 	
@@ -132,43 +149,139 @@
 			<div class="formLabel"><form:label path="matricula">Matr&iacutecula:</form:label></div>
 	        <div class="formInput"><form:input path="matricula" type="number"/></div>
 	    </div>
-	    <div class="span4">
-	       <div class="formLabel"><form:label path="registroNacional">Registro Nacional:</form:label></div>
-	       <div class="formInput"><form:input path="registroNacional" type="number"/></div>
-	    </div>
+	   
 	    <div class="span4">
 	     	<div class="formLabel"><form:label path="tituloProfesional">T&iacutetulo Profesional:</form:label></div>
 	        <div class="formInput"><form:input path="tituloProfesional" type="text"/></div>
 	    </div>
   </div>
-    <div class="row-fluid">
-	    <div class="span4">	
-			<div style="visibility:hidden;height:0px;"><form:label path="habilitacionSiprosa">Habilitacion del Siprosa:</form:label></div>
-			<div style="visibility:hidden;height:0px;"><form:input path="habilitacionSiprosa" /></div>
-			<div>
-				<div class="formLabel"><form:label path="fechaVencimientoHabilitacion">SIPROSA:</form:label></div>
-				<div style="visibility:hidden;height:0px;"><form:input class="date" path="fechaVencimientoHabilitacion" /></div>
-				<div class="formInput">
-				<div id="calendar">
-					<div class="input-group registration-date-time" style="padding-top:0%;">
-						<input class="form-control" name="registration_date" id="registration-date" type="date"  onchange="javascript:updateDate();">
-	            	</div>
-	        	</div>  
-	        	</div>
-			</div>
-	    </div>
-		<div class="span4">	
-	    </div>
-		<div class="span4">	
-	    </div>
 
-  </div>
 </div>        
         
      </div>   
     
         
 </div>   
+
+<div class="panel panel-info">
+	<div class="panel-heading">
+          <div class="panel-title">Registro Nacional de Prestadores</div>
+    </div>     
+	<div  class="panel-body">
+	
+<div class="container-fluid">
+  <div class="row-fluid">
+	    <div class="span4">
+	      <div><form:hidden path="profesionalId" /></div>
+        	<div class="formLabel"><form:label path="apellido">Nro Registro:</form:label></div>
+        	<div class="formInput"><form:input path="nroRegistro" type="text"/></div>
+	    </div>
+	    <div class="span4">	
+			<div style="visibility:hidden;height:0px;"><form:label path="habilitacionSiprosa">Habilitacion del Siprosa:</form:label></div>
+			<div style="visibility:hidden;height:0px;"><form:input path="habilitacionSiprosa" /></div>
+			<div>
+				<div class="formLabel"><form:label path="validoHasta">Valido Hasta:</form:label></div>
+				<div style="visibility:hidden;height:0px;"><form:input class="date" path="validoHasta" /></div>
+				<div class="formInput">
+				<div id="calendar">
+					<div class="input-group registration-date-time" style="padding-top:0%;">
+						<input class="form-control" name="registration_date" id="valido-hasta" type="date"  onchange="javascript:updateDateValidoHasta();">
+	            	</div>
+	        	</div>  
+	        	</div>
+			</div>
+	    </div>
+	    <div class="span4">
+	    </div>
+  	</div>
+	</div>        
+        
+    </div>       
+</div>  
+
+<div class="panel panel-info">
+	<div class="panel-heading">
+          <div class="panel-title">Constancia de Matricula</div>
+    </div>     
+	<div  class="panel-body">
+	
+<div class="container-fluid">
+  <div class="row-fluid">
+	    <div class="span4">	
+			
+			<div>
+				<div class="formLabel"><form:label path="fechaEmisionMatricula">Fecha Matricula:</form:label></div>
+				<div style="visibility:hidden;height:0px;"><form:input class="date" path="fechaEmisionMatricula" /></div>
+				<div class="formInput">
+				<div id="calendar">
+					<div class="input-group registration-date-time" style="padding-top:0%;">
+						<input class="form-control" name="fecha_matricula" id="fecha-matricula" type="date"  onchange="javascript:updateDateFechaMatricula();">
+	            	</div>
+	        	</div>  
+	        	</div>
+			</div>
+	    </div>
+	    <div class="span4">
+			<div class="formLabel"><form:label path="nroLibro">Nro. Folio:</form:label></div>
+        	<div class="formInput"><form:input path="nroLibro" type="number"/></div>
+	    </div>
+	    <div class="span4">
+			<div class="formLabel"><form:label path="nroFolio">Nro. Libro:</form:label></div>
+	        <div class="formInput"><form:input path="nroFolio" type="number"/></div>
+	    </div>
+  	</div>
+	</div>        
+        
+    </div>       
+</div>  
+
+<div class="panel panel-info">
+	<div class="panel-heading">
+          <div class="panel-title">Certificado de Cobertura</div>
+    </div>     
+	<div  class="panel-body">
+	
+<div class="container-fluid">
+  <div class="row-fluid">
+	    <div class="span4">
+	      <div><form:hidden path="profesionalId" /></div>
+        	<div class="formLabel"><form:label path="nroPoliza">Nro. Poliza:</form:label></div>
+        	<div class="formInput"><form:input path="nroPoliza" type="text"/></div>
+	    </div>
+	     <div class="span4">	
+			
+			<div>
+				<div class="formLabel"><form:label path="vigenciaDesde">Vigencia Desde:</form:label></div>
+				<div style="visibility:hidden;height:0px;"><form:input class="date" path="vigenciaDesde" /></div>
+				<div class="formInput">
+				<div id="calendar">
+					<div class="input-group registration-date-time" style="padding-top:0%;">
+						<input class="form-control" name="fecha_desde" id="fecha-desde" type="date"  onchange="javascript:updateDateFechaDesde();">
+	            	</div>
+	        	</div>  
+	        	</div>
+			</div>
+	    </div>
+	     <div class="span4">	
+			
+			<div>
+				<div class="formLabel"><form:label path="vigenciaHasta">Vigencia Hasta:</form:label></div>
+				<div style="visibility:hidden;height:0px;"><form:input class="date" path="vigenciaHasta" /></div>
+				<div class="formInput">
+				<div id="calendar">
+					<div class="input-group registration-date-time" style="padding-top:0%;">
+						<input class="form-control" name="fecha_hasta" id="fecha-hasta" type="date"  onchange="javascript:updateDateFechaHasta();">
+	            	</div>
+	        	</div>  
+	        	</div>
+			</div>
+	    </div>
+  	</div>
+	</div>        
+        
+    </div>       
+</div>  
+
 
 <div class="panel panel-info">
 	<div class="panel-heading">
@@ -225,6 +338,12 @@
 <script>
         document.getElementById("habilitacionSiprosa").value=0;
         document.getElementById("fechaVencimientoHabilitacion").value='';
+
+        document.getElementById("validoHasta").value='';        
+        document.getElementById("fechaEmisionMatricula").value='';
+        document.getElementById("vigenciaDesde").value='';
+        document.getElementById("vigenciaHasta").value='';
+        
 		document.getElementById("configuracion").parentNode.classList.add("active");
 			$("#profesional").validate({
     
@@ -237,7 +356,6 @@
 		                minlength: 5
 		            },
 		            matricula: "required",
-		            registroNacional: "required",
 		            tituloNacional: "required"
 		        },
 		        
@@ -245,12 +363,7 @@
 		        messages: {
 		            apellido: "Ingrese apellido",
 		            nombre: "Ingrese nombre",
-		            telefono: {
-		                required: "Ingrese tel&eacutefono",
-		                minlength: "T&eacutelefono debe tener al menos 5 caracteres de largo"
-		            },
-		            matricula: "Ingrese matr&iacutecula",
-		            registroNacional: "Ingrese Registro Nacional"
+		        
 		        },
 		                submitHandler: function(form) {
 		            form.submit();

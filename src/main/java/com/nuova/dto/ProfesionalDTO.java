@@ -21,6 +21,16 @@ public class ProfesionalDTO {
     private Map<Integer, String> especialidadListEdit = new HashMap<Integer, String>();
     private List<ProfesionalEspecialidadDTO> especialidadListOld = new ArrayList<ProfesionalEspecialidadDTO>();
 
+    private Integer nroRegistro;
+    private String validoHasta;
+    private String fechaEmisionMatricula;
+    private Integer nroLibro;
+    private Integer nroFolio;
+    private Integer nroPoliza;
+    private String vigenciaDesde;
+    private String vigenciaHasta;
+    private String tipoMatricula;
+
     private String acciones;
 
     public Integer getProfesionalId() {
@@ -142,6 +152,78 @@ public class ProfesionalDTO {
 
     public void setAcciones(String acciones) {
         this.acciones = acciones;
+    }
+
+    public Integer getNroRegistro() {
+        return nroRegistro;
+    }
+
+    public void setNroRegistro(Integer nroRegistro) {
+        this.nroRegistro = nroRegistro;
+    }
+
+    public String getValidoHasta() {
+        return validoHasta;
+    }
+
+    public void setValidoHasta(String validoHasta) {
+        this.validoHasta = validoHasta;
+    }
+
+    public String getFechaEmisionMatricula() {
+        return fechaEmisionMatricula;
+    }
+
+    public void setFechaEmisionMatricula(String fechaEmisionMatricula) {
+        this.fechaEmisionMatricula = fechaEmisionMatricula;
+    }
+
+    public Integer getNroLibro() {
+        return nroLibro;
+    }
+
+    public void setNroLibro(Integer nroLibro) {
+        this.nroLibro = nroLibro;
+    }
+
+    public Integer getNroFolio() {
+        return nroFolio;
+    }
+
+    public void setNroFolio(Integer nroFolio) {
+        this.nroFolio = nroFolio;
+    }
+
+    public Integer getNroPoliza() {
+        return nroPoliza;
+    }
+
+    public void setNroPoliza(Integer nroPoliza) {
+        this.nroPoliza = nroPoliza;
+    }
+
+    public String getVigenciaDesde() {
+        return vigenciaDesde;
+    }
+
+    public void setVigenciaDesde(String vigenciaDesde) {
+        this.vigenciaDesde = vigenciaDesde;
+    }
+
+    public String getVigenciaHasta() {
+        return vigenciaHasta;
+    }
+
+    public void setVigenciaHasta(String vigenciaHasta) {
+        this.vigenciaHasta = vigenciaHasta;
+    }
+
+    public String getTipoMatricula() {
+        return tipoMatricula;
+    }
+
+    public void setTipoMatricula(String tipoMatricula) {
+        this.tipoMatricula = tipoMatricula;
     }
 
 }

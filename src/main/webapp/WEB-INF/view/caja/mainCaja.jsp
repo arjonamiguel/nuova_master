@@ -35,11 +35,12 @@
 			<div  class="panel-body" >
 				<div class="container-fluid" >
 	  				<div class="row-fluid" >
+	  				<form:form action="" method="GET" commandName="caja">
 						<div class="span4">
 				   			<div id="labelDate" class="formLabel"><label>Fecha:</label></div>
 							<div style="visibility:hidden;height:0px;"><input id="fecha" class="date"/></div>						
 							<div class="formInput" >
-								<table>
+							<table>
 									<tr>
 									<td style="width:80%">		
 									
@@ -61,6 +62,7 @@
 	            			</div>
 	            				
 			   			</div>
+			   			</form:form>
 			   			<span class="pull-right">TOTAL $ </span>
 		    		</div>
 		    		

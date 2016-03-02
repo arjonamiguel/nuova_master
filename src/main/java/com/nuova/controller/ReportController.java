@@ -390,7 +390,7 @@ public class ReportController {
         dto.setMatricula(p.getMatricula());
         dto.setFechaVencimientoHabilitacion(p.getFechaVencimientoHabilitacion() + "");
 
-        List<ProfesionalEspecialidad> listPE = p.getProfesionalEspecialidads();
+        Set<ProfesionalEspecialidad> listPE = p.getProfesionalEspecialidads();
         for (ProfesionalEspecialidad pe : listPE) {
             Especialidad especialidad = especialidadManager.findEspecialidadById(
                     pe.getEspecialidad().getEspecialidadId());

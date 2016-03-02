@@ -35,12 +35,12 @@
 						$("#profesionalGrid").simplePagingGrid(
 								{
 									columnNames : [ "ID", "APELLIDO", "NOMBRE",
-											"TELEFONO", "MATRIULA", "REGISTRO",
-											 "TITULO", "VENCIMIENTO", ""],
-									columnKeys : [ "profesionalId", "nombre",
-											"apellido", "telefono", "matricula",
-											"registroNacional", "tituloProfesional", 
-											"fechaVencimientoHabilitacion", "acciones" ],
+											"TELEFONO", "MATRIULA", 
+											 "TITULO", ""],
+									columnKeys : [ "profesionalId", "apellido",
+											"nombre", "telefono", "matricula",
+											 "tituloProfesional", 
+											 "acciones" ],
 									columnWidths : [ "5%", "20%", "20%", "11%", "11%" ],
 									sortable : [ false, true, true, true ],
 									data : rows

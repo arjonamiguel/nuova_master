@@ -1,10 +1,10 @@
 package com.nuova.model;
 
-// Generated Dec 7, 2015 4:39:53 PM by Hibernate Tools 3.4.0.CR1
+// Generated Feb 29, 2016 7:49:23 PM by Hibernate Tools 4.3.1
 
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -25,10 +25,6 @@ import javax.persistence.TemporalType;
         , catalog = "nuova")
 public class Profesional implements java.io.Serializable {
 
-    /**
-     * 
-     */
-    private static final long serialVersionUID = -940210575738056861L;
     private Integer profesionalId;
     private String apellido;
     private String nombre;
@@ -38,14 +34,26 @@ public class Profesional implements java.io.Serializable {
     private String tituloProfesional;
     private Byte habilitacionSiprosa;
     private Date fechaVencimientoHabilitacion;
-    private List<ProfesionalEspecialidad> profesionalEspecialidads = new ArrayList<ProfesionalEspecialidad>();
+    private Integer nroRegistro;
+    private Date validoHasta;
+    private Date fechaEmisionMatricula;
+    private Integer nroLibro;
+    private Integer nroFolio;
+    private Integer nroPoliza;
+    private Date vigenciaDesde;
+    private Date vigenciaHasta;
+    private String tipoMatricula;
+    private Set<ProfesionalEspecialidad> profesionalEspecialidads = new HashSet<ProfesionalEspecialidad>(0);
+    private Set<OrdenProfesional> ordenProfesionals = new HashSet<OrdenProfesional>(0);
 
     public Profesional() {
     }
 
     public Profesional(String apellido, String nombre, String telefono, String matricula, String registroNacional,
-            String tituloProfesional, Byte habilitacionSiprosa, Date fechaVencimientoHabilitacion,
-            List<ProfesionalEspecialidad> profesionalEspecialidades) {
+            String tituloProfesional, Byte habilitacionSiprosa, Date fechaVencimientoHabilitacion, Integer nroRegistro,
+            Date validoHasta, Date fechaEmisionMatricula, Integer nroLibro, Integer nroFolio, Integer nroPoliza,
+            Date vigenciaDesde, Date vigenciaHasta, String tipoMatricula,
+            Set<ProfesionalEspecialidad> profesionalEspecialidads, Set<OrdenProfesional> ordenProfesionals) {
         this.apellido = apellido;
         this.nombre = nombre;
         this.telefono = telefono;
@@ -54,7 +62,17 @@ public class Profesional implements java.io.Serializable {
         this.tituloProfesional = tituloProfesional;
         this.habilitacionSiprosa = habilitacionSiprosa;
         this.fechaVencimientoHabilitacion = fechaVencimientoHabilitacion;
-        this.profesionalEspecialidads = profesionalEspecialidades;
+        this.nroRegistro = nroRegistro;
+        this.validoHasta = validoHasta;
+        this.fechaEmisionMatricula = fechaEmisionMatricula;
+        this.nroLibro = nroLibro;
+        this.nroFolio = nroFolio;
+        this.nroPoliza = nroPoliza;
+        this.vigenciaDesde = vigenciaDesde;
+        this.vigenciaHasta = vigenciaHasta;
+        this.tipoMatricula = tipoMatricula;
+        this.profesionalEspecialidads = profesionalEspecialidads;
+        this.ordenProfesionals = ordenProfesionals;
     }
 
     @Id
@@ -141,13 +159,107 @@ public class Profesional implements java.io.Serializable {
         this.fechaVencimientoHabilitacion = fechaVencimientoHabilitacion;
     }
 
+    @Column(name = "nro_registro")
+    public Integer getNroRegistro() {
+        return this.nroRegistro;
+    }
+
+    public void setNroRegistro(Integer nroRegistro) {
+        this.nroRegistro = nroRegistro;
+    }
+
+    @Temporal(TemporalType.DATE)
+    @Column(name = "valido_hasta", length = 10)
+    public Date getValidoHasta() {
+        return this.validoHasta;
+    }
+
+    public void setValidoHasta(Date validoHasta) {
+        this.validoHasta = validoHasta;
+    }
+
+    @Temporal(TemporalType.DATE)
+    @Column(name = "fecha_emision_matricula", length = 10)
+    public Date getFechaEmisionMatricula() {
+        return this.fechaEmisionMatricula;
+    }
+
+    public void setFechaEmisionMatricula(Date fechaEmisionMatricula) {
+        this.fechaEmisionMatricula = fechaEmisionMatricula;
+    }
+
+    @Column(name = "nro_libro")
+    public Integer getNroLibro() {
+        return this.nroLibro;
+    }
+
+    public void setNroLibro(Integer nroLibro) {
+        this.nroLibro = nroLibro;
+    }
+
+    @Column(name = "nro_folio")
+    public Integer getNroFolio() {
+        return this.nroFolio;
+    }
+
+    public void setNroFolio(Integer nroFolio) {
+        this.nroFolio = nroFolio;
+    }
+
+    @Column(name = "nro_poliza")
+    public Integer getNroPoliza() {
+        return this.nroPoliza;
+    }
+
+    public void setNroPoliza(Integer nroPoliza) {
+        this.nroPoliza = nroPoliza;
+    }
+
+    @Temporal(TemporalType.DATE)
+    @Column(name = "vigencia_desde", length = 10)
+    public Date getVigenciaDesde() {
+        return this.vigenciaDesde;
+    }
+
+    public void setVigenciaDesde(Date vigenciaDesde) {
+        this.vigenciaDesde = vigenciaDesde;
+    }
+
+    @Temporal(TemporalType.DATE)
+    @Column(name = "vigencia_hasta", length = 10)
+    public Date getVigenciaHasta() {
+        return this.vigenciaHasta;
+    }
+
+    public void setVigenciaHasta(Date vigenciaHasta) {
+        this.vigenciaHasta = vigenciaHasta;
+    }
+
+    @Column(name = "tipo_matricula", length = 256)
+    public String getTipoMatricula() {
+        return this.tipoMatricula;
+    }
+
+    public void setTipoMatricula(String tipoMatricula) {
+        this.tipoMatricula = tipoMatricula;
+    }
+
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "profesional")
-    public List<ProfesionalEspecialidad> getProfesionalEspecialidads() {
+    public Set<ProfesionalEspecialidad> getProfesionalEspecialidads() {
         return this.profesionalEspecialidads;
     }
 
-    public void setProfesionalEspecialidads(List<ProfesionalEspecialidad> profesionalEspecialidads) {
+    public void setProfesionalEspecialidads(Set<ProfesionalEspecialidad> profesionalEspecialidads) {
         this.profesionalEspecialidads = profesionalEspecialidads;
+    }
+
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "profesional")
+    public Set<OrdenProfesional> getOrdenProfesionals() {
+        return this.ordenProfesionals;
+    }
+
+    public void setOrdenProfesionals(Set<OrdenProfesional> ordenProfesionals) {
+        this.ordenProfesionals = ordenProfesionals;
     }
 
 }
