@@ -663,7 +663,7 @@ public class OrdenController {
         dto.setMatricula(p.getMatricula());
         dto.setFechaVencimientoHabilitacion(p.getFechaVencimientoHabilitacion() + "");
 
-        List<ProfesionalEspecialidad> listPE = p.getProfesionalEspecialidads();
+        Set<ProfesionalEspecialidad> listPE = p.getProfesionalEspecialidads();
         for (ProfesionalEspecialidad pe : listPE) {
             Especialidad especialidad = especialidadManager.findEspecialidadById(
                     pe.getEspecialidad().getEspecialidadId());
@@ -714,7 +714,7 @@ public class OrdenController {
     }
 
     private Profesional transformDtoToProfesional(ProfesionalDTO p) {
-        List<ProfesionalEspecialidad> profesionalEspecialidades = new ArrayList<ProfesionalEspecialidad>();
+        Set<ProfesionalEspecialidad> profesionalEspecialidades = new HashSet<ProfesionalEspecialidad>();
         DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
         Date fechaHabilitacion = null;
         try {
@@ -725,7 +725,7 @@ public class OrdenController {
         }
         Profesional profesional = new Profesional(p.getApellido(), p.getNombre(), p.getTelefono(), p.getMatricula(),
                 p.getRegistroNacional(), p.getTituloProfesional(), new Byte(p.getHabilitacionSiprosa()),
-                fechaHabilitacion, null);
+                fechaHabilitacion, null, null, null, null, null, null, null, null, null, null, null);
         profesional.setProfesionalId(p.getProfesionalId());
 
         for (Integer id : p.getEspecialidadList()) {

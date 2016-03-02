@@ -5,7 +5,9 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -153,18 +155,27 @@ public class ProfesionalController {
     }
 
     private Profesional transformDtoToProfesional(ProfesionalDTO p) {
-        List<ProfesionalEspecialidad> profesionalEspecialidades = new ArrayList<ProfesionalEspecialidad>();
+        Set<ProfesionalEspecialidad> profesionalEspecialidades = new HashSet<ProfesionalEspecialidad>();
         DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
         Date fechaHabilitacion = null;
+        Date validoHasta = null;
+        Date fechaMatricula = null;
+        Date vigenciaDesde = null;
+        Date vigenciaHasta = null;
         try {
-            fechaHabilitacion = formatter.parse(p.getFechaVencimientoHabilitacion());
+            // fechaHabilitacion = formatter.parse(p.getFechaVencimientoHabilitacion());
+            validoHasta = formatter.parse(p.getValidoHasta());
+            fechaMatricula = formatter.parse(p.getFechaEmisionMatricula());
+            vigenciaDesde = formatter.parse(p.getVigenciaDesde());
+            vigenciaHasta = formatter.parse(p.getVigenciaHasta());
         } catch (ParseException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
         Profesional profesional = new Profesional(p.getApellido(), p.getNombre(), p.getTelefono(), p.getMatricula(),
                 p.getRegistroNacional(), p.getTituloProfesional(), new Byte(p.getHabilitacionSiprosa()),
-                fechaHabilitacion, null);
+                fechaHabilitacion, p.getNroRegistro(), validoHasta, fechaMatricula, p.getNroLibro(), p.getNroFolio(),
+                p.getNroPoliza(), vigenciaDesde, vigenciaHasta, null, null, null);
         profesional.setProfesionalId(p.getProfesionalId());
 
         for (Integer id : p.getEspecialidadList()) {
@@ -189,7 +200,7 @@ public class ProfesionalController {
         dto.setMatricula(p.getMatricula());
         dto.setFechaVencimientoHabilitacion(p.getFechaVencimientoHabilitacion() + "");
 
-        List<ProfesionalEspecialidad> listPE = p.getProfesionalEspecialidads();
+        Set<ProfesionalEspecialidad> listPE = p.getProfesionalEspecialidads();
         for (ProfesionalEspecialidad pe : listPE) {
             Especialidad especialidad = especialidadManager.findEspecialidadById(
                     pe.getEspecialidad().getEspecialidadId());
@@ -204,6 +215,18 @@ public class ProfesionalController {
             dto.getEspecialidadListEdit().put(especialidad.getEspecialidadId(),
                     especialidad.getNombre());
         }
+
+        // ----
+        dto.setNroRegistro(p.getNroRegistro());
+        dto.setValidoHasta(p.getValidoHasta() + "");
+
+        dto.setFechaEmisionMatricula(p.getFechaEmisionMatricula() + "");
+        dto.setNroFolio(p.getNroFolio());
+        dto.setNroLibro(p.getNroLibro());
+
+        dto.setNroPoliza(p.getNroPoliza());
+        dto.setVigenciaDesde(p.getVigenciaDesde() + "");
+        dto.setVigenciaHasta(p.getVigenciaHasta() + "");
 
         return dto;
     }

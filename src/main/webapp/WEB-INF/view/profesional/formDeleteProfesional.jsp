@@ -124,39 +124,138 @@
 						<div class="formLabel"><form:label path="matricula">Matricula:</form:label></div>
 				        <div class="formInput"><form:input path="matricula" placeholder="Matricula" disabled="true"/></div>
 				    </div>
-				    <div class="span4">
-				       <div class="formLabel"><form:label path="registroNacional">Registro Nacional:</form:label></div>
-				       <div class="formInput"><form:input path="registroNacional" placeholder="Registro Nacional" disabled="true"/></div>
-				    </div>
+				  
 				    <div class="span4">
 				     	<div class="formLabel"><form:label path="tituloProfesional">Titulo Profesional:</form:label></div>
 				        <div class="formInput"><form:input path="tituloProfesional" placeholder="Titulo Profesional" disabled="true"/></div>
 				    </div>
 			  	</div>
-			    <div class="row-fluid">
-				    <div class="span4"">	
-				    	<div style="visibility:hidden;height:0px;"><form:label path="habilitacionSiprosa">Habilitacion del Siprosa:</form:label></div>
-						<div style="visibility:hidden;height:0px;"><form:input path="habilitacionSiprosa" /></div>
-						<div>
-							<div class="formLabel"><form:label path="fechaVencimientoHabilitacion">SIPROSA:</form:label></div>
-							<div style="visibility:hidden;height:0px;"><form:input class="date" path="fechaVencimientoHabilitacion" /></div>
-							<div class="formInput">
-							<div id="calendar">
-								<div class="input-group registration-date-time" style="padding-top:0%;">
-									<input class="form-control" name="registration_date" id="registration-date" type="date"  onchange="javascript:updateDate();">
-				            	</div>
-				        	</div>  
-				        	</div>
-						</div>
-				</div>
-			    <div class="span4">	
-			    </div>
-			    <div class="span4">
-			    </div>
-	  	</div>
+		
 	</div>            
 </div>       
 </div>   
+
+
+<div class="panel panel-info">
+	<div class="panel-heading">
+          <div class="panel-title">Eliminar Registro Nacional de Prestadores</div>
+    </div>     
+	<div  class="panel-body">
+	
+<div class="container-fluid">
+  <div class="row-fluid">
+	    <div class="span4">
+	      <div><form:hidden path="profesionalId" /></div>
+        	<div class="formLabel"><form:label path="apellido">Nro Registro:</form:label></div>
+        	<div class="formInput"><form:input path="nroRegistro" type="text" disabled="true"/></div>
+	    </div>
+	    <div class="span4">	
+			<div style="visibility:hidden;height:0px;"><form:label path="habilitacionSiprosa">Habilitacion del Siprosa:</form:label></div>
+			<div style="visibility:hidden;height:0px;"><form:input path="habilitacionSiprosa" disabled="true" /></div>
+			<div>
+				<div class="formLabel"><form:label path="validoHasta">Valido Hasta:</form:label></div>
+				<div style="visibility:hidden;height:0px;"><form:input class="date" path="validoHasta" /></div>
+				<div class="formInput">
+				<div id="calendar">
+					<div class="input-group registration-date-time" style="padding-top:0%;">
+						<input disabled="disabled"  class="form-control" name="registration_date" id="valido-hasta" type="date"  onchange="javascript:updateDateValidoHasta();">
+	            	</div>
+	        	</div>  
+	        	</div>
+			</div>
+	    </div>
+	    <div class="span4">
+	    </div>
+  	</div>
+	</div>        
+        
+    </div>       
+</div>  
+
+<div class="panel panel-info">
+	<div class="panel-heading">
+          <div class="panel-title">Eliminar Constancia de Matricula</div>
+    </div>     
+	<div  class="panel-body">
+	
+<div class="container-fluid">
+  <div class="row-fluid">
+	    <div class="span4">	
+			
+			<div>
+				<div class="formLabel"><form:label path="fechaEmisionMatricula">Fecha Matricula:</form:label></div>
+				<div style="visibility:hidden;height:0px;"><form:input class="date" path="fechaEmisionMatricula" /></div>
+				<div class="formInput">
+				<div id="calendar">
+					<div class="input-group registration-date-time" style="padding-top:0%;">
+						<input disabled="disabled"  class="form-control" name="fecha_matricula" id="fecha-matricula" type="date"  onchange="javascript:updateDateFechaMatricula();">
+	            	</div>
+	        	</div>  
+	        	</div>
+			</div>
+	    </div>
+	    <div class="span4">
+			<div class="formLabel"><form:label path="nroLibro">Nro. Folio:</form:label></div>
+        	<div class="formInput"><form:input path="nroLibro" type="number" disabled="true"/></div>
+	    </div>
+	    <div class="span4">
+			<div class="formLabel"><form:label path="nroFolio">Nro. Libro:</form:label></div>
+	        <div class="formInput"><form:input path="nroFolio" type="number" disabled="true"/></div>
+	    </div>
+  	</div>
+	</div>        
+        
+    </div>       
+</div>  
+
+<div class="panel panel-info">
+	<div class="panel-heading">
+          <div class="panel-title">Eliminar Certificado de Cobertura</div>
+    </div>     
+	<div  class="panel-body">
+	
+<div class="container-fluid">
+  <div class="row-fluid">
+	    <div class="span4">
+	      <div><form:hidden path="profesionalId" /></div>
+        	<div class="formLabel"><form:label path="nroPoliza">Nro. Poliza:</form:label></div>
+        	<div class="formInput"><form:input path="nroPoliza" type="text" disabled="true"/></div>
+	    </div>
+	     <div class="span4">	
+			
+			<div>
+				<div class="formLabel"><form:label path="vigenciaDesde">Vigencia Desde:</form:label></div>
+				<div style="visibility:hidden;height:0px;"><form:input class="date" path="vigenciaDesde" /></div>
+				<div class="formInput">
+				<div id="calendar">
+					<div class="input-group registration-date-time" style="padding-top:0%;">
+						<input disabled="disabled" class="form-control" name="fecha_desde" id="fecha-desde" type="date"  onchange="javascript:updateDateFechaDesde();">
+	            	</div>
+	        	</div>  
+	        	</div>
+			</div>
+	    </div>
+	     <div class="span4">	
+			
+			<div>
+				<div class="formLabel"><form:label path="vigenciaHasta">Vigencia Hasta:</form:label></div>
+				<div style="visibility:hidden;height:0px;"><form:input class="date" path="vigenciaHasta" /></div>
+				<div class="formInput">
+				<div id="calendar">
+					<div class="input-group registration-date-time" style="padding-top:0%;">
+						<input disabled="disabled"  class="form-control" name="fecha_hasta" id="fecha-hasta" type="date"  onchange="javascript:updateDateFechaHasta();">
+	            	</div>
+	        	</div>  
+	        	</div>
+			</div>
+	    </div>
+  	</div>
+	</div>        
+        
+    </div>       
+</div>  
+
+
 
 <div class="panel panel-info">
 	<div class="panel-heading">
@@ -229,10 +328,14 @@
 </html>
 
 <script language="javascript">
-       
+document.getElementById("valido-hasta").value= document.getElementById("validoHasta").value;
+document.getElementById("fecha-matricula").value= document.getElementById("fechaEmisionMatricula").value;
+document.getElementById("fecha-desde").value= document.getElementById("vigenciaDesde").value;
+document.getElementById("fecha-hasta").value= document.getElementById("vigenciaHasta").value;
+
        // var isSiprosa=$("#habilitacionSiprosa").val();
         if(true){
-        	document.getElementById("registration-date").value=document.getElementById("fechaVencimientoHabilitacion").value;
+        	// document.getElementById("registration-date").value=document.getElementById("fechaVencimientoHabilitacion").value;
 			$(".badge").click();
 			$("#calendar").css("pointer-events","none");
         }
