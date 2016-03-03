@@ -27,15 +27,27 @@
    padding-left: 10px;
    font-weight: bold;
  }
- label.error {
+ .label-error {
 		  color: #a94442;
 		  background-color: #f2dede;
 		  border-color: #ebccd1;
 		  padding:1px 20px 1px 20px;
-		  width:58%;
+		  width:22%;
 		}
 	
 	</style>
+	<script>
+	function validatedSelects(){
+		if($("#monto").val()=="NONE"){
+			$("#message").css("visibility","visible");
+			return false;
+		}
+		return true;
+	}
+	function hideMessage(){
+		$("#message").css("visibility","hidden");
+	}
+	</script>
 	
 </head>
 
@@ -48,13 +60,13 @@
 			<div class="panel-heading">
           			<div class="panel-title">
 	          			Nueva Consulta	   
-	          		<form:select path="monto" style="width:25%; margin-bottom:0px">
-						<form:option value="NONE" label="Seleccione Monto de Coseguro $"/>
-						<form:options items="${montosorden}"/>			    
-					</form:select>
-
+		          		<form:select path="monto" style="width:25%; margin-bottom:0px" onchange="hideMessage()">
+							<form:option value="NONE" label="Seleccione Monto de Coseguro $"/>
+							<form:options items="${montosorden}"/>			    
+						</form:select>
+    				</div>     
+    				<div class="label-error" id="message" style="float:left;margin-left:8%;visibility:hidden;">Falta seleccionar Coseguro</div>
           			</div>
-    		</div>     
 			<div  class="panel-body" >
 				<div class="container-fluid" >
 	  				<div class="row-fluid" >
@@ -206,7 +218,9 @@
 		            }
 		        },
 		                submitHandler: function(form) {
-		            form.submit();
+		                if(validatedSelects()){
+		            		form.submit();
+		            	}
 		        }
 		    });
 		

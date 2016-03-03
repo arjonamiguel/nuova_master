@@ -71,6 +71,26 @@
 										});
 						
 					});
+					
+					$(function() {
+			    		$('.btn-info').tooltip({
+			        	placement: 'bottom',
+			        	title: 'Editar Datos del Paciente'
+			        	});
+					});
+					$(function() {
+			    		$('.btn-success').tooltip({
+			        	placement: 'bottom',
+			        	title: 'Generar una Orden para este Paciente'
+			        	});
+					});
+					$(function() {
+			    		$('.btn-danger').tooltip({
+			        	placement: 'bottom',
+			        	title: 'Eliminar Paciente'
+			        	});
+					});
+					
 </script>
 <!-- 	Fin Configuracion del paginador -->
 

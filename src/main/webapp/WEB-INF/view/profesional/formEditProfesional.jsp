@@ -228,11 +228,11 @@ label.error {
 			</div>
 	    </div>
 	    <div class="span4">
-			<div class="formLabel"><form:label path="nroLibro">Nro. Folio:</form:label></div>
+			<div class="formLabel"><form:label path="nroLibro">Nro. Libro:</form:label></div>
         	<div class="formInput"><form:input path="nroLibro" type="number"/></div>
 	    </div>
 	    <div class="span4">
-			<div class="formLabel"><form:label path="nroFolio">Nro. Libro:</form:label></div>
+			<div class="formLabel"><form:label path="nroFolio">Nro. Folio:</form:label></div>
 	        <div class="formInput"><form:input path="nroFolio" type="number"/></div>
 	    </div>
   	</div>
@@ -372,34 +372,33 @@ label.error {
 	
 
         
-      $("#profesional").validate({
+     $("#profesional").validate({
     
-        // Specify the validation rules
-        rules: {
-            apellido: "required",
-            nombre: "required",
-            telefono: {
-                required: true,
-                minlength: 5
-            },
-            matricula: "required",
-            registroNacional: "required",
-            tituloNacional: "required"
-        },
-        
-        // Specify the validation error messages
-        messages: {
-            apellido: "Ingrese apellido",
-            nombre: "Ingrese nombre",
-            telefono: {
-                required: "Ingrese telefono",
-                minlength: "Telefono debe tener al menos 5 caracteres de largo"
-            },
-            matricula: "Ingrese matricula",
-            registroNacional: "Ingrese Registro Nacional"
-        },
-                submitHandler: function(form) {
-            form.submit();
-        }
-    });
+		        // Specify the validation rules
+		        rules: {
+		            apellido: "required",
+		            nombre: "required",
+		            matricula: "required",
+		            tituloProfesional: "required",
+		            nroRegistro: "required",
+		            nroLibro: "required",
+		            nroFolio: "required",
+		            nroPoliza: "required"
+		        },
+		        
+		        // Specify the validation error messages
+		        messages: {
+		            apellido: "Ingrese apellido",
+		            nombre: "Ingrese nombre",
+		        	matricula: "Ingrese Matrícula",
+		        	tituloProfesional: "Ingrese Título Profesional",
+		        	nroRegistro: "Ingrese Número de Registro",
+		        	nroLibro: "Ingrese Número de Libro",
+		        	nroFolio: "Ingrese Número de Folio",
+		        	nroPoliza: "Ingrese Número de Poliza"
+		        },
+		                submitHandler: function(form) {
+		            form.submit();
+		        }
+		    });
 </script>

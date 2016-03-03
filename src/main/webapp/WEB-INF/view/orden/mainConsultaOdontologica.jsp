@@ -72,6 +72,26 @@
 										});
 						
 					});
+					
+					$(function() {
+			    		$('.btn-info').tooltip({
+			        	placement: 'bottom',
+			        	title: 'Editar Consulta'
+			        	});
+					});
+					$(function() {
+			    		$('.btn-default').tooltip({
+			        	placement: 'bottom',
+			        	title: 'Imprimir Consulta'
+			        	});
+					});
+					$(function() {
+			    		$('.btn-danger').tooltip({
+			        	placement: 'bottom',
+			        	title: 'Eliminar Consulta'
+			        	});
+					});
+					
 </script>
 <!-- 	Fin Configuracion del paginador -->
 

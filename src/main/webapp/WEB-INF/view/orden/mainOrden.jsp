@@ -118,6 +118,25 @@ function editColumnsChecked() {
 
     });
 }
+
+					$(function() {
+			    		$('.btn-info').tooltip({
+			        	placement: 'bottom',
+			        	title: 'Editar Orden de Práctica'
+			        	});
+					});
+					$(function() {
+			    		$('.btn-default').tooltip({
+			        	placement: 'bottom',
+			        	title: 'Imprimir Orden de Práctica'
+			        	});
+					});
+					$(function() {
+			    		$('.btn-danger').tooltip({
+			        	placement: 'bottom',
+			        	title: 'Eliminar Orden de Práctica'
+			        	});
+					});
 </script>
 </head>
 <body style="background-color:#e5e5e5;">

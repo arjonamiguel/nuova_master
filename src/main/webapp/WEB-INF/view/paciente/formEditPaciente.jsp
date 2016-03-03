@@ -213,11 +213,14 @@ label.error {
         					<div class="formInput"><form:textarea path="domicilio" cssStyle="width:78%"/></div>
 			   		</div>
 			   		<div class="span4">
-			   				<div class="formLabel" style="padding-top:6px;;"><form:label path="coseguro">Coseguro:</form:label></div>
+			   				<div class="formLabel" style="padding-top:6px;padding-right:5px;"><form:label path="coseguro">Coseguro:</form:label></div>
 			   				<div style="visibility:hidden;"><form:checkbox path="coseguro" id="coseguro"/></div>
 							<div class="material-switch pull-left">
 									<input id="coseguroAux" name="coseguroAux" type="checkbox" value="true" >
-									<label for="coseguroAux" class="label-info" onclick="updatecoseguro()"></label>
+									<label for="coseguroAux" class="label-success" onclick="updatecoseguro()"></label>
+									<div style="padding-top:10%;">
+										NO - SI
+									</div>
 							</div>
 			   		</div>
 			   	

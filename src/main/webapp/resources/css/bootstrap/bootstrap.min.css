@@ -5029,7 +5029,7 @@ a.thumbnail:hover, a.thumbnail:focus {
 }
 
 a.label:hover, a.label:focus, a.badge:hover, a.badge:focus {
-    color: #fff;
+    color: #E10202;
     text-decoration: none;
     cursor: pointer
 }

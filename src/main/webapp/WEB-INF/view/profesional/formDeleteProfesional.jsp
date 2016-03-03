@@ -195,11 +195,11 @@
 			</div>
 	    </div>
 	    <div class="span4">
-			<div class="formLabel"><form:label path="nroLibro">Nro. Folio:</form:label></div>
+			<div class="formLabel"><form:label path="nroLibro">Nro. Libro:</form:label></div>
         	<div class="formInput"><form:input path="nroLibro" type="number" disabled="true"/></div>
 	    </div>
 	    <div class="span4">
-			<div class="formLabel"><form:label path="nroFolio">Nro. Libro:</form:label></div>
+			<div class="formLabel"><form:label path="nroFolio">Nro. Folio:</form:label></div>
 	        <div class="formInput"><form:input path="nroFolio" type="number" disabled="true"/></div>
 	    </div>
   	</div>

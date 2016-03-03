@@ -269,10 +269,6 @@ label.error {
             },
             apellido: "required",
             nombre: "required",
-            telefono: {
-                required: true,
-                minlength: 5
-            },
             email: {
                 required: true,
                 email: true
@@ -287,10 +283,6 @@ label.error {
             },
             apellido: "Ingrese apellido",
             nombre: "Ingrese nombre",
-            telefono: {
-                required: "Ingrese telefono",
-                minlength: "Telefono debe tener al menos 5 caracteres de largo"
-            },
            
         },
                 submitHandler: function(form) {

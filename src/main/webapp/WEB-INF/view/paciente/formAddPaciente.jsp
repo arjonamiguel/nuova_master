@@ -213,7 +213,11 @@ label.error {
 							<div class="material-switch pull-left">
 								<input id="coseguro" name="coseguro" type="checkbox" value="true">
 								<label for="coseguro" class="label-success"></label>
+								<div style="padding-top:10%;">
+									NO - SI
+								</div>
 							</div>
+							
 			   		</div>
 	
 			   	</div>
@@ -304,10 +308,7 @@ label.error {
             },
             apellido: "required",
             nombre: "required",
-            telefono: {
-                required: true,
-                minlength: 5
-            },
+
             email: {
                 required: true,
                 email: true
@@ -323,10 +324,7 @@ label.error {
             },
             apellido: "Ingrese apellido",
             nombre: "Ingrese nombre",
-            telefono: {
-                required: "Ingrese telefono",
-                minlength: "Telefono debe tener al menos 5 caracteres de largo"
-            },
+
 			fechaNacimiento : "Ingrese fecha de nacimiento"
         },
                 submitHandler: function(form) {
