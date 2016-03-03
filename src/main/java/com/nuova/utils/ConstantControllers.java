@@ -112,6 +112,6 @@ public class ConstantControllers {
     public final static String AJAX_GET_SEARCH_PRACTICAS_PAGINADOS = "/ajaxGetSearchPracticasPaginados";
 
     // Caja
-    public final static String MAIN_CAJA = "/mainCaja";
+    public final static String MAIN_CAJA = "/mainCaja/{fechaCaja}";
     public final static String FORM_ADD_CAJA = "/formAddCaja";
 }

@@ -19,6 +19,13 @@
 	<link href="<%=request.getContextPath()%>/resources/css/panel.css" rel="stylesheet"/>
 	<link href="<%=request.getContextPath()%>/resources/css/bootstrap/bootstrap-responsive.css" rel="stylesheet"/>
 	
+<script>
+function submitSearch() {
+	fechaCaja = document.getElementById("search").value;
+	location.href="/nuova/mainCaja/"+fechaCaja;
+}
+</script>
+
 </head>
 <body style="background-color:#e5e5e5;">
 <jsp:include page="../sec_menu.jsp"></jsp:include>
@@ -35,7 +42,6 @@
 			<div  class="panel-body" >
 				<div class="container-fluid" >
 	  				<div class="row-fluid" >
-	  				<form:form action="" method="GET" commandName="caja">
 						<div class="span4">
 				   			<div id="labelDate" class="formLabel"><label>Fecha:</label></div>
 							<div style="visibility:hidden;height:0px;"><input id="fecha" class="date"/></div>						
@@ -46,13 +52,14 @@
 									
 										<div id="calendar">
 											<div class="input-group registration-date-time">
-												<input class="form-control" name="registration_date" 
-												id="registration-date" type="date"  onchange="javascript:updateDate();">		            					
+												<input class="form-control" name="search" 
+												id="search" type="date">												
 				            				</div>
 				            			</div>	            	
 									</td>
 									<td>			
-									<input type="button" value="Buscar" class="btn btn-info" style="margin-bottom:8px"/>
+									<input type="button" value="Buscar" class="btn btn-info" style="margin-bottom:8px" 
+									onclick="javascript:submitSearch()" />
 									</td>
 									</tr>
 								</table>
@@ -62,8 +69,6 @@
 	            			</div>
 	            				
 			   			</div>
-			   			</form:form>
-			   			<span class="pull-right">TOTAL $ </span>
 		    		</div>
 		    		
 		    		<div class="row-fluid" >
@@ -82,9 +87,15 @@
 						        <td>${c.conceptoDesc}</td>
 						        <td style="text-align: right;">${c.ingreso}</td>
 						        <td style="text-align: right;">${c.egreso}</td>
-						       	</div>
 						    </tr>
 						</c:forEach>
+							<tr>
+						        <td colspan="4" style="text-align: right; background: grey;"></td>						      
+						    </tr>
+						  	<tr>
+						        <td colspan="3" style="text-align: right;"><b> TOTAL $</b></td>        
+						        <td style="color:white;background: grey; text-align: center"><b>${total}</b></td>
+						    </tr>
 						</table>
 						
 						</div>

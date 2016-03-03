@@ -7,6 +7,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -23,12 +24,20 @@ public class CajaController {
     CajaManager cajaManager;
 
     @RequestMapping(value = ConstantControllers.MAIN_CAJA, method = RequestMethod.GET)
-    public String mainCaja(ModelMap map) {
+    public String mainCaja(ModelMap map,
+            @PathVariable("fechaCaja") String fechaCaja) {
         CajaDTO cajaDTO = new CajaDTO();
-        Date fechaHoy = new Date();
-        List<Caja> cajas = cajaManager.findAllByfecha(fechaHoy);
+        Date fecha = null;
+        if (!fechaCaja.equals("null")) {
+            fecha = Util.parseToDate(fechaCaja);
+        } else {
+            fecha = new Date(); // fecha hoy
+        }
+
+        List<Caja> cajas = cajaManager.findAllByfecha(fecha);
         map.addAttribute("caja", cajaDTO);
         map.addAttribute("cajaList", getCajasList(cajas));
+        map.addAttribute("total", getTotalCaja(cajas));
         return ConstantRedirect.VIEW_MAIN_CAJA;
     }
 
@@ -50,5 +59,15 @@ public class CajaController {
             retorno.add(transformCajaToDto(c));
         }
         return retorno;
+    }
+
+    private Double getTotalCaja(List<Caja> list) {
+        double ingreso = 0.0;
+        double egreso = 0.0;
+        for (Caja c : list) {
+            ingreso = ingreso + (c.getIngreso() == null ? 0.0 : c.getIngreso().doubleValue());
+            egreso = egreso + (c.getEgreso() == null ? 0.0 : c.getEgreso().doubleValue());
+        }
+        return new Double(ingreso - egreso);
     }
 }

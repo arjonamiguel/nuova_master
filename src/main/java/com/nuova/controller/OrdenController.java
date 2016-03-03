@@ -490,7 +490,9 @@ public class OrdenController {
 
         // Profesional
         for (OrdenProfesional op : orden.getOrdenProfesionals()) {
-            dto.setProfesional(transformProfesionalToDto(op.getProfesional()));
+            if (op.getProfesional() != null) {
+                dto.setProfesional(transformProfesionalToDto(op.getProfesional()));
+            }
         }
         if (dto.getProfesional() != null) {
             dto.setProfesionalId(dto.getProfesional().getProfesionalId());
@@ -566,6 +568,7 @@ public class OrdenController {
         }
 
         Collections.sort(retorno, new Comparator<ObservacionesDTO>() {
+            @Override
             public int compare(ObservacionesDTO a1, ObservacionesDTO a2) {
                 return a2.getFecha().compareTo(a1.getFecha());
             }
@@ -584,6 +587,7 @@ public class OrdenController {
         }
 
         Collections.sort(retorno, new Comparator<OrdenWorkflowDTO>() {
+            @Override
             public int compare(OrdenWorkflowDTO a1, OrdenWorkflowDTO a2) {
                 return a2.getFecha().compareTo(a1.getFecha());
             }

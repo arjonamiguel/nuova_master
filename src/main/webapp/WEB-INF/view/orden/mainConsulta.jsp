@@ -37,7 +37,7 @@
 									columnKeys : [ "botonpaciente","ordenTipoDesc" ,"nroOrden", "fecha","iconordenmedica"
 													, "iconcredencial", "iconmonotributista", "iconrecibo"
 													, "acciones"],
-									columnWidths : [ "5%", "10%", , , , , , , "5%"],
+									columnWidths : [ "5%", "10%"],
 									sortable : [ false, true ],
 									data : rows
 								});
