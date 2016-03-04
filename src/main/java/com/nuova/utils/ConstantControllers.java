@@ -114,4 +114,7 @@ public class ConstantControllers {
     // Caja
     public final static String MAIN_CAJA = "/mainCaja/{fechaCaja}";
     public final static String FORM_UPDATE_CAJA = "/formUpdateCaja";
+    public final static String UPDATE_CAJA = "/updateCaja";
+    public final static String AJAX_GET_MOVIMIENTOS_CAJA = "/ajaxGetMovimientoCaja";
+
 }
