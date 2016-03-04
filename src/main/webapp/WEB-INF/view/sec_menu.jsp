@@ -25,7 +25,7 @@
                             <li><a href=""><i class="icon-cog"></i> Preferencias</a></li>
                             <li><a href=""><i class="icon-envelope"></i> Contacto Soporte</a></li>
                             <li class="divider"></li>
-                            <li><a href="<c:url value='j_spring_security_logout'/>"><i class="icon-off"></i> Salir</a></li>
+                            <li><a href="/nuova/j_spring_security_logout"><i class="icon-off"></i> Salir</a></li>
                         </ul>
                     </li>
                 </ul>

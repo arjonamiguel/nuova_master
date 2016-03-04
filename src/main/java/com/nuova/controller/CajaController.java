@@ -44,7 +44,7 @@ public class CajaController {
         if (dto.getTipoMovimiento().intValue() == 1) {
             caja.setIngreso(dto.getMonto());
             caja.setEgreso(new Double(0.0));
-        } else if (dto.getTipoMovimiento().intValue() == 1) {
+        } else if (dto.getTipoMovimiento().intValue() == 2) {
             caja.setEgreso(dto.getMonto());
             caja.setIngreso(new Double(0.0));
         }
