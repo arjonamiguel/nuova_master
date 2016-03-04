@@ -1,5 +1,6 @@
 package com.nuova.controller;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -64,10 +65,13 @@ public class CajaController {
             fecha = new Date(); // fecha hoy
         }
 
+        SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
         List<Caja> cajas = cajaManager.findAllByfecha(fecha);
         map.addAttribute("caja", cajaDTO);
         map.addAttribute("cajaList", getCajasList(cajas));
         map.addAttribute("total", getTotalCaja(cajas));
+        map.addAttribute("fechaBoton", "Cerrar Caja " + format.format(fecha));
+        map.addAttribute("fecha", format.format(fecha));
         return ConstantRedirect.VIEW_MAIN_CAJA;
     }
 

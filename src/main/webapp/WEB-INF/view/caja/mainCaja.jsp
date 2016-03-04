@@ -53,7 +53,7 @@ function submitSearch() {
 										<div id="calendar">
 											<div class="input-group registration-date-time">
 												<input class="form-control" name="search" 
-												id="search" type="date">												
+												id="search" type="date" />											
 				            				</div>
 				            			</div>	            	
 									</td>
@@ -68,6 +68,11 @@ function submitSearch() {
 		            			
 	            			</div>
 	            				
+			   			</div>
+			   			<div class="span4" style="float: right;text-align: right;">
+			   			<input type="button" value="${fechaBoton}" class="btn btn-success" style="margin-bottom:8px" 
+									onclick="" />
+						<input type="hidden" name="fechaCierre" id="fechaCierre" value="${fecha}" />			
 			   			</div>
 		    		</div>
 		    		
@@ -94,7 +99,10 @@ function submitSearch() {
 						    </tr>
 						  	<tr>
 						        <td colspan="3" style="text-align: right;"><b> TOTAL $</b></td>        
-						        <td style="color: #31708f;background: #d9edf7; text-align: center"><b>${total}</b></td>
+						        <td style="color: #31708f;background: #d9edf7; text-align: center">
+						        <b>${total}</b>
+						        <input type="hidden" name="totalCierre" id="totalCierre" value="${total}" />
+						        </td>
 						    </tr>
 						</table>
 						
