@@ -128,7 +128,9 @@
 				<li class="dropdown" >
 				<a href="#" id="caja"  class="dropdown-toggle" data-toggle="dropdown"><i class="icon-list-alt"></i>&nbsp;&nbsp;Caja<span class="caret"></a>
 				<ul class="dropdown-menu" role="menu">
-		                <li><a href="/nuova/mainCaja/null">Administracion de Caja</a></li>		               
+		                <li><a href="/nuova/mainCaja/null">Administracion de Caja</a></li>
+		                <li><a href="/nuova/formUpdateCaja">Nuevo Movimiento de Caja</a></li>
+		                	               
               	</ul>
 				</li>
 				</sec:authorize>

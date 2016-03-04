@@ -68,6 +68,6 @@ public class ConstantRedirect {
 
     // Caja
     public final static String VIEW_MAIN_CAJA = "/caja/mainCaja";
-    public final static String VIEW_FORM_ADD_CAJA = "/caja/formAddCaja";
+    public final static String VIEW_FORM_UPDATE_CAJA = "/caja/formUpdateCaja";
 
 }

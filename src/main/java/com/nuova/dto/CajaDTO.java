@@ -11,6 +11,7 @@ public class CajaDTO {
     private Date fecha;
     private Integer numeroReferencia;
     private String conceptoDesc;
+    private String fechaMovimiento;
 
     public CajaDTO() {
     };
@@ -78,6 +79,14 @@ public class CajaDTO {
 
     public void setConceptoDesc(String conceptoDesc) {
         this.conceptoDesc = conceptoDesc;
+    }
+
+    public String getFechaMovimiento() {
+        return fechaMovimiento;
+    }
+
+    public void setFechaMovimiento(String fechaMovimiento) {
+        this.fechaMovimiento = fechaMovimiento;
     }
 
 }

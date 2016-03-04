@@ -23,6 +23,13 @@ public class CajaController {
     @Autowired
     CajaManager cajaManager;
 
+    @RequestMapping(value = ConstantControllers.FORM_UPDATE_CAJA, method = RequestMethod.GET)
+    public String updateCaja(ModelMap map) {
+        CajaDTO dto = new CajaDTO();
+        map.addAttribute("caja", dto);
+        return ConstantRedirect.VIEW_FORM_UPDATE_CAJA;
+    }
+
     @RequestMapping(value = ConstantControllers.MAIN_CAJA, method = RequestMethod.GET)
     public String mainCaja(ModelMap map,
             @PathVariable("fechaCaja") String fechaCaja) {

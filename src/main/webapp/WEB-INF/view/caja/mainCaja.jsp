@@ -36,7 +36,7 @@ function submitSearch() {
 			<div class="panel-heading">
           			<div class="panel-title">
 	          			Administracion de Caja
-	           			<a href="#" class="pull-right"><b>+</b>&nbsp;&nbsp;Nuevo Ingreso de Caja</a>
+	           			<a href="/nuova/formUpdateCaja" class="pull-right"><b>+</b>&nbsp;&nbsp;Nuevo Movimiento de Caja</a>
           			</div>
     		</div>     
 			<div  class="panel-body" >
@@ -90,11 +90,11 @@ function submitSearch() {
 						    </tr>
 						</c:forEach>
 							<tr>
-						        <td colspan="4" style="text-align: right; background: grey;"></td>						      
+						        <td colspan="4" style="text-align: right; background: #d9edf7;"></td>						      
 						    </tr>
 						  	<tr>
 						        <td colspan="3" style="text-align: right;"><b> TOTAL $</b></td>        
-						        <td style="color:white;background: grey; text-align: center"><b>${total}</b></td>
+						        <td style="color: #31708f;background: #d9edf7; text-align: center"><b>${total}</b></td>
 						    </tr>
 						</table>
 						

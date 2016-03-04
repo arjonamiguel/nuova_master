@@ -113,5 +113,5 @@ public class ConstantControllers {
 
     // Caja
     public final static String MAIN_CAJA = "/mainCaja/{fechaCaja}";
-    public final static String FORM_ADD_CAJA = "/formAddCaja";
+    public final static String FORM_UPDATE_CAJA = "/formUpdateCaja";
 }
