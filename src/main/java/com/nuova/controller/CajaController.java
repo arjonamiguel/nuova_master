@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.nuova.dto.CajaDTO;
+import com.nuova.dto.CierreCajaDTO;
 import com.nuova.dto.ComboItemDTO;
 import com.nuova.model.Caja;
 import com.nuova.service.CajaManager;
@@ -27,6 +28,13 @@ import com.nuova.utils.Util;
 public class CajaController {
     @Autowired
     CajaManager cajaManager;
+
+    @RequestMapping(value = ConstantControllers.FORM_CIERRE_CAJA, method = RequestMethod.GET)
+    public String formCierreCaja(ModelMap map) {
+        CierreCajaDTO dto = new CierreCajaDTO();
+        map.addAttribute("cajaCierre", dto);
+        return ConstantRedirect.VIEW_FORM_CIERRE_CAJA;
+    }
 
     @RequestMapping(value = ConstantControllers.FORM_UPDATE_CAJA, method = RequestMethod.GET)
     public String formUpdateCaja(ModelMap map) {
