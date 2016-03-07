@@ -53,6 +53,9 @@ public class ConstantRedirect {
 
     // Calendario
     public final static String VIEW_MAIN_CALENDARIO = "/calendario/mainCalendario";
+    public final static String VIEW_FORM_ADD_CALENDARIO = "/calendario/formAddCalendario";
+    public final static String VIEW_FORM_DELETE_CALENDARIO = "/calendario/formDeleteCalendario";
+    public final static String VIEW_ADMIN_CALENDARIO = "/calendario/adminCalendario";
 
     // Prestadores
     public final static String VIEW_MAIN_PRESTADOR = "/prestador/mainPrestador";

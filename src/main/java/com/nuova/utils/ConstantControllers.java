@@ -88,6 +88,11 @@ public class ConstantControllers {
 
     // Calendario
     public final static String MAIN_CALENDARIO = "/mainCalendario";
+    public final static String FORM_ADD_CALENDARIO = "/formAddCalendario";
+    public final static String ADD_CALENDARIO = "/addCalendario";
+    public final static String FORM_DELETE_CALENDARIO = "/formDeleteCalendario//{calendarioId}";
+    public final static String DELETE_CALENDARIO = "/deleteCalendario";
+    public final static String ADMIN_CALENDARIO = "/adminCalendario";
 
     // Prestadores
     public final static String MAIN_PRESTADOR = "/mainPrestador";

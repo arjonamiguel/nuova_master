@@ -20,7 +20,8 @@
         <mapping class="com.nuova.model.Prestadores" />   
         <mapping class="com.nuova.model.OrdenProfesional" />
         <mapping class="com.nuova.model.Caja" />             
-        <mapping class="com.nuova.model.CajaOrden" />             
+        <mapping class="com.nuova.model.CajaOrden" />      
+        <mapping class="com.nuova.model.Calendario" />       
                      
     </session-factory>
 </hibernate-configuration>
