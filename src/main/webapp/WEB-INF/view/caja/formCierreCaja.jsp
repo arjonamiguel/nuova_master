@@ -19,13 +19,6 @@
 	<link href="<%=request.getContextPath()%>/resources/css/panel.css" rel="stylesheet"/>
 	<link href="<%=request.getContextPath()%>/resources/css/bootstrap/bootstrap-responsive.css" rel="stylesheet"/>
 	
-<script type="text/javascript">
-
-function updateDate(){
-	document.getElementById("fecha").value=document.getElementById("fecha_caja").value;
-}
-
-</script>
 
 </head>
 <body style="background-color:#e5e5e5;">
@@ -38,7 +31,7 @@ function updateDate(){
 		<div class="panel panel-info">
 			<div class="panel-heading">
           			<div class="panel-title">
-	          			<b>Ciere de Caja</b>
+	          			<b>Cierre de Caja</b>
           			</div>
     		</div>
     		
@@ -46,16 +39,18 @@ function updateDate(){
 				<div class="container-fluid" >
 				  	<div class="row-fluid">
 				  		<div class="span4">
-			 				<div class="formLabel"><form:label path="fechaCierre">Fecha:</form:label></div>
+			 				<div class="formLabel"><form:label path="fechaCierreView">Fecha:</form:label></div>
 			 				<div class="formInput">
-			 					<form:input path="fechaCierre" />			 					
+			 					<form:input path="fechaCierreView" disabled="true"/>
+			 					<form:hidden path="fechaCierre"/>			 					
 			 				</div>
 		 				</div>
 		 				
 		 				<div class="span4">
-			 				<div class="formLabel"><form:label path="monto">Monto $:</form:label></div>
+			 				<div class="formLabel"><form:label path="montoView">Monto $:</form:label></div>
 			 				<div class="formInput">
-			 					<form:input path="monto" />			 					
+			 					<form:input path="montoView" disabled="true"/>
+			 					<form:hidden path="monto"/>			 					
 			 				</div>
 		 				</div>						
 	  				</div> 			

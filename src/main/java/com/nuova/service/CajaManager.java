@@ -7,6 +7,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 import com.nuova.model.Caja;
+import com.nuova.model.CajaCierre;
 
 public interface CajaManager {
 
@@ -25,5 +26,7 @@ public interface CajaManager {
     public Page<Caja> findCajaBySearch(String search, Pageable pageable);
 
     public List<Caja> findAllByfecha(Date fecha);
+
+    public void addCajaCierre(CajaCierre cierre);
 
 }

@@ -27,7 +27,7 @@ function submitSearch() {
 
 function submitCierreCaja() {
 	fechaCierre = document.getElementById("fechaCierre").value;
-	location.href="/nuova/formCierreCaja?fecha="+fechaCierre;
+	location.href="/nuova/formCierreCaja?fechaCierre="+fechaCierre;
 }
 </script>
 

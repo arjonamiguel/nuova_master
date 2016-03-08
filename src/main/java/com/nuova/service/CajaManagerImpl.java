@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.nuova.dao.CajaDAO;
 import com.nuova.model.Caja;
+import com.nuova.model.CajaCierre;
 
 @Service
 @Transactional
@@ -48,6 +49,10 @@ public class CajaManagerImpl implements CajaManager {
 
     public List<Caja> findAllByfecha(Date fecha) {
         return cajaDAO.findAllByfecha(fecha);
+    }
+
+    public void addCajaCierre(CajaCierre cierre) {
+        cajaDAO.addCajaCierre(cierre);
     }
 
 }

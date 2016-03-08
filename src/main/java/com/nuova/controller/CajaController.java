@@ -8,6 +8,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,6 +20,7 @@ import com.nuova.dto.CajaDTO;
 import com.nuova.dto.CierreCajaDTO;
 import com.nuova.dto.ComboItemDTO;
 import com.nuova.model.Caja;
+import com.nuova.model.CajaCierre;
 import com.nuova.service.CajaManager;
 import com.nuova.utils.ConstantControllers;
 import com.nuova.utils.ConstantRedirect;
@@ -30,8 +32,17 @@ public class CajaController {
     CajaManager cajaManager;
 
     @RequestMapping(value = ConstantControllers.FORM_CIERRE_CAJA, method = RequestMethod.GET)
-    public String formCierreCaja(ModelMap map) {
+    public String formCierreCaja(ModelMap map,
+            @RequestParam(required = false, defaultValue = "01-01-9999") String fechaCierre) {
+        SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
+
+        Date fecha = Util.parseToDate(fechaCierre);
+        Double monto = getTotalCaja(cajaManager.findAllByfecha(fecha));
         CierreCajaDTO dto = new CierreCajaDTO();
+        dto.setFechaCierreView(format.format(fecha));
+        dto.setFechaCierre(fechaCierre);
+        dto.setMontoView(monto);
+        dto.setMonto(monto);
         map.addAttribute("cajaCierre", dto);
         return ConstantRedirect.VIEW_FORM_CIERRE_CAJA;
     }
@@ -42,6 +53,18 @@ public class CajaController {
         map.addAttribute("caja", dto);
 
         return ConstantRedirect.VIEW_FORM_UPDATE_CAJA;
+    }
+
+    @RequestMapping(value = ConstantControllers.CIERRE_CAJA, method = RequestMethod.POST)
+    public String cierreCaja(
+            @ModelAttribute(value = "cajaCierre") CierreCajaDTO dto,
+            BindingResult result) {
+        CajaCierre cierre = new CajaCierre();
+        cierre.setFechaCierre(Util.parseToDate(dto.getFechaCierre()));
+        cierre.setMonto(dto.getMonto());
+
+        cajaManager.addCajaCierre(cierre);
+        return "redirect: /mainCaja/null";
     }
 
     @RequestMapping(value = ConstantControllers.UPDATE_CAJA, method = RequestMethod.POST)
@@ -73,12 +96,13 @@ public class CajaController {
             fecha = new Date(); // fecha hoy
         }
 
-        SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
+        SimpleDateFormat formatbot = new SimpleDateFormat("dd/MM/yyyy");
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
         List<Caja> cajas = cajaManager.findAllByfecha(fecha);
         map.addAttribute("caja", cajaDTO);
         map.addAttribute("cajaList", getCajasList(cajas));
         map.addAttribute("total", getTotalCaja(cajas));
-        map.addAttribute("fechaBoton", "Cerrar Caja " + format.format(fecha));
+        map.addAttribute("fechaBoton", "Cerrar Caja " + formatbot.format(fecha));
         map.addAttribute("fecha", format.format(fecha));
         return ConstantRedirect.VIEW_MAIN_CAJA;
     }

@@ -12,6 +12,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
 
 import com.nuova.model.Caja;
+import com.nuova.model.CajaCierre;
 
 @Repository
 public class CajaDAOImpl implements CajaDAO {
@@ -76,6 +77,10 @@ public class CajaDAOImpl implements CajaDAO {
         List<Caja> result = query.list();
 
         return result;
+    }
+
+    public void addCajaCierre(CajaCierre cierre) {
+        this.sessionFactory.getCurrentSession().save(cierre);
     }
 
 }
