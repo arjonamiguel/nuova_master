@@ -119,7 +119,9 @@
 				<li class="dropdown" >
 				<a href="#" id="calendario"  class="dropdown-toggle" data-toggle="dropdown"><i class="icon-calendar"></i>&nbsp;&nbsp;Calendario<span class="caret"></a>
 				<ul class="dropdown-menu" role="menu">
-		                <li><a href="/nuova/mainCalendario">Visualizar Calendario</a></li>		               
+		                <li><a href="/nuova/mainCalendario">Visualizar Calendario</a></li>	
+		                <li><a href="/nuova/formAddCalendario">Agregar Calendario</a></li>	
+		                <li><a href="/nuova/adminCalendario">Administrar Calendario</a></li>               
               	</ul>
 				</li>
 				</sec:authorize>

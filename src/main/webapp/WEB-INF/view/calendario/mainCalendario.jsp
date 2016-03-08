@@ -118,7 +118,7 @@
 
 				resourceLabelText: 'Consultorios',
 				resources: [
-					{ id: 'a', title: 'Consultorio A' },
+					{ id: 'a', title: 'Consultorio A', eventColor: 'red' },
 					{ id: 'b', title: 'Consultorio B', eventColor: 'green' },
 					{ id: 'c', title: 'Consultorio C', eventColor: 'orange' },
 					{ id: 'd', title: 'Consultorio D', children: [

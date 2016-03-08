@@ -9,9 +9,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.nuova.dto.CalendarDTO;
 import com.nuova.dto.ComboItemDTO;
 import com.nuova.dto.ObraSocialDTO;
 import com.nuova.dto.OrdenDTO;
+import com.nuova.model.Calendario;
 import com.nuova.model.Obrasocial;
 import com.nuova.model.Paciente;
 import com.nuova.model.Practica;
@@ -104,6 +106,16 @@ public class Util {
         obrasocial.setObrasocialId(dto.getObrasocialId());
         obrasocial.setNombre(dto.getNombre());
         return obrasocial;
+    }
+    
+    static public Calendario transformDtoToCalendario(CalendarDTO dto) {
+        Calendario calendario = new Calendario();
+        calendario.setCalendarioId(dto.getId());
+        calendario.setResource(dto.getResourceId());
+        calendario.setStart(parseToDate(dto.getStart()));
+        calendario.setEnd(parseToDate(dto.getEnd()));
+        calendario.setTitle(dto.getTitle());     
+        return calendario;
     }
 
     static public Date parseToDate(String date) {

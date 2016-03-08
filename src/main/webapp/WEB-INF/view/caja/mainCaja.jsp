@@ -24,6 +24,11 @@ function submitSearch() {
 	fechaCaja = document.getElementById("search").value;
 	location.href="/nuova/mainCaja/"+fechaCaja;
 }
+
+function submitCierreCaja() {
+	fechaCierre = document.getElementById("fechaCierre").value;
+	location.href="/nuova/formCierreCaja?fecha="+fechaCierre;
+}
 </script>
 
 </head>
@@ -71,7 +76,7 @@ function submitSearch() {
 			   			</div>
 			   			<div class="span4" style="float: right;text-align: right;">
 			   			<input type="button" value="${fechaBoton}" class="btn btn-success" style="margin-bottom:8px" 
-									onclick="" />
+									onclick="submitCierreCaja()" />
 						<input type="hidden" name="fechaCierre" id="fechaCierre" value="${fecha}" />			
 			   			</div>
 		    		</div>
