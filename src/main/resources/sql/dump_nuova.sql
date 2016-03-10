@@ -2,11 +2,11 @@
 -- Host:                         138.219.42.11
 -- Versión del servidor:         5.5.47-0ubuntu0.14.04.1 - (Ubuntu)
 -- SO del servidor:              debian-linux-gnu
--- HeidiSQL Versión:             9.2.0.4981
+-- HeidiSQL Versión:             8.3.0.4694
 -- --------------------------------------------------------
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
-/*!40101 SET NAMES utf8mb4 */;
+/*!40101 SET NAMES utf8 */;
 /*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
 
@@ -25,9 +25,9 @@ CREATE TABLE IF NOT EXISTS `caja` (
   `numero_referencia` int(11) DEFAULT NULL,
   PRIMARY KEY (`caja_id`),
   KEY `caja_id` (`caja_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+) ENGINE=InnoDB AUTO_INCREMENT=27 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
--- Volcando datos para la tabla nuova.caja: ~8 rows (aproximadamente)
+-- Volcando datos para la tabla nuova.caja: ~20 rows (aproximadamente)
 DELETE FROM `caja`;
 /*!40000 ALTER TABLE `caja` DISABLE KEYS */;
 INSERT INTO `caja` (`caja_id`, `concepto`, `ingreso`, `egreso`, `fecha`, `numero_referencia`) VALUES
@@ -38,8 +38,37 @@ INSERT INTO `caja` (`caja_id`, `concepto`, `ingreso`, `egreso`, `fecha`, `numero
 	(11, 1, NULL, 0.00, '2016-02-22 01:10:04', NULL),
 	(12, 1, NULL, 0.00, '2016-02-23 20:24:30', NULL),
 	(13, 1, NULL, 0.00, '2016-02-23 20:24:56', NULL),
-	(14, 1, NULL, 0.00, '2016-02-23 20:32:31', NULL);
+	(14, 1, NULL, 0.00, '2016-02-23 20:32:31', NULL),
+	(15, 0, 200.00, 0.00, '2016-03-04 00:00:00', NULL),
+	(16, 1, 50.00, 0.00, '2016-03-04 21:04:46', NULL),
+	(17, 1, 20.00, 0.00, '2016-03-04 21:05:34', NULL),
+	(18, 101, 0.00, 300.00, '2016-03-04 00:00:00', NULL),
+	(19, 1, 40.00, 0.00, '2016-03-04 21:06:41', NULL),
+	(20, 0, 3222.00, 0.00, '2016-03-05 00:00:00', NULL),
+	(21, 0, 52.56, 0.00, '2016-03-05 00:00:00', NULL),
+	(22, 1, 40.00, 0.00, '2016-03-08 20:26:04', NULL),
+	(23, 0, 40.00, 0.00, '2016-03-08 00:00:00', NULL),
+	(24, 100, 0.00, 50.00, '2016-03-08 00:00:00', NULL),
+	(25, 102, 0.00, 20.02, '2016-03-08 00:00:00', NULL),
+	(26, 1, NULL, 0.00, '2016-03-08 20:38:23', NULL);
 /*!40000 ALTER TABLE `caja` ENABLE KEYS */;
+
+
+-- Volcando estructura para tabla nuova.caja_cierre
+CREATE TABLE IF NOT EXISTS `caja_cierre` (
+  `caja_cierre_id` int(11) NOT NULL AUTO_INCREMENT,
+  `fecha_cierre` date DEFAULT NULL,
+  `monto` double DEFAULT NULL,
+  PRIMARY KEY (`caja_cierre_id`),
+  KEY `caja_cierre_id` (`caja_cierre_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
+-- Volcando datos para la tabla nuova.caja_cierre: ~1 rows (aproximadamente)
+DELETE FROM `caja_cierre`;
+/*!40000 ALTER TABLE `caja_cierre` DISABLE KEYS */;
+INSERT INTO `caja_cierre` (`caja_cierre_id`, `fecha_cierre`, `monto`) VALUES
+	(8, '2016-03-08', 9.980000000000004);
+/*!40000 ALTER TABLE `caja_cierre` ENABLE KEYS */;
 
 
 -- Volcando estructura para tabla nuova.caja_egresos
@@ -74,9 +103,9 @@ CREATE TABLE IF NOT EXISTS `caja_orden` (
   KEY `FK_caja_orden_orden` (`orden_id`),
   CONSTRAINT `FK_caja_orden_caja` FOREIGN KEY (`caja_id`) REFERENCES `caja` (`caja_id`),
   CONSTRAINT `FK_caja_orden_orden` FOREIGN KEY (`orden_id`) REFERENCES `orden` (`orden_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
--- Volcando datos para la tabla nuova.caja_orden: ~8 rows (aproximadamente)
+-- Volcando datos para la tabla nuova.caja_orden: ~13 rows (aproximadamente)
 DELETE FROM `caja_orden`;
 /*!40000 ALTER TABLE `caja_orden` DISABLE KEYS */;
 INSERT INTO `caja_orden` (`caja_orden_id`, `orden_id`, `caja_id`) VALUES
@@ -87,8 +116,33 @@ INSERT INTO `caja_orden` (`caja_orden_id`, `orden_id`, `caja_id`) VALUES
 	(11, 48, 11),
 	(12, 49, 12),
 	(13, 50, 13),
-	(14, 51, 14);
+	(14, 51, 14),
+	(15, 52, 16),
+	(16, 53, 17),
+	(17, 54, 19),
+	(18, 55, 22),
+	(19, 56, 26);
 /*!40000 ALTER TABLE `caja_orden` ENABLE KEYS */;
+
+
+-- Volcando estructura para tabla nuova.calendario
+CREATE TABLE IF NOT EXISTS `calendario` (
+  `calendario_id` int(11) NOT NULL AUTO_INCREMENT,
+  `resource` char(50) COLLATE utf8_bin DEFAULT NULL,
+  `start` timestamp NULL DEFAULT NULL,
+  `end` timestamp NULL DEFAULT NULL,
+  `title` varchar(256) COLLATE utf8_bin DEFAULT NULL,
+  PRIMARY KEY (`calendario_id`),
+  KEY `calendario_id` (`calendario_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=31 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
+-- Volcando datos para la tabla nuova.calendario: ~2 rows (aproximadamente)
+DELETE FROM `calendario`;
+/*!40000 ALTER TABLE `calendario` DISABLE KEYS */;
+INSERT INTO `calendario` (`calendario_id`, `resource`, `start`, `end`, `title`) VALUES
+	(29, 'b', '2016-03-01 00:00:00', '2016-03-10 00:00:00', 'LOPEZ, JULIO ARMANDO'),
+	(30, 'b', '2016-03-22 00:00:00', '2016-03-24 00:00:00', 'LOPEZ, JULIO ARMANDO');
+/*!40000 ALTER TABLE `calendario` ENABLE KEYS */;
 
 
 -- Volcando estructura para tabla nuova.especialidad
@@ -97,9 +151,9 @@ CREATE TABLE IF NOT EXISTS `especialidad` (
   `nombre` varchar(256) COLLATE utf8_bin DEFAULT '0',
   PRIMARY KEY (`especialidad_id`),
   KEY `id` (`especialidad_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=23 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+) ENGINE=InnoDB AUTO_INCREMENT=24 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
--- Volcando datos para la tabla nuova.especialidad: ~13 rows (aproximadamente)
+-- Volcando datos para la tabla nuova.especialidad: ~8 rows (aproximadamente)
 DELETE FROM `especialidad`;
 /*!40000 ALTER TABLE `especialidad` DISABLE KEYS */;
 INSERT INTO `especialidad` (`especialidad_id`, `nombre`) VALUES
@@ -107,15 +161,10 @@ INSERT INTO `especialidad` (`especialidad_id`, `nombre`) VALUES
 	(2, 'CLINICO'),
 	(3, 'ODONTOLOGO'),
 	(5, 'TRAUMATOLOGO'),
-	(6, 'GINECOLOGO'),
 	(7, 'PSICOLOGO'),
-	(9, 'UROLOGO'),
 	(16, 'TEST ESPECIALIDAD 4'),
 	(17, 'TEST ESPECIALIDAD 5'),
-	(18, 'TEST ESPECIALIDAD 6'),
-	(19, 'TEST ESPECIALIDAD 7'),
-	(20, 'TEST ESPECIALIDAD 8'),
-	(21, 'TEST ESPECIALIDAD 9');
+	(23, 'GINECOLOGIA');
 /*!40000 ALTER TABLE `especialidad` ENABLE KEYS */;
 
 
@@ -142,7 +191,7 @@ INSERT INTO `obrasocial` (`obrasocial_id`, `nombre`) VALUES
 	(11, 'Test OS 5'),
 	(12, 'Test OS 6'),
 	(13, 'Test OS 7'),
-	(14, 'Test OS 8'),
+	(14, 'ASOCIART'),
 	(18, 'O.S.P.S.I.P');
 /*!40000 ALTER TABLE `obrasocial` ENABLE KEYS */;
 
@@ -158,15 +207,16 @@ CREATE TABLE IF NOT EXISTS `observaciones` (
   KEY `observacion_id` (`observacion_id`),
   KEY `FK_observaciones_orden` (`orden_id`),
   CONSTRAINT `FK_observaciones_orden` FOREIGN KEY (`orden_id`) REFERENCES `orden` (`orden_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=51 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+) ENGINE=InnoDB AUTO_INCREMENT=52 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
--- Volcando datos para la tabla nuova.observaciones: ~3 rows (aproximadamente)
+-- Volcando datos para la tabla nuova.observaciones: ~4 rows (aproximadamente)
 DELETE FROM `observaciones`;
 /*!40000 ALTER TABLE `observaciones` DISABLE KEYS */;
 INSERT INTO `observaciones` (`observacion_id`, `observacion`, `orden_id`, `user_name`, `fecha`) VALUES
 	(48, 'ESTO ES UNA PRUEBA DE UNA ORDEN DE PRACTICA', 44, 'administrador@nuova.com', '2016-02-13 15:43:01'),
 	(49, 'ESTO ES OTRO COMENTARIO DE OBSERVACIONES', 44, 'administrador@nuova.com', '2016-02-13 15:44:46'),
-	(50, 'Pago 20 pesos', 46, 'virginia.gottardi@nuova.com', '2016-02-21 21:36:14');
+	(50, 'Pago 20 pesos', 46, 'virginia.gottardi@nuova.com', '2016-02-21 21:36:14'),
+	(51, 'sad asd as asd a', 53, 'administrador@nuovamed.com', '2016-03-04 21:05:34');
 /*!40000 ALTER TABLE `observaciones` ENABLE KEYS */;
 
 
@@ -187,9 +237,9 @@ CREATE TABLE IF NOT EXISTS `orden` (
   KEY `FK_orden_orden_tipo` (`orden_tipo`),
   CONSTRAINT `FK_orden_orden_tipo` FOREIGN KEY (`orden_tipo`) REFERENCES `orden_tipo` (`orden_tipo_id`),
   CONSTRAINT `FK_orden_paciente` FOREIGN KEY (`paciente_id`) REFERENCES `paciente` (`paciente_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=52 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+) ENGINE=InnoDB AUTO_INCREMENT=57 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
--- Volcando datos para la tabla nuova.orden: ~8 rows (aproximadamente)
+-- Volcando datos para la tabla nuova.orden: ~13 rows (aproximadamente)
 DELETE FROM `orden`;
 /*!40000 ALTER TABLE `orden` DISABLE KEYS */;
 INSERT INTO `orden` (`orden_id`, `paciente_id`, `fecha`, `orden_tipo`, `req_orden_medico`, `req_credecial`, `req_recibo_sueldo`, `req_monotributista`, `estado`) VALUES
@@ -200,7 +250,12 @@ INSERT INTO `orden` (`orden_id`, `paciente_id`, `fecha`, `orden_tipo`, `req_orde
 	(48, 184, '2016-02-22', 1, 0, 0, 0, 0, 'INCOMPLETA'),
 	(49, 185, '2016-02-23', 1, 0, 1, 1, 0, 'INCOMPLETA'),
 	(50, 185, '2016-02-23', 1, 0, 1, 1, 0, 'INCOMPLETA'),
-	(51, 185, '2016-02-23', 1, 0, 0, 0, 0, 'INCOMPLETA');
+	(51, 185, '2016-02-23', 1, 0, 0, 0, 0, 'INCOMPLETA'),
+	(52, 185, '2016-03-04', 1, 1, 1, 0, 1, 'PENDIENTE'),
+	(53, 184, '2016-03-04', 2, 1, 1, 0, 1, 'PENDIENTE'),
+	(54, 183, '2016-03-04', 1, 1, 1, 0, 1, 'PENDIENTE'),
+	(55, 190, '2016-03-08', 1, 1, 0, 1, 1, 'INCOMPLETA'),
+	(56, 190, '2016-03-08', 3, 0, 1, 0, 1, 'AUTORIZADA');
 /*!40000 ALTER TABLE `orden` ENABLE KEYS */;
 
 
@@ -216,15 +271,17 @@ CREATE TABLE IF NOT EXISTS `orden_practica` (
   KEY `FK__practica` (`practica_id`),
   CONSTRAINT `FK__orden` FOREIGN KEY (`orden_id`) REFERENCES `orden` (`orden_id`),
   CONSTRAINT `FK__practica` FOREIGN KEY (`practica_id`) REFERENCES `practica` (`practica_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=55 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+) ENGINE=InnoDB AUTO_INCREMENT=63 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
--- Volcando datos para la tabla nuova.orden_practica: ~3 rows (aproximadamente)
+-- Volcando datos para la tabla nuova.orden_practica: ~5 rows (aproximadamente)
 DELETE FROM `orden_practica`;
 /*!40000 ALTER TABLE `orden_practica` DISABLE KEYS */;
 INSERT INTO `orden_practica` (`ordden_practica_id`, `orden_id`, `practica_id`, `fecha`) VALUES
 	(52, 44, 376, '2016-02-13'),
 	(53, 44, 839, '2016-02-13'),
-	(54, 44, 383, '2016-02-13');
+	(54, 44, 383, '2016-02-13'),
+	(61, 56, 18, '2016-03-08'),
+	(62, 56, 31, '2016-03-08');
 /*!40000 ALTER TABLE `orden_practica` ENABLE KEYS */;
 
 
@@ -239,15 +296,18 @@ CREATE TABLE IF NOT EXISTS `orden_profesional` (
   KEY `FK__profesional_orden` (`profesional_id`),
   CONSTRAINT `FK__orden_profe` FOREIGN KEY (`orden_id`) REFERENCES `orden` (`orden_id`),
   CONSTRAINT `FK__profesional_orden` FOREIGN KEY (`profesional_id`) REFERENCES `profesional` (`profesional_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
--- Volcando datos para la tabla nuova.orden_profesional: ~3 rows (aproximadamente)
+-- Volcando datos para la tabla nuova.orden_profesional: ~6 rows (aproximadamente)
 DELETE FROM `orden_profesional`;
 /*!40000 ALTER TABLE `orden_profesional` DISABLE KEYS */;
 INSERT INTO `orden_profesional` (`orden_profesional_id`, `orden_id`, `profesional_id`) VALUES
 	(1, 45, 3),
 	(2, 47, NULL),
-	(3, 50, 12);
+	(3, 50, 12),
+	(4, 52, 12),
+	(5, 54, 3),
+	(6, 55, 12);
 /*!40000 ALTER TABLE `orden_profesional` ENABLE KEYS */;
 
 
@@ -284,9 +344,9 @@ CREATE TABLE IF NOT EXISTS `orden_workflow` (
   KEY `orden_workflow_id` (`orden_workflow_id`),
   KEY `FK_orden_workflow_orden` (`orden_id`),
   CONSTRAINT `FK_orden_workflow_orden` FOREIGN KEY (`orden_id`) REFERENCES `orden` (`orden_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=83 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+) ENGINE=InnoDB AUTO_INCREMENT=90 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
--- Volcando datos para la tabla nuova.orden_workflow: ~9 rows (aproximadamente)
+-- Volcando datos para la tabla nuova.orden_workflow: ~16 rows (aproximadamente)
 DELETE FROM `orden_workflow`;
 /*!40000 ALTER TABLE `orden_workflow` DISABLE KEYS */;
 INSERT INTO `orden_workflow` (`orden_workflow_id`, `orden_id`, `user_name`, `estado`, `fecha`) VALUES
@@ -298,7 +358,14 @@ INSERT INTO `orden_workflow` (`orden_workflow_id`, `orden_id`, `user_name`, `est
 	(79, 48, 'virginia.gottardi@nuova.com', 'INCOMPLETA', '2016-02-22 01:10:04'),
 	(80, 49, 'virginia.gottardi@nuova.com', 'INCOMPLETA', '2016-02-23 20:24:30'),
 	(81, 50, 'virginia.gottardi@nuova.com', 'INCOMPLETA', '2016-02-23 20:24:56'),
-	(82, 51, 'virginia.gottardi@nuova.com', 'INCOMPLETA', '2016-02-23 20:32:31');
+	(82, 51, 'virginia.gottardi@nuova.com', 'INCOMPLETA', '2016-02-23 20:32:31'),
+	(83, 52, 'administrador@nuovamed.com', 'PENDIENTE', '2016-03-04 21:04:46'),
+	(84, 53, 'administrador@nuovamed.com', 'PENDIENTE', '2016-03-04 21:05:34'),
+	(85, 54, 'administrador@nuovamed.com', 'PENDIENTE', '2016-03-04 21:06:41'),
+	(86, 55, 'virginia.gottardi@nuovamed.com', 'INCOMPLETA', '2016-03-08 20:26:04'),
+	(87, 56, 'virginia.gottardi@nuovamed.com', 'INCOMPLETA', '2016-03-08 20:38:23'),
+	(88, 56, 'virginia.gottardi@nuovamed.com', 'PENDIENTE', '2016-03-08 20:52:16'),
+	(89, 56, 'virginia.gottardi@nuovamed.com', 'AUTORIZADA', '2016-03-08 20:54:46');
 /*!40000 ALTER TABLE `orden_workflow` ENABLE KEYS */;
 
 
@@ -321,16 +388,20 @@ CREATE TABLE IF NOT EXISTS `paciente` (
   KEY `pacienteId` (`paciente_id`),
   KEY `FK_paciente_paciente` (`adherente_id`),
   CONSTRAINT `FK_paciente_paciente` FOREIGN KEY (`adherente_id`) REFERENCES `paciente` (`paciente_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=187 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+) ENGINE=InnoDB AUTO_INCREMENT=191 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
--- Volcando datos para la tabla nuova.paciente: ~4 rows (aproximadamente)
+-- Volcando datos para la tabla nuova.paciente: ~8 rows (aproximadamente)
 DELETE FROM `paciente`;
 /*!40000 ALTER TABLE `paciente` DISABLE KEYS */;
 INSERT INTO `paciente` (`paciente_id`, `apellido`, `nombre`, `fecha_nacimiento`, `domicilio`, `telefono`, `mail`, `coseguro`, `adherente_id`, `dni`, `provincia`, `parentesco`, `zona_afiliacion`) VALUES
-	(183, 'JUAREZ', 'JUAN GABRIEL', '1983-10-27', 'ASDASDASDADA', '45218741', 'asdasdad@asdad.com', 0, NULL, 28797545, 'Tucumán', 0, 'Tucumán'),
-	(184, 'GOTTARDI', 'MARIA VIRGINIA', '2018-03-02', 'ASDASDASDADA', '45218741', 'asdasdad@asdad.com', 1, 183, 5545555, 'Tucumán', 2, NULL),
+	(183, 'LEDESMA', 'IGNACIO', '1983-10-27', 'ASDASDASDADA', '45218741', 'asdasdad@asdad.com', 0, NULL, 28797545, 'Tucumán', 0, 'Tucumán'),
+	(184, 'GOTTARDI', 'MARIA VIRGINIA', '2018-03-02', 'ASDASDASDADA', '45218741', 'asdasdad@asdad.com', 1, 183, 31812915, 'Tucumán', 2, NULL),
 	(185, 'PERINETTI', 'RODOLFO', '1974-11-11', 'BUENOS AIRES 4500', '4356520', '', 1, NULL, 24253577, 'Tucumán', 0, 'Tucumán'),
-	(186, 'PERINETTI', 'MARIA', NULL, 'BUENOS AIRES 4500', '4356520', '', 0, 185, 31812915, 'Tucumán', 1, NULL);
+	(186, 'PERINETTI', 'MARIA', NULL, 'BUENOS AIRES 4500', '4356520', '', 0, 185, 31812915, 'Tucumán', 1, NULL),
+	(187, 'ROUCO', 'VIRGINIA', '2016-03-15', 'IJJNJNN', '4352070', '', 1, NULL, 10220512, 'Tucumán', 0, 'Tucumán'),
+	(188, 'ROUCO', 'VIRGINIA', '2016-03-15', 'IJJNJNN', '4352070', '', 1, NULL, 10220512, 'Tucumán', 0, 'Tucumán'),
+	(189, 'BRITEZ', 'PAULA', '2016-03-07', 'FERERER', '', '', 1, NULL, 32084220, 'Córdoba', 0, 'Tucumán'),
+	(190, 'ARJONA', 'MIGUEL', '2016-03-09', 'JFJYJTDY', '9999999', '', 0, NULL, 29878065, 'Tucumán', 0, 'Tucumán');
 /*!40000 ALTER TABLE `paciente` ENABLE KEYS */;
 
 
@@ -348,13 +419,17 @@ CREATE TABLE IF NOT EXISTS `paciente_obrasocial` (
   KEY `FK_paciente_obrasocial_paciente` (`paciente_id`),
   CONSTRAINT `FK_paciente_obrasocial_obrasocial` FOREIGN KEY (`obrasocial_id`) REFERENCES `obrasocial` (`obrasocial_id`),
   CONSTRAINT `FK_paciente_obrasocial_paciente` FOREIGN KEY (`paciente_id`) REFERENCES `paciente` (`paciente_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=121 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+) ENGINE=InnoDB AUTO_INCREMENT=130 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
--- Volcando datos para la tabla nuova.paciente_obrasocial: ~1 rows (aproximadamente)
+-- Volcando datos para la tabla nuova.paciente_obrasocial: ~5 rows (aproximadamente)
 DELETE FROM `paciente_obrasocial`;
 /*!40000 ALTER TABLE `paciente_obrasocial` DISABLE KEYS */;
 INSERT INTO `paciente_obrasocial` (`paciente_obrasocial_id`, `nro_credencial`, `provisorio`, `obrasocial_id`, `paciente_id`, `fecha`) VALUES
-	(120, '4444444', 1, 18, 185, '2016-02-24');
+	(120, '4444444', 1, 18, 185, '2016-02-24'),
+	(124, '6666', 0, 18, 183, '2016-03-06'),
+	(125, '780866877', 0, 18, 184, '2016-03-06'),
+	(126, '99999', 0, 18, 188, '2016-03-06'),
+	(129, '555555', 1, 18, 190, '2016-03-08');
 /*!40000 ALTER TABLE `paciente_obrasocial` ENABLE KEYS */;
 
 
@@ -368,7 +443,7 @@ CREATE TABLE IF NOT EXISTS `practica` (
   KEY `practica_id` (`practica_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1164 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
--- Volcando datos para la tabla nuova.practica: ~1.166 rows (aproximadamente)
+-- Volcando datos para la tabla nuova.practica: ~1.127 rows (aproximadamente)
 DELETE FROM `practica`;
 /*!40000 ALTER TABLE `practica` DISABLE KEYS */;
 INSERT INTO `practica` (`practica_id`, `codigo`, `nombre`, `valor_1`) VALUES
@@ -1548,7 +1623,7 @@ INSERT INTO `prestadores` (`prestador_id`, `nombre`, `domicilio`, `telefono`, `p
 	(9, 'Prestador Test 6', 'asdas das dasd asdsa dadsadsa dasasdasdasdsa dasd as', '4454545454', 'Tucumán'),
 	(10, 'Prestador Test 7', 'adsdsdas dsa ad asdadasd asd asd ads a', '654654654654', 'Tucumán'),
 	(11, 'Prestador Test 9', 'asdsa ad asd adads asda dad ad ', '6654654', 'Tucumán'),
-	(12, 'Prestador Test 8', 'sadasdsadasdad asd asd asd adsa sa asd ad ada a', '546546464', 'Tucumán');
+	(12, 'MENDEZ COLLADO', 'MUÑECAS 000', '546546464', 'Tucumán');
 /*!40000 ALTER TABLE `prestadores` ENABLE KEYS */;
 
 
@@ -1574,14 +1649,15 @@ CREATE TABLE IF NOT EXISTS `profesional` (
   `tipo_matricula` varchar(256) COLLATE utf8_bin DEFAULT NULL,
   PRIMARY KEY (`profesional_id`),
   KEY `id` (`profesional_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
--- Volcando datos para la tabla nuova.profesional: ~2 rows (aproximadamente)
+-- Volcando datos para la tabla nuova.profesional: ~3 rows (aproximadamente)
 DELETE FROM `profesional`;
 /*!40000 ALTER TABLE `profesional` DISABLE KEYS */;
 INSERT INTO `profesional` (`profesional_id`, `apellido`, `nombre`, `telefono`, `matricula`, `registro_nacional`, `titulo_profesional`, `habilitacion_siprosa`, `fecha_vencimiento_habilitacion`, `nro_registro`, `valido_hasta`, `fecha_emision_matricula`, `nro_libro`, `nro_folio`, `nro_poliza`, `vigencia_desde`, `vigencia_hasta`, `tipo_matricula`) VALUES
 	(3, 'LOPEZ', 'JULIO ARMANDO', '4877585', '23324', '8787', 'Ejemplo titutulo', 1, '2015-12-18', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-	(12, 'DIAZ POLIZZI', 'ANGEL ROBERTO', '0381400000', '7394', '213.932', 'MEDICO', 0, '2016-02-17', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+	(12, 'DIAZ POLIZZI', 'ANGEL ROBERTO', '0381400000', '7394', NULL, 'MEDICO', 0, NULL, 325456, '2016-03-08', '2016-03-08', 5465, 242, 5646, '2016-03-04', '2016-03-10', NULL),
+	(15, 'VIRGILLITO', 'WALTER ALFREDO', '154098820', '6948', NULL, 'MEDICO', 0, NULL, 248419, '2017-02-07', '2016-03-16', 15, 453, 850468, '2015-09-30', '2016-09-30', NULL);
 /*!40000 ALTER TABLE `profesional` ENABLE KEYS */;
 
 
@@ -1595,11 +1671,14 @@ CREATE TABLE IF NOT EXISTS `profesional_especialidad` (
   KEY `FK_profesionales_especialidades_especialidades` (`especialidad_id`),
   CONSTRAINT `FK_profesionales_especialidades_especialidades` FOREIGN KEY (`especialidad_id`) REFERENCES `especialidad` (`especialidad_id`),
   CONSTRAINT `FK_profesionales_especialidades_profesionales` FOREIGN KEY (`profesional_id`) REFERENCES `profesional` (`profesional_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=81 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+) ENGINE=InnoDB AUTO_INCREMENT=91 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
--- Volcando datos para la tabla nuova.profesional_especialidad: ~0 rows (aproximadamente)
+-- Volcando datos para la tabla nuova.profesional_especialidad: ~2 rows (aproximadamente)
 DELETE FROM `profesional_especialidad`;
 /*!40000 ALTER TABLE `profesional_especialidad` DISABLE KEYS */;
+INSERT INTO `profesional_especialidad` (`id`, `profesional_id`, `especialidad_id`) VALUES
+	(88, 12, 1),
+	(90, 15, 2);
 /*!40000 ALTER TABLE `profesional_especialidad` ENABLE KEYS */;
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
 /*!40014 SET FOREIGN_KEY_CHECKS=IF(@OLD_FOREIGN_KEY_CHECKS IS NULL, 1, @OLD_FOREIGN_KEY_CHECKS) */;
