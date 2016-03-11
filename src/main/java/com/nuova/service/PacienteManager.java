@@ -30,5 +30,7 @@ public interface PacienteManager {
     public OrdenAlarmaDTO countPacientes();
 
     public List<Paciente> findPacienteAutocomplete(String search);
+    
+    public Paciente findPacienteByDni(Integer dni);
 
 }

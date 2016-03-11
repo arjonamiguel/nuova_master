@@ -72,4 +72,9 @@ public class PacienteManagerImpl implements PacienteManager {
         return pacienteDAO.findPacienteAutocomplete(search);
     }
 
+    @Override
+    public Paciente findPacienteByDni(Integer dni) {
+      return pacienteDAO.findPacienteByDni(dni);
+    }
+
 }
