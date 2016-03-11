@@ -14,7 +14,7 @@
         <link href="<%=request.getContextPath()%>/resources/css/bootstrap/bootstrap.min.css" rel="stylesheet"/>       
 		<script src="<c:url value="/resources/js/jquery/jquery-2.0.3.min.js" />"></script>
 		<script src="<c:url value="/resources/js/bootstrap/bootstrap.min.js" />"></script>
-		<script src="<%=request.getContextPath()%>/resources/js/jquery/bootstrap-collapse.js" />"></script>
+		<script src="<%=request.getContextPath()%>/resources/js/jquery/bootstrap-collapse.js" /></script>
 		<link href="<%=request.getContextPath()%>/resources/css/nuova.css" rel="stylesheet"/>
 		<link href="<%=request.getContextPath()%>/resources/css/panel.css" rel="stylesheet"/>
 		<link href="<%=request.getContextPath()%>/resources/css/bootstrap/bootstrap-responsive.css" rel="stylesheet"/>
@@ -185,49 +185,13 @@
 				<div class="formInput">
 				<div id="calendar">
 					<div class="input-group registration-date-time" style="padding-top:0%;">
-						<input class="form-control" name="registration_date" id="valido-hasta" type="date"  onchange="javascript:updateDateValidoHasta();">
+						<input class="form-control" name="valido_hasta_date" id="valido-hasta" type="date"  onchange="javascript:updateDateValidoHasta();">
 	            	</div>
 	        	</div>  
 	        	</div>
 			</div>
 	    </div>
 	    <div class="span4">
-	    </div>
-  	</div>
-	</div>        
-        
-    </div>       
-</div>  
-
-<div class="panel panel-info">
-	<div class="panel-heading">
-          <div class="panel-title">Constancia de Matricula</div>
-    </div>     
-	<div  class="panel-body">
-	
-<div class="container-fluid">
-  <div class="row-fluid">
-	    <div class="span4">	
-			
-			<div>
-				<div class="formLabel"><form:label path="fechaEmisionMatricula">Fecha Matricula:</form:label></div>
-				<div style="visibility:hidden;height:0px;"><form:input class="date" path="fechaEmisionMatricula" /></div>
-				<div class="formInput">
-				<div id="calendar">
-					<div class="input-group registration-date-time" style="padding-top:0%;">
-						<input class="form-control" name="fecha_matricula" id="fecha-matricula" type="date"  onchange="javascript:updateDateFechaMatricula();">
-	            	</div>
-	        	</div>  
-	        	</div>
-			</div>
-	    </div>
-	    <div class="span4">
-			<div class="formLabel"><form:label path="nroLibro">Nro. Libro:</form:label></div>
-        	<div class="formInput"><form:input path="nroLibro" type="number"/></div>
-	    </div>
-	    <div class="span4">
-			<div class="formLabel"><form:label path="nroFolio">Nro. Folio:</form:label></div>
-	        <div class="formInput"><form:input path="nroFolio" type="number"/></div>
 	    </div>
   	</div>
 	</div>        
@@ -255,7 +219,7 @@
 				<div style="visibility:hidden;height:0px;"><form:input class="date" path="vigenciaDesde" /></div>
 				<div class="formInput">
 				<div id="calendar">
-					<div class="input-group registration-date-time" style="padding-top:0%;">
+					<div class="input-group vigenciadesde-date-time" style="padding-top:0%;">
 						<input class="form-control" name="fecha_desde" id="fecha-desde" type="date"  onchange="javascript:updateDateFechaDesde();">
 	            	</div>
 	        	</div>  
@@ -269,7 +233,7 @@
 				<div style="visibility:hidden;height:0px;"><form:input class="date" path="vigenciaHasta" /></div>
 				<div class="formInput">
 				<div id="calendar">
-					<div class="input-group registration-date-time" style="padding-top:0%;">
+					<div class="input-group vigenciahasta-date-time" style="padding-top:0%;">
 						<input class="form-control" name="fecha_hasta" id="fecha-hasta" type="date"  onchange="javascript:updateDateFechaHasta();">
 	            	</div>
 	        	</div>  
@@ -306,7 +270,7 @@
     <div class="tableContainer">
 	    <TABLE id="dataTable" class="table"  style="margin-top:0px;">
 	        <TR>      	
-	            <TD>Id</TD>
+	            <TD>ID</TD>
 	            <TD>Especialidad</TD> 
 	            <TD></TD>       
 	        </TR>
