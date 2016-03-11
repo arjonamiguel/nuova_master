@@ -114,6 +114,13 @@
 		function updateDateFechaHasta() {
 			document.getElementById("vigenciaHasta").value=document.getElementById("fecha-hasta").value;
 		}
+		
+		function isNumberKey(evt){
+		    var charCode = (evt.which) ? evt.which : evt.keyCode;
+		    if (charCode > 31 && (charCode < 48 || charCode > 57))
+		        return false;
+		    return true;
+		}
     </SCRIPT>
 </head>
 <body style="background-color:#e5e5e5;">
@@ -147,7 +154,7 @@
     <div class="row-fluid">
 	    <div class="span4">
 			<div class="formLabel"><form:label path="matricula">Matr&iacutecula:</form:label></div>
-	        <div class="formInput"><form:input path="matricula" type="number"/></div>
+	        <div class="formInput"><form:input path="matricula" type="number" onkeypress='return isNumberKey(event)'/></div>
 	    </div>
 	   
 	    <div class="span4">
@@ -174,7 +181,7 @@
 	    <div class="span4">
 	      <div><form:hidden path="profesionalId" /></div>
         	<div class="formLabel"><form:label path="apellido">Nro Registro:</form:label></div>
-        	<div class="formInput"><form:input path="nroRegistro" type="text"/></div>
+        	<div class="formInput"><form:input path="nroRegistro" type="text" onkeypress='return isNumberKey(event)'/></div>
 	    </div>
 	    <div class="span4">	
 			<div style="visibility:hidden;height:0px;"><form:label path="habilitacionSiprosa">Habilitacion del Siprosa:</form:label></div>
@@ -210,7 +217,7 @@
 	    <div class="span4">
 	      <div><form:hidden path="profesionalId" /></div>
         	<div class="formLabel"><form:label path="nroPoliza">Nro. Poliza:</form:label></div>
-        	<div class="formInput"><form:input path="nroPoliza" type="text"/></div>
+        	<div class="formInput"><form:input path="nroPoliza" type="text" onkeypress='return isNumberKey(event)'/></div>
 	    </div>
 	     <div class="span4">	
 			
