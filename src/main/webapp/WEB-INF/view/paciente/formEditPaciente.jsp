@@ -378,6 +378,26 @@ label.error {
 </body>
 </html>
 <script>
+
+function callExistDni(dni) {
+	var retorno;
+	$.ajax({
+		url : "ajaxGetExistDni?dni=" + dni,
+		type : "GET",
+		contentType : "application/json; charset=utf-8",
+		//    data: jsonString, //Stringified Json Object
+		async : false, //Cross-domain requests and dataType: "jsonp" requests do not support synchronous operation
+		cache : false, //This will force requested pages not to be cached by the browser          
+		processData : false, //To avoid making query String instead of JSON
+			
+		success : function(existDni) {
+			retorno = existDni;
+		}
+	});
+
+	return retorno;
+}
+
 			document.getElementById("mainPaciente").parentNode.classList.add("active");
         	document.getElementById("registration-date").value=document.getElementById("fechaNacimiento").value;
         	updatecoseguro();
@@ -420,7 +440,13 @@ label.error {
             registroNacional: "Ingrese Registro Nacional"
         },
                 submitHandler: function(form) {
-            form.submit();
+                	var dni = document.getElementById("dni");            
+                    if (callExistDni(dni.value)){
+                        alert("El DNI ingresado ya existe.");
+                        dni.focus();
+                    } else {
+                    	form.submit();
+                    }        
         }
     });
 </script>
