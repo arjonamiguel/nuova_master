@@ -139,6 +139,8 @@ label.error {
 			document.getElementById("fechaNacimiento").value=document.getElementById("registration-date").value;
 		}
 
+	
+
        </SCRIPT>
 </head>
 <body style="background-color:#e5e5e5;">
@@ -157,7 +159,7 @@ label.error {
 		  		<div class="row-fluid">
 			   		<div class="span4">
 			   				<div class="formLabel"><form:label path="dni">DNI:</form:label></div>
-        					<div class="formInput"><form:input path="dni" type="number"/></div>
+        					<div class="formInput"><form:input path="dni" type="number" /></div>
 			   		</div>
 			   		<div class="span4">
 			   				<div class="formLabel"><form:label path="apellido">Apellido:</form:label></div>
@@ -298,6 +300,26 @@ label.error {
 </html>
 <script>
 		document.getElementById("mainPaciente").parentNode.classList.add("active");
+
+		function callExistDni(dni) {
+			var retorno;
+			$.ajax({
+				url : "ajaxGetExistDni?dni=" + dni,
+				type : "GET",
+				contentType : "application/json; charset=utf-8",
+				//    data: jsonString, //Stringified Json Object
+				async : false, //Cross-domain requests and dataType: "jsonp" requests do not support synchronous operation
+				cache : false, //This will force requested pages not to be cached by the browser          
+				processData : false, //To avoid making query String instead of JSON
+					
+				success : function(existDni) {
+					retorno = existDni;
+				}
+			});
+
+			return retorno;
+		}
+		
 			$("#paciente").validate({
     
         // Specify the validation rules
@@ -327,8 +349,15 @@ label.error {
 
 			fechaNacimiento : "Ingrese fecha de nacimiento"
         },
-                submitHandler: function(form) {
-            form.submit();
+        submitHandler: function(form) {
+        	var dni = document.getElementById("dni");            
+            if (callExistDni(dni.value)){
+                alert("El DNI ingresado ya existe.");
+                dni.focus();
+            } else {
+            	form.submit();
+            }        
+            
         }
     });
 

@@ -106,19 +106,18 @@ public class PacienteDAOImpl implements PacienteDAO {
         return result;
     }
 
-    @Override
-    public Paciente findPacienteByDni(Integer dni) {      
-      Paciente retorno = null;
-      @SuppressWarnings("unchecked")
-      List<Paciente> result = this.sessionFactory.getCurrentSession()
-          .createQuery(" SELECT p "
-                  + " FROM Paciente p "
-                  + " WHERE p.dni = "+dni).list();
-      
-      if (result != null) {
-        retorno = result.get(0);
-      }
-      
-      return retorno;
+    public Paciente findPacienteByDni(Integer dni) {
+        Paciente retorno = null;
+        @SuppressWarnings("unchecked")
+        List<Paciente> result = this.sessionFactory.getCurrentSession()
+                .createQuery(" SELECT p "
+                        + " FROM Paciente p "
+                        + " WHERE p.dni = " + dni).list();
+
+        if (result != null && !result.isEmpty()) {
+            retorno = result.get(0);
+        }
+
+        return retorno;
     }
 }

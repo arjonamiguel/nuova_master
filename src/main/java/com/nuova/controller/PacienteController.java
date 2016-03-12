@@ -192,6 +192,17 @@ public class PacienteController {
         return retorno;
     }
 
+    @RequestMapping(value = ConstantControllers.AJAX_GET_EXIST_DNI, method = RequestMethod.GET)
+    public @ResponseBody Boolean existDni(
+            @RequestParam(required = false, defaultValue = "") String dni) {
+        Paciente p = pacienteManager.findPacienteByDni(Integer.valueOf(dni));
+        if (p != null) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
     // Adherentes --------------------------------------------
     @RequestMapping(value = ConstantControllers.FORM_ADD_ADHERENTE, method = RequestMethod.GET)
     public String formAddAdherente(ModelMap map,
