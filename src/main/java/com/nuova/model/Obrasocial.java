@@ -28,6 +28,9 @@ public class Obrasocial implements java.io.Serializable {
     private static final long serialVersionUID = -6064833297447829489L;
     private Integer obrasocialId;
     private String nombre;
+    private String cuit;
+    private String direccion;
+    private String telefono;
     private List<PacienteObrasocial> pacienteObrasocials = new ArrayList<PacienteObrasocial>(0);
 
     public Obrasocial() {
@@ -67,4 +70,29 @@ public class Obrasocial implements java.io.Serializable {
         this.pacienteObrasocials = pacienteObrasocials;
     }
 
+	public String getCuit() {
+		return cuit;
+	}
+
+	public void setCuit(String cuit) {
+		this.cuit = cuit;
+	}
+
+	public String getDireccion() {
+		return direccion;
+	}
+
+	public void setDireccion(String direccion) {
+		this.direccion = direccion;
+	}
+
+	public String getTelefono() {
+		return telefono;
+	}
+
+	public void setTelefono(String telefono) {
+		this.telefono = telefono;
+	}
+
+    
 }

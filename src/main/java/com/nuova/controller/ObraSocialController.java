@@ -102,6 +102,9 @@ public class ObraSocialController {
             ObraSocialDTO dto = new ObraSocialDTO();
             dto.setObrasocialId(o.getObrasocialId());
             dto.setNombre(o.getNombre());
+            dto.setCuit(o.getCuit());
+            dto.setDireccion(o.getDireccion());
+            dto.setTelefono(o.getTelefono());
             dtos.add(dto);
         }
 
@@ -124,6 +127,9 @@ public class ObraSocialController {
             ObraSocialDTO dto = new ObraSocialDTO();
             dto.setObrasocialId(o.getObrasocialId());
             dto.setNombre(o.getNombre());
+            dto.setCuit(o.getCuit());
+            dto.setDireccion(o.getDireccion());
+            dto.setTelefono(o.getTelefono());
             dtos.add(dto);
         }
 

@@ -8,6 +8,10 @@ public class ObraSocialDTO {
     private String original = "1";
 
     private String acciones;
+    
+    private String cuit;
+    private String direccion;
+    private String telefono;
 
     public ObraSocialDTO() {
     }
@@ -66,5 +70,31 @@ public class ObraSocialDTO {
     public void setAcciones(String acciones) {
         this.acciones = acciones;
     }
+
+	public String getCuit() {
+		return cuit;
+	}
+
+	public void setCuit(String cuit) {
+		this.cuit = cuit;
+	}
+
+	public String getDireccion() {
+		return direccion;
+	}
+
+	public void setDireccion(String direccion) {
+		this.direccion = direccion;
+	}
+
+	public String getTelefono() {
+		return telefono;
+	}
+
+	public void setTelefono(String telefono) {
+		this.telefono = telefono;
+	}
+    
+    
 
 }

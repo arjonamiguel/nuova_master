@@ -105,6 +105,9 @@ public class Util {
         Obrasocial obrasocial = new Obrasocial();
         obrasocial.setObrasocialId(dto.getObrasocialId());
         obrasocial.setNombre(dto.getNombre());
+        obrasocial.setCuit(dto.getCuit());
+        obrasocial.setDireccion(dto.getDireccion());
+        obrasocial.setTelefono(dto.getTelefono());
         return obrasocial;
     }
     

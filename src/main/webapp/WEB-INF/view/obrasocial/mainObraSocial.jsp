@@ -33,9 +33,9 @@
 
 						$("#obrasocialGrid").simplePagingGrid(
 								{
-									columnNames : [ "ID", "NOMBRE", "" ],
-									columnKeys : [ "obrasocialId", "nombre", "acciones"],
-									columnWidths : [ "5%", "40%",],
+									columnNames : [ "ID", "NOMBRE","CUIT","DIRECCION","TELEFONO", "" ],
+									columnKeys : [ "obrasocialId", "nombre","cuit","direccion","telefono", "acciones"],
+									columnWidths : [ "5%", "20%",],
 									sortable : [ false, true ],
 									data : rows
 								});

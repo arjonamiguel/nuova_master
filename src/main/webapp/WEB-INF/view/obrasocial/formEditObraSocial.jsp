@@ -44,9 +44,21 @@
 		<div class="panel-body" >
 				<div class="container-fluid">
 						<div class="row-fluid">
-							<div class="span6">
+							<div class="span3">
 								<div class="formLabel"><form:label path="nombre">Obra Social:</form:label></div>
         						<div class="formInput"><form:input path="nombre" /></div>
+							</div>
+							<div class="span3">
+								<div class="formLabel"><form:label path="cuit">CUIT:</form:label></div>
+        						<div class="formInput"><form:input path="cuit" /></div>
+							</div>
+							<div class="span3">
+								<div class="formLabel"><form:label path="direccion">Direccion:</form:label></div>
+        						<div class="formInput"><form:input path="direccion" /></div>
+							</div>
+							<div class="span3">
+								<div class="formLabel"><form:label path="telefono">Telefono:</form:label></div>
+        						<div class="formInput"><form:input path="telefono" /></div>
 							</div>
 						</div>
 				</div>

@@ -28,7 +28,7 @@
 				}
 		</style>
 		<script>
-			function updateDateFechaStart() {
+			function updateDateFefchaStart() {
 				document.getElementById("start").value=document.getElementById("fecha-start").value;
 			}
 			function updateDateFechaEnd() {
