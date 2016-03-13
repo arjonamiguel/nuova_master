@@ -18,21 +18,72 @@
 		<link href="<%=request.getContextPath()%>/resources/css/panel.css" rel="stylesheet"/>
 		<link href="<%=request.getContextPath()%>/resources/css/bootstrap/bootstrap-responsive.css" rel="stylesheet"/>
 		<script src="<c:url value="/resources/js/jquery/jquery.validate.min.js" />"></script>
+		<link href="<%=request.getContextPath()%>/resources/montrezorro-bootstrap-checkbox-fa865ff/css/bootstrap-checkbox.css" rel="stylesheet"/>
+		<script src="<%=request.getContextPath()%>/resources/montrezorro-bootstrap-checkbox-fa865ff/js/bootstrap-checkbox.js" /></script>
 	
 	<style>
 	.chkbox {
    padding-left: 10px;
    font-weight: bold;
  }
- label.error {
+ .label-error {
 		  color: #a94442;
 		  background-color: #f2dede;
 		  border-color: #ebccd1;
 		  padding:1px 20px 1px 20px;
-		  width:58%;
+		  width:22%;
 		}
 	
 	</style>
+		<script>
+	var checkBoxSelectedFlag="false";
+	
+	function validatedSelects(){
+		if($(".cb-icon-check")[0].style.display!="none" && $(".cb-icon-check")[1].style.display!="none"){
+			$("#message2").css("visibility","hidden");
+			if(checkBoxSelectedFlag=="false"){
+				$("#message2").text("Falta chequear el penultimo o ultimo requisito");
+				$("#message2").css("visibility","visible");
+				return false;
+			}
+		}else{
+			$("#message2").css("visibility","visible");
+			return false;
+		}
+		return true;
+	}
+	function hideMessage(){
+		$("#message").css("visibility","hidden");
+	}
+	
+	function monotributistaSelected(){
+		if(checkBoxSelectedFlag=="false")
+		{
+			checkBoxSelectedFlag="true";
+		}else{
+			checkBoxSelectedFlag="false";
+		}
+		
+		if($(".cb-icon-check")[3].style.display!="none")
+		{
+			$("#reqReciboSueldo").click();
+		}
+		
+	}
+	
+	function recibosueldoSelected(){
+		if(checkBoxSelectedFlag=="false")
+		{
+			checkBoxSelectedFlag="true";
+		}else{
+			checkBoxSelectedFlag="false";
+		}
+		if($(".cb-icon-check")[2].style.display!="none")
+		{
+			$("#reqMonotributista").click();
+		}
+	}
+	</script>
 	
 </head>
 
@@ -46,6 +97,7 @@
           			<div class="panel-title">
 	          			Nueva Práctica
           			</div>
+          			<div class="label-error" id="message2" style="float:left;margin-left:8%;visibility:hidden;">Faltan chequear los dos primeros requisitos</div>
     		</div>     
 			<div  class="panel-body" >
 				<div class="container-fluid" >
@@ -95,7 +147,7 @@
 														<b>Presentó la orden original del médico solicitante?</b>
 													</td>
 													<td  style="text-align:left" colspan="2">			
-													    <input type="checkbox" id="reqOrdenMedico" name = "reqOrdenMedico"  />
+													    <input type="checkbox" id="reqOrdenMedico" name = "reqOrdenMedico" class="checkbox" />
 													</td>
 												</tr>
 												<tr>
@@ -104,7 +156,7 @@
 														<b>Presentó fotocopia de la credencial de la prestadora OSPSIP?</b>
 													</td>
 													<td  style="text-align:left" colspan="2">			
-													    <input type="checkbox" id="reqCredecial" name="reqCredecial"  />
+													    <input type="checkbox" id="reqCredecial" name="reqCredecial" class="checkbox" />
 													</td>
 												</tr>
 									
@@ -116,7 +168,7 @@
 														<b>Presentó fotocopia de los 3 último recibos como Monotributista o Ama de Casa?</b>
 													</td>
 													<td  style="text-align:left" colspan="2">			
-													    <input type="checkbox" id="reqMonotributista" name="reqMonotributista" />
+													    <input type="checkbox" id="reqMonotributista" name="reqMonotributista" class="checkbox" onchange="monotributistaSelected()"/>
 													</td>
 												</tr>	
 												<tr>
@@ -125,7 +177,7 @@
 														<b>Presentó fotocopia del último recibo de sueldo?</b>
 													</td>
 													<td  style="text-align:left" colspan="2">			
-													    <input type="checkbox" id="reqReciboSueldo" name="reqReciboSueldo" />
+													    <input type="checkbox" id="reqReciboSueldo" name="reqReciboSueldo" class="checkbox" onchange="recibosueldoSelected()"/>
 													</td>
 												</tr>
 									
@@ -172,6 +224,7 @@
 </html>
 <script>
 		document.getElementById("mainPaciente").parentNode.classList.add("active");
+		$(".checkbox").checkbox();
 			$("#ordenDto").validate({
     
 		        // Specify the validation rules
@@ -194,7 +247,9 @@
 		            }
 		        },
 		                submitHandler: function(form) {
-		            form.submit();
+		             	if(validatedSelects()){
+		            		form.submit();
+		            	}
 		        }
 		    });
 		

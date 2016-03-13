@@ -197,7 +197,7 @@ label.error {
 				<div style="visibility:hidden;height:0px;"><form:input path="validoHasta" /></div>
 				<div class="formInput">
 
-						<input class="form-control" name="valido-hasta" id="valido-hasta" type="date"  onchange="javascript:updateDateValidoHasta();">
+						<input name="valido-hasta" id="valido-hasta" type="date"  onchange="javascript:updateDateValidoHasta();">
   
 	        	</div>
 			</div>
@@ -231,7 +231,7 @@ label.error {
 				<div style="visibility:hidden;height:0px;"><form:input path="vigenciaDesde" /></div>
 				<div class="formInput">
 	
-						<input class="form-control" name="fecha_desde" id="fecha-desde" type="date"  onblur="javascript:updateDateFechaDesde();">
+						<input name="fecha_desde" id="fecha-desde" type="date"  onblur="javascript:updateDateFechaDesde();">
 	   
 	        	</div>
 			</div>
@@ -243,7 +243,7 @@ label.error {
 				<div style="visibility:hidden;height:0px;"><form:input path="vigenciaHasta" /></div>
 				<div class="formInput">
 		
-						<input class="form-control" name="fecha_hasta" id="fecha-hasta" type="date"  onblur="javascript:updateDateFechaHasta();">
+						<input name="fecha_hasta" id="fecha-hasta" type="date"  onblur="javascript:updateDateFechaHasta();">
 	          
 	        	</div>
 			</div>

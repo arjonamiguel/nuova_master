@@ -37,15 +37,55 @@
 	
 	</style>
 	<script>
+	var checkBoxSelectedFlag="false";
+	
 	function validatedSelects(){
 		if($("#monto").val()=="NONE"){
 			$("#message").css("visibility","visible");
+			return false;
+		}else if($(".cb-icon-check")[0].style.display!="none" && $(".cb-icon-check")[1].style.display!="none"){
+			$("#message2").css("visibility","hidden");
+			if(checkBoxSelectedFlag=="false"){
+				$("#message2").text("Falta chequear el penultimo o ultimo requisito");
+				$("#message2").css("visibility","visible");
+				return false;
+			}
+		}else{
+			$("#message2").css("visibility","visible");
 			return false;
 		}
 		return true;
 	}
 	function hideMessage(){
 		$("#message").css("visibility","hidden");
+	}
+	
+	function monotributistaSelected(){
+		if(checkBoxSelectedFlag=="false")
+		{
+			checkBoxSelectedFlag="true";
+		}else{
+			checkBoxSelectedFlag="false";
+		}
+		
+		if($(".cb-icon-check")[3].style.display!="none")
+		{
+			$("#reqReciboSueldo").click();
+		}
+		
+	}
+	
+	function recibosueldoSelected(){
+		if(checkBoxSelectedFlag=="false")
+		{
+			checkBoxSelectedFlag="true";
+		}else{
+			checkBoxSelectedFlag="false";
+		}
+		if($(".cb-icon-check")[2].style.display!="none")
+		{
+			$("#reqMonotributista").click();
+		}
 	}
 	</script>
 	
@@ -63,6 +103,7 @@
 
     				</div>     
     				<div class="label-error" id="message" style="float:left;margin-left:8%;visibility:hidden;">Falta seleccionar Coseguro</div>
+    				<div class="label-error" id="message2" style="float:left;margin-left:8%;visibility:hidden;">Faltan chequear los dos primeros requisitos</div>
           			</div>
 			<div  class="panel-body" >
 				<div class="container-fluid" >
@@ -134,7 +175,7 @@
 														<b>Presentó fotocopia de los 3 último recibos como Monotributista o Ama de Casa?</b>
 													</td>
 													<td  style="text-align:left" colspan="2">			
-													    <input type="checkbox" id="reqMonotributista" name="reqMonotributista" class="checkbox"/>
+													    <input type="checkbox" id="reqMonotributista" name="reqMonotributista" class="checkbox" onchange="monotributistaSelected()"/>
 													</td>
 												</tr>	
 												<tr>
@@ -143,7 +184,7 @@
 														<b>Presentó fotocopia del último recibo de sueldo?</b>
 													</td>
 													<td  style="text-align:left" colspan="2">			
-													    <input type="checkbox" id="reqReciboSueldo" name="reqReciboSueldo" class="checkbox"/>
+													    <input type="checkbox" id="reqReciboSueldo" name="reqReciboSueldo" class="checkbox" onchange="recibosueldoSelected()"/>
 													</td>
 												</tr>
 									
