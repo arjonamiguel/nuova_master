@@ -312,6 +312,7 @@ label.error {
 				</div>
 			</div>
 			
+			
 </div>
 <c:if test="${paciente.parentesco == 0}">
 <div class="panel panel-info">
@@ -414,14 +415,7 @@ function callExistDni(dni) {
             },
             apellido: "required",
             nombre: "required",
-            telefono: {
-                required: true,
-                minlength: 5
-            },
-            email: {
-                required: true,
-                email: true
-            }
+
         },
         
         // Specify the validation error messages
@@ -432,12 +426,7 @@ function callExistDni(dni) {
             },
             apellido: "Ingrese apellido",
             nombre: "Ingrese nombre",
-            telefono: {
-                required: "Ingrese telefono",
-                minlength: "Telefono debe tener al menos 5 caracteres de largo"
-            },
-            matricula: "Ingrese matricula",
-            registroNacional: "Ingrese Registro Nacional"
+
         },
                 submitHandler: function(form) {
                 	var dni = document.getElementById("dni");            

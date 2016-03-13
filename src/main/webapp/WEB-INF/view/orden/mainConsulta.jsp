@@ -32,12 +32,10 @@
 
 						$("#ordenGrid").simplePagingGrid(
 								{
-									columnNames : [ "PACIENTE","TIPO" ,"NRO.ORDEN", "FECHA", "ORDEN MEDICA", "CREDENCIAL",
-													"MONOTRIBUTISTA", "RECIBO SUELDO","" ],
-									columnKeys : [ "botonpaciente","ordenTipoDesc" ,"nroOrden", "fecha","iconordenmedica"
-													, "iconcredencial", "iconmonotributista", "iconrecibo"
+									columnNames : [ "PACIENTE","TIPO" ,"NRO.ORDEN", "FECHA", ,"" ],
+									columnKeys : [ "botonpaciente","ordenTipoDesc" ,"nroOrden", "fecha",
 													, "acciones"],
-									columnWidths : [ "5%", "10%"],
+									columnWidths : [ "30%", "20%", "20%", "10%"],
 									sortable : [ false, true ],
 									data : rows
 								});

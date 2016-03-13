@@ -60,10 +60,7 @@
 			<div class="panel-heading">
           			<div class="panel-title">
 	          			Nueva Consulta	   
-		          		<form:select path="monto" style="width:25%; margin-bottom:0px" onchange="hideMessage()">
-							<form:option value="NONE" label="Seleccione Monto de Coseguro $"/>
-							<form:options items="${montosorden}"/>			    
-						</form:select>
+
     				</div>     
     				<div class="label-error" id="message" style="float:left;margin-left:8%;visibility:hidden;">Falta seleccionar Coseguro</div>
           			</div>
@@ -77,6 +74,7 @@
 										  <li class="active"><a data-toggle="tab" href="#tb_paciente">Paciente</a></li>
 										  <li><a data-toggle="tab" href="#tb_requisitos">Requisitos</a></li>	  
 										  <li><a data-toggle="tab" href="#tb_profesional">Profesional</a></li>
+										  <li><a data-toggle="tab" href="#tb_coseguro">Coseguro</a></li>
 										</ul>
 									
 										<div class="tab-content" style="height: 350px">
@@ -165,6 +163,23 @@
 												</tr>		
 												</table>
 									  		</div>
+									  		
+									  		<div id="tb_coseguro" class="tab-pane fade">
+									    		<table class="table"  style="width: 100%">			
+												<tr>		
+													<td style="width: 15%">
+														Monto de Coseguro:
+													</td>
+													<td  style="text-align:left" colspan="5">			
+																													         <form:select path="monto" style="width:25%; margin-bottom:0px" onchange="hideMessage()">
+																	<form:option value="NONE" label="Seleccione Monto de Coseguro $"/>
+																		<form:options items="${montosorden}"/>			    
+																	</form:select>
+													</td>
+												</tr>		
+												</table>
+									  		</div>
+									  		
 										</div>
 										<div style="float:right;">
 										<table>
