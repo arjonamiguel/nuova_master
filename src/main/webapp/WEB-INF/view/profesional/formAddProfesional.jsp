@@ -103,9 +103,7 @@
 			document.getElementById("validoHasta").value=document.getElementById("valido-hasta").value;
 		}
 
-		function updateDateFechaMatricula() {
-			document.getElementById("fechaEmisionMatricula").value=document.getElementById("fecha-matricula").value;
-		}
+
 
 		function updateDateFechaDesde() {
 			document.getElementById("vigenciaDesde").value=document.getElementById("fecha-desde").value;
@@ -188,13 +186,13 @@
 			<div style="visibility:hidden;height:0px;"><form:input path="habilitacionSiprosa" /></div>
 			<div>
 				<div class="formLabel"><form:label path="validoHasta">Valido Hasta:</form:label></div>
-				<div style="visibility:hidden;height:0px;"><form:input class="date" path="validoHasta" /></div>
+				<div style="visibility:hidden;height:0px;"><form:input path="validoHasta" /></div>
 				<div class="formInput">
-				<div id="calendar">
-					<div class="input-group registration-date-time" style="padding-top:0%;">
+				
+					
 						<input class="form-control" name="valido_hasta_date" id="valido-hasta" type="date"  onchange="javascript:updateDateValidoHasta();">
-	            	</div>
-	        	</div>  
+	            
+	        
 	        	</div>
 			</div>
 	    </div>
@@ -223,13 +221,11 @@
 			
 			<div>
 				<div class="formLabel"><form:label path="vigenciaDesde">Vigencia Desde:</form:label></div>
-				<div style="visibility:hidden;height:0px;"><form:input class="date" path="vigenciaDesde" /></div>
+				<div style="visibility:hidden;height:0px;"><form:input path="vigenciaDesde" /></div>
 				<div class="formInput">
-				<div id="calendar">
-					<div class="input-group vigenciadesde-date-time" style="padding-top:0%;">
+				
 						<input class="form-control" name="fecha_desde" id="fecha-desde" type="date"  onchange="javascript:updateDateFechaDesde();">
-	            	</div>
-	        	</div>  
+	      
 	        	</div>
 			</div>
 	    </div>
@@ -237,13 +233,11 @@
 			
 			<div>
 				<div class="formLabel"><form:label path="vigenciaHasta">Vigencia Hasta:</form:label></div>
-				<div style="visibility:hidden;height:0px;"><form:input class="date" path="vigenciaHasta" /></div>
+				<div style="visibility:hidden;height:0px;"><form:input path="vigenciaHasta" /></div>
 				<div class="formInput">
-				<div id="calendar">
-					<div class="input-group vigenciahasta-date-time" style="padding-top:0%;">
+				
 						<input class="form-control" name="fecha_hasta" id="fecha-hasta" type="date"  onchange="javascript:updateDateFechaHasta();">
-	            	</div>
-	        	</div>  
+	          
 	        	</div>
 			</div>
 	    </div>
@@ -307,15 +301,8 @@
 </html>
 
 <script>
-        document.getElementById("habilitacionSiprosa").value=0;
-        //document.getElementById("fechaVencimientoHabilitacion").value='';
-
-        document.getElementById("validoHasta").value='';        
-        document.getElementById("fechaEmisionMatricula").value='';
-        document.getElementById("vigenciaDesde").value='';
-        document.getElementById("vigenciaHasta").value='';
-        
-		document.getElementById("configuracion").parentNode.classList.add("active");
+	document.getElementById("configuracion").parentNode.classList.add("active");
+		
 			$("#profesional").validate({
     
 		        // Specify the validation rules
@@ -346,5 +333,10 @@
 		        }
 		    });
 		
-	
+		
+
+	document.getElementById("validoHasta").value="";
+
+	document.getElementById("vigenciaDesde").value="";
+	document.getElementById("vigenciaHasta").value="";
 </script>

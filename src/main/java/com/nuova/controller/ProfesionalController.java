@@ -168,10 +168,16 @@ public class ProfesionalController {
     Date vigenciaHasta = null;
     try {
       // fechaHabilitacion = formatter.parse(p.getFechaVencimientoHabilitacion());
-      validoHasta = formatter.parse(p.getValidoHasta());
-      // fechaMatricula = formatter.parse(p.getFechaEmisionMatricula());
-      vigenciaDesde = formatter.parse(p.getVigenciaDesde());
-      vigenciaHasta = formatter.parse(p.getVigenciaHasta());
+    if(!p.getValidoHasta().equals("")){
+	      validoHasta = formatter.parse(p.getValidoHasta());
+    }
+	      // fechaMatricula = formatter.parse(p.getFechaEmisionMatricula());
+    if(!p.getVigenciaDesde().equals("")){
+	      vigenciaDesde = formatter.parse(p.getVigenciaDesde());
+    }
+    if(!p.getVigenciaHasta().equals("")){
+	      vigenciaHasta = formatter.parse(p.getVigenciaHasta());
+    }
     } catch (ParseException e) {
       // TODO Auto-generated catch block
       e.printStackTrace();
@@ -179,7 +185,7 @@ public class ProfesionalController {
     Profesional profesional =
         new Profesional(p.getApellido(), p.getNombre(), p.getTelefono(), p.getMatricula(),
             p.getRegistroNacional(), p.getTituloProfesional(),
-            new Byte(p.getHabilitacionSiprosa()), fechaHabilitacion, p.getNroRegistro(),
+            new Byte((p.getHabilitacionSiprosa().equals(""))?"0":p.getHabilitacionSiprosa()), fechaHabilitacion, p.getNroRegistro(),
             validoHasta, null, null, null, p.getNroPoliza(), vigenciaDesde, vigenciaHasta, null,
             null, null);
     profesional.setProfesionalId(p.getProfesionalId());

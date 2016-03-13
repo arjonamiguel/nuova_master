@@ -194,13 +194,11 @@ label.error {
 			<div style="visibility:hidden;height:0px;"><form:input path="habilitacionSiprosa" /></div>
 			<div>
 				<div class="formLabel"><form:label path="validoHasta">Valido Hasta:</form:label></div>
-				<div style="visibility:hidden;height:0px;"><form:input class="date" path="validoHasta" /></div>
+				<div style="visibility:hidden;height:0px;"><form:input path="validoHasta" /></div>
 				<div class="formInput">
-				<div id="calendar">
-					<div class="input-group registration-date-time" style="padding-top:0%;">
-						<input class="form-control" name="registration_date" id="valido-hasta" type="date"  onchange="javascript:updateDateValidoHasta();">
-	            	</div>
-	        	</div>  
+
+						<input class="form-control" name="valido-hasta" id="valido-hasta" type="date"  onchange="javascript:updateDateValidoHasta();">
+  
 	        	</div>
 			</div>
 	    </div>
@@ -230,13 +228,11 @@ label.error {
 			
 			<div>
 				<div class="formLabel"><form:label path="vigenciaDesde">Vigencia Desde:</form:label></div>
-				<div style="visibility:hidden;height:0px;"><form:input class="date" path="vigenciaDesde" /></div>
+				<div style="visibility:hidden;height:0px;"><form:input path="vigenciaDesde" /></div>
 				<div class="formInput">
-				<div id="calendar">
-					<div class="input-group registration-date-time" style="padding-top:0%;">
+	
 						<input class="form-control" name="fecha_desde" id="fecha-desde" type="date"  onblur="javascript:updateDateFechaDesde();">
-	            	</div>
-	        	</div>  
+	   
 	        	</div>
 			</div>
 	    </div>
@@ -244,13 +240,11 @@ label.error {
 			
 			<div>
 				<div class="formLabel"><form:label path="vigenciaHasta">Vigencia Hasta:</form:label></div>
-				<div style="visibility:hidden;height:0px;"><form:input class="date" path="vigenciaHasta" /></div>
+				<div style="visibility:hidden;height:0px;"><form:input path="vigenciaHasta" /></div>
 				<div class="formInput">
-				<div id="calendar">
-					<div class="input-group registration-date-time" style="padding-top:0%;">
+		
 						<input class="form-control" name="fecha_hasta" id="fecha-hasta" type="date"  onblur="javascript:updateDateFechaHasta();">
-	            	</div>
-	        	</div>  
+	          
 	        	</div>
 			</div>
 	    </div>
@@ -333,9 +327,25 @@ label.error {
 
 <script language="javascript">
 
-	document.getElementById("valido-hasta").value= document.getElementById("validoHasta").value;
-	document.getElementById("fecha-desde").value= document.getElementById("vigenciaDesde").value;
-	document.getElementById("fecha-hasta").value= document.getElementById("vigenciaHasta").value;
+	if(document.getElementById("validoHasta").value=="null"){
+		document.getElementById("valido-hasta").value= "";
+	}else{
+		document.getElementById("valido-hasta").value= document.getElementById("validoHasta").value;
+	}
+	if(document.getElementById("vigenciaDesde").value=="null"){
+		document.getElementById("fecha-desde").value ="";
+	}else{
+		document.getElementById("fecha-desde").value= document.getElementById("vigenciaDesde").value;
+	}
+	if(document.getElementById("vigenciaDesde").value=="null"){
+		document.getElementById("fecha-desde").value= "";
+	}else{
+		document.getElementById("fecha-hasta").value= document.getElementById("vigenciaHasta").value;
+	}
+	
+	
+	
+	
         
      $("#profesional").validate({
     
