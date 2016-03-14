@@ -12,7 +12,6 @@ import org.springframework.stereotype.Repository;
 
 import com.nuova.dto.OrdenAlarmaDTO;
 import com.nuova.model.Paciente;
-import com.nuova.model.PacienteObrasocial;
 
 @Repository
 public class PacienteDAOImpl implements PacienteDAO {
@@ -21,9 +20,9 @@ public class PacienteDAOImpl implements PacienteDAO {
 
     public void add(Paciente paciente) {
         this.sessionFactory.getCurrentSession().save(paciente);
-        for (PacienteObrasocial po : paciente.getPacienteObrasocials()) {
-            this.sessionFactory.getCurrentSession().save(po);
-        }
+        // for (PacienteObrasocial po : paciente.getPacienteObrasocials()) {
+        // this.sessionFactory.getCurrentSession().save(po);
+        // }
     }
 
     public Paciente fin1dPacienteById(Integer pacienteId) {
@@ -44,9 +43,9 @@ public class PacienteDAOImpl implements PacienteDAO {
     }
 
     public void edit(Paciente paciente) {
-        for (PacienteObrasocial po : paciente.getPacienteObrasocials()) {
-            this.sessionFactory.getCurrentSession().saveOrUpdate(po);
-        }
+        // for (PacienteObrasocial po : paciente.getPacienteObrasocials()) {
+        // this.sessionFactory.getCurrentSession().saveOrUpdate(po);
+        // }
         this.sessionFactory.getCurrentSession().saveOrUpdate(paciente);
     }
 

@@ -1,6 +1,6 @@
 package com.nuova.model;
 
-// Generated Dec 17, 2015 7:14:16 PM by Hibernate Tools 3.4.0.CR1
+// Generated Mar 14, 2016 12:41:49 AM by Hibernate Tools 4.3.1
 
 import java.util.Date;
 import java.util.HashSet;
@@ -27,10 +27,6 @@ import javax.persistence.TemporalType;
         , catalog = "nuova")
 public class Paciente implements java.io.Serializable {
 
-    /**
-     * 
-     */
-    private static final long serialVersionUID = 1623880535481351173L;
     private Integer pacienteId;
     private Paciente paciente;
     private String apellido;
@@ -41,18 +37,22 @@ public class Paciente implements java.io.Serializable {
     private String mail;
     private Byte coseguro;
     private Integer dni;
-    private Set<PacienteObrasocial> pacienteObrasocials = new HashSet<PacienteObrasocial>();
-    private Set<Paciente> pacientes = new HashSet<Paciente>();
     private String provincia;
     private Byte parentesco;
     private String zonaAfiliacion;
+    private Integer obrasocialId;
+    private String nroCredencial;
+    private Byte elinidado;
+    private Set<Orden> ordens = new HashSet<Orden>(0);
+    private Set<Paciente> pacientes = new HashSet<Paciente>(0);
 
     public Paciente() {
     }
 
     public Paciente(Paciente paciente, String apellido, String nombre, Date fechaNacimiento, String domicilio,
-            String telefono, String mail, Byte coseguro, Integer dni, Set<PacienteObrasocial> pacienteObrasocials,
-            Set<Paciente> pacientes, String provincia) {
+            String telefono, String mail, Byte coseguro, Integer dni, String provincia, Byte parentesco,
+            String zonaAfiliacion, Integer obrasocialId, String nroCredencial, Byte elinidado, Set<Orden> ordens,
+            Set<Paciente> pacientes) {
         this.paciente = paciente;
         this.apellido = apellido;
         this.nombre = nombre;
@@ -62,7 +62,13 @@ public class Paciente implements java.io.Serializable {
         this.mail = mail;
         this.coseguro = coseguro;
         this.dni = dni;
-        this.pacienteObrasocials = pacienteObrasocials;
+        this.provincia = provincia;
+        this.parentesco = parentesco;
+        this.zonaAfiliacion = zonaAfiliacion;
+        this.obrasocialId = obrasocialId;
+        this.nroCredencial = nroCredencial;
+        this.elinidado = elinidado;
+        this.ordens = ordens;
         this.pacientes = pacientes;
     }
 
@@ -160,24 +166,6 @@ public class Paciente implements java.io.Serializable {
         this.dni = dni;
     }
 
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "paciente")
-    public Set<PacienteObrasocial> getPacienteObrasocials() {
-        return this.pacienteObrasocials;
-    }
-
-    public void setPacienteObrasocials(Set<PacienteObrasocial> pacienteObrasocials) {
-        this.pacienteObrasocials = pacienteObrasocials;
-    }
-
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "paciente")
-    public Set<Paciente> getPacientes() {
-        return this.pacientes;
-    }
-
-    public void setPacientes(Set<Paciente> pacientes) {
-        this.pacientes = pacientes;
-    }
-
     @Column(name = "provincia", length = 156)
     public String getProvincia() {
         return this.provincia;
@@ -196,13 +184,58 @@ public class Paciente implements java.io.Serializable {
         this.parentesco = parentesco;
     }
 
-    @Column(name = "zona_afiliacion")
+    @Column(name = "zona_afiliacion", length = 156)
     public String getZonaAfiliacion() {
-        return zonaAfiliacion;
+        return this.zonaAfiliacion;
     }
 
     public void setZonaAfiliacion(String zonaAfiliacion) {
         this.zonaAfiliacion = zonaAfiliacion;
+    }
+
+    @Column(name = "obrasocial_id")
+    public Integer getObrasocialId() {
+        return this.obrasocialId;
+    }
+
+    public void setObrasocialId(Integer obrasocialId) {
+        this.obrasocialId = obrasocialId;
+    }
+
+    @Column(name = "nro_credencial", length = 64)
+    public String getNroCredencial() {
+        return this.nroCredencial;
+    }
+
+    public void setNroCredencial(String nroCredencial) {
+        this.nroCredencial = nroCredencial;
+    }
+
+    @Column(name = "elinidado")
+    public Byte getElinidado() {
+        return this.elinidado;
+    }
+
+    public void setElinidado(Byte elinidado) {
+        this.elinidado = elinidado;
+    }
+
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "paciente")
+    public Set<Orden> getOrdens() {
+        return this.ordens;
+    }
+
+    public void setOrdens(Set<Orden> ordens) {
+        this.ordens = ordens;
+    }
+
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "paciente")
+    public Set<Paciente> getPacientes() {
+        return this.pacientes;
+    }
+
+    public void setPacientes(Set<Paciente> pacientes) {
+        this.pacientes = pacientes;
     }
 
 }

@@ -249,39 +249,32 @@ label.error {
 	</div>	
 </div>
 
+
 <div class="panel panel-info">
-			<div class="panel-heading">
-				<div class="panel-title">Obra Social</div>
-			</div>
-			<div class="panel-body">
-						<div class="row-fluid">
-							<div class="span9">
-							</div>
-							<div class="span2">
-								<form:select path="obrasocial" style="width:88%; margin-bottom:0px">
-							   		<form:option value="NONE" label="Seleccione Obra Social ..."/>
-							   		<form:options items="${obrasocialList}" itemLabel="nombre" itemValue="obrasocialId" />			    
-								</form:select>
-							</div>
-							<div class="span1">
-								<div style="float:right;"><INPUT type="button" value="Agregar" onclick="addRow('dataTable')" class="btn btn-info"/></div>
-							</div>
-						</div>
-						<div class="row-fluid">
-							<div class="span12">
-									<TABLE id="dataTable" class="table" style="width: 100%; margin-top:0px;">
-								        <TR>
-								            <TD>ID</TD>
-								            <TD>Obra Social</TD>        
-								            <TD style="width: 20%">Nro Credencial</TD>
-								            <TD style="width: 15%">Original/Provisoria</TD>
-								            <td></td>
-								        </TR>
-					    			</TABLE>
-							</div>
-						</div>
-			</div>		
+	<div class="panel-heading">
+		<div class="panel-title">Obra Social</div>
+	</div>
+	<div class="panel-body">
+		<div class="row-fluid">
+			<div class="span4">
+			   <div class="formLabel"><form:label path="obrasocial">Obra Social:</form:label></div>
+        		<div class="formInput">
+        		<form:select path="obrasocial.obrasocialId" style="width:83%; margin-bottom:0px">
+				<form:option value="NONE" label="Seleccione Obra Social ..."/>
+				<form:options items="${obrasocialList}" itemLabel="nombre" itemValue="obrasocialId" />
+				</form:select>
+        		</div>
+			 </div>
+			 
+			 <div class="span4">
+			 	<div class="formLabel"><form:label path="obrasocial.credencial">Credencial:</form:label></div>
+        	 	<div class="formInput"><form:input path="obrasocial.credencial"/></div>
+			 </div>
+		</div>
+						
+	</div>		
 </div>
+
 <div class="panel panel-info">
 			<div class="panel-body">
 				<div class="row-fluid">

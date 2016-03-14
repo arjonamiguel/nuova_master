@@ -210,37 +210,35 @@ label.error {
 		 	</div>
 	 	</div>
 	 </div>
+	
 	 
-	 <div class="panel panel-info">
-	 	<div class="panel-heading">
-	 		<div class="panel-title">Obra Social</div>
-	 	</div>
-	 	<div style="padding-top:3%;" class="panel-body">
-	 		<div class="row-fluid">
-	 			<div class="span12">
-	 					    <TABLE id="tb_paciente_obrasocial" class="table table-striped custab" style="width: 100%; margin: 1% 0">
-	        				<TR>
-					            <TD>Id</TD>
-					            <TD>Obra Social</TD>        
-					            <TD>Nro Credencial</TD>
-					            <TD>Original/Provisoria</TD>
-					        </TR>
-					        
-					        <% int index = 0;%>
-					        <c:forEach items="${paciente.obrasocialList}" var="po" varStatus="loop" >
-					    	<tr>
-						    	
-						        <td>${po.obrasocialId}<input type="hidden" name = "obrasocialListEdit[<%=index%>].obrasocialId" value = "${po.obrasocialId}" /> </td>
-						        <td>${po.nombre}</td>        
-						        <td><input type="text" value="${po.credencial}" name = "obrasocialListEdit[<%=index%>].credencial"></td>
-						        <td> <input type="checkbox" name="obrasocialListEdit[<%=index%>].original" ${po.original} class="checkbox"/></td>
-						        <%index++;%>
-					    	</tr>
-							</c:forEach>
-	   						 </TABLE>
-	 			</div>
-	 		</div>
-	 	<div class="row-fluid">
+<div class="panel panel-info">
+	<div class="panel-heading">
+		<div class="panel-title">Obra Social</div>
+	</div>
+	<div class="panel-body">
+		<div class="row-fluid">
+			<div class="span4">
+			   <div class="formLabel"><form:label path="obrasocial">Obra Social:</form:label></div>
+        		<div class="formInput">
+        		<form:select path="obrasocial.obrasocialId" style="width:83%; margin-bottom:0px">
+				<form:option value="-1" label="Seleccione Obra Social ..."/>
+				<form:options items="${obrasocialList}" itemLabel="nombre" itemValue="obrasocialId" />
+				</form:select>
+        		</div>
+			 </div>
+			 
+			 <div class="span4">
+			 	<div class="formLabel"><form:label path="obrasocial.credencial">Credencial:</form:label></div>
+        	 	<div class="formInput"><form:input path="obrasocial.credencial"/></div>
+			 </div>
+		</div>
+						
+	</div>		
+</div>
+	 
+	
+	 <div class="row-fluid">
 			<div class="span8">
 			</div>
 			<div class="span4">
@@ -262,7 +260,7 @@ label.error {
 function callExistDni(dni) {
 	var retorno;
 	$.ajax({
-		url : "ajaxGetExistDni?dni=" + dni,
+		url : "/nuova/ajaxGetExistDni?dni=" + dni,
 		type : "GET",
 		contentType : "application/json; charset=utf-8",
 		//    data: jsonString, //Stringified Json Object

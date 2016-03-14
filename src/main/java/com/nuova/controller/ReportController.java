@@ -32,7 +32,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.google.common.io.ByteSource;
 import com.nuova.dto.EspecialidadDTO;
-import com.nuova.dto.ObraSocialDTO;
 import com.nuova.dto.ObservacionesDTO;
 import com.nuova.dto.OrdenDTO;
 import com.nuova.dto.OrdenPracticaDTO;
@@ -46,7 +45,6 @@ import com.nuova.model.Orden;
 import com.nuova.model.OrdenPractica;
 import com.nuova.model.OrdenWorkflow;
 import com.nuova.model.Paciente;
-import com.nuova.model.PacienteObrasocial;
 import com.nuova.model.Practica;
 import com.nuova.model.Profesional;
 import com.nuova.model.ProfesionalEspecialidad;
@@ -283,14 +281,14 @@ public class ReportController {
         //
         // }
 
-        for (PacienteObrasocial po : p.getPacienteObrasocials()) {
-            ObraSocialDTO o = new ObraSocialDTO(po.getObrasocial().getObrasocialId(), po.getObrasocial().getNombre(),
-                    po.getNroCredencial(), po.getProvisorio() == 1 ? "checked" : "");
-            dto.getObrasocialList().add(o);
-            dto.setObrasocial(o);
-            dto.setOriginal(po.getProvisorio().intValue() == 1 ? true : false);
-            break;
-        }
+        // for (PacienteObrasocial po : p.getPacienteObrasocials()) {
+        // ObraSocialDTO o = new ObraSocialDTO(po.getObrasocial().getObrasocialId(), po.getObrasocial().getNombre(),
+        // po.getNroCredencial(), po.getProvisorio() == 1 ? "checked" : "");
+        // dto.getObrasocialList().add(o);
+        // dto.setObrasocial(o);
+        // dto.setOriginal(po.getProvisorio().intValue() == 1 ? true : false);
+        // break;
+        // }
 
         for (Paciente ad : p.getPacientes()) {
             PacienteDTO dtoad = new PacienteDTO();
@@ -307,10 +305,10 @@ public class ReportController {
             // if (ad.getTitular() != null) {
             // dtoad.setTitular(ad.getTitular().equals(1) ? true : false);
             // }
-            for (PacienteObrasocial poo : ad.getPacienteObrasocials()) {
-                dtoad.setCrdencial(poo.getNroCredencial());
-                break;
-            }
+            // for (PacienteObrasocial poo : ad.getPacienteObrasocials()) {
+            // dtoad.setCrdencial(poo.getNroCredencial());
+            // break;
+            // }
 
             dto.getAdherentes().add(dtoad);
         }

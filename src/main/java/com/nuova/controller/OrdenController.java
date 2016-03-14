@@ -30,7 +30,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.nuova.dto.ComboItemDTO;
 import com.nuova.dto.EspecialidadDTO;
-import com.nuova.dto.ObraSocialDTO;
 import com.nuova.dto.ObservacionesDTO;
 import com.nuova.dto.OrdenDTO;
 import com.nuova.dto.OrdenPracticaDTO;
@@ -43,7 +42,6 @@ import com.nuova.dto.ProfesionalEspecialidadDTO;
 import com.nuova.model.Caja;
 import com.nuova.model.CajaOrden;
 import com.nuova.model.Especialidad;
-import com.nuova.model.Obrasocial;
 import com.nuova.model.Observaciones;
 import com.nuova.model.Orden;
 import com.nuova.model.OrdenPractica;
@@ -51,7 +49,6 @@ import com.nuova.model.OrdenProfesional;
 import com.nuova.model.OrdenTipo;
 import com.nuova.model.OrdenWorkflow;
 import com.nuova.model.Paciente;
-import com.nuova.model.PacienteObrasocial;
 import com.nuova.model.Practica;
 import com.nuova.model.Profesional;
 import com.nuova.model.ProfesionalEspecialidad;
@@ -87,12 +84,17 @@ public class OrdenController {
     @Autowired
     CajaManager cajaManager;
 
-    private String rechazada = "<span class='label-important' style='color:white;'>RECHAZADA</span>";
-    private String incompleta = "<span class='label-warning' style='color:white;'>INCOMPLETA</span>";
-    private String autorizada = " <span class='label-success' style='color:white;'>AUTORIZADA</span>";
-    private String pendiente = "<span class='label-warning' style='color:white;'>PENDIETE</span>";
-    private String cerrada = "<span class='label-warning' style='color:white;'>CERRADA</span>";
-    private String enobservacion = "<span class='label-warning' style='color:white;'>EN OBSERVACION</span>";
+    private String iniciada = " <span class='label-success' style='color:white;'>INICIADA</span>";
+
+    private String autorizacion_directa = "<span class='label-important' style='color:white;'>AUTORIZACION DIRECTA</span>";
+    private String pendiente_afiliaciones = "<span class='label-warning' style='color:white;'>PENDIENTE AFILIACIONES</span>";
+    private String autorizada_por_afiliaciones = " <span class='label-success' style='color:white;'>AUTORIZADA POR AFILIACIONES</span>";
+    private String rechazada_por_afiliaciones = "<span class='label-warning' style='color:white;'>RECHAZADA POR AFILIACIONES</span>";
+    private String pendiente_auditoria = "<span class='label-warning' style='color:white;'>PENDIENTE AUDITORIA</span>";
+    private String autorizada_por_auditoria = "<span class='label-warning' style='color:white;'>AUTORIZADA POR AUDITORIA</span>";
+    private String rechazada_por_auditoria = "<span class='label-warning' style='color:white;'>RECHAZADA POR AUDITORIA</span>";
+    private String rechazada = "<span class='label-warning' style='color:white;'>RECHAZADA</span>";
+    private String anulado = "<span class='label-warning' style='color:white;'>ANULADO</span>";
 
     @RequestMapping(value = ConstantControllers.REDIRECT_ORDEN, method = RequestMethod.POST)
     public String redirectOrden(ModelMap map,
@@ -237,18 +239,28 @@ public class OrdenController {
                     new Observaciones(orden, ordenDto.getObservacion(), user.getUsername(), new Date()));
         }
 
-        // Caja
-        Caja caja = new Caja();
-        caja.setConcepto(Util.CONCEPTO_INGRESO_ORDENCONSULTA);
-        caja.setIngreso(ordenDto.getMonto());
-        caja.setEgreso(0.00);
-        caja.setFecha(new Date());
+        if (ordenDto.getOrdenTipo().getOrdenTipoId().intValue() == 1
+                || ordenDto.getOrdenTipo().getOrdenTipoId().intValue() == 2) {
+            // Caja
+            Caja caja = new Caja();
+            if (ordenDto.getOrdenTipo().getOrdenTipoId().intValue() == 1) {
+                caja.setConcepto(Util.CONCEPTO_INGRESO_ORDENCONSULTA);
+            }
 
-        cajaManager.add(caja);
-        CajaOrden cajaorden = new CajaOrden(caja, orden);
-        Set<CajaOrden> cajaordenes = new HashSet<CajaOrden>();
-        cajaordenes.add(cajaorden);
-        orden.setCajaOrdens(cajaordenes);
+            if (ordenDto.getOrdenTipo().getOrdenTipoId().intValue() == 2) {
+                caja.setConcepto(Util.CONCEPTO_INGRESO_ORDENCONSULTAODONTOLOGICA);
+            }
+
+            caja.setIngreso(ordenDto.getMonto());
+            caja.setEgreso(0.00);
+            caja.setFecha(new Date());
+
+            cajaManager.add(caja);
+            CajaOrden cajaorden = new CajaOrden(caja, orden);
+            Set<CajaOrden> cajaordenes = new HashSet<CajaOrden>();
+            cajaordenes.add(cajaorden);
+            orden.setCajaOrdens(cajaordenes);
+        }
 
         // Orden
         ordenManager.add(orden);
@@ -365,20 +377,20 @@ public class OrdenController {
         paciente.setTelefono(dto.getTelefono());
         paciente.setProvincia(dto.getProvincia());
 
-        for (ObraSocialDTO os : dto.getObrasocialListEdit()) {
-            if (os.getObrasocialId() != null) {
-                Obrasocial obrasocial = obrasocialManager.findObraSocialById(os.getObrasocialId());
-                PacienteObrasocial po = new PacienteObrasocial();
-                po.setObrasocial(obrasocial);
-                po.setFecha(new Date());
-                po.setNroCredencial(os.getCredencial());
-                Byte isOriginalCredential = os.getOriginal().equals("on") ? new Byte("1") : new Byte("0");
-                po.setProvisorio(isOriginalCredential);
-                po.setPaciente(paciente);
-
-                paciente.getPacienteObrasocials().add(po);
-            }
-        }
+        // for (ObraSocialDTO os : dto.getObrasocialListEdit()) {
+        // if (os.getObrasocialId() != null) {
+        // Obrasocial obrasocial = obrasocialManager.findObraSocialById(os.getObrasocialId());
+        // PacienteObrasocial po = new PacienteObrasocial();
+        // po.setObrasocial(obrasocial);
+        // po.setFecha(new Date());
+        // po.setNroCredencial(os.getCredencial());
+        // Byte isOriginalCredential = os.getOriginal().equals("on") ? new Byte("1") : new Byte("0");
+        // po.setProvisorio(isOriginalCredential);
+        // po.setPaciente(paciente);
+        //
+        // paciente.getPacienteObrasocials().add(po);
+        // }
+        // }
 
         return paciente;
 
@@ -402,14 +414,20 @@ public class OrdenController {
                     .fin1dPacienteById(p.getPaciente().getPacienteId())));
         }
 
-        for (PacienteObrasocial po : p.getPacienteObrasocials()) {
-            ObraSocialDTO o = new ObraSocialDTO(po.getObrasocial().getObrasocialId(), po.getObrasocial().getNombre(),
-                    po.getNroCredencial(), po.getProvisorio() == 1 ? "checked" : "");
-            dto.getObrasocialList().add(o);
-            dto.setObrasocial(o);
-            dto.setOriginal(po.getProvisorio().intValue() == 1 ? true : false);
-            break;
-        }
+        // Obrasocial os = obrasocialManager.findObraSocialById(p.getObrasocialId());
+        // dto.setCrdencial(p.getNroCredencial());
+        // ObraSocialDTO o = new ObraSocialDTO();
+        // o.setNombre(os.getNombre());
+        // o.setObrasocialId(os.getObrasocialId());
+        // dto.setObrasocial(o);
+        // for (PacienteObrasocial po : p.getPacienteObrasocials()) {
+        // ObraSocialDTO o = new ObraSocialDTO(po.getObrasocial().getObrasocialId(), po.getObrasocial().getNombre(),
+        // po.getNroCredencial(), po.getProvisorio() == 1 ? "checked" : "");
+        // dto.getObrasocialList().add(o);
+        // dto.setObrasocial(o);
+        // dto.setOriginal(po.getProvisorio().intValue() == 1 ? true : false);
+        // break;
+        // }
 
         for (Paciente ad : p.getPacientes()) {
             PacienteDTO dtoad = new PacienteDTO();
@@ -424,10 +442,10 @@ public class OrdenController {
             dtoad.setTelefono(ad.getTelefono());
             dtoad.setDni(ad.getDni());
 
-            for (PacienteObrasocial poo : ad.getPacienteObrasocials()) {
-                dtoad.setCrdencial(poo.getNroCredencial());
-                break;
-            }
+            // for (PacienteObrasocial poo : ad.getPacienteObrasocials()) {
+            // dtoad.setCrdencial(poo.getNroCredencial());
+            // break;
+            // }
 
             dto.getAdherentes().add(dtoad);
         }
@@ -498,27 +516,39 @@ public class OrdenController {
             dto.setProfesionalId(dto.getProfesional().getProfesionalId());
         }
 
-        if (orden.getEstado() != null && orden.getEstado().equals(ConstantOrdenEstado.AUTORIZADA)) {
-            dto.setEtiqestado(autorizada);
+        if (orden.getEstado() != null && orden.getEstado().equals(ConstantOrdenEstado.INICIADA)) {
+            dto.setEtiqestado(iniciada);
         }
-        if (orden.getEstado() != null && orden.getEstado().equals(ConstantOrdenEstado.CERRADA)) {
-            dto.setEtiqestado(cerrada);
+        if (orden.getEstado() != null && orden.getEstado().equals(ConstantOrdenEstado.ANULADO)) {
+            dto.setEtiqestado(anulado);
         }
-        if (orden.getEstado() != null && orden.getEstado().equals(ConstantOrdenEstado.EN_OBSERVACION)) {
-            dto.setEtiqestado(enobservacion);
+        if (orden.getEstado() != null && orden.getEstado().equals(ConstantOrdenEstado.AUTORIZACION_DIRECTA)) {
+            dto.setEtiqestado(autorizacion_directa);
         }
-        if (orden.getEstado() != null && orden.getEstado().equals(ConstantOrdenEstado.INCOMPLETA)) {
-            dto.setEtiqestado(incompleta);
+        if (orden.getEstado() != null && orden.getEstado().equals(ConstantOrdenEstado.AUTORIZADA_POR_AFILIACIONES)) {
+            dto.setEtiqestado(autorizada_por_afiliaciones);
         }
-        if (orden.getEstado() != null && orden.getEstado().equals(ConstantOrdenEstado.PENDIENTE)) {
-            dto.setEtiqestado(pendiente);
+        if (orden.getEstado() != null && orden.getEstado().equals(ConstantOrdenEstado.AUTORIZADA_POR_AUDITORIA)) {
+            dto.setEtiqestado(autorizada_por_auditoria);
+        }
+        if (orden.getEstado() != null && orden.getEstado().equals(ConstantOrdenEstado.PENDIENTE_AFILIACIONES)) {
+            dto.setEtiqestado(pendiente_afiliaciones);
+        }
+        if (orden.getEstado() != null && orden.getEstado().equals(ConstantOrdenEstado.PENDIENTE_AUDITORIA)) {
+            dto.setEtiqestado(pendiente_auditoria);
         }
         if (orden.getEstado() != null && orden.getEstado().equals(ConstantOrdenEstado.RECHAZADA)) {
             dto.setEtiqestado(rechazada);
         }
+        if (orden.getEstado() != null && orden.getEstado().equals(ConstantOrdenEstado.RECHAZADA_POR_AFILIACIONES)) {
+            dto.setEtiqestado(rechazada_por_afiliaciones);
+        }
+        if (orden.getEstado() != null && orden.getEstado().equals(ConstantOrdenEstado.RECHAZADA_POR_AUDITORIA)) {
+            dto.setEtiqestado(rechazada_por_auditoria);
+        }
 
         // boton paciente
-        String botonpaciente = 
+        String botonpaciente =
                 dto.getPaciente().getApellido().toUpperCase() + ", " + dto.getPaciente().getNombre();
         dto.setBotonpaciente(botonpaciente);
 
@@ -565,7 +595,6 @@ public class OrdenController {
         }
 
         Collections.sort(retorno, new Comparator<ObservacionesDTO>() {
-            @Override
             public int compare(ObservacionesDTO a1, ObservacionesDTO a2) {
                 return a2.getFecha().compareTo(a1.getFecha());
             }
@@ -584,7 +613,6 @@ public class OrdenController {
         }
 
         Collections.sort(retorno, new Comparator<OrdenWorkflowDTO>() {
-            @Override
             public int compare(OrdenWorkflowDTO a1, OrdenWorkflowDTO a2) {
                 return a2.getFecha().compareTo(a1.getFecha());
             }
@@ -726,7 +754,7 @@ public class OrdenController {
         }
         Profesional profesional = new Profesional(p.getApellido(), p.getNombre(), p.getTelefono(), p.getMatricula(),
                 p.getRegistroNacional(), p.getTituloProfesional(), new Byte(p.getHabilitacionSiprosa()),
-                fechaHabilitacion, null, null, null, null, null, null, null, null, null, null, null);
+                fechaHabilitacion, null, null, null, null, null, null, null, null, null, null, null, null);
         profesional.setProfesionalId(p.getProfesionalId());
 
         for (Integer id : p.getEspecialidadList()) {

@@ -110,14 +110,14 @@ public class Util {
         obrasocial.setTelefono(dto.getTelefono());
         return obrasocial;
     }
-    
+
     static public Calendario transformDtoToCalendario(CalendarDTO dto) {
         Calendario calendario = new Calendario();
         calendario.setCalendarioId(dto.getId());
         calendario.setResource(dto.getResourceId());
         calendario.setStart(parseToDate(dto.getStart()));
         calendario.setEnd(parseToDate(dto.getEnd()));
-        calendario.setTitle(dto.getTitle());     
+        calendario.setTitle(dto.getTitle());
         return calendario;
     }
 
@@ -156,24 +156,37 @@ public class Util {
     }
 
     static public String getEstadoInicial(OrdenDTO dto) {
-        String retorno = "";
-        if (dto.isReqCredecial() && dto.isReqOrdenMedico() && (dto.isReqMonotributista() || dto.isReqReciboSueldo())) {
-            retorno = ConstantOrdenEstado.PENDIENTE;
-        } else {
-            retorno = ConstantOrdenEstado.INCOMPLETA;
-        }
+        String retorno = ConstantOrdenEstado.INICIADA;
+        // if (dto.isReqCredecial() && dto.isReqOrdenMedico() && (dto.isReqMonotributista() || dto.isReqReciboSueldo()))
+        // {
+        // retorno = ConstantOrdenEstado.PENDIENTE;
+        // } else {
+        // retorno = ConstantOrdenEstado.INCOMPLETA;
+        // }
 
         return retorno;
     }
 
     static public List<ComboItemDTO> getEstadosList() {
         List<ComboItemDTO> retorno = new ArrayList<ComboItemDTO>();
-        retorno.add(new ComboItemDTO(ConstantOrdenEstado.PENDIENTE, ConstantOrdenEstado.PENDIENTE));
-        retorno.add(new ComboItemDTO(ConstantOrdenEstado.INCOMPLETA, ConstantOrdenEstado.INCOMPLETA));
-        retorno.add(new ComboItemDTO(ConstantOrdenEstado.AUTORIZADA, ConstantOrdenEstado.AUTORIZADA));
-        retorno.add(new ComboItemDTO(ConstantOrdenEstado.EN_OBSERVACION, ConstantOrdenEstado.EN_OBSERVACION));
-        retorno.add(new ComboItemDTO(ConstantOrdenEstado.CERRADA, ConstantOrdenEstado.CERRADA));
-        retorno.add(new ComboItemDTO(ConstantOrdenEstado.RECHAZADA, ConstantOrdenEstado.RECHAZADA));
+        retorno.add(new ComboItemDTO(ConstantOrdenEstado.AUTORIZACION_DIRECTA,
+                ConstantOrdenEstado.AUTORIZACION_DIRECTA));
+        retorno.add(new ComboItemDTO(ConstantOrdenEstado.PENDIENTE_AFILIACIONES,
+                ConstantOrdenEstado.PENDIENTE_AFILIACIONES));
+        retorno.add(new ComboItemDTO(ConstantOrdenEstado.AUTORIZADA_POR_AFILIACIONES,
+                ConstantOrdenEstado.AUTORIZADA_POR_AFILIACIONES));
+        retorno.add(new ComboItemDTO(ConstantOrdenEstado.RECHAZADA_POR_AFILIACIONES,
+                ConstantOrdenEstado.RECHAZADA_POR_AFILIACIONES));
+        retorno.add(new ComboItemDTO(ConstantOrdenEstado.PENDIENTE_AUDITORIA,
+                ConstantOrdenEstado.PENDIENTE_AUDITORIA));
+        retorno.add(new ComboItemDTO(ConstantOrdenEstado.AUTORIZADA_POR_AUDITORIA,
+                ConstantOrdenEstado.AUTORIZADA_POR_AUDITORIA));
+        retorno.add(new ComboItemDTO(ConstantOrdenEstado.RECHAZADA_POR_AUDITORIA,
+                ConstantOrdenEstado.RECHAZADA_POR_AUDITORIA));
+        retorno.add(new ComboItemDTO(ConstantOrdenEstado.RECHAZADA,
+                ConstantOrdenEstado.RECHAZADA));
+        retorno.add(new ComboItemDTO(ConstantOrdenEstado.ANULADO,
+                ConstantOrdenEstado.ANULADO));
         return retorno;
     }
 
