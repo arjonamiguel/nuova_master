@@ -28,24 +28,24 @@ public class PracticaDAOImpl implements PracticaDAO {
 
     @SuppressWarnings("unchecked")
     public List<Nomenclador> findAll() {
-        return this.sessionFactory.getCurrentSession().createQuery("FROM Practica").list();
+        return this.sessionFactory.getCurrentSession().createQuery("FROM Nomenclador").list();
     }
 
     public void edit(Nomenclador practica) {
         this.sessionFactory.getCurrentSession().saveOrUpdate(practica);
     }
 
-    public void deletePractica(Integer practicaId) {
+    public void deletePractica(Integer nomencladorId) {
         this.sessionFactory.getCurrentSession().
-                createQuery(" DELETE FROM Practica p "
-                        + " WHERE p.practicaId = :practicaId ").
-                setInteger("practicaId", practicaId).
+                createQuery(" DELETE FROM Nomenclador p "
+                        + " WHERE p.nomencladorId = :nomencladorId ").
+                setInteger("nomencladorId", nomencladorId).
                 executeUpdate();
     }
 
     public Page<Nomenclador> findPracticaByPageable(Pageable pageable) {
         Query query = this.sessionFactory.getCurrentSession().createQuery(
-                "FROM Practica p ORDER BY p.practicaId DESC");
+                "FROM Nomenclador p ORDER BY p.nomencladorId DESC");
         // query.setFirstResult(pageable.getOffset());
         // query.setMaxResults(pageable.getPageNumber());
         List<Nomenclador> result = query.list();
@@ -54,7 +54,7 @@ public class PracticaDAOImpl implements PracticaDAO {
 
     public Page<Nomenclador> findPracticaBySearch(String search, Pageable pageable) {
         Query query = this.sessionFactory.getCurrentSession()
-                .createQuery("FROM Practica p "
+                .createQuery("FROM Nomenclador p "
                         + " WHERE upper(p.nombre) LIKE '%" + search.toUpperCase() + "%' "
                         + " OR upper(p.codigo) LIKE '%" + search.toUpperCase() + "%' "
                         + " ORDER BY p.codigo ");
