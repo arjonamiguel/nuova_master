@@ -10,7 +10,7 @@
 <div class="row" style="padding-left:2%;height:60px;">
         <hr class="hr-primary" />
         <ol id="breadcrumbList"class="breadcrumb bread-primary ">
-          <button id="breadButton" href="" class="btn btn-info" onclick="javascript:window.location.href = '/nuova'"><i class="ico icon-home"></i>Home</button>
+          <button id="breadButton" href="" class="btn btn-info" onclick="javascript:window.location.href = '/nuova'"><i class="ico icon-home"></i>&nbsp;Pagina de Inicio</button>
         </ol>
 </div>
 
