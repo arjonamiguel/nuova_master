@@ -43,7 +43,12 @@
 		if($("#monto").val()=="NONE"){
 			$("#message").css("visibility","visible");
 			return false;
-		}else if($(".cb-icon-check")[0].style.display!="none" && $(".cb-icon-check")[1].style.display!="none"){
+		}else if($("#profesionalId").val()=="NONE"){
+				$("#message").text("Debe Seleccionar un Profesional");
+				$("#message").css("visibility","visible");
+				return false;
+		}
+		else if($(".cb-icon-check")[0].style.display!="none" && $(".cb-icon-check")[1].style.display!="none"){
 			$("#message2").css("visibility","hidden");
 			if(checkBoxSelectedFlag=="false"){
 				$("#message2").text("Falta chequear el penultimo o ultimo requisito");
@@ -196,7 +201,7 @@
 												<tr>		
 													<td style="width: 15%"><form:label path="profesionalId">Profesional</form:label></td>
 													<td  style="text-align:left" colspan="5">			
-													    <form:select path="profesionalId" style="width:30%; margin-bottom:0px">
+													    <form:select path="profesionalId" style="width:30%; margin-bottom:0px" onchange="hideMessage()">
 															   <form:option value="NONE" label="Seleccione Profesional ..."/>
 															   <form:options items="${profesionales}" itemLabel="value" itemValue="id" />			    
 															</form:select>
