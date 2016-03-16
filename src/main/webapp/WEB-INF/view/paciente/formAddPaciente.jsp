@@ -319,7 +319,8 @@ label.error {
         rules: {
         	 dni: {
                 required: true,
-                minlength: 7
+                minlength: 7,
+                maxlength:10
             },
             apellido: "required",
             nombre: "required",
@@ -335,7 +336,8 @@ label.error {
         messages: {
         	 dni: {
                 required: "Ingrese DNI",
-                minlength: "DNI debe tener al menos 7 caracteres de largo"
+                minlength: "DNI debe tener al menos 7 caracteres de largo",
+                maxlength: "DNI deber ser menor a 10 caracteres de largo"
             },
             apellido: "Ingrese apellido",
             nombre: "Ingrese nombre",
