@@ -10,28 +10,28 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
 
-import com.nuova.model.Practica;
+import com.nuova.model.Nomenclador;
 
 @Repository
 public class PracticaDAOImpl implements PracticaDAO {
     @Autowired
     private SessionFactory sessionFactory;
 
-    public void add(Practica practica) {
+    public void add(Nomenclador practica) {
         this.sessionFactory.getCurrentSession().save(practica);
     }
 
-    public Practica findPracticaById(Integer practicaId) {
-        return (Practica) this.sessionFactory.
-                getCurrentSession().get(Practica.class, practicaId);
+    public Nomenclador findPracticaById(Integer practicaId) {
+        return (Nomenclador) this.sessionFactory.
+                getCurrentSession().get(Nomenclador.class, practicaId);
     }
 
     @SuppressWarnings("unchecked")
-    public List<Practica> findAll() {
+    public List<Nomenclador> findAll() {
         return this.sessionFactory.getCurrentSession().createQuery("FROM Practica").list();
     }
 
-    public void edit(Practica practica) {
+    public void edit(Nomenclador practica) {
         this.sessionFactory.getCurrentSession().saveOrUpdate(practica);
     }
 
@@ -43,16 +43,16 @@ public class PracticaDAOImpl implements PracticaDAO {
                 executeUpdate();
     }
 
-    public Page<Practica> findPracticaByPageable(Pageable pageable) {
+    public Page<Nomenclador> findPracticaByPageable(Pageable pageable) {
         Query query = this.sessionFactory.getCurrentSession().createQuery(
                 "FROM Practica p ORDER BY p.practicaId DESC");
         // query.setFirstResult(pageable.getOffset());
         // query.setMaxResults(pageable.getPageNumber());
-        List<Practica> result = query.list();
-        return new PageImpl<Practica>(result, pageable, result.size());
+        List<Nomenclador> result = query.list();
+        return new PageImpl<Nomenclador>(result, pageable, result.size());
     }
 
-    public Page<Practica> findPracticaBySearch(String search, Pageable pageable) {
+    public Page<Nomenclador> findPracticaBySearch(String search, Pageable pageable) {
         Query query = this.sessionFactory.getCurrentSession()
                 .createQuery("FROM Practica p "
                         + " WHERE upper(p.nombre) LIKE '%" + search.toUpperCase() + "%' "
@@ -60,8 +60,8 @@ public class PracticaDAOImpl implements PracticaDAO {
                         + " ORDER BY p.codigo ");
         // query.setFirstResult(pageable.getOffset());
         // query.setMaxResults(pageable.getPageNumber());
-        List<Practica> result = query.list();
-        return new PageImpl<Practica>(result, pageable, result.size());
+        List<Nomenclador> result = query.list();
+        return new PageImpl<Nomenclador>(result, pageable, result.size());
     }
 
 }

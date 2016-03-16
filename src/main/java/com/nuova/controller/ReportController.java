@@ -40,12 +40,12 @@ import com.nuova.dto.PacienteDTO;
 import com.nuova.dto.ProfesionalDTO;
 import com.nuova.dto.ProfesionalEspecialidadDTO;
 import com.nuova.model.Especialidad;
+import com.nuova.model.Nomenclador;
 import com.nuova.model.Observaciones;
 import com.nuova.model.Orden;
 import com.nuova.model.OrdenPractica;
 import com.nuova.model.OrdenWorkflow;
 import com.nuova.model.Paciente;
-import com.nuova.model.Practica;
 import com.nuova.model.Profesional;
 import com.nuova.model.ProfesionalEspecialidad;
 import com.nuova.service.EspecialidadManager;
@@ -319,11 +319,11 @@ public class ReportController {
     private List<OrdenPracticaDTO> getPracticaDto(Set<OrdenPractica> list) {
         List<OrdenPracticaDTO> retorno = new ArrayList<OrdenPracticaDTO>(0);
         for (OrdenPractica op : list) {
-            Practica p = op.getPractica();
+            Nomenclador p = op.getNomenclador();
             p.setNombre("[" + p.getCodigo() + "]-" + p.getNombre());
             Orden o = op.getOrden();
             // PracticaDTO dto = new PracticaDTO(p.getPracticaId(), "[" + p.getCodigo() + "]-" + p.getNombre());
-            OrdenPracticaDTO dto = new OrdenPracticaDTO(o.getOrdenId(), p.getNombre(), p.getPracticaId());
+            OrdenPracticaDTO dto = new OrdenPracticaDTO(o.getOrdenId(), p.getNombre(), p.getNomencladorId());
             dto.setOrddenPracticaId(op.getOrddenPracticaId());
             retorno.add(dto);
         }

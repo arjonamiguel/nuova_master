@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.nuova.dto.PracticaDTO;
-import com.nuova.model.Practica;
+import com.nuova.model.Nomenclador;
 import com.nuova.service.PracticaManager;
 import com.nuova.utils.ConstantControllers;
 import com.nuova.utils.ConstantRedirect;
@@ -95,9 +95,9 @@ public class PracticaController {
         // Sort sort = new Sort(Sort.Direction.DESC, "creationDate");
         Pageable pageable = new PageRequest(start, limit);
 
-        Page<Practica> prestadores = practicaManager.findPracticaByPageable(pageable);
+        Page<Nomenclador> prestadores = practicaManager.findPracticaByPageable(pageable);
         List<PracticaDTO> dtos = new ArrayList<PracticaDTO>();
-        for (Practica p : prestadores) {
+        for (Nomenclador p : prestadores) {
             dtos.add(transformPrestadoresToDto(p));
         }
 
@@ -114,27 +114,27 @@ public class PracticaController {
         // Sort sort = new Sort(Sort.Direction.DESC, "creationDate");
         Pageable pageable = new PageRequest(start, limit);
 
-        Page<Practica> prestadores = practicaManager.findPracticaBySearch(search, pageable);
+        Page<Nomenclador> prestadores = practicaManager.findPracticaBySearch(search, pageable);
         List<PracticaDTO> dtos = new ArrayList<PracticaDTO>();
-        for (Practica p : prestadores) {
+        for (Nomenclador p : prestadores) {
             dtos.add(transformPrestadoresToDto(p));
         }
 
         return new PageImpl<PracticaDTO>(dtos, pageable, prestadores.getTotalElements());
     }
 
-    private PracticaDTO transformPrestadoresToDto(Practica p) {
+    private PracticaDTO transformPrestadoresToDto(Nomenclador p) {
         PracticaDTO retorno = new PracticaDTO();
         retorno.setNombre(p.getNombre());
-        retorno.setPracticaId(p.getPracticaId());
+        retorno.setPracticaId(p.getNomencladorId());
         retorno.setCodigo(p.getCodigo());
         return retorno;
     }
 
-    private Practica transformDtoToPrestadores(PracticaDTO dto) {
-        Practica retorno = new Practica();
+    private Nomenclador transformDtoToPrestadores(PracticaDTO dto) {
+        Nomenclador retorno = new Nomenclador();
         retorno.setNombre(dto.getNombre());
-        retorno.setPracticaId(dto.getPracticaId());
+        retorno.setNomencladorId(dto.getPracticaId());
         retorno.setCodigo(dto.getCodigo());
         return retorno;
     }

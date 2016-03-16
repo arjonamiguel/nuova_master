@@ -5,21 +5,21 @@ import java.util.List;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
-import com.nuova.model.Practica;
+import com.nuova.model.Nomenclador;
 
 public interface PracticaDAO {
-    public void add(Practica practica);
+    public void add(Nomenclador practica);
 
-    public Practica findPracticaById(Integer practicaId);
+    public Nomenclador findPracticaById(Integer practicaId);
 
-    public List<Practica> findAll();
+    public List<Nomenclador> findAll();
 
-    public void edit(Practica practica);
+    public void edit(Nomenclador practica);
 
     public void deletePractica(Integer practicaId);
 
-    public Page<Practica> findPracticaByPageable(Pageable pageable);
+    public Page<Nomenclador> findPracticaByPageable(Pageable pageable);
 
-    public Page<Practica> findPracticaBySearch(String search, Pageable pageable);
+    public Page<Nomenclador> findPracticaBySearch(String search, Pageable pageable);
 
 }

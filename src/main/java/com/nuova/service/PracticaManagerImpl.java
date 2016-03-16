@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.nuova.dao.PracticaDAO;
-import com.nuova.model.Practica;
+import com.nuova.model.Nomenclador;
 
 @Service
 public class PracticaManagerImpl implements PracticaManager {
@@ -17,22 +17,22 @@ public class PracticaManagerImpl implements PracticaManager {
     PracticaDAO practicaDAO;
 
     @Transactional
-    public void add(Practica practica) {
+    public void add(Nomenclador practica) {
         practicaDAO.add(practica);
     }
 
     @Transactional
-    public Practica findPracticaById(Integer practicaId) {
+    public Nomenclador findPracticaById(Integer practicaId) {
         return practicaDAO.findPracticaById(practicaId);
     }
 
     @Transactional
-    public List<Practica> findAll() {
+    public List<Nomenclador> findAll() {
         return practicaDAO.findAll();
     }
 
     @Transactional
-    public void edit(Practica practica) {
+    public void edit(Nomenclador practica) {
         practicaDAO.edit(practica);
     }
 
@@ -42,12 +42,12 @@ public class PracticaManagerImpl implements PracticaManager {
     }
 
     @Transactional
-    public Page<Practica> findPracticaByPageable(Pageable pageable) {
+    public Page<Nomenclador> findPracticaByPageable(Pageable pageable) {
         return practicaDAO.findPracticaByPageable(pageable);
     }
 
     @Transactional
-    public Page<Practica> findPracticaBySearch(String search, Pageable pageable) {
+    public Page<Nomenclador> findPracticaBySearch(String search, Pageable pageable) {
         return practicaDAO.findPracticaBySearch(search, pageable);
     }
 

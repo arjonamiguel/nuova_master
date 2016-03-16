@@ -14,9 +14,9 @@ import com.nuova.dto.ComboItemDTO;
 import com.nuova.dto.ObraSocialDTO;
 import com.nuova.dto.OrdenDTO;
 import com.nuova.model.Calendario;
+import com.nuova.model.Nomenclador;
 import com.nuova.model.Obrasocial;
 import com.nuova.model.Paciente;
-import com.nuova.model.Practica;
 
 public class Util {
 
@@ -142,9 +142,9 @@ public class Util {
                 Paciente o = (Paciente) obj;
                 retorno.add(new ComboItemDTO(o.getPacienteId() + "", o.getApellido() + " "
                         + o.getNombre()));
-            } else if (obj instanceof Practica) {
-                Practica o = (Practica) obj;
-                retorno.add(new ComboItemDTO(o.getPracticaId() + "", "[" + o.getCodigo() + "]-"
+            } else if (obj instanceof Nomenclador) {
+                Nomenclador o = (Nomenclador) obj;
+                retorno.add(new ComboItemDTO(o.getNomencladorId() + "", "[" + o.getCodigo() + "]-"
                         + o.getNombre()));
             }
         }
