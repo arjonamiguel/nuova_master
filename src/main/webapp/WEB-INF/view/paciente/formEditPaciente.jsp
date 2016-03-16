@@ -155,7 +155,7 @@ label.error {
 	<div class="panel panel-info">
 	<div class="panel-heading">
 		<div class="panel-title">
-		Editar Paciente
+		<b>Editar Paciente</b>
     	 	<c:if test="${paciente.parentesco > 0}">
      			<h4>Titular: <a href="/nuova/formEditPaciente/${paciente.pacienteTitular.pacienteId}">${paciente.pacienteTitular.apellido}, ${paciente.pacienteTitular.nombre}</a></h4>
      		</c:if>

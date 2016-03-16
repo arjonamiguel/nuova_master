@@ -66,7 +66,9 @@ public class ProfesionalDAOImpl implements ProfesionalDAO {
 
     public Page<Profesional> findProfesionalesByPageable(Pageable pageable) {
         Query query = this.sessionFactory.getCurrentSession().createQuery(
-                "FROM Profesional p ORDER BY p.profesionalId DESC");
+                " FROM Profesional p "
+                        + " WHERE p.eliminado = 0"
+                        + " ORDER BY p.profesionalId DESC");
         // query.setFirstResult(pageable.getOffset());
         // query.setMaxResults(pageable.getPageNumber());
         List<Profesional> result = query.list();
@@ -76,7 +78,9 @@ public class ProfesionalDAOImpl implements ProfesionalDAO {
     public Page<Profesional> findProfesionalesBySearch(String search, Pageable pageable) {
         Query query = this.sessionFactory.getCurrentSession()
                 .createQuery("FROM Profesional p "
-                        + " WHERE upper(p.apellido) LIKE '%" + search.toUpperCase() + "%' "
+                        + " WHERE "
+                        + " p.eliminado = 0 AND"
+                        + " upper(p.apellido) LIKE '%" + search.toUpperCase() + "%' "
                         + " OR upper(p.nombre) LIKE '%" + search.toUpperCase() + "%' "
                         + " ORDER BY p.apellido ");
         // query.setFirstResult(pageable.getOffset());

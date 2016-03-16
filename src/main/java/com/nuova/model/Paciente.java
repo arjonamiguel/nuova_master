@@ -42,7 +42,7 @@ public class Paciente implements java.io.Serializable {
     private String zonaAfiliacion;
     private Integer obrasocialId;
     private String nroCredencial;
-    private Byte elinidado;
+    private Byte eliminado;
     private Set<Orden> ordens = new HashSet<Orden>(0);
     private Set<Paciente> pacientes = new HashSet<Paciente>(0);
 
@@ -51,7 +51,7 @@ public class Paciente implements java.io.Serializable {
 
     public Paciente(Paciente paciente, String apellido, String nombre, Date fechaNacimiento, String domicilio,
             String telefono, String mail, Byte coseguro, Integer dni, String provincia, Byte parentesco,
-            String zonaAfiliacion, Integer obrasocialId, String nroCredencial, Byte elinidado, Set<Orden> ordens,
+            String zonaAfiliacion, Integer obrasocialId, String nroCredencial, Byte eliminado, Set<Orden> ordens,
             Set<Paciente> pacientes) {
         this.paciente = paciente;
         this.apellido = apellido;
@@ -67,7 +67,7 @@ public class Paciente implements java.io.Serializable {
         this.zonaAfiliacion = zonaAfiliacion;
         this.obrasocialId = obrasocialId;
         this.nroCredencial = nroCredencial;
-        this.elinidado = elinidado;
+        this.eliminado = eliminado;
         this.ordens = ordens;
         this.pacientes = pacientes;
     }
@@ -211,13 +211,13 @@ public class Paciente implements java.io.Serializable {
         this.nroCredencial = nroCredencial;
     }
 
-    @Column(name = "elinidado")
-    public Byte getElinidado() {
-        return this.elinidado;
+    @Column(name = "eliminado")
+    public Byte getEliminado() {
+        return this.eliminado;
     }
 
-    public void setElinidado(Byte elinidado) {
-        this.elinidado = elinidado;
+    public void setEliminado(Byte eliminado) {
+        this.eliminado = eliminado;
     }
 
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "paciente")

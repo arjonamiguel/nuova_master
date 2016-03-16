@@ -120,7 +120,7 @@
 		<div class="panel panel-info">
 			<div class="panel-heading">
           			<div class="panel-title">
-	          			Administracion de Pacientes
+	          			<b>Administracion de Pacientes</b>
 	           			<a href="formAddPaciente" class="pull-right"><b>+</b>&nbsp;&nbsp;Nuevo Paciente</a>
           			</div>
     		</div>     

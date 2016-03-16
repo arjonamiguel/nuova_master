@@ -69,7 +69,9 @@ public class PacienteDAOImpl implements PacienteDAO {
     }
 
     public Page<Paciente> findPacientesByPageable(Pageable pageable) {
-        Query query = this.sessionFactory.getCurrentSession().createQuery("FROM Paciente p ORDER BY p.pacienteId DESC");
+        Query query = this.sessionFactory.getCurrentSession().createQuery("FROM Paciente p "
+                + " WHERE p.eliminado = 0"
+                + " ORDER BY p.pacienteId DESC");
         // query.setFirstResult(pageable.getOffset());
         // query.setMaxResults(pageable.getPageNumber());
         List<Paciente> result = query.list();
@@ -79,7 +81,8 @@ public class PacienteDAOImpl implements PacienteDAO {
     public Page<Paciente> findPacientesBySearch(String search, Pageable pageable) {
         Query query = this.sessionFactory.getCurrentSession()
                 .createQuery("FROM Paciente p "
-                        + " WHERE upper(p.apellido) LIKE '%" + search.toUpperCase() + "%' "
+                        + " WHERE  p.eliminado = 0 AND "
+                        + " upper(p.apellido) LIKE '%" + search.toUpperCase() + "%' "
                         + " OR upper(p.nombre) LIKE '%" + search.toUpperCase() + "%' "
                         + " ORDER BY p.apellido ASC");
         // query.setFirstResult(pageable.getOffset());
@@ -119,4 +122,5 @@ public class PacienteDAOImpl implements PacienteDAO {
 
         return retorno;
     }
+
 }

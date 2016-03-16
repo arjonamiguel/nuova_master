@@ -144,7 +144,7 @@
 	<div class="panel panel-info">
 	<div class="panel-heading">
 		<div class="panel-title">
-		Eliminar Paciente
+		<b>Eliminar Paciente</b>
     	 	<c:if test="${!isTitular}">
      			<h4>Titular: <a href="/nuova/formEditPaciente/${paciente.pacienteTitular.pacienteId}">${paciente.pacienteTitular.apellido}, ${paciente.pacienteTitular.nombre}</a></h4>
      		</c:if>
@@ -239,59 +239,31 @@
 </div>
 
 <div class="panel panel-info">
-			<div class="panel-heading">
-				<div class="panel-title">Obra Social</div>
-			</div>
-			<div class="panel-body">
-				<div class="row-fluid">
-					<div class="span9">
-					</div>
-					<div class="span2">
-						<form:select path="obrasocial" style="width:88%; margin-bottom:0px" disabled="true">
-					   		<form:option value="NONE" label="Seleccione Obra Social ..."/>
-					   		<form:options items="${obrasocialList}" itemLabel="nombre" itemValue="obrasocialId" />			    
-						</form:select>
-					</div>
-					<div class="span1">
-						<div style="float:right;"><INPUT type="button" value="Agregar" onclick="addRow('dataTable')" class="btn btn-info" disabled="true"/></div>
-					</div>
-				</div>
-				<div class="row-fluid">
-					<div class="span12" style="pointer-events:none;">
-							<TABLE id="dataTable" class="table" style="width: 100%; margin-top:0px;">
-						        <TR>
-						        	
-						            <TD>ID</TD>
-						            <TD>Obra Social</TD>        
-						            <TD style="width: 20%">Nro Credencial</TD>
-						            <TD style="width: 15%">Original/Provisoria</TD>
-						            <td></td>
-						        </TR>
-						        <% int index = 0;%>
-						        <c:forEach items="${paciente.obrasocialList}" var="po" varStatus="loop" >
-						    	<tr>
-							        <td>${po.obrasocialId}<input type="hidden" name = "obrasocialListEdit[<%=index%>].obrasocialId" value = "${po.obrasocialId}" /> </td>
-							        <td>${po.nombre}</td>        
-							        <td><input type="text" value="${po.credencial}" name = "obrasocialListEdit[<%=index%>].credencial"></td>
-							        <td> <input type="checkbox" name="obrasocialListEdit[<%=index%>].original" ${po.original} class="checkbox"/></td>
-							        <td><button type='button' class='btn btn-link' onClick='Eliminar(this.parentNode.parentNode.rowIndex)'>eliminar</button></td>
-							        <%index++;%>
-						    	</tr>
-								</c:forEach>
-			    			</TABLE>
-					</div>
-				</div>
-				
-				<div class="row-fluid">
-					<div class="span8">
-					</div>
-					<div class="span4">
+	<div class="panel-heading">
+		<div class="panel-title">Obra Social</div>
+	</div>
+	<div class="panel-body">
+		<div class="row-fluid">
+			<div class="span4">
+			   <div class="formLabel"><form:label path="obrasocial">Obra Social:</form:label></div>
+        		<div class="formInput">
+        		<form:select path="obrasocial.obrasocialId" style="width:83%; margin-bottom:0px" disabled="true">
+				<form:option value="-1" label="Seleccione Obra Social ..."/>
+				<form:options items="${obrasocialList}" itemLabel="nombre" itemValue="obrasocialId" />
+				</form:select>
+        		</div>
+			 </div>
+			 
+			 <div class="span4">
+			 	<div class="formLabel"><form:label path="obrasocial.credencial">Credencial:</form:label></div>
+        	 	<div class="formInput"><form:input path="obrasocial.credencial" disabled="true"/></div>
+			 </div>
+		</div>
 						
-					</div>
-				</div>
-			</div>
-			
-</div> 
+	</div>		
+</div>
+
+
 <c:if test="${isTitular}">
 <div class="panel panel-info">
 				<div class="panel-heading">

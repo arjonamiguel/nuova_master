@@ -82,6 +82,7 @@ public class ProfesionalController {
     public String addProfesional(@ModelAttribute(value = "employee") ProfesionalDTO profesionalDto,
             BindingResult result) {
         Profesional profesional = transformDtoToProfesional(profesionalDto);
+        profesional.setEliminado(new Byte("0"));
         profesionalManager.add(profesional);
         return "redirect:" + ConstantControllers.MAIN_PROFESIONAL;
     }
@@ -89,10 +90,12 @@ public class ProfesionalController {
     @RequestMapping(value = ConstantControllers.DELETE_PROFESIONAL, method = RequestMethod.POST)
     public String deleteEspecialidad(@ModelAttribute(value = "profesional") ProfesionalDTO dto) {
         Profesional profesionalOld = profesionalManager.findProfesionalById(dto.getProfesionalId());
+        Profesional profesional = transformDtoToProfesional(dto);
         for (ProfesionalEspecialidad pe : profesionalOld.getProfesionalEspecialidads()) {
             profesionalManager.deleteProfesionalEspecialidad(pe.getProfesional().getProfesionalId());
         }
-        profesionalManager.delete(profesionalOld.getProfesionalId());
+        profesional.setEliminado(new Byte("1"));
+        profesionalManager.edit(profesional);
         return "redirect:" + ConstantControllers.MAIN_PROFESIONAL;
     }
 
@@ -103,6 +106,7 @@ public class ProfesionalController {
         for (ProfesionalEspecialidad pe : profesionalOld.getProfesionalEspecialidads()) {
             profesionalManager.deleteProfesionalEspecialidad(pe.getProfesional().getProfesionalId());
         }
+        profesional.setEliminado(profesionalOld.getEliminado());
         profesionalManager.edit(profesional);
         return "redirect:" + ConstantControllers.MAIN_PROFESIONAL;
     }
@@ -189,10 +193,16 @@ public class ProfesionalController {
         // fechaHabilitacion, p.getNroRegistro(),
         // validoHasta, null, null, null, p.getNroPoliza(), vigenciaDesde, vigenciaHasta, null,
         // null, null, null, null, null, null);
+
+        Byte hs = null;
+        if (p.getHabilitacionSiprosa() != null) {
+            hs = new Byte((p.getHabilitacionSiprosa().equals("")) ? "0"
+                    : p.getHabilitacionSiprosa());
+        }
         Profesional profesional = new Profesional(p.getApellido()
                 , p.getNombre(), p.getTelefono(), p.getMatricula(), p.getRegistroNacional(),
                 p.getTituloProfesional(),
-                new Byte((p.getHabilitacionSiprosa().equals("")) ? "0" : p.getHabilitacionSiprosa()),
+                hs,
                 fechaHabilitacion, p.getNroRegistro(),
                 validoHasta, null, null, null, p.getNroPoliza(), vigenciaDesde, null, vigenciaHasta,
                 null, null, null);
