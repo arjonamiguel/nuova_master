@@ -18,9 +18,23 @@
 	<link href="<%=request.getContextPath()%>/resources/css/nuova.css" rel="stylesheet"/>
 	<link href="<%=request.getContextPath()%>/resources/css/panel.css" rel="stylesheet"/>
 	<link href="<%=request.getContextPath()%>/resources/css/bootstrap/bootstrap-responsive.css" rel="stylesheet"/>
+	<style>
+	.label-error {
+		  color: #a94442;
+		  background-color: #f2dede;
+		  border-color: #ebccd1;
+		  padding:1px 20px 1px 20px;
+		  width:22%;
+		}
+	</style>
+	
 	
 <script>
 function submitSearch() {
+		if($("#search").val()==""){
+			$("#message").css("visibility","visible");
+			return;
+		}		
 	fechaCaja = document.getElementById("search").value;
 	location.href="/nuova/mainCaja/"+fechaCaja;
 }
@@ -29,6 +43,9 @@ function submitCierreCaja() {
 	fechaCierre = document.getElementById("fechaCierre").value;
 	location.href="/nuova/formCierreCaja?fechaCierre="+fechaCierre;
 }
+	function hideMessage(){
+		$("#message").css("visibility","hidden");
+	}
 </script>
 
 </head>
@@ -58,13 +75,14 @@ function submitCierreCaja() {
 										<div id="calendar">
 											<div class="input-group registration-date-time">
 												<input class="form-control" name="search" 
-												id="search" type="date" />											
+												id="search" type="date" onchange="hideMessage()"/>											
 				            				</div>
 				            			</div>	            	
 									</td>
 									<td>			
 									<input type="button" value="Buscar" class="btn btn-info" style="margin-bottom:8px" 
 									onclick="javascript:submitSearch()" />
+									
 									</td>
 									</tr>
 								</table>
@@ -79,6 +97,7 @@ function submitCierreCaja() {
 									onclick="submitCierreCaja()" />
 						<input type="hidden" name="fechaCierre" id="fechaCierre" value="${fecha}" />			
 			   			</div>
+			   			<div class="label-error" id="message" style="float:left;margin-left:8%;visibility:hidden;">Debe ingresar una fecha valida de busqueda</div>
 		    		</div>
 		    		
 		    		<div class="row-fluid" >
