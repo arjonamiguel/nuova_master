@@ -139,7 +139,7 @@
 												name="ctl00$ContainerGeneralOverWrite$ContainerGeneral$sq"
 												type="text"
 												id="ContainerGeneralOverWrite_ContainerGeneral_sq"
-												placeholder="Inicie la b&uacute;squeda de pacientes ..."
+												placeholder="Ingrese DNI o el Apellido ..."
 												autocomplete="off"
 												style="height: 40px; width: 50%">
 										</div>
@@ -186,7 +186,7 @@
 												id="ContainerGeneralOverWrite_ContainerGeneral_sq1"
 												data-su="/ofertas-de-trabajo/"
 												class="js-cargos-suggest typeahead"
-												placeholder="Inicie la b&uacute;squeda de pacientes ..."
+												placeholder="Ingrese DNI o el Apellido ..."
 												style="height: 40px; width: 50%"
 												autocomplete="off">
 										</div>
