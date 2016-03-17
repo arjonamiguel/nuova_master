@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
+import java.util.Formatter;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -161,7 +162,7 @@ public class OrdenController {
             int observacionCount = ordenDto.getObservacioneses().size();
             map.addAttribute("ordenDto", ordenDto);
             map.addAttribute("observacionCount", observacionCount);
-            map.addAttribute("practicasList", Util.getComboItems(practicaManager.findAll()));
+            // map.addAttribute("practicasList", Util.getComboItems(practicaManager.findAll()));
 
             map.addAttribute("estadosList", Util.getEstadosList());
         }
@@ -222,6 +223,19 @@ public class OrdenController {
         }
 
         return new PageImpl<OrdenDTO>(dtos, pageable, ordenes.getTotalElements());
+    }
+
+    @RequestMapping(value = ConstantControllers.AJAX_GET_AUTOCOMPLETE_NOMENCLADOR, method = RequestMethod.POST)
+    public @ResponseBody List<ComboItemDTO> getAutocompletePaciente(
+            @RequestParam(required = false, defaultValue = "") String query) {
+        Formatter fmt = new Formatter();
+        List<ComboItemDTO> retorno = new ArrayList<ComboItemDTO>();
+        for (Nomenclador n : practicaManager.findNomencladorAutocomplete(query)) {
+            retorno.add(new ComboItemDTO(n.getNomencladorId() + "", "[" + n.getCodigo() + "] - "
+                    + "[" + n.getTipo() + "] - " + n.getNombre()));
+        }
+
+        return retorno;
     }
 
     @RequestMapping(value = ConstantControllers.ADD_ORDEN, method = RequestMethod.POST)
@@ -625,7 +639,7 @@ public class OrdenController {
         List<OrdenPracticaDTO> retorno = new ArrayList<OrdenPracticaDTO>(0);
         for (OrdenPractica op : list) {
             Nomenclador p = op.getNomenclador();
-            p.setNombre("[" + p.getCodigo() + "]-" + p.getNombre());
+            p.setNombre("[" + p.getCodigo() + "] - [" + p.getTipo() + "] - " + p.getNombre());
             Orden o = op.getOrden();
             // PracticaDTO dto = new PracticaDTO(p.getPracticaId(), "[" + p.getCodigo() + "]-" + p.getNombre());
             OrdenPracticaDTO dto = new OrdenPracticaDTO(o.getOrdenId(), p.getNombre(), p.getNomencladorId());

@@ -21,4 +21,7 @@ public interface PracticaManager {
     public Page<Nomenclador> findPracticaByPageable(Pageable pageable);
 
     public Page<Nomenclador> findPracticaBySearch(String search, Pageable pageable);
+
+    public List<Nomenclador> findNomencladorAutocomplete(String search);
+
 }

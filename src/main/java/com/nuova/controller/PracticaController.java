@@ -128,6 +128,7 @@ public class PracticaController {
         retorno.setNombre(p.getNombre());
         retorno.setPracticaId(p.getNomencladorId());
         retorno.setCodigo(p.getCodigo());
+        retorno.setTipo(p.getTipo());
         return retorno;
     }
 

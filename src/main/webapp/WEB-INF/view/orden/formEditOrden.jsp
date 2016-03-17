@@ -23,6 +23,41 @@
 	
 	<script type="text/javascript">
 	
+	 $(document).ready(function() {
+   	  var map = new Object();
+   	  var objects = [];
+   	  
+       $('input.typeahead').typeahead({
+         source: function (query, process) {
+           $.ajax({
+             url: '/nuova/ajaxGetAutoCompleteNomenclador',
+             type: 'POST',             
+             dataType: 'JSON',
+             minLength: 3,                           
+             data: 'query=' + query,
+             success: function(data) { 
+               console.log(data);
+               $.each(data, function(i, object) {
+                   map[object.value] = object;
+                   if (objects[i] == null) {
+                   	objects.push(object.value);
+                   }
+               });
+               process(objects);
+               objects = [];
+             }
+           });
+         },
+         updater: function(item) {
+             $('#nomencladorId').val(map[item].id);
+             return item;
+         }
+       });
+     });
+
+
+	
+	
 	function setObservacionVisible(){
 		$("#addObservacion").css("visibility","visible");
 	}
@@ -35,7 +70,7 @@
   	}
   	
 	  function addRow(tableID) {
-	  					if(document.getElementById("practica").value=="NONE"){
+	  					if(document.getElementById("ContainerGeneralOverWrite_ContainerGeneral_sq").value==""){
             	return;
         	}
 	  
@@ -45,15 +80,17 @@
 	          var rowCount = table.rows.length;
 	          var row = table.insertRow(rowCount);
 	          var cell2 = row.insertCell(0);                      
-	          cell2.innerHTML = document.getElementById("practica").value+"<input type='hidden' name='ordenpracticaListEdit[" + index + "].orddenPracticaId'> "
-	          + "<input type='hidden' name='ordenpracticaListEdit[" + index + "].practicaId' value='" + document.getElementById("practica").value + "'>";
+	          cell2.innerHTML = document.getElementById("nomencladorId").value+"<input type='hidden' name='ordenpracticaListEdit[" + index + "].orddenPracticaId'> "
+	          + "<input type='hidden' name='ordenpracticaListEdit[" + index + "].practicaId' value='" + document.getElementById("nomencladorId").value + "'>";
 	          var cell3 = row.insertCell(1);
-	          cell3.innerHTML = document.getElementById('practica').options[document.getElementById('practica').selectedIndex].text; 
+	          cell3.innerHTML = document.getElementById("ContainerGeneralOverWrite_ContainerGeneral_sq").value; 
 	          var cell1 = row.insertCell(2);
 	          row.valign = "BASELINE";
 	          cell1.innerHTML = "<button type='button' class='btn btn-link' onClick='Eliminar(this.parentNode.parentNode.rowIndex)'>eliminar</button>"
 	           
 	          index ++;
+	          document.getElementById("ContainerGeneralOverWrite_ContainerGeneral_sq").value = "";
+	          document.getElementById("ContainerGeneralOverWrite_ContainerGeneral_sq").focus();
 	       }
 	</script>
 	
@@ -191,12 +228,24 @@
 													<tr>
 										        	<td colspan="2">
 										           	<div>
-														<div class="inputProf">
-														<form:select path="practica" style="width:70%; margin-bottom:0px">
-															   <form:option value="NONE" label="Seleccione Práctica ..."/>
-															   <form:options items="${practicasList}" itemLabel="value" itemValue="id" />			    
-															</form:select>
-															<INPUT type="button" value="Agregar" onclick="addRow('tb_practicas')" class="btn btn-info"/>
+														<div class="">
+														
+														<div class="">													
+																								
+														<input type="hidden" name="nomencladorId" id="nomencladorId" value="">										
+															<input
+																data-provide="typeahead" 
+																class="typeahead"
+																name="ctl00$ContainerGeneralOverWrite$ContainerGeneral$sq"
+																type="text"
+																id="ContainerGeneralOverWrite_ContainerGeneral_sq"
+																placeholder="Busque en el Nomenclador por Codigo o Nombre..."
+																autocomplete="off"
+																style="height: 20px; width: 40%;margin-bottom:0px">
+																
+																<INPUT type="button" value="Agregar" onclick="addRow('tb_practicas')" class="btn btn-info"/>
+														</div>
+															
 																    	
 															
 														</div>	

@@ -22,4 +22,6 @@ public interface PracticaDAO {
 
     public Page<Nomenclador> findPracticaBySearch(String search, Pageable pageable);
 
+    public List<Nomenclador> findNomencladorAutocomplete(String search);
+
 }

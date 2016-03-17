@@ -51,4 +51,8 @@ public class PracticaManagerImpl implements PracticaManager {
         return practicaDAO.findPracticaBySearch(search, pageable);
     }
 
+    @Transactional
+    public List<Nomenclador> findNomencladorAutocomplete(String search) {
+        return practicaDAO.findNomencladorAutocomplete(search);
+    }
 }

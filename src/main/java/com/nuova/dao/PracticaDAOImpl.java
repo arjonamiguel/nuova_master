@@ -45,9 +45,10 @@ public class PracticaDAOImpl implements PracticaDAO {
 
     public Page<Nomenclador> findPracticaByPageable(Pageable pageable) {
         Query query = this.sessionFactory.getCurrentSession().createQuery(
-                "FROM Nomenclador p ORDER BY p.nomencladorId DESC");
+                "FROM Nomenclador p ORDER BY p.codigo, p.nombre, p.tipo asc");
         // query.setFirstResult(pageable.getOffset());
         // query.setMaxResults(pageable.getPageNumber());
+        query.setMaxResults(200);
         List<Nomenclador> result = query.list();
         return new PageImpl<Nomenclador>(result, pageable, result.size());
     }
@@ -57,11 +58,24 @@ public class PracticaDAOImpl implements PracticaDAO {
                 .createQuery("FROM Nomenclador p "
                         + " WHERE upper(p.nombre) LIKE '%" + search.toUpperCase() + "%' "
                         + " OR upper(p.codigo) LIKE '%" + search.toUpperCase() + "%' "
-                        + " ORDER BY p.codigo ");
+                        + " AND p.tipo='Practicas'"
+                        + " ORDER BY p.codigo, p.nombre, p.tipo ");
         // query.setFirstResult(pageable.getOffset());
         // query.setMaxResults(pageable.getPageNumber());
+        query.setMaxResults(200);
         List<Nomenclador> result = query.list();
         return new PageImpl<Nomenclador>(result, pageable, result.size());
     }
 
+    public List<Nomenclador> findNomencladorAutocomplete(String search) {
+        Query query = this.sessionFactory.getCurrentSession().createQuery("FROM Nomenclador n "
+                + " WHERE n.codigo like '%" + search.toUpperCase() + "%' OR"
+                + " upper(n.nombre) LIKE '%" + search.toUpperCase() + "%' "
+                // + " AND n.tipo='Practicas'"
+                + " ORDER BY n.codigo, n.nombre, n.tipo ASC");
+        // query.setFirstResult(pageable.getOffset());
+        query.setMaxResults(20);
+        List<Nomenclador> result = query.list();
+        return result;
+    }
 }
