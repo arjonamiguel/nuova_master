@@ -22,6 +22,21 @@
 		
 	
 	<script type="text/javascript">
+	function createSelectEstados(id) {
+		var selectEstado = '<select id="estado" name="estado_'+id+'" id="estado_'+id+'" style="width:70%; margin-bottom:0px">' +
+		   ' <option value="NONE">Seleccione Estado ...</option>' +
+		   ' <option value="AUTORIZACION DIRECTA">AUTORIZACION DIRECTA</option>' + 
+		   ' <option value="PENDIENTE AFILIACIONES">PENDIENTE AFILIACIONES</option>' +
+		   ' <option value="AUTORIZADA POR AFILIACIONES">AUTORIZADA POR AFILIACIONES</option>' +
+		   ' <option value="RECHAZADA POR AFILIACIONES">RECHAZADA POR AFILIACIONES</option>' +
+		   ' <option value="PENDIENTE AUDITORIA">PENDIENTE AUDITORIA</option>' +
+		   ' <option value="AUTORIZADA POR AUDITORIA">AUTORIZADA POR AUDITORIA</option>' +
+		   ' <option value="RECHAZADA POR AUDITORIA">RECHAZADA POR AUDITORIA</option>' +
+		   ' <option value="RECHAZADA">RECHAZADA</option><option value="ANULADO">ANULADO</option>' +			    
+		   ' </select>';
+		
+		   return selectEstado;
+	}
 	
 	 $(document).ready(function() {
    	  var map = new Object();
@@ -79,28 +94,34 @@
 	          var table = document.getElementById(tableID);
 	          var rowCount = table.rows.length;
 	          var row = table.insertRow(rowCount);
-	          var cell2 = row.insertCell(0);                      
-	          cell2.innerHTML = document.getElementById("nomencladorId").value+"<input type='hidden' name='ordenpracticaListEdit[" + index + "].orddenPracticaId'> "
+	          
+	          var cell1 = row.insertCell(0);                      
+	          cell1.innerHTML = document.getElementById("nomencladorId").value+"<input type='hidden' name='ordenpracticaListEdit[" + index + "].orddenPracticaId'> "
 	          + "<input type='hidden' name='ordenpracticaListEdit[" + index + "].practicaId' value='" + document.getElementById("nomencladorId").value + "'>";
-	          var cell3 = row.insertCell(1);
-	          cell3.innerHTML = document.getElementById("ContainerGeneralOverWrite_ContainerGeneral_sq").value; 
-	          var cell1 = row.insertCell(2);
+	          
+	          var cell2 = row.insertCell(1);
+	          cell2.innerHTML = document.getElementById("ContainerGeneralOverWrite_ContainerGeneral_sq").value; 
+	          
+	          var cell3 = row.insertCell(2);
+	          cell3.innerHTML = createSelectEstados(document.getElementById("nomencladorId").value);
+	          
+	          var cell4 = row.insertCell(3);
 	          row.valign = "BASELINE";
-	          cell1.innerHTML = "<button type='button' class='btn btn-link' onClick='Eliminar(this.parentNode.parentNode.rowIndex)'>eliminar</button>"
+	          cell4.innerHTML = "<button type='button' class='btn btn-link' onClick='Eliminar(this.parentNode.parentNode.rowIndex)'>eliminar</button>"
 	           
 	          index ++;
 	          document.getElementById("ContainerGeneralOverWrite_ContainerGeneral_sq").value = "";
 	          document.getElementById("ContainerGeneralOverWrite_ContainerGeneral_sq").focus();
 	       }
 	</script>
-	
-	<style>
-	.chkbox {
-   padding-left: 10px;
-   font-weight: bold;
- }
-	</style>
-	
+
+<style>
+.chkbox {
+	padding-left: 10px;
+	font-weight: bold;
+}
+</style>
+
 </head>
 
 <body style="background-color:#e5e5e5;">
@@ -213,21 +234,7 @@
 												
 										  		</div>
 										  		<div id="tb_autorizacion" class="tab-pane fade">
-										  		<table class="table"  style="width: 100%">			
-													<tr>
-														<td style="width: 10%">Estado</td>
-										        		<td>
-										        			<form:select path="estado" style="width:30%; margin-bottom:0px">
-															   <form:option value="NONE" label="Seleccione Estado ..."/>
-															   <form:options items="${estadosList}" itemLabel="value" itemValue="id" />			    
-															</form:select>
-														</td>
-										        	</tr>	
-										  		</table>
-										    	<table class="table"  style="width: 100%" height="100%">			
-													<tr>
-										        	<td colspan="2">
-										           	<div>
+										  		<div>
 														<div class="">
 														
 														<div class="">													
@@ -250,13 +257,18 @@
 															
 														</div>	
 													</div>
+										  		
+										    	<table class="scroll"  style="width: 100%" height="100%">			
+													<tr>
+										        	<td colspan="2">										           	
 										    		<div>		    
 													    <TABLE id="tb_practicas" class="table" style="width: 100%; margin: 2% 0;" >
 													    <thead>
 													        <TR>
 													        	
 													            <TD style="width: 10%">ID</TD>			                    
-													            <TD style="width: 100%">Practica</TD>
+													            <TD style="width: 50%">Practica</TD>
+													            <TD style="width: 40%">Estados</TD>
 													            <td></td>
 													        </TR>
 													        <% int index = 0;%>
@@ -266,7 +278,7 @@
 														        <input type="hidden" name = "ordenpracticaListEdit[<%=index%>].orddenPracticaId" value = "${pa.orddenPracticaId}" />
 														        <input type="hidden" name = "ordenpracticaListEdit[<%=index%>].practicaId" value = "${pa.practicaId}" /> 
 														        </td>
-														        <td>${pa.nombre}</td>				        
+														        <td>${pa.nombre}</td>		        
 														        <td><button type='button' class='btn btn-link' onClick='Eliminar(this.parentNode.parentNode.rowIndex)'>eliminar</button></td>
 														        <%index++;%>
 													    	</tr>
