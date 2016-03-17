@@ -1991,7 +1991,8 @@ table td[class*="span"], table th[class*="span"], .row-fluid table td[class*="sp
 }
 
 .icon-time {
-    background-position: -48px -24px
+    background-position: -48px -24px;
+    background-image: url("../../img/bootstrap/glyphicons-halflings.png");
 }
 
 .icon-road {
@@ -5029,7 +5030,7 @@ a.thumbnail:hover, a.thumbnail:focus {
 }
 
 a.label:hover, a.label:focus, a.badge:hover, a.badge:focus {
-    color: #fff;
+    color: #E10202;
     text-decoration: none;
     cursor: pointer
 }

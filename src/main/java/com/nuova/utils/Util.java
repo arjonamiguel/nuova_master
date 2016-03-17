@@ -9,12 +9,14 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.nuova.dto.CalendarDTO;
 import com.nuova.dto.ComboItemDTO;
 import com.nuova.dto.ObraSocialDTO;
 import com.nuova.dto.OrdenDTO;
+import com.nuova.model.Calendario;
+import com.nuova.model.Nomenclador;
 import com.nuova.model.Obrasocial;
 import com.nuova.model.Paciente;
-import com.nuova.model.Practica;
 
 public class Util {
 
@@ -103,7 +105,20 @@ public class Util {
         Obrasocial obrasocial = new Obrasocial();
         obrasocial.setObrasocialId(dto.getObrasocialId());
         obrasocial.setNombre(dto.getNombre());
+        obrasocial.setCuit(dto.getCuit());
+        obrasocial.setDireccion(dto.getDireccion());
+        obrasocial.setTelefono(dto.getTelefono());
         return obrasocial;
+    }
+
+    static public Calendario transformDtoToCalendario(CalendarDTO dto) {
+        Calendario calendario = new Calendario();
+        calendario.setCalendarioId(dto.getId());
+        calendario.setResource(dto.getResourceId());
+        calendario.setStart(parseToDate(dto.getStart()));
+        calendario.setEnd(parseToDate(dto.getEnd()));
+        calendario.setTitle(dto.getTitle());
+        return calendario;
     }
 
     static public Date parseToDate(String date) {
@@ -127,9 +142,9 @@ public class Util {
                 Paciente o = (Paciente) obj;
                 retorno.add(new ComboItemDTO(o.getPacienteId() + "", o.getApellido() + " "
                         + o.getNombre()));
-            } else if (obj instanceof Practica) {
-                Practica o = (Practica) obj;
-                retorno.add(new ComboItemDTO(o.getPracticaId() + "", "[" + o.getCodigo() + "]-"
+            } else if (obj instanceof Nomenclador) {
+                Nomenclador o = (Nomenclador) obj;
+                retorno.add(new ComboItemDTO(o.getNomencladorId() + "", "[" + o.getCodigo() + "]-"
                         + o.getNombre()));
             }
         }
@@ -141,24 +156,37 @@ public class Util {
     }
 
     static public String getEstadoInicial(OrdenDTO dto) {
-        String retorno = "";
-        if (dto.isReqCredecial() && dto.isReqOrdenMedico() && (dto.isReqMonotributista() || dto.isReqReciboSueldo())) {
-            retorno = ConstantOrdenEstado.PENDIENTE;
-        } else {
-            retorno = ConstantOrdenEstado.INCOMPLETA;
-        }
+        String retorno = ConstantOrdenEstado.INICIADA;
+        // if (dto.isReqCredecial() && dto.isReqOrdenMedico() && (dto.isReqMonotributista() || dto.isReqReciboSueldo()))
+        // {
+        // retorno = ConstantOrdenEstado.PENDIENTE;
+        // } else {
+        // retorno = ConstantOrdenEstado.INCOMPLETA;
+        // }
 
         return retorno;
     }
 
     static public List<ComboItemDTO> getEstadosList() {
         List<ComboItemDTO> retorno = new ArrayList<ComboItemDTO>();
-        retorno.add(new ComboItemDTO(ConstantOrdenEstado.PENDIENTE, ConstantOrdenEstado.PENDIENTE));
-        retorno.add(new ComboItemDTO(ConstantOrdenEstado.INCOMPLETA, ConstantOrdenEstado.INCOMPLETA));
-        retorno.add(new ComboItemDTO(ConstantOrdenEstado.AUTORIZADA, ConstantOrdenEstado.AUTORIZADA));
-        retorno.add(new ComboItemDTO(ConstantOrdenEstado.EN_OBSERVACION, ConstantOrdenEstado.EN_OBSERVACION));
-        retorno.add(new ComboItemDTO(ConstantOrdenEstado.CERRADA, ConstantOrdenEstado.CERRADA));
-        retorno.add(new ComboItemDTO(ConstantOrdenEstado.RECHAZADA, ConstantOrdenEstado.RECHAZADA));
+        retorno.add(new ComboItemDTO(ConstantOrdenEstado.AUTORIZACION_DIRECTA,
+                ConstantOrdenEstado.AUTORIZACION_DIRECTA));
+        retorno.add(new ComboItemDTO(ConstantOrdenEstado.PENDIENTE_AFILIACIONES,
+                ConstantOrdenEstado.PENDIENTE_AFILIACIONES));
+        retorno.add(new ComboItemDTO(ConstantOrdenEstado.AUTORIZADA_POR_AFILIACIONES,
+                ConstantOrdenEstado.AUTORIZADA_POR_AFILIACIONES));
+        retorno.add(new ComboItemDTO(ConstantOrdenEstado.RECHAZADA_POR_AFILIACIONES,
+                ConstantOrdenEstado.RECHAZADA_POR_AFILIACIONES));
+        retorno.add(new ComboItemDTO(ConstantOrdenEstado.PENDIENTE_AUDITORIA,
+                ConstantOrdenEstado.PENDIENTE_AUDITORIA));
+        retorno.add(new ComboItemDTO(ConstantOrdenEstado.AUTORIZADA_POR_AUDITORIA,
+                ConstantOrdenEstado.AUTORIZADA_POR_AUDITORIA));
+        retorno.add(new ComboItemDTO(ConstantOrdenEstado.RECHAZADA_POR_AUDITORIA,
+                ConstantOrdenEstado.RECHAZADA_POR_AUDITORIA));
+        retorno.add(new ComboItemDTO(ConstantOrdenEstado.RECHAZADA,
+                ConstantOrdenEstado.RECHAZADA));
+        retorno.add(new ComboItemDTO(ConstantOrdenEstado.ANULADO,
+                ConstantOrdenEstado.ANULADO));
         return retorno;
     }
 

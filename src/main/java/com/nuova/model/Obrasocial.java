@@ -2,16 +2,11 @@ package com.nuova.model;
 
 // Generated Dec 14, 2015 5:12:02 PM by Hibernate Tools 3.4.0.CR1
 
-import java.util.ArrayList;
-import java.util.List;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 /**
@@ -28,14 +23,15 @@ public class Obrasocial implements java.io.Serializable {
     private static final long serialVersionUID = -6064833297447829489L;
     private Integer obrasocialId;
     private String nombre;
-    private List<PacienteObrasocial> pacienteObrasocials = new ArrayList<PacienteObrasocial>(0);
+    private String cuit;
+    private String direccion;
+    private String telefono;
 
     public Obrasocial() {
     }
 
-    public Obrasocial(String nombre, List<PacienteObrasocial> pacienteObrasocials) {
+    public Obrasocial(String nombre) {
         this.nombre = nombre;
-        this.pacienteObrasocials = pacienteObrasocials;
     }
 
     @Id
@@ -58,13 +54,28 @@ public class Obrasocial implements java.io.Serializable {
         this.nombre = nombre;
     }
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "obrasocial")
-    public List<PacienteObrasocial> getPacienteObrasocials() {
-        return this.pacienteObrasocials;
+    public String getCuit() {
+        return cuit;
     }
 
-    public void setPacienteObrasocials(List<PacienteObrasocial> pacienteObrasocials) {
-        this.pacienteObrasocials = pacienteObrasocials;
+    public void setCuit(String cuit) {
+        this.cuit = cuit;
+    }
+
+    public String getDireccion() {
+        return direccion;
+    }
+
+    public void setDireccion(String direccion) {
+        this.direccion = direccion;
+    }
+
+    public String getTelefono() {
+        return telefono;
+    }
+
+    public void setTelefono(String telefono) {
+        this.telefono = telefono;
     }
 
 }

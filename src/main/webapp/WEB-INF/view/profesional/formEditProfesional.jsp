@@ -116,6 +116,13 @@ label.error {
 	function updateDateFechaHasta() {
 		document.getElementById("vigenciaHasta").value=document.getElementById("fecha-hasta").value;
 	}
+	
+	function isNumberKey(evt){
+	    var charCode = (evt.which) ? evt.which : evt.keyCode;
+	    if (charCode > 31 && (charCode < 48 || charCode > 57))
+	        return false;
+	    return true;
+	}
 
 </SCRIPT>
 </head>
@@ -151,7 +158,7 @@ label.error {
     <div class="row-fluid">
 	    <div class="span4">
 			<div class="formLabel"><form:label path="matricula">Matricula:</form:label></div>
-	        <div class="formInput"><form:input path="matricula" placeholder="Matricula"/></div>
+	        <div class="formInput"><form:input path="matricula" placeholder="Matricula" onkeypress='return isNumberKey(event)'/></div>
 	    </div>
 	    
 	    <div class="span4">
@@ -180,20 +187,18 @@ label.error {
 	    <div class="span4">
 	      <div><form:hidden path="profesionalId" /></div>
         	<div class="formLabel"><form:label path="apellido">Nro Registro:</form:label></div>
-        	<div class="formInput"><form:input path="nroRegistro" type="text"/></div>
+        	<div class="formInput"><form:input path="nroRegistro" type="text" onkeypress='return isNumberKey(event)'/></div>
 	    </div>
 	    <div class="span4">	
 			<div style="visibility:hidden;height:0px;"><form:label path="habilitacionSiprosa">Habilitacion del Siprosa:</form:label></div>
 			<div style="visibility:hidden;height:0px;"><form:input path="habilitacionSiprosa" /></div>
 			<div>
 				<div class="formLabel"><form:label path="validoHasta">Valido Hasta:</form:label></div>
-				<div style="visibility:hidden;height:0px;"><form:input class="date" path="validoHasta" /></div>
+				<div style="visibility:hidden;height:0px;"><form:input path="validoHasta" /></div>
 				<div class="formInput">
-				<div id="calendar">
-					<div class="input-group registration-date-time" style="padding-top:0%;">
-						<input class="form-control" name="registration_date" id="valido-hasta" type="date"  onchange="javascript:updateDateValidoHasta();">
-	            	</div>
-	        	</div>  
+
+						<input name="valido-hasta" id="valido-hasta" type="date"  onchange="javascript:updateDateValidoHasta();">
+  
 	        	</div>
 			</div>
 	    </div>
@@ -205,41 +210,6 @@ label.error {
     </div>       
 </div>  
 
-<div class="panel panel-info">
-	<div class="panel-heading">
-          <div class="panel-title">Editar Constancia de Matricula</div>
-    </div>     
-	<div  class="panel-body">
-	
-<div class="container-fluid">
-  <div class="row-fluid">
-	    <div class="span4">	
-			
-			<div>
-				<div class="formLabel"><form:label path="fechaEmisionMatricula">Fecha Matricula:</form:label></div>
-				<div style="visibility:hidden;height:0px;"><form:input class="date" path="fechaEmisionMatricula" /></div>
-				<div class="formInput">
-				<div id="calendar">
-					<div class="input-group registration-date-time" style="padding-top:0%;">
-						<input class="form-control" name="fecha_matricula" id="fecha-matricula" type="date"  onchange="javascript:updateDateFechaMatricula();">
-	            	</div>
-	        	</div>  
-	        	</div>
-			</div>
-	    </div>
-	    <div class="span4">
-			<div class="formLabel"><form:label path="nroLibro">Nro. Folio:</form:label></div>
-        	<div class="formInput"><form:input path="nroLibro" type="number"/></div>
-	    </div>
-	    <div class="span4">
-			<div class="formLabel"><form:label path="nroFolio">Nro. Libro:</form:label></div>
-	        <div class="formInput"><form:input path="nroFolio" type="number"/></div>
-	    </div>
-  	</div>
-	</div>        
-        
-    </div>       
-</div>  
 
 <div class="panel panel-info">
 	<div class="panel-heading">
@@ -252,19 +222,17 @@ label.error {
 	    <div class="span4">
 	      <div><form:hidden path="profesionalId" /></div>
         	<div class="formLabel"><form:label path="nroPoliza">Nro. Poliza:</form:label></div>
-        	<div class="formInput"><form:input path="nroPoliza" type="text"/></div>
+        	<div class="formInput"><form:input path="nroPoliza" type="text" onkeypress='return isNumberKey(event)'/></div>
 	    </div>
 	     <div class="span4">	
 			
 			<div>
 				<div class="formLabel"><form:label path="vigenciaDesde">Vigencia Desde:</form:label></div>
-				<div style="visibility:hidden;height:0px;"><form:input class="date" path="vigenciaDesde" /></div>
+				<div style="visibility:hidden;height:0px;"><form:input path="vigenciaDesde" /></div>
 				<div class="formInput">
-				<div id="calendar">
-					<div class="input-group registration-date-time" style="padding-top:0%;">
-						<input class="form-control" name="fecha_desde" id="fecha-desde" type="date"  onchange="javascript:updateDateFechaDesde();">
-	            	</div>
-	        	</div>  
+	
+						<input name="fecha_desde" id="fecha-desde" type="date"  onblur="javascript:updateDateFechaDesde();">
+	   
 	        	</div>
 			</div>
 	    </div>
@@ -272,13 +240,11 @@ label.error {
 			
 			<div>
 				<div class="formLabel"><form:label path="vigenciaHasta">Vigencia Hasta:</form:label></div>
-				<div style="visibility:hidden;height:0px;"><form:input class="date" path="vigenciaHasta" /></div>
+				<div style="visibility:hidden;height:0px;"><form:input path="vigenciaHasta" /></div>
 				<div class="formInput">
-				<div id="calendar">
-					<div class="input-group registration-date-time" style="padding-top:0%;">
-						<input class="form-control" name="fecha_hasta" id="fecha-hasta" type="date"  onchange="javascript:updateDateFechaHasta();">
-	            	</div>
-	        	</div>  
+		
+						<input name="fecha_hasta" id="fecha-hasta" type="date"  onblur="javascript:updateDateFechaHasta();">
+	          
 	        	</div>
 			</div>
 	    </div>
@@ -319,7 +285,7 @@ label.error {
 	    <TABLE id="dataTable" class="table"  style="margin-top:0px;">
 	        <TR>
 	        <TR>      	
-	            <TD>Id</TD>
+	            <TD>ID</TD>
 	            <TD>Especialidad</TD> 
 	            <TD></TD>       
 	        </TR>       
@@ -360,46 +326,54 @@ label.error {
 </html>
 
 <script language="javascript">
-	//document.getElementById("registration-date").value= document.getElementById("fechaVencimientoHabilitacion").value  ;
 
-	document.getElementById("valido-hasta").value= document.getElementById("validoHasta").value;
-	document.getElementById("fecha-matricula").value= document.getElementById("fechaEmisionMatricula").value;
-	document.getElementById("fecha-desde").value= document.getElementById("vigenciaDesde").value;
-	document.getElementById("fecha-hasta").value= document.getElementById("vigenciaHasta").value;
+	if(document.getElementById("validoHasta").value=="null"){
+		document.getElementById("valido-hasta").value= "";
+	}else{
+		document.getElementById("valido-hasta").value= document.getElementById("validoHasta").value;
+	}
+	if(document.getElementById("vigenciaDesde").value=="null"){
+		document.getElementById("fecha-desde").value ="";
+	}else{
+		document.getElementById("fecha-desde").value= document.getElementById("vigenciaDesde").value;
+	}
+	if(document.getElementById("vigenciaDesde").value=="null"){
+		document.getElementById("fecha-desde").value= "";
+	}else{
+		document.getElementById("fecha-hasta").value= document.getElementById("vigenciaHasta").value;
+	}
 	
 	
 	
 	
-
         
-      $("#profesional").validate({
+     $("#profesional").validate({
     
-        // Specify the validation rules
-        rules: {
-            apellido: "required",
-            nombre: "required",
-            telefono: {
-                required: true,
-                minlength: 5
-            },
-            matricula: "required",
-            registroNacional: "required",
-            tituloNacional: "required"
-        },
-        
-        // Specify the validation error messages
-        messages: {
-            apellido: "Ingrese apellido",
-            nombre: "Ingrese nombre",
-            telefono: {
-                required: "Ingrese telefono",
-                minlength: "Telefono debe tener al menos 5 caracteres de largo"
-            },
-            matricula: "Ingrese matricula",
-            registroNacional: "Ingrese Registro Nacional"
-        },
-                submitHandler: function(form) {
-            form.submit();
-        }
-    });
+		        // Specify the validation rules
+		        rules: {
+		            apellido: "required",
+		            nombre: "required",
+		            matricula: "required",
+		            tituloProfesional: "required",
+		            nroRegistro: "required",
+		            nroLibro: "required",
+		            nroFolio: "required",
+		            nroPoliza: "required"
+		        },
+		        
+		        // Specify the validation error messages
+		        messages: {
+		            apellido: "Ingrese apellido",
+		            nombre: "Ingrese nombre",
+		        	matricula: "Ingrese Matrícula",
+		        	tituloProfesional: "Ingrese Título Profesional",
+		        	nroRegistro: "Ingrese Número de Registro",
+		        	nroLibro: "Ingrese Número de Libro",
+		        	nroFolio: "Ingrese Número de Folio",
+		        	nroPoliza: "Ingrese Número de Poliza"
+		        },
+		                submitHandler: function(form) {
+		            form.submit();
+		        }
+		    });
 </script>

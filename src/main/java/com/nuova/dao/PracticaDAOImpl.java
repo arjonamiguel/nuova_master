@@ -10,58 +10,72 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
 
-import com.nuova.model.Practica;
+import com.nuova.model.Nomenclador;
 
 @Repository
 public class PracticaDAOImpl implements PracticaDAO {
     @Autowired
     private SessionFactory sessionFactory;
 
-    public void add(Practica practica) {
+    public void add(Nomenclador practica) {
         this.sessionFactory.getCurrentSession().save(practica);
     }
 
-    public Practica findPracticaById(Integer practicaId) {
-        return (Practica) this.sessionFactory.
-                getCurrentSession().get(Practica.class, practicaId);
+    public Nomenclador findPracticaById(Integer practicaId) {
+        return (Nomenclador) this.sessionFactory.
+                getCurrentSession().get(Nomenclador.class, practicaId);
     }
 
     @SuppressWarnings("unchecked")
-    public List<Practica> findAll() {
-        return this.sessionFactory.getCurrentSession().createQuery("FROM Practica").list();
+    public List<Nomenclador> findAll() {
+        return this.sessionFactory.getCurrentSession().createQuery("FROM Nomenclador").list();
     }
 
-    public void edit(Practica practica) {
+    public void edit(Nomenclador practica) {
         this.sessionFactory.getCurrentSession().saveOrUpdate(practica);
     }
 
-    public void deletePractica(Integer practicaId) {
+    public void deletePractica(Integer nomencladorId) {
         this.sessionFactory.getCurrentSession().
-                createQuery(" DELETE FROM Practica p "
-                        + " WHERE p.practicaId = :practicaId ").
-                setInteger("practicaId", practicaId).
+                createQuery(" DELETE FROM Nomenclador p "
+                        + " WHERE p.nomencladorId = :nomencladorId ").
+                setInteger("nomencladorId", nomencladorId).
                 executeUpdate();
     }
 
-    public Page<Practica> findPracticaByPageable(Pageable pageable) {
+    public Page<Nomenclador> findPracticaByPageable(Pageable pageable) {
         Query query = this.sessionFactory.getCurrentSession().createQuery(
-                "FROM Practica p ORDER BY p.practicaId DESC");
+                "FROM Nomenclador p ORDER BY p.codigo, p.nombre, p.tipo asc");
         // query.setFirstResult(pageable.getOffset());
         // query.setMaxResults(pageable.getPageNumber());
-        List<Practica> result = query.list();
-        return new PageImpl<Practica>(result, pageable, result.size());
+        query.setMaxResults(200);
+        List<Nomenclador> result = query.list();
+        return new PageImpl<Nomenclador>(result, pageable, result.size());
     }
 
-    public Page<Practica> findPracticaBySearch(String search, Pageable pageable) {
+    public Page<Nomenclador> findPracticaBySearch(String search, Pageable pageable) {
         Query query = this.sessionFactory.getCurrentSession()
-                .createQuery("FROM Practica p "
+                .createQuery("FROM Nomenclador p "
                         + " WHERE upper(p.nombre) LIKE '%" + search.toUpperCase() + "%' "
                         + " OR upper(p.codigo) LIKE '%" + search.toUpperCase() + "%' "
-                        + " ORDER BY p.codigo ");
+                        + " AND p.tipo='Practicas'"
+                        + " ORDER BY p.codigo, p.nombre, p.tipo ");
         // query.setFirstResult(pageable.getOffset());
         // query.setMaxResults(pageable.getPageNumber());
-        List<Practica> result = query.list();
-        return new PageImpl<Practica>(result, pageable, result.size());
+        query.setMaxResults(200);
+        List<Nomenclador> result = query.list();
+        return new PageImpl<Nomenclador>(result, pageable, result.size());
     }
 
+    public List<Nomenclador> findNomencladorAutocomplete(String search) {
+        Query query = this.sessionFactory.getCurrentSession().createQuery("FROM Nomenclador n "
+                + " WHERE n.codigo like '%" + search.toUpperCase() + "%' OR"
+                + " upper(n.nombre) LIKE '%" + search.toUpperCase() + "%' "
+                // + " AND n.tipo='Practicas'"
+                + " ORDER BY n.codigo, n.nombre, n.tipo ASC");
+        // query.setFirstResult(pageable.getOffset());
+        query.setMaxResults(20);
+        List<Nomenclador> result = query.list();
+        return result;
+    }
 }

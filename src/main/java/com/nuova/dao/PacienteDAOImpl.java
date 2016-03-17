@@ -12,7 +12,6 @@ import org.springframework.stereotype.Repository;
 
 import com.nuova.dto.OrdenAlarmaDTO;
 import com.nuova.model.Paciente;
-import com.nuova.model.PacienteObrasocial;
 
 @Repository
 public class PacienteDAOImpl implements PacienteDAO {
@@ -21,9 +20,9 @@ public class PacienteDAOImpl implements PacienteDAO {
 
     public void add(Paciente paciente) {
         this.sessionFactory.getCurrentSession().save(paciente);
-        for (PacienteObrasocial po : paciente.getPacienteObrasocials()) {
-            this.sessionFactory.getCurrentSession().save(po);
-        }
+        // for (PacienteObrasocial po : paciente.getPacienteObrasocials()) {
+        // this.sessionFactory.getCurrentSession().save(po);
+        // }
     }
 
     public Paciente fin1dPacienteById(Integer pacienteId) {
@@ -44,9 +43,9 @@ public class PacienteDAOImpl implements PacienteDAO {
     }
 
     public void edit(Paciente paciente) {
-        for (PacienteObrasocial po : paciente.getPacienteObrasocials()) {
-            this.sessionFactory.getCurrentSession().saveOrUpdate(po);
-        }
+        // for (PacienteObrasocial po : paciente.getPacienteObrasocials()) {
+        // this.sessionFactory.getCurrentSession().saveOrUpdate(po);
+        // }
         this.sessionFactory.getCurrentSession().saveOrUpdate(paciente);
     }
 
@@ -70,7 +69,9 @@ public class PacienteDAOImpl implements PacienteDAO {
     }
 
     public Page<Paciente> findPacientesByPageable(Pageable pageable) {
-        Query query = this.sessionFactory.getCurrentSession().createQuery("FROM Paciente p ORDER BY p.pacienteId DESC");
+        Query query = this.sessionFactory.getCurrentSession().createQuery("FROM Paciente p "
+                + " WHERE p.eliminado = 0"
+                + " ORDER BY p.pacienteId DESC");
         // query.setFirstResult(pageable.getOffset());
         // query.setMaxResults(pageable.getPageNumber());
         List<Paciente> result = query.list();
@@ -80,7 +81,8 @@ public class PacienteDAOImpl implements PacienteDAO {
     public Page<Paciente> findPacientesBySearch(String search, Pageable pageable) {
         Query query = this.sessionFactory.getCurrentSession()
                 .createQuery("FROM Paciente p "
-                        + " WHERE upper(p.apellido) LIKE '%" + search.toUpperCase() + "%' "
+                        + " WHERE  p.eliminado = 0 AND "
+                        + " upper(p.apellido) LIKE '%" + search.toUpperCase() + "%' "
                         + " OR upper(p.nombre) LIKE '%" + search.toUpperCase() + "%' "
                         + " ORDER BY p.apellido ASC");
         // query.setFirstResult(pageable.getOffset());
@@ -105,4 +107,20 @@ public class PacienteDAOImpl implements PacienteDAO {
         List<Paciente> result = query.list();
         return result;
     }
+
+    public Paciente findPacienteByDni(Integer dni) {
+        Paciente retorno = null;
+        @SuppressWarnings("unchecked")
+        List<Paciente> result = this.sessionFactory.getCurrentSession()
+                .createQuery(" SELECT p "
+                        + " FROM Paciente p "
+                        + " WHERE p.dni = " + dni).list();
+
+        if (result != null && !result.isEmpty()) {
+            retorno = result.get(0);
+        }
+
+        return retorno;
+    }
+
 }

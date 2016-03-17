@@ -195,7 +195,7 @@
 }
 
 .material-switch > label::before {
-    background: rgb(0, 0, 0);
+    background: red;
     box-shadow: inset 0px 0px 10px rgba(0, 0, 0, 0.5);
     border-radius: 8px;
     content: '';

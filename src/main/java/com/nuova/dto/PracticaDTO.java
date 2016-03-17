@@ -4,6 +4,7 @@ public class PracticaDTO {
     private Integer practicaId;
     private String nombre;
     private String codigo;
+    private String tipo;
 
     private String acciones;
 
@@ -54,6 +55,14 @@ public class PracticaDTO {
 
     public void setAcciones(String acciones) {
         this.acciones = acciones;
+    }
+
+    public String getTipo() {
+        return tipo;
+    }
+
+    public void setTipo(String tipo) {
+        this.tipo = tipo;
     }
 
 }

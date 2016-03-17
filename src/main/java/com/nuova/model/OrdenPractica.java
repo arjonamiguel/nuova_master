@@ -30,15 +30,15 @@ public class OrdenPractica implements java.io.Serializable {
     private static final long serialVersionUID = 8742454053094013763L;
     private Integer orddenPracticaId;
     private Orden orden;
-    private Practica practica;
+    private Nomenclador nomenclador;
     private Date fecha;
 
     public OrdenPractica() {
     }
 
-    public OrdenPractica(Orden orden, Practica practica, Date fecha) {
+    public OrdenPractica(Orden orden, Nomenclador nomenclador, Date fecha) {
         this.orden = orden;
-        this.practica = practica;
+        this.nomenclador = nomenclador;
         this.fecha = fecha;
     }
 
@@ -64,13 +64,13 @@ public class OrdenPractica implements java.io.Serializable {
     }
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "practica_id")
-    public Practica getPractica() {
-        return this.practica;
+    @JoinColumn(name = "nomenclador_id")
+    public Nomenclador getNomenclador() {
+        return this.nomenclador;
     }
 
-    public void setPractica(Practica practica) {
-        this.practica = practica;
+    public void setNomenclador(Nomenclador nomenclador) {
+        this.nomenclador = nomenclador;
     }
 
     @Temporal(TemporalType.DATE)

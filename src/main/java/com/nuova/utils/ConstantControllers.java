@@ -48,6 +48,7 @@ public class ConstantControllers {
     public final static String AJAX_GET_PACIENTES_PAGINADOS = "/ajaxGetPacientesPaginados";
     public final static String AJAX_GET_SEARCH_PACIENTES_PAGINADOS = "/ajaxGetSearchPacientesPaginados";
     public final static String AJAX_GET_AUTOCOMPLETE_PACIENTES = "/ajaxGetAutoCompletePacientes";
+    public final static String AJAX_GET_EXIST_DNI = "/ajaxGetExistDni";
 
     // Adherente
     public final static String FORM_ADD_ADHERENTE = "/formAddAdherente/{titularId}";
@@ -88,6 +89,11 @@ public class ConstantControllers {
 
     // Calendario
     public final static String MAIN_CALENDARIO = "/mainCalendario";
+    public final static String FORM_ADD_CALENDARIO = "/formAddCalendario";
+    public final static String ADD_CALENDARIO = "/addCalendario";
+    public final static String FORM_DELETE_CALENDARIO = "/formDeleteCalendario//{calendarioId}";
+    public final static String DELETE_CALENDARIO = "/deleteCalendario";
+    public final static String ADMIN_CALENDARIO = "/adminCalendario";
 
     // Prestadores
     public final static String MAIN_PRESTADOR = "/mainPrestador";
@@ -110,8 +116,14 @@ public class ConstantControllers {
     public final static String EDIT_PRACTICA = "/editPractica";
     public final static String AJAX_GET_PRACTICAS_PAGINADOS = "/ajaxGetPracticasPaginados";
     public final static String AJAX_GET_SEARCH_PRACTICAS_PAGINADOS = "/ajaxGetSearchPracticasPaginados";
+    public final static String AJAX_GET_AUTOCOMPLETE_NOMENCLADOR = "/ajaxGetAutoCompleteNomenclador";
 
     // Caja
-    public final static String MAIN_CAJA = "/mainCaja";
-    public final static String FORM_ADD_CAJA = "/formAddCaja";
+    public final static String MAIN_CAJA = "/mainCaja/{fechaCaja}";
+    public final static String FORM_UPDATE_CAJA = "/formUpdateCaja";
+    public final static String UPDATE_CAJA = "/updateCaja";
+    public final static String AJAX_GET_MOVIMIENTOS_CAJA = "/ajaxGetMovimientoCaja";
+    public final static String FORM_CIERRE_CAJA = "/formCierreCaja";
+    public final static String CIERRE_CAJA = "/cierreCaja";
+
 }

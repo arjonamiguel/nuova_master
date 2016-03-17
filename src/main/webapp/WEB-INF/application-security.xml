@@ -20,11 +20,11 @@
 	<authentication-manager alias="authenticationManager">
 		<authentication-provider>
 			<user-service>				
-                <user name="administrador@nuova.com" password="1234" authorities="ROLE_ADMIN" />           
-                <user name="miguel.arjona@nuova.com" password="1234" authorities="ROLE_USER" />
-                <user name="gustavo.valdez@nuova.com" password="1234" authorities="ROLE_USER" />
-                <user name="virginia.gottardi@nuova.com" password="1234" authorities="ROLE_ADMIN" />
-                <user name="usuario.autorizador@nuova.com" password="1234" authorities="ROLE_USER" />                
+                <user name="administrador@nuovamed.com" password="1234" authorities="ROLE_ADMIN" />           
+                <user name="miguel.arjona@nuovamed.com" password="1234" authorities="ROLE_USER" />
+                <user name="gustavo.valdez@nuovamed.com" password="1234" authorities="ROLE_USER" />
+                <user name="virginia.gottardi@nuovamed.com" password="1234" authorities="ROLE_ADMIN" />
+                <user name="usuario.autorizador@nuovamed.com" password="1234" authorities="ROLE_USER" />                
             </user-service>           
 		</authentication-provider>
 	</authentication-manager>

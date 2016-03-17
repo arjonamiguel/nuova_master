@@ -72,4 +72,9 @@ public class PacienteManagerImpl implements PacienteManager {
         return pacienteDAO.findPacienteAutocomplete(search);
     }
 
+    @Transactional
+    public Paciente findPacienteByDni(Integer dni) {
+        return pacienteDAO.findPacienteByDni(dni);
+    }
+
 }

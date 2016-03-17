@@ -71,6 +71,26 @@
 										});
 						
 					});
+					
+					$(function() {
+			    		$('.btn-info').tooltip({
+			        	placement: 'bottom',
+			        	title: 'Editar Datos del Paciente'
+			        	});
+					});
+					$(function() {
+			    		$('.btn-success').tooltip({
+			        	placement: 'bottom',
+			        	title: 'Generar una Orden para este Paciente'
+			        	});
+					});
+					$(function() {
+			    		$('.btn-danger').tooltip({
+			        	placement: 'bottom',
+			        	title: 'Eliminar Paciente'
+			        	});
+					});
+					
 </script>
 <!-- 	Fin Configuracion del paginador -->
 
@@ -100,7 +120,7 @@
 		<div class="panel panel-info">
 			<div class="panel-heading">
           			<div class="panel-title">
-	          			Administracion de Pacientes
+	          			<b>Administracion de Pacientes</b>
 	           			<a href="formAddPaciente" class="pull-right"><b>+</b>&nbsp;&nbsp;Nuevo Paciente</a>
           			</div>
     		</div>     

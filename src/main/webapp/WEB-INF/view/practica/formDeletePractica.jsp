@@ -35,7 +35,7 @@
 <div class="mainContainer"> 
 <div class="panelContainer">
 	<form:form method="post" action="/nuova/deletePractica" commandName="practica">
-	<form:hidden path="practicaId"/>
+	<form:hidden path="nomencladorId"/>
 	<div class="panel panel-info">
 			<div class="panel-heading">
 				<div class="panel-title">Nuevo Código de Práctica</div>

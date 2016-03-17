@@ -139,6 +139,8 @@ label.error {
 			document.getElementById("fechaNacimiento").value=document.getElementById("registration-date").value;
 		}
 
+	
+
        </SCRIPT>
 </head>
 <body style="background-color:#e5e5e5;">
@@ -157,7 +159,7 @@ label.error {
 		  		<div class="row-fluid">
 			   		<div class="span4">
 			   				<div class="formLabel"><form:label path="dni">DNI:</form:label></div>
-        					<div class="formInput"><form:input path="dni" type="number"/></div>
+        					<div class="formInput"><form:input path="dni" type="number" /></div>
 			   		</div>
 			   		<div class="span4">
 			   				<div class="formLabel"><form:label path="apellido">Apellido:</form:label></div>
@@ -213,7 +215,11 @@ label.error {
 							<div class="material-switch pull-left">
 								<input id="coseguro" name="coseguro" type="checkbox" value="true">
 								<label for="coseguro" class="label-success"></label>
+								<div style="padding-top:10%;">
+									NO - SI
+								</div>
 							</div>
+							
 			   		</div>
 	
 			   	</div>
@@ -243,39 +249,32 @@ label.error {
 	</div>	
 </div>
 
+
 <div class="panel panel-info">
-			<div class="panel-heading">
-				<div class="panel-title">Obra Social</div>
-			</div>
-			<div class="panel-body">
-						<div class="row-fluid">
-							<div class="span9">
-							</div>
-							<div class="span2">
-								<form:select path="obrasocial" style="width:88%; margin-bottom:0px">
-							   		<form:option value="NONE" label="Seleccione Obra Social ..."/>
-							   		<form:options items="${obrasocialList}" itemLabel="nombre" itemValue="obrasocialId" />			    
-								</form:select>
-							</div>
-							<div class="span1">
-								<div style="float:right;"><INPUT type="button" value="Agregar" onclick="addRow('dataTable')" class="btn btn-info"/></div>
-							</div>
-						</div>
-						<div class="row-fluid">
-							<div class="span12">
-									<TABLE id="dataTable" class="table" style="width: 100%; margin-top:0px;">
-								        <TR>
-								            <TD>ID</TD>
-								            <TD>Obra Social</TD>        
-								            <TD style="width: 20%">Nro Credencial</TD>
-								            <TD style="width: 15%">Original/Provisoria</TD>
-								            <td></td>
-								        </TR>
-					    			</TABLE>
-							</div>
-						</div>
-			</div>		
+	<div class="panel-heading">
+		<div class="panel-title">Obra Social</div>
+	</div>
+	<div class="panel-body">
+		<div class="row-fluid">
+			<div class="span4">
+			   <div class="formLabel"><form:label path="obrasocial">Obra Social:</form:label></div>
+        		<div class="formInput">
+        		<form:select path="obrasocial.obrasocialId" style="width:83%; margin-bottom:0px">
+				<form:option value="NONE" label="Seleccione Obra Social ..."/>
+				<form:options items="${obrasocialList}" itemLabel="nombre" itemValue="obrasocialId" />
+				</form:select>
+        		</div>
+			 </div>
+			 
+			 <div class="span4">
+			 	<div class="formLabel"><form:label path="obrasocial.credencial">Credencial:</form:label></div>
+        	 	<div class="formInput"><form:input path="obrasocial.credencial"/></div>
+			 </div>
+		</div>
+						
+	</div>		
 </div>
+
 <div class="panel panel-info">
 			<div class="panel-body">
 				<div class="row-fluid">
@@ -294,20 +293,38 @@ label.error {
 </html>
 <script>
 		document.getElementById("mainPaciente").parentNode.classList.add("active");
+
+		function callExistDni(dni) {
+			var retorno;
+			$.ajax({
+				url : "ajaxGetExistDni?dni=" + dni,
+				type : "GET",
+				contentType : "application/json; charset=utf-8",
+				//    data: jsonString, //Stringified Json Object
+				async : false, //Cross-domain requests and dataType: "jsonp" requests do not support synchronous operation
+				cache : false, //This will force requested pages not to be cached by the browser          
+				processData : false, //To avoid making query String instead of JSON
+					
+				success : function(existDni) {
+					retorno = existDni;
+				}
+			});
+
+			return retorno;
+		}
+		
 			$("#paciente").validate({
     
         // Specify the validation rules
         rules: {
         	 dni: {
                 required: true,
-                minlength: 7
+                minlength: 7,
+                maxlength:10
             },
             apellido: "required",
             nombre: "required",
-            telefono: {
-                required: true,
-                minlength: 5
-            },
+
             email: {
                 required: true,
                 email: true
@@ -319,18 +336,23 @@ label.error {
         messages: {
         	 dni: {
                 required: "Ingrese DNI",
-                minlength: "DNI debe tener al menos 7 caracteres de largo"
+                minlength: "DNI debe tener al menos 7 caracteres de largo",
+                maxlength: "DNI deber ser menor a 10 caracteres de largo"
             },
             apellido: "Ingrese apellido",
             nombre: "Ingrese nombre",
-            telefono: {
-                required: "Ingrese telefono",
-                minlength: "Telefono debe tener al menos 5 caracteres de largo"
-            },
+
 			fechaNacimiento : "Ingrese fecha de nacimiento"
         },
-                submitHandler: function(form) {
-            form.submit();
+        submitHandler: function(form) {
+        	var dni = document.getElementById("dni");            
+            if (callExistDni(dni.value)){
+                alert("El DNI ingresado ya existe.");
+                dni.focus();
+            } else {
+            	form.submit();
+            }        
+            
         }
     });
 

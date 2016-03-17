@@ -1,6 +1,6 @@
 package com.nuova.model;
 
-// Generated Feb 29, 2016 7:49:23 PM by Hibernate Tools 4.3.1
+// Generated Mar 14, 2016 12:41:49 AM by Hibernate Tools 4.3.1
 
 import java.util.Date;
 import java.util.HashSet;
@@ -41,6 +41,7 @@ public class Profesional implements java.io.Serializable {
     private Integer nroFolio;
     private Integer nroPoliza;
     private Date vigenciaDesde;
+    private Byte eliminado;
     private Date vigenciaHasta;
     private String tipoMatricula;
     private Set<ProfesionalEspecialidad> profesionalEspecialidads = new HashSet<ProfesionalEspecialidad>(0);
@@ -52,7 +53,7 @@ public class Profesional implements java.io.Serializable {
     public Profesional(String apellido, String nombre, String telefono, String matricula, String registroNacional,
             String tituloProfesional, Byte habilitacionSiprosa, Date fechaVencimientoHabilitacion, Integer nroRegistro,
             Date validoHasta, Date fechaEmisionMatricula, Integer nroLibro, Integer nroFolio, Integer nroPoliza,
-            Date vigenciaDesde, Date vigenciaHasta, String tipoMatricula,
+            Date vigenciaDesde, Byte eliminado, Date vigenciaHasta, String tipoMatricula,
             Set<ProfesionalEspecialidad> profesionalEspecialidads, Set<OrdenProfesional> ordenProfesionals) {
         this.apellido = apellido;
         this.nombre = nombre;
@@ -69,6 +70,7 @@ public class Profesional implements java.io.Serializable {
         this.nroFolio = nroFolio;
         this.nroPoliza = nroPoliza;
         this.vigenciaDesde = vigenciaDesde;
+        this.eliminado = eliminado;
         this.vigenciaHasta = vigenciaHasta;
         this.tipoMatricula = tipoMatricula;
         this.profesionalEspecialidads = profesionalEspecialidads;
@@ -225,6 +227,15 @@ public class Profesional implements java.io.Serializable {
         this.vigenciaDesde = vigenciaDesde;
     }
 
+    @Column(name = "eliminado")
+    public Byte getEliminado() {
+        return this.eliminado;
+    }
+
+    public void setEliminado(Byte eliminado) {
+        this.eliminado = eliminado;
+    }
+
     @Temporal(TemporalType.DATE)
     @Column(name = "vigencia_hasta", length = 10)
     public Date getVigenciaHasta() {
@@ -253,7 +264,7 @@ public class Profesional implements java.io.Serializable {
         this.profesionalEspecialidads = profesionalEspecialidads;
     }
 
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "profesional")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "profesional")
     public Set<OrdenProfesional> getOrdenProfesionals() {
         return this.ordenProfesionals;
     }

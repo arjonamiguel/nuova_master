@@ -34,9 +34,9 @@
 
 						$("#practicaGrid").simplePagingGrid(
 								{
-									columnNames : [ "ID", "CODIGO", "NOMBRE","" ],
-									columnKeys : [ "practicaId", "codigo", "nombre","acciones"],
-									columnWidths : [ "5%", "10%",],
+									columnNames : [  "CODIGO", "NOMBRE","TIPO", "" ],
+									columnKeys : [  "codigo", "nombre","tipo","acciones"],
+									columnWidths : [ "5%",],
 									sortable : [ false, true ],
 									data : rows
 								});

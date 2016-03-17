@@ -172,41 +172,6 @@
     </div>       
 </div>  
 
-<div class="panel panel-info">
-	<div class="panel-heading">
-          <div class="panel-title">Eliminar Constancia de Matricula</div>
-    </div>     
-	<div  class="panel-body">
-	
-<div class="container-fluid">
-  <div class="row-fluid">
-	    <div class="span4">	
-			
-			<div>
-				<div class="formLabel"><form:label path="fechaEmisionMatricula">Fecha Matricula:</form:label></div>
-				<div style="visibility:hidden;height:0px;"><form:input class="date" path="fechaEmisionMatricula" /></div>
-				<div class="formInput">
-				<div id="calendar">
-					<div class="input-group registration-date-time" style="padding-top:0%;">
-						<input disabled="disabled"  class="form-control" name="fecha_matricula" id="fecha-matricula" type="date"  onchange="javascript:updateDateFechaMatricula();">
-	            	</div>
-	        	</div>  
-	        	</div>
-			</div>
-	    </div>
-	    <div class="span4">
-			<div class="formLabel"><form:label path="nroLibro">Nro. Folio:</form:label></div>
-        	<div class="formInput"><form:input path="nroLibro" type="number" disabled="true"/></div>
-	    </div>
-	    <div class="span4">
-			<div class="formLabel"><form:label path="nroFolio">Nro. Libro:</form:label></div>
-	        <div class="formInput"><form:input path="nroFolio" type="number" disabled="true"/></div>
-	    </div>
-  	</div>
-	</div>        
-        
-    </div>       
-</div>  
 
 <div class="panel panel-info">
 	<div class="panel-heading">
@@ -284,7 +249,7 @@
 	    <TABLE id="dataTable" class="table"  style="margin-top:0px;">
 	        <TR>
 	        <TR>      	
-	            <TD>Id</TD>
+	            <TD>ID</TD>
 	            <TD>Especialidad</TD> 
 	            <TD></TD>       
 	        </TR>       

@@ -25,7 +25,7 @@
                             <li><a href=""><i class="icon-cog"></i> Preferencias</a></li>
                             <li><a href=""><i class="icon-envelope"></i> Contacto Soporte</a></li>
                             <li class="divider"></li>
-                            <li><a href="<c:url value='j_spring_security_logout'/>"><i class="icon-off"></i> Salir</a></li>
+                            <li><a href="/nuova/j_spring_security_logout"><i class="icon-off"></i> Salir</a></li>
                         </ul>
                     </li>
                 </ul>
@@ -63,31 +63,26 @@
 		            <ul class="dropdown-menu">
 		            	
 						<li><a href="/nuova/mainProfesional" id="mainProfesional">Administrar Profesionales</a></li>
-						<li><a href="/nuova/formAddProfesional" id="formAddProfesional">Agregar Profesional</a></li>
 						<li><a href="/nuova/showReporteProfesionales" id="showReporteProfesionales">Reporte de Profesionales</a></li>
 						
 						<li class="divider"></li>
 						
 						<sec:authorize access="hasRole('ROLE_ADMIN')">
 						<li><a href="/nuova/mainEspecialidad" id="mainEspecialidad">Administrar Especialidades</a></li>
-						<li><a href="/nuova/formAddEspecialidad" id="formAddEspecialidad">Agregar Especialidades</a></li>
 						<li><a href="/nuova/showReporteEspecialidades" id="showReporteEspecialidades">Reporte de Especialidades</a></li>
 						<li class="divider"></li>
 						</sec:authorize>
 						<sec:authorize access="hasRole('ROLE_ADMIN')">
 						<li><a href="/nuova/mainObraSocial" id="mainObraSocial">Administrar Obras Sociales</a></li>
-						<li><a href="/nuova/formAddObraSocial" id="formAddObraSocial">Agregar Obras Sociales</a></li>
 						<li class="divider"></li>
 						</sec:authorize>
 						<sec:authorize access="hasRole('ROLE_ADMIN')">
 						<li><a href="/nuova/mainPrestador" id="mainPrestador">Administrar Prestadores</a></li>
-						<li><a href="/nuova/formAddPrestador" id="formAddPrestador">Agregar Prestadores</a></li>
 						<li><a href="/nuova/showReportePrestadores" id="showReportePrestador">Reporte de Prestadores</a></li>
 						<li class="divider"></li>						
 						</sec:authorize>						
 						<sec:authorize access="hasRole('ROLE_ADMIN')">
 						<li><a href="/nuova/mainPractica" id="mainPractica">Administrar Nomenclador</a></li>
-						<li><a href="/nuova/formAddPractica" id="formAddPractica">Agregar Practica</a></li>
 						<li><a href="/nuova/showReportePractica" id="showReportePractica">Reporte Nomenclador</a></li>
 						</sec:authorize>
 		            </ul>
@@ -109,7 +104,6 @@
 					<a href="#" id="mainPaciente"  class="dropdown-toggle" data-toggle="dropdown"><i class="icon-file"></i>&nbsp;&nbsp;Administracion de Pacientes<span class="caret"></a>
 					<ul class="dropdown-menu" role="menu">
 		                <li><a href="/nuova/mainPaciente">Administrar Pacientes</a></li>
-		                <li><a href="/nuova/formAddPaciente">Agregar Pacientes</a></li>
 		                <li><a href="/nuova/showReportePacientes">Reporte de Pacientes</a></li>
               		</ul>  
 				</li>
@@ -119,7 +113,9 @@
 				<li class="dropdown" >
 				<a href="#" id="calendario"  class="dropdown-toggle" data-toggle="dropdown"><i class="icon-calendar"></i>&nbsp;&nbsp;Calendario<span class="caret"></a>
 				<ul class="dropdown-menu" role="menu">
-		                <li><a href="/nuova/mainCalendario">Visualizar Calendario</a></li>		               
+		                <li><a href="/nuova/mainCalendario">Visualizar Calendario</a></li>	
+		                <li><a href="/nuova/formAddCalendario">Agregar Calendario</a></li>	
+		                <li><a href="/nuova/adminCalendario">Administrar Calendario</a></li>               
               	</ul>
 				</li>
 				</sec:authorize>
@@ -128,7 +124,9 @@
 				<li class="dropdown" >
 				<a href="#" id="caja"  class="dropdown-toggle" data-toggle="dropdown"><i class="icon-list-alt"></i>&nbsp;&nbsp;Caja<span class="caret"></a>
 				<ul class="dropdown-menu" role="menu">
-		                <li><a href="/nuova/mainCaja">Administracion de Caja</a></li>		               
+		                <li><a href="/nuova/mainCaja/null">Administracion de Caja</a></li>
+		                <li><a href="/nuova/formUpdateCaja">Nuevo Movimiento de Caja</a></li>
+		                	               
               	</ul>
 				</li>
 				</sec:authorize>

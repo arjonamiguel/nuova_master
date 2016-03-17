@@ -18,7 +18,7 @@ public class PacienteDTO {
     private String telefono;
     private String mail;
 
-    private ObraSocialDTO obrasocial;
+    private ObraSocialDTO obrasocial = new ObraSocialDTO();
     private List<ObraSocialDTO> obrasocialList = new ArrayList<ObraSocialDTO>();
     private List<ObraSocialDTO> obrasocialListEdit = new ArrayList<ObraSocialDTO>();
     private String provincia;

@@ -32,12 +32,10 @@
 
 						$("#ordenGrid").simplePagingGrid(
 								{
-									columnNames : [ "PACIENTE","TIPO" ,"NRO.ORDEN", "FECHA", "ORDEN MEDICA", "CREDENCIAL",
-													"MONOTRIBUTISTA", "RECIBO SUELDO", "ESTADO","" ],
-									columnKeys : [ "botonpaciente","ordenTipoDesc" ,"nroOrden", "fecha","iconordenmedica"
-													, "iconcredencial", "iconmonotributista", "iconrecibo"
+									columnNames : [ "PACIENTE","TIPO" ,"NRO.ORDEN", "FECHA", "", "ESTADO","","" ],
+									columnKeys : [ "botonpaciente","ordenTipoDesc" ,"nroOrden", "fecha",
 													, "etiqestado", "acciones"],
-									columnWidths : [ "5%", "10%", , , , , , , "5%"],
+									columnWidths : [ "20%", "15%","15%","15%"],
 									sortable : [ false, true ],
 									data : rows
 								});
@@ -72,6 +70,26 @@
 										});
 						
 					});
+					
+					$(function() {
+			    		$('.btn-info').tooltip({
+			        	placement: 'bottom',
+			        	title: 'Editar Consulta'
+			        	});
+					});
+					$(function() {
+			    		$('.btn-default').tooltip({
+			        	placement: 'bottom',
+			        	title: 'Imprimir Consulta'
+			        	});
+					});
+					$(function() {
+			    		$('.btn-danger').tooltip({
+			        	placement: 'bottom',
+			        	title: 'Eliminar Consulta'
+			        	});
+					});
+					
 </script>
 <!-- 	Fin Configuracion del paginador -->
 

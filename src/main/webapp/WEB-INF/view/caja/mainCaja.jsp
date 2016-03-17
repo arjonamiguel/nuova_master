@@ -18,7 +18,36 @@
 	<link href="<%=request.getContextPath()%>/resources/css/nuova.css" rel="stylesheet"/>
 	<link href="<%=request.getContextPath()%>/resources/css/panel.css" rel="stylesheet"/>
 	<link href="<%=request.getContextPath()%>/resources/css/bootstrap/bootstrap-responsive.css" rel="stylesheet"/>
+	<style>
+	.label-error {
+		  color: #a94442;
+		  background-color: #f2dede;
+		  border-color: #ebccd1;
+		  padding:1px 20px 1px 20px;
+		  width:22%;
+		}
+	</style>
 	
+	
+<script>
+function submitSearch() {
+		if($("#search").val()==""){
+			$("#message").css("visibility","visible");
+			return;
+		}		
+	fechaCaja = document.getElementById("search").value;
+	location.href="/nuova/mainCaja/"+fechaCaja;
+}
+
+function submitCierreCaja() {
+	fechaCierre = document.getElementById("fechaCierre").value;
+	location.href="/nuova/formCierreCaja?fechaCierre="+fechaCierre;
+}
+	function hideMessage(){
+		$("#message").css("visibility","hidden");
+	}
+</script>
+
 </head>
 <body style="background-color:#e5e5e5;">
 <jsp:include page="../sec_menu.jsp"></jsp:include>
@@ -29,13 +58,12 @@
 			<div class="panel-heading">
           			<div class="panel-title">
 	          			Administracion de Caja
-	           			<a href="#" class="pull-right"><b>+</b>&nbsp;&nbsp;Nuevo Ingreso de Caja</a>
+	           			<a href="/nuova/formUpdateCaja" class="pull-right"><b>+</b>&nbsp;&nbsp;Nuevo Movimiento de Caja</a>
           			</div>
     		</div>     
 			<div  class="panel-body" >
 				<div class="container-fluid" >
 	  				<div class="row-fluid" >
-	  				<form:form action="" method="GET" commandName="caja">
 						<div class="span4">
 				   			<div id="labelDate" class="formLabel"><label>Fecha:</label></div>
 							<div style="visibility:hidden;height:0px;"><input id="fecha" class="date"/></div>						
@@ -46,13 +74,15 @@
 									
 										<div id="calendar">
 											<div class="input-group registration-date-time">
-												<input class="form-control" name="registration_date" 
-												id="registration-date" type="date"  onchange="javascript:updateDate();">		            					
+												<input class="form-control" name="search" 
+												id="search" type="date" onchange="hideMessage()"/>											
 				            				</div>
 				            			</div>	            	
 									</td>
 									<td>			
-									<input type="button" value="Buscar" class="btn btn-info" style="margin-bottom:8px"/>
+									<input type="button" value="Buscar" class="btn btn-info" style="margin-bottom:8px" 
+									onclick="javascript:submitSearch()" />
+									
 									</td>
 									</tr>
 								</table>
@@ -62,8 +92,12 @@
 	            			</div>
 	            				
 			   			</div>
-			   			</form:form>
-			   			<span class="pull-right">TOTAL $ </span>
+			   			<div class="span4" style="float: right;text-align: right;">
+			   			<input type="button" value="${fechaBoton}" class="btn btn-success" style="margin-bottom:8px" 
+									onclick="submitCierreCaja()" />
+						<input type="hidden" name="fechaCierre" id="fechaCierre" value="${fecha}" />			
+			   			</div>
+			   			<div class="label-error" id="message" style="float:left;margin-left:8%;visibility:hidden;">Debe ingresar una fecha valida de busqueda</div>
 		    		</div>
 		    		
 		    		<div class="row-fluid" >
@@ -82,9 +116,18 @@
 						        <td>${c.conceptoDesc}</td>
 						        <td style="text-align: right;">${c.ingreso}</td>
 						        <td style="text-align: right;">${c.egreso}</td>
-						       	</div>
 						    </tr>
 						</c:forEach>
+							<tr>
+						        <td colspan="4" style="text-align: right; background: #d9edf7;"></td>						      
+						    </tr>
+						  	<tr>
+						        <td colspan="3" style="text-align: right;"><b> TOTAL $</b></td>        
+						        <td style="color: #31708f;background: #d9edf7; text-align: center">
+						        <b>${total}</b>
+						        <input type="hidden" name="totalCierre" id="totalCierre" value="${total}" />
+						        </td>
+						    </tr>
 						</table>
 						
 						</div>

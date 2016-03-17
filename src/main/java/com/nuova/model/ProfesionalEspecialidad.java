@@ -47,7 +47,7 @@ public class ProfesionalEspecialidad implements java.io.Serializable {
         this.id = id;
     }
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "profesional_id")
     public Profesional getProfesional() {
         return this.profesional;

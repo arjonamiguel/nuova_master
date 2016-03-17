@@ -18,21 +18,76 @@
 		<link href="<%=request.getContextPath()%>/resources/css/panel.css" rel="stylesheet"/>
 		<link href="<%=request.getContextPath()%>/resources/css/bootstrap/bootstrap-responsive.css" rel="stylesheet"/>
 		<script src="<c:url value="/resources/js/jquery/jquery.validate.min.js" />"></script>
+		<link href="<%=request.getContextPath()%>/resources/montrezorro-bootstrap-checkbox-fa865ff/css/bootstrap-checkbox.css" rel="stylesheet"/>
+		<script src="<%=request.getContextPath()%>/resources/montrezorro-bootstrap-checkbox-fa865ff/js/bootstrap-checkbox.js" /></script>
 	
 	<style>
 	.chkbox {
    padding-left: 10px;
    font-weight: bold;
  }
- label.error {
+ .label-error {
 		  color: #a94442;
 		  background-color: #f2dede;
 		  border-color: #ebccd1;
 		  padding:1px 20px 1px 20px;
-		  width:58%;
+		  width:22%;
 		}
 	
+	
 	</style>
+	<script>
+	var checkBoxSelectedFlag="false";
+	
+	function validatedSelects(){
+		if($("#monto").val()=="NONE"){
+			$("#message").css("visibility","visible");
+			return false;
+		}else if($(".cb-icon-check")[0].style.display!="none" && $(".cb-icon-check")[1].style.display!="none"){
+			$("#message2").css("visibility","hidden");
+			if(checkBoxSelectedFlag=="false"){
+				$("#message2").text("Falta chequear el penultimo o ultimo requisito");
+				$("#message2").css("visibility","visible");
+				return false;
+			}
+		}else{
+			$("#message2").css("visibility","visible");
+			return false;
+		}
+		return true;
+	}
+	function hideMessage(){
+		$("#message").css("visibility","hidden");
+	}
+	
+	function monotributistaSelected(){
+		if(checkBoxSelectedFlag=="false")
+		{
+			checkBoxSelectedFlag="true";
+		}else{
+			checkBoxSelectedFlag="false";
+		}
+		
+		if($(".cb-icon-check")[3].style.display!="none")
+		{
+			$("#reqReciboSueldo").click();
+		}
+		
+	}
+	
+	function recibosueldoSelected(){
+		if(checkBoxSelectedFlag=="false")
+		{
+			checkBoxSelectedFlag="true";
+		}else{
+			checkBoxSelectedFlag="false";
+		}
+		if($(".cb-icon-check")[2].style.display!="none")
+		{
+			$("#reqMonotributista").click();
+		}
+	}
+	</script>
 	
 </head>
 
@@ -45,12 +100,13 @@
 			<div class="panel-heading">
           			<div class="panel-title">
 	          			Nueva Consulta Odontológica
-	          			<form:select path="monto" style="width:25%; margin-bottom:0px">
-						<form:option value="NONE" label="Seleccione Monto de Coseguro $"/>
-						<form:options items="${montosorden}"/>			    
-					</form:select>
+
           			</div>
+          		<div class="label-error" id="message" style="float:left;margin-left:15%;visibility:hidden;">Falta seleccionar Coseguro</div>
+          		<div class="label-error" id="message2" style="float:left;margin-left:8%;visibility:hidden;">Faltan chequear los dos primeros requisitos</div>
     		</div>     
+    		
+          			
 			<div  class="panel-body" >
 				<div class="container-fluid" >
 	  				<div class="row-fluid" >
@@ -61,6 +117,7 @@
 										  <li class="active"><a data-toggle="tab" href="#tb_paciente">Paciente</a></li>
 										  <li><a data-toggle="tab" href="#tb_requisitos">Requisitos</a></li>	  
 										  <li><a data-toggle="tab" href="#tb_observacion">Observaciones</a></li>
+										  <li><a data-toggle="tab" href="#tb_coseguro">Coseguro</a></li>
 										</ul>
 									
 										<div class="tab-content" style="height: 350px">
@@ -99,7 +156,7 @@
 														<b>Presentó la orden original del médico solicitante?</b>
 													</td>
 													<td  style="text-align:left" colspan="2">			
-													    <input type="checkbox" id="reqOrdenMedico" name = "reqOrdenMedico"  />
+													    <input type="checkbox" id="reqOrdenMedico" name = "reqOrdenMedico" class="checkbox"/>
 													</td>
 												</tr>
 												<tr>
@@ -108,7 +165,7 @@
 														<b>Presentó fotocopia de la credencial de la prestadora OSPSIP?</b>
 													</td>
 													<td  style="text-align:left" colspan="2">			
-													    <input type="checkbox" id="reqCredecial" name="reqCredecial"  />
+													    <input type="checkbox" id="reqCredecial" name="reqCredecial" class="checkbox"/>
 													</td>
 												</tr>
 									
@@ -120,7 +177,7 @@
 														<b>Presentó fotocopia de los 3 último recibos como Monotributista o Ama de Casa?</b>
 													</td>
 													<td  style="text-align:left" colspan="2">			
-													    <input type="checkbox" id="reqMonotributista" name="reqMonotributista" />
+													    <input type="checkbox" id="reqMonotributista" name="reqMonotributista" class="checkbox" onchange="monotributistaSelected()"/>
 													</td>
 												</tr>	
 												<tr>
@@ -129,7 +186,7 @@
 														<b>Presentó fotocopia del último recibo de sueldo?</b>
 													</td>
 													<td  style="text-align:left" colspan="2">			
-													    <input type="checkbox" id="reqReciboSueldo" name="reqReciboSueldo" />
+													    <input type="checkbox" id="reqReciboSueldo" name="reqReciboSueldo" class="checkbox" onchange="recibosueldoSelected()"/>
 													</td>
 												</tr>
 									
@@ -146,6 +203,21 @@
 												</tr>		
 												</table>
 									  		</div>
+									  		
+									  		<div id="tb_coseguro" class="tab-pane fade">
+									    		<table class="table"  style="width: 100%">			
+												<tr>		
+													<td style="width: 15%">Coseguro:</td>
+													<td  style="text-align:left" colspan="5">			
+													    	<form:select path="monto" style="width:25%; margin-bottom:0px" onchange="hideMessage()">
+																<form:option value="NONE" label="Seleccione Monto de Coseguro $"/>
+																<form:options items="${montosorden}"/>			    
+															</form:select>
+													</td>
+												</tr>		
+												</table>
+									  		</div>
+									  		
 										</div>
 										<div style="float:right;">
 										<table>
@@ -175,7 +247,8 @@
 </body>
 </html>
 <script>
-		document.getElementById("mainPaciente").parentNode.classList.add("active");
+			document.getElementById("mainPaciente").parentNode.classList.add("active");
+			$(".checkbox").checkbox();
 			$("#ordenDto").validate({
     
 		        // Specify the validation rules
@@ -197,8 +270,10 @@
 		                minlength: "DNI debe tener al menos 7 caracteres de largo"
 		            }
 		        },
-		                submitHandler: function(form) {
-		            form.submit();
+  						submitHandler: function(form) {
+		                if(validatedSelects()){
+		            		form.submit();
+		            	}
 		        }
 		    });
 		

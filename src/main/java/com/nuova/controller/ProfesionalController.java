@@ -55,7 +55,8 @@ public class ProfesionalController {
             @PathVariable("profesionalId") Integer profesionalId) {
         if (profesionalId != null) {
             List<Especialidad> especialidadList = especialidadManager.findAll();
-            ProfesionalDTO dto = transformProfesionalToDto(profesionalManager.findProfesionalById(profesionalId));
+            ProfesionalDTO dto =
+                    transformProfesionalToDto(profesionalManager.findProfesionalById(profesionalId));
 
             map.addAttribute("especialidadList", especialidadList);
             map.addAttribute("especialidadListEdit", dto.getEspecialidadListEdit());
@@ -68,7 +69,8 @@ public class ProfesionalController {
     public String formDeleteEspecialidad(ModelMap map,
             @PathVariable("profesionalId") Integer profesionalId) {
         if (profesionalId != null) {
-            ProfesionalDTO dto = transformProfesionalToDto(profesionalManager.findProfesionalById(profesionalId));
+            ProfesionalDTO dto =
+                    transformProfesionalToDto(profesionalManager.findProfesionalById(profesionalId));
 
             map.addAttribute("especialidadListEdit", dto.getEspecialidadListEdit());
             map.addAttribute("profesional", dto);
@@ -77,10 +79,10 @@ public class ProfesionalController {
     }
 
     @RequestMapping(value = ConstantControllers.ADD_PROFESIONAL, method = RequestMethod.POST)
-    public String addProfesional(
-            @ModelAttribute(value = "employee") ProfesionalDTO profesionalDto,
+    public String addProfesional(@ModelAttribute(value = "employee") ProfesionalDTO profesionalDto,
             BindingResult result) {
         Profesional profesional = transformDtoToProfesional(profesionalDto);
+        profesional.setEliminado(new Byte("0"));
         profesionalManager.add(profesional);
         return "redirect:" + ConstantControllers.MAIN_PROFESIONAL;
     }
@@ -88,10 +90,12 @@ public class ProfesionalController {
     @RequestMapping(value = ConstantControllers.DELETE_PROFESIONAL, method = RequestMethod.POST)
     public String deleteEspecialidad(@ModelAttribute(value = "profesional") ProfesionalDTO dto) {
         Profesional profesionalOld = profesionalManager.findProfesionalById(dto.getProfesionalId());
+        Profesional profesional = transformDtoToProfesional(dto);
         for (ProfesionalEspecialidad pe : profesionalOld.getProfesionalEspecialidads()) {
             profesionalManager.deleteProfesionalEspecialidad(pe.getProfesional().getProfesionalId());
         }
-        profesionalManager.delete(profesionalOld.getProfesionalId());
+        profesional.setEliminado(new Byte("1"));
+        profesionalManager.edit(profesional);
         return "redirect:" + ConstantControllers.MAIN_PROFESIONAL;
     }
 
@@ -102,6 +106,7 @@ public class ProfesionalController {
         for (ProfesionalEspecialidad pe : profesionalOld.getProfesionalEspecialidads()) {
             profesionalManager.deleteProfesionalEspecialidad(pe.getProfesional().getProfesionalId());
         }
+        profesional.setEliminado(profesionalOld.getEliminado());
         profesionalManager.edit(profesional);
         return "redirect:" + ConstantControllers.MAIN_PROFESIONAL;
     }
@@ -115,10 +120,11 @@ public class ProfesionalController {
     }
 
     // Ajax --------------------------------------------
-    @RequestMapping(value = ConstantControllers.AJAX_GET_PROFESIONALES_PAGINADOS, method = RequestMethod.GET)
-    public @ResponseBody Page<ProfesionalDTO> getProfesionalesPaginados(
-            @RequestParam(required = false, defaultValue = "0") Integer start,
-            @RequestParam(required = false, defaultValue = "50") Integer limit) {
+    @RequestMapping(value = ConstantControllers.AJAX_GET_PROFESIONALES_PAGINADOS,
+            method = RequestMethod.GET)
+    public @ResponseBody Page<ProfesionalDTO> getProfesionalesPaginados(@RequestParam(
+            required = false, defaultValue = "0") Integer start, @RequestParam(required = false,
+            defaultValue = "50") Integer limit) {
 
         // Sort and Pagination
         // Sort sort = new Sort(Sort.Direction.DESC, "creationDate");
@@ -134,17 +140,19 @@ public class ProfesionalController {
         return new PageImpl<ProfesionalDTO>(dtos, pageable, profesionales.getTotalElements());
     }
 
-    @RequestMapping(value = ConstantControllers.AJAX_GET_SEARCH_PROFESIONALES_PAGINADOS, method = RequestMethod.GET)
-    public @ResponseBody Page<ProfesionalDTO> getSearchProfesionalesPaginados(
-            @RequestParam(required = false, defaultValue = "") String search,
-            @RequestParam(required = false, defaultValue = "0") Integer start,
+    @RequestMapping(value = ConstantControllers.AJAX_GET_SEARCH_PROFESIONALES_PAGINADOS,
+            method = RequestMethod.GET)
+    public @ResponseBody Page<ProfesionalDTO> getSearchProfesionalesPaginados(@RequestParam(
+            required = false, defaultValue = "") String search, @RequestParam(required = false,
+            defaultValue = "0") Integer start,
             @RequestParam(required = false, defaultValue = "50") Integer limit) {
 
         // Sort and Pagination
         // Sort sort = new Sort(Sort.Direction.DESC, "creationDate");
         Pageable pageable = new PageRequest(start, limit);
 
-        Page<Profesional> profesionales = profesionalManager.findProfesionalesBySearch(search, pageable);
+        Page<Profesional> profesionales =
+                profesionalManager.findProfesionalesBySearch(search, pageable);
         List<ProfesionalDTO> dtos = new ArrayList<ProfesionalDTO>();
         for (Profesional p : profesionales) {
             ProfesionalDTO dto = transformProfesionalToDto(p);
@@ -159,24 +167,46 @@ public class ProfesionalController {
         DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
         Date fechaHabilitacion = null;
         Date validoHasta = null;
-        Date fechaMatricula = null;
+        // Date fechaMatricula = null;
         Date vigenciaDesde = null;
         Date vigenciaHasta = null;
         try {
             // fechaHabilitacion = formatter.parse(p.getFechaVencimientoHabilitacion());
-            validoHasta = formatter.parse(p.getValidoHasta());
-            fechaMatricula = formatter.parse(p.getFechaEmisionMatricula());
-            vigenciaDesde = formatter.parse(p.getVigenciaDesde());
-            vigenciaHasta = formatter.parse(p.getVigenciaHasta());
+            if (!p.getValidoHasta().equals("")) {
+                validoHasta = formatter.parse(p.getValidoHasta());
+            }
+            // fechaMatricula = formatter.parse(p.getFechaEmisionMatricula());
+            if (!p.getVigenciaDesde().equals("")) {
+                vigenciaDesde = formatter.parse(p.getVigenciaDesde());
+            }
+            if (!p.getVigenciaHasta().equals("")) {
+                vigenciaHasta = formatter.parse(p.getVigenciaHasta());
+            }
         } catch (ParseException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
-        Profesional profesional = new Profesional(p.getApellido(), p.getNombre(), p.getTelefono(), p.getMatricula(),
-                p.getRegistroNacional(), p.getTituloProfesional(), new Byte(p.getHabilitacionSiprosa()),
-                fechaHabilitacion, p.getNroRegistro(), validoHasta, fechaMatricula, p.getNroLibro(), p.getNroFolio(),
-                p.getNroPoliza(), vigenciaDesde, vigenciaHasta, null, null, null);
-        profesional.setProfesionalId(p.getProfesionalId());
+        // Profesional profesional =
+        // new Profesional(p.getApellido(), p.getNombre(), p.getTelefono(), p.getMatricula(),
+        // p.getRegistroNacional(), p.getTituloProfesional(),
+        // new Byte((p.getHabilitacionSiprosa().equals("")) ? "0" : p.getHabilitacionSiprosa()),
+        // fechaHabilitacion, p.getNroRegistro(),
+        // validoHasta, null, null, null, p.getNroPoliza(), vigenciaDesde, vigenciaHasta, null,
+        // null, null, null, null, null, null);
+
+        Byte hs = null;
+        if (p.getHabilitacionSiprosa() != null) {
+            hs = new Byte((p.getHabilitacionSiprosa().equals("")) ? "0"
+                    : p.getHabilitacionSiprosa());
+        }
+        Profesional profesional = new Profesional(p.getApellido()
+                , p.getNombre(), p.getTelefono(), p.getMatricula(), p.getRegistroNacional(),
+                p.getTituloProfesional(),
+                hs,
+                fechaHabilitacion, p.getNroRegistro(),
+                validoHasta, null, null, null, p.getNroPoliza(), vigenciaDesde, null, vigenciaHasta,
+                null, null, null);
+        // profesional.setProfesionalId(p.getProfesionalId());
 
         for (Integer id : p.getEspecialidadList()) {
             Especialidad especialidad = especialidadManager.findEspecialidadById(id);
@@ -202,18 +232,17 @@ public class ProfesionalController {
 
         Set<ProfesionalEspecialidad> listPE = p.getProfesionalEspecialidads();
         for (ProfesionalEspecialidad pe : listPE) {
-            Especialidad especialidad = especialidadManager.findEspecialidadById(
-                    pe.getEspecialidad().getEspecialidadId());
+            Especialidad especialidad =
+                    especialidadManager.findEspecialidadById(pe.getEspecialidad().getEspecialidadId());
 
             ProfesionalDTO profesionalDto = new ProfesionalDTO();
             profesionalDto.setProfesionalId(pe.getProfesional().getProfesionalId());
             EspecialidadDTO especialidadDto = new EspecialidadDTO();
             especialidadDto.setId(pe.getEspecialidad().getEspecialidadId());
 
-            dto.getEspecialidadListOld().add(new ProfesionalEspecialidadDTO(pe.getId(),
-                    profesionalDto, especialidadDto));
-            dto.getEspecialidadListEdit().put(especialidad.getEspecialidadId(),
-                    especialidad.getNombre());
+            dto.getEspecialidadListOld().add(
+                    new ProfesionalEspecialidadDTO(pe.getId(), profesionalDto, especialidadDto));
+            dto.getEspecialidadListEdit().put(especialidad.getEspecialidadId(), especialidad.getNombre());
         }
 
         // ----
