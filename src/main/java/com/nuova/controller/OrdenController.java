@@ -344,6 +344,12 @@ public class OrdenController {
             orden.setOrdenProfesionals(ordenProfesionals);
         }
 
+        // requisitos
+        orden.setReqCredecial(Util.getByteFlag(dto.isReqCredecial()));
+        orden.setReqMonotributista(Util.getByteFlag(dto.isReqMonotributista()));
+        orden.setReqOrdenMedico(Util.getByteFlag(dto.isReqOrdenMedico()));
+        orden.setReqReciboSueldo(Util.getByteFlag(dto.isReqReciboSueldo()));
+
         ordenManager.edit(orden);
 
         String redirect = "";
