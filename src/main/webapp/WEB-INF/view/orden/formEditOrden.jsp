@@ -23,7 +23,7 @@
 	
 	<script type="text/javascript">
 	function createSelectEstados(id) {
-		var selectEstado = '<select id="estado" name="estado_'+id+'" id="estado_'+id+'" style="width:70%; margin-bottom:0px">' +
+		var selectEstado = '<select name="'+id+'" id="'+id+'" style="width:70%; margin-bottom:0px">' +
 		   ' <option value="NONE">Seleccione Estado ...</option>' +
 		   ' <option value="AUTORIZACION DIRECTA">AUTORIZACION DIRECTA</option>' + 
 		   ' <option value="PENDIENTE AFILIACIONES">PENDIENTE AFILIACIONES</option>' +
@@ -95,17 +95,15 @@
 	          var rowCount = table.rows.length;
 	          var row = table.insertRow(rowCount);
 	          
-	          var cell1 = row.insertCell(0);                      
-	          cell1.innerHTML = document.getElementById("nomencladorId").value+"<input type='hidden' name='ordenpracticaListEdit[" + index + "].orddenPracticaId'> "
-	          + "<input type='hidden' name='ordenpracticaListEdit[" + index + "].practicaId' value='" + document.getElementById("nomencladorId").value + "'>";
 	          
-	          var cell2 = row.insertCell(1);
-	          cell2.innerHTML = document.getElementById("ContainerGeneralOverWrite_ContainerGeneral_sq").value; 
+	          var cell2 = row.insertCell(0);
+	          cell2.innerHTML = document.getElementById("ContainerGeneralOverWrite_ContainerGeneral_sq").value+" <input type='hidden' name='ordenpracticaListEdit[" + index + "].orddenPracticaId'> "
+	          + "<input type='hidden' name='ordenpracticaListEdit[" + index + "].practicaId' value='" + document.getElementById("nomencladorId").value + "'>"; 
 	          
-	          var cell3 = row.insertCell(2);
-	          cell3.innerHTML = createSelectEstados(document.getElementById("nomencladorId").value);
+	          var cell3 = row.insertCell(1);
+	          cell3.innerHTML = createSelectEstados("ordenpracticaListEdit[" + index + "].estado");
 	          
-	          var cell4 = row.insertCell(3);
+	          var cell4 = row.insertCell(2);
 	          row.valign = "BASELINE";
 	          cell4.innerHTML = "<button type='button' class='btn btn-link' onClick='Eliminar(this.parentNode.parentNode.rowIndex)'>eliminar</button>"
 	           
@@ -134,7 +132,7 @@
 		<div class="panel panel-info">
 			<div class="panel-heading">
           			<div class="panel-title">
-	          		Editar Practicas 
+	          		<b>Editar Prácticas</b> 
           			</div>
     		</div>     
 			<div  class="panel-body" >
@@ -246,7 +244,7 @@
 																name="ctl00$ContainerGeneralOverWrite$ContainerGeneral$sq"
 																type="text"
 																id="ContainerGeneralOverWrite_ContainerGeneral_sq"
-																placeholder="Busque en el Nomenclador por Codigo o Nombre..."
+																placeholder="Búsque en el Nomenclador por Codigo o Nombre..."
 																autocomplete="off"
 																style="height: 20px; width: 40%;margin-bottom:0px">
 																
@@ -264,21 +262,40 @@
 										    		<div>		    
 													    <TABLE id="tb_practicas" class="table" style="width: 100%; margin: 2% 0;" >
 													    <thead>
-													        <TR>
-													        	
-													            <TD style="width: 10%">ID</TD>			                    
-													            <TD style="width: 50%">Practica</TD>
-													            <TD style="width: 40%">Estados</TD>
+													        <TR>													        	
+													            <TD style="width: 50%"><b>Nomenclador</b></TD>
+													            <TD style="width: 40%"><b>Estados</b></TD>
 													            <td></td>
 													        </TR>
 													        <% int index = 0;%>
 													        <c:forEach items="${ordenDto.practicasListEdit}" var="pa" varStatus="loop" >
 													    	<tr>
-														        <td>${pa.practicaId}
+														        
+														        <td>
 														        <input type="hidden" name = "ordenpracticaListEdit[<%=index%>].orddenPracticaId" value = "${pa.orddenPracticaId}" />
-														        <input type="hidden" name = "ordenpracticaListEdit[<%=index%>].practicaId" value = "${pa.practicaId}" /> 
-														        </td>
-														        <td>${pa.nombre}</td>		        
+														        <input type="hidden" name = "ordenpracticaListEdit[<%=index%>].practicaId" value = "${pa.practicaId}" />
+														        ${pa.nombre}
+														        </td>	
+														        
+														        <td>
+														        
+														        <select name = "ordenpracticaListEdit[<%=index%>].estado" 
+														        id = "ordenpracticaListEdit[<%=index%>].estado" style="width:70%; margin-bottom:0px" >
+																   <option value="NONE">Seleccione Estado ...</option>
+																    <option value="AUTORIZACION DIRECTA">AUTORIZACION DIRECTA</option> 
+																    <option value="PENDIENTE AFILIACIONES">PENDIENTE AFILIACIONES</option>
+																    <option value="AUTORIZADA POR AFILIACIONES">AUTORIZADA POR AFILIACIONES</option>
+																    <option value="RECHAZADA POR AFILIACIONES">RECHAZADA POR AFILIACIONES</option>
+																    <option value="PENDIENTE AUDITORIA">PENDIENTE AUDITORIA</option>
+																    <option value="AUTORIZADA POR AUDITORIA">AUTORIZADA POR AUDITORIA</option>
+																    <option value="RECHAZADA POR AUDITORIA">RECHAZADA POR AUDITORIA</option>
+																    <option value="RECHAZADA">RECHAZADA</option><option value="ANULADO">ANULADO</option>			    
+																</select>
+																
+																<script>																
+																document.getElementById('ordenpracticaListEdit[<%=index%>].estado').value ='${pa.estado}'; 
+																</script>
+														        </td>	        
 														        <td><button type='button' class='btn btn-link' onClick='Eliminar(this.parentNode.parentNode.rowIndex)'>eliminar</button></td>
 														        <%index++;%>
 													    	</tr>

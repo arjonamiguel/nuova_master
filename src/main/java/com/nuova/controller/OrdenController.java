@@ -31,6 +31,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.nuova.dto.ComboItemDTO;
 import com.nuova.dto.EspecialidadDTO;
+import com.nuova.dto.ObraSocialDTO;
 import com.nuova.dto.ObservacionesDTO;
 import com.nuova.dto.OrdenDTO;
 import com.nuova.dto.OrdenPracticaDTO;
@@ -44,6 +45,7 @@ import com.nuova.model.Caja;
 import com.nuova.model.CajaOrden;
 import com.nuova.model.Especialidad;
 import com.nuova.model.Nomenclador;
+import com.nuova.model.Obrasocial;
 import com.nuova.model.Observaciones;
 import com.nuova.model.Orden;
 import com.nuova.model.OrdenPractica;
@@ -320,6 +322,7 @@ public class OrdenController {
                 op.setFecha(new Date());
                 op.setOrden(orden);
                 op.setNomenclador(p);
+                op.setEstado(opdto.getEstado());
 
                 persistOrdenPracticaList.add(op);
             }
@@ -433,6 +436,14 @@ public class OrdenController {
             dto.setPacienteTitular(transformPacienteToDto(pacienteManager
                     .fin1dPacienteById(p.getPaciente().getPacienteId())));
         }
+
+        Obrasocial os = obrasocialManager.findObraSocialById(p.getObrasocialId());
+        // ObraSocialDTO o = new ObraSocialDTO(po.getObrasocial().getObrasocialId(), po.getObrasocial().getNombre(),
+        // po.getNroCredencial(), po.getProvisorio() == 1 ? "checked" : "");
+        ObraSocialDTO o = new ObraSocialDTO();
+        o.setNombre(os.getNombre());
+        o.setCredencial(p.getNroCredencial());
+        dto.setObrasocial(o);
 
         // Obrasocial os = obrasocialManager.findObraSocialById(p.getObrasocialId());
         // dto.setCrdencial(p.getNroCredencial());
@@ -648,8 +659,13 @@ public class OrdenController {
             p.setNombre("[" + p.getCodigo() + "] - [" + p.getTipo() + "] - " + p.getNombre());
             Orden o = op.getOrden();
             // PracticaDTO dto = new PracticaDTO(p.getPracticaId(), "[" + p.getCodigo() + "]-" + p.getNombre());
-            OrdenPracticaDTO dto = new OrdenPracticaDTO(o.getOrdenId(), p.getNombre(), p.getNomencladorId());
+            OrdenPracticaDTO dto = new OrdenPracticaDTO();
             dto.setOrddenPracticaId(op.getOrddenPracticaId());
+            dto.setOrdenId(o.getOrdenId());
+            dto.setNombre(p.getNombre());
+            dto.setPracticaId(p.getNomencladorId());
+            dto.setEstado(op.getEstado());
+
             retorno.add(dto);
         }
 

@@ -323,8 +323,10 @@ public class ReportController {
             p.setNombre("[" + p.getCodigo() + "]-" + p.getNombre());
             Orden o = op.getOrden();
             // PracticaDTO dto = new PracticaDTO(p.getPracticaId(), "[" + p.getCodigo() + "]-" + p.getNombre());
-            OrdenPracticaDTO dto = new OrdenPracticaDTO(o.getOrdenId(), p.getNombre(), p.getNomencladorId());
-            dto.setOrddenPracticaId(op.getOrddenPracticaId());
+            OrdenPracticaDTO dto = new OrdenPracticaDTO(op.getOrddenPracticaId(), o.getOrdenId(), p.getNombre(),
+                    p.getNomencladorId(),
+                    op.getEstado());
+            // dto.setOrddenPracticaId(op.getOrddenPracticaId());
             retorno.add(dto);
         }
 
