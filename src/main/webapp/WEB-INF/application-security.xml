@@ -13,20 +13,22 @@
 		<intercept-url pattern="/logout" access="permitAll" />
 		<intercept-url pattern="/accessdenied" access="permitAll" />
         <intercept-url pattern="/**" access="hasRole('ROLE_USER') OR hasRole('ROLE_ADMIN')" />
-		<form-login login-page="/login" default-target-url="/home" authentication-failure-url="/accessdenied" />
+		<form-login
+             login-page="/login" 
+             default-target-url="/home" 
+             authentication-failure-url="/accessdenied"     
+        />
 		<logout logout-success-url="/logout" />
 	</http>
 
-	<authentication-manager alias="authenticationManager">
-		<authentication-provider>
-			<user-service>				
-                <user name="administrador@nuovamed.com" password="1234" authorities="ROLE_ADMIN" />           
-                <user name="miguel.arjona@nuovamed.com" password="1234" authorities="ROLE_USER" />
-                <user name="gustavo.valdez@nuovamed.com" password="1234" authorities="ROLE_USER" />
-                <user name="virginia.gottardi@nuovamed.com" password="1234" authorities="ROLE_ADMIN" />
-                <user name="usuario.autorizador@nuovamed.com" password="1234" authorities="ROLE_USER" />                
-            </user-service>           
-		</authentication-provider>
-	</authentication-manager>
+    <authentication-manager>
+    <authentication-provider>
+        <jdbc-user-service data-source-ref="dataSource" 
+        users-by-username-query="select username,password, enabled from user_details where username=?"        
+        authorities-by-username-query="select ud.username, ur.role
+        from user_details ud, user_roles ur,users_role_map urm
+        where ud.id = urm.id and urm.role_id = ur.role_id and ud.username = ? "/>
+    </authentication-provider>
+    </authentication-manager>
 
 </beans:beans>
