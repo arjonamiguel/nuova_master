@@ -127,7 +127,7 @@
 				<ul class="dropdown-menu" role="menu">
 		                <li><a href="/nuova/mainCaja/null">Administracion de Caja</a></li>
 		                <li><a href="/nuova/formUpdateCaja">Nuevo Movimiento de Caja</a></li>
-		                	               
+		                <li><a href="/nuova/mainCierreCaja">Administración Cierres de Cajas</a></li>		                	               
               	</ul>
 				</li>
 				</sec:authorize>

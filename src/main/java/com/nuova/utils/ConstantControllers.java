@@ -125,5 +125,7 @@ public class ConstantControllers {
     public final static String AJAX_GET_MOVIMIENTOS_CAJA = "/ajaxGetMovimientoCaja";
     public final static String FORM_CIERRE_CAJA = "/formCierreCaja";
     public final static String CIERRE_CAJA = "/cierreCaja";
-
+    public final static String MAIN_CIERRE_CAJA = "/mainCierreCaja";
+    public final static String AJAX_GET_CAJACIERRE_PAGINADOS = "/ajaxGetCajaCierrePaginados";
+    public final static String AJAX_GET_SEARCH_CAJACIERRE_PAGINADOS = "/ajaxGetSearchCajaCierrePaginados";
 }

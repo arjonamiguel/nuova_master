@@ -83,4 +83,25 @@ public class CajaDAOImpl implements CajaDAO {
         this.sessionFactory.getCurrentSession().save(cierre);
     }
 
+    public Page<CajaCierre> findCajaCierreByPageable(Pageable pageable) {
+        Query query = this.sessionFactory.getCurrentSession().createQuery(
+                "FROM CajaCierre c ORDER BY c.fechaCierre DESC");
+        // query.setFirstResult(pageable.getOffset());
+        // query.setMaxResults(pageable.getPageNumber());
+        List<CajaCierre> result = query.list();
+        return new PageImpl<CajaCierre>(result, pageable, result.size());
+    }
+
+    public Page<CajaCierre> findCajaCierreBySearch(String search, Pageable pageable) {
+        Query query = this.sessionFactory.getCurrentSession()
+                .createQuery("FROM CajaCierre c "
+                        + " WHERE c.fechaCierre=" + search
+                        + " ORDER BY c.fechaCierre ASC");
+
+        // query.setFirstResult(pageable.getOffset());
+        // query.setMaxResults(pageable.getPageNumber());
+        List<CajaCierre> result = query.list();
+        return new PageImpl<CajaCierre>(result, pageable, result.size());
+    }
+
 }
