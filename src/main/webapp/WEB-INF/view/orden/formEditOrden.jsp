@@ -149,7 +149,8 @@ function addRow(tableID) {
 									</c:if>
 									</a>
 								</li>
-								<li><a data-toggle="tab" href="#tb_flujo" onclick="setObservacionInvisible()">Flujo de Estados</a></li>
+								<li><a data-toggle="tab" href="#tb_historiaclinica" onclick="setObservacionInvisible()">Historia Clinica</a></li>
+								<li><a data-toggle="tab" href="#tb_flujo" onclick="setObservacionInvisible()">Flujo de Estados</a></li>								
 							</ul>
 							<!-- Fin Declaracion de tabs -->							
 							
@@ -175,10 +176,15 @@ function addRow(tableID) {
 									<jsp:include page="formEditOrdenTabObservaciones.jsp"></jsp:include>			
 								</div>
 								
+								<!-- ** Tab Historia Clinica -->
+								<div id="tb_historiaclinica" class="tab-pane fade">  					
+									<jsp:include page="formEditOrdenTabHistoriaClinica.jsp"></jsp:include>	
+		 						</div>
+		 						
 								<!-- ** Tab Flujos -->
 								<div id="tb_flujo" class="tab-pane fade">  					
 									<jsp:include page="formEditOrdenTabFlujo.jsp"></jsp:include>	
-		 						</div>
+		 						</div>							
 		 		
 							</div>
 							<!-- Fin Contenedor de Tabs -->
