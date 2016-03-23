@@ -124,7 +124,10 @@ label.error {
 <form:form method="post" action="/nuova/addAdherente" commandName="paciente">
 	<div class="panel panel-info">
 	 	<div class="panel-heading">
-	 	 	<div class="panel-title">Nuevo Adherente - Titular: ${datosTitular}</div>
+	 	 	<div class="panel-title">
+			<b>Nuevo Adherente</b>
+	     	<h4>Titular: <a href="/nuova/formEditPaciente/${paciente.pacienteTitular.pacienteId}">${datosTitular}</a></h4>
+	     	</div>
 	 	</div>
 	 	<div style="padding-top:30px" class="panel-body" >
 		 	<div class="container-fluid">

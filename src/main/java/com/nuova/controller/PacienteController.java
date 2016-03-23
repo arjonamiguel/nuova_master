@@ -207,6 +207,7 @@ public class PacienteController {
         dto.setMail(titular.getMail());
         dto.setDomicilio(titular.getDomicilio());
         dto.setTitularId(titular.getPacienteId());
+        dto.setParentesco(titular.getParentesco().intValue());
 
         ObraSocialDTO os = new ObraSocialDTO();
         os.setObrasocialId(titular.getObrasocialId());
@@ -222,6 +223,7 @@ public class PacienteController {
         map.addAttribute("obrasocialList", obrasocialList);
         map.addAttribute("obrasocialDTOList", new ArrayList<ObraSocialDTO>());
         map.addAttribute("paciente", dto);
+        map.addAttribute("isTitular", dto.isTitular());
         return ConstantRedirect.VIEW_FORM_ADD_ADHERENTE;
     }
 

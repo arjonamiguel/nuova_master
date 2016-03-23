@@ -55,4 +55,12 @@ public class CajaManagerImpl implements CajaManager {
         cajaDAO.addCajaCierre(cierre);
     }
 
+    public Page<CajaCierre> findCajaCierreByPageable(Pageable pageable) {
+        return cajaDAO.findCajaCierreByPageable(pageable);
+    }
+
+    public Page<CajaCierre> findCajaCierreBySearch(String search, Pageable pageable) {
+        return cajaDAO.findCajaCierreBySearch(search, pageable);
+    }
+
 }

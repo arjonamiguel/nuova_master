@@ -6,6 +6,10 @@ import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
@@ -41,7 +45,7 @@ public class CajaController {
         CierreCajaDTO dto = new CierreCajaDTO();
         dto.setFechaCierreView(format.format(fecha));
         dto.setFechaCierre(fechaCierre);
-        dto.setMontoView(monto);
+        // dto.setMontoView(monto);
         dto.setMonto(monto);
         map.addAttribute("cajaCierre", dto);
         return ConstantRedirect.VIEW_FORM_CIERRE_CAJA;
@@ -105,6 +109,35 @@ public class CajaController {
         map.addAttribute("fechaBoton", "Cerrar Caja " + formatbot.format(fecha));
         map.addAttribute("fecha", format.format(fecha));
         return ConstantRedirect.VIEW_MAIN_CAJA;
+    }
+
+    @RequestMapping(value = ConstantControllers.MAIN_CIERRE_CAJA, method = RequestMethod.GET)
+    public String mainCaja(ModelMap map) {
+        return ConstantRedirect.VIEW_MAIN_CIEREE_CAJA;
+    }
+
+    // Ajax --------------------------------------------
+    @RequestMapping(value = ConstantControllers.AJAX_GET_CAJACIERRE_PAGINADOS,
+            method = RequestMethod.GET)
+    public @ResponseBody Page<CierreCajaDTO> getProfesionalesPaginados(@RequestParam(
+            required = false, defaultValue = "0") Integer start, @RequestParam(required = false,
+            defaultValue = "50") Integer limit) {
+
+        // Sort and Pagination
+        // Sort sort = new Sort(Sort.Direction.DESC, "creationDate");
+        Pageable pageable = new PageRequest(start, limit);
+
+        Page<CajaCierre> cajacierres = cajaManager.findCajaCierreByPageable(pageable);
+        List<CierreCajaDTO> dtos = new ArrayList<CierreCajaDTO>();
+        for (CajaCierre c : cajacierres) {
+            CierreCajaDTO dto = new CierreCajaDTO();
+            dto.setCajaCierreId(c.getCajaCierreId());
+            dto.setFechaCierre(c.getFechaCierre() + "");
+            dto.setMonto(c.getMonto());
+            dtos.add(dto);
+        }
+
+        return new PageImpl<CierreCajaDTO>(dtos, pageable, cajacierres.getTotalElements());
     }
 
     // Ajax --------------------------------------------

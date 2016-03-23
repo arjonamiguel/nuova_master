@@ -32,14 +32,16 @@ public class OrdenPractica implements java.io.Serializable {
     private Orden orden;
     private Nomenclador nomenclador;
     private Date fecha;
+    private String estado;
 
     public OrdenPractica() {
     }
 
-    public OrdenPractica(Orden orden, Nomenclador nomenclador, Date fecha) {
+    public OrdenPractica(Orden orden, Nomenclador nomenclador, Date fecha, String estado) {
         this.orden = orden;
         this.nomenclador = nomenclador;
         this.fecha = fecha;
+        this.estado = estado;
     }
 
     @Id
@@ -81,6 +83,15 @@ public class OrdenPractica implements java.io.Serializable {
 
     public void setFecha(Date fecha) {
         this.fecha = fecha;
+    }
+
+    @Column(name = "estado", length = 256)
+    public String getEstado() {
+        return estado;
+    }
+
+    public void setEstado(String estado) {
+        this.estado = estado;
     }
 
 }

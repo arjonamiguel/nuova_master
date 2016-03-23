@@ -29,4 +29,8 @@ public interface CajaManager {
 
     public void addCajaCierre(CajaCierre cierre);
 
+    public Page<CajaCierre> findCajaCierreByPageable(Pageable pageable);
+
+    public Page<CajaCierre> findCajaCierreBySearch(String search, Pageable pageable);
+
 }

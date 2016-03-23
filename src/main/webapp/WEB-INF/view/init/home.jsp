@@ -4,6 +4,7 @@
 <%@taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 <%@taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@taglib uri="http://www.springframework.org/security/tags"  prefix="sec" %>
 
 <html>
 <head>
@@ -31,7 +32,7 @@
 		<script type="text/javascript" src="<%=request.getContextPath()%>/resources/simplepaginggrid/examples/pageNumbers/script/handlebars-1.0.rc.1.js"></script>
 		<script type="text/javascript" src="<%=request.getContextPath()%>/resources/simplepaginggrid/script/simplePagingGrid-0.5.0.2.js"></script>
 
-<style>
+<style type="text/css">
 .navbar-brand-centered {
 	position: absolute;
 	left: 50%;
@@ -41,45 +42,45 @@
 	background-color: transparent;
 }
 
-.navbar>.container .navbar-brand-centered, .navbar>.container-fluid .navbar-brand-centered
-	{
+.navbar>.container .navbar-brand-centered, .navbar>.container-fluid .navbar-brand-centered {
 	margin-left: -80px;
 }
 
 </style>
 
- <script type="text/javascript">
-      $(document).ready(function() {
-    	  var map = new Object();
-    	  var objects = [];
-    	  
-        $('input.typeahead').typeahead({
-          source: function (query, process) {
-            $.ajax({
-              url: '/nuova/ajaxGetAutoCompletePacientes',
-              type: 'POST',
-              dataType: 'JSON',              
-              data: 'query=' + query,
-              success: function(data) {
-                console.log(data);
-                $.each(data, function(i, object) {
-                    map[object.value] = object;
-                    if (objects[i] == null) {
-                    	objects.push(object.value);
-                    }
-                });
-                process(objects);
-              }
-            });
-          },
-          updater: function(item) {
-              $('#pacienteId').val(map[item].id);
-              return item;
-          }
-        });
-      });
-    </script>
- 
+<script type="text/javascript">
+	$(document).ready(function() {
+		var map = new Object();
+		var objects = [];
+
+		$('input.typeahead').typeahead({
+			source : function(query, process) {
+				$.ajax({
+					url : '/nuova/ajaxGetAutoCompletePacientes',
+					type : 'POST',
+					dataType : 'JSON',
+					data : 'query=' + query,
+					success : function(data) {
+						console.log(data);
+						$.each(data, function(i, object) {
+							map[object.value] = object;
+							if (objects[i] == null) {
+								objects.push(object.value);
+							}
+						});
+						process(objects);
+						objects = [];
+					}
+				});
+			},
+			updater : function(item) {
+				$('#pacienteId').val(map[item].id);
+				return item;
+			}
+		});
+	});
+</script>
+
 </head>
 
 <body style="background-color: #e5e5e5;">
@@ -126,7 +127,6 @@
 								</div>
 								</section>
 								<div>
-<!-- 									onkeypress="javascript:return WebForm_FireDefaultButton(event, 'ContainerGeneralOverWrite_ContainerGeneral_btnSearchOffers')"> -->
 
 									<div class="buscador buscador_mvl">
 										<h2>B&uacute;squeda de Pacientes</h2>
@@ -139,23 +139,24 @@
 												name="ctl00$ContainerGeneralOverWrite$ContainerGeneral$sq"
 												type="text"
 												id="ContainerGeneralOverWrite_ContainerGeneral_sq"
-												placeholder="Inicie la b&uacute;squeda de pacientes ..."
+												placeholder="Ingrese DNI o el Apellido ..."
 												autocomplete="off"
 												style="height: 40px; width: 50%">
 										</div>
 
-										<input type="submit"
-											name="ctl00$ContainerGeneralOverWrite$ContainerGeneral$btnSearchOffers"
-											value="Buscar Paciente"
-											id="ContainerGeneralOverWrite_ContainerGeneral_btnSearchOffers"
-											class="submit_n" style="margin-top: 2px;">
-
+										<button id="breadButton" href="" 
+										class="btn btn-info" 
+										style="margin-top: 2px; height: 40px"
+										onclick="">
+										<i class="ico icon-user">
+										</i>&nbsp;Buscar Paciente
+										</button>
 
 									</div>
 
 								</div>
 								<div class="offers_insc">
-									<h3>Monitor de Practicas Realizadas</h3>
+									<h3>Monitor de Pr&aacute;cticas Realizadas</h3>
 									<ul>
 										<c:forEach items="${alarmas}" var="al">
 											<li class="offers_apl"><span><b>(${al.cantidad})</b>
@@ -164,10 +165,7 @@
 									</ul>
 									<a href="/nuova/mainOrdenPractica">Ir al Administrador Ordenes de Pr&aacute;cticas</a>
 									<a href="/nuova/mainConsultaOdontologica">Ir al Administrador de Ordenes de Pr&aacute;cticas Odontol&oacute;gicas</a>
-									<div class="box_tooltips ocultar" id="tooltip_offers_insc">
-										Aquí podrás ver toda la información relacionada con tus
-										postulaciones <span class="icon arrow"></span>
-									</div>
+									
 								</div>
 
 							</div>
@@ -188,15 +186,18 @@
 												id="ContainerGeneralOverWrite_ContainerGeneral_sq1"
 												data-su="/ofertas-de-trabajo/"
 												class="js-cargos-suggest typeahead"
-												placeholder="Inicie la b&uacute;squeda de pacientes ..."
+												placeholder="Ingrese DNI o el Apellido ..."
 												style="height: 40px; width: 50%"
 												autocomplete="off">
 										</div>
-										<input type="submit"
-											name="ctl00$ContainerGeneralOverWrite$ContainerGeneral$btnSearchOffers1"
-											value="Buscar Paciente"
-											id="ContainerGeneralOverWrite_ContainerGeneral_btnSearchOffers1"
-											class="submit_n">
+										
+										<button id="breadButton" href="" 
+										class="btn btn-info" 
+										style="margin-top: 2px; height: 40px"
+										onclick="">
+										<i class="ico icon-user">
+										</i>&nbsp;Buscar Paciente
+										</button>
 
 									</div>
 
@@ -211,31 +212,33 @@
 										</a> <span> <a href="/nuova/showReportePacientes">
 										<img src="/nuova/resources/img/others/export_excel_32x32.png"></a>
 										</span></li>
-
+										
+										<sec:authorize access="hasRole('ROLE_ADMIN')">
 										<li class="devclick cp"><a href="/nuova/mainProfesional">
 												<b>(${cantProfesional})</b> - Profesionales Registrados.
 										</a> <span> <a href="/nuova/showReporteProfesionales">
 										<img src="/nuova/resources/img/others/export_excel_32x32.png"></a>
 										</span></li>
-
+										</sec:authorize>
+										
+										<sec:authorize access="hasRole('ROLE_ADMIN')">
 										<li class="devclick cp"><a href="/nuova/mainEspecialidad">
 												<b>(${cantEspecialidad})</b> - Especialidades en Curso.
 										</a> <span> <a href="/nuova/showReporteEspecialidades">
 										<img src="/nuova/resources/img/others/export_excel_32x32.png"></a>
 										</span></li>
-
+										</sec:authorize>
+										
+										<sec:authorize access="hasRole('ROLE_ADMIN')">
 										<li class="devclick cp"><a href="/nuova/mainObraSocial">
 												<b>(${cantObrasocial})</b> - Obras Sociales Registradas.
 										</a> <span> <a href="/nuova/showReportesObraSociales">
 										<img src="/nuova/resources/img/others/export_excel_32x32.png"></a>
 										</span></li>
-
+										</sec:authorize>
 
 									</ul>
-									<div class="box_tooltips ocultar" id="tooltip_offers_suggest">
-										Listado de las ofertas que se ajustan a tu perfil profesional
-										<span class="icon arrow"></span>
-									</div>
+									
 								</div>
 
 							</div>

@@ -1,11 +1,15 @@
 package com.nuova.dto;
 
+import java.text.DecimalFormat;
+
 public class CierreCajaDTO {
     private Integer cajaCierreId;
     private String fechaCierreView;
     private String fechaCierre;
-    private Double montoView;
+    private String montoView;
     private Double monto;
+
+    DecimalFormat format = new DecimalFormat("#.00");
 
     public CierreCajaDTO() {
 
@@ -50,11 +54,11 @@ public class CierreCajaDTO {
         this.fechaCierreView = fechaCierreView;
     }
 
-    public Double getMontoView() {
-        return montoView;
+    public String getMontoView() {
+        return "<div style='text-align:right  !important'>" + format.format(monto.doubleValue()) + "</div>";
     }
 
-    public void setMontoView(Double montoView) {
+    public void setMontoView(String montoView) {
         this.montoView = montoView;
     }
 

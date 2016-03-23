@@ -3,10 +3,11 @@ package com.nuova.model;
 // Generated Mar 5, 2016 3:21:43 PM by Hibernate Tools 4.3.1
 
 import java.util.Date;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
-import static javax.persistence.GenerationType.IDENTITY;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -33,7 +34,7 @@ public class CajaCierre implements java.io.Serializable {
     }
 
     @Id
-    @GeneratedValue(strategy = IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "caja_cierre_id", unique = true, nullable = false)
     public Integer getCajaCierreId() {
         return this.cajaCierreId;
@@ -53,7 +54,7 @@ public class CajaCierre implements java.io.Serializable {
         this.fechaCierre = fechaCierre;
     }
 
-    @Column(name = "monto", precision = 22, scale = 0)
+    @Column(name = "monto", precision = 10, scale = 2)
     public Double getMonto() {
         return this.monto;
     }

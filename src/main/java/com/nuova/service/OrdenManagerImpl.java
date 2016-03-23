@@ -11,76 +11,98 @@ import org.springframework.transaction.annotation.Transactional;
 import com.nuova.dao.OrdenDAO;
 import com.nuova.dto.OrdenAlarmaDTO;
 import com.nuova.model.Orden;
+import com.nuova.model.OrdenDocument;
 import com.nuova.model.OrdenTipo;
 
+@Transactional
 @Service
 public class OrdenManagerImpl implements OrdenManager {
     @Autowired
     OrdenDAO ordenDAO;
 
-    @Transactional
+    @Override
     public void add(Orden orden) {
         ordenDAO.add(orden);
     }
 
-    @Transactional
+    @Override
     public Orden findOrdenById(Integer ordenId) {
         return ordenDAO.findOrdenById(ordenId);
     }
 
-    @Transactional
+    @Override
     public List<Orden> findAll() {
         return ordenDAO.findAll();
     }
 
-    @Transactional
+    @Override
     public void delete(Integer ordenId) {
         ordenDAO.delete(ordenId);
     }
 
-    @Transactional
+    @Override
     public void edit(Orden orden) {
         ordenDAO.edit(orden);
     }
 
-    @Transactional
+    @Override
     public void deleteOrdenPractica(Integer id) {
         ordenDAO.deleteOrdenPractica(id);
     }
 
-    @Transactional
+    @Override
     public Page<Orden> findOrdenesByPageable(Pageable pageable, Integer codigoOrdenTipo) {
         return ordenDAO.findOrdenesByPageable(pageable, codigoOrdenTipo);
     }
 
-    @Transactional
+    @Override
     public Page<Orden> findOrdenesBySearch(String search, Pageable pageable, Integer codigoOrdenTipo) {
         return ordenDAO.findOrdenesBySearch(search, pageable, codigoOrdenTipo);
     }
 
-    @Transactional
+    @Override
     public List<OrdenAlarmaDTO> findAlarmaOrdenes() {
         return ordenDAO.findAlarmaOrdenes();
     }
 
-    @Transactional
+    @Override
     public List<OrdenTipo> finAllOrdenTipo() {
         return ordenDAO.finAllOrdenTipo();
     }
 
-    @Transactional
+    @Override
     public OrdenTipo findOrdenTipoByCodigo(Integer codigo) {
         return ordenDAO.findOrdenTipoByCodigo(codigo);
     }
 
-    @Transactional
+    @Override
     public void deleteOrdenProfesional(Integer ordenId) {
         ordenDAO.deleteOrdenProfesional(ordenId);
     }
 
-    @Transactional
+    @Override
     public OrdenTipo findOrdenTipoById(Integer id) {
         return ordenDAO.findOrdenTipoById(id);
+    }
+
+    @Override
+    public void add(OrdenDocument document) {
+        ordenDAO.add(document);
+    }
+
+    @Override
+    public OrdenDocument findOrdenDocumentById(Integer documentId) {
+        return ordenDAO.findOrdenDocumentById(documentId);
+    }
+
+    @Override
+    public void deleteOrdenDocument(Integer docuementId) {
+        ordenDAO.deleteOrdenDocument(docuementId);
+    }
+
+    @Override
+    public List<OrdenDocument> finAllOrdenDocumentByOrdenId(Integer ordenId) {
+        return ordenDAO.finAllOrdenDocumentByOrdenId(ordenId);
     }
 
 }

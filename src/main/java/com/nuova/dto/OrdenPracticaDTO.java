@@ -5,15 +5,19 @@ public class OrdenPracticaDTO {
     private Integer ordenId;
     private String nombre;
     private Integer practicaId;
+    private String estado;
 
     public OrdenPracticaDTO() {
 
     }
 
-    public OrdenPracticaDTO(Integer ordenId, String nombre, Integer practicaId) {
+    public OrdenPracticaDTO(Integer orddenPracticaId, Integer ordenId, String nombre, Integer practicaId, String estado) {
+        super();
+        this.orddenPracticaId = orddenPracticaId;
         this.ordenId = ordenId;
         this.nombre = nombre;
         this.practicaId = practicaId;
+        this.estado = estado;
     }
 
     public Integer getOrddenPracticaId() {
@@ -46,6 +50,14 @@ public class OrdenPracticaDTO {
 
     public void setPracticaId(Integer practicaId) {
         this.practicaId = practicaId;
+    }
+
+    public String getEstado() {
+        return estado;
+    }
+
+    public void setEstado(String estado) {
+        this.estado = estado;
     }
 
 }
