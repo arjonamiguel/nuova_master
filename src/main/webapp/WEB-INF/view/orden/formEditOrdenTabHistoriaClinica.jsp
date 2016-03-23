@@ -15,7 +15,7 @@ Adjuntar Nuevo Archivo</a>
 	${hc.fileName}<br>
 </td>
 <td style="width: 10%">
-<a href="#">
+<a href="javascript:window.open('/nuova/download-document/${hc.documentId}','NUOVA - ${hc.fileName}','width=500,height=150')">
   <img src="<%=request.getContextPath()%>/resources/img/download16x16.png" alt="Descargar">
   Descargar
 </a>
