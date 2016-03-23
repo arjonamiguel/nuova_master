@@ -7,6 +7,7 @@ import org.springframework.data.domain.Pageable;
 
 import com.nuova.dto.OrdenAlarmaDTO;
 import com.nuova.model.Orden;
+import com.nuova.model.OrdenDocument;
 import com.nuova.model.OrdenTipo;
 
 public interface OrdenDAO {
@@ -36,4 +37,12 @@ public interface OrdenDAO {
 
     public OrdenTipo findOrdenTipoById(Integer id);
 
+    // Orden Document
+    public void add(OrdenDocument document);
+
+    public OrdenDocument findOrdenDocumentById(Integer documentId);
+
+    public void deleteOrdenDocument(Integer docuementId);
+
+    public List<OrdenDocument> finAllOrdenDocumentByOrdenId(Integer ordenId);
 }

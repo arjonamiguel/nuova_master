@@ -107,6 +107,34 @@ function addRow(tableID) {
     document.getElementById("ContainerGeneralOverWrite_ContainerGeneral_sq").value = "";
     document.getElementById("ContainerGeneralOverWrite_ContainerGeneral_sq").focus();
    }
+
+
+function addRowHistoriaClinica(tableID) {
+	
+	var index = document.getElementById(tableID).getElementsByTagName('tr').length;
+	index ++;	
+    var table = document.getElementById(tableID);
+    var rowCount = table.rows.length;
+    var row = table.insertRow(rowCount);          
+          
+    var cell0 = row.insertCell(0);    
+    cell0.innerHTML = " <input type='hidden' name='historiasclinicas[" + index + "].documentId'> "
+    + "<input type='file' name='historiasclinicas[" + index + "].fileData'>"; 
+    
+    var cell1 = row.insertCell(1);
+    cell1.innerHTML = "";
+    
+    var cell2 = row.insertCell(2);
+    row.valign = "BASELINE";    
+    cell2.innerHTML = "<a href='#' onclick='eliminarHC(this.parentNode.parentNode.rowIndex)'>Eliminar</a>";
+     
+    index ++;
+    
+   }
+function eliminarHC (i) {    	 
+    document.getElementById("tabla_historiaclinica").deleteRow(i);
+}
+
 </script>
 
 <style>
@@ -117,7 +145,8 @@ function addRow(tableID) {
 <body style="background-color:#e5e5e5;">
 <jsp:include page="../sec_menu.jsp"></jsp:include>
 
-<form:form method="post" action="/nuova/editOrden" commandName="ordenDto">
+<form:form method="post" action="/nuova/editOrden" commandName="ordenDto"
+enctype="multipart/form-data">
 <form:hidden path="ordenId"/>
 <div class="mainContainer">	
 	<div class="panelContainer">		

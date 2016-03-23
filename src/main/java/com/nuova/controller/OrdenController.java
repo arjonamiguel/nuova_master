@@ -34,6 +34,7 @@ import com.nuova.dto.EspecialidadDTO;
 import com.nuova.dto.ObraSocialDTO;
 import com.nuova.dto.ObservacionesDTO;
 import com.nuova.dto.OrdenDTO;
+import com.nuova.dto.OrdenDocumentDTO;
 import com.nuova.dto.OrdenPracticaDTO;
 import com.nuova.dto.OrdenProfesionalDTO;
 import com.nuova.dto.OrdenTipoDTO;
@@ -48,6 +49,7 @@ import com.nuova.model.Nomenclador;
 import com.nuova.model.Obrasocial;
 import com.nuova.model.Observaciones;
 import com.nuova.model.Orden;
+import com.nuova.model.OrdenDocument;
 import com.nuova.model.OrdenPractica;
 import com.nuova.model.OrdenProfesional;
 import com.nuova.model.OrdenTipo;
@@ -353,7 +355,49 @@ public class OrdenController {
         orden.setReqOrdenMedico(Util.getByteFlag(dto.isReqOrdenMedico()));
         orden.setReqReciboSueldo(Util.getByteFlag(dto.isReqReciboSueldo()));
 
+        // Actualizo Orden
         ordenManager.edit(orden);
+
+        // Actualizo Orden Document
+        // Historia Cinica - Archivos Adjuntos
+        boolean haveChange = false;
+
+        List<OrdenDocument> documents = new ArrayList<OrdenDocument>();
+        List<OrdenDocument> documentsTotal = new ArrayList<OrdenDocument>();
+        List<OrdenDocument> documentsOld = ordenManager.finAllOrdenDocumentByOrdenId(orden.getOrdenId());
+        for (OrdenDocumentDTO hc : dto.getHistoriasclinicas()) {
+            if (hc.getDocumentId() != null) {
+                OrdenDocument d = ordenManager.findOrdenDocumentById(hc.getDocumentId());
+                if (d != null) {
+                    documents.add(d);
+                }
+            }
+        }
+
+        for (OrdenDocumentDTO hc : dto.getHistoriasclinicas()) {
+            if (hc.getDocumentId() == null && hc.getFileData() != null && !hc.getFileData().isEmpty()) {
+                OrdenDocument content = new OrdenDocument();
+                content.setContent(hc.getFileData().getBytes());
+                content.setFileName(hc.getFileData().getOriginalFilename());
+                content.setType(Util.DOCUMENT_TYPE);
+                content.setFileType(hc.getFileData().getContentType());
+                content.setOrdenId(orden.getOrdenId());
+
+                documentsTotal.add(content);
+            }
+        }
+
+        for (OrdenDocument od : documentsOld) {
+            ordenManager.deleteOrdenDocument(od.getDocumentId());
+        }
+
+        if (documents.size() > 0) {
+            documentsTotal.addAll(documents);
+        }
+
+        for (OrdenDocument od : documentsTotal) {
+            ordenManager.add(od);
+        }
 
         String redirect = "";
         if (orden.getOrdenTipo().getCodigo().intValue() == 100) {
@@ -578,6 +622,15 @@ public class OrdenController {
             dto.setEtiqestado(rechazada_por_auditoria);
         }
 
+        // Historia Clinica
+        List<OrdenDocument> documents = ordenManager.finAllOrdenDocumentByOrdenId(dto.getOrdenId());
+        for (OrdenDocument od : documents) {
+            OrdenDocumentDTO oddto = new OrdenDocumentDTO(od.getDocumentId(), od.getType()
+                    , od.getFileName(), od.getFileType(), od.getOrdenId(), null);
+
+            dto.getHistoriasclinicas().add(oddto);
+        }
+
         // boton paciente
         String botonpaciente =
                 dto.getPaciente().getApellido().toUpperCase() + ", " + dto.getPaciente().getNombre();
@@ -626,6 +679,7 @@ public class OrdenController {
         }
 
         Collections.sort(retorno, new Comparator<ObservacionesDTO>() {
+            @Override
             public int compare(ObservacionesDTO a1, ObservacionesDTO a2) {
                 return a2.getFecha().compareTo(a1.getFecha());
             }
@@ -644,6 +698,7 @@ public class OrdenController {
         }
 
         Collections.sort(retorno, new Comparator<OrdenWorkflowDTO>() {
+            @Override
             public int compare(OrdenWorkflowDTO a1, OrdenWorkflowDTO a2) {
                 return a2.getFecha().compareTo(a1.getFecha());
             }
