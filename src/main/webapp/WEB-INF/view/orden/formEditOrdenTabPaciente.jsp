@@ -1,7 +1,8 @@
 <%@taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
+<div class="tab-content" style="height: 250px">	
 <table class="table">						
 	<tr>
-		<td><form:label path="paciente.dni">DNI 2</form:label></td>
+		<td><form:label path="paciente.dni">DNI</form:label></td>
 		<td><form:input path="paciente.dni" disabled="true"/></td>
 		<td><form:label path="paciente.apellido">Apellido</form:label></td>
 		<td>
@@ -20,4 +21,5 @@
 		<td></td>			
 		<td></td>
 	</tr>
-</table>  		  
+</table>  		 
+</div> 

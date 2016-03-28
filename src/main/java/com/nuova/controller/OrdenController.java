@@ -181,12 +181,12 @@ public class OrdenController {
   public String formEditOrden(ModelMap map, @PathVariable("ordenId") Integer ordenId) {
     if (ordenId != null) {
       OrdenDTO ordenDto = transformOrdenToDto(ordenManager.findOrdenById(ordenId));
+      User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
       int observacionCount = ordenDto.getObservacioneses().size();
       map.addAttribute("ordenDto", ordenDto);
       map.addAttribute("observacionCount", observacionCount);
-      // map.addAttribute("practicasList", Util.getComboItems(practicaManager.findAll()));
-
-      map.addAttribute("estadosList", Util.getEstadosList());
+      map.addAttribute("userNameLogged", user.getUsername());
+      map.addAttribute("ordenEstadosList", Util.getOrdenEstadosList());
     }
 
     return ConstantRedirect.VIEW_FORM_EDIT_ORDEN;
@@ -448,7 +448,7 @@ public class OrdenController {
       redirect = ConstantControllers.MAIN_CONSULTA_ODONTOLOGICA;
     }
     if (orden.getOrdenTipo().getCodigo().intValue() == 102) {
-      redirect = ConstantControllers.MAIN_ORDEN_PRACTICA;
+      redirect = "/formEditOrden/" + orden.getOrdenId();
     }
 
     return "redirect:" + redirect;
@@ -635,9 +635,9 @@ public class OrdenController {
       dto.setProfesionalId(dto.getProfesional().getProfesionalId());
     }
 
-    if (orden.getEstado() != null && orden.getEstado().equals(ConstantOrdenEstado.INICIADA)) {
-      dto.setEtiqestado(iniciada);
-    }
+    // if (orden.getEstado() != null && orden.getEstado().equals(ConstantOrdenEstado.INICIADA)) {
+    // dto.setEtiqestado(iniciada);
+    // }
     if (orden.getEstado() != null && orden.getEstado().equals(ConstantOrdenEstado.ANULADO)) {
       dto.setEtiqestado(anulado);
     }

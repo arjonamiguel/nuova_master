@@ -1,4 +1,5 @@
 <%@taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
+<div class="tab-content" style="height: 250px">	
 <table class="table" style="width: 100%">
 <tr>
 	<td colspan="4" style="width:60%">
@@ -36,3 +37,4 @@
 	</td>
 </tr>
 </table>
+</div>

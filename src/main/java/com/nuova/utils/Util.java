@@ -160,7 +160,7 @@ public class Util {
   }
 
   static public String getEstadoInicial(OrdenDTO dto) {
-    String retorno = ConstantOrdenEstado.INICIADA;
+    String retorno = ConstantOrdenEstado.ORDEN_INICIADA;
     // if (dto.isReqCredecial() && dto.isReqOrdenMedico() && (dto.isReqMonotributista() ||
     // dto.isReqReciboSueldo()))
     // {
@@ -192,5 +192,26 @@ public class Util {
     retorno.add(new ComboItemDTO(ConstantOrdenEstado.ANULADO, ConstantOrdenEstado.ANULADO));
     return retorno;
   }
+
+  static public List<ComboItemDTO> getOrdenEstadosList() {
+    List<ComboItemDTO> retorno = new ArrayList<ComboItemDTO>();
+    retorno.add(
+        new ComboItemDTO(ConstantOrdenEstado.ORDEN_INICIADA, ConstantOrdenEstado.ORDEN_INICIADA));
+    retorno.add(new ComboItemDTO(ConstantOrdenEstado.ORDEN_EN_PROGRESO,
+        ConstantOrdenEstado.ORDEN_EN_PROGRESO));
+    retorno.add(
+        new ComboItemDTO(ConstantOrdenEstado.ORDEN_PENDIENTE, ConstantOrdenEstado.ORDEN_PENDIENTE));
+    retorno.add(new ComboItemDTO(ConstantOrdenEstado.ORDEN_AUTORIZADA,
+        ConstantOrdenEstado.ORDEN_AUTORIZADA));
+    retorno.add(
+        new ComboItemDTO(ConstantOrdenEstado.ORDEN_RECHAZADA, ConstantOrdenEstado.ORDEN_RECHAZADA));
+    retorno.add(
+        new ComboItemDTO(ConstantOrdenEstado.ORDEN_ANULADA, ConstantOrdenEstado.ORDEN_ANULADA));
+    retorno.add(
+        new ComboItemDTO(ConstantOrdenEstado.ORDEN_CERRADA, ConstantOrdenEstado.ORDEN_CERRADA));
+
+    return retorno;
+  }
+
 
 }

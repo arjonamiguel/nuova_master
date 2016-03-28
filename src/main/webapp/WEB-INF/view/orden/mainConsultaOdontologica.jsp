@@ -146,8 +146,8 @@ function editColumnsChecked() {
 		<div class="panel panel-info">
 			<div class="panel-heading">
           			<div class="panel-title">
-	          			Administracion de Consultas Odontologicas
-	           			<a href="formAddOrden" class="pull-right"><b>+</b>&nbsp;&nbsp;Nueva Consulta Odontologica</a>
+	          			<b>Administraci&oacute;n de Consultas Odontol&oacute;gicas</b>
+	           			<a href="formAddOrden" class="pull-right"><b>+</b>&nbsp;&nbsp;Nueva Consulta Odontol&oacute;gica</a>
           			</div>
     		</div>     
 			<div  class="panel-body" >

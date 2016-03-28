@@ -1,7 +1,6 @@
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <div>
-<div>
 	<!-- Autocompletar Nomenclador de codigos -->
 	<div>										
 	<input type="hidden" name="nomencladorId" id="nomencladorId" value="">										
@@ -19,9 +18,9 @@
 	</div>
 	<!-- Fin Autocompletar Nomenclador de codigos -->
 </div>
-</div>
-	
-<table class="scroll"  style="width: 100%" height="100%">			
+
+<div class="tab-content" style="height: 200px">	
+<table class="scroll"  style="width: 100%">			
 <tr>
 	<td colspan="2">										           	
 	<div>		    
@@ -59,7 +58,7 @@
 				document.getElementById('ordenpracticaListEdit[<%=index%>].estado').value ='${pa.estado}'; 
 				</script>
 			</td>
-			<td><button type='button' class='btn btn-link' onClick='Eliminar(this.parentNode.parentNode.rowIndex)'>eliminar</button></td>
+			<td><button type='button' class='btn btn-link' onClick='Eliminar(this.parentNode.parentNode.rowIndex)'>Eliminar</button></td>
 			<%index++;%>
 			</tr>
 		</c:forEach>
@@ -69,3 +68,4 @@
 	</td>
 </tr>
 </table>
+</div>
