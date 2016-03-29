@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="reporteOrdenEmitida" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="863c5a1a-ff63-4ec5-9d35-c4a00e5423ed">
 	<property name="ireport.zoom" value="2.0"/>
 	<property name="ireport.x" value="366"/>
-	<property name="ireport.y" value="0"/>
+	<property name="ireport.y" value="602"/>
 	<parameter name="nro_orden" class="java.lang.String" isForPrompting="false">
 		<defaultValueExpression><![CDATA[""]]></defaultValueExpression>
 	</parameter>
@@ -458,12 +458,11 @@
 				<reportElement x="0" y="411" width="555" height="10" backcolor="#C0C0C0" uuid="983ea484-447f-4477-8bf6-c08b27c76c7d"/>
 			</rectangle>
 			<staticText>
-				<reportElement x="470" y="421" width="85" height="35" uuid="4c37f7bb-f499-4b9c-b201-ddbdd0bbf15c"/>
-				<textElement>
+				<reportElement x="468" y="421" width="85" height="23" uuid="4c37f7bb-f499-4b9c-b201-ddbdd0bbf15c"/>
+				<textElement textAlignment="Right">
 					<font size="13" isBold="true"/>
 				</textElement>
-				<text><![CDATA[ORDEN DE
-CONSULTA]]></text>
+				<text><![CDATA[ORDEN DE]]></text>
 			</staticText>
 			<rectangle>
 				<reportElement mode="Opaque" x="269" y="632" width="286" height="18" backcolor="#C0C0C0" uuid="fac75e41-ae79-4381-9d3e-ac7c99987f92"/>
@@ -753,6 +752,13 @@ CONSULTA]]></text>
 			<textField>
 				<reportElement x="411" y="25" width="142" height="20" uuid="67cb8e1b-a2ec-4e94-971c-933a394e6fb6"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="13" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{tipo_orden}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="409" y="437" width="144" height="20" uuid="65a598b6-4570-44b1-8b9b-9790a2fc610c"/>
+				<textElement textAlignment="Right">
 					<font size="13" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{tipo_orden}]]></textFieldExpression>
