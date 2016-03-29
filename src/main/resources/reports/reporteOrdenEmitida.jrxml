@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="reporteOrdenEmitida" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="863c5a1a-ff63-4ec5-9d35-c4a00e5423ed">
-	<property name="ireport.zoom" value="1.0"/>
-	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="323"/>
+	<property name="ireport.zoom" value="2.0"/>
+	<property name="ireport.x" value="366"/>
+	<property name="ireport.y" value="0"/>
 	<parameter name="nro_orden" class="java.lang.String" isForPrompting="false">
 		<defaultValueExpression><![CDATA[""]]></defaultValueExpression>
 	</parameter>
@@ -25,6 +25,7 @@
 	<parameter name="orden_internacion" class="java.lang.String"/>
 	<parameter name="sexo" class="java.lang.String"/>
 	<parameter name="coseguro" class="java.lang.String"/>
+	<parameter name="tipo_orden" class="java.lang.String"/>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
@@ -77,12 +78,12 @@
 				<textFieldExpression><![CDATA[new String((new java.text.SimpleDateFormat("EEEEE dd MMMMM yyyy",new Locale("es","ES"))).format(new java.util.Date())+"").toUpperCase()]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="470" y="10" width="85" height="35" uuid="0b61d510-17a4-4902-8782-632a768e41ce"/>
-				<textElement>
+				<reportElement x="468" y="10" width="85" height="23" uuid="0b61d510-17a4-4902-8782-632a768e41ce"/>
+				<textElement textAlignment="Right">
 					<font size="13" isBold="true"/>
 				</textElement>
 				<text><![CDATA[ORDEN DE
-CONSULTA]]></text>
+]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="3" y="13" width="27" height="20" uuid="fdaf8efd-689b-42dc-bf82-1373540a09ff"/>
@@ -104,7 +105,7 @@ CONSULTA]]></text>
 				<text><![CDATA[OBRA SOCIAL]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="30" y="13" width="91" height="20" uuid="fd774cae-cfbb-412d-895e-41d3a5b38dab"/>
+				<reportElement x="30" y="13" width="69" height="20" uuid="fd774cae-cfbb-412d-895e-41d3a5b38dab"/>
 				<textElement textAlignment="Right">
 					<font size="12" isBold="true"/>
 				</textElement>
@@ -137,12 +138,6 @@ CONSULTA]]></text>
 			<rectangle>
 				<reportElement mode="Transparent" x="0" y="50" width="135" height="18" uuid="b647f067-faa2-4f84-abbf-323196a6807b"/>
 			</rectangle>
-			<line>
-				<reportElement x="3" y="402" width="550" height="1" uuid="1a9c99e4-b767-4cf2-8a1f-15262430dd34"/>
-				<graphicElement>
-					<pen lineStyle="Dashed"/>
-				</graphicElement>
-			</line>
 			<rectangle>
 				<reportElement mode="Transparent" x="135" y="50" width="131" height="18" uuid="a17f6cef-42d6-48bb-8585-8c998fe598ff"/>
 			</rectangle>
@@ -400,7 +395,7 @@ CONSULTA]]></text>
 				<textFieldExpression><![CDATA[$P{coseguro}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="227" y="113" width="43" height="20" uuid="bf83211b-255e-429d-b7ff-87fbfbde946c"/>
+				<reportElement x="224" y="113" width="43" height="20" uuid="bf83211b-255e-429d-b7ff-87fbfbde946c"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$P{sexo}]]></textFieldExpression>
 			</textField>
@@ -495,7 +490,7 @@ CONSULTA]]></text>
 				<reportElement mode="Transparent" x="195" y="524" width="30" height="18" uuid="6e94eac3-d8a7-4f4c-a338-4ecfb0b03486"/>
 			</rectangle>
 			<textField>
-				<reportElement x="30" y="424" width="88" height="20" uuid="3fc07a41-2d9e-4f00-b21a-04c1d0a5976a"/>
+				<reportElement x="30" y="424" width="64" height="20" uuid="3fc07a41-2d9e-4f00-b21a-04c1d0a5976a"/>
 				<textElement textAlignment="Right">
 					<font size="12" isBold="true"/>
 				</textElement>
@@ -650,7 +645,7 @@ CONSULTA]]></text>
 				<reportElement mode="Transparent" x="0" y="680" width="137" height="109" uuid="79c780db-06ad-47b1-bdd3-d11ca29dbfc5"/>
 			</rectangle>
 			<rectangle>
-				<reportElement mode="Transparent" x="164" y="506" width="30" height="18" uuid="8607b224-7fc5-45df-a561-a4f03be05d22"/>
+				<reportElement mode="Transparent" x="165" y="506" width="30" height="18" uuid="8607b224-7fc5-45df-a561-a4f03be05d22"/>
 			</rectangle>
 			<rectangle>
 				<reportElement mode="Transparent" x="470" y="461" width="85" height="18" uuid="02067478-ad54-4a5e-910c-65811f5d3bed"/>
@@ -749,6 +744,19 @@ CONSULTA]]></text>
 				</textElement>
 				<text><![CDATA[Duplicado]]></text>
 			</staticText>
+			<line>
+				<reportElement x="3" y="402" width="550" height="1" uuid="1a9c99e4-b767-4cf2-8a1f-15262430dd34"/>
+				<graphicElement>
+					<pen lineStyle="Dashed"/>
+				</graphicElement>
+			</line>
+			<textField>
+				<reportElement x="411" y="25" width="142" height="20" uuid="67cb8e1b-a2ec-4e94-971c-933a394e6fb6"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="13" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{tipo_orden}]]></textFieldExpression>
+			</textField>
 		</band>
 	</title>
 	<pageHeader>
