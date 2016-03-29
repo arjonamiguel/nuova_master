@@ -71,7 +71,6 @@ public class ReportController {
   // OnErrorTypeEnum.BLANK);
   // parameters.put("img", img);
 
-  private static final String FILE_TYPE = ".pdf";
   private static final String ORDEN_EMITIDA_REPORT_JRXML = "reports/reporteOrdenEmitida.jrxml";
   private static final String PROFESIONALES_REPORT_JRXML = "reports/reporteProfesionales.jrxml";
   private static final String ESPECIALIDADES_REPORT_JRXML = "reports/reporteEspecialidades.jrxml";
@@ -143,6 +142,7 @@ public class ReportController {
     parameters.put("orden_internacion", "");
     parameters.put("sexo", "");
     parameters.put("coseguro", "");
+    parameters.put("tipo_orden", dto.getOrdenTipo().getNombre());
 
     ByteSource source = ByteSource.wrap(createReport(ORDEN_EMITIDA_REPORT_JRXML, parameters, null));
     source.copyTo(response.getOutputStream());

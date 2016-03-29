@@ -49,7 +49,7 @@
 		 				<div class="span4">
 			 				<div class="formLabel"><form:label path="montoView">Monto $:</form:label></div>
 			 				<div class="formInput">
-			 					<form:input path="montoView" disabled="true"/>
+			 					<form:input path="monto" disabled="true"/>
 			 					<form:hidden path="monto"/>			 					
 			 				</div>
 		 				</div>						

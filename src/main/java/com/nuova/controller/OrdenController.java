@@ -9,7 +9,6 @@ import com.nuova.dto.ObservacionesDTO;
 import com.nuova.dto.OrdenDTO;
 import com.nuova.dto.OrdenDocumentDTO;
 import com.nuova.dto.OrdenPracticaDTO;
-import com.nuova.dto.OrdenProfesionalDTO;
 import com.nuova.dto.OrdenTipoDTO;
 import com.nuova.dto.OrdenWorkflowDTO;
 import com.nuova.dto.PacienteDTO;
@@ -65,14 +64,10 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.nio.charset.CharsetEncoder;
 import java.nio.charset.StandardCharsets;
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
-import java.util.Formatter;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -98,8 +93,6 @@ public class OrdenController {
   @Autowired
   CajaManager cajaManager;
 
-  private static final int BUFFER_SIZE = 4096;
-
   private String iniciada = " <span  style='color:black;background:gold'>INICIADA</span>";
   private String autorizada = "<span style='color:white;background: green'>AUTORIZADA</span>";
   private String pendiente = "<span  style='color:white;background: sienna'>PENDIENTE</span>";
@@ -107,7 +100,7 @@ public class OrdenController {
       " <span style='color:white;background: steelblue'>EN PROGRESO</span>";
   private String rechazada = "<span style='color:white;background: gray'>RECHAZADA</span>";
   private String cerrada = "<span style='color:white;background: black'>CERRADA</span>";
-  private String anulada = "<span style='color:white;background: maroon'>ANULADA</span>";
+  private String anulada = "<span style='color:white;background: tomato'>ANULADA</span>";
 
   @RequestMapping(value = ConstantControllers.REDIRECT_ORDEN, method = RequestMethod.POST)
   public String redirectOrden(ModelMap map,
@@ -261,7 +254,6 @@ public class OrdenController {
       method = RequestMethod.POST)
   public @ResponseBody List<ComboItemDTO> getAutocompletePaciente(
       @RequestParam(required = false, defaultValue = "") String query) {
-    Formatter fmt = new Formatter();
     List<ComboItemDTO> retorno = new ArrayList<ComboItemDTO>();
     for (Nomenclador n : practicaManager.findNomencladorAutocomplete(query)) {
       retorno.add(new ComboItemDTO(n.getNomencladorId() + "",
@@ -389,8 +381,6 @@ public class OrdenController {
 
     // Actualizo Orden Document
     // Historia Cinica - Archivos Adjuntos
-    boolean haveChange = false;
-
     List<OrdenDocument> documents = new ArrayList<OrdenDocument>();
     List<OrdenDocument> documentsTotal = new ArrayList<OrdenDocument>();
     List<OrdenDocument> documentsOld =
@@ -858,38 +848,6 @@ public class OrdenController {
     }
 
     return retorno;
-  }
-
-  private OrdenProfesional transformDtoToOrdenProfesional(OrdenProfesionalDTO dto) {
-    OrdenProfesional retorno = new OrdenProfesional();
-    retorno.setProfesional(transformDtoToProfesional(dto.getProfesional()));
-    return retorno;
-  }
-
-  private Profesional transformDtoToProfesional(ProfesionalDTO p) {
-    Set<ProfesionalEspecialidad> profesionalEspecialidades = new HashSet<ProfesionalEspecialidad>();
-    DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
-    Date fechaHabilitacion = null;
-    try {
-      fechaHabilitacion = formatter.parse(p.getFechaVencimientoHabilitacion());
-    } catch (ParseException e) {
-      // TODO Auto-generated catch block
-      e.printStackTrace();
-    }
-    Profesional profesional = new Profesional(p.getApellido(), p.getNombre(), p.getTelefono(),
-        p.getMatricula(), p.getRegistroNacional(), p.getTituloProfesional(),
-        new Byte(p.getHabilitacionSiprosa()), fechaHabilitacion, null, null, null, null, null, null,
-        null, null, null, null, null, null);
-    profesional.setProfesionalId(p.getProfesionalId());
-
-    for (Integer id : p.getEspecialidadList()) {
-      Especialidad especialidad = especialidadManager.findEspecialidadById(id);
-      profesionalEspecialidades.add(new ProfesionalEspecialidad(profesional, especialidad));
-    }
-
-    profesional.setProfesionalEspecialidads(profesionalEspecialidades);
-
-    return profesional;
   }
 
   private String getContentDispositionValue(String fileName, String typeFile) {

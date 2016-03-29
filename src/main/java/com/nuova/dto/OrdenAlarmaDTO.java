@@ -13,7 +13,7 @@ public class OrdenAlarmaDTO {
       " <span style='color:white;background: steelblue'>EN PROGRESO</span>";
   private String rechazada = "<span style='color:white;background: gray'>RECHAZADA</span>";
   private String cerrada = "<span style='color:white;background: black'>CERRADA</span>";
-  private String anulada = "<span style='color:white;background: maroon'>ANULADA</span>";
+  private String anulada = "<span style='color:white;background: tomato'>ANULADA</span>";
 
   public OrdenAlarmaDTO() {
 

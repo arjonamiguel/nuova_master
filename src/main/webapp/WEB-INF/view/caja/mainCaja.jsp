@@ -92,12 +92,17 @@ function submitCierreCaja() {
 	            			</div>
 	            				
 			   			</div>
+			   			
+			   			<!-- Valido boton Cierre-->
+			   			<c:if test="${hasCierre}">
 			   			<div class="span4" style="float: right;text-align: right;">
 			   			<input type="button" value="${fechaBoton}" class="btn btn-success" style="margin-bottom:8px" 
 									onclick="submitCierreCaja()" />
 						<input type="hidden" name="fechaCierre" id="fechaCierre" value="${fecha}" />			
 			   			</div>
 			   			<div class="label-error" id="message" style="float:left;margin-left:8%;visibility:hidden;">Debe ingresar una fecha valida de busqueda</div>
+			   			</c:if>
+			   			
 		    		</div>
 		    		
 		    		<div class="row-fluid" >
