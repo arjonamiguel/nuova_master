@@ -36,7 +36,7 @@
 									columnKeys : [ "botonpaciente","ordenTipoDesc" ,"nroOrden", "fecha",
 													, "etiqestado", "acciones"],
 									columnWidths : [ "20%", "10%", "10%","10%","10%"],
-									sortable : [ false, true ],
+									sortable : [ true, false, true,true,true ],
 									data : rows
 								});
 
@@ -139,6 +139,7 @@ function editColumnsChecked() {
 function showReport(id){
 	var iframe = "<iframe src='/nuova/reporteOrdenEmitida/"+id+"' width='100%' height='150%' >";
 	document.getElementById("iframeReport").innerHTML = iframe;
+	document.getElementById("myModal").style.height = '60%';
 }
 </script>
 </head>
@@ -186,7 +187,7 @@ function showReport(id){
 </div>
 
 <!-- Modal -->
-<div id="myModal" class="modal fade" role="dialog" style="width: 50%;height:60%">
+<div id="myModal" class="modal fade" role="dialog" style="width: 50%;">
   <div class="modal-dialog" style="height:100%">
 
     <!-- Modal content-->
