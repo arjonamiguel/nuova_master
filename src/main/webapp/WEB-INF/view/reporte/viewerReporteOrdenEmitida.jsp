@@ -27,14 +27,7 @@
 		
 <div class="panelContainer">		
 		<div class="panel panel-info">
-			<div class="panel-heading">
-          			<div class="panel-title">
-	          			Orden Emitida
-	          			<span lass="pull-right">	           			
-	           			<a href="" class="pull-right" onclick="location.href = document.referrer; return false;"><b><<</b>&nbsp;&nbsp;Volver al Listado de Ordenes</a>
-	           			</span>
-          			</div>
-    		</div>     
+  
 			<div  class="panel-body" >
 				<div class="container-fluid" >
 	  				<div class="row-fluid" >

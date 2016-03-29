@@ -100,24 +100,13 @@ public class OrdenController {
 
   private static final int BUFFER_SIZE = 4096;
 
-  private String iniciada = " <span class='label-success' style='color:white;'>INICIADA</span>";
-
-  private String autorizacion_directa =
-      "<span class='label-important' style='color:white;'>AUTORIZACION DIRECTA</span>";
-  private String pendiente_afiliaciones =
-      "<span class='label-warning' style='color:white;'>PENDIENTE AFILIACIONES</span>";
-  private String autorizada_por_afiliaciones =
-      " <span class='label-success' style='color:white;'>AUTORIZADA POR AFILIACIONES</span>";
-  private String rechazada_por_afiliaciones =
-      "<span class='label-warning' style='color:white;'>RECHAZADA POR AFILIACIONES</span>";
-  private String pendiente_auditoria =
-      "<span class='label-warning' style='color:white;'>PENDIENTE AUDITORIA</span>";
-  private String autorizada_por_auditoria =
-      "<span class='label-warning' style='color:white;'>AUTORIZADA POR AUDITORIA</span>";
-  private String rechazada_por_auditoria =
-      "<span class='label-warning' style='color:white;'>RECHAZADA POR AUDITORIA</span>";
-  private String rechazada = "<span class='label-warning' style='color:white;'>RECHAZADA</span>";
-  private String anulado = "<span class='label-warning' style='color:white;'>ANULADO</span>";
+  private String iniciada = " <span  style='color:black;background:gold'>INICIADA</span>";
+  private String autorizada = "<span style='color:white;background: green'>AUTORIZADA</span>";
+  private String pendiente = "<span  style='color:white;background: sienna'>PENDIENTE</span>";
+  private String en_progreso =
+      " <span style='color:white;background: steelblue'>EN PROGRESO</span>";
+  private String rechazada = "<span style='color:white;background: gray'>RECHAZADA</span>";
+  private String cerrada = "<span style='color:white;background: black'>CERRADA</span>";
 
   @RequestMapping(value = ConstantControllers.REDIRECT_ORDEN, method = RequestMethod.POST)
   public String redirectOrden(ModelMap map,
@@ -631,46 +620,33 @@ public class OrdenController {
         dto.setProfesional(transformProfesionalToDto(op.getProfesional()));
       }
     }
+
+    // Set de Estados
     if (dto.getProfesional() != null) {
       dto.setProfesionalId(dto.getProfesional().getProfesionalId());
     }
 
-    // if (orden.getEstado() != null && orden.getEstado().equals(ConstantOrdenEstado.INICIADA)) {
-    // dto.setEtiqestado(iniciada);
-    // }
-    if (orden.getEstado() != null && orden.getEstado().equals(ConstantOrdenEstado.ANULADO)) {
-      dto.setEtiqestado(anulado);
+    if (orden.getEstado() != null && orden.getEstado().equals(ConstantOrdenEstado.ORDEN_INICIADA)) {
+      dto.setEtiqestado(iniciada);
     }
     if (orden.getEstado() != null
-        && orden.getEstado().equals(ConstantOrdenEstado.AUTORIZACION_DIRECTA)) {
-      dto.setEtiqestado(autorizacion_directa);
+        && orden.getEstado().equals(ConstantOrdenEstado.ORDEN_AUTORIZADA)) {
+      dto.setEtiqestado(autorizada);
+    }
+    if (orden.getEstado() != null && orden.getEstado().equals(ConstantOrdenEstado.ORDEN_CERRADA)) {
+      dto.setEtiqestado(cerrada);
     }
     if (orden.getEstado() != null
-        && orden.getEstado().equals(ConstantOrdenEstado.AUTORIZADA_POR_AFILIACIONES)) {
-      dto.setEtiqestado(autorizada_por_afiliaciones);
+        && orden.getEstado().equals(ConstantOrdenEstado.ORDEN_EN_PROGRESO)) {
+      dto.setEtiqestado(en_progreso);
     }
     if (orden.getEstado() != null
-        && orden.getEstado().equals(ConstantOrdenEstado.AUTORIZADA_POR_AUDITORIA)) {
-      dto.setEtiqestado(autorizada_por_auditoria);
+        && orden.getEstado().equals(ConstantOrdenEstado.ORDEN_PENDIENTE)) {
+      dto.setEtiqestado(pendiente);
     }
     if (orden.getEstado() != null
-        && orden.getEstado().equals(ConstantOrdenEstado.PENDIENTE_AFILIACIONES)) {
-      dto.setEtiqestado(pendiente_afiliaciones);
-    }
-    if (orden.getEstado() != null
-        && orden.getEstado().equals(ConstantOrdenEstado.PENDIENTE_AUDITORIA)) {
-      dto.setEtiqestado(pendiente_auditoria);
-    }
-    if (orden.getEstado() != null && orden.getEstado().equals(ConstantOrdenEstado.RECHAZADA)) {
+        && orden.getEstado().equals(ConstantOrdenEstado.ORDEN_RECHAZADA)) {
       dto.setEtiqestado(rechazada);
-    }
-    if (orden.getEstado() != null
-        && orden.getEstado().equals(ConstantOrdenEstado.RECHAZADA_POR_AFILIACIONES)) {
-      dto.setEtiqestado(rechazada_por_afiliaciones);
-    }
-    if (orden.getEstado() != null
-        && orden.getEstado().equals(ConstantOrdenEstado.RECHAZADA_POR_AUDITORIA)) {
-      dto.setEtiqestado(rechazada_por_auditoria);
     }
 
     // Historia Clinica
@@ -710,8 +686,11 @@ public class OrdenController {
     String botonDelete = "<a class='btn btn-danger btn-xs' href='/nuova/formDeleteOrden/"
         + dto.getOrdenId() + "'><span class='icon icon-remove'></span></a>";
 
-    String botonPrint = "<a class='btn btn-default btn-xs' href='/nuova/showReporteOrdenEmitida/"
-        + dto.getOrdenId() + "'><span class='icon icon-print'></span></a>";
+    String botonPrint =
+        "<a class='btn btn-default btn-xs' data-toggle='modal' data-target='#myModal' onClick='showReport("
+            + dto.getOrdenId() + ")'><span class='icon icon-print'></span></a>";
+    // String botonPrint = "<button type='button' class='btn btn-info btn-lg' data-toggle='modal'
+    // data-target='#myModal'>Open Modal</button>";
 
     dto.setAcciones(botonEdit + botonDelete + botonPrint);
 

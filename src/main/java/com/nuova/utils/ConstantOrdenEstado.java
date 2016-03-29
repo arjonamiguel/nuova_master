@@ -6,7 +6,7 @@ public class ConstantOrdenEstado {
   static public final String ORDEN_EN_PROGRESO = "EN PROGRESO";
   static public final String ORDEN_PENDIENTE = "PENDIENTE";
   static public final String ORDEN_AUTORIZADA = "AUTORIZADA";
-  static public final String ORDEN_RECHAZADA = "RCHAZADA";
+  static public final String ORDEN_RECHAZADA = "RECHAZADA";
   static public final String ORDEN_ANULADA = "ANULADA";
   static public final String ORDEN_CERRADA = "CERRADA";
 

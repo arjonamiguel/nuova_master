@@ -6,24 +6,13 @@ public class OrdenAlarmaDTO {
   private Long cantidad = 0L;
   private String descripcion;
 
-  private String iniciada = " <span class='label-success' style='color:white;'>INICIADA</span>";
-
-  private String autorizacion_directa =
-      "<span class='label-important' style='color:white;'>AUTORIZACION DIRECTA</span>";
-  private String pendiente_afiliaciones =
-      "<span class='label-warning' style='color:white;'>PENDIENTE AFILIACIONES</span>";
-  private String autorizada_por_afiliaciones =
-      " <span class='label-success' style='color:white;'>AUTORIZADA POR AFILIACIONES</span>";
-  private String rechazada_por_afiliaciones =
-      "<span class='label-warning' style='color:white;'>RECHAZADA POR AFILIACIONES</span>";
-  private String pendiente_auditoria =
-      "<span class='label-warning' style='color:white;'>PENDIENTE AUDITORIA</span>";
-  private String autorizada_por_auditoria =
-      "<span class='label-warning' style='color:white;'>AUTORIZADA POR AUDITORIA</span>";
-  private String rechazada_por_auditoria =
-      "<span class='label-warning' style='color:white;'>RECHAZADA POR AUDITORIA</span>";
-  private String rechazada = "<span class='label-warning' style='color:white;'>RECHAZADA</span>";
-  private String anulado = "<span class='label-warning' style='color:white;'>ANULADO</span>";
+  private String iniciada = " <span  style='color:black;background:gold'>INICIADA</span>";
+  private String autorizada = "<span style='color:white;background: green'>AUTORIZADA</span>";
+  private String pendiente = "<span  style='color:white;background: sienna'>PENDIENTE</span>";
+  private String en_progreso =
+      " <span style='color:white;background: steelblue'>EN PROGRESO</span>";
+  private String rechazada = "<span style='color:white;background: gray'>RECHAZADA</span>";
+  private String cerrada = "<span style='color:white;background: black'>CERRADA</span>";
 
   public OrdenAlarmaDTO() {
 
@@ -47,36 +36,23 @@ public class OrdenAlarmaDTO {
   }
 
   public String getDescripcion() {
-    // if (descripcion != null && descripcion.equals(ConstantOrdenEstado.INICIADA)) {
-    // return iniciada;
-    // }
-    if (descripcion != null && descripcion.equals(ConstantOrdenEstado.ANULADO)) {
-      return anulado;
+    if (descripcion != null && descripcion.equals(ConstantOrdenEstado.ORDEN_INICIADA)) {
+      return iniciada;
     }
-    if (descripcion != null && descripcion.equals(ConstantOrdenEstado.AUTORIZACION_DIRECTA)) {
-      return autorizacion_directa;
+    if (descripcion != null && descripcion.equals(ConstantOrdenEstado.ORDEN_AUTORIZADA)) {
+      return autorizada;
     }
-    if (descripcion != null
-        && descripcion.equals(ConstantOrdenEstado.AUTORIZADA_POR_AFILIACIONES)) {
-      return autorizada_por_afiliaciones;
+    if (descripcion != null && descripcion.equals(ConstantOrdenEstado.ORDEN_CERRADA)) {
+      return cerrada;
     }
-    if (descripcion != null && descripcion.equals(ConstantOrdenEstado.AUTORIZADA_POR_AUDITORIA)) {
-      return autorizada_por_auditoria;
+    if (descripcion != null && descripcion.equals(ConstantOrdenEstado.ORDEN_EN_PROGRESO)) {
+      return en_progreso;
     }
-    if (descripcion != null && descripcion.equals(ConstantOrdenEstado.PENDIENTE_AFILIACIONES)) {
-      return pendiente_afiliaciones;
+    if (descripcion != null && descripcion.equals(ConstantOrdenEstado.ORDEN_PENDIENTE)) {
+      return pendiente;
     }
-    if (descripcion != null && descripcion.equals(ConstantOrdenEstado.PENDIENTE_AUDITORIA)) {
-      return pendiente_auditoria;
-    }
-    if (descripcion != null && descripcion.equals(ConstantOrdenEstado.RECHAZADA)) {
+    if (descripcion != null && descripcion.equals(ConstantOrdenEstado.ORDEN_RECHAZADA)) {
       return rechazada;
-    }
-    if (descripcion != null && descripcion.equals(ConstantOrdenEstado.RECHAZADA_POR_AFILIACIONES)) {
-      return rechazada_por_afiliaciones;
-    }
-    if (descripcion != null && descripcion.equals(ConstantOrdenEstado.RECHAZADA_POR_AUDITORIA)) {
-      return rechazada_por_auditoria;
     }
 
     return "";

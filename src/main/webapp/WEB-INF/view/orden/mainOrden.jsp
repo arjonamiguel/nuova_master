@@ -135,6 +135,11 @@ function editColumnsChecked() {
 			        	title: 'Eliminar Orden de Práctica'
 			        	});
 					});
+					
+function showReport(id){
+	var iframe = "<iframe src='/nuova/reporteOrdenEmitida/"+id+"' width='100%' scrolling='auto'>";
+	document.getElementById("iframeReport").innerHTML = iframe;
+}
 </script>
 </head>
 <body style="background-color:#e5e5e5;">
@@ -178,6 +183,27 @@ function editColumnsChecked() {
 </div>
 	
 	
+</div>
+
+<!-- Modal -->
+<div id="myModal" class="modal fade" role="dialog" style="width: 50%;">
+  <div class="modal-dialog" >
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Comprobante de Orden</h4>
+      </div>
+      <div class="modal-body">
+        <div id="iframeReport">	</div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+      </div>
+    </div>
+
+  </div>
 </div>
 </body>
 </html>
