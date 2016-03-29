@@ -137,7 +137,7 @@ function editColumnsChecked() {
 					});
 					
 function showReport(id){
-	var iframe = "<iframe src='/nuova/reporteOrdenEmitida/"+id+"' width='100%' scrolling='auto'>";
+	var iframe = "<iframe src='/nuova/reporteOrdenEmitida/"+id+"' width='100%' height='150%' >";
 	document.getElementById("iframeReport").innerHTML = iframe;
 }
 </script>
@@ -186,17 +186,17 @@ function showReport(id){
 </div>
 
 <!-- Modal -->
-<div id="myModal" class="modal fade" role="dialog" style="width: 50%;">
-  <div class="modal-dialog" >
+<div id="myModal" class="modal fade" role="dialog" style="width: 50%;height:80%">
+  <div class="modal-dialog" style="height:110%">
 
     <!-- Modal content-->
-    <div class="modal-content">
+    <div class="modal-content" style="height:80%">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal">&times;</button>
         <h4 class="modal-title">Comprobante de Orden</h4>
       </div>
-      <div class="modal-body">
-        <div id="iframeReport">	</div>
+      <div class="modal-body" style="height:80%">
+        <div id="iframeReport" style="height:80%">	</div>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>

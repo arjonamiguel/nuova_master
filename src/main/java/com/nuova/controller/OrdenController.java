@@ -107,6 +107,7 @@ public class OrdenController {
       " <span style='color:white;background: steelblue'>EN PROGRESO</span>";
   private String rechazada = "<span style='color:white;background: gray'>RECHAZADA</span>";
   private String cerrada = "<span style='color:white;background: black'>CERRADA</span>";
+  private String anulada = "<span style='color:white;background: maroon'>ANULADA</span>";
 
   @RequestMapping(value = ConstantControllers.REDIRECT_ORDEN, method = RequestMethod.POST)
   public String redirectOrden(ModelMap map,
@@ -648,7 +649,9 @@ public class OrdenController {
         && orden.getEstado().equals(ConstantOrdenEstado.ORDEN_RECHAZADA)) {
       dto.setEtiqestado(rechazada);
     }
-
+    if (orden.getEstado() != null && orden.getEstado().equals(ConstantOrdenEstado.ORDEN_ANULADA)) {
+      dto.setEtiqestado(anulada);
+    }
     // Historia Clinica
     List<OrdenDocument> documents = ordenManager.finAllOrdenDocumentByOrdenId(dto.getOrdenId());
     for (OrdenDocument od : documents) {

@@ -13,6 +13,7 @@ public class OrdenAlarmaDTO {
       " <span style='color:white;background: steelblue'>EN PROGRESO</span>";
   private String rechazada = "<span style='color:white;background: gray'>RECHAZADA</span>";
   private String cerrada = "<span style='color:white;background: black'>CERRADA</span>";
+  private String anulada = "<span style='color:white;background: maroon'>ANULADA</span>";
 
   public OrdenAlarmaDTO() {
 
@@ -53,6 +54,10 @@ public class OrdenAlarmaDTO {
     }
     if (descripcion != null && descripcion.equals(ConstantOrdenEstado.ORDEN_RECHAZADA)) {
       return rechazada;
+    }
+
+    if (descripcion != null && descripcion.equals(ConstantOrdenEstado.ORDEN_ANULADA)) {
+      return anulada;
     }
 
     return "";
