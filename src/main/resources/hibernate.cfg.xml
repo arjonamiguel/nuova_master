@@ -23,5 +23,6 @@
         <mapping class="com.nuova.model.CajaCierre" />    
         <mapping class="com.nuova.model.Calendario" />  
         <mapping class="com.nuova.model.OrdenDocument" />     
+        <mapping class="com.nuova.model.Localidades" />
     </session-factory>
 </hibernate-configuration>

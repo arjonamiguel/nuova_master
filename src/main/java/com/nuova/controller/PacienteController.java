@@ -22,6 +22,7 @@ import com.nuova.dto.ComboItemDTO;
 import com.nuova.dto.ObraSocialDTO;
 import com.nuova.dto.OrdenTipoDTO;
 import com.nuova.dto.PacienteDTO;
+import com.nuova.model.Localidades;
 import com.nuova.model.Obrasocial;
 import com.nuova.model.OrdenTipo;
 import com.nuova.model.Paciente;
@@ -184,6 +185,17 @@ public class PacienteController {
         return retorno;
     }
 
+    @RequestMapping(value = ConstantControllers.AJAX_GET_AUTOCOMPLETE_LOCALIDADES, method = RequestMethod.POST)
+    public @ResponseBody List<ComboItemDTO> getAutocompleteLocalidades(
+            @RequestParam(required = false, defaultValue = "") String query) {
+        List<ComboItemDTO> retorno = new ArrayList<ComboItemDTO>();
+        for (Localidades loc : pacienteManager.findLocalidadesAutocomplete(query)) {
+            retorno.add(new ComboItemDTO(loc.getLocalidadId() + "", loc.getNombre()));
+        }
+
+        return retorno;
+    }
+
     @RequestMapping(value = ConstantControllers.AJAX_GET_EXIST_DNI, method = RequestMethod.GET)
     public @ResponseBody Boolean existDni(
             @RequestParam(required = false, defaultValue = "") String dni) {
@@ -255,6 +267,10 @@ public class PacienteController {
         dto.setTelefono(p.getTelefono());
         dto.setProvincia(p.getProvincia());
         dto.setZonaAfiliacion(p.getZonaAfiliacion());
+
+        Localidades loc = pacienteManager.findLocalidadById(p.getLocalidadId());
+        dto.setLocalidadId(loc.getLocalidadId());
+        dto.setLocalidadString(loc.getNombre());
 
         ObraSocialDTO osdto = new ObraSocialDTO();
         osdto.setObrasocialId(p.getObrasocialId());
@@ -348,6 +364,7 @@ public class PacienteController {
         paciente.setZonaAfiliacion(dto.getZonaAfiliacion());
         paciente.setObrasocialId(dto.getObrasocial().getObrasocialId());
         paciente.setNroCredencial(dto.getObrasocial().getCredencial());
+        paciente.setLocalidadId(dto.getLocalidadId());
 
         return paciente;
 

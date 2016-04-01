@@ -1,282 +1,300 @@
 package com.nuova.dto;
 
-import com.nuova.model.Paciente;
-
 import java.util.ArrayList;
 import java.util.List;
 
+import com.nuova.model.Paciente;
+
 public class PacienteDTO {
 
-  private Integer pacienteId;
-  private Integer titularId;
-  private Integer dni;
-  private Paciente paciente;
-  private String apellido;
-  private String nombre;
-  private String fechaNacimiento;
-  private String domicilio;
-  private String telefono;
-  private String mail;
-
-  private ObraSocialDTO obrasocial = new ObraSocialDTO();
-  private List<ObraSocialDTO> obrasocialList = new ArrayList<ObraSocialDTO>();
-  private List<ObraSocialDTO> obrasocialListEdit = new ArrayList<ObraSocialDTO>();
-  private String provincia;
-  private List<String> provinciaList;
-  private List<PacienteDTO> adherentes = new ArrayList<PacienteDTO>();
-  private List<PacienteDTO> adherentesEditList = new ArrayList<PacienteDTO>();
-
-  private String crdencial;
-  private boolean original = false;
-
-  private boolean titular = false;
-  private String checkedTitular;
-  private PacienteDTO pacienteTitular;
-
-  private boolean coseguro = false;
-  private String checkedLiberado;
-
-  private String acciones;
-  private int parentesco;
-  private String parentescoDescription;
-
-  private String zonaAfiliacion;
-
-  // private List<PacienteObrasocial> pacienteObrasocials = new ArrayList<PacienteObrasocial>(0);
-
-  public Integer getPacienteId() {
-    return pacienteId;
-  }
-
-  public void setPacienteId(Integer pacienteId) {
-    this.pacienteId = pacienteId;
-  }
-
-  public Paciente getPaciente() {
-    return paciente;
-  }
-
-  public void setPaciente(Paciente paciente) {
-    this.paciente = paciente;
-  }
-
-  public String getApellido() {
-    return apellido;
-  }
-
-  public void setApellido(String apellido) {
-    this.apellido = apellido;
-  }
-
-  public String getNombre() {
-    return nombre;
-  }
-
-  public void setNombre(String nombre) {
-    this.nombre = nombre;
-  }
-
-  public String getFechaNacimiento() {
-    return fechaNacimiento;
-  }
-
-  public void setFechaNacimiento(String fechaNacimiento) {
-    this.fechaNacimiento = fechaNacimiento;
-  }
-
-  public String getDomicilio() {
-    return domicilio;
-  }
-
-  public void setDomicilio(String domicilio) {
-    this.domicilio = domicilio;
-  }
-
-  public String getTelefono() {
-    return telefono;
-  }
-
-  public void setTelefono(String telefono) {
-    this.telefono = telefono;
-  }
-
-  public String getMail() {
-    return mail;
-  }
-
-  public void setMail(String mail) {
-    this.mail = mail;
-  }
-
-  public boolean getCoseguro() {
-    return coseguro;
-  }
+    private Integer pacienteId;
+    private Integer titularId;
+    private Integer dni;
+    private Paciente paciente;
+    private String apellido;
+    private String nombre;
+    private String fechaNacimiento;
+    private String domicilio;
+    private String telefono;
+    private String mail;
+    private Integer localidadId;
+    private String localidadString;
+
+    private ObraSocialDTO obrasocial = new ObraSocialDTO();
+    private List<ObraSocialDTO> obrasocialList = new ArrayList<ObraSocialDTO>();
+    private List<ObraSocialDTO> obrasocialListEdit = new ArrayList<ObraSocialDTO>();
+    private String provincia;
+    private List<String> provinciaList;
+    private List<PacienteDTO> adherentes = new ArrayList<PacienteDTO>();
+    private List<PacienteDTO> adherentesEditList = new ArrayList<PacienteDTO>();
+
+    private String crdencial;
+    private boolean original = false;
+
+    private boolean titular = false;
+    private String checkedTitular;
+    private PacienteDTO pacienteTitular;
+
+    private boolean coseguro = false;
+    private String checkedLiberado;
+
+    private String acciones;
+    private int parentesco;
+    private String parentescoDescription;
+
+    private String zonaAfiliacion;
+
+    // private List<PacienteObrasocial> pacienteObrasocials = new ArrayList<PacienteObrasocial>(0);
+
+    public Integer getPacienteId() {
+        return pacienteId;
+    }
+
+    public void setPacienteId(Integer pacienteId) {
+        this.pacienteId = pacienteId;
+    }
+
+    public Paciente getPaciente() {
+        return paciente;
+    }
+
+    public void setPaciente(Paciente paciente) {
+        this.paciente = paciente;
+    }
+
+    public String getApellido() {
+        return apellido;
+    }
+
+    public void setApellido(String apellido) {
+        this.apellido = apellido;
+    }
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
+    public String getFechaNacimiento() {
+        return fechaNacimiento;
+    }
+
+    public void setFechaNacimiento(String fechaNacimiento) {
+        this.fechaNacimiento = fechaNacimiento;
+    }
+
+    public String getDomicilio() {
+        return domicilio;
+    }
+
+    public void setDomicilio(String domicilio) {
+        this.domicilio = domicilio;
+    }
+
+    public String getTelefono() {
+        return telefono;
+    }
+
+    public void setTelefono(String telefono) {
+        this.telefono = telefono;
+    }
+
+    public String getMail() {
+        return mail;
+    }
+
+    public void setMail(String mail) {
+        this.mail = mail;
+    }
+
+    public boolean getCoseguro() {
+        return coseguro;
+    }
+
+    public void setCoseguro(boolean coseguro) {
+        this.coseguro = coseguro;
+    }
+
+    public Integer getDni() {
+        return dni;
+    }
+
+    public void setDni(Integer dni) {
+        this.dni = dni;
+    }
+
+    public ObraSocialDTO getObrasocial() {
+        return obrasocial;
+    }
+
+    public void setObrasocial(ObraSocialDTO obrasocial) {
+        this.obrasocial = obrasocial;
+    }
+
+    public List<ObraSocialDTO> getObrasocialList() {
+        return obrasocialList;
+    }
+
+    public void setObrasocialList(List<ObraSocialDTO> obrasocialList) {
+        this.obrasocialList = obrasocialList;
+    }
+
+    public String getProvincia() {
+        return provincia;
+    }
 
-  public void setCoseguro(boolean coseguro) {
-    this.coseguro = coseguro;
-  }
+    public void setProvincia(String provincia) {
+        this.provincia = provincia;
+    }
 
-  public Integer getDni() {
-    return dni;
-  }
+    public List<String> getProvinciaList() {
+        return provinciaList;
+    }
 
-  public void setDni(Integer dni) {
-    this.dni = dni;
-  }
+    public void setProvinciaList(List<String> provinciaList) {
+        this.provinciaList = provinciaList;
+    }
 
-  public ObraSocialDTO getObrasocial() {
-    return obrasocial;
-  }
+    public List<ObraSocialDTO> getObrasocialListEdit() {
+        return obrasocialListEdit;
+    }
 
-  public void setObrasocial(ObraSocialDTO obrasocial) {
-    this.obrasocial = obrasocial;
-  }
+    public void setObrasocialListEdit(List<ObraSocialDTO> obrasocialListEdit) {
+        this.obrasocialListEdit = obrasocialListEdit;
+    }
 
-  public List<ObraSocialDTO> getObrasocialList() {
-    return obrasocialList;
-  }
+    public Integer getTitularId() {
+        return titularId;
+    }
 
-  public void setObrasocialList(List<ObraSocialDTO> obrasocialList) {
-    this.obrasocialList = obrasocialList;
-  }
+    public void setTitularId(Integer titularId) {
+        this.titularId = titularId;
+    }
 
-  public String getProvincia() {
-    return provincia;
-  }
+    public List<PacienteDTO> getAdherentes() {
+        return adherentes;
+    }
 
-  public void setProvincia(String provincia) {
-    this.provincia = provincia;
-  }
+    public void setAdherentes(List<PacienteDTO> adherentes) {
+        this.adherentes = adherentes;
+    }
 
-  public List<String> getProvinciaList() {
-    return provinciaList;
-  }
+    public List<PacienteDTO> getAdherentesEditList() {
+        return adherentesEditList;
+    }
 
-  public void setProvinciaList(List<String> provinciaList) {
-    this.provinciaList = provinciaList;
-  }
+    public void setAdherentesEditList(List<PacienteDTO> adherentesEditList) {
+        this.adherentesEditList = adherentesEditList;
+    }
 
-  public List<ObraSocialDTO> getObrasocialListEdit() {
-    return obrasocialListEdit;
-  }
+    public String getCrdencial() {
+        return crdencial;
+    }
 
-  public void setObrasocialListEdit(List<ObraSocialDTO> obrasocialListEdit) {
-    this.obrasocialListEdit = obrasocialListEdit;
-  }
+    public void setCrdencial(String crdencial) {
+        this.crdencial = crdencial;
+    }
 
-  public Integer getTitularId() {
-    return titularId;
-  }
+    public boolean isTitular() {
+        return titular;
+    }
 
-  public void setTitularId(Integer titularId) {
-    this.titularId = titularId;
-  }
+    public void setTitular(boolean titular) {
+        this.titular = titular;
+    }
 
-  public List<PacienteDTO> getAdherentes() {
-    return adherentes;
-  }
+    public String getCheckedTitular() {
+        return checkedTitular;
+    }
 
-  public void setAdherentes(List<PacienteDTO> adherentes) {
-    this.adherentes = adherentes;
-  }
+    public void setCheckedTitular(String checkedTitular) {
+        this.checkedTitular = checkedTitular;
+    }
 
-  public List<PacienteDTO> getAdherentesEditList() {
-    return adherentesEditList;
-  }
+    public PacienteDTO getPacienteTitular() {
+        return pacienteTitular;
+    }
 
-  public void setAdherentesEditList(List<PacienteDTO> adherentesEditList) {
-    this.adherentesEditList = adherentesEditList;
-  }
+    public void setPacienteTitular(PacienteDTO pacienteTitular) {
+        this.pacienteTitular = pacienteTitular;
+    }
 
-  public String getCrdencial() {
-    return crdencial;
-  }
+    public String getCheckedLiberado() {
+        return checkedLiberado;
+    }
 
-  public void setCrdencial(String crdencial) {
-    this.crdencial = crdencial;
-  }
+    public void setCheckedLiberado(String checkedLiberado) {
+        this.checkedLiberado = checkedLiberado;
+    }
 
-  public boolean isTitular() {
-    return titular;
-  }
+    public boolean isOriginal() {
+        return original;
+    }
 
-  public void setTitular(boolean titular) {
-    this.titular = titular;
-  }
+    public void setOriginal(boolean original) {
+        this.original = original;
+    }
 
-  public String getCheckedTitular() {
-    return checkedTitular;
-  }
+    public String getAcciones() {
+        String botonEdit = "<a class='btn btn-info btn-xs' href='formEditPaciente/" + getPacienteId()
+                + "'><span class='icon icon-edit'></span>Editar</a>&nbsp;";
 
-  public void setCheckedTitular(String checkedTitular) {
-    this.checkedTitular = checkedTitular;
-  }
+        String botonTipoOrden = "<a class='btn btn-success btn-xs' href='tipoOrden/" + getPacienteId()
+                + "'><span class='icon icon-plus-sign'></span>Orden</a>";
 
-  public PacienteDTO getPacienteTitular() {
-    return pacienteTitular;
-  }
+        String botonDelete = "<a class='btn btn-danger btn-xs' href='formDeletePaciente/"
+                + getPacienteId() + "'><span class='icon icon-remove'></span>Eliminar</a>&nbsp;";
 
-  public void setPacienteTitular(PacienteDTO pacienteTitular) {
-    this.pacienteTitular = pacienteTitular;
-  }
+        this.acciones = botonEdit + botonDelete + botonTipoOrden;
 
-  public String getCheckedLiberado() {
-    return checkedLiberado;
-  }
+        return acciones;
+    }
 
-  public void setCheckedLiberado(String checkedLiberado) {
-    this.checkedLiberado = checkedLiberado;
-  }
+    public void setAcciones(String acciones) {
+        this.acciones = acciones;
+    }
 
-  public boolean isOriginal() {
-    return original;
-  }
+    public int getParentesco() {
+        return parentesco;
+    }
 
-  public void setOriginal(boolean original) {
-    this.original = original;
-  }
+    public void setParentesco(int parentesco) {
+        this.parentesco = parentesco;
+    }
 
-  public String getAcciones() {
-    String botonEdit = "<a class='btn btn-info btn-xs' href='formEditPaciente/" + getPacienteId()
-        + "'><span class='icon icon-edit'></span>Editar</a>&nbsp;";
+    public String getParentescoDescription() {
+        return parentescoDescription;
+    }
 
-    String botonTipoOrden = "<a class='btn btn-success btn-xs' href='tipoOrden/" + getPacienteId()
-        + "'><span class='icon icon-plus-sign'></span>Orden</a>";
+    public void setParentescoDescription(String parentescoDescription) {
+        this.parentescoDescription = parentescoDescription;
+    }
 
-    String botonDelete = "<a class='btn btn-danger btn-xs' href='formDeletePaciente/"
-        + getPacienteId() + "'><span class='icon icon-remove'></span>Eliminar</a>&nbsp;";
+    public String getZonaAfiliacion() {
+        return zonaAfiliacion;
+    }
 
-    this.acciones = botonEdit + botonDelete + botonTipoOrden;
+    public void setZonaAfiliacion(String zonaAfiliacion) {
+        this.zonaAfiliacion = zonaAfiliacion;
+    }
 
-    return acciones;
-  }
+    public Integer getLocalidadId() {
+        return localidadId;
+    }
 
-  public void setAcciones(String acciones) {
-    this.acciones = acciones;
-  }
+    public void setLocalidadId(Integer localidadId) {
+        this.localidadId = localidadId;
+    }
 
-  public int getParentesco() {
-    return parentesco;
-  }
+    public String getLocalidadString() {
+        return localidadString;
+    }
 
-  public void setParentesco(int parentesco) {
-    this.parentesco = parentesco;
-  }
-
-  public String getParentescoDescription() {
-    return parentescoDescription;
-  }
-
-  public void setParentescoDescription(String parentescoDescription) {
-    this.parentescoDescription = parentescoDescription;
-  }
-
-  public String getZonaAfiliacion() {
-    return zonaAfiliacion;
-  }
-
-  public void setZonaAfiliacion(String zonaAfiliacion) {
-    this.zonaAfiliacion = zonaAfiliacion;
-  }
+    public void setLocalidadString(String localidadString) {
+        this.localidadString = localidadString;
+    }
 
 }

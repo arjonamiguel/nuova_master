@@ -11,6 +11,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
 
 import com.nuova.dto.OrdenAlarmaDTO;
+import com.nuova.model.Localidades;
 import com.nuova.model.Paciente;
 
 @Repository
@@ -18,6 +19,7 @@ public class PacienteDAOImpl implements PacienteDAO {
     @Autowired
     private SessionFactory sessionFactory;
 
+    @Override
     public void add(Paciente paciente) {
         this.sessionFactory.getCurrentSession().save(paciente);
         // for (PacienteObrasocial po : paciente.getPacienteObrasocials()) {
@@ -25,16 +27,19 @@ public class PacienteDAOImpl implements PacienteDAO {
         // }
     }
 
+    @Override
     public Paciente fin1dPacienteById(Integer pacienteId) {
         return (Paciente) this.sessionFactory.
                 getCurrentSession().get(Paciente.class, pacienteId);
     }
 
+    @Override
     @SuppressWarnings("unchecked")
     public List<Paciente> findAll() {
         return this.sessionFactory.getCurrentSession().createQuery("FROM Paciente").list();
     }
 
+    @Override
     public void delete(Integer pacienteId) {
         this.sessionFactory.getCurrentSession().
                 createQuery(" DELETE FROM Paciente p WHERE p.pacienteId = :pacienteId ").
@@ -42,6 +47,7 @@ public class PacienteDAOImpl implements PacienteDAO {
                 executeUpdate();
     }
 
+    @Override
     public void edit(Paciente paciente) {
         // for (PacienteObrasocial po : paciente.getPacienteObrasocials()) {
         // this.sessionFactory.getCurrentSession().saveOrUpdate(po);
@@ -49,6 +55,7 @@ public class PacienteDAOImpl implements PacienteDAO {
         this.sessionFactory.getCurrentSession().saveOrUpdate(paciente);
     }
 
+    @Override
     public void deleteAdherente(Integer pacienteId) {
         this.sessionFactory
                 .getCurrentSession().
@@ -58,6 +65,7 @@ public class PacienteDAOImpl implements PacienteDAO {
                 executeUpdate();
     }
 
+    @Override
     public void deletePacienteObrasocial(Integer pacienteId) {
         this.sessionFactory
                 .getCurrentSession().
@@ -68,6 +76,7 @@ public class PacienteDAOImpl implements PacienteDAO {
 
     }
 
+    @Override
     public Page<Paciente> findPacientesByPageable(Pageable pageable) {
         Query query = this.sessionFactory.getCurrentSession().createQuery("FROM Paciente p "
                 + " WHERE p.eliminado = 0"
@@ -78,6 +87,7 @@ public class PacienteDAOImpl implements PacienteDAO {
         return new PageImpl<Paciente>(result, pageable, result.size());
     }
 
+    @Override
     public Page<Paciente> findPacientesBySearch(String search, Pageable pageable) {
         Query query = this.sessionFactory.getCurrentSession()
                 .createQuery("FROM Paciente p "
@@ -91,6 +101,7 @@ public class PacienteDAOImpl implements PacienteDAO {
         return new PageImpl<Paciente>(result, pageable, result.size());
     }
 
+    @Override
     @SuppressWarnings("unchecked")
     public OrdenAlarmaDTO countPacientes() {
         return (OrdenAlarmaDTO) this.sessionFactory.getCurrentSession()
@@ -98,6 +109,7 @@ public class PacienteDAOImpl implements PacienteDAO {
                         + " FROM Paciente p ").list().get(0);
     }
 
+    @Override
     public List<Paciente> findPacienteAutocomplete(String search) {
         Query query = this.sessionFactory.getCurrentSession().createQuery("FROM Paciente p "
                 + " WHERE upper(p.apellido) LIKE '%" + search.toUpperCase() + "%'"
@@ -108,6 +120,7 @@ public class PacienteDAOImpl implements PacienteDAO {
         return result;
     }
 
+    @Override
     public Paciente findPacienteByDni(Integer dni) {
         Paciente retorno = null;
         @SuppressWarnings("unchecked")
@@ -121,6 +134,23 @@ public class PacienteDAOImpl implements PacienteDAO {
         }
 
         return retorno;
+    }
+
+    @Override
+    public List<Localidades> findLocalidadesAutocomplete(String search) {
+        Query query = this.sessionFactory.getCurrentSession().createQuery("FROM Localidades loc "
+                + " WHERE upper(loc.nombre) LIKE '%" + search.toUpperCase() + "%'"
+                + " ORDER BY loc.nombre ASC");
+        // query.setFirstResult(pageable.getOffset());
+        query.setMaxResults(20);
+        List<Localidades> result = query.list();
+        return result;
+    }
+
+    @Override
+    public Localidades findLocalidadById(Integer localidadId) {
+        return (Localidades) this.sessionFactory.
+                getCurrentSession().get(Localidades.class, localidadId);
     }
 
 }

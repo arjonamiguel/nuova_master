@@ -30,6 +30,39 @@ label.error {
   width:58%;
 }
 </style>		
+<script type="text/javascript">
+	$(document).ready(function() {
+		var map = new Object();
+		var objects = [];
+
+		$('input.typeahead').typeahead({
+			source : function(query, process) {
+				$.ajax({
+					url : '/nuova/ajaxGetAutoCompleteLocalidades',
+					type : 'POST',
+					dataType : 'JSON',
+					data : 'query=' + query,
+					success : function(data) {
+						console.log(data);
+						$.each(data, function(i, object) {
+							map[object.value] = object;
+							if (objects[i] == null) {
+								objects.push(object.value);
+							}
+						});
+						process(objects);
+						objects = [];
+					}
+				});
+			},
+			updater : function(item) {
+				$('#localidadId').val(map[item].id);
+				return item;
+			}
+		});
+	});
+</script>	
+
 	
 <SCRIPT language="javascript">
     
@@ -198,7 +231,8 @@ label.error {
         					<div class="formInput"><form:input path="mail" /></div>
 			   		</div>
 			   	</div>
-			   	<div class="row-fluid">
+			   	
+			   	 	<div class="row-fluid">
 			   		<div class="span4">
 			   				<div class="formLabel"><form:label path="provincia">Provincia Origen:</form:label></div>
         					<div class="formInput">
@@ -209,36 +243,38 @@ label.error {
         					</div>
 			   		</div>
 			   		<div class="span4">
-			   				<div class="formLabel"><form:label path="domicilio">Domicilio:</form:label></div>
-        					<div class="formInput"><form:textarea path="domicilio" cssStyle="width:78%"/></div>
-			   		</div>
-			   		<div class="span4">
-			   				<div class="formLabel" style="padding-top:6px;padding-right:5px;"><form:label path="coseguro">Coseguro:</form:label></div>
-			   				<div style="visibility:hidden;"><form:checkbox path="coseguro" id="coseguro"/></div>
-							<div class="material-switch pull-left">
-									<input id="coseguroAux" name="coseguroAux" type="checkbox" value="true" >
-									<label for="coseguroAux" class="label-success" onclick="updatecoseguro()"></label>
-									<div style="padding-top:10%;">
-										NO - SI
-									</div>
+			   				<div class="formLabel"><form:label path="domicilio">Localidad:</form:label></div>
+        					<div class="formInput">
+        					<form:hidden path="localidadId"/>
+        					<form:input path="localidadString"
+        						data-provide="typeahead" 
+								class="typeahead"								
+								type="text"								
+								placeholder="Ingrese Localidad ..."
+								autocomplete="off"
+        					/> 
+        					<a href="#" title="Nueva Localidad">
+								<img src="/nuova/resources/img/list_add_16x16.png">
+							</a>
 							</div>
 			   		</div>
 			   	
-						
-			   					   
+			   		<div class="span4">
+			   				<div class="formLabel"><form:label path="domicilio">Domicilio:</form:label></div>
+        					<div class="formInput"><form:textarea path="domicilio" cssStyle="width:78%"/></div>
+			   		</div>
 			   	</div>
-			   	<div class="row-fluid">
+			   	
+			   		<div class="row-fluid">
 			   		<div class="span4">
 			   				<div class="formLabel"><form:label path="titular">Parentesco:</form:label></div>
-							<div class="formInput">
+							<div  class="formInput">
 								<form:select path="parentesco" style="width:83%; margin-bottom:0px">
 									<form:option value="-1" label="Seleccione Parentesco ..."/>
 									<form:options items="${parentescosList}"  itemLabel="value" itemValue="id"/>			    
 								</form:select>
 							</div>
 			   		</div>
-			   		
-			   		<c:if test="${paciente.parentesco == 0}">			   		
 			   		<div class="span4">
 			   				<div class="formLabel"><form:label path="zonaAfiliacion">Zona Afiliación:</form:label></div>
         					<div class="formInput">
@@ -248,8 +284,25 @@ label.error {
 								</form:select>
         					</div>
 			   		</div>
-			   		</c:if>
+			   		
+			   		<div class="span1" style="">
+			   				<div class="formLabel"><form:label path="coseguro">Coseguro:</form:label></div>
+			   				
+							
+			   		</div>
+			   		<div class="span3" style="margin-top:1%;">
+			   		
+							<div class="material-switch pull-left">
+								<input id="coseguro" name="coseguro" type="checkbox" value="true">
+								<label for="coseguro" class="label-success"></label>
+								<div style="padding-top:10%;">
+									NO - SI
+								</div>
+							</div>
+							
+			   		</div>
 			   	</div>
+			   	
 		 </div>
 	</div>	
 </div>
@@ -383,7 +436,7 @@ function callExistDni(dni) {
             },
             apellido: "required",
             nombre: "required",
-
+            localidadString: "required"
         },
         
         // Specify the validation error messages
@@ -395,6 +448,7 @@ function callExistDni(dni) {
             },
             apellido: "Ingrese apellido",
             nombre: "Ingrese nombre",
+            localidadString : "Seleccione Localidad"
 
         },
                 submitHandler: function(form) {

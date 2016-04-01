@@ -17,24 +17,29 @@ public class PracticaDAOImpl implements PracticaDAO {
     @Autowired
     private SessionFactory sessionFactory;
 
+    @Override
     public void add(Nomenclador practica) {
         this.sessionFactory.getCurrentSession().save(practica);
     }
 
+    @Override
     public Nomenclador findPracticaById(Integer practicaId) {
         return (Nomenclador) this.sessionFactory.
                 getCurrentSession().get(Nomenclador.class, practicaId);
     }
 
+    @Override
     @SuppressWarnings("unchecked")
     public List<Nomenclador> findAll() {
         return this.sessionFactory.getCurrentSession().createQuery("FROM Nomenclador").list();
     }
 
+    @Override
     public void edit(Nomenclador practica) {
         this.sessionFactory.getCurrentSession().saveOrUpdate(practica);
     }
 
+    @Override
     public void deletePractica(Integer nomencladorId) {
         this.sessionFactory.getCurrentSession().
                 createQuery(" DELETE FROM Nomenclador p "
@@ -43,6 +48,7 @@ public class PracticaDAOImpl implements PracticaDAO {
                 executeUpdate();
     }
 
+    @Override
     public Page<Nomenclador> findPracticaByPageable(Pageable pageable) {
         Query query = this.sessionFactory.getCurrentSession().createQuery(
                 "FROM Nomenclador p ORDER BY p.codigo, p.nombre, p.tipo asc");
@@ -53,6 +59,7 @@ public class PracticaDAOImpl implements PracticaDAO {
         return new PageImpl<Nomenclador>(result, pageable, result.size());
     }
 
+    @Override
     public Page<Nomenclador> findPracticaBySearch(String search, Pageable pageable) {
         Query query = this.sessionFactory.getCurrentSession()
                 .createQuery("FROM Nomenclador p "
@@ -67,12 +74,20 @@ public class PracticaDAOImpl implements PracticaDAO {
         return new PageImpl<Nomenclador>(result, pageable, result.size());
     }
 
+    @Override
     public List<Nomenclador> findNomencladorAutocomplete(String search) {
-        Query query = this.sessionFactory.getCurrentSession().createQuery("FROM Nomenclador n "
-                + " WHERE n.codigo like '%" + search.toUpperCase() + "%' OR"
-                + " upper(n.nombre) LIKE '%" + search.toUpperCase() + "%' "
-                // + " AND n.tipo='Practicas'"
-                + " ORDER BY n.codigo, n.nombre, n.tipo ASC");
+        Query query = this.sessionFactory
+                .getCurrentSession()
+                .createQuery(
+                        "FROM Nomenclador n "
+                                + " WHERE (n.codigo like '%"
+                                + search.toUpperCase()
+                                + "%' OR"
+                                + " upper(n.nombre) LIKE '%"
+                                + search.toUpperCase()
+                                + "%' )"
+                                + " AND n.tipo IN ('Practicas', 'Odontológico', 'Prótesis', 'Descartables', 'Prácticas PMOe', 'Odontológico PMO', 'Codigos Fuera de PMO')"
+                                + " ORDER BY n.codigo, n.nombre, n.tipo ASC");
         // query.setFirstResult(pageable.getOffset());
         query.setMaxResults(20);
         List<Nomenclador> result = query.list();

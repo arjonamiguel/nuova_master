@@ -45,6 +45,7 @@ public class Paciente implements java.io.Serializable {
     private Byte eliminado;
     private Set<Orden> ordens = new HashSet<Orden>(0);
     private Set<Paciente> pacientes = new HashSet<Paciente>(0);
+    private Integer localidadId;
 
     public Paciente() {
     }
@@ -236,6 +237,15 @@ public class Paciente implements java.io.Serializable {
 
     public void setPacientes(Set<Paciente> pacientes) {
         this.pacientes = pacientes;
+    }
+
+    @Column(name = "localidad_id")
+    public Integer getLocalidadId() {
+        return localidadId;
+    }
+
+    public void setLocalidadId(Integer localidadId) {
+        this.localidadId = localidadId;
     }
 
 }

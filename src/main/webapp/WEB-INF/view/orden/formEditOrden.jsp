@@ -151,8 +151,9 @@ function eliminarHC (i) {
 enctype="multipart/form-data">
 <form:hidden path="ordenId"/>
 <div class="mainContainer">	
+
 	<div class="panelContainer">		
-		<div class="panel panel-info">
+		<div class="panel panel-info">	
 			<!-- Cabecera y Titulo -->
 			<div class="panel-heading">
    				<div class="panel-title">
@@ -166,7 +167,7 @@ enctype="multipart/form-data">
 					<div class="row-fluid" >
 		   				<div class="span12">
 		   					<div class="tableContainer">	
-		   					
+		   					<jsp:include page="../message.jsp"></jsp:include>
 							<!-- Declaracion de tabs -->
 							<ul class="nav nav-tabs">
 								<li class="active"><a data-toggle="tab" href="#tb_paciente" onclick="setObservacionInvisible()">Paciente</a></li>
@@ -232,7 +233,7 @@ enctype="multipart/form-data">
 		<div class="panel panel-info">
 			<div class="panel-body">
 				<div class="row-fluid">
-				<div class="span12">
+				<div class="span12">					
 					<div style="float:right;">
 						<input type="button" value="Cancelar" onclick="location.href = '/nuova/mainOrdenPractica'; return false;" class="btn"/>	
 					</div>

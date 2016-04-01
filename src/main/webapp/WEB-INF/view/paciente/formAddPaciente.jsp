@@ -30,6 +30,38 @@ label.error {
   width:58%;
 }
 </style>		
+<script type="text/javascript">
+	$(document).ready(function() {
+		var map = new Object();
+		var objects = [];
+
+		$('input.typeahead').typeahead({
+			source : function(query, process) {
+				$.ajax({
+					url : '/nuova/ajaxGetAutoCompleteLocalidades',
+					type : 'POST',
+					dataType : 'JSON',
+					data : 'query=' + query,
+					success : function(data) {
+						console.log(data);
+						$.each(data, function(i, object) {
+							map[object.value] = object;
+							if (objects[i] == null) {
+								objects.push(object.value);
+							}
+						});
+						process(objects);
+						objects = [];
+					}
+				});
+			},
+			updater : function(item) {
+				$('#localidadId').val(map[item].id);
+				return item;
+			}
+		});
+	});
+</script>	
 	
 <SCRIPT language="javascript">
 	var index = 0;
@@ -202,26 +234,28 @@ label.error {
         					</div>
 			   		</div>
 			   		<div class="span4">
+			   				<div class="formLabel"><form:label path="localidadString">Localidad:</form:label></div>
+        					<div class="formInput">
+        					<input type="hidden" name="localidadId" id="localidadId" value="">										
+							<input
+								data-provide="typeahead" 
+								class="typeahead"
+								name="localidadString"
+								type="text"
+								id="localidadString"
+								placeholder="Ingrese Localidad ..."
+								autocomplete="off"
+								>
+							<a href="#" title="Nueva Localidad">
+								<img src="/nuova/resources/img/list_add_16x16.png">
+							</a>
+							</div>
+			   		</div>
+			   	
+			   		<div class="span4">
 			   				<div class="formLabel"><form:label path="domicilio">Domicilio:</form:label></div>
         					<div class="formInput"><form:textarea path="domicilio" cssStyle="width:78%"/></div>
 			   		</div>
-			   		<div class="span1" style="margin-top:2%;">
-			   				<div class="formLabel"><form:label path="coseguro">Coseguro:</form:label></div>
-			   				
-							
-			   		</div>
-			   		<div class="span3" style="margin-top:3%;">
-			   		
-							<div class="material-switch pull-left">
-								<input id="coseguro" name="coseguro" type="checkbox" value="true">
-								<label for="coseguro" class="label-success"></label>
-								<div style="padding-top:10%;">
-									NO - SI
-								</div>
-							</div>
-							
-			   		</div>
-	
 			   	</div>
 			   	<div class="row-fluid">
 			   		<div class="span4">
@@ -243,6 +277,22 @@ label.error {
         					</div>
 			   		</div>
 			   		
+			   		<div class="span1" style="">
+			   				<div class="formLabel"><form:label path="coseguro">Coseguro:</form:label></div>
+			   				
+							
+			   		</div>
+			   		<div class="span3" style="margin-top:1%;">
+			   		
+							<div class="material-switch pull-left">
+								<input id="coseguro" name="coseguro" type="checkbox" value="true">
+								<label for="coseguro" class="label-success"></label>
+								<div style="padding-top:10%;">
+									NO - SI
+								</div>
+							</div>
+							
+			   		</div>
 			   	</div>
 			   	
 		 </div>
@@ -324,6 +374,7 @@ label.error {
             },
             apellido: "required",
             nombre: "required",
+            localidadString: "required",
 
             email: {
                 required: true,
@@ -341,6 +392,7 @@ label.error {
             },
             apellido: "Ingrese apellido",
             nombre: "Ingrese nombre",
+            localidadString : "Seleccione Localidad",
 
 			fechaNacimiento : "Ingrese fecha de nacimiento"
         },

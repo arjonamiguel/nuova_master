@@ -19,6 +19,12 @@ import java.util.List;
 import java.util.Map;
 
 public class Util {
+
+  static public int MESSAGE_SUCCESS = 1;
+  static public int MESSAGE_WARNING = 2;
+  static public int MESSAGE_INFORMATION = 3;
+  static public int MESSAGE_ERROR = 4;
+
   static public String DOCUMENT_TYPE = "HISTORIA_CLINICA";
 
   static public int CONCEPTO_INGRESO_INICIOCAJA = 0;

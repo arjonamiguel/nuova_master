@@ -319,105 +319,114 @@ public class OrdenController {
   }
 
   @RequestMapping(value = ConstantControllers.EDIT_ORDEN, method = RequestMethod.POST)
-  public String editOrden(@ModelAttribute(value = "ordenDto") OrdenDTO dto) {
+  public String editOrden(ModelMap map, @ModelAttribute(value = "ordenDto") OrdenDTO dto) {
+    int message = Util.MESSAGE_SUCCESS;
     Orden orden = ordenManager.findOrdenById(dto.getOrdenId());
-    User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-    List<OrdenPracticaDTO> practicas = dto.getOrdenpracticaListEdit();
 
-    // Persisto Observacion
-    if (dto.getObservacion() != null && !dto.getObservacion().trim().equals("")) {
-      // observacionManager.add(new Observaciones(orden, dto.getObservacion(), user.getUsername(),
-      // new Date()));
-      orden.getObservacioneses()
-          .add(new Observaciones(orden, dto.getObservacion(), user.getUsername(), new Date()));
-    }
+    try {
 
-    // Persiste Practicas
-    for (OrdenPractica o : orden.getOrdenPracticas()) {
-      ordenManager.deleteOrdenPractica(o.getOrden().getOrdenId());
-    }
+      User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+      List<OrdenPracticaDTO> practicas = dto.getOrdenpracticaListEdit();
 
-    Set<OrdenPractica> persistOrdenPracticaList = new HashSet<OrdenPractica>();
-    for (OrdenPracticaDTO opdto : practicas) {
-      if (opdto.getPracticaId() != null) {
-        Nomenclador p = new Nomenclador();
-        p.setNomencladorId(opdto.getPracticaId());
-        OrdenPractica op = new OrdenPractica();
-        op.setFecha(new Date());
-        op.setOrden(orden);
-        op.setNomenclador(p);
-        op.setEstado(opdto.getEstado());
-
-        persistOrdenPracticaList.add(op);
+      // Persisto Observacion
+      if (dto.getObservacion() != null && !dto.getObservacion().trim().equals("")) {
+        // observacionManager.add(new Observaciones(orden, dto.getObservacion(), user.getUsername(),
+        // new Date()));
+        orden.getObservacioneses()
+            .add(new Observaciones(orden, dto.getObservacion(), user.getUsername(), new Date()));
       }
-    }
-    orden.setOrdenPracticas(persistOrdenPracticaList);
 
-    // Persiste Estado
-    if (dto.getEstado() != null && !orden.getEstado().equals(dto.getEstado())) {
-      OrdenWorkflow ow = new OrdenWorkflow(orden, user.getUsername(), dto.getEstado(), new Date());
-      orden.getOrdenWorkflows().add(ow);
-      orden.setEstado(dto.getEstado());
-    }
+      // Persiste Practicas
+      for (OrdenPractica o : orden.getOrdenPracticas()) {
+        ordenManager.deleteOrdenPractica(o.getOrden().getOrdenId());
+      }
 
-    if (orden.getOrdenTipo().getCodigo().intValue() == 100) {
-      Set<OrdenProfesional> ordenProfesionals = new HashSet<OrdenProfesional>();
-      OrdenProfesional op = new OrdenProfesional();
-      op.setProfesional(profesionalManager.findProfesionalById(dto.getProfesionalId()));
-      op.setOrden(orden);
-      ordenProfesionals.add(op);
-      ordenManager.deleteOrdenProfesional(orden.getOrdenId());
-      orden.setOrdenProfesionals(ordenProfesionals);
-    }
+      Set<OrdenPractica> persistOrdenPracticaList = new HashSet<OrdenPractica>();
+      for (OrdenPracticaDTO opdto : practicas) {
+        if (opdto.getPracticaId() != null) {
+          Nomenclador p = new Nomenclador();
+          p.setNomencladorId(opdto.getPracticaId());
+          OrdenPractica op = new OrdenPractica();
+          op.setFecha(new Date());
+          op.setOrden(orden);
+          op.setNomenclador(p);
+          op.setEstado(opdto.getEstado());
 
-    // requisitos
-    orden.setReqCredecial(Util.getByteFlag(dto.isReqCredecial()));
-    orden.setReqMonotributista(Util.getByteFlag(dto.isReqMonotributista()));
-    orden.setReqOrdenMedico(Util.getByteFlag(dto.isReqOrdenMedico()));
-    orden.setReqReciboSueldo(Util.getByteFlag(dto.isReqReciboSueldo()));
-
-    // Actualizo Orden
-    ordenManager.edit(orden);
-
-    // Actualizo Orden Document
-    // Historia Cinica - Archivos Adjuntos
-    List<OrdenDocument> documents = new ArrayList<OrdenDocument>();
-    List<OrdenDocument> documentsTotal = new ArrayList<OrdenDocument>();
-    List<OrdenDocument> documentsOld =
-        ordenManager.finAllOrdenDocumentByOrdenId(orden.getOrdenId());
-    for (OrdenDocumentDTO hc : dto.getHistoriasclinicas()) {
-      if (hc.getDocumentId() != null) {
-        OrdenDocument d = ordenManager.findOrdenDocumentById(hc.getDocumentId());
-        if (d != null) {
-          documents.add(d);
+          persistOrdenPracticaList.add(op);
         }
       }
-    }
+      orden.setOrdenPracticas(persistOrdenPracticaList);
 
-    for (OrdenDocumentDTO hc : dto.getHistoriasclinicas()) {
-      if (hc.getDocumentId() == null && hc.getFileData() != null && !hc.getFileData().isEmpty()) {
-        OrdenDocument content = new OrdenDocument();
-        content.setContent(hc.getFileData().getBytes());
-        content.setFileName(hc.getFileData().getOriginalFilename());
-        content.setType(Util.DOCUMENT_TYPE);
-        content.setFileType(hc.getFileData().getContentType());
-        content.setOrdenId(orden.getOrdenId());
-        content.setSize(hc.getFileData().getSize());
-
-        documentsTotal.add(content);
+      // Persiste Estado
+      if (dto.getEstado() != null && !orden.getEstado().equals(dto.getEstado())) {
+        OrdenWorkflow ow =
+            new OrdenWorkflow(orden, user.getUsername(), dto.getEstado(), new Date());
+        orden.getOrdenWorkflows().add(ow);
+        orden.setEstado(dto.getEstado());
       }
-    }
 
-    for (OrdenDocument od : documentsOld) {
-      ordenManager.deleteOrdenDocument(od.getDocumentId());
-    }
+      if (orden.getOrdenTipo().getCodigo().intValue() == 100) {
+        Set<OrdenProfesional> ordenProfesionals = new HashSet<OrdenProfesional>();
+        OrdenProfesional op = new OrdenProfesional();
+        op.setProfesional(profesionalManager.findProfesionalById(dto.getProfesionalId()));
+        op.setOrden(orden);
+        ordenProfesionals.add(op);
+        ordenManager.deleteOrdenProfesional(orden.getOrdenId());
+        orden.setOrdenProfesionals(ordenProfesionals);
+      }
 
-    if (documents.size() > 0) {
-      documentsTotal.addAll(documents);
-    }
+      // requisitos
+      orden.setReqCredecial(Util.getByteFlag(dto.isReqCredecial()));
+      orden.setReqMonotributista(Util.getByteFlag(dto.isReqMonotributista()));
+      orden.setReqOrdenMedico(Util.getByteFlag(dto.isReqOrdenMedico()));
+      orden.setReqReciboSueldo(Util.getByteFlag(dto.isReqReciboSueldo()));
 
-    for (OrdenDocument od : documentsTotal) {
-      ordenManager.add(od);
+      // Actualizo Orden
+      ordenManager.edit(orden);
+
+      // Actualizo Orden Document
+      // Historia Cinica - Archivos Adjuntos
+      List<OrdenDocument> documents = new ArrayList<OrdenDocument>();
+      List<OrdenDocument> documentsTotal = new ArrayList<OrdenDocument>();
+      List<OrdenDocument> documentsOld =
+          ordenManager.finAllOrdenDocumentByOrdenId(orden.getOrdenId());
+      for (OrdenDocumentDTO hc : dto.getHistoriasclinicas()) {
+        if (hc.getDocumentId() != null) {
+          OrdenDocument d = ordenManager.findOrdenDocumentById(hc.getDocumentId());
+          if (d != null) {
+            documents.add(d);
+          }
+        }
+      }
+
+      for (OrdenDocumentDTO hc : dto.getHistoriasclinicas()) {
+        if (hc.getDocumentId() == null && hc.getFileData() != null && !hc.getFileData().isEmpty()) {
+          OrdenDocument content = new OrdenDocument();
+          content.setContent(hc.getFileData().getBytes());
+          content.setFileName(hc.getFileData().getOriginalFilename());
+          content.setType(Util.DOCUMENT_TYPE);
+          content.setFileType(hc.getFileData().getContentType());
+          content.setOrdenId(orden.getOrdenId());
+          content.setSize(hc.getFileData().getSize());
+
+          documentsTotal.add(content);
+        }
+      }
+
+      for (OrdenDocument od : documentsOld) {
+        ordenManager.deleteOrdenDocument(od.getDocumentId());
+      }
+
+      if (documents.size() > 0) {
+        documentsTotal.addAll(documents);
+      }
+
+      for (OrdenDocument od : documentsTotal) {
+        ordenManager.add(od);
+      }
+
+    } catch (Exception ex) {
+      message = Util.MESSAGE_ERROR;
     }
 
     String redirect = "";
@@ -430,6 +439,9 @@ public class OrdenController {
     if (orden.getOrdenTipo().getCodigo().intValue() == 102) {
       redirect = "/formEditOrden/" + orden.getOrdenId();
     }
+
+
+    map.addAttribute("message", message);
 
     return "redirect:" + redirect;
   }
