@@ -253,4 +253,6 @@
 	</div>
 </body>
 </html>
-
+<script>
+document.getElementById("home").parentNode.classList.add("active");
+</script>

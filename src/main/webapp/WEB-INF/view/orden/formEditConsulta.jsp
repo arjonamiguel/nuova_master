@@ -68,7 +68,6 @@
 
 <body style="background-color:#e5e5e5;">
 <jsp:include page="../sec_menu.jsp"></jsp:include>
-<jsp:include page="../breadcrumb.jsp"></jsp:include>
 
 <form:form method="post" action="/nuova/editOrden" commandName="ordenDto">
 <form:hidden path="ordenId"/>

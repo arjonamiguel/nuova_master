@@ -22,7 +22,7 @@
 </head>		
 <body style="background-color:#e5e5e5;">
 <jsp:include page="../sec_menu.jsp"></jsp:include>
-<jsp:include page="../breadcrumb.jsp"></jsp:include>
+
 <div class="mainContainer">
 		
 <div class="panelContainer">		
