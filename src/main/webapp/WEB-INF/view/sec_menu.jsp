@@ -138,7 +138,7 @@
 				<sec:authorize access="hasRole('ROLE_ADMIN')">
 				<li class="dropdown" >
 				<a href="#" id="caja"  class="dropdown-toggle" data-toggle="dropdown">
-				<img src="/nuova/resources/img/currency_dollar blue_24x24.png">
+				<img src="/nuova/resources/img/tag_24x24.png">
 				&nbsp;&nbsp;Caja<span class="caret"></a>
 				<ul class="dropdown-menu" role="menu">
 		                <li><a href="/nuova/mainCaja/null">Administracion de Caja</a></li>

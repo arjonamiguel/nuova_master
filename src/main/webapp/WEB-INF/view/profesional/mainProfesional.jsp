@@ -88,7 +88,7 @@
 		<div class="panel panel-info">
 			<div class="panel-heading">
           			<div class="panel-title">
-	          			Administración de Profesionales
+	          			<b>Administración de Profesionales</b>
 	           			<a href="formAddProfesional" class="pull-right"><b>+</b>&nbsp;&nbsp;Nuevo Profesional</a>
           			</div>
     		</div>     

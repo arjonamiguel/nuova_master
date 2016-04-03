@@ -33,7 +33,7 @@
 				<div class="container-fluid">
 						<div class="row-fluid">
 							<div class="span6">
-								<div class="formLabel"><form:label path="nombre">Especialidad:</form:label></div>
+								<div class="formLabel"><form:label path="nombre">Nombre Especialidad:</form:label></div>
         						<div class="formInput"><form:input path="nombre" class="input-block-level" disabled="true"/></div>
 							</div>
 							<div class="span6">
@@ -41,17 +41,28 @@
         						<div class="formInput"></div>
 							</div>
 						</div>
-						<div class="row-fluid">
-							<div class="span12">
-									        <div style="float:right;">
-	         									<input class="btn btn-danger btn-xs" type="submit" value="Eliminar"/> 
-	         									<input class="btn" type="button" value="Cancelar" onclick="location.href='/nuova/mainEspecialidad';"/>
-	        								</div>
-							</div>
-						</div>
+						
 				</div>
 			</div>
 	</div>
+	
+		
+	<!-- Botoneras -->
+		<div class="panel panel-info">
+			<div class="panel-body">
+				<div class="row-fluid">
+				<div class="span12">					
+					<div style="float:right;">
+						<input class="btn" type="button" value="Cancelar" onclick="location.href='/nuova/mainEspecialidad';"/>	
+					</div>
+					<div style="float:right;padding-right:2%;">
+						<input type="submit" value="Eliminar" class="btn btn-danger"/>
+					</div>								 			
+				</div>
+				</div>
+			</div>
+		</div>
+		<!-- Fin Botoneras -->
 	</form:form>
 </div>
 </div>
