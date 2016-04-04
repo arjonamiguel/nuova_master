@@ -57,14 +57,21 @@ function updateDate(){
 	document.getElementById("fechaMovimiento").value=document.getElementById("fecha_Movimiento").value;
 }
 
+function nuevoAdherente() {
+	var titularId = document.getElementById("pacienteId").value;
+	window.location.href = "/nuova/formAddAdherente/"+titularId;
+}
+
 </script>
 
 </head>
 <body style="background-color:#e5e5e5;">
 <jsp:include page="../sec_menu.jsp"></jsp:include>
 <div class="mainContainer"> 	
-	<div class="panelContainer">			
+	<div class="panelContainer">
 		<div class="panel panel-info">
+		<input type="hidden" value = "${paciente.pacienteId}" id="pacienteId">
+		
 			<div class="panel-heading">
           			<div class="panel-title">
 	          			Informacion del Paciente
@@ -73,13 +80,113 @@ function updateDate(){
     		
 			<div  class="panel-body" >
 				<div class="container-fluid" >
-				<table class="table">
+				<table class="table" border = 1>
 				<tr>
-					<td>s</td>
-					<td>s</td>
-					<td>s</td>
+					<td rowspan="4" width="130">
+						<img alt="" src="/nuova/resources/img/user_128x128.png">
+					</td>
+					<td colspan="4">
+						<div class="panel-title">${paciente.apellido} ${paciente.nombre}</div>
+					</td>					
+					
 				</tr>
-				</table>			
+				<tr >
+					<td width="150">D.N.I.</td>
+					<td width="400">${paciente.dni}</td>
+					<td width="100">Tipo Afiliado</td>
+					<td>${paciente.parentescoDescription}</td>
+				</tr>
+				<tr >
+					<td>Fecha Nacimiento</td>
+					<td>${paciente.fechaNacimiento}</td>
+					<td>Obra Social</td>
+					<td>${paciente.obrasocial.nombre}</td>
+				</tr>
+								<tr >
+					<td>Domicilio</td>
+					<td>${paciente.domicilio}</td>
+					<td>Nro. Credencial</td>
+					<td>${paciente.obrasocial.credencial}</td>
+				</tr>
+				</table>
+				
+				<!-- Declaracion de tabs -->
+							<ul class="nav nav-tabs">
+								<li class="active"><a data-toggle="tab" href="#tb_adherentes" ><b>Adherentes</b></a></li>
+								<li><a data-toggle="tab" href="#tb_consultas" ><b>Consultas</b></a></li>
+								<li><a data-toggle="tab" href="#tb_practicas" ><b>Practicas</b></a></li>								
+								<li><a data-toggle="tab" href="#tb_reintegros" ><b>Reintegros</b></a></li>
+							</ul>
+							<!-- Fin Declaracion de tabs -->							
+							
+							<!-- Contenedor de Tabs -->
+							<div class="tab-content">
+								<!-- ** Tab Adhenrentes -->
+								<div id="tb_adherentes" class="tab-pane fade in active">							
+								
+<c:if test="${paciente.parentesco == 0}">
+<div class="panel panel-info">
+				<div class="panel-heading">
+					<div class="panel-title">Adherentes</div>
+				</div>
+				<div class="panel-body">
+					<div class="row-fluid">
+						<div class="span12">
+						<div style="text-align: right;">
+		    <INPUT type="button" value="Nuevo Adherente" onclick="nuevoAdherente()" class="btn btn-success"/>
+			</div>
+		     <TABLE id="dataTableAdherente" class="table table-striped custab" style="width: 100%; margin: 1% 0">
+		        <TR>
+		        	
+		            <TD>ID</TD>
+		            <TD>DNI</TD>
+		            <TD>Apellido</TD>        
+		            <TD>Nombre</TD>
+		            <TD>Credencial</TD>
+		            <TD>Parentesco</TD>
+		            <TD></TD>
+		        </TR>
+		         <% int index2 = 0;%>
+		        <c:forEach items="${paciente.adherentes}" var="adh" varStatus="loop" >
+		    	<tr>
+			    	
+			        <td>${adh.pacienteId}<input type="hidden" name = "adherentesEditList[<%=index2%>].pacienteId" value = "${adh.pacienteId}" /> </td>
+			        <td>${adh.dni}</td>        
+			        <td>${adh.apellido}</td>
+			        <td>${adh.nombre}</td>
+			        <td>${adh.crdencial}</td>
+			        <td>${adh.parentescoDescription}</td>
+			        <td>
+			        	<a class="btn btn-info btn-xs" href="/nuova/formEditPaciente/${adh.pacienteId}" title="Editar Adherente">
+			        	<span class="icon icon-edit" title="Editar Adherente"></span></a>		        
+			    		<a class="btn btn-danger btn-xs" href="/nuova/formDeletePaciente/${adh.pacienteId}" title="Eliminar Adherente">
+			    		<span class="icon icon-remove" title="Eliminar Adherente"></span></a>
+			    	</td>
+			        <%index2++;%>
+		    	</tr>
+				</c:forEach>
+		    </TABLE> 
+						</div>
+					</div>
+				</div>
+</div>
+</c:if>
+								
+								</div>
+								<!-- ** Tab Consultas -->
+								<div id="tb_consultas" class="tab-pane fade">							
+								asdsa 3
+								</div>
+								<!-- ** Tab Practicas -->
+								<div id="tb_practicas" class="tab-pane fade">							
+								asdsa 2
+								</div>								
+								<!-- ** Tab Reintegros -->
+								<div id="tb_reintegros" class="tab-pane fade">							
+								asdsa 4
+								</div>								
+							</div>
+							<!-- Fin Contenedor de Tabs -->		
 	  	
 	  			</div>	  		
 	  		

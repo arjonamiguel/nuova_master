@@ -59,7 +59,7 @@ public class PacienteController {
   public String formInfoPaciente(ModelMap map, @PathVariable("pacienteId") Integer pacienteId) {
     if (pacienteId != null) {
       PacienteDTO dto = transformPacienteToDto(pacienteManager.fin1dPacienteById(pacienteId));
-
+      map.addAttribute("paciente", dto);
     }
     return ConstantRedirect.VIEW_FORM_INFO_PACIENTE;
   }
@@ -279,9 +279,10 @@ public class PacienteController {
     dto.setLocalidadId(loc.getLocalidadId());
     dto.setLocalidadString(loc.getNombre());
 
+    Obrasocial o = obrasocialManager.findObraSocialById(p.getObrasocialId());
     ObraSocialDTO osdto = new ObraSocialDTO();
     osdto.setObrasocialId(p.getObrasocialId());
-
+    osdto.setNombre(o.getNombre());
     osdto.setCredencial(p.getNroCredencial());
     dto.setObrasocial(osdto);
     if (p.getPaciente() != null && p.getPaciente().getPacienteId() != null) {
