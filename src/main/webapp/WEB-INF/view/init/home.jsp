@@ -70,6 +70,7 @@
 						});
 						process(objects);
 						objects = [];
+						$('#pacienteId').val("");
 					}
 				});
 			},
@@ -79,6 +80,18 @@
 			}
 		});
 	});
+	
+	
+function goInfoPaciente() {
+	var pacienteId = document.getElementById("pacienteId").value;
+	if (pacienteId == "") {
+		alert("Usted debe seleccionar un paciente.");
+		document.getElementById("searchPaciente").focus();
+		
+	}else {
+		window.location.href = "/nuova/formInfoPaciente/"+pacienteId;
+	}
+}	
 </script>
 
 </head>
@@ -136,9 +149,9 @@
 											<input
 												data-provide="typeahead" 
 												class="typeahead"
-												name="ctl00$ContainerGeneralOverWrite$ContainerGeneral$sq"
+												name="searchPaciente"
 												type="text"
-												id="ContainerGeneralOverWrite_ContainerGeneral_sq"
+												id="searchPaciente"
 												placeholder="Ingrese DNI o el Apellido ..."
 												autocomplete="off"
 												style="height: 40px; width: 50%">
@@ -147,7 +160,7 @@
 										<button id="breadButton" href="" 
 										class="btn btn-info" 
 										style="margin-top: 2px; height: 40px"
-										onclick="">
+										onclick="goInfoPaciente()">
 										<i class="ico icon-user">
 										</i>&nbsp;Buscar Paciente
 										</button>
@@ -181,9 +194,9 @@
 											<span class="icon palabra_clave"></span> 
 												<input
 												data-provide="typeahead" 
-												name="ctl00$ContainerGeneralOverWrite$ContainerGeneral$sq1"
+												name="searchPaciente"
 												type="text"
-												id="ContainerGeneralOverWrite_ContainerGeneral_sq1"
+												id="searchPaciente"
 												data-su="/ofertas-de-trabajo/"
 												class="js-cargos-suggest typeahead"
 												placeholder="Ingrese DNI o el Apellido ..."
@@ -194,7 +207,7 @@
 										<button id="breadButton" href="" 
 										class="btn btn-info" 
 										style="margin-top: 2px; height: 40px"
-										onclick="">
+										onclick="goInfoPaciente()">
 										<i class="ico icon-user">
 										</i>&nbsp;Buscar Paciente
 										</button>
