@@ -210,6 +210,6 @@ function nuevoAdherente() {
 </body>
 </html>
 <script>
-document.getElementById("caja").parentNode.classList.add("active");
+document.getElementById("mainPaciente").parentNode.classList.add("active");
 
 </script>
