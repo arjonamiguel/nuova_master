@@ -18,44 +18,37 @@
 	<link href="<%=request.getContextPath()%>/resources/css/nuova.css" rel="stylesheet"/>
 	<link href="<%=request.getContextPath()%>/resources/css/panel.css" rel="stylesheet"/>
 	<link href="<%=request.getContextPath()%>/resources/css/bootstrap/bootstrap-responsive.css" rel="stylesheet"/>
+
+
+	<!-- 	Configuracion del paginador -->
+	<link href="<%=request.getContextPath()%>/resources/simplepaginggrid/css/simplePagingGrid-0.4.css" rel="stylesheet">
+	<script type="text/javascript" src="<%=request.getContextPath()%>/resources/simplepaginggrid/examples/pageNumbers/script/handlebars-1.0.rc.1.js"></script>
+	<script type="text/javascript" src="<%=request.getContextPath()%>/resources/simplepaginggrid/script/simplePagingGrid-0.5.0.2.js"></script>
+
 	
 <script type="text/javascript">
 
-function callMovimientosCaja(tipo) {
-	var retorno;
-	$.ajax({
-		url : "ajaxGetMovimientoCaja?tipoMovimiento="+tipo,
-		type : "GET",
-		contentType : "application/json; charset=utf-8",
-		//    data: jsonString, //Stringified Json Object
-		async : false, //Cross-domain requests and dataType: "jsonp" requests do not support synchronous operation
-		cache : false, //This will force requested pages not to be cached by the browser          
-		processData : false, //To avoid making query String instead of JSON
-		success : function(page) {
-			// Success Message Handler
-			retorno = page;
-		}
-	});
+$(document).ready(function() {
+	
+	var rows = [];
 
-	return retorno;
-}
+	rows = callPaciente();
 
-function getConceptos(tipo) {
-	var conceptos = callMovimientosCaja(tipo.value);
-	$('#concepto')
-	.empty()
-    .append('<option selected="selected" value="-1">Seleccione Concepto ...</option>')
-;
-	$.each(conceptos, function(key, value) {   
-	     $('#concepto')
-	          .append($('<option>', { value : value.id })
-	          .text(value.value)); 
-	});
-}
+	$("#consultasGrid").simplePagingGrid(
+			{
+				columnNames : [ "ID", "DNI", "APELLIDO", "NOMBRE",  "" ],
+				columnKeys : [ "pacienteId", "dni",
+						"apellido", "nombre", "acciones" ],
+				columnWidths : [ "5%", "10%", "20%", "20%","80%"],
+				sortable : [ false, true, true, true ],
+				data : rows,
+				pageSize : 5,
+				minimumVisibleRows: 5
+			});
 
-function updateDate(){
-	document.getElementById("fechaMovimiento").value=document.getElementById("fecha_Movimiento").value;
-}
+	
+});
+
 
 function nuevoAdherente() {
 	var titularId = document.getElementById("pacienteId").value;
@@ -126,32 +119,27 @@ function nuevoAdherente() {
 								
 <c:if test="${paciente.parentesco == 0}">
 <div class="panel panel-info">
-				<div class="panel-heading">
-					<div class="panel-title">Adherentes</div>
-				</div>
+				
 				<div class="panel-body">
 					<div class="row-fluid">
 						<div class="span12">
 						<div style="text-align: right;">
 		    <INPUT type="button" value="Nuevo Adherente" onclick="nuevoAdherente()" class="btn btn-success"/>
 			</div>
-		     <TABLE id="dataTableAdherente" class="table table-striped custab" style="width: 100%; margin: 1% 0">
+		     <TABLE id="dataTableAdherente" class="table" style="width: 100%; margin: 1% 0">
 		        <TR>
 		        	
-		            <TD>ID</TD>
-		            <TD>DNI</TD>
-		            <TD>Apellido</TD>        
-		            <TD>Nombre</TD>
-		            <TD>Credencial</TD>
-		            <TD>Parentesco</TD>
+		            <TD><b>DNI</b></TD>
+		            <TD><b>Apellido</b></TD>        
+		            <TD><b>Nombre</b></TD>
+		            <TD><b>Credencial</b></TD>
+		            <TD><b>Parentesco</b></TD>
 		            <TD></TD>
 		        </TR>
 		         <% int index2 = 0;%>
 		        <c:forEach items="${paciente.adherentes}" var="adh" varStatus="loop" >
-		    	<tr>
-			    	
-			        <td>${adh.pacienteId}<input type="hidden" name = "adherentesEditList[<%=index2%>].pacienteId" value = "${adh.pacienteId}" /> </td>
-			        <td>${adh.dni}</td>        
+		    	<tr>			         
+			        <td>${adh.dni} <input type="hidden" name = "adherentesEditList[<%=index2%>].pacienteId" value = "${adh.pacienteId}" /></td>        
 			        <td>${adh.apellido}</td>
 			        <td>${adh.nombre}</td>
 			        <td>${adh.crdencial}</td>
@@ -175,7 +163,15 @@ function nuevoAdherente() {
 								</div>
 								<!-- ** Tab Consultas -->
 								<div id="tb_consultas" class="tab-pane fade">							
-								asdsa 3
+								<div class="panel panel-info">		
+								<div class="panel-body">
+									<div class="row-fluid">
+										<div class="span12">
+										<div id="consultasGrid"></div>
+										</div>
+									</div>
+								</div>		
+								</div>
 								</div>
 								<!-- ** Tab Practicas -->
 								<div id="tb_practicas" class="tab-pane fade">							
@@ -211,5 +207,23 @@ function nuevoAdherente() {
 </html>
 <script>
 document.getElementById("mainPaciente").parentNode.classList.add("active");
+function callPaciente() {
+	var retorno;
+	$.ajax({
+		url : "/nuova/ajaxGetPacientesPaginados",
+		type : "GET",
+		contentType : "application/json; charset=utf-8",
+		//    data: jsonString, //Stringified Json Object
+		async : false, //Cross-domain requests and dataType: "jsonp" requests do not support synchronous operation
+		cache : false, //This will force requested pages not to be cached by the browser          
+		processData : false, //To avoid making query String instead of JSON
+		success : function(page) {
+			// Success Message Handler
+			retorno = page.content;
+		}
+	});
+
+	return retorno;
+}
 
 </script>
