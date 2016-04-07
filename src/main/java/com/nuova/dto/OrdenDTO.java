@@ -44,6 +44,7 @@ public class OrdenDTO {
   private Double monto;
 
   private ProfesionalDTO profesional;
+  private String apellidoNombreProfesional;
 
   private List<OrdenDocumentDTO> historiasclinicas = new ArrayList<OrdenDocumentDTO>();
 
@@ -287,6 +288,11 @@ public class OrdenDTO {
     this.historiasclinicas = historiasclinicas;
   }
 
+  public String getApellidoNombreProfesional() {
+    return apellidoNombreProfesional;
+  }
 
-
+  public void setApellidoNombreProfesional(String apellidoNombreProfesional) {
+    this.apellidoNombreProfesional = apellidoNombreProfesional;
+  }
 }

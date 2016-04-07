@@ -30,23 +30,34 @@
 
 $(document).ready(function() {
 	
-	var rows = [];
+	var rowsConsultas = [];
+	var rowsPracticas = [];
 
-	rows = callPaciente();
+	rowsConsultas = callConsultas();
+	rowsPracticas = callPracticas();
 
 	$("#consultasGrid").simplePagingGrid(
 			{
-				columnNames : [ "ID", "DNI", "APELLIDO", "NOMBRE",  "" ],
-				columnKeys : [ "pacienteId", "dni",
-						"apellido", "nombre", "acciones" ],
-				columnWidths : [ "5%", "10%", "20%", "20%","80%"],
-				sortable : [ false, true, true, true ],
-				data : rows,
+				columnNames : [ "Nro. Orden","Fecha" ,"Profesional", ""],
+				columnKeys : [ "nroOrden", "fecha" ,"apellidoNombreProfesional","acciones" ],
+				columnWidths : [ "10%", "10%", "30%"],
+				sortable : [ true, true,],
+				data : rowsConsultas,
 				pageSize : 5,
 				minimumVisibleRows: 5
 			});
 
-	
+
+	$("#practicasGrid").simplePagingGrid(
+			{
+				columnNames : [ "Nro. Orden","Fecha" ,"Estado", ""],
+				columnKeys : [ "nroOrden", "fecha" ,"estado","acciones" ],
+				columnWidths : [ "10%", "10%", "30%"],
+				sortable : [ true, true,],
+				data : rowsPracticas,
+				pageSize : 5,
+				minimumVisibleRows: 5
+			});
 });
 
 
@@ -78,9 +89,18 @@ function nuevoAdherente() {
 					<td rowspan="4" width="130">
 						<img alt="" src="/nuova/resources/img/user_128x128.png">
 					</td>
-					<td colspan="4">
+					<td colspan="2">
 						<div class="panel-title">${paciente.apellido} ${paciente.nombre}</div>
-					</td>					
+					</td>
+					<td>Estado</td>
+					<td>
+					<c:if test="${paciente.eliminado == 0}">
+					<span style="background:green">ACTIVO</span>
+					</c:if>
+					<c:if test="${paciente.eliminado == 1}">
+					<span style="background:red">INACTIVO</span>
+					</c:if>
+					</td>
 					
 				</tr>
 				<tr >
@@ -167,7 +187,13 @@ function nuevoAdherente() {
 								<div class="panel-body">
 									<div class="row-fluid">
 										<div class="span12">
-										<div id="consultasGrid"></div>
+											<div style="text-align: right;">
+										    	<INPUT type="button" 
+										    		value="Nueva Consulta" 
+										    		onclick="nuevaConsulta()" 
+										    		class="btn btn-success"/>
+											</div>
+										<div id="consultasGrid" style= "margin: 1% 0"></div>
 										</div>
 									</div>
 								</div>		
@@ -175,11 +201,25 @@ function nuevoAdherente() {
 								</div>
 								<!-- ** Tab Practicas -->
 								<div id="tb_practicas" class="tab-pane fade">							
-								asdsa 2
+								<div class="panel panel-info">		
+								<div class="panel-body">
+									<div class="row-fluid">
+										<div class="span12">
+											<div style="text-align: right;">
+										    	<INPUT type="button" 
+										    		value="Nueva Práctica" 
+										    		onclick="nuevaPractica()" 
+										    		class="btn btn-success"/>
+											</div>
+										<div id="practicasGrid" style= "margin: 1% 0"></div>
+										</div>
+									</div>
+								</div>		
+								</div>
 								</div>								
 								<!-- ** Tab Reintegros -->
 								<div id="tb_reintegros" class="tab-pane fade">							
-								asdsa 4
+								
 								</div>								
 							</div>
 							<!-- Fin Contenedor de Tabs -->		
@@ -207,10 +247,29 @@ function nuevoAdherente() {
 </html>
 <script>
 document.getElementById("mainPaciente").parentNode.classList.add("active");
-function callPaciente() {
+function callConsultas() {
 	var retorno;
 	$.ajax({
-		url : "/nuova/ajaxGetPacientesPaginados",
+		url : "/nuova/ajaxGetConsultasByPacientePaginados/${paciente.pacienteId}",
+		type : "GET",
+		contentType : "application/json; charset=utf-8",
+		//    data: jsonString, //Stringified Json Object
+		async : false, //Cross-domain requests and dataType: "jsonp" requests do not support synchronous operation
+		cache : false, //This will force requested pages not to be cached by the browser          
+		processData : false, //To avoid making query String instead of JSON
+		success : function(page) {
+			// Success Message Handler
+			retorno = page.content;
+		}
+	});
+
+	return retorno;
+}
+
+function callPracticas() {
+	var retorno;
+	$.ajax({
+		url : "/nuova/ajaxGetPracticasByPacientePaginados/${paciente.pacienteId}",
 		type : "GET",
 		contentType : "application/json; charset=utf-8",
 		//    data: jsonString, //Stringified Json Object

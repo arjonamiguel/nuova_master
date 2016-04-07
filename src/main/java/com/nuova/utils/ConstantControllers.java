@@ -82,6 +82,10 @@ public class ConstantControllers {
       "/ajaxGetOrdenesPaginados/{codigoOrdenTipo}";
   public final static String AJAX_GET_SEARCH_ORDENES_PAGINADOS =
       "/ajaxGetSearchOrdenesPaginados/{codigoOrdenTipo}";
+  public final static String AJAX_GET_CONSULTASBYPACIENTE_PAGINADOS =
+      "/ajaxGetConsultasByPacientePaginados/{pacienteId}";
+  public final static String AJAX_GET_PRACTICASBYPACIENTE_PAGINADOS =
+      "/ajaxGetPracticasByPacientePaginados/{pacienteId}";
   public final static String DOWNLOAD = "/download-document/{documentId}";
 
   // Reportes

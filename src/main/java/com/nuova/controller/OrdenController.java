@@ -228,6 +228,48 @@ public class OrdenController {
     return new PageImpl<OrdenDTO>(dtos, pageable, ordenes.getTotalElements());
   }
 
+  @RequestMapping(value = ConstantControllers.AJAX_GET_CONSULTASBYPACIENTE_PAGINADOS,
+      method = RequestMethod.GET)
+  public @ResponseBody Page<OrdenDTO> getConsultasByPacientePaginados(
+      @PathVariable("pacienteId") Integer pacienteId,
+      @RequestParam(required = false, defaultValue = "0") Integer start,
+      @RequestParam(required = false, defaultValue = "50") Integer limit) {
+
+    // Sort and Pagination
+    // Sort sort = new Sort(Sort.Direction.DESC, "creationDate");
+    Pageable pageable = new PageRequest(start, limit);
+
+    Page<Orden> ordenes = ordenManager.findConsultasByPageableANDPaciente(pageable, pacienteId);
+    List<OrdenDTO> dtos = new ArrayList<OrdenDTO>();
+    for (Orden o : ordenes) {
+      OrdenDTO dto = transformOrdenToDto(o);
+      dtos.add(dto);
+    }
+
+    return new PageImpl<OrdenDTO>(dtos, pageable, ordenes.getTotalElements());
+  }
+
+  @RequestMapping(value = ConstantControllers.AJAX_GET_PRACTICASBYPACIENTE_PAGINADOS,
+      method = RequestMethod.GET)
+  public @ResponseBody Page<OrdenDTO> getPracticasByPacientePaginados(
+      @PathVariable("pacienteId") Integer pacienteId,
+      @RequestParam(required = false, defaultValue = "0") Integer start,
+      @RequestParam(required = false, defaultValue = "50") Integer limit) {
+
+    // Sort and Pagination
+    // Sort sort = new Sort(Sort.Direction.DESC, "creationDate");
+    Pageable pageable = new PageRequest(start, limit);
+
+    Page<Orden> ordenes = ordenManager.findPracticasByPageableANDPaciente(pageable, pacienteId);
+    List<OrdenDTO> dtos = new ArrayList<OrdenDTO>();
+    for (Orden o : ordenes) {
+      OrdenDTO dto = transformOrdenToDto(o);
+      dtos.add(dto);
+    }
+
+    return new PageImpl<OrdenDTO>(dtos, pageable, ordenes.getTotalElements());
+  }
+
   @RequestMapping(value = ConstantControllers.AJAX_GET_SEARCH_ORDENES_PAGINADOS,
       method = RequestMethod.GET)
   public @ResponseBody Page<OrdenDTO> getSearchOrdenesPaginados(
@@ -561,6 +603,7 @@ public class OrdenController {
       dto.getAdherentes().add(dtoad);
     }
 
+    dto.setEliminado(p.getEliminado().intValue());
     return dto;
   }
 
@@ -622,6 +665,9 @@ public class OrdenController {
       if (op.getProfesional() != null) {
         dto.setProfesional(transformProfesionalToDto(op.getProfesional()));
       }
+    }
+    if (dto.getProfesional() != null) {
+      dto.setApellidoNombreProfesional(dto.getProfesional().getApellidoNombre());
     }
 
     // Set de Estados
@@ -810,6 +856,7 @@ public class OrdenController {
     ProfesionalDTO dto = new ProfesionalDTO();
     dto.setApellido(p.getApellido());
     dto.setNombre(p.getNombre());
+    dto.setApellidoNombre(p.getApellido() + " " + p.getNombre());
     dto.setTelefono(p.getTelefono());
     dto.setTituloProfesional(p.getTituloProfesional());
     dto.setRegistroNacional(p.getRegistroNacional());
