@@ -55,6 +55,12 @@ public class PacienteController {
     return ConstantRedirect.VIEW_FORM_TIPO_ORDEN;
   }
 
+  @RequestMapping(value = ConstantControllers.FORM_BUSCAR_PACIENTE, method = RequestMethod.GET)
+  public String formBuscarPaciente(ModelMap map) {
+
+    return ConstantRedirect.VIEW_FORM_BUSCAR_PACIENTE;
+  }
+
   @RequestMapping(value = ConstantControllers.FORM_INFO_PACIENTE, method = RequestMethod.GET)
   public String formInfoPaciente(ModelMap map, @PathVariable("pacienteId") Integer pacienteId) {
     if (pacienteId != null) {
@@ -263,6 +269,7 @@ public class PacienteController {
   public PacienteDTO transformPacienteToDto(Paciente p) {
     PacienteDTO dto = new PacienteDTO();
     dto.setPacienteId(p.getPacienteId());
+    dto.setEliminado(p.getEliminado().intValue());
     dto.setDni(p.getDni());
     dto.setApellido(p.getApellido());
     dto.setNombre(p.getNombre());

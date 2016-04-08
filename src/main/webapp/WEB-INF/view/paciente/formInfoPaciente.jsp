@@ -66,6 +66,17 @@ function nuevoAdherente() {
 	window.location.href = "/nuova/formAddAdherente/"+titularId;
 }
 
+function createOrden(ordenTipoId){
+	var pacienteId = document.getElementById("pacienteId").value;
+	var url = "/nuova/createOrden/"+ordenTipoId+"/"+pacienteId;
+	window.open(url, '_blank');
+}
+
+function showReport(id){
+	var iframe = "<iframe src='/nuova/reporteOrdenEmitida/"+id+"' width='100%' height='150%' >";
+	document.getElementById("iframeReport").innerHTML = iframe;
+	document.getElementById("myModal").style.height = '60%';
+}
 </script>
 
 </head>
@@ -92,13 +103,14 @@ function nuevoAdherente() {
 					<td colspan="2">
 						<div class="panel-title">${paciente.apellido} ${paciente.nombre}</div>
 					</td>
+					
 					<td>Estado</td>
 					<td>
 					<c:if test="${paciente.eliminado == 0}">
-					<span style="background:green">ACTIVO</span>
+					<span style="background:green; padding: 2px 4px 2px 4px;color:white;">ACTIVO</span>
 					</c:if>
 					<c:if test="${paciente.eliminado == 1}">
-					<span style="background:red">INACTIVO</span>
+					<span style="background:red; padding: 2px 4px 2px 4px;;">INACTIVO</span>
 					</c:if>
 					</td>
 					
@@ -190,7 +202,7 @@ function nuevoAdherente() {
 											<div style="text-align: right;">
 										    	<INPUT type="button" 
 										    		value="Nueva Consulta" 
-										    		onclick="nuevaConsulta()" 
+										    		onclick="javascript:createOrden(1)" 
 										    		class="btn btn-success"/>
 											</div>
 										<div id="consultasGrid" style= "margin: 1% 0"></div>
@@ -208,7 +220,7 @@ function nuevoAdherente() {
 											<div style="text-align: right;">
 										    	<INPUT type="button" 
 										    		value="Nueva Práctica" 
-										    		onclick="nuevaPractica()" 
+										    		onclick="javascript:createOrden(3)" 
 										    		class="btn btn-success"/>
 											</div>
 										<div id="practicasGrid" style= "margin: 1% 0"></div>
@@ -234,8 +246,7 @@ function nuevoAdherente() {
 							<div class="panel-body">
 								<div class="row-fluid">
 									<div class="span12">
-									<div style="float:right;"><input type="button" value="Cancelar" onclick="location.href='/nuova/mainCaja/null';" class="btn"/></div>
-										<div style="float:right;padding-right:2%;"><input type="submit" value="Guardar" class="btn btn-info"/></div> 
+									<div style="float:right;"><input type="button" value="Cancelar" onclick="location.href='/nuova/formBuscarPaciente';" class="btn"/></div>
 							 			
 									</div>
 								</div>
@@ -243,6 +254,30 @@ function nuevoAdherente() {
 				</div>		
 </div>
 </div>
+
+
+<!-- Modal -->
+<div id="myModal" class="modal fade" role="dialog" style="width: 50%;">
+  <div class="modal-dialog" style="height:100%">
+
+    <!-- Modal content-->
+    <div class="modal-content" style="height:80%">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Comprobante</h4>
+      </div>
+      <div class="modal-body" style="height:110%">
+        <div id="iframeReport" style="height:110%">	</div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+<!-- Fin Modal -->
+
 </body>
 </html>
 <script>

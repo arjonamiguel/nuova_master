@@ -32,10 +32,10 @@
 
 						$("#ordenGrid").simplePagingGrid(
 								{
-									columnNames : [ "PACIENTE","TIPO" ,"NRO.ORDEN", "FECHA", ,"" ],
-									columnKeys : [ "botonpaciente","ordenTipoDesc" ,"nroOrden", "fecha",
+									columnNames : [ "NRO.ORDEN","PACIENTE","TIPO" , "FECHA", "PROFESIONAL" ,"" ],
+									columnKeys : [ "nroOrden", "botonpaciente","ordenTipoDesc" , "fecha","apellidoNombreProfesional"
 													, "acciones"],
-									columnWidths : [ "30%", "20%", "20%", "10%"],
+									columnWidths : [ "10%", "30%",],
 									sortable : [ false, true ],
 									data : rows
 								});
@@ -144,7 +144,7 @@ function editColumnsChecked() {
 			<div class="panel-heading">
           			<div class="panel-title">
 	          			<b>Administraci&oacute;n de Consultas</b>
-	           			<a href="formAddOrden" class="pull-right"><b>+</b>&nbsp;&nbsp;Nueva Consulta</a>
+	           			
           			</div>
     		</div>     
 			<div  class="panel-body" >

@@ -32,10 +32,10 @@
 
 						$("#ordenGrid").simplePagingGrid(
 								{
-									columnNames : [ "PACIENTE","TIPO" ,"NRO.ORDEN","FECHA" ,"", "ESTADO","", "" ],
-									columnKeys : [ "botonpaciente","ordenTipoDesc" ,"nroOrden", "fecha",
+									columnNames : [ "NRO.ORDEN","PACIENTE","TIPO" ,"FECHA", "ESTADO", "" ],
+									columnKeys : [ "nroOrden","botonpaciente","ordenTipoDesc" , "fecha"
 													, "etiqestado", "acciones"],
-									columnWidths : [ "20%", "10%", "10%","10%","10%"],
+									columnWidths : [ "10%", "20%", ],
 									sortable : [ true, false, true,true,true ],
 									data : rows
 								});
@@ -141,6 +141,7 @@ function showReport(id){
 	document.getElementById("iframeReport").innerHTML = iframe;
 	document.getElementById("myModal").style.height = '60%';
 }
+
 </script>
 </head>
 <body style="background-color:#e5e5e5;">
@@ -151,7 +152,6 @@ function showReport(id){
 			<div class="panel-heading">
           			<div class="panel-title">
 	          			<b>Administraci&oacute;n Orden de Pr&aacute;cticas</b>
-	           			<a href="formAddOrden" class="pull-right"><b>+</b>&nbsp;&nbsp;Nueva Orden de Pr&aacute;ctica</a>
           			</div>
     		</div>     
 			<div  class="panel-body" >

@@ -136,6 +136,19 @@ public class OrdenController {
     return redirect;
   }
 
+  @RequestMapping(value = ConstantControllers.CREATE_ORDEN, method = RequestMethod.GET)
+  public String createOrden(ModelMap map, @PathVariable("ordenTipoId") Integer ordenTipoId,
+      @PathVariable("pacienteId") Integer pacienteId) {
+    OrdenTipo otp = ordenManager.findOrdenTipoById(ordenTipoId);
+    OrdenTipoDTO ordenTipo = new OrdenTipoDTO();
+    ordenTipo.setCodigo(otp.getCodigo());
+    ordenTipo.setOrdenTipoId(otp.getOrdenTipoId());
+    ordenTipo.setPacienteId(pacienteId);
+
+    return redirectOrden(map, ordenTipo);
+  }
+
+
   @RequestMapping(value = ConstantControllers.FORM_ADD_ORDEN, method = RequestMethod.GET)
   public String formAddOrden(ModelMap map) {
     List<Paciente> pacientes = pacienteManager.findAll();
@@ -542,6 +555,7 @@ public class OrdenController {
   public PacienteDTO transformPacienteToDto(Paciente p) {
     PacienteDTO dto = new PacienteDTO();
     dto.setPacienteId(p.getPacienteId());
+    dto.setEliminado(p.getEliminado().intValue());
     dto.setDni(p.getDni());
     dto.setApellido(p.getApellido());
     dto.setNombre(p.getNombre());

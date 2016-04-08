@@ -43,6 +43,7 @@ public class ConstantControllers {
   // Paciente
 
   public final static String FORM_INFO_PACIENTE = "/formInfoPaciente/{pacienteId}";
+  public final static String FORM_BUSCAR_PACIENTE = "/formBuscarPaciente";
   public final static String MAIN_PACIENTE = "/mainPaciente";
   public final static String FORM_ADD_PACIENTE = "/formAddPaciente";
   public final static String FORM_EDIT_PACIENTE = "/formEditPaciente/{pacienteId}";
@@ -78,6 +79,8 @@ public class ConstantControllers {
   public final static String EDIT_ORDEN = "/editOrden";
   public final static String TIPO_ORDEN = "/tipoOrden/{pacienteId}";
   public final static String REDIRECT_ORDEN = "/redirectOrden";
+  public final static String CREATE_ORDEN = "/createOrden/{ordenTipoId}/{pacienteId}";
+
   public final static String AJAX_GET_ORDENES_PAGINADOS =
       "/ajaxGetOrdenesPaginados/{codigoOrdenTipo}";
   public final static String AJAX_GET_SEARCH_ORDENES_PAGINADOS =
