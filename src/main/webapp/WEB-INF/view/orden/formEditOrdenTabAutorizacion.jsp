@@ -6,7 +6,37 @@ function showNuevoNomenclador() {
 }
 
 function nuevoNomencladorOk() {
+	var codigo = document.getElementById("nomenclador_codigo").value;
+	var nombre = document.getElementById("nomenclador_nombre").value;
+	
+	if(codigo == "" && nombre == "") {
+		alert("Los campos Codigo y Nombre del Nomenclador, no pueden ser vacios.");
+	}
+	
+	var result = callSaveCodigoNomenclador(getJsonNomenclador(codigo, nombre));
 	document.getElementById("nuevoNomenclador").style.display = 'none';
+}
+
+function callSaveCodigoNomenclador(jsonString) {
+	var retorno;
+	$.ajax({
+		url : "/nuova/ajaxPostSaveCodigoNomenclador",
+		type : "POST",
+		contentType : "application/json; charset=utf-8",
+		data: jsonString, //Stringified Json Object
+		async : false, //Cross-domain requests and dataType: "jsonp" requests do not support synchronous operation
+		cache : false, //This will force requested pages not to be cached by the browser          
+		processData : false, //To avoid making query String instead of JSON
+		success : function(result) {
+			retorno = result;
+		}
+	});
+
+	return retorno;
+}
+
+function getJsonNomenclador(codigo, nombre){
+	return '{"codigo":"'+codigo+'", "nombre":"'+nombre+'"}';
 }
 </script>
 <div>
@@ -27,19 +57,19 @@ function nuevoNomencladorOk() {
 
 		<input type="button" value="..." onclick="javascript:showNuevoNomenclador()" class="btn"/>
 		<span style ="float:right;display: none;" id="nuevoNomenclador">
-		<input type="text" id="nomenclador_codigo"  
-		style="height: 20px; width: 20%;margin-top:2px"
-		placeholder="Codigo"	> 
-		<input type="text" id="nomenclador_nombre"  
-		style="height: 20px; width: 60%;margin-top:2px"
-		placeholder="Nombre del Nomenclador"	>
-		<button id="nuevo_nomenclador_ok" 
-		class="btn btn-info" 
-		onclick="javascript:nuevoNomencladorOk()"
-		style="margin-bottom: 8px; height: 30px">
-		<i class="ico icon-ok">
-		</i>
-		</button>
+			<input type="text" id="nomenclador_codigo"  
+			style="height: 20px; width: 20%;margin-top:2px"
+			placeholder="C&oacute;digo"	> 
+			<input type="text" id="nomenclador_nombre"  
+			style="height: 20px; width: 60%;margin-top:2px"
+			placeholder="Nombre del Nomenclador">
+			<input type="button" 
+			value="OK" 
+			id="nuevo_nomenclador_ok" 
+			onclick="javascript:nuevoNomencladorOk()"
+			class="btn btn-info"
+			style="margin-bottom: 8px; height: 30px"/>
+			
 		</span>
 	</div>
 	<!-- Fin Autocompletar Nomenclador de codigos -->
@@ -53,9 +83,9 @@ function nuevoNomencladorOk() {
 		<table id="tb_practicas" class="table" style="width: 100%; margin: 2% 0;" >
 		<thead>
 		<tr>													        	
-			<td style="width: 50%"><b>Nomenclador</b></td>
+			<td style="width: 40%"><b>Nomenclador</b></td>
 			<td style="width: 10%"><b>Valor</b></td>
-			<td style="width: 40%"><b>Estados</b></td>
+			<td style="width: 31%"><b>Estados</b></td>			
 			<td></td>
 		</tr>
 		<% int index = 0;%>
@@ -87,6 +117,7 @@ function nuevoNomencladorOk() {
 				document.getElementById('ordenpracticaListEdit[<%=index%>].estado').value ='${pa.estado}'; 
 				</script>
 			</td>
+			
 			<td><button type='button' class='btn btn-link' onClick='Eliminar(this.parentNode.parentNode.rowIndex)'>Eliminar</button></td>
 			<%index++;%>
 			</tr>

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="reporteOrdenEmitida" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="863c5a1a-ff63-4ec5-9d35-c4a00e5423ed">
-	<property name="ireport.zoom" value="2.0"/>
-	<property name="ireport.x" value="366"/>
-	<property name="ireport.y" value="559"/>
+	<property name="ireport.zoom" value="1.5"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="403"/>
 	<parameter name="nro_orden" class="java.lang.String" isForPrompting="false">
 		<defaultValueExpression><![CDATA[""]]></defaultValueExpression>
 	</parameter>
@@ -333,19 +333,12 @@
 			<staticText>
 				<reportElement x="357" y="221" width="144" height="18" uuid="8d348355-615b-4012-ad6b-c6a37b31a236"/>
 				<textElement verticalAlignment="Middle" rotation="None"/>
-				<text><![CDATA[MOTIVO O DIAGNOSTICO]]></text>
+				<text><![CDATA[DESCRIPCION]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="310" y="68" width="122" height="18" uuid="e367b612-4a77-4bfc-8937-a2db75278e10"/>
 				<textElement verticalAlignment="Middle" rotation="None"/>
 				<text><![CDATA[San Miguel de Tucumán]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="422" y="376" width="60" height="13" uuid="e0503bf2-217a-4429-b742-7e5db0043d48"/>
-				<textElement verticalAlignment="Middle">
-					<font size="8"/>
-				</textElement>
-				<text><![CDATA[COSEGURO $]]></text>
 			</staticText>
 			<textField>
 				<reportElement x="470" y="68" width="85" height="20" uuid="598bb9d3-1e0c-4536-b130-c9bb92e84d34"/>
@@ -386,13 +379,6 @@
 				<reportElement x="271" y="194" width="284" height="20" uuid="2a4faa89-75af-462c-82e7-260e0727dccb"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$P{orden_internacion}]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement x="483" y="373" width="72" height="20" uuid="e5b5e389-0034-4182-84a0-333db1064a91"/>
-				<textElement verticalAlignment="Middle">
-					<font isBold="true"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$P{coseguro}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="224" y="113" width="43" height="20" uuid="bf83211b-255e-429d-b7ff-87fbfbde946c"/>
@@ -440,20 +426,6 @@
 			<rectangle>
 				<reportElement mode="Transparent" x="269" y="587" width="286" height="18" uuid="4e99fd75-36be-4f83-934e-41998b13fa1b"/>
 			</rectangle>
-			<staticText>
-				<reportElement x="422" y="787" width="60" height="13" uuid="af412958-2a59-4bcb-953d-a10f10283796"/>
-				<textElement verticalAlignment="Middle">
-					<font size="8"/>
-				</textElement>
-				<text><![CDATA[COSEGURO $]]></text>
-			</staticText>
-			<textField>
-				<reportElement x="480" y="786" width="72" height="16" uuid="cb90b5d5-9278-4e0f-8828-34e283e6a5fe"/>
-				<textElement verticalAlignment="Middle">
-					<font isBold="true"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$P{coseguro}]]></textFieldExpression>
-			</textField>
 			<rectangle>
 				<reportElement x="0" y="411" width="555" height="10" backcolor="#C0C0C0" uuid="983ea484-447f-4477-8bf6-c08b27c76c7d"/>
 			</rectangle>
@@ -498,7 +470,7 @@
 			<staticText>
 				<reportElement x="357" y="632" width="144" height="18" uuid="89800334-a7f7-4cb3-9a90-fcca68fc118b"/>
 				<textElement verticalAlignment="Middle" rotation="None"/>
-				<text><![CDATA[MOTIVO O DIAGNOSTICO]]></text>
+				<text><![CDATA[DESCRIPCION]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="411" y="507" width="124" height="17" uuid="530a2738-0adb-4499-9008-dd8f5e0819a9"/>
