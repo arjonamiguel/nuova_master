@@ -1,11 +1,14 @@
 package com.nuova.dto;
 
+import java.math.BigDecimal;
+
 public class OrdenPracticaDTO {
     private Integer orddenPracticaId;
     private Integer ordenId;
     private String nombre;
     private Integer practicaId;
     private String estado;
+    private BigDecimal valor;
 
     public OrdenPracticaDTO() {
 
@@ -58,6 +61,14 @@ public class OrdenPracticaDTO {
 
     public void setEstado(String estado) {
         this.estado = estado;
+    }
+
+    public BigDecimal getValor() {
+        return valor;
+    }
+
+    public void setValor(BigDecimal valor) {
+        this.valor = valor;
     }
 
 }

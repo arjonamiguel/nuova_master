@@ -90,6 +90,8 @@ function showReport(id){
 	document.getElementById("iframeReport").innerHTML = iframe;
 	document.getElementById("myModal").style.height = '60%';
 }
+
+
 </script>
 
 </head>

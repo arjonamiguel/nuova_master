@@ -196,4 +196,5 @@ public class Orden implements java.io.Serializable {
     public void setCajaOrdens(Set<CajaOrden> cajaOrdens) {
         this.cajaOrdens = cajaOrdens;
     }
+
 }

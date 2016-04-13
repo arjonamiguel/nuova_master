@@ -96,13 +96,16 @@ function addRow(tableID) {
     var cell2 = row.insertCell(0);
     cell2.innerHTML = document.getElementById("ContainerGeneralOverWrite_ContainerGeneral_sq").value+" <input type='hidden' name='ordenpracticaListEdit[" + index + "].orddenPracticaId'> "
     + "<input type='hidden' name='ordenpracticaListEdit[" + index + "].practicaId' value='" + document.getElementById("nomencladorId").value + "'>"; 
-    
+
     var cell3 = row.insertCell(1);
-    cell3.innerHTML = createSelectEstados("ordenpracticaListEdit[" + index + "].estado");
+    cell3.innerHTML = "<input type='text' name='ordenpracticaListEdit[" + index + "].valor' value='0.00'>"; 
     
     var cell4 = row.insertCell(2);
+    cell4.innerHTML = createSelectEstados("ordenpracticaListEdit[" + index + "].estado");
+    
+    var cell5 = row.insertCell(3);
     row.valign = "BASELINE";
-    cell4.innerHTML = "<button type='button' class='btn btn-link' onClick='Eliminar(this.parentNode.parentNode.rowIndex)'>Eliminar</button>"
+    cell5.innerHTML = "<button type='button' class='btn btn-link' onClick='Eliminar(this.parentNode.parentNode.rowIndex)'>Eliminar</button>"
      
     index ++;
     document.getElementById("ContainerGeneralOverWrite_ContainerGeneral_sq").value = "";

@@ -2,6 +2,7 @@ package com.nuova.model;
 
 // Generated Jan 11, 2016 12:33:30 PM by Hibernate Tools 3.4.0.CR1
 
+import java.math.BigDecimal;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -33,6 +34,7 @@ public class OrdenPractica implements java.io.Serializable {
     private Nomenclador nomenclador;
     private Date fecha;
     private String estado;
+    private BigDecimal valor;
 
     public OrdenPractica() {
     }
@@ -92,6 +94,15 @@ public class OrdenPractica implements java.io.Serializable {
 
     public void setEstado(String estado) {
         this.estado = estado;
+    }
+
+    @Column(name = "valor", nullable = false, precision = 10)
+    public BigDecimal getValor() {
+        return valor;
+    }
+
+    public void setValor(BigDecimal valor) {
+        this.valor = valor;
     }
 
 }
