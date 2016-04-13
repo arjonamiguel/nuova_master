@@ -1,8 +1,15 @@
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <script>
+var nuevoNomActive = false;
 function showNuevoNomenclador() {
-	document.getElementById("nuevoNomenclador").style.display = '';
+	if (!nuevoNomActive) {
+		document.getElementById("nuevoNomenclador").style.display = '';
+		nuevoNomActive = true;
+	} else {
+		document.getElementById("nuevoNomenclador").style.display = 'none';
+		nuevoNomActive = false;
+	}
 }
 
 function nuevoNomencladorOk() {
@@ -11,10 +18,18 @@ function nuevoNomencladorOk() {
 	
 	if(codigo == "" && nombre == "") {
 		alert("Los campos Codigo y Nombre del Nomenclador, no pueden ser vacios.");
+		return;
 	}
 	
-	var result = callSaveCodigoNomenclador(getJsonNomenclador(codigo, nombre));
-	document.getElementById("nuevoNomenclador").style.display = 'none';
+	var nomencladorId = callSaveCodigoNomenclador(getJsonNomenclador(codigo, nombre));
+	
+	if (nomencladorId != "-1") {
+		addRowNuevoNom('tb_practicas', nomencladorId);
+		document.getElementById("nuevoNomenclador").style.display = 'none';
+	}else {
+		alert("ERROR: No se pudo agregar verifique los datos ingresados.");	
+	}
+	
 }
 
 function callSaveCodigoNomenclador(jsonString) {
@@ -38,6 +53,44 @@ function callSaveCodigoNomenclador(jsonString) {
 function getJsonNomenclador(codigo, nombre){
 	return '{"codigo":"'+codigo+'", "nombre":"'+nombre+'"}';
 }
+
+function addRowNuevoNom(tableID, nomencladorId) {
+	var codigo = document.getElementById("nomenclador_codigo").value;
+	var nombre = document.getElementById("nomenclador_nombre").value;
+	
+	if(codigo == "" && nombre == "") {
+		alert("Los campos Codigo y Nombre del Nomenclador, no pueden ser vacios.");
+		return;
+	}
+  
+	var index = document.getElementById(tableID).getElementsByTagName('tr').length;
+	index ++;	
+    var table = document.getElementById(tableID);
+    var rowCount = table.rows.length;
+    var row = table.insertRow(rowCount);
+    row.style.background= '#f5f5f5';
+          
+    var cell2 = row.insertCell(0);
+    cell2.innerHTML = "["+codigo+"] - [MANUAL] - "+nombre+" " + 
+    " <input type='hidden' name='ordenpracticaListEdit[" + index + "].orddenPracticaId'> " +
+    " <input type='hidden' name='ordenpracticaListEdit[" + index + "].practicaId' value='" + nomencladorId + "'>"; 
+
+    var cell3 = row.insertCell(1);
+    cell3.innerHTML = "<input type='text' name='ordenpracticaListEdit[" + index + "].valor' value='0.00'>"; 
+    
+    var cell4 = row.insertCell(2);
+    cell4.innerHTML = createSelectEstados("ordenpracticaListEdit[" + index + "].estado");
+    
+    var cell5 = row.insertCell(3);
+    row.valign = "BASELINE";
+    cell5.innerHTML = "<button type='button' class='btn btn-link' onClick='Eliminar(this.parentNode.parentNode.rowIndex)'>Eliminar</button>"
+     
+    index ++;
+    document.getElementById("nomenclador_codigo").value = "";
+    document.getElementById("nomenclador_nombre").value = "";
+    document.getElementById("ContainerGeneralOverWrite_ContainerGeneral_sq").focus();
+   }
+
 </script>
 <div>
 	<!-- Autocompletar Nomenclador de codigos -->
@@ -57,8 +110,8 @@ function getJsonNomenclador(codigo, nombre){
 
 		<input type="button" value="..." onclick="javascript:showNuevoNomenclador()" class="btn"/>
 		<span style ="float:right;display: none;" id="nuevoNomenclador">
-			<input type="text" id="nomenclador_codigo"  
-			style="height: 20px; width: 20%;margin-top:2px"
+			<input type="number" id="nomenclador_codigo"  
+			style="height: 20px; width: 20%;margin-top:2px"			
 			placeholder="C&oacute;digo"	> 
 			<input type="text" id="nomenclador_nombre"  
 			style="height: 20px; width: 60%;margin-top:2px"
@@ -68,8 +121,7 @@ function getJsonNomenclador(codigo, nombre){
 			id="nuevo_nomenclador_ok" 
 			onclick="javascript:nuevoNomencladorOk()"
 			class="btn btn-info"
-			style="margin-bottom: 8px; height: 30px"/>
-			
+			style="margin-bottom: 8px; height: 30px"/>			
 		</span>
 	</div>
 	<!-- Fin Autocompletar Nomenclador de codigos -->

@@ -330,7 +330,7 @@ public class OrdenController {
     nom.setTipo("MANUAL");
 
     practicaManager.add(nom);
-    return nom.getNomencladorId() != null ? "ok" : "error";
+    return nom.getNomencladorId() != null ? nom.getNomencladorId() + "" : "-1";
   }
 
   @RequestMapping(value = ConstantControllers.ADD_ORDEN, method = RequestMethod.POST)
