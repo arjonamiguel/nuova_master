@@ -333,6 +333,21 @@ public class OrdenController {
     return nom.getNomencladorId() != null ? nom.getNomencladorId() + "" : "-1";
   }
 
+  @RequestMapping(value = ConstantControllers.AJAX_GET_ESPECIALIDADESBYPROFESIONAL,
+      method = RequestMethod.GET)
+  public @ResponseBody List<ComboItemDTO> getEspecialidadesByProfesionalId(
+      @RequestParam(required = false, defaultValue = "0") Integer profesionalId) {
+    List<ComboItemDTO> retorno = new ArrayList<ComboItemDTO>();
+    List<Especialidad> especialidades =
+        especialidadManager.findEspecialidadByProfesionalId(profesionalId);
+
+    for (Especialidad e : especialidades) {
+      retorno.add(new ComboItemDTO(e.getEspecialidadId() + "", e.getNombre()));
+    }
+    return retorno;
+  }
+
+
   @RequestMapping(value = ConstantControllers.ADD_ORDEN, method = RequestMethod.POST)
   public String addOrden(@ModelAttribute(value = "ordenDto") OrdenDTO ordenDto,
       BindingResult result) {
