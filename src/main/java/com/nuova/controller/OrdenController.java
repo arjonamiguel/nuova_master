@@ -115,10 +115,10 @@ public class OrdenController {
     OrdenTipo ot = ordenManager.findOrdenTipoByCodigo(codigo);
     ordenDto.setOrdenTipo(transformOrdenTipoToDto(ot));
 
+    List<Profesional> profesionales = profesionalManager.findAll();
+
     if (codigo == Util.ORDEN_CONSULTA) {
       OrdenTipoDTO otdto = transformOrdenTipoToDto(ot);
-
-      List<Profesional> profesionales = profesionalManager.findAll();
       map.addAttribute("profesionales", getProfesionalDTOList(profesionales));
       map.addAttribute("ordenTipoDto", otdto);
       map.addAttribute("montosorden", getMontosOrden(otdto));
@@ -132,6 +132,7 @@ public class OrdenController {
       redirect = ConstantRedirect.VIEW_FORM_ODONTOLOGIA_BY_PACIENTE;
 
     } else if (codigo == Util.ORDEN_PRACTICA) {
+      map.addAttribute("profesionales", getProfesionalDTOList(profesionales));
       redirect = ConstantRedirect.VIEW_FORM_ADD_ORDEN_BY_PACIENTE;
     }
 
@@ -179,12 +180,17 @@ public class OrdenController {
   public String formEditOrden(ModelMap map, @PathVariable("ordenId") Integer ordenId) {
     if (ordenId != null) {
       OrdenDTO ordenDto = transformOrdenToDto(ordenManager.findOrdenById(ordenId));
+      List<Profesional> profesionales = profesionalManager.findAll();
+      List<Especialidad> especialidades =
+          especialidadManager.findEspecialidadByProfesionalId(ordenDto.getProfesionalId());
       User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
       int observacionCount = ordenDto.getObservacioneses().size();
       map.addAttribute("ordenDto", ordenDto);
       map.addAttribute("observacionCount", observacionCount);
       map.addAttribute("userNameLogged", user.getUsername());
       map.addAttribute("ordenEstadosList", Util.getOrdenEstadosList());
+      map.addAttribute("profesionales", getProfesionalDTOList(profesionales));
+      map.addAttribute("especialidades", getEspecialidadDTOList(especialidades));
     }
 
     return ConstantRedirect.VIEW_FORM_EDIT_ORDEN;
@@ -455,16 +461,16 @@ public class OrdenController {
         orden.setEstado(dto.getEstado());
       }
 
-      if (orden.getOrdenTipo().getCodigo().intValue() == 100) {
-        Set<OrdenProfesional> ordenProfesionals = new HashSet<OrdenProfesional>();
-        OrdenProfesional op = new OrdenProfesional();
-        op.setProfesional(profesionalManager.findProfesionalById(dto.getProfesionalId()));
-        op.setOrden(orden);
-        op.setEspecialidadId(dto.getEspecialidad());
-        ordenProfesionals.add(op);
-        ordenManager.deleteOrdenProfesional(orden.getOrdenId());
-        orden.setOrdenProfesionals(ordenProfesionals);
-      }
+      // Profesional y la especialidad relacionada a la orden
+      Set<OrdenProfesional> ordenProfesionals = new HashSet<OrdenProfesional>();
+      OrdenProfesional op = new OrdenProfesional();
+      op.setProfesional(profesionalManager.findProfesionalById(dto.getProfesionalId()));
+      op.setOrden(orden);
+      op.setEspecialidadId(dto.getEspecialidad());
+      ordenProfesionals.add(op);
+      ordenManager.deleteOrdenProfesional(orden.getOrdenId());
+      orden.setOrdenProfesionals(ordenProfesionals);
+
 
       // requisitos
       orden.setReqCredecial(Util.getByteFlag(dto.isReqCredecial()));
