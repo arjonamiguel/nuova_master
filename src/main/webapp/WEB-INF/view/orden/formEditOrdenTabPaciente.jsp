@@ -1,5 +1,5 @@
 <%@taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
-<div class="tab-content" style="height: 250px">	
+<div class="tab-content" style="height: 400px">	
 <table class="table">						
 	<tr>
 		<td><form:label path="paciente.dni">DNI</form:label></td>

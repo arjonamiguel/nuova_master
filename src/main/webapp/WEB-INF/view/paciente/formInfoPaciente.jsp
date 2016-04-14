@@ -51,9 +51,10 @@ $(document).ready(function() {
 
 	$("#consultasGrid").simplePagingGrid(
 			{
-				columnNames : [ "Nro. Orden","Fecha" ,"Profesional", ""],
-				columnKeys : [ "nroOrden", "fecha" ,"apellidoNombreProfesional","acciones" ],
-				columnWidths : [ "10%", "10%", "30%"],
+				columnNames : [ "NRO.ORDEN","PACIENTE","TIPO" , "FECHA", "PROFESIONAL" ,"ESPECIALIDAD", "" ],
+				columnKeys : [ "nroOrden", "botonpaciente","ordenTipoDesc" , "fecha","apellidoNombreProfesional"
+								, "especialidadView", "acciones"],
+				columnWidths : [ "10%", "20%"],
 				sortable : [ true, true,],
 				data : rowsConsultas,
 				pageSize : 5,
@@ -63,9 +64,11 @@ $(document).ready(function() {
 
 	$("#practicasGrid").simplePagingGrid(
 			{
-				columnNames : [ "Nro. Orden","Fecha" ,"Estado", ""],
-				columnKeys : [ "nroOrden", "fecha" ,"estado","acciones" ],
-				columnWidths : [ "10%", "10%", "30%"],
+				
+				columnNames : [ "NRO.ORDEN","PACIENTE","TIPO" ,"FECHA","PROFESIONAL","ESPECIALIDAD", "ESTADO", "" ],
+				columnKeys : [ "nroOrden","botonpaciente","ordenTipoDesc" , "fecha", "apellidoNombreProfesional"
+								, "especialidadView", "etiqestado", "acciones"],
+				columnWidths : [ "10%", "20%"],
 				sortable : [ true, true,],
 				data : rowsPracticas,
 				pageSize : 5,

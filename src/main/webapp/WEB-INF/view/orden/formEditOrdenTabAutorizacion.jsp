@@ -70,26 +70,37 @@ function addRowNuevoNom(tableID, nomencladorId) {
     var row = table.insertRow(rowCount);
     row.style.background= '#f5f5f5';
           
-    var cell2 = row.insertCell(0);
-    cell2.innerHTML = "["+codigo+"] - [MANUAL] - "+nombre+" " + 
+    var cell0 = row.insertCell(0);
+    cell0.innerHTML = "["+codigo+"] - [MANUAL] - "+nombre+" " + 
     " <input type='hidden' name='ordenpracticaListEdit[" + index + "].orddenPracticaId'> " +
     " <input type='hidden' name='ordenpracticaListEdit[" + index + "].practicaId' value='" + nomencladorId + "'>"; 
 
-    var cell3 = row.insertCell(1);
-    cell3.innerHTML = "<input type='text' name='ordenpracticaListEdit[" + index + "].valor' value='0.00'>"; 
+    var cell1 = row.insertCell(1);
+    cell1.innerHTML = "<input type='text' name='ordenpracticaListEdit[" + index + "].valor' value='0.00'>"; 
     
-    var cell4 = row.insertCell(2);
-    cell4.innerHTML = createSelectEstados("ordenpracticaListEdit[" + index + "].estado");
+    var cell2 = row.insertCell(2);
+    cell2.innerHTML = createSelectEstados("ordenpracticaListEdit[" + index + "].estado");
     
-    var cell5 = row.insertCell(3);
+    var cell3 = row.insertCell(3);
     row.valign = "BASELINE";
-    cell5.innerHTML = "<button type='button' class='btn btn-link' onClick='Eliminar(this.parentNode.parentNode.rowIndex)'>Eliminar</button>"
-     
+    cell3.innerHTML = "<button type='button' class='btn btn-link' onClick='Eliminar(this.parentNode.parentNode.rowIndex)'>Eliminar</button>";
+    
+   	var cell4 = row.insertCell(4);    
+   	cell4.innerHTML = "";
+   	
     index ++;
     document.getElementById("nomenclador_codigo").value = "";
     document.getElementById("nomenclador_nombre").value = "";
     document.getElementById("ContainerGeneralOverWrite_ContainerGeneral_sq").focus();
    }
+   
+function checkAll(chk) {
+    var chks = document.getElementById("tb_practicas").getElementsByTagName("input");
+    for(var i=0; i<chks.length; i++) {
+        if(chks[i].type == "checkbox") 
+        	chks[i].checked= chk.checked;
+    }
+}
 
 </script>
 <div>
@@ -127,7 +138,14 @@ function addRowNuevoNom(tableID, nomencladorId) {
 	<!-- Fin Autocompletar Nomenclador de codigos -->
 </div>
 <br>
-<div class="tab-content" style="height: 200px">	
+<div style = "float:right;padding-right: 20px">
+<a href="#">
+<img alt="Imprimir Orden" src="/nuova/resources/img/print_16x16.png" />
+Imprimir</a> 
+</div>
+<br>
+
+<div class="tab-content" style="height: 400px">	
 <table class="scroll"  style="width: 100%">			
 <tr>
 	<td colspan="2">										           	
@@ -139,6 +157,10 @@ function addRowNuevoNom(tableID, nomencladorId) {
 			<td style="width: 10%"><b>Valor</b></td>
 			<td style="width: 31%"><b>Estados</b></td>			
 			<td></td>
+			<td>
+				<input type="checkbox" name="selectImprimirAll" 
+				onclick="checkAll(this)">				
+			</td>
 		</tr>
 		<% int index = 0;%>
 		<c:forEach items="${ordenDto.practicasListEdit}" var="pa" varStatus="loop" >
@@ -171,6 +193,7 @@ function addRowNuevoNom(tableID, nomencladorId) {
 			</td>
 			
 			<td><button type='button' class='btn btn-link' onClick='Eliminar(this.parentNode.parentNode.rowIndex)'>Eliminar</button></td>
+			<td><input type="checkbox" name="ordenpracticaListEdit[<%=index%>].imprimir"></td>
 			<%index++;%>
 			</tr>
 		</c:forEach>

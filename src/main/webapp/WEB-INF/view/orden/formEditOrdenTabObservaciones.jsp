@@ -8,7 +8,7 @@
 	</td>
 </tr>		
 </table>
-<div class="tab-content" style="height: 200px">	
+<div class="tab-content" style="height: 400px">	
 <c:forEach items="${ordenDto.observacioneses}" var="obs" varStatus="loop" >
 	<table class="table"  style="width: 100%;">	
 	<tr style="background-color:#f5f5f5;">

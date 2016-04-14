@@ -716,14 +716,18 @@ public class OrdenController {
     dto.setOrdenWorkflows(getOrdenWorkflowToDto(orden.getOrdenWorkflows()));
 
     // Profesional
+    Integer especialidadId = new Integer(0);
     for (OrdenProfesional op : orden.getOrdenProfesionals()) {
       if (op.getProfesional() != null) {
         dto.setEspecialidad(op.getEspecialidadId());
         dto.setProfesional(transformProfesionalToDto(op.getProfesional()));
+        especialidadId = op.getEspecialidadId();
       }
     }
     if (dto.getProfesional() != null) {
       dto.setApellidoNombreProfesional(dto.getProfesional().getApellidoNombre());
+      Especialidad e = especialidadManager.findEspecialidadById(especialidadId);
+      dto.setEspecialidadView(e.getNombre());
     }
 
     // Set de Estados
@@ -790,8 +794,8 @@ public class OrdenController {
     String botonEdit = "<a class='btn btn-info btn-xs' href='/nuova/" + action + "/"
         + dto.getOrdenId() + "'><span class='icon icon-edit'></span></a>";
 
-    String botonDelete = "<a class='btn btn-danger btn-xs' href='/nuova/formDeleteOrden/"
-        + dto.getOrdenId() + "'><span class='icon icon-remove'></span></a>";
+    // String botonDelete = "<a class='btn btn-danger btn-xs' href='/nuova/formDeleteOrden/"
+    // + dto.getOrdenId() + "'><span class='icon icon-remove'></span></a>";
 
     String botonPrint =
         "<a class='btn btn-default btn-xs' data-toggle='modal' data-target='#myModal' onClick='showReport("
@@ -799,7 +803,7 @@ public class OrdenController {
     // String botonPrint = "<button type='button' class='btn btn-info btn-lg' data-toggle='modal'
     // data-target='#myModal'>Open Modal</button>";
 
-    dto.setAcciones(botonEdit + botonDelete + botonPrint);
+    dto.setAcciones(botonEdit + botonPrint);
 
     return dto;
   }

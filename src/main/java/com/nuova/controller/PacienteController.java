@@ -282,9 +282,11 @@ public class PacienteController {
     dto.setProvincia(p.getProvincia());
     dto.setZonaAfiliacion(p.getZonaAfiliacion());
 
-    Localidades loc = pacienteManager.findLocalidadById(p.getLocalidadId());
-    dto.setLocalidadId(loc.getLocalidadId());
-    dto.setLocalidadString(loc.getNombre());
+    if (p.getLocalidadId() != null) {
+      Localidades loc = pacienteManager.findLocalidadById(p.getLocalidadId());
+      dto.setLocalidadId(loc.getLocalidadId());
+      dto.setLocalidadString(loc.getNombre());
+    }
 
     Obrasocial o = obrasocialManager.findObraSocialById(p.getObrasocialId());
     ObraSocialDTO osdto = new ObraSocialDTO();

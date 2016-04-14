@@ -93,19 +93,22 @@ function addRow(tableID) {
     var row = table.insertRow(rowCount);
     row.style.background= '#f5f5f5';
           
-    var cell2 = row.insertCell(0);
-    cell2.innerHTML = document.getElementById("ContainerGeneralOverWrite_ContainerGeneral_sq").value+" <input type='hidden' name='ordenpracticaListEdit[" + index + "].orddenPracticaId'> "
+    var cell0 = row.insertCell(0);
+    cell0.innerHTML = document.getElementById("ContainerGeneralOverWrite_ContainerGeneral_sq").value+" <input type='hidden' name='ordenpracticaListEdit[" + index + "].orddenPracticaId'> "
     + "<input type='hidden' name='ordenpracticaListEdit[" + index + "].practicaId' value='" + document.getElementById("nomencladorId").value + "'>"; 
 
-    var cell3 = row.insertCell(1);
-    cell3.innerHTML = "<input type='text' name='ordenpracticaListEdit[" + index + "].valor' value='0.00'>"; 
+    var cell1 = row.insertCell(1);
+    cell1.innerHTML = "<input type='text' name='ordenpracticaListEdit[" + index + "].valor' value='0.00'>"; 
     
-    var cell4 = row.insertCell(2);
-    cell4.innerHTML = createSelectEstados("ordenpracticaListEdit[" + index + "].estado");
+    var cell2 = row.insertCell(2);
+    cell2.innerHTML = createSelectEstados("ordenpracticaListEdit[" + index + "].estado");
     
-    var cell5 = row.insertCell(3);
+    var cell3 = row.insertCell(3);
     row.valign = "BASELINE";
-    cell5.innerHTML = "<button type='button' class='btn btn-link' onClick='Eliminar(this.parentNode.parentNode.rowIndex)'>Eliminar</button>"
+    cell3.innerHTML = "<button type='button' class='btn btn-link' onClick='Eliminar(this.parentNode.parentNode.rowIndex)'>Eliminar</button>";
+    
+    var cell4 = row.insertCell(4);
+    cell4.innerHTML = "";
      
     index ++;
     document.getElementById("ContainerGeneralOverWrite_ContainerGeneral_sq").value = "";
@@ -234,30 +237,11 @@ enctype="multipart/form-data">
 									<jsp:include page="formEditOrdenTabRequisitos.jsp"></jsp:include>		
 								</div>
 								
+								<!-- ** Tab Profesional -->
 								<div id="tb_profesional" class="tab-pane fade">
-									    		<table class="table"  style="width: 100%">			
-												<tr>		
-													<td style="width: 15%"><form:label path="profesionalId">Profesional</form:label></td>
-													<td  style="text-align:left" colspan="5">			
-													    <form:select path="profesionalId" style="width:80%; margin-bottom:0px" 
-													    onchange="findEspecialidades(this);">
-															   <form:option value="-1" label="Seleccione Profesional ..."/>
-															   <form:options items="${profesionales}" itemLabel="value" itemValue="id" />			    
-															</form:select>
-													</td>
-													<td><form:label path="especialidad">Especialidad</form:label></td>
-													<td>
-														<form:select path="especialidad" style="width:60%; margin-bottom:0px">
-															<form:option value="-1" label="Seleccione Especialidad ..."/>
-															<form:options items="${especialidades}" itemLabel="value" itemValue="id" />																	
-														</form:select>
-													
-													</td>																									
-													
-												</tr>		
-												</table>
+									<jsp:include page="formEditOrdenTabProfesional.jsp"></jsp:include>
 								</div>
-								
+
 								<!-- ** Tab Autorizaciones -->
 								<div id="tb_autorizacion" class="tab-pane fade">
 									<jsp:include page="formEditOrdenTabAutorizacion.jsp"></jsp:include>

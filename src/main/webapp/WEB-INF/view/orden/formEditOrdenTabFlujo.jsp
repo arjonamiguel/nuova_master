@@ -15,7 +15,7 @@
 </tr>
 </table>
 <br>
-<div class="tab-content" style="height: 200px">	
+<div class="tab-content" style="height: 400px">	
 <c:forEach items="${ordenDto.ordenWorkflows}" var="ow" varStatus="loop" >			
 	<table class="table"  style="width: 100%">	
 	<tr style="border-left: 2px solid orange;">

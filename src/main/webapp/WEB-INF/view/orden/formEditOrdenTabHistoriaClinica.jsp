@@ -6,7 +6,7 @@ Adjuntar Nuevo Archivo</a>
 </div>
 <br><br>
 
-<div class="tab-content" style="height: 200px">	
+<div class="tab-content" style="height: 400px">	
 <% int index = 0;%>
 
 <table class="table"  style="width: 100%"  id="tabla_historiaclinica">		
