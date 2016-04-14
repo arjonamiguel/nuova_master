@@ -91,6 +91,8 @@
 <jsp:include page="../sec_menu.jsp"></jsp:include>
 <form:form method="post" action="/nuova/addOrden" commandName="ordenDto">
 <form:hidden path="ordenTipo.ordenTipoId"/>
+<div class="mainContainer">
+
 <div class="panelContainer">		
 		<div class="panel panel-info">
 			<div class="panel-heading">
@@ -195,19 +197,7 @@
 												</table>
 									  		</div>
 										</div>
-										<div style="float:right;">
-										<table>
-									 		<tr>
-												<td style="width: 50%">
-												<input class="btn btn-lg btn-primary btn-block btn-info" type="submit" value="Guardar"/>
-												</td>
-												<td>
-												<input type="button" value="Cancelar" onclick="location.href = document.referrer; return false;" class="btn"/>
-												</td>
-												<td colspan="4"></td>
-											</tr>
-										</table>
-										</div>
+										
 									</div> 		    						
 									
 								</div>
@@ -216,8 +206,25 @@
 		    	</div>
 	    	</div>
 	    </div>
+	    
+	    			<!-- Botoneras -->
+		<div class="panel panel-info">
+			<div class="panel-body">
+				<div class="row-fluid">
+				<div class="span12">					
+					<div style="float:right;">
+						<input type="button" value="Cancelar" onclick="location.href = document.referrer; return false;" class="btn"/>	
+					</div>
+					<div style="float:right;padding-right:2%;">
+						<input type="submit" value="Guardar" class="btn btn-info"/>
+					</div>								 			
+				</div>
+				</div>
+			</div>
+		</div>
+		<!-- Fin Botoneras -->
 </div>
-
+</div>
 </form:form>
 
 </body>

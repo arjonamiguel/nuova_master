@@ -117,6 +117,7 @@ public class OrdenController {
 
     if (codigo == Util.ORDEN_CONSULTA) {
       OrdenTipoDTO otdto = transformOrdenTipoToDto(ot);
+
       List<Profesional> profesionales = profesionalManager.findAll();
       map.addAttribute("profesionales", getProfesionalDTOList(profesionales));
       map.addAttribute("ordenTipoDto", otdto);
@@ -194,7 +195,10 @@ public class OrdenController {
     if (ordenId != null) {
       OrdenDTO ordenDto = transformOrdenToDto(ordenManager.findOrdenById(ordenId));
       List<Profesional> profesionales = profesionalManager.findAll();
+      List<Especialidad> especialidades =
+          especialidadManager.findEspecialidadByProfesionalId(ordenDto.getProfesionalId());
       map.addAttribute("profesionales", getProfesionalDTOList(profesionales));
+      map.addAttribute("especialidades", getEspecialidadDTOList(especialidades));
       map.addAttribute("ordenDto", ordenDto);
     }
 
@@ -456,6 +460,7 @@ public class OrdenController {
         OrdenProfesional op = new OrdenProfesional();
         op.setProfesional(profesionalManager.findProfesionalById(dto.getProfesionalId()));
         op.setOrden(orden);
+        op.setEspecialidadId(dto.getEspecialidad());
         ordenProfesionals.add(op);
         ordenManager.deleteOrdenProfesional(orden.getOrdenId());
         orden.setOrdenProfesionals(ordenProfesionals);
@@ -707,6 +712,7 @@ public class OrdenController {
     // Profesional
     for (OrdenProfesional op : orden.getOrdenProfesionals()) {
       if (op.getProfesional() != null) {
+        dto.setEspecialidad(op.getEspecialidadId());
         dto.setProfesional(transformProfesionalToDto(op.getProfesional()));
       }
     }
@@ -870,6 +876,7 @@ public class OrdenController {
       Profesional profesional = new Profesional();
       profesional.setProfesionalId(dto.getProfesionalId());
       OrdenProfesional op = new OrdenProfesional(orden, profesional);
+      op.setEspecialidadId(dto.getEspecialidad());
       ordenProfesionals.add(op);
       orden.setOrdenProfesionals(ordenProfesionals);
     }
@@ -933,6 +940,14 @@ public class OrdenController {
     for (Profesional p : list) {
       retorno
           .add(new ComboItemDTO(p.getProfesionalId() + "", p.getApellido() + ", " + p.getNombre()));
+    }
+    return retorno;
+  }
+
+  private List<ComboItemDTO> getEspecialidadDTOList(List<Especialidad> list) {
+    List<ComboItemDTO> retorno = new ArrayList<ComboItemDTO>();
+    for (Especialidad e : list) {
+      retorno.add(new ComboItemDTO(e.getEspecialidadId() + "", e.getNombre()));
     }
     return retorno;
   }

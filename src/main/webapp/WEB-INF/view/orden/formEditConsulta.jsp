@@ -60,7 +60,7 @@
 		  var especialidades = callEspecialidadesByProfesional(profesional.value);
 			$('#especialidad')
 			.empty()
-		    .append('<option selected="selected" value="-1">Seleccione Especilidad ...</option>')
+		    .append('<option selected="selected" value="-1">Seleccione Especialidad ...</option>')
 		;
 			$.each(especialidades, function(key, value) {   
 			     $('#especialidad')
@@ -207,18 +207,19 @@
 												<tr>		
 													<td style="width: 15%"><form:label path="profesionalId">Profesional</form:label></td>
 													<td  style="text-align:left" colspan="5">			
-													    <form:select path="profesionalId" style="width:30%; margin-bottom:0px" 
+													    <form:select path="profesionalId" style="width:80%; margin-bottom:0px" 
 													    onchange="findEspecialidades(this);">
 															   <form:option value="-1" label="Seleccione Profesional ..."/>
 															   <form:options items="${profesionales}" itemLabel="value" itemValue="id" />			    
 															</form:select>
 													</td>
-													<td><form:label path="profesionalId">Especialidades</form:label></td>
-													<td> 
-														<form:select path="profesionalId" style="width:78%; margin-bottom:0px">
-															<form:option value="-1" label="Seleccione Concepto ..."/>
-		
+													<td><form:label path="especialidad">Especialidad</form:label></td>
+													<td>
+														<form:select path="especialidad" style="width:60%; margin-bottom:0px">
+															<form:option value="-1" label="Seleccione Especialidad ..."/>
+															<form:options items="${especialidades}" itemLabel="value" itemValue="id" />																	
 														</form:select>
+													
 													</td>																									
 													
 												</tr>		
@@ -227,7 +228,7 @@
 										  		<div id="tb_flujo" class="tab-pane fade">  					
 													<c:forEach items="${ordenDto.ordenWorkflows}" var="ow" varStatus="loop" >			
 													<table class="table"  style="width: 100%">	
-											    	<tr style="border-left: 2px solid orange;border-bottom: 1px solid orange;">
+											    	<tr style="border-left: 2px solid orange;">
 											    		<td style="width: 60%">
 											    		<b>${ow.userName}</b><br>
 											    		<span style="font-size: 12px">${ow.fecha}</span>
@@ -249,9 +250,7 @@
 	    </div>
 	</div>
 	
-	
-</div> 
-<!-- Botoneras -->
+	<!-- Botoneras -->
 		<div class="panel panel-info">
 			<div class="panel-body">
 				<div class="row-fluid">
@@ -267,6 +266,11 @@
 			</div>
 		</div>
 		<!-- Fin Botoneras -->
+	
+	
+	
+</div> 
+		</div>
 </form:form>
 
 </body>
