@@ -74,7 +74,7 @@ public class PracticaDAOImpl implements PracticaDAO {
     Query query = this.sessionFactory.getCurrentSession()
         .createQuery("FROM Nomenclador n " + " WHERE (n.codigo like '%" + search.toUpperCase()
             + "%' OR" + " upper(n.nombre) LIKE '%" + search.toUpperCase() + "%' )"
-            + " AND n.tipo IN ('Practicas', 'Odontológico', 'Prótesis', 'Descartables', 'Prácticas PMOe', 'Odontológico PMO', 'Codigos Fuera de PMO','MANUAL')"
+            + " AND n.tipo IN ('Practicas', 'Odontológico', 'Prótesis', 'Nom. Bioquimico Unic', 'Prácticas PMOe', 'Odontológico PMO', 'Codigos Fuera de PMO','MANUAL','Bioquímico PMOe')"
             + " ORDER BY n.codigo, n.nombre, n.tipo ASC");
     // query.setFirstResult(pageable.getOffset());
     query.setMaxResults(20);

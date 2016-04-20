@@ -67,6 +67,9 @@
             hibernate.connection.provider_class=org.hibernate.connection.C3P0ConnectionProvider
             hibernate.dialect=org.hibernate.dialect.MySQLDialect
             hibernate.show_sql=true
+            hibernate.connection.defaultNChar=true
+            hibernate.connection.useUnicode=true
+            hibernate.connection.characterEncoding=utf-8            
        		</value>
         </property>
     </bean>

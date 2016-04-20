@@ -334,7 +334,7 @@ public class ReportController {
   public PacienteDTO transformPacienteToDto(Paciente p) {
     PacienteDTO dto = new PacienteDTO();
     dto.setPacienteId(p.getPacienteId());
-    dto.setDni(p.getDni());
+    dto.setDni(Integer.valueOf(p.getDni()));
     dto.setApellido(p.getApellido());
     dto.setNombre(p.getNombre());
     dto.setDomicilio(p.getDomicilio());
@@ -389,7 +389,7 @@ public class ReportController {
       dtoad.setCheckedLiberado(p.getCoseguro().intValue() == 1 ? "checked" : "");
       dtoad.setMail(ad.getMail());
       dtoad.setTelefono(ad.getTelefono());
-      dtoad.setDni(ad.getDni());
+      dtoad.setDni(Integer.valueOf(ad.getDni()));
 
       // for (PacienteObrasocial poo : ad.getPacienteObrasocials()) {
       // dtoad.setCrdencial(poo.getNroCredencial());

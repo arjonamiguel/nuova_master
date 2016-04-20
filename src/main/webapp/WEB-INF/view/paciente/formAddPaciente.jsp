@@ -294,6 +294,19 @@ label.error {
 			   		</div>
 			   	</div>
 			   	
+			   	<div class="row-fluid">
+			   		<div class="span4">
+			   				<div class="formLabel"><form:label path="trabajaEn">Trabaja En:</form:label></div>
+        					<div class="formInput">
+        						<form:select path="trabajaEn" style="width:83%; margin-bottom:0px">
+									<form:option value="-1" label="Seleccione donde Trabaja ..."/>
+									<form:options items="${trabajaEnList}"  itemLabel="value" itemValue="id"/>
+								</form:select>
+        					</div>
+			   		
+			   		</div>
+			   	</div>	
+			   	
 		 </div>
 	</div>	
 </div>

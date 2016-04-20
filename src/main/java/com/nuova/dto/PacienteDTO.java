@@ -44,6 +44,10 @@ public class PacienteDTO {
 
   private String zonaAfiliacion;
   private Integer eliminado;
+  private String eliminadoView;
+
+  private int trabajaEn;
+
 
   // private List<PacienteObrasocial> pacienteObrasocials = new ArrayList<PacienteObrasocial>(0);
 
@@ -249,7 +253,11 @@ public class PacienteDTO {
     String botonDelete = "<a class='btn btn-danger btn-xs' href='formDeletePaciente/"
         + getPacienteId() + "'><span class='icon icon-remove'></span>Eliminar</a>&nbsp;";
 
-    this.acciones = botonEdit + botonDelete + botonTipoOrden;
+
+    String botonActivar = "<a class='btn btn-success btn-xs' href='#" + getPacienteId()
+        + "'><span class='icon icon-ok'></span>Activar&nbsp;&nbsp;</a>&nbsp;";
+
+    this.acciones = botonEdit + (getEliminado().intValue() == 0 ? botonDelete : botonActivar);
 
     return acciones;
   }
@@ -306,6 +314,20 @@ public class PacienteDTO {
     this.eliminado = eliminado;
   }
 
+  public int getTrabajaEn() {
+    return trabajaEn;
+  }
 
+  public void setTrabajaEn(int trabajaEn) {
+    this.trabajaEn = trabajaEn;
+  }
+
+  public String getEliminadoView() {
+    return eliminadoView;
+  }
+
+  public void setEliminadoView(String eliminadoView) {
+    this.eliminadoView = eliminadoView;
+  }
 
 }

@@ -30,6 +30,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -75,6 +76,7 @@ public class PacienteController {
     List<Obrasocial> obrasocialList = obrasocialManager.findAll();
     map.addAttribute("provinciaList", Util.getProvincias());
     map.addAttribute("parentescosList", Util.getParentescos());
+    map.addAttribute("trabajaEnList", Util.getTrabajaEn());
     map.addAttribute("obrasocialList", obrasocialList);
     map.addAttribute("obrasocialDTOList", new ArrayList<ObraSocialDTO>());
     map.addAttribute("paciente", new PacienteDTO());
@@ -87,6 +89,7 @@ public class PacienteController {
       PacienteDTO dto = transformPacienteToDto(pacienteManager.fin1dPacienteById(pacienteId));
       map.addAttribute("provinciaList", Util.getProvincias());
       map.addAttribute("parentescosList", Util.getParentescos());
+      map.addAttribute("trabajaEnList", Util.getTrabajaEn());
       map.addAttribute("obrasocialList", obrasocialManager.findAll());
       map.addAttribute("paciente", dto);
       map.addAttribute("isTitular", dto.isTitular());
@@ -100,6 +103,7 @@ public class PacienteController {
       PacienteDTO dto = transformPacienteToDto(pacienteManager.fin1dPacienteById(pacienteId));
       map.addAttribute("provinciaList", Util.getProvincias());
       map.addAttribute("parentescosList", Util.getParentescos());
+      map.addAttribute("trabajaEnList", Util.getTrabajaEn());
       map.addAttribute("obrasocialList", obrasocialManager.findAll());
       map.addAttribute("paciente", dto);
       map.addAttribute("isTitular", dto.isTitular());
@@ -170,12 +174,18 @@ public class PacienteController {
       @RequestParam(required = false, defaultValue = "") String search,
       @RequestParam(required = false, defaultValue = "0") Integer start,
       @RequestParam(required = false, defaultValue = "50") Integer limit) {
-
+    String query = "";
+    try {
+      query = new String(search.getBytes("ISO-8859-1"), "UTF-8");
+    } catch (UnsupportedEncodingException e) {
+      // TODO Auto-generated catch block
+      e.printStackTrace();
+    }
     // Sort and Pagination
     // Sort sort = new Sort(Sort.Direction.DESC, "creationDate");
     Pageable pageable = new PageRequest(start, limit);
 
-    Page<Paciente> pacientes = pacienteManager.findPacientesBySearch(search, pageable);
+    Page<Paciente> pacientes = pacienteManager.findPacientesBySearch(query, pageable);
     // Page<Paciente> batches = new Pa
     // enrollImportBatchService.getBatches(pageable);
     List<PacienteDTO> dtos = new ArrayList<PacienteDTO>();
@@ -193,7 +203,8 @@ public class PacienteController {
       @RequestParam(required = false, defaultValue = "") String query) {
     List<ComboItemDTO> retorno = new ArrayList<ComboItemDTO>();
     for (Paciente p : pacienteManager.findPacienteAutocomplete(query)) {
-      retorno.add(new ComboItemDTO(p.getPacienteId() + "", p.getApellido() + ", " + p.getNombre()));
+      retorno.add(new ComboItemDTO(p.getPacienteId() + "",
+          "[" + p.getDni() + "] - " + p.getApellido() + ", " + p.getNombre()));
     }
 
     return retorno;
@@ -244,10 +255,11 @@ public class PacienteController {
 
     List<Obrasocial> obrasocialList = obrasocialManager.findAll();
     map.addAttribute("datosTitular", titular.getApellido() + " " + titular.getNombre());
-    map.addAttribute("parentescosList", Util.getParentescos());
+    map.addAttribute("parentescosList", Util.getParentescosAdherente());
     map.addAttribute("provinciaList", Util.getProvincias());
     map.addAttribute("obrasocialList", obrasocialList);
     map.addAttribute("obrasocialDTOList", new ArrayList<ObraSocialDTO>());
+    map.addAttribute("trabajaEnList", Util.getTrabajaEn());
     map.addAttribute("paciente", dto);
     map.addAttribute("isTitular", dto.isTitular());
     return ConstantRedirect.VIEW_FORM_ADD_ADHERENTE;
@@ -270,7 +282,7 @@ public class PacienteController {
     PacienteDTO dto = new PacienteDTO();
     dto.setPacienteId(p.getPacienteId());
     dto.setEliminado(p.getEliminado().intValue());
-    dto.setDni(p.getDni());
+    dto.setDni(Integer.valueOf(p.getDni()));
     dto.setApellido(p.getApellido());
     dto.setNombre(p.getNombre());
     dto.setDomicilio(p.getDomicilio());
@@ -281,6 +293,7 @@ public class PacienteController {
     dto.setTelefono(p.getTelefono());
     dto.setProvincia(p.getProvincia());
     dto.setZonaAfiliacion(p.getZonaAfiliacion());
+    dto.setEliminadoView(p.getEliminado().intValue() == 0 ? "ACTIVO" : "INACTIVO");
 
     if (p.getLocalidadId() != null) {
       Localidades loc = pacienteManager.findLocalidadById(p.getLocalidadId());
@@ -305,6 +318,9 @@ public class PacienteController {
         dto.setParentescoDescription(item.getValue());
     }
 
+    dto.setTrabajaEn(p.getTrabajaEn());
+
+
     for (Paciente ad : p.getPacientes()) {
       PacienteDTO dtoad = new PacienteDTO();
       dtoad.setPacienteId(ad.getPacienteId());
@@ -316,10 +332,11 @@ public class PacienteController {
       dtoad.setCheckedLiberado(p.getCoseguro().intValue() == 1 ? "checked" : "");
       dtoad.setMail(ad.getMail());
       dtoad.setTelefono(ad.getTelefono());
-      dtoad.setDni(ad.getDni());
+      dtoad.setDni(Integer.valueOf(ad.getDni()));
       dtoad.setZonaAfiliacion(p.getZonaAfiliacion());
       dtoad.setParentesco(ad.getParentesco().intValue());
       dtoad.setCrdencial(ad.getNroCredencial());
+      dtoad.setEliminado(p.getEliminado().intValue());
 
       for (ComboItemDTO item : Util.getParentescos()) {
         if (dtoad.getParentesco() == Integer.valueOf(item.getId()).intValue())
@@ -337,7 +354,7 @@ public class PacienteController {
     for (Paciente p : listPacientes) {
       PacienteDTO dto = new PacienteDTO();
       dto.setPacienteId(p.getPacienteId());
-      dto.setDni(p.getDni());
+      dto.setDni(Integer.valueOf(p.getDni()));
       dto.setApellido(p.getApellido());
       dto.setNombre(p.getNombre());
       dto.setDomicilio(p.getDomicilio());
@@ -368,7 +385,7 @@ public class PacienteController {
   public Paciente transformDtoToPaciente(PacienteDTO dto) {
     Paciente paciente = new Paciente();
     paciente.setPacienteId(dto.getPacienteId());
-    paciente.setDni(dto.getDni());
+    paciente.setDni(dto.getDni().toString());
     paciente.setApellido(dto.getApellido());
     paciente.setNombre(dto.getNombre());
     paciente.setDomicilio(dto.getDomicilio());
@@ -382,6 +399,7 @@ public class PacienteController {
     paciente.setObrasocialId(dto.getObrasocial().getObrasocialId());
     paciente.setNroCredencial(dto.getObrasocial().getCredencial());
     paciente.setLocalidadId(dto.getLocalidadId());
+    paciente.setTrabajaEn(dto.getTrabajaEn());
 
     return paciente;
 

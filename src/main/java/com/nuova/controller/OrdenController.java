@@ -564,7 +564,7 @@ public class OrdenController {
   public Paciente transformDtoToPaciente(PacienteDTO dto) {
     Paciente paciente = new Paciente();
     paciente.setPacienteId(dto.getPacienteId());
-    paciente.setDni(dto.getDni());
+    paciente.setDni(dto.getDni().toString());
     paciente.setApellido(dto.getApellido());
     paciente.setNombre(dto.getNombre());
     paciente.setDomicilio(dto.getDomicilio());
@@ -597,7 +597,7 @@ public class OrdenController {
     PacienteDTO dto = new PacienteDTO();
     dto.setPacienteId(p.getPacienteId());
     dto.setEliminado(p.getEliminado().intValue());
-    dto.setDni(p.getDni());
+    dto.setDni(Integer.valueOf(p.getDni()));
     dto.setApellido(p.getApellido());
     dto.setNombre(p.getNombre());
     dto.setDomicilio(p.getDomicilio());
@@ -607,6 +607,8 @@ public class OrdenController {
     dto.setMail(p.getMail());
     dto.setTelefono(p.getTelefono());
     dto.setProvincia(p.getProvincia());
+    dto.setEliminadoView(p.getEliminado().intValue() == 0 ? "ACTIVO" : "INACTIVO");
+
     if (p.getPaciente() != null && p.getPaciente().getPacienteId() != null) {
       dto.setPacienteTitular(transformPacienteToDto(
           pacienteManager.fin1dPacienteById(p.getPaciente().getPacienteId())));
@@ -648,7 +650,9 @@ public class OrdenController {
       dtoad.setCheckedLiberado(p.getCoseguro().intValue() == 1 ? "checked" : "");
       dtoad.setMail(ad.getMail());
       dtoad.setTelefono(ad.getTelefono());
-      dtoad.setDni(ad.getDni());
+      dtoad.setDni(Integer.valueOf(ad.getDni()));
+      dtoad.setEliminado(ad.getEliminado().intValue());
+
 
       // for (PacienteObrasocial poo : ad.getPacienteObrasocials()) {
       // dtoad.setCrdencial(poo.getNroCredencial());
@@ -726,8 +730,10 @@ public class OrdenController {
     }
     if (dto.getProfesional() != null) {
       dto.setApellidoNombreProfesional(dto.getProfesional().getApellidoNombre());
-      Especialidad e = especialidadManager.findEspecialidadById(especialidadId);
-      dto.setEspecialidadView(e.getNombre());
+      if (especialidadId != null) {
+        Especialidad e = especialidadManager.findEspecialidadById(especialidadId);
+        dto.setEspecialidadView(e.getNombre());
+      }
     }
 
     // Set de Estados

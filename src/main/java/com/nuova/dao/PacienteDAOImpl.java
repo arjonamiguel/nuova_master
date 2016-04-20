@@ -12,6 +12,7 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
 
+import java.io.UnsupportedEncodingException;
 import java.util.List;
 
 @Repository
@@ -73,7 +74,7 @@ public class PacienteDAOImpl implements PacienteDAO {
   @Override
   public Page<Paciente> findPacientesByPageable(Pageable pageable) {
     Query query = this.sessionFactory.getCurrentSession()
-        .createQuery("FROM Paciente p " + " WHERE p.eliminado = 0" + " ORDER BY p.pacienteId DESC");
+        .createQuery("FROM Paciente p " + " " + " ORDER BY p.pacienteId DESC");
     // query.setFirstResult(pageable.getOffset());
     // query.setMaxResults(pageable.getPageNumber());
     List<Paciente> result = query.list();
@@ -82,10 +83,18 @@ public class PacienteDAOImpl implements PacienteDAO {
 
   @Override
   public Page<Paciente> findPacientesBySearch(String search, Pageable pageable) {
-    Query query = this.sessionFactory.getCurrentSession().createQuery(
-        "FROM Paciente p " + " WHERE  p.eliminado = 0 AND " + " upper(p.apellido) LIKE '%"
+    try {
+      byte[] parameterByte = search.getBytes("ISO-8859-15");
+      search = new String(parameterByte, "UTF-8");
+    } catch (UnsupportedEncodingException e) {
+      // TODO Auto-generated catch block
+      e.printStackTrace();
+    }
+
+    Query query = this.sessionFactory.getCurrentSession()
+        .createQuery("FROM Paciente p " + " WHERE " + " upper(p.apellido) LIKE '%"
             + search.toUpperCase() + "%' " + " OR upper(p.nombre) LIKE '%" + search.toUpperCase()
-            + "%' " + " ORDER BY p.apellido ASC");
+            + "%' " + " OR p.dni like'%" + search + "%' ORDER BY p.apellido ASC");
     // query.setFirstResult(pageable.getOffset());
     // query.setMaxResults(pageable.getPageNumber());
     List<Paciente> result = query.list();
@@ -102,10 +111,11 @@ public class PacienteDAOImpl implements PacienteDAO {
 
   @Override
   public List<Paciente> findPacienteAutocomplete(String search) {
-    Query query = this.sessionFactory.getCurrentSession()
-        .createQuery("FROM Paciente p " + " WHERE upper(p.apellido) LIKE '%" + search.toUpperCase()
-            + "%' " + " OR CAST(p.dni as string) LIKE '%" + search.toUpperCase() + "%' "
-            + " ORDER BY p.apellido ASC");
+    Query query =
+        this.sessionFactory.getCurrentSession()
+            .createQuery("FROM Paciente p " + " WHERE upper(p.apellido) LIKE '%"
+                + search.toUpperCase() + "%' " + " OR p.dni LIKE '%" + search.toUpperCase() + "%' "
+                + " ORDER BY p.apellido ASC");
     // query.setFirstResult(pageable.getOffset());
     query.setMaxResults(20);
     List<Paciente> result = query.list();

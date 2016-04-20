@@ -55,18 +55,23 @@ public class Util {
   static public int ORDEN_ODONTOLOGICA = 101;
   static public int ORDEN_PRACTICA = 102;
 
-  static public String PARENTESCO_TITULAR = "[00]-Titular";
-  static public String PARENTESCO_CONYUGE = "[01]-Esposo/a";
-  static public String PARENTESCO_CONCUBINO = "[02]-Concubino/a";
-  static public String PARENTESCO_HIJOSOLTEROMENOR = "[03]-Hijo soltero menor de 21 años";
+  static public String PARENTESCO_TITULAR = "Titular";
+  static public String PARENTESCO_CONYUGE = "Esposo/a";
+  static public String PARENTESCO_CONCUBINO = "Concubino/a";
+  static public String PARENTESCO_HIJOSOLTEROMENOR = "Hijo soltero menor de 21 años";
   static public String PARENTESCO_HIJOSOLTEROESTUDIANTE =
-      "[04]-Hijo soltero de 21 a 25 años cursando estudios regulares";
+      "Hijo soltero de 21 a 25 años cursando estudios regulares";
   static public String PARENTESCO_HIJOCONYUGESOLTEROMENOR =
-      "[05]-Hijo de cónyuge soltero menor de 21 años";
+      "Hijo de cónyuge soltero menor de 21 años";
   static public String PARENTESCO_HIJOCONYUGESOLTEROESTUDIANTE =
-      "[06]-Hijo de cónyuge soltero de 21 a 25 años cursando estudios regulares";
-  static public String PARENTESCO_MENORBAJOTUTELA = "[07]-Menor bajo guarda o tutela";
-  static public String PARENTESCO_HIJODISCAPACITADO = "[08]-Hijo discapacitado";
+      "Hijo de cónyuge soltero de 21 a 25 años cursando estudios regulares";
+  static public String PARENTESCO_MENORBAJOTUTELA = "Menor bajo guarda o tutela";
+  static public String PARENTESCO_HIJODISCAPACITADO = "Hijo discapacitado";
+
+  static public String EMPLEADO_SEGURIDAD = "Empleado de Seguridad";
+  static public String MONOTRIBUTISTA = "Monotributista";
+  static public String EMPLEADA_DOMESTICA = "Empleada Domestica";
+
 
   static public List<ComboItemDTO> getParentescos() {
     List<ComboItemDTO> parentescos = new ArrayList<ComboItemDTO>();
@@ -81,6 +86,29 @@ public class Util {
     parentescos.add(new ComboItemDTO("8", PARENTESCO_HIJODISCAPACITADO));
 
     return parentescos;
+  }
+
+  static public List<ComboItemDTO> getParentescosAdherente() {
+    List<ComboItemDTO> parentescos = new ArrayList<ComboItemDTO>();
+    parentescos.add(new ComboItemDTO("1", PARENTESCO_CONYUGE));
+    parentescos.add(new ComboItemDTO("2", PARENTESCO_CONCUBINO));
+    parentescos.add(new ComboItemDTO("3", PARENTESCO_HIJOSOLTEROMENOR));
+    parentescos.add(new ComboItemDTO("4", PARENTESCO_HIJOSOLTEROESTUDIANTE));
+    parentescos.add(new ComboItemDTO("5", PARENTESCO_HIJOCONYUGESOLTEROMENOR));
+    parentescos.add(new ComboItemDTO("6", PARENTESCO_HIJOCONYUGESOLTEROESTUDIANTE));
+    parentescos.add(new ComboItemDTO("7", PARENTESCO_MENORBAJOTUTELA));
+    parentescos.add(new ComboItemDTO("8", PARENTESCO_HIJODISCAPACITADO));
+
+    return parentescos;
+  }
+
+  static public List<ComboItemDTO> getTrabajaEn() {
+    List<ComboItemDTO> trabaEn = new ArrayList<ComboItemDTO>();
+    trabaEn.add(new ComboItemDTO("0", EMPLEADO_SEGURIDAD));
+    trabaEn.add(new ComboItemDTO("1", MONOTRIBUTISTA));
+    trabaEn.add(new ComboItemDTO("2", EMPLEADA_DOMESTICA));
+
+    return trabaEn;
   }
 
   static public List<String> getProvincias() {

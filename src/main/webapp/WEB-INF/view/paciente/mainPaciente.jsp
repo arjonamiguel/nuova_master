@@ -1,12 +1,12 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>    
+<%@ page language="java" session="true" contentType="text/html;charset=latin1"%>    
 <%@taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 <%@taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>Nuova</title>
 	<link rel="shortcut icon" href="<%=request.getContextPath()%>/resources/img/favicon/favicon.ico">
@@ -33,10 +33,10 @@
 
 						$("#pacienteGrid").simplePagingGrid(
 								{
-									columnNames : [ "ID", "DNI", "APELLIDO", "NOMBRE",  "" ],
+									columnNames : [ "ID", "DNI", "APELLIDO", "NOMBRE","ESTADO",  "" ],
 									columnKeys : [ "pacienteId", "dni",
-											"apellido", "nombre", "acciones" ],
-									columnWidths : [ "5%", "10%", "20%", "20%","80%"],
+											"apellido", "nombre", "eliminadoView" ,"acciones" ],
+									columnWidths : [ "5%", "10%", "20%", "20%","20%"],
 									sortable : [ false, true, true, true ],
 									data : rows
 								});
@@ -186,7 +186,7 @@
 		$.ajax({
 			url : "ajaxGetSearchPacientesPaginados?search=" + search,
 			type : "GET",
-			contentType : "application/json; charset=utf-8",
+			contentType : "application/json; ;charset=ISO-8859-15",
 			//    data: jsonString, //Stringified Json Object
 			async : false, //Cross-domain requests and dataType: "jsonp" requests do not support synchronous operation
 			cache : false, //This will force requested pages not to be cached by the browser          
