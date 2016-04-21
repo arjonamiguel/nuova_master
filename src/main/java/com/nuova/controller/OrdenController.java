@@ -447,6 +447,7 @@ public class OrdenController {
           op.setNomenclador(p);
           op.setEstado(opdto.getEstado());
           op.setValor(opdto.getValor());
+          op.setAutorizarAutomatico(Util.parseToDate(opdto.getAutorizarAutomatico()));
 
           persistOrdenPracticaList.add(op);
         }
@@ -869,7 +870,7 @@ public class OrdenController {
       dto.setPracticaId(p.getNomencladorId());
       dto.setEstado(op.getEstado());
       dto.setValor(op.getValor());
-
+      dto.setAutorizarAutomatico(op.getAutorizarAutomatico() + "");
       retorno.add(dto);
     }
 

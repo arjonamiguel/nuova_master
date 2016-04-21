@@ -22,6 +22,26 @@
 
 
 <script type="text/javascript">
+
+function createDatePicker(idx) {
+	return '	<div style="visibility:hidden;height:0px;"> '+
+	' <input type="text"' + 
+	' name = "ordenpracticaListEdit['+idx+'].autorizarAutomatico" '  +
+	' id = "ordenpracticaListEdit['+idx+'].autorizarAutomatico"' +
+	' class="date" />' 	+					
+	' </div> '+
+	' <div id="calendar">'+
+	' <div class="input-group registration-date-time" style="padding-top:0%;">'+
+	' <input class="form-control"'+
+	' <input class="form-control"'+
+	' name="autorizar_automatico_'+idx +'"'+
+	' id="autorizar_automatico_'+idx +'"'+
+	' type="date"'+
+	' onchange="javascript:updateDate('+idx+');">'+
+	' </div>'+
+	' </div>';	 
+
+}
 function createSelectEstados(id) {
 	var selectEstado = '<select name="'+id+'" id="'+id+'" style="width:70%; margin-bottom:0px">' +
 	   ' <option value="NONE">Seleccione Estado ...</option>' +
@@ -104,11 +124,14 @@ function addRow(tableID) {
     cell2.innerHTML = createSelectEstados("ordenpracticaListEdit[" + index + "].estado");
     
     var cell3 = row.insertCell(3);
-    row.valign = "BASELINE";
-    cell3.innerHTML = "<button type='button' class='btn btn-link' onClick='Eliminar(this.parentNode.parentNode.rowIndex)'>Eliminar</button>";
-    
+    cell3.innerHTML = createDatePicker(index); 
+   
     var cell4 = row.insertCell(4);
-    cell4.innerHTML = "";
+    row.valign = "BASELINE";
+    cell4.innerHTML = "<button type='button' class='btn btn-link' onClick='Eliminar(this.parentNode.parentNode.rowIndex)'>Eliminar</button>";
+    
+    var cell5 = row.insertCell(5);
+    cell5.innerHTML = "";
      
     index ++;
     document.getElementById("ContainerGeneralOverWrite_ContainerGeneral_sq").value = "";

@@ -82,11 +82,14 @@ function addRowNuevoNom(tableID, nomencladorId) {
     cell2.innerHTML = createSelectEstados("ordenpracticaListEdit[" + index + "].estado");
     
     var cell3 = row.insertCell(3);
+    cell3.innerHTML = createDatePicker(index); 
+
+    var cell4 = row.insertCell(4);
     row.valign = "BASELINE";
-    cell3.innerHTML = "<button type='button' class='btn btn-link' onClick='Eliminar(this.parentNode.parentNode.rowIndex)'>Eliminar</button>";
+    cell4.innerHTML = "<button type='button' class='btn btn-link' onClick='Eliminar(this.parentNode.parentNode.rowIndex)'>Eliminar</button>";
     
-   	var cell4 = row.insertCell(4);    
-   	cell4.innerHTML = "";
+   	var cell5 = row.insertCell(5);    
+   	cell5.innerHTML = "";
    	
     index ++;
     document.getElementById("nomenclador_codigo").value = "";
@@ -100,6 +103,9 @@ function checkAll(chk) {
         if(chks[i].type == "checkbox") 
         	chks[i].checked= chk.checked;
     }
+}
+function updateDate(i){	
+	document.getElementById("ordenpracticaListEdit["+i+"].autorizarAutomatico").value=document.getElementById("autorizar_automatico_"+i).value;
 }
 
 </script>
@@ -155,7 +161,8 @@ Imprimir</a>
 		<tr>													        	
 			<td style="width: 40%"><b>Nomenclador</b></td>
 			<td style="width: 10%"><b>Valor</b></td>
-			<td style="width: 31%"><b>Estados</b></td>			
+			<td style="width: 31%"><b>Estados</b></td>
+			<td style="width: 20%"><b>Automatico</b></td>
 			<td></td>
 			<td>
 				<input type="checkbox" name="selectImprimirAll" 
@@ -192,6 +199,27 @@ Imprimir</a>
 				</script>
 			</td>
 			
+			<td align="left">				
+					<div style="visibility:hidden;height:0px;">
+						<input type="text" 
+							name = "ordenpracticaListEdit[<%=index%>].autorizarAutomatico"  
+							id = "ordenpracticaListEdit[<%=index%>].autorizarAutomatico"
+							value = "${pa.autorizarAutomatico}" 
+							class="date" />						
+					</div>
+					
+					<div id="calendar">
+					<div class="input-group registration-date-time" style="padding-top:0%;">
+						<input class="form-control" 
+							name="autorizar_automatico_<%=index%>" 
+							id="autorizar_automatico_<%=index%>" 
+							type="date"
+							value = "${pa.autorizarAutomatico}"  
+							onchange="javascript:updateDate(<%=index%>);">
+		            </div>
+		            </div>
+	           
+			</td>
 			<td><button type='button' class='btn btn-link' onClick='Eliminar(this.parentNode.parentNode.rowIndex)'>Eliminar</button></td>
 			<td><input type="checkbox" name="ordenpracticaListEdit[<%=index%>].imprimir"></td>
 			<%index++;%>

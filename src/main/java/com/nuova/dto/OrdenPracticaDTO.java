@@ -10,6 +10,7 @@ public class OrdenPracticaDTO {
   private String estado;
   private BigDecimal valor;
   private boolean imprimir;
+  private String autorizarAutomatico;
 
   public OrdenPracticaDTO() {
 
@@ -81,5 +82,11 @@ public class OrdenPracticaDTO {
     this.imprimir = imprimir;
   }
 
+  public String getAutorizarAutomatico() {
+    return autorizarAutomatico;
+  }
 
+  public void setAutorizarAutomatico(String autorizarAutomatico) {
+    this.autorizarAutomatico = autorizarAutomatico;
+  }
 }
