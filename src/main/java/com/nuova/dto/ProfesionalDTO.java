@@ -28,7 +28,7 @@ public class ProfesionalDTO {
   private String fechaEmisionMatricula;
   private Integer nroLibro;
   private Integer nroFolio;
-  private Integer nroPoliza;
+  private String nroPoliza;
   private String vigenciaDesde;
   private String vigenciaHasta;
   private String tipoMatricula;
@@ -196,11 +196,11 @@ public class ProfesionalDTO {
     this.nroFolio = nroFolio;
   }
 
-  public Integer getNroPoliza() {
+  public String getNroPoliza() {
     return nroPoliza;
   }
 
-  public void setNroPoliza(Integer nroPoliza) {
+  public void setNroPoliza(String nroPoliza) {
     this.nroPoliza = nroPoliza;
   }
 

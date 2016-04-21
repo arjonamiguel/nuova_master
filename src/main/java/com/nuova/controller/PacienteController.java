@@ -319,6 +319,7 @@ public class PacienteController {
     }
 
     dto.setTrabajaEn(p.getTrabajaEn());
+    dto.setEmpresa(p.getEmpresa());
 
 
     for (Paciente ad : p.getPacientes()) {
@@ -337,6 +338,7 @@ public class PacienteController {
       dtoad.setParentesco(ad.getParentesco().intValue());
       dtoad.setCrdencial(ad.getNroCredencial());
       dtoad.setEliminado(p.getEliminado().intValue());
+      dtoad.setEmpresa(ad.getEmpresa());
 
       for (ComboItemDTO item : Util.getParentescos()) {
         if (dtoad.getParentesco() == Integer.valueOf(item.getId()).intValue())
@@ -400,6 +402,7 @@ public class PacienteController {
     paciente.setNroCredencial(dto.getObrasocial().getCredencial());
     paciente.setLocalidadId(dto.getLocalidadId());
     paciente.setTrabajaEn(dto.getTrabajaEn());
+    paciente.setEmpresa(dto.getEmpresa());
 
     return paciente;
 

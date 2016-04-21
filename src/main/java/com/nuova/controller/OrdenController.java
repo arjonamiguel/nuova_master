@@ -732,7 +732,8 @@ public class OrdenController {
       dto.setApellidoNombreProfesional(dto.getProfesional().getApellidoNombre());
       if (especialidadId != null) {
         Especialidad e = especialidadManager.findEspecialidadById(especialidadId);
-        dto.setEspecialidadView(e.getNombre());
+        if (e != null)
+          dto.setEspecialidadView(e.getNombre());
       }
     }
 

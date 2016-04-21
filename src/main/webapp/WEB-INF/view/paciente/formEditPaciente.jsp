@@ -286,14 +286,13 @@ label.error {
 			   		
 			   		<div class="span1" style="">
 			   				<div class="formLabel"><form:label path="coseguro">Coseguro:</form:label></div>
-			   				
+			   				<div style="visibility:hidden;"><form:checkbox path="coseguro" id="coseguro"/></div>
 							
 			   		</div>
-			   		<div class="span3" style="margin-top:1%;">
-			   		
+			   		<div class="span3" style="margin-top:1%;">			   		
 							<div class="material-switch pull-left">
-								<input id="coseguro" name="coseguro" type="checkbox" value="true">
-								<label for="coseguro" class="label-success"></label>
+								<input id="coseguroAux" name="coseguroAux" type="checkbox" value="true" >
+									<label for="coseguroAux" class="label-success" onclick="updatecoseguro()"></label>
 								<div style="padding-top:10%;">
 									NO - SI
 								</div>
@@ -310,6 +309,13 @@ label.error {
 									<form:option value="-1" label="Seleccione donde Trabaja ..."/>
 									<form:options items="${trabajaEnList}"  itemLabel="value" itemValue="id"/>
 								</form:select>
+        					</div>
+			   		
+			   		</div>
+			   		<div class="span4">
+			   				<div class="formLabel"><form:label path="empresa">Empresa:</form:label></div>
+        					<div class="formInput">
+        						<form:input path="empresa" type="text"/>
         					</div>
 			   		
 			   		</div>
@@ -412,6 +418,7 @@ label.error {
 </html>
 <script>
 
+
 function callExistDni(dni) {
 	var retorno;
 	$.ajax({
@@ -433,8 +440,7 @@ function callExistDni(dni) {
 
 			document.getElementById("mainPaciente").parentNode.classList.add("active");
         	document.getElementById("registration-date").value=document.getElementById("fechaNacimiento").value;
-        	updatecoseguro();
-			$(".checkbox").checkbox();
+        	
 			
 			
 		$("#paciente").validate({
@@ -476,5 +482,9 @@ function callExistDni(dni) {
                     	form.submit();
                     }        
         }
-    });
+
+		});
+		
+		updatecoseguro();
+		$(".checkbox").checkbox();		
 </script>

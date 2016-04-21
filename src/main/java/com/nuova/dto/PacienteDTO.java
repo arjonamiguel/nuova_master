@@ -47,7 +47,7 @@ public class PacienteDTO {
   private String eliminadoView;
 
   private int trabajaEn;
-
+  private String empresa;
 
   // private List<PacienteObrasocial> pacienteObrasocials = new ArrayList<PacienteObrasocial>(0);
 
@@ -329,5 +329,14 @@ public class PacienteDTO {
   public void setEliminadoView(String eliminadoView) {
     this.eliminadoView = eliminadoView;
   }
+
+  public String getEmpresa() {
+    return empresa;
+  }
+
+  public void setEmpresa(String empresa) {
+    this.empresa = empresa;
+  }
+
 
 }

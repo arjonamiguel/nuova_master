@@ -215,7 +215,7 @@
 	    <div class="span4">
 	      <div><form:hidden path="profesionalId" /></div>
         	<div class="formLabel"><form:label path="nroPoliza">Nro. Poliza:</form:label></div>
-        	<div class="formInput"><form:input path="nroPoliza" type="text" onkeypress='return isNumberKey(event)'/></div>
+        	<div class="formInput"><form:input path="nroPoliza" type="text"/></div>
 	    </div>
 	     <div class="span4">	
 			

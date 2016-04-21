@@ -241,13 +241,21 @@
 			   		</div>
 			   		</c:if>
 			   		
-			   		<div class="span4">
-			   				<div class="formLabel" style="padding-top:6px;;"><form:label path="coseguro">Coseguro:</form:label></div>
+			   	
+			   		<div class="span1" style="">
+			   				<div class="formLabel"><form:label path="coseguro">Coseguro:</form:label></div>
 			   				<div style="visibility:hidden;"><form:checkbox path="coseguro" id="coseguro"/></div>
-								<div class="material-switch pull-left">
-									<input id="coseguroAux" name="coseguroAux" type="checkbox" value="true" disabled="true">
-									<label for="coseguroAux" class="label-info" onclick="updatecoseguro()"></label>
+							
+			   		</div>
+			   		<div class="span3" style="margin-top:1%;">			   		
+							<div class="material-switch pull-left">
+								<input id="coseguroAux" name="coseguroAux" type="checkbox" value="true">
+									<label for="coseguroAux" class="label-success" onclick="updatecoseguro()"></label>
+								<div style="padding-top:10%;">
+									NO - SI
 								</div>
+							</div>
+							
 			   		</div>
 			   	</div>
 			   	<br>
@@ -260,6 +268,13 @@
 									<form:option value="-1" label="Seleccione donde Trabaja ..."/>
 									<form:options items="${trabajaEnList}"  itemLabel="value" itemValue="id"/>
 								</form:select>
+        					</div>
+			   		
+			   		</div>
+			   		<div class="span4">
+			   				<div class="formLabel"><form:label path="empresa">Empresa:</form:label></div>
+        					<div class="formInput">
+        						<form:input path="empresa" type="text" disabled="true"/>
         					</div>
 			   		
 			   		</div>

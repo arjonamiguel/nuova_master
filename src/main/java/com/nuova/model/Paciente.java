@@ -46,6 +46,7 @@ public class Paciente implements java.io.Serializable {
   private Set<Paciente> pacientes = new HashSet<Paciente>(0);
   private Integer localidadId;
   private Integer trabajaEn;
+  private String empresa;
 
   public Paciente() {}
 
@@ -254,6 +255,15 @@ public class Paciente implements java.io.Serializable {
 
   public void setTrabajaEn(Integer trabajaEn) {
     this.trabajaEn = trabajaEn;
+  }
+
+  @Column(name = "empresa")
+  public String getEmpresa() {
+    return empresa;
+  }
+
+  public void setEmpresa(String empresa) {
+    this.empresa = empresa;
   }
 
 

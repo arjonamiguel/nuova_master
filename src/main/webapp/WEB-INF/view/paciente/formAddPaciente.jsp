@@ -305,6 +305,13 @@ label.error {
         					</div>
 			   		
 			   		</div>
+			   		<div class="span4">
+			   				<div class="formLabel"><form:label path="empresa">Empresa:</form:label></div>
+        					<div class="formInput">
+        						<form:input path="empresa" type="text"/>
+        					</div>
+			   		
+			   		</div>
 			   	</div>	
 			   	
 		 </div>

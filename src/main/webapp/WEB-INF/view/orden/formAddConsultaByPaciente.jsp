@@ -60,6 +60,10 @@
 			$("#message").text("Debe Seleccionar un Profesional");
 			$("#message").css("visibility", "visible");
 			return false;
+		} else if ($("#especialidad").val() == "-1") {
+				$("#message").text("Debe Seleccionar una Especialidad");
+				$("#message").css("visibility", "visible");
+				return false;	
 		} else if ($(".cb-icon-check")[0].style.display != "none"
 				&& $(".cb-icon-check")[1].style.display != "none") {
 			$("#message2").css("visibility", "hidden");
