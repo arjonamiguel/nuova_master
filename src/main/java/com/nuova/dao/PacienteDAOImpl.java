@@ -77,6 +77,7 @@ public class PacienteDAOImpl implements PacienteDAO {
         .createQuery("FROM Paciente p " + " " + " ORDER BY p.pacienteId DESC");
     // query.setFirstResult(pageable.getOffset());
     // query.setMaxResults(pageable.getPageNumber());
+    query.setMaxResults(20);
     List<Paciente> result = query.list();
     return new PageImpl<Paciente>(result, pageable, result.size());
   }
@@ -97,6 +98,7 @@ public class PacienteDAOImpl implements PacienteDAO {
             + "%' " + " OR p.dni like'%" + search + "%' ORDER BY p.apellido ASC");
     // query.setFirstResult(pageable.getOffset());
     // query.setMaxResults(pageable.getPageNumber());
+    query.setMaxResults(20);
     List<Paciente> result = query.list();
     return new PageImpl<Paciente>(result, pageable, result.size());
   }

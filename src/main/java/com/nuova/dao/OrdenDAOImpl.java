@@ -63,6 +63,7 @@ public class OrdenDAOImpl implements OrdenDAO {
         + " WHERE o.ordenTipo.codigo=" + codigoOrdenTipo + " ORDER BY o.ordenId DESC");
     // query.setFirstResult(pageable.getOffset());
     // query.setMaxResults(pageable.getPageNumber());
+    query.setMaxResults(20);
     List<Orden> result = query.list();
     return new PageImpl<Orden>(result, pageable, result.size());
   }
@@ -77,6 +78,7 @@ public class OrdenDAOImpl implements OrdenDAO {
 
     // query.setFirstResult(pageable.getOffset());
     // query.setMaxResults(pageable.getPageNumber());
+    query.setMaxResults(20);
     List<Orden> result = query.list();
     return new PageImpl<Orden>(result, pageable, result.size());
   }
