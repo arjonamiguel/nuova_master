@@ -6,6 +6,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 import com.nuova.dto.OrdenAlarmaDTO;
+import com.nuova.model.Empresas;
 import com.nuova.model.Localidades;
 import com.nuova.model.Paciente;
 
@@ -37,4 +38,12 @@ public interface PacienteDAO {
     public List<Localidades> findLocalidadesAutocomplete(String search);
 
     public Localidades findLocalidadById(Integer localidadId);
+
+    public Paciente findPacienteByCredencial(String credencial);
+
+    public List<Paciente> findAllAdherentes();
+
+    // Empresas
+    public List<Empresas> findAllEmpresas();
+
 }

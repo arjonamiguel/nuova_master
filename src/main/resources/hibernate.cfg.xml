@@ -24,5 +24,7 @@
         <mapping class="com.nuova.model.Calendario" />  
         <mapping class="com.nuova.model.OrdenDocument" />     
         <mapping class="com.nuova.model.Localidades" />
+        <mapping class="com.nuova.model.Reintegro" />
+        <mapping class="com.nuova.model.Empresas" />
     </session-factory>
 </hibernate-configuration>

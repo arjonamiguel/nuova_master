@@ -151,4 +151,19 @@ public class ConstantControllers {
   public final static String AJAX_GET_CAJACIERRE_PAGINADOS = "/ajaxGetCajaCierrePaginados";
   public final static String AJAX_GET_SEARCH_CAJACIERRE_PAGINADOS =
       "/ajaxGetSearchCajaCierrePaginados";
+
+  // Reintegro
+  public final static String MAIN_REINTEGRO = "/mainReintegro";
+  public final static String FORM_ADD_REINTEGRO = "/formAddReintegro/{pacienteId}";
+  public final static String FORM_EDIT_REINTEGRO = "/formEditReintegro/{reintegroId}";
+  public final static String FORM_DELETE_REINTEGRO = "/formDeleteReintegro/{reintegroId}";
+  public final static String ADD_REINTEGRO = "/addReintegro";
+  public final static String DELETE_REINTEGRO = "/deleteReintegro";
+  public final static String EDIT_REINTEGRO = "/editReintegro";
+  public final static String AJAX_GET_REINTEGROS_PAGINADOS = "/ajaxGetReintegrosPaginados";
+  public final static String AJAX_GET_SEARCH_REINTEGROS_PAGINADOS =
+      "/ajaxGetSearchReintegrosPaginados";
+  public final static String AJAX_GET_REINTEGROSBYPACIENTE_PAGINADOS =
+      "/ajaxGetReintegrosByPacientePaginados/{pacienteId}";
+
 }

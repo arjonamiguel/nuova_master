@@ -40,14 +40,13 @@
 
 
 <script type="text/javascript">
-
-$(document).ready(function() {
-	
+$(document).ready(function() {	
 	var rowsConsultas = [];
 	var rowsPracticas = [];
-
+	var rowsReintegros = [];
 	rowsConsultas = callConsultas();
 	rowsPracticas = callPracticas();
+	rowsReintegros = callReintegros();
 
 	$("#consultasGrid").simplePagingGrid(
 			{
@@ -61,10 +60,8 @@ $(document).ready(function() {
 				minimumVisibleRows: 5
 			});
 
-
 	$("#practicasGrid").simplePagingGrid(
 			{
-				
 				columnNames : [ "NRO.ORDEN","PACIENTE","TIPO" ,"FECHA","PROFESIONAL","ESPECIALIDAD", "ESTADO", "" ],
 				columnKeys : [ "nroOrden","botonpaciente","ordenTipoDesc" , "fecha", "apellidoNombreProfesional"
 								, "especialidadView", "etiqestado", "acciones"],
@@ -74,8 +71,18 @@ $(document).ready(function() {
 				pageSize : 5,
 				minimumVisibleRows: 5
 			});
-});
 
+	$("#reintegrosGrid").simplePagingGrid(
+			{
+				columnNames : [ "INICIO", "REINTEGRO" ,"PROFESIONAL" , "ESTADO", "MONTO", "" ],
+				columnKeys : [ "fechaDesde", "fechaReintegro","profesional","estadoView" , "monto","acciones"],
+				columnWidths : [ "10%", "10%"],
+				sortable : [ true, true,],
+				data : rowsReintegros,
+				pageSize : 5,
+				minimumVisibleRows: 5
+			});
+});
 
 function nuevoAdherente() {
 	var titularId = document.getElementById("pacienteId").value;
@@ -94,9 +101,12 @@ function showReport(id){
 	document.getElementById("myModal").style.height = '60%';
 }
 
-
+function createReintegro(){
+	var pacienteId = document.getElementById("pacienteId").value;
+	var url = "/nuova/formAddReintegro/"+pacienteId;
+	window.open(url, '_blank');
+}
 </script>
-
 </head>
 <body style="background-color: #e5e5e5;">
 	<jsp:include page="../sec_menu.jsp"></jsp:include>
@@ -170,12 +180,12 @@ function showReport(id){
 							<div id="tb_consultas" class="tab-pane fade">
 								<jsp:include page="formInfoPacienteTabConsultas.jsp"></jsp:include>
 							</div>
-							
+
 							<!-- ** Tab Practicas -->
 							<div id="tb_practicas" class="tab-pane fade">
 								<jsp:include page="formInfoPacienteTabPracticas.jsp"></jsp:include>
 							</div>
-							
+
 							<!-- ** Tab Reintegros -->
 							<div id="tb_reintegros" class="tab-pane fade">
 								<jsp:include page="formInfoPacienteTabReintegros.jsp"></jsp:include>
@@ -184,10 +194,7 @@ function showReport(id){
 						<!-- Fin Contenedor de Tabs -->
 
 					</div>
-
 				</div>
-
-
 			</div>
 			<div class="panel panel-info">
 				<div class="panel-body">
@@ -198,7 +205,6 @@ function showReport(id){
 									onclick="location.href='/nuova/formBuscarPaciente';"
 									class="btn" />
 							</div>
-
 						</div>
 					</div>
 				</div>
@@ -206,11 +212,9 @@ function showReport(id){
 		</div>
 	</div>
 
-
 	<!-- Modal -->
 	<div id="myModal" class="modal fade" role="dialog" style="width: 50%;">
 		<div class="modal-dialog" style="height: 100%">
-
 			<!-- Modal content-->
 			<div class="modal-content" style="height: 80%">
 				<div class="modal-header">
@@ -224,7 +228,6 @@ function showReport(id){
 					<button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
 				</div>
 			</div>
-
 		</div>
 	</div>
 	<!-- Fin Modal -->
@@ -271,4 +274,22 @@ function callPracticas() {
 	return retorno;
 }
 
+function callReintegros() {
+	var retorno;
+	$.ajax({
+		url : "/nuova/ajaxGetReintegrosByPacientePaginados/${paciente.pacienteId}",
+		type : "GET",
+		contentType : "application/json; charset=utf-8",
+		//    data: jsonString, //Stringified Json Object
+		async : false, //Cross-domain requests and dataType: "jsonp" requests do not support synchronous operation
+		cache : false, //This will force requested pages not to be cached by the browser          
+		processData : false, //To avoid making query String instead of JSON
+		success : function(page) {
+			// Success Message Handler
+			retorno = page.content;
+		}
+	});
+
+	return retorno;
+}
 </script>
