@@ -104,7 +104,8 @@
 					&nbsp;&nbsp;Pacientes<span class="caret"></a>
 					<ul class="dropdown-menu" role="menu">
 		                <li><a href="/nuova/mainPaciente">Administrar Pacientes</a></li>
-		                <li><a href="/nuova/formBuscarPaciente">Buscar Paciente ...</a></li>		                
+		                <li><a href="/nuova/formBuscarPaciente">Buscar Paciente ...</a></li>	
+		                <li><a href="/nuova/mainReintegro">Administrar Reintegros</a></li>	                
 		                <li><a href="/nuova/showReportePacientes">Reporte de Pacientes</a></li>
               		</ul>  
 				</li>

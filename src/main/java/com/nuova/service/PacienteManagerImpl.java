@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.nuova.dao.PacienteDAO;
 import com.nuova.dto.OrdenAlarmaDTO;
+import com.nuova.model.Empresas;
 import com.nuova.model.Localidades;
 import com.nuova.model.Paciente;
 
@@ -100,5 +101,17 @@ public class PacienteManagerImpl implements PacienteManager {
     @Transactional
     public Localidades findLocalidadById(Integer localidadId) {
         return pacienteDAO.findLocalidadById(localidadId);
+    }
+
+    @Override
+    @Transactional
+    public Paciente findPacienteByCredencial(String credencial) {
+        return pacienteDAO.findPacienteByCredencial(credencial);
+    }
+
+    @Override
+    @Transactional
+    public List<Empresas> findAllEmpresas() {
+        return pacienteDAO.findAllEmpresas();
     }
 }

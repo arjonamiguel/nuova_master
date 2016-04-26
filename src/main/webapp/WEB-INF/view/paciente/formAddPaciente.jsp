@@ -171,6 +171,18 @@ label.error {
 			document.getElementById("fechaNacimiento").value=document.getElementById("registration-date").value;
 		}
 
+		function showEmpresas() {						
+			var trabajo = document.getElementById("trabajaEn").value;
+			var t = parseInt(trabajo); 
+			if( t == 0) {
+				document.getElementById("empresaId").disabled = "";
+				
+			}else {
+				document.getElementById("empresaId").value = "-1";
+				document.getElementById("empresaId").disabled = "false";
+			}
+
+		}
 	
 
        </SCRIPT>
@@ -298,9 +310,19 @@ label.error {
 			   		<div class="span4">
 			   				<div class="formLabel"><form:label path="trabajaEn">Trabaja En:</form:label></div>
         					<div class="formInput">
-        						<form:select path="trabajaEn" style="width:83%; margin-bottom:0px">
+        						<form:select path="trabajaEn" style="width:83%; margin-bottom:0px" onchange="showEmpresas()">
 									<form:option value="-1" label="Seleccione donde Trabaja ..."/>
 									<form:options items="${trabajaEnList}"  itemLabel="value" itemValue="id"/>
+								</form:select>
+        					</div>
+			   		
+			   		</div>
+			   		<div class="span4">
+			   				<div class="formLabel"><form:label path="empresaId">Empresa:</form:label></div>
+        					<div class="formInput">
+        						<form:select path="empresaId" style="width:83%; margin-bottom:0px">
+									<form:option value="-1" label="Seleccione Empresa..."/>
+									<form:options items="${empresas}"  itemLabel="nombre" itemValue="empresaId"/>
 								</form:select>
         					</div>
 			   		
@@ -337,7 +359,10 @@ label.error {
 			 
 			 <div class="span4">
 			 	<div class="formLabel"><form:label path="obrasocial.credencial">Credencial:</form:label></div>
-        	 	<div class="formInput"><form:input path="obrasocial.credencial"/></div>
+        	 	<div class="formInput">
+        	 		<form:input path="obrasocial.credencial" cssStyle="width:25%"/><b>&nbsp;-&nbsp;</b>
+        	 		<form:input path="obrasocial.credencialSufijo" cssStyle="width:10%"/>
+        	 	</div>
 			 </div>
 		</div>
 						
@@ -362,6 +387,7 @@ label.error {
 </html>
 <script>
 		document.getElementById("mainPaciente").parentNode.classList.add("active");
+		showEmpresas();
 
 		function callExistDni(dni) {
 			var retorno;

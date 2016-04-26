@@ -272,6 +272,16 @@
 			   		
 			   		</div>
 			   		<div class="span4">
+			   				<div class="formLabel"><form:label path="empresaId">Empresa:</form:label></div>
+        					<div class="formInput">
+        						<form:select path="empresaId" style="width:83%; margin-bottom:0px" disabled="true">
+									<form:option value="-1" label="Seleccione Empresa..."/>
+									<form:options items="${empresas}"  itemLabel="nombre" itemValue="empresaId"/>
+								</form:select>
+        					</div>
+			   		
+			   		</div>
+			   		<div class="span4">
 			   				<div class="formLabel"><form:label path="empresa">Empresa:</form:label></div>
         					<div class="formInput">
         						<form:input path="empresa" type="text" disabled="true"/>
