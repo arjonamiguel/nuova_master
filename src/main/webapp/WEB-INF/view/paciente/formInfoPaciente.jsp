@@ -127,7 +127,17 @@ function createReintegro(){
 									src="/nuova/resources/img/user_128x128.png"></td>
 								<td colspan="2">
 									<div class="panel-title">${paciente.apellido}
-										${paciente.nombre}</div>
+										${paciente.nombre}
+										<a class="btn btn-info btn-xs" href="/nuova/formEditPaciente/${paciente.pacienteId}" title="Editar" target="_blank"
+										> 
+											<span class="icon icon-edit" title="Editar"></span>
+										</a>
+										
+										<c:if test="${paciente.parentesco > 0}">
+     			<h5>Titular: <a href="/nuova/formInfoPaciente/${paciente.pacienteTitular.pacienteId}" target="_blank">${paciente.pacienteTitular.apellido}, ${paciente.pacienteTitular.nombre} </a></h5>
+     		</c:if>
+										
+										</div>
 								</td>
 
 								<td>Estado</td>
@@ -155,7 +165,7 @@ function createReintegro(){
 								<td>Domicilio</td>
 								<td>${paciente.domicilio}</td>
 								<td>Nro. Credencial</td>
-								<td>${paciente.obrasocial.credencial}</td>
+								<td>${paciente.obrasocial.credencial}-${paciente.obrasocial.credencialSufijo} </td>
 							</tr>
 						</table>
 

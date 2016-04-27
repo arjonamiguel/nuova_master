@@ -115,6 +115,17 @@ public class Util {
     return trabaEn;
   }
 
+  static public String getTrbajaEnValue(String id) {
+    String retorno = "";
+    for (ComboItemDTO c : getTrabajaEn()) {
+      if (c.getId().equals(id)) {
+        retorno = c.getValue();
+      }
+    }
+
+    return retorno;
+  }
+
   static public List<String> getProvincias() {
     List<String> provincias = new ArrayList<String>();
     provincias.add("Tucumán");
@@ -175,6 +186,20 @@ public class Util {
       }
     }
     return fechaHabilitacion;
+  }
+
+  static public String parseToStringDate(Date date) {
+    String retorno = "";
+    DateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+    if (date != null) {
+      try {
+        retorno = formatter.format(date);
+      } catch (Exception e) {
+        // TODO Auto-generated catch block
+        e.printStackTrace();
+      }
+    }
+    return retorno;
   }
 
   static public List<ComboItemDTO> getComboItems(List<?> list) {

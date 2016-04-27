@@ -309,7 +309,7 @@ public class PacienteController {
     dto.setApellido(p.getApellido());
     dto.setNombre(p.getNombre());
     dto.setDomicilio(p.getDomicilio());
-    dto.setFechaNacimiento("" + p.getFechaNacimiento());
+    dto.setFechaNacimiento(Util.parseToStringDate(p.getFechaNacimiento()));
     dto.setCoseguro(p.getCoseguro().intValue() == 1 ? true : false);
     dto.setCheckedLiberado(p.getCoseguro().intValue() == 1 ? "checked" : "");
     dto.setMail(p.getMail());
@@ -352,7 +352,7 @@ public class PacienteController {
       dtoad.setApellido(ad.getApellido());
       dtoad.setNombre(ad.getNombre());
       dtoad.setDomicilio(ad.getDomicilio());
-      dtoad.setFechaNacimiento("" + ad.getFechaNacimiento());
+      dtoad.setFechaNacimiento(Util.parseToStringDate(ad.getFechaNacimiento()));
       dtoad.setCoseguro(ad.getCoseguro().intValue() == 1 ? true : false);
       dtoad.setCheckedLiberado(p.getCoseguro().intValue() == 1 ? "checked" : "");
       dtoad.setMail(ad.getMail());
@@ -384,7 +384,7 @@ public class PacienteController {
       dto.setApellido(p.getApellido());
       dto.setNombre(p.getNombre());
       dto.setDomicilio(p.getDomicilio());
-      dto.setFechaNacimiento("" + p.getFechaNacimiento());
+      dto.setFechaNacimiento(Util.parseToStringDate(p.getFechaNacimiento()));
       dto.setCoseguro(p.getCoseguro().intValue() == 1 ? true : false);
       dto.setCheckedLiberado(p.getCoseguro().intValue() == 1 ? "checked" : "");
       dto.setMail(p.getMail());
@@ -395,7 +395,8 @@ public class PacienteController {
         dtoad.setApellido(ad.getApellido());
         dtoad.setNombre(ad.getNombre());
         dtoad.setDomicilio(ad.getDomicilio());
-        dtoad.setFechaNacimiento("" + ad.getFechaNacimiento());
+
+        dtoad.setFechaNacimiento(Util.parseToStringDate(ad.getFechaNacimiento()));
         dtoad.setCoseguro(ad.getCoseguro().intValue() == 1 ? true : false);
         dtoad.setCheckedLiberado(p.getCoseguro().intValue() == 1 ? "checked" : "");
         dtoad.setMail(ad.getMail());
