@@ -146,6 +146,13 @@ label.error {
   padding:1px 20px 1px 20px;
   width:58%;
 }
+ .label-error {
+		  color: #a94442;
+		  background-color: #f2dede;
+		  border-color: #ebccd1;
+		  padding:1px 20px 1px 20px;
+		  width:22%;
+		}
 </style>
 </head>
 <body style="background-color:#e5e5e5;">
@@ -159,6 +166,7 @@ label.error {
 			<b>Nuevo Adherente</b>
 	     	<h4>Titular: <a href="/nuova/formEditPaciente/${paciente.titularId}">${datosTitular}</a></h4>
 	     	</div>
+	     	<div class="label-error" id="message" style="float:left;margin-left:8%;visibility:hidden;">El DNI ingresado ya existe.</div>
 	 	</div>
 	 	<div style="padding-top:30px" class="panel-body" >
 		 	<div class="container-fluid">
@@ -276,13 +284,7 @@ label.error {
 			   	
 			   		<div class="row-fluid">
 			   		<div class="span4">
-			   				<div class="formLabel"><form:label path="trabajaEn">Trabaja En:</form:label></div>
-        					<div class="formInput">
-        						<form:select path="trabajaEn" style="width:83%; margin-bottom:0px">
-									<form:option value="-1" label="Seleccione donde Trabaja ..."/>
-									<form:options items="${trabajaEnList}"  itemLabel="value" itemValue="id"/>
-								</form:select>
-        					</div>
+			   			
 			   		
 			   		</div>
 			   	</div>	
@@ -354,7 +356,7 @@ function callExistDni(dni) {
 	return retorno;
 }
 
-			$(".checkbox").checkbox();
+			
 			$("#paciente").validate({
     
         // Specify the validation rules
@@ -362,7 +364,7 @@ function callExistDni(dni) {
         	 dni: {
                 required: true,
                 minlength: 7,
-                maxlenght: 10
+                maxlength: 10
             },
             apellido: "required",
             nombre: "required",
@@ -388,7 +390,7 @@ function callExistDni(dni) {
                 submitHandler: function(form) {
                 	var dni = document.getElementById("dni");            
                     if (callExistDni(dni.value)){
-                        alert("El DNI ingresado ya existe.");
+                        $("#message").css("visibility","visible");
                         dni.focus();
                     } else {
                     	form.submit();

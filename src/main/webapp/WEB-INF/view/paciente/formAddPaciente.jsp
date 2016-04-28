@@ -29,6 +29,13 @@ label.error {
   padding:1px 20px 1px 20px;
   width:58%;
 }
+ .label-error {
+		  color: #a94442;
+		  background-color: #f2dede;
+		  border-color: #ebccd1;
+		  padding:1px 20px 1px 20px;
+		  width:22%;
+		}
 </style>		
 <script type="text/javascript">
 	$(document).ready(function() {
@@ -184,6 +191,7 @@ label.error {
 	<div class="panel panel-info">
 	<div class="panel-heading">
 		<div class="panel-title">Nuevo Paciente</div>
+		<div class="label-error" id="message" style="float:left;margin-left:8%;visibility:hidden;">El DNI ingresado ya existe.</div>
 	</div>
 	<div class="panel-body">
 		<div class="container-fluid">
@@ -418,7 +426,7 @@ label.error {
         submitHandler: function(form) {
         	var dni = document.getElementById("dni");            
             if (callExistDni(dni.value)){
-                alert("El DNI ingresado ya existe.");
+                $("#message").css("visibility","visible");
                 dni.focus();
             } else {
             	form.submit();
