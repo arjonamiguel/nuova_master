@@ -1,6 +1,7 @@
 package com.nuova.dao;
 
 import com.nuova.dto.OrdenAlarmaDTO;
+import com.nuova.model.Empresas;
 import com.nuova.model.Localidades;
 import com.nuova.model.Paciente;
 
@@ -77,6 +78,7 @@ public class PacienteDAOImpl implements PacienteDAO {
         .createQuery("FROM Paciente p " + " " + " ORDER BY p.pacienteId DESC");
     // query.setFirstResult(pageable.getOffset());
     // query.setMaxResults(pageable.getPageNumber());
+    query.setMaxResults(20);
     List<Paciente> result = query.list();
     return new PageImpl<Paciente>(result, pageable, result.size());
   }
@@ -97,6 +99,7 @@ public class PacienteDAOImpl implements PacienteDAO {
             + "%' " + " OR p.dni like'%" + search + "%' ORDER BY p.apellido ASC");
     // query.setFirstResult(pageable.getOffset());
     // query.setMaxResults(pageable.getPageNumber());
+    query.setMaxResults(20);
     List<Paciente> result = query.list();
     return new PageImpl<Paciente>(result, pageable, result.size());
   }
@@ -151,6 +154,30 @@ public class PacienteDAOImpl implements PacienteDAO {
   public Localidades findLocalidadById(Integer localidadId) {
     return (Localidades) this.sessionFactory.getCurrentSession().get(Localidades.class,
         localidadId);
+  }
+
+  @Override
+  public Paciente findPacienteByCredencial(String credencial) {
+    Query query = this.sessionFactory.getCurrentSession()
+        .createQuery("FROM Paciente p " + " WHERE p.nroCredencial = '" + credencial + "' ");
+    return (Paciente) ((query.list().isEmpty()) ? null : query.list().get(0));
+  }
+
+  @Override
+  public List<Paciente> findAllAdherentes() {
+    return this.sessionFactory.getCurrentSession()
+        .createQuery("FROM Paciente p WHERE p.parenteso > 0").list();
+  }
+
+  @Override
+  public List<Empresas> findAllEmpresas() {
+    return this.sessionFactory.getCurrentSession().createQuery("FROM Empresas").list();
+
+  }
+
+  @Override
+  public Empresas findEmpresaById(Integer empresaId) {
+    return (Empresas) this.sessionFactory.getCurrentSession().get(Empresas.class, empresaId);
   }
 
 }

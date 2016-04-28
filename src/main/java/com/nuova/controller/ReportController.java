@@ -12,6 +12,7 @@ import com.nuova.dto.OrdenWorkflowDTO;
 import com.nuova.dto.PacienteDTO;
 import com.nuova.dto.ProfesionalDTO;
 import com.nuova.dto.ProfesionalEspecialidadDTO;
+import com.nuova.model.Empresas;
 import com.nuova.model.Especialidad;
 import com.nuova.model.Localidades;
 import com.nuova.model.Nomenclador;
@@ -33,6 +34,7 @@ import com.nuova.service.PacienteManager;
 import com.nuova.service.ProfesionalManager;
 import com.nuova.utils.ConstantControllers;
 import com.nuova.utils.ConstantRedirect;
+import com.nuova.utils.Util;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -138,13 +140,17 @@ public class ReportController {
     parameters.put("domicilio", dto.getPaciente().getDomicilio().toUpperCase());
     parameters.put("nombre_obrasocial",
         dto.getPaciente().getObrasocial().getNombre().toUpperCase());
-    parameters.put("credencial_obrasocial", dto.getPaciente().getObrasocial().getCredencial());
+    parameters.put("credencial_obrasocial", dto.getPaciente().getObrasocial().getCredencial() + "-"
+        + dto.getPaciente().getObrasocial().getCredencialSufijo());
     parameters.put("fecha", dto.getFecha());
-    parameters.put("fecha_presentacion", "");
+
     parameters.put("codigo_n_n", "");
     parameters.put("establecimiento", "");
     parameters.put("orden_internacion", "");
-    parameters.put("sexo", "");
+    parameters.put("trabaja_en", Util.getTrbajaEnValue(dto.getPaciente().getTrabajaEn() + ""));
+
+    Empresas e = pacienteManager.findEmpresaById(dto.getPaciente().getEmpresaId());
+    parameters.put("empresa", e == null ? "" : e.getNombre());
     parameters.put("coseguro", "");
     parameters.put("tipo_orden", dto.getOrdenTipo().getNombre());
 
@@ -348,6 +354,12 @@ public class ReportController {
     dto.setLocalidadId(loc.getLocalidadId());
     dto.setLocalidadString(loc.getNombre());
 
+    dto.setTrabajaEn(p.getTrabajaEn());
+    dto.setEmpresa(p.getEmpresa());
+    dto.setEmpresaId(p.getEmpresaId());
+
+
+
     if (p.getPaciente() != null && p.getPaciente().getPacienteId() != null) {
       dto.setPacienteTitular(transformPacienteToDto(
           pacienteManager.fin1dPacienteById(p.getPaciente().getPacienteId())));
@@ -360,6 +372,7 @@ public class ReportController {
     ObraSocialDTO o = new ObraSocialDTO();
     o.setNombre(os.getNombre());
     o.setCredencial(p.getNroCredencial());
+    o.setCredencialSufijo(p.getNroCredencialSufijo());
     dto.setObrasocial(o);
 
     // Obrasocial os = obrasocialManager.findObraSocialById(p.getObrasocialId());

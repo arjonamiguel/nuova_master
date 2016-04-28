@@ -288,6 +288,7 @@ label.error {
 			   		
 			   		</div>
 			   	</div>	
+
 		 	</div>
 	 	</div>
 	 </div>
@@ -309,9 +310,12 @@ label.error {
         		</div>
 			 </div>
 			 
-			 <div class="span4">
+			  <div class="span4">
 			 	<div class="formLabel"><form:label path="obrasocial.credencial">Credencial:</form:label></div>
-        	 	<div class="formInput"><form:input path="obrasocial.credencial"/></div>
+        	 	<div class="formInput">
+        	 		<form:input path="obrasocial.credencial" cssStyle="width:25%"/><b>&nbsp;-&nbsp;</b>
+        	 		<form:input path="obrasocial.credencialSufijo" cssStyle="width:10%"/>
+        	 	</div>
 			 </div>
 		</div>
 						

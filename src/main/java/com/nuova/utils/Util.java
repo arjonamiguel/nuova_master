@@ -20,6 +20,10 @@ import java.util.Map;
 
 public class Util {
 
+  static public String ESTADO_REINTEGRO_ENPROCESO = "EN PROCESO";
+  static public String ESTADO_REINTEGRO_PROCESADO = "PROCESADO";
+  static public String ESTADO_REINTEGRO_ANULADO = "ANULADO";
+
   static public int MESSAGE_SUCCESS = 1;
   static public int MESSAGE_WARNING = 2;
   static public int MESSAGE_INFORMATION = 3;
@@ -111,6 +115,17 @@ public class Util {
     return trabaEn;
   }
 
+  static public String getTrbajaEnValue(String id) {
+    String retorno = "";
+    for (ComboItemDTO c : getTrabajaEn()) {
+      if (c.getId().equals(id)) {
+        retorno = c.getValue();
+      }
+    }
+
+    return retorno;
+  }
+
   static public List<String> getProvincias() {
     List<String> provincias = new ArrayList<String>();
     provincias.add("Tucumán");
@@ -171,6 +186,20 @@ public class Util {
       }
     }
     return fechaHabilitacion;
+  }
+
+  static public String parseToStringDate(Date date) {
+    String retorno = "";
+    DateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+    if (date != null) {
+      try {
+        retorno = formatter.format(date);
+      } catch (Exception e) {
+        // TODO Auto-generated catch block
+        e.printStackTrace();
+      }
+    }
+    return retorno;
   }
 
   static public List<ComboItemDTO> getComboItems(List<?> list) {
@@ -243,6 +272,34 @@ public class Util {
         new ComboItemDTO(ConstantOrdenEstado.ORDEN_ANULADA, ConstantOrdenEstado.ORDEN_ANULADA));
     retorno.add(
         new ComboItemDTO(ConstantOrdenEstado.ORDEN_CERRADA, ConstantOrdenEstado.ORDEN_CERRADA));
+
+    return retorno;
+  }
+
+  static public String getEtiquetaEstadoReintegro(String estado) {
+    String retorno = "";
+
+    if (Util.ESTADO_REINTEGRO_ENPROCESO.equals(estado)) {
+      retorno = " <span  style='color:black;background:gold'>" + estado + "</span>";
+    }
+
+    if (Util.ESTADO_REINTEGRO_PROCESADO.equals(estado)) {
+      retorno = "<span style='color:white;background: green'>" + estado + "</span>";
+    }
+
+    if (Util.ESTADO_REINTEGRO_ANULADO.equals(estado)) {
+      retorno = "<span style='color:white;background: tomato'>" + estado + "</span>";;
+    }
+
+    return retorno;
+  }
+
+
+  static public List<String> getEstadosReintegro() {
+    List<String> retorno = new ArrayList<String>();
+    retorno.add(ESTADO_REINTEGRO_ENPROCESO);
+    retorno.add(ESTADO_REINTEGRO_PROCESADO);
+    retorno.add(ESTADO_REINTEGRO_ANULADO);
 
     return retorno;
   }

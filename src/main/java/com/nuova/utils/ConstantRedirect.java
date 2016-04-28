@@ -78,4 +78,9 @@ public class ConstantRedirect {
   public final static String VIEW_FORM_CIERRE_CAJA = "/caja/formCierreCaja";
   public final static String VIEW_MAIN_CIEREE_CAJA = "/caja/mainCajaCierre";
 
+  // Reintegro
+  public final static String VIEW_MAIN_REINTEGRO = "/reintegro/mainReintegro";
+  public final static String VIEW_FORM_ADD_REINTEGRO = "/reintegro/formAddReintegro";
+  public final static String VIEW_FORM_EDIT_REINTEGRO = "/reintegro/formEditReintegro";
+  public final static String VIEW_FORM_DELETE_REINTEGRO = "/reintegro/formDeleteReintegro";
 }
