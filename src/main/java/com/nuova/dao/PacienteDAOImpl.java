@@ -172,7 +172,7 @@ public class PacienteDAOImpl implements PacienteDAO {
 
   @Override
   public List<Empresas> findAllEmpresas() {
-    return this.sessionFactory.getCurrentSession().createQuery("FROM Empresas").list();
+    return this.sessionFactory.getCurrentSession().createQuery("FROM Empresas e ORDER BY e.nombre ASC").list();
 
   }
 
