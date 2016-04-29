@@ -316,6 +316,7 @@ label.error {
 			   	</div>
 			   	
 			   		<div class="row-fluid">
+			   		<c:if test="${paciente.parentesco == 0}">
 			   		<div class="span4">
 			   				<div class="formLabel"><form:label path="trabajaEn">Trabaja En:</form:label></div>
         					<div class="formInput">
@@ -343,6 +344,7 @@ label.error {
         					</div>
 			   		
 			   		</div>
+			   		</c:if>
 			   	</div>	
 			   	
 		 </div>
