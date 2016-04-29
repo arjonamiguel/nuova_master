@@ -2,6 +2,7 @@ package com.nuova.service;
 
 import com.nuova.dto.OrdenAlarmaDTO;
 import com.nuova.model.Especialidad;
+import com.nuova.model.Profesional;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -25,5 +26,5 @@ public interface EspecialidadManager {
 
   public OrdenAlarmaDTO countEspecialidades();
 
-  public List<Especialidad> findEspecialidadByProfesionalId(Integer profesionalId);
+  public List<Profesional> findProfesionalByEspecialidadId(Integer especialidadId);
 }

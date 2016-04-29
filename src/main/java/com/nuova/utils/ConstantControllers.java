@@ -57,6 +57,8 @@ public class ConstantControllers {
   public final static String AJAX_GET_AUTOCOMPLETE_PACIENTES = "/ajaxGetAutoCompletePacientes";
   public final static String AJAX_GET_EXIST_DNI = "/ajaxGetExistDni";
   public final static String AJAX_GET_AUTOCOMPLETE_LOCALIDADES = "/ajaxGetAutoCompleteLocalidades";
+  public final static String AJAX_GET_AUTOCOMPLETE_ESPECIALIDADES =
+      "/ajaxGetAutoCompleteEspecialidades";
 
   // Adherente
   public final static String FORM_ADD_ADHERENTE = "/formAddAdherente/{titularId}";
@@ -91,8 +93,8 @@ public class ConstantControllers {
       "/ajaxGetPracticasByPacientePaginados/{pacienteId}";
   public final static String DOWNLOAD = "/download-document/{documentId}";
   public final static String AJAX_POST_SAVECODIGONOMENCLADOR = "/ajaxPostSaveCodigoNomenclador";
-  public final static String AJAX_GET_ESPECIALIDADESBYPROFESIONAL =
-      "/ajaxGetEspecialidadesByProfesional";
+  public final static String AJAX_GET_PROFESIONALESBYESPECIALIDAD =
+      "/ajaxGetProfesionalByEspecialidad";
 
   // Reportes
   public final static String SHOW_REPORT_ORDEN_EMITIDA = "/showReporteOrdenEmitida/{ordenId}";

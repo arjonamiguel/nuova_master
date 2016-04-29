@@ -3,6 +3,7 @@ package com.nuova.service;
 import com.nuova.dao.PacienteDAO;
 import com.nuova.dto.OrdenAlarmaDTO;
 import com.nuova.model.Empresas;
+import com.nuova.model.Especialidad;
 import com.nuova.model.Localidades;
 import com.nuova.model.Paciente;
 
@@ -119,5 +120,11 @@ public class PacienteManagerImpl implements PacienteManager {
   @Transactional
   public Empresas findEmpresaById(Integer empresaId) {
     return pacienteDAO.findEmpresaById(empresaId);
+  }
+
+  @Override
+  @Transactional
+  public List<Especialidad> findEspecialidadesAutocomplete(String search) {
+    return pacienteDAO.findEspecialidadesAutocomplete(search);
   }
 }

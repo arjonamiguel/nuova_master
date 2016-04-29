@@ -2,6 +2,7 @@ package com.nuova.dao;
 
 import com.nuova.dto.OrdenAlarmaDTO;
 import com.nuova.model.Especialidad;
+import com.nuova.model.Profesional;
 import com.nuova.model.ProfesionalEspecialidad;
 
 import org.hibernate.Query;
@@ -84,22 +85,24 @@ public class EspecialidadDAOImpl implements EspecialidadDAO {
   }
 
   @Override
-  public List<Especialidad> findEspecialidadByProfesionalId(Integer profesionalId) {
+  public List<Profesional> findProfesionalByEspecialidadId(Integer especialidadId) {
     Query query =
         this.sessionFactory.getCurrentSession().createQuery("FROM ProfesionalEspecialidad e "
-            + " WHERE e.profesional.profesionalId = " + profesionalId);
+            + " WHERE e.especialidad.especialidadId = " + especialidadId);
     // query.setFirstResult(pageable.getOffset());
     // query.setMaxResults(pageable.getPageNumber());
     List<ProfesionalEspecialidad> result = query.list();
 
-    List<Especialidad> especialidades = new ArrayList<Especialidad>();
+    List<Profesional> profesionales = new ArrayList<Profesional>();
     for (ProfesionalEspecialidad pe : result) {
-      Especialidad e = new Especialidad();
-      e.setEspecialidadId(pe.getEspecialidad().getEspecialidadId());
-      e.setNombre(pe.getEspecialidad().getNombre());
-      especialidades.add(e);
+      Profesional p = new Profesional();
+      p.setProfesionalId(pe.getProfesional().getProfesionalId());
+      p.setApellido(pe.getProfesional().getApellido());
+      p.setNombre(pe.getProfesional().getNombre());
+
+      profesionales.add(p);
     }
 
-    return especialidades;
+    return profesionales;
   }
 }

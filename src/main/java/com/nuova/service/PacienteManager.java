@@ -2,6 +2,7 @@ package com.nuova.service;
 
 import com.nuova.dto.OrdenAlarmaDTO;
 import com.nuova.model.Empresas;
+import com.nuova.model.Especialidad;
 import com.nuova.model.Localidades;
 import com.nuova.model.Paciente;
 
@@ -40,6 +41,8 @@ public interface PacienteManager {
   public Localidades findLocalidadById(Integer localidadId);
 
   public Paciente findPacienteByCredencial(String credencial);
+
+  public List<Especialidad> findEspecialidadesAutocomplete(String search);
 
   public List<Empresas> findAllEmpresas();
 

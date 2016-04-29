@@ -2,6 +2,7 @@ package com.nuova.dao;
 
 import com.nuova.dto.OrdenAlarmaDTO;
 import com.nuova.model.Empresas;
+import com.nuova.model.Especialidad;
 import com.nuova.model.Localidades;
 import com.nuova.model.Paciente;
 
@@ -42,6 +43,8 @@ public interface PacienteDAO {
   public Paciente findPacienteByCredencial(String credencial);
 
   public List<Paciente> findAllAdherentes();
+
+  public List<Especialidad> findEspecialidadesAutocomplete(String search);
 
   // Empresas
   public List<Empresas> findAllEmpresas();

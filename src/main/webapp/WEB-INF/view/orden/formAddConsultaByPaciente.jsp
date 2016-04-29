@@ -49,23 +49,49 @@
 	width: 22%;
 }
 </style>
+<script type="text/javascript">
+	$(document).ready(function() {
+		var map = new Object();
+		var objects = [];
+
+		$('input.typeahead').typeahead({
+			source : function(query, process) {
+				$.ajax({
+					url : '/nuova/ajaxGetAutoCompleteEspecialidades',
+					type : 'POST',
+					dataType : 'JSON',
+					data : 'query=' + query,
+					success : function(data) {
+						console.log(data);
+						$.each(data, function(i, object) {
+							map[object.value] = object;
+							if (objects[i] == null) {
+								objects.push(object.value);
+							}
+						});
+						process(objects);
+						objects = [];
+					}
+				});
+			},
+			updater : function(item) {
+				$('#especialidad').val(map[item].id);
+				findProfesinoales($('#especialidad'));
+				return item;
+			}
+		});
+	});
+</script>	
+
+
 <script>
 	var checkBoxSelectedFlag = "false";
 
 	function validatedSelects() {
-		if ($("#monto").val() == "NONE") {
-			$("#message").css("visibility", "visible");
-			return false;
-		} else if ($("#profesionalId").val() == "NONE") {
-			$("#message").text("Debe Seleccionar un Profesional");
-			$("#message").css("visibility", "visible");
-			return false;
-		} else if ($("#especialidad").val() == "-1") {
-				$("#message").text("Debe Seleccionar una Especialidad");
-				$("#message").css("visibility", "visible");
-				return false;	
-		} else if ($(".cb-icon-check")[0].style.display != "none"
-				&& $(".cb-icon-check")[1].style.display != "none") {
+		$("#message2").css("visibility", "hidden");
+
+		if ($(".cb-icon-check")[0].style.display != "none"
+			&& $(".cb-icon-check")[1].style.display != "none") {
 			$("#message2").css("visibility", "hidden");
 			if (checkBoxSelectedFlag == "false") {
 				$("#message2").text(
@@ -74,9 +100,32 @@
 				return false;
 			}
 		} else {
+			$("#message2").text(
+			"Falta chequear los 2 requisitos principales");
 			$("#message2").css("visibility", "visible");
 			return false;
 		}
+		
+		
+		if ($("#especialidad").val() == '') {
+				$("#message").text("Debe Seleccionar una Especialidad");
+				$("#message").css("visibility", "visible");
+				return false;	
+		} 
+		
+		if ($("#profesionalId").val() == '-1') {
+			$("#message").text("Debe Seleccionar un Profesional");
+			$("#message").css("visibility", "visible");
+			return false;
+		}
+		
+		if ($("#monto").val() == '') {
+			$("#message").css("visibility", "visible");
+			return false;
+		}else {
+			return validaFloat($("#monto").val());
+		}
+
 		return true;
 	}
 	function hideMessage() {
@@ -107,14 +156,14 @@
 		}
 	}
 
-	function findEspecialidades(profesional) {
-		var especialidades = callEspecialidadesByProfesional(profesional.value);
-		$('#especialidad')
+	function findProfesinoales(especialidad) {
+		var especialidades = callProfesionalByEspecialidad(especialidad.attr('value'));
+		$('#profesionalId')
 				.empty()
 				.append(
-						'<option selected="selected" value="-1">Seleccione Especialidad ...</option>');
+						'<option selected="selected" value="-1">Seleccione Profesional ...</option>');
 		$.each(especialidades, function(key, value) {
-			$('#especialidad').append($('<option>', {
+			$('#profesionalId').append($('<option>', {
 				value : value.id
 			}).text(value.value));
 		});
@@ -122,11 +171,11 @@
 		hideMessage();
 	}
 
-	function callEspecialidadesByProfesional(profesionalId) {
+	function callProfesionalByEspecialidad(especialidadId) {
 		var retorno;
 		$.ajax({
-			url : "/nuova/ajaxGetEspecialidadesByProfesional?profesionalId="
-					+ profesionalId,
+			url : "/nuova/ajaxGetProfesionalByEspecialidad?especialidadId="
+					+ especialidadId,
 			type : "GET",
 			contentType : "application/json; charset=utf-8",
 			//    data: jsonString, //Stringified Json Object
@@ -140,6 +189,17 @@
 		});
 
 		return retorno;
+	}
+	
+	function validaFloat(numero)
+	{
+	  if (!/^([0-9])*[.]?[0-9]*$/.test(numero)) {
+		  $("#message").text("El formato decimal "+numero+" no es correcto.");
+		$("#message").css("visibility", "visible");
+		return false;
+	  }else {
+		  return true;
+	  }
 	}
 </script>
 
@@ -158,7 +218,7 @@
 					<div class="panel-title">Nueva Consulta</div>
 					<div class="label-error" id="message"
 						style="float: left; margin-left: 8%; visibility: hidden;">Falta
-						seleccionar Coseguro</div>
+						ingresar Coseguro</div>
 					<div class="label-error" id="message2"
 						style="float: left; margin-left: 8%; visibility: hidden;">Faltan
 						chequear los dos primeros requisitos</div>
@@ -254,38 +314,49 @@
 											<div id="tb_profesional" class="tab-pane fade">
 												<table class="table" style="width: 100%">
 													<tr>
-														<td style="width: 15%"><form:label
-																path="profesionalId">Profesional</form:label></td>
+																		<td style="width: 15%"><form:label
+																path="especialidad">Especialidad</form:label></td>
+														<td style="text-align: left" colspan="5">
+															<input type="hidden" name="especialidad" id="especialidad" value="${ordenDto.especialidad}">										
+															<input
+																data-provide="typeahead" 
+																class="typeahead"
+																name="especialidadString"
+																type="text"
+																id="especialidadString"
+																placeholder="Ingrese Especialidad ..."
+																autocomplete="off"
+																value ="${especialidadView}"
+																>
+															<a href="/nuova/formAddEspecialidad" title="Nueva Especialidad">
+																<img src="/nuova/resources/img/list_add_16x16.png">
+															</a>
+														</td>
+														<td style="width: 15%"><form:label path="profesionalId">Profesional</form:label></td>
 														<td style="text-align: left" colspan="5"><form:select
-																path="profesionalId"
-																style="width:80%; margin-bottom:0px"
-																onchange="findEspecialidades(this);">
-																<form:option value="NONE"
-																	label="Seleccione Profesional ..." />
+																path="profesionalId" style="width:80%; margin-bottom:0px"
+																>
+																<form:option value="-1" label="Seleccione Profesional ..." />																
 																<form:options items="${profesionales}" itemLabel="value"
 																	itemValue="id" />
-															</form:select></td>
-														<td><form:label path="especialidad">Especialidad</form:label></td>
-														<td><form:select path="especialidad"
-																style="width:60%; margin-bottom:0px">
-																<form:option value="-1"
-																	label="Seleccione Especialidad ..." />
-															</form:select></td>
-													</tr>
+															</form:select>
+												
+															
+														</td>													</tr>
 												</table>
 											</div>
 
 											<div id="tb_coseguro" class="tab-pane fade">
 												<table class="table" style="width: 100%">
 													<tr>
-														<td style="width: 15%">Monto de Coseguro:</td>
-														<td style="text-align: left" colspan="5"><form:select
-																path="monto" style="width:25%; margin-bottom:0px"
-																onchange="hideMessage()">
-																<form:option value="NONE"
-																	label="Seleccione Monto de Coseguro $" />
-																<form:options items="${montosorden}" />
-															</form:select></td>
+														<td style="width: 15%">Monto de Coseguro $:</td>
+														<td>
+														<form:input path="monto" cssStyle="width: 10%"/>
+														<div class="alert alert-info">														
+  														<strong>Importante!</strong> Usar "." (punto) en montos decimales<br>
+  														Ejemplos: 2.00 / 5.50 / 12.00 / 161.20 / 5100.58
+  														</div>
+														</td>
 													</tr>
 												</table>
 											</div>

@@ -3,6 +3,7 @@ package com.nuova.service;
 import com.nuova.dao.EspecialidadDAO;
 import com.nuova.dto.OrdenAlarmaDTO;
 import com.nuova.model.Especialidad;
+import com.nuova.model.Profesional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -68,7 +69,7 @@ public class EspecialidadManagerImpl implements EspecialidadManager {
 
   @Override
   @Transactional
-  public List<Especialidad> findEspecialidadByProfesionalId(Integer profesionalId) {
-    return especialidadDAO.findEspecialidadByProfesionalId(profesionalId);
+  public List<Profesional> findProfesionalByEspecialidadId(Integer especialidadId) {
+    return especialidadDAO.findProfesionalByEspecialidadId(especialidadId);
   }
 }

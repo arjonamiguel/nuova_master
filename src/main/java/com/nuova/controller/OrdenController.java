@@ -180,17 +180,18 @@ public class OrdenController {
   public String formEditOrden(ModelMap map, @PathVariable("ordenId") Integer ordenId) {
     if (ordenId != null) {
       OrdenDTO ordenDto = transformOrdenToDto(ordenManager.findOrdenById(ordenId));
-      List<Profesional> profesionales = profesionalManager.findAll();
-      List<Especialidad> especialidades =
-          especialidadManager.findEspecialidadByProfesionalId(ordenDto.getProfesionalId());
+      Especialidad e = especialidadManager.findEspecialidadById(ordenDto.getEspecialidad());
+
+      List<Profesional> profesionales =
+          especialidadManager.findProfesionalByEspecialidadId(ordenDto.getProfesionalId());
       User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
       int observacionCount = ordenDto.getObservacioneses().size();
       map.addAttribute("ordenDto", ordenDto);
       map.addAttribute("observacionCount", observacionCount);
       map.addAttribute("userNameLogged", user.getUsername());
       map.addAttribute("ordenEstadosList", Util.getOrdenEstadosList());
-      map.addAttribute("profesionales", getProfesionalDTOList(profesionales));
-      map.addAttribute("especialidades", getEspecialidadDTOList(especialidades));
+      map.addAttribute("profesionales", profesionales);
+      map.addAttribute("especialidadView", e.getNombre());
     }
 
     return ConstantRedirect.VIEW_FORM_EDIT_ORDEN;
@@ -200,12 +201,15 @@ public class OrdenController {
   public String formEditConsulta(ModelMap map, @PathVariable("ordenId") Integer ordenId) {
     if (ordenId != null) {
       OrdenDTO ordenDto = transformOrdenToDto(ordenManager.findOrdenById(ordenId));
-      List<Profesional> profesionales = profesionalManager.findAll();
-      List<Especialidad> especialidades =
-          especialidadManager.findEspecialidadByProfesionalId(ordenDto.getProfesionalId());
+      Especialidad e = especialidadManager.findEspecialidadById(ordenDto.getEspecialidad());
+
+      List<Profesional> profesionales =
+          especialidadManager.findProfesionalByEspecialidadId(ordenDto.getEspecialidad());
+
       map.addAttribute("profesionales", getProfesionalDTOList(profesionales));
-      map.addAttribute("especialidades", getEspecialidadDTOList(especialidades));
       map.addAttribute("ordenDto", ordenDto);
+      map.addAttribute("especialidadView", e.getNombre());
+
     }
 
     return ConstantRedirect.VIEW_FORM_EDIT_CONSULTA;
@@ -343,17 +347,30 @@ public class OrdenController {
     return nom.getNomencladorId() != null ? nom.getNomencladorId() + "" : "-1";
   }
 
-  @RequestMapping(value = ConstantControllers.AJAX_GET_ESPECIALIDADESBYPROFESIONAL,
+  @RequestMapping(value = ConstantControllers.AJAX_GET_PROFESIONALESBYESPECIALIDAD,
       method = RequestMethod.GET)
-  public @ResponseBody List<ComboItemDTO> getEspecialidadesByProfesionalId(
-      @RequestParam(required = false, defaultValue = "0") Integer profesionalId) {
+  public @ResponseBody List<ComboItemDTO> getProfesionalesByEspecialidad(
+      @RequestParam(required = false, defaultValue = "0") Integer especialidadId) {
     List<ComboItemDTO> retorno = new ArrayList<ComboItemDTO>();
-    List<Especialidad> especialidades =
-        especialidadManager.findEspecialidadByProfesionalId(profesionalId);
+    List<Profesional> profesionales =
+        especialidadManager.findProfesionalByEspecialidadId(especialidadId);
 
-    for (Especialidad e : especialidades) {
+    for (Profesional p : profesionales) {
+      retorno
+          .add(new ComboItemDTO(p.getProfesionalId() + "", p.getApellido() + " " + p.getNombre()));
+    }
+    return retorno;
+  }
+
+  @RequestMapping(value = ConstantControllers.AJAX_GET_AUTOCOMPLETE_ESPECIALIDADES,
+      method = RequestMethod.POST)
+  public @ResponseBody List<ComboItemDTO> getAutocompleteEspecialidades(
+      @RequestParam(required = false, defaultValue = "") String query) {
+    List<ComboItemDTO> retorno = new ArrayList<ComboItemDTO>();
+    for (Especialidad e : pacienteManager.findEspecialidadesAutocomplete(query)) {
       retorno.add(new ComboItemDTO(e.getEspecialidadId() + "", e.getNombre()));
     }
+
     return retorno;
   }
 
@@ -565,7 +582,7 @@ public class OrdenController {
   public Paciente transformDtoToPaciente(PacienteDTO dto) {
     Paciente paciente = new Paciente();
     paciente.setPacienteId(dto.getPacienteId());
-    paciente.setDni(dto.getDni().toString());
+    paciente.setDni((dto.getDni() == null) ? "" : dto.getDni().toString());
     paciente.setApellido(dto.getApellido());
     paciente.setNombre(dto.getNombre());
     paciente.setDomicilio(dto.getDomicilio());

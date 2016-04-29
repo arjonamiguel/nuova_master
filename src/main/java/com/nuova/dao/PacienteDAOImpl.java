@@ -2,6 +2,7 @@ package com.nuova.dao;
 
 import com.nuova.dto.OrdenAlarmaDTO;
 import com.nuova.model.Empresas;
+import com.nuova.model.Especialidad;
 import com.nuova.model.Localidades;
 import com.nuova.model.Paciente;
 
@@ -178,6 +179,17 @@ public class PacienteDAOImpl implements PacienteDAO {
   @Override
   public Empresas findEmpresaById(Integer empresaId) {
     return (Empresas) this.sessionFactory.getCurrentSession().get(Empresas.class, empresaId);
+  }
+
+  @Override
+  public List<Especialidad> findEspecialidadesAutocomplete(String search) {
+    Query query = this.sessionFactory.getCurrentSession()
+        .createQuery("FROM Especialidad e " + " WHERE upper(e.nombre) LIKE '%"
+            + search.toUpperCase() + "%'" + " ORDER BY e.nombre ASC");
+    // query.setFirstResult(pageable.getOffset());
+    query.setMaxResults(20);
+    List<Especialidad> result = query.list();
+    return result;
   }
 
 }

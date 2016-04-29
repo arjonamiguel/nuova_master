@@ -19,10 +19,48 @@
 		<link href="<%=request.getContextPath()%>/resources/css/bootstrap/bootstrap-responsive.css" rel="stylesheet"/>
 		<link href="<%=request.getContextPath()%>/resources/montrezorro-bootstrap-checkbox-fa865ff/css/bootstrap-checkbox.css" rel="stylesheet"/>
 		<script src="<%=request.getContextPath()%>/resources/montrezorro-bootstrap-checkbox-fa865ff/js/bootstrap-checkbox.js" /></script>
+		<script src="<c:url value="/resources/js/jquery/jquery.validate.min.js" />"></script>
 		
 	
-	<script type="text/javascript">
+<script type="text/javascript">
+
+	$(document).ready(function() {
+		var map = new Object();
+		var objects = [];
+
+		$('input.typeahead').typeahead({
+			source : function(query, process) {
+				$.ajax({
+					url : '/nuova/ajaxGetAutoCompleteEspecialidades',
+					type : 'POST',
+					dataType : 'JSON',
+					data : 'query=' + query,
+					success : function(data) {
+						console.log(data);
+						$.each(data, function(i, object) {
+							map[object.value] = object;
+							if (objects[i] == null) {
+								objects.push(object.value);
+							}
+						});
+						process(objects);
+						objects = [];
+					}
+				});
+			},
+			updater : function(item) {
+				$('#especialidad').val(map[item].id);
+				findProfesinoales($('#especialidad'));
+				return item;
+			}
+		});
+	});
+</script>	
 	
+	
+	<script type="text/javascript">
+	var checkBoxSelectedFlag = "false";
+
 	function setObservacionVisible(){
 		$("#addObservacion").css("visibility","visible");
 	}
@@ -56,20 +94,6 @@
 	          index ++;
 	       }
 	  
-	  function findEspecialidades(profesional) {
-		  var especialidades = callEspecialidadesByProfesional(profesional.value);
-			$('#especialidad')
-			.empty()
-		    .append('<option selected="selected" value="-1">Seleccione Especialidad ...</option>')
-		;
-			$.each(especialidades, function(key, value) {   
-			     $('#especialidad')
-			          .append($('<option>', { value : value.id })
-			          .text(value.value)); 
-			});
-		  
-	  } 
-	  
 	  function callEspecialidadesByProfesional(profesionalId) {
 			var retorno;
 			$.ajax({
@@ -88,6 +112,113 @@
 
 			return retorno;
 		}
+	  
+		function callProfesionalByEspecialidad(especialidadId) {
+			var retorno;
+			$.ajax({
+				url : "/nuova/ajaxGetProfesionalByEspecialidad?especialidadId="
+						+ especialidadId,
+				type : "GET",
+				contentType : "application/json; charset=utf-8",
+				//    data: jsonString, //Stringified Json Object
+				async : false, //Cross-domain requests and dataType: "jsonp" requests do not support synchronous operation
+				cache : false, //This will force requested pages not to be cached by the browser          
+				processData : false, //To avoid making query String instead of JSON
+				success : function(page) {
+					// Success Message Handler
+					retorno = page;
+				}
+			});
+
+			return retorno;
+		}
+
+	  
+	  function findProfesinoales(especialidad) {
+			var especialidades = callProfesionalByEspecialidad(especialidad.attr('value'));
+			$('#profesionalId')
+					.empty()
+					.append(
+							'<option selected="selected" value="-1">Seleccione Profesional ...</option>');
+			$.each(especialidades, function(key, value) {
+				$('#profesionalId').append($('<option>', {
+					value : value.id
+				}).text(value.value));
+			});
+
+			hideMessage();
+		}
+		function validatedSelects() {
+			
+			$("#message2").css("visibility", "hidden");
+
+// 			if ($(".cb-icon-check")[0].style.display != "none"
+// 				&& $(".cb-icon-check")[1].style.display != "none") {
+// 				$("#message2").css("visibility", "hidden");
+// // 				if (checkBoxSelectedFlag == "false") {
+// // 					$("#message2").text(
+// // 							"Falta chequear el penultimo o ultimo requisito");
+// // 					$("#message2").css("visibility", "visible");
+// // 					return false;
+// // 				}
+// 			} else {
+// 				$("#message2").text(
+// 				"Falta chequear los 2 requisitos principales");
+// 				$("#message2").css("visibility", "visible");
+// 				return false;
+// 			}
+			
+			
+			if ($("#especialidad").val() == '') {
+					$("#message").text("Debe Seleccionar una Especialidad");
+					$("#message").css("visibility", "visible");
+					return false;	
+			} 
+			
+			if ($("#profesionalId").val() == '-1') {
+				$("#message").text("Debe Seleccionar un Profesional");
+				$("#message").css("visibility", "visible");
+				return false;
+			}
+			
+			if ($("#monto").val() == '') {
+				$("#message").css("visibility", "visible");
+				return false;
+			}else {
+				return validaFloat($("#monto").val());
+			}
+
+			return true;
+		}
+
+
+	  function hideMessage() {
+			$("#message").css("visibility", "hidden");
+		}
+
+		function monotributistaSelected() {
+			if (checkBoxSelectedFlag == "false") {
+				checkBoxSelectedFlag = "true";
+			} else {
+				checkBoxSelectedFlag = "false";
+			}
+
+			if ($(".cb-icon-check")[3].style.display != "none") {
+				$("#reqReciboSueldo").click();
+			}
+
+		}
+
+		function recibosueldoSelected() {
+			if (checkBoxSelectedFlag == "false") {
+				checkBoxSelectedFlag = "true";
+			} else {
+				checkBoxSelectedFlag = "false";
+			}
+			if ($(".cb-icon-check")[2].style.display != "none") {
+				$("#reqMonotributista").click();
+			}
+		}
 
 	</script>
 	
@@ -96,6 +227,14 @@
    padding-left: 10px;
    font-weight: bold;
  }
+
+.label-error {
+	color: #a94442;
+	background-color: #f2dede;
+	border-color: #ebccd1;
+	padding: 1px 20px 1px 20px;
+	width: 22%;
+}
 	</style>
 	
 </head>
@@ -113,6 +252,12 @@
           			<div class="panel-title">
 	          		Editar Consultas 
           			</div>
+          			<div class="label-error" id="message"
+						style="float: left; margin-left: 8%; visibility: hidden;">Falta
+						ingresar Coseguro</div>
+					<div class="label-error" id="message2"
+						style="float: left; margin-left: 8%; visibility: hidden;">Faltan
+						chequear los dos primeros requisitos</div>
     		</div>     
 			<div  class="panel-body" >
 				<div class="container-fluid" >
@@ -205,23 +350,36 @@
 										  		<div id="tb_profesional" class="tab-pane fade">
 									    		<table class="table"  style="width: 100%">			
 												<tr>		
-													<td style="width: 15%"><form:label path="profesionalId">Profesional</form:label></td>
-													<td  style="text-align:left" colspan="5">			
-													    <form:select path="profesionalId" style="width:80%; margin-bottom:0px" 
-													    onchange="findEspecialidades(this);">
-															   <form:option value="-1" label="Seleccione Profesional ..."/>
-															   <form:options items="${profesionales}" itemLabel="value" itemValue="id" />			    
+													<td style="width: 15%"><form:label
+																path="especialidad">Especialidad</form:label></td>
+														<td style="text-align: left" colspan="5">
+															<input type="hidden" name="especialidad" id="especialidad" value="${ordenDto.especialidad}">										
+															<input
+																data-provide="typeahead" 
+																class="typeahead"
+																name="especialidadString"
+																type="text"
+																id="especialidadString"
+																placeholder="Ingrese Especialidad ..."
+																autocomplete="off"
+																value ="${especialidadView}"
+																>
+															<a href="/nuova/formAddEspecialidad" title="Nueva Especialidad">
+																<img src="/nuova/resources/img/list_add_16x16.png">
+															</a>
+														</td>
+														<td style="width: 15%"><form:label path="profesionalId">Profesional</form:label></td>
+														<td style="text-align: left" colspan="5"><form:select
+																path="profesionalId" style="width:80%; margin-bottom:0px"
+																>
+																<form:option value="-1" label="Seleccione Profesional ..." />																
+																<form:options items="${profesionales}" itemLabel="value"
+																	itemValue="id" />
 															</form:select>
-													</td>
-													<td><form:label path="especialidad">Especialidad</form:label></td>
-													<td>
-														<form:select path="especialidad" style="width:60%; margin-bottom:0px">
-															<form:option value="-1" label="Seleccione Especialidad ..."/>
-															<form:options items="${especialidades}" itemLabel="value" itemValue="id" />																	
-														</form:select>
-													
-													</td>																									
-													
+												
+															
+														</td>
+
 												</tr>		
 												</table>
 									  			</div>
@@ -278,4 +436,33 @@
 <script>
 document.getElementById("mainOrden").parentNode.classList.add("active");
 $(".checkbox").checkbox();
+$("#ordenDto").validate({
+
+	// Specify the validation rules
+	rules : {
+		dni : {
+			required : true,
+			minlength : 7
+		},
+		apellido : "required",
+		nombre : "required"
+	},
+
+	// Specify the validation error messages
+	messages : {
+		apellido : "Ingrese apellido",
+		nombre : "Ingrese nombre",
+		dni : {
+			required : "Ingrese DNI",
+			minlength : "DNI debe tener al menos 7 caracteres de largo"
+		}
+	},
+	submitHandler : function(form) {
+		if (validatedSelects()) {
+			form.submit();
+		}
+	}
+});
+
+
 </script>
