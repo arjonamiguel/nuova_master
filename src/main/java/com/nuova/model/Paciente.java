@@ -37,6 +37,7 @@ public class Paciente implements java.io.Serializable {
     private Byte coseguro;
     private String dni;
     private String provincia;
+    private String razonCoseguro;
     private Byte parentesco;
     private String zonaAfiliacion;
     private Integer obrasocialId;
@@ -54,7 +55,7 @@ public class Paciente implements java.io.Serializable {
     }
 
     public Paciente(Paciente paciente, String apellido, String nombre, Date fechaNacimiento,
-            String domicilio, String telefono, String mail, Byte coseguro, Integer dni, String provincia,
+            String domicilio, String telefono, String mail, Byte coseguro, Integer dni, String provincia,String razonCoseguro,
             Byte parentesco, String zonaAfiliacion, Integer obrasocialId, String nroCredencial,
             Byte eliminado, Set<Orden> ordens, Set<Paciente> pacientes) {
         this.paciente = paciente;
@@ -67,6 +68,7 @@ public class Paciente implements java.io.Serializable {
         this.coseguro = coseguro;
         this.dni = dni.toString();
         this.provincia = provincia;
+        this.razonCoseguro = razonCoseguro;
         this.parentesco = parentesco;
         this.zonaAfiliacion = zonaAfiliacion;
         this.obrasocialId = obrasocialId;
@@ -177,6 +179,15 @@ public class Paciente implements java.io.Serializable {
 
     public void setProvincia(String provincia) {
         this.provincia = provincia;
+    }
+    
+    @Column(name = "razon_coseguro", length = 156)
+    public String getRazonCoseguro() {
+        return this.razonCoseguro;
+    }
+
+    public void setRazonCoseguro(String razonCoseguro) {
+        this.razonCoseguro = razonCoseguro;
     }
 
     @Column(name = "parentesco")

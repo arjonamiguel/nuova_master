@@ -83,6 +83,7 @@ public class PacienteController {
     map.addAttribute("obrasocialDTOList", new ArrayList<ObraSocialDTO>());
     map.addAttribute("paciente", new PacienteDTO());
     map.addAttribute("empresas", empresas);
+    map.addAttribute("razonCoseguroList", Util.getRazonCoseguro());
 
     return ConstantRedirect.VIEW_FORM_ADD_PACIENTE;
   }
@@ -100,6 +101,8 @@ public class PacienteController {
       map.addAttribute("paciente", dto);
       map.addAttribute("isTitular", dto.isTitular());
       map.addAttribute("empresas", empresas);
+      map.addAttribute("razonCoseguro", dto.getRazonCoseguro());
+      map.addAttribute("razonCoseguroList", Util.getRazonCoseguro());
     }
     return ConstantRedirect.VIEW_FORM_EDIT_PACIENTE;
   }
@@ -285,6 +288,7 @@ public class PacienteController {
     map.addAttribute("trabajaEnList", Util.getTrabajaEn());
     map.addAttribute("paciente", dto);
     map.addAttribute("isTitular", dto.isTitular());
+    map.addAttribute("razonCoseguro", Util.getRazonCoseguro());
     return ConstantRedirect.VIEW_FORM_ADD_ADHERENTE;
   }
 
@@ -315,6 +319,7 @@ public class PacienteController {
     dto.setMail(p.getMail());
     dto.setTelefono(p.getTelefono());
     dto.setProvincia(p.getProvincia());
+    dto.setRazonCoseguro(p.getRazonCoseguro());
     dto.setZonaAfiliacion(p.getZonaAfiliacion());
     dto.setEliminadoView(p.getEliminado().intValue() == 0 ? "ACTIVO" : "INACTIVO");
 
@@ -421,6 +426,7 @@ public class PacienteController {
     paciente.setMail(dto.getMail());
     paciente.setTelefono(dto.getTelefono());
     paciente.setProvincia(dto.getProvincia());
+    paciente.setRazonCoseguro(dto.getRazonCoseguro());
     paciente.setParentesco(new Byte(dto.getParentesco() + ""));
     paciente.setZonaAfiliacion(dto.getZonaAfiliacion());
     paciente.setLocalidadId(dto.getLocalidadId());

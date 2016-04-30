@@ -401,5 +401,5 @@ function callExistDni(dni) {
                     }       
         }
     });
-
+	$("#coseguro").click();	
 </script>

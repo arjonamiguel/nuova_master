@@ -190,6 +190,16 @@ label.error {
 			}
 
 		}
+		
+		function razonEnable(){
+				if($( "#coseguro").prop( "checked" )){
+					 $("#razonCoseguro").prop("disabled", false);
+				}else{
+					$("#razonCoseguro").val("NONE");
+					$("#razonCoseguro").prop("disabled", true);
+				}
+		
+		}
 	
 
        </SCRIPT>
@@ -305,7 +315,7 @@ label.error {
 			   		
 							<div class="material-switch pull-left">
 								<input id="coseguro" name="coseguro" type="checkbox" value="true">
-								<label for="coseguro" class="label-success"></label>
+								<label for="coseguro" class="label-success" onclick="razonEnable()"></label>
 								<div style="padding-top:10%;">
 									NO - SI
 								</div>
@@ -332,16 +342,19 @@ label.error {
 									<form:option value="-1" label="Seleccione Empresa..."/>
 									<form:options items="${empresas}"  itemLabel="nombre" itemValue="empresaId"/>
 								</form:select>
-        					</div>
-			   		
+        					</div>	
 			   		</div>
 			   		<div class="span4">
-			   				<div class="formLabel"><form:label path="empresa">Empresa:</form:label></div>
+			   			<div class="formLabel"><form:label path="razonCoseguro">Razón Coseguro:</form:label></div>
         					<div class="formInput">
-        						<form:input path="empresa" type="text"/>
+        						<form:select path="razonCoseguro" style="width:83%; margin-bottom:0px">
+									<form:option value="NONE" label="Seleccione Razón Coseguro ..."/>
+									<form:options items="${razonCoseguroList}"  />			    
+								</form:select>
         					</div>
 			   		
 			   		</div>
+	
 			   	</div>	
 			   	
 		 </div>
@@ -460,5 +473,7 @@ label.error {
             
         }
     });
-
+	$("#coseguro").click();	
+	$("#razonCoseguro").val("NONE");
+	$("#razonCoseguro").prop("disabled", true);
 </script>

@@ -153,6 +153,16 @@ public class Util {
     provincias.add("Tierra del Fuego");
     return provincias;
   }
+  
+  static public List<String> getRazonCoseguro() {
+	    List<String> razonCoseguro = new ArrayList<String>();
+	    razonCoseguro.add("Discapacitado");
+	    razonCoseguro.add("PMI");
+	    razonCoseguro.add("Embarazo");
+	    razonCoseguro.add("Oncológico");
+	    razonCoseguro.add("Otro");
+	    return razonCoseguro;
+	  }
 
   static public Obrasocial transformDtoToObraSocial(ObraSocialDTO dto) {
     Obrasocial obrasocial = new Obrasocial();

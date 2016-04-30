@@ -149,13 +149,18 @@ label.error {
 				coseguroFlag=1;
 				if($( "#coseguro").prop( "checked" )){
 					$("#coseguroAux").click();
+					$("#razonCoseguro").val("NONE");
+					$("#razonCoseguro").prop("disabled", true);
 				}
 			}else{
 			//validacion on change
 				if($( "#coseguro").prop( "checked" )){
 					 $("#coseguro").removeAttr("checked");
+					 $("#razonCoseguro").prop("disabled", false);
 				}else{
 					$("#coseguro").click();
+					$("#razonCoseguro").val("NONE");
+					$("#razonCoseguro").prop("disabled", true);
 				}
 			}	
 		}
@@ -176,7 +181,8 @@ label.error {
 			}	
 		}
 
-		function showEmpresas() {						
+		function showEmpresas() {	
+		if(document.getElementById("trabajaEn")!=null){					
 			var trabajo = document.getElementById("trabajaEn").value;
 			var t = parseInt(trabajo); 
 			if( t == 0) {
@@ -186,7 +192,7 @@ label.error {
 				document.getElementById("empresaId").value = "-1";
 				document.getElementById("empresaId").disabled = "false";
 			}
-
+		}
 		}
 		
         </SCRIPT>
@@ -337,14 +343,18 @@ label.error {
         					</div>
 			   		
 			   		</div>
+			   		</c:if>
 			   		<div class="span4">
-			   				<div class="formLabel"><form:label path="empresa">Empresa:</form:label></div>
+			   			<div class="formLabel"><form:label path="razonCoseguro">Razón Coseguro:</form:label></div>
         					<div class="formInput">
-        						<form:input path="empresa" type="text"/>
+        						<form:select path="razonCoseguro" style="width:83%; margin-bottom:0px">
+									<form:option value="NONE" label="Seleccione Razón Coseguro ..."/>
+									<form:options items="${razonCoseguroList}"  />			    
+								</form:select>
         					</div>
 			   		
 			   		</div>
-			   		</c:if>
+			   		
 			   	</div>	
 			   	
 		 </div>
@@ -516,4 +526,7 @@ function callExistDni(dni) {
 		
 		updatecoseguro();
 		$(".checkbox").checkbox();		
+		var valueDate=document.getElementById("fechaNacimiento").value.split('/')[2]+"-"+document.getElementById("fechaNacimiento").value.split('/')[1]+"-"+document.getElementById("fechaNacimiento").value.split('/')[0];
+		document.getElementById("registration-date").value=valueDate;
+		
 </script>
