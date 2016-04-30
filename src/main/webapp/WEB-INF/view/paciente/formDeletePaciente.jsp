@@ -135,7 +135,6 @@
 </head>
 <body style="background-color:#e5e5e5;">
 <jsp:include page="../sec_menu.jsp"></jsp:include>
-<jsp:include page="../breadcrumb.jsp"></jsp:include>
 
 <div class="mainContainer"> 
 <div class="panelContainer">
@@ -145,7 +144,7 @@
 	<div class="panel-heading">
 		<div class="panel-title">
 		<b>Eliminar Paciente</b>
-    	 	<c:if test="${!isTitular}">
+    	 	<c:if test="${paciente.parentesco > 0}">
      			<h4>Titular: <a href="/nuova/formEditPaciente/${paciente.pacienteTitular.pacienteId}">${paciente.pacienteTitular.apellido}, ${paciente.pacienteTitular.nombre}</a></h4>
      		</c:if>
      	</div>
@@ -197,21 +196,29 @@
 								</form:select>
         					</div>
 			   		</div>
+			   		
+			   		<div class="span4">
+			   				<div class="formLabel"><form:label path="domicilio">Localidad:</form:label></div>
+        					<div class="formInput">
+        					<form:hidden path="localidadId"/>
+        					<form:input path="localidadString"
+        						data-provide="typeahead" 
+								class="typeahead"								
+								type="text"								
+								placeholder="Ingrese Localidad ..."
+								autocomplete="off"								
+								disabled="true"
+        					/>	
+							</div>
+			   		</div>
 			   		<div class="span4">
 			   				<div class="formLabel"><form:label path="domicilio">Domicilio:</form:label></div>
         					<div class="formInput"><form:textarea path="domicilio" cssStyle="width:78%" disabled="true"/></div>
 			   		</div>
-			   		<div class="span4">
-			   				<div class="formLabel" style="padding-top:6px;;"><form:label path="coseguro">Coseguro:</form:label></div>
-			   				<div style="visibility:hidden;"><form:checkbox path="coseguro" id="coseguro"/></div>
-								<div class="material-switch pull-left">
-									<input id="coseguroAux" name="coseguroAux" type="checkbox" value="true" disabled="true">
-									<label for="coseguroAux" class="label-info" onclick="updatecoseguro()"></label>
-								</div>
-			   		</div>
 			   		
 			   	</div>
-			   		<div class="row-fluid">
+			   	
+			   	<div class="row-fluid">
 			   		<div class="span4">
 			   				<div class="formLabel"><form:label path="titular">Parentesco:</form:label></div>
 							<div  class="formInput">
@@ -226,14 +233,62 @@
 			   		<div class="span4">
 			   				<div class="formLabel"><form:label path="zonaAfiliacion">Zona Afiliación:</form:label></div>
         					<div class="formInput">
-        						<form:select path="zonaAfiliacion" style="width:83%; margin-bottom:0px">
+        						<form:select path="zonaAfiliacion" style="width:83%; margin-bottom:0px" disabled="true">
 									<form:option value="NONE" label="Seleccione Zona Afiliación ..."/>
 									<form:options items="${provinciaList}"  />			    
 								</form:select>
         					</div>
 			   		</div>
 			   		</c:if>
+			   		
+			   	
+			   		<div class="span1" style="">
+			   				<div class="formLabel"><form:label path="coseguro">Coseguro:</form:label></div>
+			   				<div style="visibility:hidden;"><form:checkbox path="coseguro" id="coseguro"/></div>
+							
+			   		</div>
+			   		<div class="span3" style="margin-top:1%;">			   		
+							<div class="material-switch pull-left">
+								<input id="coseguroAux" name="coseguroAux" type="checkbox" value="true">
+									<label for="coseguroAux" class="label-success" onclick="updatecoseguro()"></label>
+								<div style="padding-top:10%;">
+									NO - SI
+								</div>
+							</div>
+							
+			   		</div>
 			   	</div>
+			   	<br>
+			   	
+			   	<div class="row-fluid">
+			   		<div class="span4">
+			   				<div class="formLabel"><form:label path="trabajaEn">Trabaja En:</form:label></div>
+        					<div class="formInput">
+        						<form:select path="trabajaEn" style="width:83%; margin-bottom:0px" disabled="true">
+									<form:option value="-1" label="Seleccione donde Trabaja ..."/>
+									<form:options items="${trabajaEnList}"  itemLabel="value" itemValue="id"/>
+								</form:select>
+        					</div>
+			   		
+			   		</div>
+			   		<div class="span4">
+			   				<div class="formLabel"><form:label path="empresaId">Empresa:</form:label></div>
+        					<div class="formInput">
+        						<form:select path="empresaId" style="width:83%; margin-bottom:0px" disabled="true">
+									<form:option value="-1" label="Seleccione Empresa..."/>
+									<form:options items="${empresas}"  itemLabel="nombre" itemValue="empresaId"/>
+								</form:select>
+        					</div>
+			   		
+			   		</div>
+			   		<div class="span4">
+			   				<div class="formLabel"><form:label path="empresa">Empresa:</form:label></div>
+        					<div class="formInput">
+        						<form:input path="empresa" type="text" disabled="true"/>
+        					</div>
+			   		
+			   		</div>
+			   	</div>	
 		 </div>
 	</div>	
 </div>

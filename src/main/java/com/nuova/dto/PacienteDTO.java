@@ -17,6 +17,8 @@ public class PacienteDTO {
     private String domicilio;
     private String telefono;
     private String mail;
+    private Integer localidadId;
+    private String localidadString;
 
     private ObraSocialDTO obrasocial = new ObraSocialDTO();
     private List<ObraSocialDTO> obrasocialList = new ArrayList<ObraSocialDTO>();
@@ -27,6 +29,7 @@ public class PacienteDTO {
     private List<PacienteDTO> adherentesEditList = new ArrayList<PacienteDTO>();
 
     private String crdencial;
+    private String credencialSufijo;
     private boolean original = false;
 
     private boolean titular = false;
@@ -41,7 +44,16 @@ public class PacienteDTO {
     private String parentescoDescription;
 
     private String zonaAfiliacion;
+    private Integer eliminado;
+    private String eliminadoView;
 
+    private int trabajaEn;
+    private String empresa;
+    private Integer empresaId;
+    
+    private List<String> razonCoseguroList;
+    private String razonCoseguro;
+    
     // private List<PacienteObrasocial> pacienteObrasocials = new ArrayList<PacienteObrasocial>(0);
 
     public Integer getPacienteId() {
@@ -156,7 +168,23 @@ public class PacienteDTO {
         this.provinciaList = provinciaList;
     }
 
-    public List<ObraSocialDTO> getObrasocialListEdit() {
+    public List<String> getRazonCoseguroList() {
+		return razonCoseguroList;
+	}
+
+	public void setRazonCoseguroList(List<String> razonCoseguroList) {
+		this.razonCoseguroList = razonCoseguroList;
+	}
+
+	public String getRazonCoseguro() {
+		return razonCoseguro;
+	}
+
+	public void setRazonCoseguro(String razonCoseguro) {
+		this.razonCoseguro = razonCoseguro;
+	}
+
+	public List<ObraSocialDTO> getObrasocialListEdit() {
         return obrasocialListEdit;
     }
 
@@ -240,14 +268,16 @@ public class PacienteDTO {
         String botonEdit = "<a class='btn btn-info btn-xs' href='formEditPaciente/" + getPacienteId()
                 + "'><span class='icon icon-edit'></span>Editar</a>&nbsp;";
 
-        String botonTipoOrden = "<a class='btn btn-success btn-xs' href='tipoOrden/"
-                + getPacienteId()
-                + "'><span class='icon icon-plus-sign'></span>Orden</a>&nbsp;";
+        String botonTipoOrden = "<a class='btn btn-success btn-xs' href='tipoOrden/" + getPacienteId()
+                + "'><span class='icon icon-plus-sign'></span>Orden</a>";
 
-        String botonDelete = "<a class='btn btn-danger btn-xs' href='formDeletePaciente/" + getPacienteId()
-                + "'><span class='icon icon-remove'></span>Eliminar</a>";
+        String botonDelete = "<a class='btn btn-danger btn-xs' href='formDeletePaciente/"
+                + getPacienteId() + "'><span class='icon icon-remove'></span>Eliminar</a>&nbsp;";
 
-        this.acciones = botonEdit + botonTipoOrden + botonDelete;
+        String botonActivar = "<a class='btn btn-success btn-xs' href='#" + getPacienteId()
+                + "'><span class='icon icon-ok'></span>Activar&nbsp;&nbsp;</a>&nbsp;";
+
+        this.acciones = botonEdit + (getEliminado().intValue() == 0 ? botonDelete : botonActivar);
 
         return acciones;
     }
@@ -278,6 +308,71 @@ public class PacienteDTO {
 
     public void setZonaAfiliacion(String zonaAfiliacion) {
         this.zonaAfiliacion = zonaAfiliacion;
+    }
+
+    public Integer getLocalidadId() {
+        return localidadId;
+    }
+
+    public void setLocalidadId(Integer localidadId) {
+        this.localidadId = localidadId;
+    }
+
+    public String getLocalidadString() {
+        return localidadString;
+    }
+
+    public void setLocalidadString(String localidadString) {
+        this.localidadString = localidadString;
+    }
+
+    public Integer getEliminado() {
+        return eliminado;
+    }
+
+    public void setEliminado(Integer eliminado) {
+        this.eliminado = eliminado;
+    }
+
+    public int getTrabajaEn() {
+        return trabajaEn;
+    }
+
+    public void setTrabajaEn(int trabajaEn) {
+        this.trabajaEn = trabajaEn;
+    }
+
+    public String getEliminadoView() {
+        return eliminadoView;
+    }
+
+    public void setEliminadoView(String eliminadoView) {
+        this.eliminadoView = eliminadoView;
+    }
+
+    public String getEmpresa() {
+        return empresa;
+    }
+
+    public void setEmpresa(String empresa) {
+        this.empresa = empresa;
+    }
+
+    public Integer getEmpresaId() {
+        return empresaId;
+    }
+
+    public void setEmpresaId(Integer empresaId) {
+        this.empresaId = empresaId;
+    }
+    
+
+	public String getCredencialSufijo() {
+        return credencialSufijo;
+    }
+
+    public void setCredencialSufijo(String credencialSufijo) {
+        this.credencialSufijo = credencialSufijo;
     }
 
 }

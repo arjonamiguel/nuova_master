@@ -83,6 +83,39 @@
 			$("#reqMonotributista").click();
 		}
 	}
+	
+	  function findEspecialidades(profesional) {
+		  var especialidades = callEspecialidadesByProfesional(profesional.value);
+			$('#especialidad')
+			.empty()
+		    .append('<option selected="selected" value="-1">Seleccione Especialidad ...</option>')
+		;
+			$.each(especialidades, function(key, value) {   
+			     $('#especialidad')
+			          .append($('<option>', { value : value.id })
+			          .text(value.value)); 
+			});
+		  
+	  } 
+	  
+	  function callEspecialidadesByProfesional(profesionalId) {
+			var retorno;
+			$.ajax({
+				url : "/nuova/ajaxGetEspecialidadesByProfesional?profesionalId="+profesionalId,
+				type : "GET",
+				contentType : "application/json; charset=utf-8",
+				//    data: jsonString, //Stringified Json Object
+				async : false, //Cross-domain requests and dataType: "jsonp" requests do not support synchronous operation
+				cache : false, //This will force requested pages not to be cached by the browser          
+				processData : false, //To avoid making query String instead of JSON
+				success : function(page) {
+					// Success Message Handler
+					retorno = page;
+				}
+			});
+
+			return retorno;
+		}
 	</script>
 	
 </head>
@@ -91,6 +124,8 @@
 <jsp:include page="../sec_menu.jsp"></jsp:include>
 <form:form method="post" action="/nuova/addOrden" commandName="ordenDto">
 <form:hidden path="ordenTipo.ordenTipoId"/>
+<div class="mainContainer">
+
 <div class="panelContainer">		
 		<div class="panel panel-info">
 			<div class="panel-heading">
@@ -107,7 +142,8 @@
 		    						<div class="row col-md-6 col-md-offset-2 custyle">
 										<ul class="nav nav-tabs">
 										  <li class="active"><a data-toggle="tab" href="#tb_paciente">Paciente</a></li>
-										  <li><a data-toggle="tab" href="#tb_requisitos">Requisitos</a></li>	  
+										  <li><a data-toggle="tab" href="#tb_requisitos">Requisitos</a></li>
+										  <li><a data-toggle="tab" href="#tb_profesional">Profesional</a></li>										  	  
 										  <li><a data-toggle="tab" href="#tb_observacion">Observaciones</a></li>
 										</ul>
 									
@@ -183,6 +219,30 @@
 									
 											</table>	
 									  		</div>
+									  		
+									  		<div id="tb_profesional" class="tab-pane fade">
+									    		<table class="table"  style="width: 100%">			
+												<tr>		
+													<td style="width: 15%"><form:label path="profesionalId">Profesional</form:label></td>
+													<td  style="text-align:left" colspan="5">			
+													    <form:select path="profesionalId" style="width:80%; margin-bottom:0px" 
+													    onchange="findEspecialidades(this);">
+															   <form:option value="-1" label="Seleccione Profesional ..."/>
+															   <form:options items="${profesionales}" itemLabel="value" itemValue="id" />			    
+															</form:select>
+													</td>
+													<td><form:label path="especialidad">Especialidad</form:label></td>
+													<td>
+														<form:select path="especialidad" style="width:60%; margin-bottom:0px">
+															<form:option value="-1" label="Seleccione Especialidad ..."/>
+															<form:options items="${especialidades}" itemLabel="value" itemValue="id" />																	
+														</form:select>
+													
+													</td>																									
+													
+												</tr>		
+												</table>
+									  		</div>
 									  		 		
 									  		<div id="tb_observacion" class="tab-pane fade">
 									    		<table class="table"  style="width: 100%">			
@@ -195,19 +255,7 @@
 												</table>
 									  		</div>
 										</div>
-										<div style="float:right;">
-										<table>
-									 		<tr>
-												<td style="width: 50%">
-												<input class="btn btn-lg btn-primary btn-block btn-info" type="submit" value="Guardar"/>
-												</td>
-												<td>
-												<input type="button" value="Cancelar" onclick="location.href = document.referrer; return false;" class="btn"/>
-												</td>
-												<td colspan="4"></td>
-											</tr>
-										</table>
-										</div>
+										
 									</div> 		    						
 									
 								</div>
@@ -216,8 +264,25 @@
 		    	</div>
 	    	</div>
 	    </div>
+	    
+	    			<!-- Botoneras -->
+		<div class="panel panel-info">
+			<div class="panel-body">
+				<div class="row-fluid">
+				<div class="span12">					
+					<div style="float:right;">
+						<input type="button" value="Cancelar" onclick="location.href = document.referrer; return false;" class="btn"/>	
+					</div>
+					<div style="float:right;padding-right:2%;">
+						<input type="submit" value="Guardar" class="btn btn-info"/>
+					</div>								 			
+				</div>
+				</div>
+			</div>
+		</div>
+		<!-- Fin Botoneras -->
 </div>
-
+</div>
 </form:form>
 
 </body>

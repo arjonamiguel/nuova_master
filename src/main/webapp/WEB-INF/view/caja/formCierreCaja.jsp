@@ -23,7 +23,6 @@
 </head>
 <body style="background-color:#e5e5e5;">
 <jsp:include page="../sec_menu.jsp"></jsp:include>
-<jsp:include page="../breadcrumb.jsp"></jsp:include>
 <div class="mainContainer"> 	
 	<div class="panelContainer">
 	<form:form method="post" action="/nuova/cierreCaja" commandName="cajaCierre">
@@ -49,7 +48,7 @@
 		 				<div class="span4">
 			 				<div class="formLabel"><form:label path="montoView">Monto $:</form:label></div>
 			 				<div class="formInput">
-			 					<form:input path="montoView" disabled="true"/>
+			 					<form:input path="monto" disabled="true"/>
 			 					<form:hidden path="monto"/>			 					
 			 				</div>
 		 				</div>						

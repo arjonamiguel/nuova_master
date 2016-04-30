@@ -19,6 +19,16 @@ import java.util.List;
 import java.util.Map;
 
 public class Util {
+
+  static public String ESTADO_REINTEGRO_ENPROCESO = "EN PROCESO";
+  static public String ESTADO_REINTEGRO_PROCESADO = "PROCESADO";
+  static public String ESTADO_REINTEGRO_ANULADO = "ANULADO";
+
+  static public int MESSAGE_SUCCESS = 1;
+  static public int MESSAGE_WARNING = 2;
+  static public int MESSAGE_INFORMATION = 3;
+  static public int MESSAGE_ERROR = 4;
+
   static public String DOCUMENT_TYPE = "HISTORIA_CLINICA";
 
   static public int CONCEPTO_INGRESO_INICIOCAJA = 0;
@@ -49,18 +59,23 @@ public class Util {
   static public int ORDEN_ODONTOLOGICA = 101;
   static public int ORDEN_PRACTICA = 102;
 
-  static public String PARENTESCO_TITULAR = "[00]-Titular";
-  static public String PARENTESCO_CONYUGE = "[01]-Esposo/a";
-  static public String PARENTESCO_CONCUBINO = "[02]-Concubino/a";
-  static public String PARENTESCO_HIJOSOLTEROMENOR = "[03]-Hijo soltero menor de 21 años";
+  static public String PARENTESCO_TITULAR = "Titular";
+  static public String PARENTESCO_CONYUGE = "Esposo/a";
+  static public String PARENTESCO_CONCUBINO = "Concubino/a";
+  static public String PARENTESCO_HIJOSOLTEROMENOR = "Hijo soltero menor de 21 años";
   static public String PARENTESCO_HIJOSOLTEROESTUDIANTE =
-      "[04]-Hijo soltero de 21 a 25 años cursando estudios regulares";
+      "Hijo soltero de 21 a 25 años cursando estudios regulares";
   static public String PARENTESCO_HIJOCONYUGESOLTEROMENOR =
-      "[05]-Hijo de cónyuge soltero menor de 21 años";
+      "Hijo de cónyuge soltero menor de 21 años";
   static public String PARENTESCO_HIJOCONYUGESOLTEROESTUDIANTE =
-      "[06]-Hijo de cónyuge soltero de 21 a 25 años cursando estudios regulares";
-  static public String PARENTESCO_MENORBAJOTUTELA = "[07]-Menor bajo guarda o tutela";
-  static public String PARENTESCO_HIJODISCAPACITADO = "[08]-Hijo discapacitado";
+      "Hijo de cónyuge soltero de 21 a 25 años cursando estudios regulares";
+  static public String PARENTESCO_MENORBAJOTUTELA = "Menor bajo guarda o tutela";
+  static public String PARENTESCO_HIJODISCAPACITADO = "Hijo discapacitado";
+
+  static public String EMPLEADO_SEGURIDAD = "Empleado de Seguridad";
+  static public String MONOTRIBUTISTA = "Monotributista";
+  static public String EMPLEADA_DOMESTICA = "Empleada Domestica";
+
 
   static public List<ComboItemDTO> getParentescos() {
     List<ComboItemDTO> parentescos = new ArrayList<ComboItemDTO>();
@@ -75,6 +90,40 @@ public class Util {
     parentescos.add(new ComboItemDTO("8", PARENTESCO_HIJODISCAPACITADO));
 
     return parentescos;
+  }
+
+  static public List<ComboItemDTO> getParentescosAdherente() {
+    List<ComboItemDTO> parentescos = new ArrayList<ComboItemDTO>();
+    parentescos.add(new ComboItemDTO("1", PARENTESCO_CONYUGE));
+    parentescos.add(new ComboItemDTO("2", PARENTESCO_CONCUBINO));
+    parentescos.add(new ComboItemDTO("3", PARENTESCO_HIJOSOLTEROMENOR));
+    parentescos.add(new ComboItemDTO("4", PARENTESCO_HIJOSOLTEROESTUDIANTE));
+    parentescos.add(new ComboItemDTO("5", PARENTESCO_HIJOCONYUGESOLTEROMENOR));
+    parentescos.add(new ComboItemDTO("6", PARENTESCO_HIJOCONYUGESOLTEROESTUDIANTE));
+    parentescos.add(new ComboItemDTO("7", PARENTESCO_MENORBAJOTUTELA));
+    parentescos.add(new ComboItemDTO("8", PARENTESCO_HIJODISCAPACITADO));
+
+    return parentescos;
+  }
+
+  static public List<ComboItemDTO> getTrabajaEn() {
+    List<ComboItemDTO> trabaEn = new ArrayList<ComboItemDTO>();
+    trabaEn.add(new ComboItemDTO("0", EMPLEADO_SEGURIDAD));
+    trabaEn.add(new ComboItemDTO("1", MONOTRIBUTISTA));
+    trabaEn.add(new ComboItemDTO("2", EMPLEADA_DOMESTICA));
+
+    return trabaEn;
+  }
+
+  static public String getTrbajaEnValue(String id) {
+    String retorno = "";
+    for (ComboItemDTO c : getTrabajaEn()) {
+      if (c.getId().equals(id)) {
+        retorno = c.getValue();
+      }
+    }
+
+    return retorno;
   }
 
   static public List<String> getProvincias() {
@@ -104,6 +153,16 @@ public class Util {
     provincias.add("Tierra del Fuego");
     return provincias;
   }
+  
+  static public List<String> getRazonCoseguro() {
+	    List<String> razonCoseguro = new ArrayList<String>();
+	    razonCoseguro.add("Discapacitado");
+	    razonCoseguro.add("PMI");
+	    razonCoseguro.add("Embarazo");
+	    razonCoseguro.add("Oncológico");
+	    razonCoseguro.add("Otro");
+	    return razonCoseguro;
+	  }
 
   static public Obrasocial transformDtoToObraSocial(ObraSocialDTO dto) {
     Obrasocial obrasocial = new Obrasocial();
@@ -139,6 +198,20 @@ public class Util {
     return fechaHabilitacion;
   }
 
+  static public String parseToStringDate(Date date) {
+    String retorno = "";
+    DateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+    if (date != null) {
+      try {
+        retorno = formatter.format(date);
+      } catch (Exception e) {
+        // TODO Auto-generated catch block
+        e.printStackTrace();
+      }
+    }
+    return retorno;
+  }
+
   static public List<ComboItemDTO> getComboItems(List<?> list) {
     List<ComboItemDTO> retorno = new ArrayList<ComboItemDTO>();
     for (Object obj : list) {
@@ -160,7 +233,7 @@ public class Util {
   }
 
   static public String getEstadoInicial(OrdenDTO dto) {
-    String retorno = ConstantOrdenEstado.INICIADA;
+    String retorno = ConstantOrdenEstado.ORDEN_INICIADA;
     // if (dto.isReqCredecial() && dto.isReqOrdenMedico() && (dto.isReqMonotributista() ||
     // dto.isReqReciboSueldo()))
     // {
@@ -192,5 +265,54 @@ public class Util {
     retorno.add(new ComboItemDTO(ConstantOrdenEstado.ANULADO, ConstantOrdenEstado.ANULADO));
     return retorno;
   }
+
+  static public List<ComboItemDTO> getOrdenEstadosList() {
+    List<ComboItemDTO> retorno = new ArrayList<ComboItemDTO>();
+    retorno.add(
+        new ComboItemDTO(ConstantOrdenEstado.ORDEN_INICIADA, ConstantOrdenEstado.ORDEN_INICIADA));
+    retorno.add(new ComboItemDTO(ConstantOrdenEstado.ORDEN_EN_PROGRESO,
+        ConstantOrdenEstado.ORDEN_EN_PROGRESO));
+    retorno.add(
+        new ComboItemDTO(ConstantOrdenEstado.ORDEN_PENDIENTE, ConstantOrdenEstado.ORDEN_PENDIENTE));
+    retorno.add(new ComboItemDTO(ConstantOrdenEstado.ORDEN_AUTORIZADA,
+        ConstantOrdenEstado.ORDEN_AUTORIZADA));
+    retorno.add(
+        new ComboItemDTO(ConstantOrdenEstado.ORDEN_RECHAZADA, ConstantOrdenEstado.ORDEN_RECHAZADA));
+    retorno.add(
+        new ComboItemDTO(ConstantOrdenEstado.ORDEN_ANULADA, ConstantOrdenEstado.ORDEN_ANULADA));
+    retorno.add(
+        new ComboItemDTO(ConstantOrdenEstado.ORDEN_CERRADA, ConstantOrdenEstado.ORDEN_CERRADA));
+
+    return retorno;
+  }
+
+  static public String getEtiquetaEstadoReintegro(String estado) {
+    String retorno = "";
+
+    if (Util.ESTADO_REINTEGRO_ENPROCESO.equals(estado)) {
+      retorno = " <span  style='color:black;background:gold'>" + estado + "</span>";
+    }
+
+    if (Util.ESTADO_REINTEGRO_PROCESADO.equals(estado)) {
+      retorno = "<span style='color:white;background: green'>" + estado + "</span>";
+    }
+
+    if (Util.ESTADO_REINTEGRO_ANULADO.equals(estado)) {
+      retorno = "<span style='color:white;background: tomato'>" + estado + "</span>";;
+    }
+
+    return retorno;
+  }
+
+
+  static public List<String> getEstadosReintegro() {
+    List<String> retorno = new ArrayList<String>();
+    retorno.add(ESTADO_REINTEGRO_ENPROCESO);
+    retorno.add(ESTADO_REINTEGRO_PROCESADO);
+    retorno.add(ESTADO_REINTEGRO_ANULADO);
+
+    return retorno;
+  }
+
 
 }

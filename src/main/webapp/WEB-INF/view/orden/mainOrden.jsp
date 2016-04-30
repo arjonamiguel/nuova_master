@@ -23,6 +23,12 @@
 <script type="text/javascript" src="<%=request.getContextPath()%>/resources/simplepaginggrid/examples/pageNumbers/script/handlebars-1.0.rc.1.js"></script>
 <script type="text/javascript" src="<%=request.getContextPath()%>/resources/simplepaginggrid/script/simplePagingGrid-0.5.0.2.js"></script>
 
+<style type="text/css">
+.custom-height-modal {
+  height: 400px;
+}
+</style>
+
 <script type="text/javascript">
 	$(document).ready(function() {
 												
@@ -32,11 +38,11 @@
 
 						$("#ordenGrid").simplePagingGrid(
 								{
-									columnNames : [ "PACIENTE","TIPO" ,"NRO.ORDEN","FECHA" ,"", "ESTADO","", "" ],
-									columnKeys : [ "botonpaciente","ordenTipoDesc" ,"nroOrden", "fecha",
-													, "etiqestado", "acciones"],
-									columnWidths : [ "20%", "10%", "10%","10%","10%"],
-									sortable : [ false, true ],
+									columnNames : [ "NRO.ORDEN","PACIENTE","TIPO" ,"FECHA","PROFESIONAL","ESPECIALIDAD", "ESTADO", "" ],
+									columnKeys : [ "nroOrden","botonpaciente","ordenTipoDesc" , "fecha", "apellidoNombreProfesional"
+													, "especialidadView", "etiqestado", "acciones"],
+									columnWidths : [ "10%", "20%", ],
+									sortable : [ true, false, true,true,true ],
 									data : rows
 								});
 
@@ -135,18 +141,22 @@ function editColumnsChecked() {
 			        	title: 'Eliminar Orden de Práctica'
 			        	});
 					});
+					
+function showReport(id){
+	var iframe = "<iframe src='/nuova/reporteOrdenEmitida/"+id+"' width='100%' height='150%' >";
+	document.getElementById("iframeReport").innerHTML = iframe;
+}
+
 </script>
 </head>
 <body style="background-color:#e5e5e5;">
 <jsp:include page="../sec_menu.jsp"></jsp:include>
-<jsp:include page="../breadcrumb.jsp"></jsp:include>
 <div class="mainContainer">   
 	<div class="panelContainer">		
 		<div class="panel panel-info">
 			<div class="panel-heading">
           			<div class="panel-title">
-	          			Administracion Orden de Practicas
-	           			<a href="formAddOrden" class="pull-right"><b>+</b>&nbsp;&nbsp;Nueva Orden de Practica</a>
+	          			<b>Administraci&oacute;n Orden de Pr&aacute;cticas</b>
           			</div>
     		</div>     
 			<div  class="panel-body" >
@@ -179,6 +189,28 @@ function editColumnsChecked() {
 	
 	
 </div>
+
+<!-- Modal -->
+<div id="myModal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Comprobante de Orden</h4>
+      </div>
+      <div class="modal-body custom-height-modal">
+        <div id="iframeReport" style="height: 800px">	</div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+<!-- Fin Modal -->
 </body>
 </html>
 <script>

@@ -1,5 +1,14 @@
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
+<table class="table"  style="width: 100%">    					
+<tr>		
+	<td style="width: 15%"><form:label path="observacion">Observaci&oacute;n</form:label></td>
+	<td  style="text-align:left" colspan="5">			
+	<form:textarea path="observacion" cssStyle="width:90%"/>
+	</td>
+</tr>		
+</table>
+<div class="tab-content" style="height: 400px">	
 <c:forEach items="${ordenDto.observacioneses}" var="obs" varStatus="loop" >
 	<table class="table"  style="width: 100%;">	
 	<tr style="background-color:#f5f5f5;">
@@ -10,7 +19,7 @@
 	</tr>
 	<tr>
 		<td style="background-color:#f5f5f5;border-top:none;"></td>
-		<td style="width: 80%; padding: 1px 1px;border-left: 2px solid orange;">
+		<td style="width: 80%; border-left: 2px solid orange;">
 			<b>${obs.userName}</b> <span style="font-size: 12px">${obs.fecha}</span>
 		</td>
 		<td style="padding: 1px 1px; text-align: right;">
@@ -36,3 +45,4 @@
 	</tr>
 	</table>
 </c:forEach>
+</div>

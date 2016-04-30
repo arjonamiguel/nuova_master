@@ -4,12 +4,12 @@ import com.google.common.base.Charsets;
 import com.google.common.io.ByteSource;
 import com.nuova.dto.ComboItemDTO;
 import com.nuova.dto.EspecialidadDTO;
+import com.nuova.dto.NomencladorDTO;
 import com.nuova.dto.ObraSocialDTO;
 import com.nuova.dto.ObservacionesDTO;
 import com.nuova.dto.OrdenDTO;
 import com.nuova.dto.OrdenDocumentDTO;
 import com.nuova.dto.OrdenPracticaDTO;
-import com.nuova.dto.OrdenProfesionalDTO;
 import com.nuova.dto.OrdenTipoDTO;
 import com.nuova.dto.OrdenWorkflowDTO;
 import com.nuova.dto.PacienteDTO;
@@ -55,6 +55,7 @@ import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -65,14 +66,10 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.nio.charset.CharsetEncoder;
 import java.nio.charset.StandardCharsets;
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
-import java.util.Formatter;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -98,26 +95,14 @@ public class OrdenController {
   @Autowired
   CajaManager cajaManager;
 
-  private static final int BUFFER_SIZE = 4096;
-
-  private String iniciada = " <span class='label-success' style='color:white;'>INICIADA</span>";
-
-  private String autorizacion_directa =
-      "<span class='label-important' style='color:white;'>AUTORIZACION DIRECTA</span>";
-  private String pendiente_afiliaciones =
-      "<span class='label-warning' style='color:white;'>PENDIENTE AFILIACIONES</span>";
-  private String autorizada_por_afiliaciones =
-      " <span class='label-success' style='color:white;'>AUTORIZADA POR AFILIACIONES</span>";
-  private String rechazada_por_afiliaciones =
-      "<span class='label-warning' style='color:white;'>RECHAZADA POR AFILIACIONES</span>";
-  private String pendiente_auditoria =
-      "<span class='label-warning' style='color:white;'>PENDIENTE AUDITORIA</span>";
-  private String autorizada_por_auditoria =
-      "<span class='label-warning' style='color:white;'>AUTORIZADA POR AUDITORIA</span>";
-  private String rechazada_por_auditoria =
-      "<span class='label-warning' style='color:white;'>RECHAZADA POR AUDITORIA</span>";
-  private String rechazada = "<span class='label-warning' style='color:white;'>RECHAZADA</span>";
-  private String anulado = "<span class='label-warning' style='color:white;'>ANULADO</span>";
+  private String iniciada = " <span  style='color:black;background:gold'>INICIADA</span>";
+  private String autorizada = "<span style='color:white;background: green'>AUTORIZADA</span>";
+  private String pendiente = "<span  style='color:white;background: sienna'>PENDIENTE</span>";
+  private String en_progreso =
+      " <span style='color:white;background: steelblue'>EN PROGRESO</span>";
+  private String rechazada = "<span style='color:white;background: gray'>RECHAZADA</span>";
+  private String cerrada = "<span style='color:white;background: black'>CERRADA</span>";
+  private String anulada = "<span style='color:white;background: tomato'>ANULADA</span>";
 
   @RequestMapping(value = ConstantControllers.REDIRECT_ORDEN, method = RequestMethod.POST)
   public String redirectOrden(ModelMap map,
@@ -130,9 +115,10 @@ public class OrdenController {
     OrdenTipo ot = ordenManager.findOrdenTipoByCodigo(codigo);
     ordenDto.setOrdenTipo(transformOrdenTipoToDto(ot));
 
+    List<Profesional> profesionales = profesionalManager.findAll();
+
     if (codigo == Util.ORDEN_CONSULTA) {
       OrdenTipoDTO otdto = transformOrdenTipoToDto(ot);
-      List<Profesional> profesionales = profesionalManager.findAll();
       map.addAttribute("profesionales", getProfesionalDTOList(profesionales));
       map.addAttribute("ordenTipoDto", otdto);
       map.addAttribute("montosorden", getMontosOrden(otdto));
@@ -146,11 +132,24 @@ public class OrdenController {
       redirect = ConstantRedirect.VIEW_FORM_ODONTOLOGIA_BY_PACIENTE;
 
     } else if (codigo == Util.ORDEN_PRACTICA) {
+      map.addAttribute("profesionales", getProfesionalDTOList(profesionales));
       redirect = ConstantRedirect.VIEW_FORM_ADD_ORDEN_BY_PACIENTE;
     }
 
     map.addAttribute("ordenDto", ordenDto);
     return redirect;
+  }
+
+  @RequestMapping(value = ConstantControllers.CREATE_ORDEN, method = RequestMethod.GET)
+  public String createOrden(ModelMap map, @PathVariable("ordenTipoId") Integer ordenTipoId,
+      @PathVariable("pacienteId") Integer pacienteId) {
+    OrdenTipo otp = ordenManager.findOrdenTipoById(ordenTipoId);
+    OrdenTipoDTO ordenTipo = new OrdenTipoDTO();
+    ordenTipo.setCodigo(otp.getCodigo());
+    ordenTipo.setOrdenTipoId(otp.getOrdenTipoId());
+    ordenTipo.setPacienteId(pacienteId);
+
+    return redirectOrden(map, ordenTipo);
   }
 
   @RequestMapping(value = ConstantControllers.FORM_ADD_ORDEN, method = RequestMethod.GET)
@@ -181,12 +180,18 @@ public class OrdenController {
   public String formEditOrden(ModelMap map, @PathVariable("ordenId") Integer ordenId) {
     if (ordenId != null) {
       OrdenDTO ordenDto = transformOrdenToDto(ordenManager.findOrdenById(ordenId));
+      Especialidad e = especialidadManager.findEspecialidadById(ordenDto.getEspecialidad());
+
+      List<Profesional> profesionales =
+          especialidadManager.findProfesionalByEspecialidadId(ordenDto.getProfesionalId());
+      User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
       int observacionCount = ordenDto.getObservacioneses().size();
       map.addAttribute("ordenDto", ordenDto);
       map.addAttribute("observacionCount", observacionCount);
-      // map.addAttribute("practicasList", Util.getComboItems(practicaManager.findAll()));
-
-      map.addAttribute("estadosList", Util.getEstadosList());
+      map.addAttribute("userNameLogged", user.getUsername());
+      map.addAttribute("ordenEstadosList", Util.getOrdenEstadosList());
+      map.addAttribute("profesionales", profesionales);
+      map.addAttribute("especialidadView", e.getNombre());
     }
 
     return ConstantRedirect.VIEW_FORM_EDIT_ORDEN;
@@ -196,9 +201,15 @@ public class OrdenController {
   public String formEditConsulta(ModelMap map, @PathVariable("ordenId") Integer ordenId) {
     if (ordenId != null) {
       OrdenDTO ordenDto = transformOrdenToDto(ordenManager.findOrdenById(ordenId));
-      List<Profesional> profesionales = profesionalManager.findAll();
+      Especialidad e = especialidadManager.findEspecialidadById(ordenDto.getEspecialidad());
+
+      List<Profesional> profesionales =
+          especialidadManager.findProfesionalByEspecialidadId(ordenDto.getEspecialidad());
+
       map.addAttribute("profesionales", getProfesionalDTOList(profesionales));
       map.addAttribute("ordenDto", ordenDto);
+      map.addAttribute("especialidadView", e.getNombre());
+
     }
 
     return ConstantRedirect.VIEW_FORM_EDIT_CONSULTA;
@@ -245,6 +256,48 @@ public class OrdenController {
     return new PageImpl<OrdenDTO>(dtos, pageable, ordenes.getTotalElements());
   }
 
+  @RequestMapping(value = ConstantControllers.AJAX_GET_CONSULTASBYPACIENTE_PAGINADOS,
+      method = RequestMethod.GET)
+  public @ResponseBody Page<OrdenDTO> getConsultasByPacientePaginados(
+      @PathVariable("pacienteId") Integer pacienteId,
+      @RequestParam(required = false, defaultValue = "0") Integer start,
+      @RequestParam(required = false, defaultValue = "50") Integer limit) {
+
+    // Sort and Pagination
+    // Sort sort = new Sort(Sort.Direction.DESC, "creationDate");
+    Pageable pageable = new PageRequest(start, limit);
+
+    Page<Orden> ordenes = ordenManager.findConsultasByPageableANDPaciente(pageable, pacienteId);
+    List<OrdenDTO> dtos = new ArrayList<OrdenDTO>();
+    for (Orden o : ordenes) {
+      OrdenDTO dto = transformOrdenToDto(o);
+      dtos.add(dto);
+    }
+
+    return new PageImpl<OrdenDTO>(dtos, pageable, ordenes.getTotalElements());
+  }
+
+  @RequestMapping(value = ConstantControllers.AJAX_GET_PRACTICASBYPACIENTE_PAGINADOS,
+      method = RequestMethod.GET)
+  public @ResponseBody Page<OrdenDTO> getPracticasByPacientePaginados(
+      @PathVariable("pacienteId") Integer pacienteId,
+      @RequestParam(required = false, defaultValue = "0") Integer start,
+      @RequestParam(required = false, defaultValue = "50") Integer limit) {
+
+    // Sort and Pagination
+    // Sort sort = new Sort(Sort.Direction.DESC, "creationDate");
+    Pageable pageable = new PageRequest(start, limit);
+
+    Page<Orden> ordenes = ordenManager.findPracticasByPageableANDPaciente(pageable, pacienteId);
+    List<OrdenDTO> dtos = new ArrayList<OrdenDTO>();
+    for (Orden o : ordenes) {
+      OrdenDTO dto = transformOrdenToDto(o);
+      dtos.add(dto);
+    }
+
+    return new PageImpl<OrdenDTO>(dtos, pageable, ordenes.getTotalElements());
+  }
+
   @RequestMapping(value = ConstantControllers.AJAX_GET_SEARCH_ORDENES_PAGINADOS,
       method = RequestMethod.GET)
   public @ResponseBody Page<OrdenDTO> getSearchOrdenesPaginados(
@@ -271,7 +324,6 @@ public class OrdenController {
       method = RequestMethod.POST)
   public @ResponseBody List<ComboItemDTO> getAutocompletePaciente(
       @RequestParam(required = false, defaultValue = "") String query) {
-    Formatter fmt = new Formatter();
     List<ComboItemDTO> retorno = new ArrayList<ComboItemDTO>();
     for (Nomenclador n : practicaManager.findNomencladorAutocomplete(query)) {
       retorno.add(new ComboItemDTO(n.getNomencladorId() + "",
@@ -280,6 +332,48 @@ public class OrdenController {
 
     return retorno;
   }
+
+  @RequestMapping(value = ConstantControllers.AJAX_POST_SAVECODIGONOMENCLADOR,
+      method = RequestMethod.POST, headers = {"content-type=application/json"})
+  public @ResponseBody String saveCodigoNomenclador(@RequestBody NomencladorDTO dto)
+      throws Exception {
+
+    Nomenclador nom = new Nomenclador();
+    nom.setCodigo(dto.getCodigo());
+    nom.setNombre(dto.getNombre());
+    nom.setTipo("MANUAL");
+
+    practicaManager.add(nom);
+    return nom.getNomencladorId() != null ? nom.getNomencladorId() + "" : "-1";
+  }
+
+  @RequestMapping(value = ConstantControllers.AJAX_GET_PROFESIONALESBYESPECIALIDAD,
+      method = RequestMethod.GET)
+  public @ResponseBody List<ComboItemDTO> getProfesionalesByEspecialidad(
+      @RequestParam(required = false, defaultValue = "0") Integer especialidadId) {
+    List<ComboItemDTO> retorno = new ArrayList<ComboItemDTO>();
+    List<Profesional> profesionales =
+        especialidadManager.findProfesionalByEspecialidadId(especialidadId);
+
+    for (Profesional p : profesionales) {
+      retorno
+          .add(new ComboItemDTO(p.getProfesionalId() + "", p.getApellido() + " " + p.getNombre()));
+    }
+    return retorno;
+  }
+
+  @RequestMapping(value = ConstantControllers.AJAX_GET_AUTOCOMPLETE_ESPECIALIDADES,
+      method = RequestMethod.POST)
+  public @ResponseBody List<ComboItemDTO> getAutocompleteEspecialidades(
+      @RequestParam(required = false, defaultValue = "") String query) {
+    List<ComboItemDTO> retorno = new ArrayList<ComboItemDTO>();
+    for (Especialidad e : pacienteManager.findEspecialidadesAutocomplete(query)) {
+      retorno.add(new ComboItemDTO(e.getEspecialidadId() + "", e.getNombre()));
+    }
+
+    return retorno;
+  }
+
 
   @RequestMapping(value = ConstantControllers.ADD_ORDEN, method = RequestMethod.POST)
   public String addOrden(@ModelAttribute(value = "ordenDto") OrdenDTO ordenDto,
@@ -337,107 +431,117 @@ public class OrdenController {
   }
 
   @RequestMapping(value = ConstantControllers.EDIT_ORDEN, method = RequestMethod.POST)
-  public String editOrden(@ModelAttribute(value = "ordenDto") OrdenDTO dto) {
+  public String editOrden(ModelMap map, @ModelAttribute(value = "ordenDto") OrdenDTO dto) {
+    int message = Util.MESSAGE_SUCCESS;
     Orden orden = ordenManager.findOrdenById(dto.getOrdenId());
-    User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-    List<OrdenPracticaDTO> practicas = dto.getOrdenpracticaListEdit();
 
-    // Persisto Observacion
-    if (dto.getObservacion() != null && !dto.getObservacion().trim().equals("")) {
-      // observacionManager.add(new Observaciones(orden, dto.getObservacion(), user.getUsername(),
-      // new Date()));
-      orden.getObservacioneses()
-          .add(new Observaciones(orden, dto.getObservacion(), user.getUsername(), new Date()));
-    }
+    try {
 
-    // Persiste Practicas
-    for (OrdenPractica o : orden.getOrdenPracticas()) {
-      ordenManager.deleteOrdenPractica(o.getOrden().getOrdenId());
-    }
+      User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+      List<OrdenPracticaDTO> practicas = dto.getOrdenpracticaListEdit();
 
-    Set<OrdenPractica> persistOrdenPracticaList = new HashSet<OrdenPractica>();
-    for (OrdenPracticaDTO opdto : practicas) {
-      if (opdto.getPracticaId() != null) {
-        Nomenclador p = new Nomenclador();
-        p.setNomencladorId(opdto.getPracticaId());
-        OrdenPractica op = new OrdenPractica();
-        op.setFecha(new Date());
-        op.setOrden(orden);
-        op.setNomenclador(p);
-        op.setEstado(opdto.getEstado());
-
-        persistOrdenPracticaList.add(op);
+      // Persisto Observacion
+      if (dto.getObservacion() != null && !dto.getObservacion().trim().equals("")) {
+        // observacionManager.add(new Observaciones(orden, dto.getObservacion(), user.getUsername(),
+        // new Date()));
+        orden.getObservacioneses()
+            .add(new Observaciones(orden, dto.getObservacion(), user.getUsername(), new Date()));
       }
-    }
-    orden.setOrdenPracticas(persistOrdenPracticaList);
 
-    // Persiste Estado
-    if (dto.getEstado() != null && !orden.getEstado().equals(dto.getEstado())) {
-      OrdenWorkflow ow = new OrdenWorkflow(orden, user.getUsername(), dto.getEstado(), new Date());
-      orden.getOrdenWorkflows().add(ow);
-      orden.setEstado(dto.getEstado());
-    }
+      // Persiste Practicas
+      for (OrdenPractica o : orden.getOrdenPracticas()) {
+        ordenManager.deleteOrdenPractica(o.getOrden().getOrdenId());
+      }
 
-    if (orden.getOrdenTipo().getCodigo().intValue() == 100) {
+      Set<OrdenPractica> persistOrdenPracticaList = new HashSet<OrdenPractica>();
+      for (OrdenPracticaDTO opdto : practicas) {
+        if (opdto.getPracticaId() != null) {
+          Nomenclador p = new Nomenclador();
+          p.setNomencladorId(opdto.getPracticaId());
+          OrdenPractica op = new OrdenPractica();
+          op.setFecha(new Date());
+          op.setOrden(orden);
+          op.setNomenclador(p);
+          op.setEstado(opdto.getEstado());
+          op.setValor(opdto.getValor());
+          op.setAutorizarAutomatico(Util.parseToDate(opdto.getAutorizarAutomatico()));
+
+          persistOrdenPracticaList.add(op);
+        }
+      }
+      orden.setOrdenPracticas(persistOrdenPracticaList);
+
+      // Persiste Estado
+      if (dto.getEstado() != null && !orden.getEstado().equals(dto.getEstado())) {
+        OrdenWorkflow ow =
+            new OrdenWorkflow(orden, user.getUsername(), dto.getEstado(), new Date());
+        orden.getOrdenWorkflows().add(ow);
+        orden.setEstado(dto.getEstado());
+      }
+
+      // Profesional y la especialidad relacionada a la orden
       Set<OrdenProfesional> ordenProfesionals = new HashSet<OrdenProfesional>();
       OrdenProfesional op = new OrdenProfesional();
       op.setProfesional(profesionalManager.findProfesionalById(dto.getProfesionalId()));
       op.setOrden(orden);
+      op.setEspecialidadId(dto.getEspecialidad());
       ordenProfesionals.add(op);
       ordenManager.deleteOrdenProfesional(orden.getOrdenId());
       orden.setOrdenProfesionals(ordenProfesionals);
-    }
 
-    // requisitos
-    orden.setReqCredecial(Util.getByteFlag(dto.isReqCredecial()));
-    orden.setReqMonotributista(Util.getByteFlag(dto.isReqMonotributista()));
-    orden.setReqOrdenMedico(Util.getByteFlag(dto.isReqOrdenMedico()));
-    orden.setReqReciboSueldo(Util.getByteFlag(dto.isReqReciboSueldo()));
 
-    // Actualizo Orden
-    ordenManager.edit(orden);
+      // requisitos
+      orden.setReqCredecial(Util.getByteFlag(dto.isReqCredecial()));
+      orden.setReqMonotributista(Util.getByteFlag(dto.isReqMonotributista()));
+      orden.setReqOrdenMedico(Util.getByteFlag(dto.isReqOrdenMedico()));
+      orden.setReqReciboSueldo(Util.getByteFlag(dto.isReqReciboSueldo()));
 
-    // Actualizo Orden Document
-    // Historia Cinica - Archivos Adjuntos
-    boolean haveChange = false;
+      // Actualizo Orden
+      ordenManager.edit(orden);
 
-    List<OrdenDocument> documents = new ArrayList<OrdenDocument>();
-    List<OrdenDocument> documentsTotal = new ArrayList<OrdenDocument>();
-    List<OrdenDocument> documentsOld =
-        ordenManager.finAllOrdenDocumentByOrdenId(orden.getOrdenId());
-    for (OrdenDocumentDTO hc : dto.getHistoriasclinicas()) {
-      if (hc.getDocumentId() != null) {
-        OrdenDocument d = ordenManager.findOrdenDocumentById(hc.getDocumentId());
-        if (d != null) {
-          documents.add(d);
+      // Actualizo Orden Document
+      // Historia Cinica - Archivos Adjuntos
+      List<OrdenDocument> documents = new ArrayList<OrdenDocument>();
+      List<OrdenDocument> documentsTotal = new ArrayList<OrdenDocument>();
+      List<OrdenDocument> documentsOld =
+          ordenManager.finAllOrdenDocumentByOrdenId(orden.getOrdenId());
+      for (OrdenDocumentDTO hc : dto.getHistoriasclinicas()) {
+        if (hc.getDocumentId() != null) {
+          OrdenDocument d = ordenManager.findOrdenDocumentById(hc.getDocumentId());
+          if (d != null) {
+            documents.add(d);
+          }
         }
       }
-    }
 
-    for (OrdenDocumentDTO hc : dto.getHistoriasclinicas()) {
-      if (hc.getDocumentId() == null && hc.getFileData() != null && !hc.getFileData().isEmpty()) {
-        OrdenDocument content = new OrdenDocument();
-        content.setContent(hc.getFileData().getBytes());
-        content.setFileName(hc.getFileData().getOriginalFilename());
-        content.setType(Util.DOCUMENT_TYPE);
-        content.setFileType(hc.getFileData().getContentType());
-        content.setOrdenId(orden.getOrdenId());
-        content.setSize(hc.getFileData().getSize());
+      for (OrdenDocumentDTO hc : dto.getHistoriasclinicas()) {
+        if (hc.getDocumentId() == null && hc.getFileData() != null && !hc.getFileData().isEmpty()) {
+          OrdenDocument content = new OrdenDocument();
+          content.setContent(hc.getFileData().getBytes());
+          content.setFileName(hc.getFileData().getOriginalFilename());
+          content.setType(Util.DOCUMENT_TYPE);
+          content.setFileType(hc.getFileData().getContentType());
+          content.setOrdenId(orden.getOrdenId());
+          content.setSize(hc.getFileData().getSize());
 
-        documentsTotal.add(content);
+          documentsTotal.add(content);
+        }
       }
-    }
 
-    for (OrdenDocument od : documentsOld) {
-      ordenManager.deleteOrdenDocument(od.getDocumentId());
-    }
+      for (OrdenDocument od : documentsOld) {
+        ordenManager.deleteOrdenDocument(od.getDocumentId());
+      }
 
-    if (documents.size() > 0) {
-      documentsTotal.addAll(documents);
-    }
+      if (documents.size() > 0) {
+        documentsTotal.addAll(documents);
+      }
 
-    for (OrdenDocument od : documentsTotal) {
-      ordenManager.add(od);
+      for (OrdenDocument od : documentsTotal) {
+        ordenManager.add(od);
+      }
+
+    } catch (Exception ex) {
+      message = Util.MESSAGE_ERROR;
     }
 
     String redirect = "";
@@ -448,8 +552,10 @@ public class OrdenController {
       redirect = ConstantControllers.MAIN_CONSULTA_ODONTOLOGICA;
     }
     if (orden.getOrdenTipo().getCodigo().intValue() == 102) {
-      redirect = ConstantControllers.MAIN_ORDEN_PRACTICA;
+      redirect = "/formEditOrden/" + orden.getOrdenId();
     }
+
+    map.addAttribute("message", message);
 
     return "redirect:" + redirect;
   }
@@ -476,7 +582,7 @@ public class OrdenController {
   public Paciente transformDtoToPaciente(PacienteDTO dto) {
     Paciente paciente = new Paciente();
     paciente.setPacienteId(dto.getPacienteId());
-    paciente.setDni(dto.getDni());
+    paciente.setDni((dto.getDni() == null) ? "" : dto.getDni().toString());
     paciente.setApellido(dto.getApellido());
     paciente.setNombre(dto.getNombre());
     paciente.setDomicilio(dto.getDomicilio());
@@ -508,7 +614,8 @@ public class OrdenController {
   public PacienteDTO transformPacienteToDto(Paciente p) {
     PacienteDTO dto = new PacienteDTO();
     dto.setPacienteId(p.getPacienteId());
-    dto.setDni(p.getDni());
+    dto.setEliminado(p.getEliminado().intValue());
+    dto.setDni(Integer.valueOf(p.getDni()));
     dto.setApellido(p.getApellido());
     dto.setNombre(p.getNombre());
     dto.setDomicilio(p.getDomicilio());
@@ -518,6 +625,8 @@ public class OrdenController {
     dto.setMail(p.getMail());
     dto.setTelefono(p.getTelefono());
     dto.setProvincia(p.getProvincia());
+    dto.setEliminadoView(p.getEliminado().intValue() == 0 ? "ACTIVO" : "INACTIVO");
+
     if (p.getPaciente() != null && p.getPaciente().getPacienteId() != null) {
       dto.setPacienteTitular(transformPacienteToDto(
           pacienteManager.fin1dPacienteById(p.getPaciente().getPacienteId())));
@@ -559,7 +668,9 @@ public class OrdenController {
       dtoad.setCheckedLiberado(p.getCoseguro().intValue() == 1 ? "checked" : "");
       dtoad.setMail(ad.getMail());
       dtoad.setTelefono(ad.getTelefono());
-      dtoad.setDni(ad.getDni());
+      dtoad.setDni(Integer.valueOf(ad.getDni()));
+      dtoad.setEliminado(ad.getEliminado().intValue());
+
 
       // for (PacienteObrasocial poo : ad.getPacienteObrasocials()) {
       // dtoad.setCrdencial(poo.getNroCredencial());
@@ -569,6 +680,7 @@ public class OrdenController {
       dto.getAdherentes().add(dtoad);
     }
 
+    dto.setEliminado(p.getEliminado().intValue());
     return dto;
   }
 
@@ -626,53 +738,53 @@ public class OrdenController {
     dto.setOrdenWorkflows(getOrdenWorkflowToDto(orden.getOrdenWorkflows()));
 
     // Profesional
+    Integer especialidadId = new Integer(0);
     for (OrdenProfesional op : orden.getOrdenProfesionals()) {
       if (op.getProfesional() != null) {
+        dto.setEspecialidad(op.getEspecialidadId());
         dto.setProfesional(transformProfesionalToDto(op.getProfesional()));
+        especialidadId = op.getEspecialidadId();
       }
     }
+    if (dto.getProfesional() != null) {
+      dto.setApellidoNombreProfesional(dto.getProfesional().getApellidoNombre());
+      if (especialidadId != null) {
+        Especialidad e = especialidadManager.findEspecialidadById(especialidadId);
+        if (e != null)
+          dto.setEspecialidadView(e.getNombre());
+      }
+    }
+
+    // Set de Estados
     if (dto.getProfesional() != null) {
       dto.setProfesionalId(dto.getProfesional().getProfesionalId());
     }
 
-    if (orden.getEstado() != null && orden.getEstado().equals(ConstantOrdenEstado.INICIADA)) {
+    if (orden.getEstado() != null && orden.getEstado().equals(ConstantOrdenEstado.ORDEN_INICIADA)) {
       dto.setEtiqestado(iniciada);
     }
-    if (orden.getEstado() != null && orden.getEstado().equals(ConstantOrdenEstado.ANULADO)) {
-      dto.setEtiqestado(anulado);
+    if (orden.getEstado() != null
+        && orden.getEstado().equals(ConstantOrdenEstado.ORDEN_AUTORIZADA)) {
+      dto.setEtiqestado(autorizada);
+    }
+    if (orden.getEstado() != null && orden.getEstado().equals(ConstantOrdenEstado.ORDEN_CERRADA)) {
+      dto.setEtiqestado(cerrada);
     }
     if (orden.getEstado() != null
-        && orden.getEstado().equals(ConstantOrdenEstado.AUTORIZACION_DIRECTA)) {
-      dto.setEtiqestado(autorizacion_directa);
+        && orden.getEstado().equals(ConstantOrdenEstado.ORDEN_EN_PROGRESO)) {
+      dto.setEtiqestado(en_progreso);
     }
     if (orden.getEstado() != null
-        && orden.getEstado().equals(ConstantOrdenEstado.AUTORIZADA_POR_AFILIACIONES)) {
-      dto.setEtiqestado(autorizada_por_afiliaciones);
+        && orden.getEstado().equals(ConstantOrdenEstado.ORDEN_PENDIENTE)) {
+      dto.setEtiqestado(pendiente);
     }
     if (orden.getEstado() != null
-        && orden.getEstado().equals(ConstantOrdenEstado.AUTORIZADA_POR_AUDITORIA)) {
-      dto.setEtiqestado(autorizada_por_auditoria);
-    }
-    if (orden.getEstado() != null
-        && orden.getEstado().equals(ConstantOrdenEstado.PENDIENTE_AFILIACIONES)) {
-      dto.setEtiqestado(pendiente_afiliaciones);
-    }
-    if (orden.getEstado() != null
-        && orden.getEstado().equals(ConstantOrdenEstado.PENDIENTE_AUDITORIA)) {
-      dto.setEtiqestado(pendiente_auditoria);
-    }
-    if (orden.getEstado() != null && orden.getEstado().equals(ConstantOrdenEstado.RECHAZADA)) {
+        && orden.getEstado().equals(ConstantOrdenEstado.ORDEN_RECHAZADA)) {
       dto.setEtiqestado(rechazada);
     }
-    if (orden.getEstado() != null
-        && orden.getEstado().equals(ConstantOrdenEstado.RECHAZADA_POR_AFILIACIONES)) {
-      dto.setEtiqestado(rechazada_por_afiliaciones);
+    if (orden.getEstado() != null && orden.getEstado().equals(ConstantOrdenEstado.ORDEN_ANULADA)) {
+      dto.setEtiqestado(anulada);
     }
-    if (orden.getEstado() != null
-        && orden.getEstado().equals(ConstantOrdenEstado.RECHAZADA_POR_AUDITORIA)) {
-      dto.setEtiqestado(rechazada_por_auditoria);
-    }
-
     // Historia Clinica
     List<OrdenDocument> documents = ordenManager.finAllOrdenDocumentByOrdenId(dto.getOrdenId());
     for (OrdenDocument od : documents) {
@@ -707,13 +819,16 @@ public class OrdenController {
     String botonEdit = "<a class='btn btn-info btn-xs' href='/nuova/" + action + "/"
         + dto.getOrdenId() + "'><span class='icon icon-edit'></span></a>";
 
-    String botonDelete = "<a class='btn btn-danger btn-xs' href='/nuova/formDeleteOrden/"
-        + dto.getOrdenId() + "'><span class='icon icon-remove'></span></a>";
+    // String botonDelete = "<a class='btn btn-danger btn-xs' href='/nuova/formDeleteOrden/"
+    // + dto.getOrdenId() + "'><span class='icon icon-remove'></span></a>";
 
-    String botonPrint = "<a class='btn btn-default btn-xs' href='/nuova/showReporteOrdenEmitida/"
-        + dto.getOrdenId() + "'><span class='icon icon-print'></span></a>";
+    String botonPrint =
+        "<a class='btn btn-default btn-xs' data-toggle='modal' data-target='#myModal' onClick='showReport("
+            + dto.getOrdenId() + ")'><span class='icon icon-print'></span></a>";
+    // String botonPrint = "<button type='button' class='btn btn-info btn-lg' data-toggle='modal'
+    // data-target='#myModal'>Open Modal</button>";
 
-    dto.setAcciones(botonEdit + botonDelete + botonPrint);
+    dto.setAcciones(botonEdit + botonPrint);
 
     return dto;
   }
@@ -771,7 +886,8 @@ public class OrdenController {
       dto.setNombre(p.getNombre());
       dto.setPracticaId(p.getNomencladorId());
       dto.setEstado(op.getEstado());
-
+      dto.setValor(op.getValor());
+      dto.setAutorizarAutomatico(op.getAutorizarAutomatico() + "");
       retorno.add(dto);
     }
 
@@ -795,6 +911,7 @@ public class OrdenController {
       Profesional profesional = new Profesional();
       profesional.setProfesionalId(dto.getProfesionalId());
       OrdenProfesional op = new OrdenProfesional(orden, profesional);
+      op.setEspecialidadId(dto.getEspecialidad());
       ordenProfesionals.add(op);
       orden.setOrdenProfesionals(ordenProfesionals);
     }
@@ -826,6 +943,7 @@ public class OrdenController {
     ProfesionalDTO dto = new ProfesionalDTO();
     dto.setApellido(p.getApellido());
     dto.setNombre(p.getNombre());
+    dto.setApellidoNombre(p.getApellido() + " " + p.getNombre());
     dto.setTelefono(p.getTelefono());
     dto.setTituloProfesional(p.getTituloProfesional());
     dto.setRegistroNacional(p.getRegistroNacional());
@@ -861,6 +979,14 @@ public class OrdenController {
     return retorno;
   }
 
+  private List<ComboItemDTO> getEspecialidadDTOList(List<Especialidad> list) {
+    List<ComboItemDTO> retorno = new ArrayList<ComboItemDTO>();
+    for (Especialidad e : list) {
+      retorno.add(new ComboItemDTO(e.getEspecialidadId() + "", e.getNombre()));
+    }
+    return retorno;
+  }
+
   private List<Double> getMontosOrden(OrdenTipoDTO dto) {
     List<Double> retorno = new ArrayList<Double>();
     if (dto.getMonto1().doubleValue() > 0.00) {
@@ -876,38 +1002,6 @@ public class OrdenController {
     }
 
     return retorno;
-  }
-
-  private OrdenProfesional transformDtoToOrdenProfesional(OrdenProfesionalDTO dto) {
-    OrdenProfesional retorno = new OrdenProfesional();
-    retorno.setProfesional(transformDtoToProfesional(dto.getProfesional()));
-    return retorno;
-  }
-
-  private Profesional transformDtoToProfesional(ProfesionalDTO p) {
-    Set<ProfesionalEspecialidad> profesionalEspecialidades = new HashSet<ProfesionalEspecialidad>();
-    DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
-    Date fechaHabilitacion = null;
-    try {
-      fechaHabilitacion = formatter.parse(p.getFechaVencimientoHabilitacion());
-    } catch (ParseException e) {
-      // TODO Auto-generated catch block
-      e.printStackTrace();
-    }
-    Profesional profesional = new Profesional(p.getApellido(), p.getNombre(), p.getTelefono(),
-        p.getMatricula(), p.getRegistroNacional(), p.getTituloProfesional(),
-        new Byte(p.getHabilitacionSiprosa()), fechaHabilitacion, null, null, null, null, null, null,
-        null, null, null, null, null, null);
-    profesional.setProfesionalId(p.getProfesionalId());
-
-    for (Integer id : p.getEspecialidadList()) {
-      Especialidad especialidad = especialidadManager.findEspecialidadById(id);
-      profesionalEspecialidades.add(new ProfesionalEspecialidad(profesional, especialidad));
-    }
-
-    profesional.setProfesionalEspecialidads(profesionalEspecialidades);
-
-    return profesional;
   }
 
   private String getContentDispositionValue(String fileName, String typeFile) {

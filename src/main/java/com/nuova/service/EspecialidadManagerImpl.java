@@ -1,6 +1,9 @@
 package com.nuova.service;
 
-import java.util.List;
+import com.nuova.dao.EspecialidadDAO;
+import com.nuova.dto.OrdenAlarmaDTO;
+import com.nuova.model.Especialidad;
+import com.nuova.model.Profesional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -8,53 +11,65 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.nuova.dao.EspecialidadDAO;
-import com.nuova.dto.OrdenAlarmaDTO;
-import com.nuova.model.Especialidad;
+import java.util.List;
 
 @Service
 public class EspecialidadManagerImpl implements EspecialidadManager {
-    @Autowired
-    EspecialidadDAO especialidadDAO;
+  @Autowired
+  EspecialidadDAO especialidadDAO;
 
-    @Transactional
-    public void add(Especialidad especialidad) {
-        especialidadDAO.add(especialidad);
-    }
+  @Override
+  @Transactional
+  public void add(Especialidad especialidad) {
+    especialidadDAO.add(especialidad);
+  }
 
-    @Transactional
-    public List<Especialidad> findAll() {
-        return especialidadDAO.findAll();
-    }
+  @Override
+  @Transactional
+  public List<Especialidad> findAll() {
+    return especialidadDAO.findAll();
+  }
 
-    @Transactional
-    public void delete(Integer id) {
-        especialidadDAO.delete(id);
+  @Override
+  @Transactional
+  public void delete(Integer id) {
+    especialidadDAO.delete(id);
 
-    }
+  }
 
-    @Transactional
-    public Especialidad findEspecialidadById(Integer id) {
-        return especialidadDAO.findEspecialidadById(id);
-    }
+  @Override
+  @Transactional
+  public Especialidad findEspecialidadById(Integer id) {
+    return especialidadDAO.findEspecialidadById(id);
+  }
 
-    @Transactional
-    public void edit(Especialidad especialidad) {
-        this.especialidadDAO.edit(especialidad);
-    }
+  @Override
+  @Transactional
+  public void edit(Especialidad especialidad) {
+    this.especialidadDAO.edit(especialidad);
+  }
 
-    @Transactional
-    public Page<Especialidad> findEspecialidadesByPageable(Pageable pageable) {
-        return especialidadDAO.findEspecialidadesByPageable(pageable);
-    }
+  @Override
+  @Transactional
+  public Page<Especialidad> findEspecialidadesByPageable(Pageable pageable) {
+    return especialidadDAO.findEspecialidadesByPageable(pageable);
+  }
 
-    @Transactional
-    public Page<Especialidad> findEspecialidadesBySearch(String search, Pageable pageable) {
-        return especialidadDAO.findEspecialidadesBySearch(search, pageable);
-    }
+  @Override
+  @Transactional
+  public Page<Especialidad> findEspecialidadesBySearch(String search, Pageable pageable) {
+    return especialidadDAO.findEspecialidadesBySearch(search, pageable);
+  }
 
-    @Transactional
-    public OrdenAlarmaDTO countEspecialidades() {
-        return especialidadDAO.countEspecialidades();
-    }
+  @Override
+  @Transactional
+  public OrdenAlarmaDTO countEspecialidades() {
+    return especialidadDAO.countEspecialidades();
+  }
+
+  @Override
+  @Transactional
+  public List<Profesional> findProfesionalByEspecialidadId(Integer especialidadId) {
+    return especialidadDAO.findProfesionalByEspecialidadId(especialidadId);
+  }
 }

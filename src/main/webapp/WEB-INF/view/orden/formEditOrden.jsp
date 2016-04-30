@@ -22,6 +22,26 @@
 
 
 <script type="text/javascript">
+
+function createDatePicker(idx) {
+	return '	<div style="visibility:hidden;height:0px;"> '+
+	' <input type="text"' + 
+	' name = "ordenpracticaListEdit['+idx+'].autorizarAutomatico" '  +
+	' id = "ordenpracticaListEdit['+idx+'].autorizarAutomatico"' +
+	' class="date" />' 	+					
+	' </div> '+
+	' <div id="calendar">'+
+	' <div class="input-group registration-date-time" style="padding-top:0%;">'+
+	' <input class="form-control"'+
+	' <input class="form-control"'+
+	' name="autorizar_automatico_'+idx +'"'+
+	' id="autorizar_automatico_'+idx +'"'+
+	' type="date"'+
+	' onchange="javascript:updateDate('+idx+');">'+
+	' </div>'+
+	' </div>';	 
+
+}
 function createSelectEstados(id) {
 	var selectEstado = '<select name="'+id+'" id="'+id+'" style="width:70%; margin-bottom:0px">' +
 	   ' <option value="NONE">Seleccione Estado ...</option>' +
@@ -90,18 +110,28 @@ function addRow(tableID) {
 	index ++;	
     var table = document.getElementById(tableID);
     var rowCount = table.rows.length;
-    var row = table.insertRow(rowCount);          
+    var row = table.insertRow(rowCount);
+    row.style.background= '#f5f5f5';
           
-    var cell2 = row.insertCell(0);
-    cell2.innerHTML = document.getElementById("ContainerGeneralOverWrite_ContainerGeneral_sq").value+" <input type='hidden' name='ordenpracticaListEdit[" + index + "].orddenPracticaId'> "
+    var cell0 = row.insertCell(0);
+    cell0.innerHTML = document.getElementById("ContainerGeneralOverWrite_ContainerGeneral_sq").value+" <input type='hidden' name='ordenpracticaListEdit[" + index + "].orddenPracticaId'> "
     + "<input type='hidden' name='ordenpracticaListEdit[" + index + "].practicaId' value='" + document.getElementById("nomencladorId").value + "'>"; 
+
+    var cell1 = row.insertCell(1);
+    cell1.innerHTML = "<input type='text' name='ordenpracticaListEdit[" + index + "].valor' value='0.00'>"; 
     
-    var cell3 = row.insertCell(1);
-    cell3.innerHTML = createSelectEstados("ordenpracticaListEdit[" + index + "].estado");
+    var cell2 = row.insertCell(2);
+    cell2.innerHTML = createSelectEstados("ordenpracticaListEdit[" + index + "].estado");
     
-    var cell4 = row.insertCell(2);
+    var cell3 = row.insertCell(3);
+    cell3.innerHTML = createDatePicker(index); 
+   
+    var cell4 = row.insertCell(4);
     row.valign = "BASELINE";
-    cell4.innerHTML = "<button type='button' class='btn btn-link' onClick='Eliminar(this.parentNode.parentNode.rowIndex)'>eliminar</button>"
+    cell4.innerHTML = "<button type='button' class='btn btn-link' onClick='Eliminar(this.parentNode.parentNode.rowIndex)'>Eliminar</button>";
+    
+    var cell5 = row.insertCell(5);
+    cell5.innerHTML = "";
      
     index ++;
     document.getElementById("ContainerGeneralOverWrite_ContainerGeneral_sq").value = "";
@@ -115,7 +145,8 @@ function addRowHistoriaClinica(tableID) {
 	index ++;	
     var table = document.getElementById(tableID);
     var rowCount = table.rows.length;
-    var row = table.insertRow(rowCount);          
+    var row = table.insertRow(rowCount);
+    row.style.background= '#f5f5f5';
           
     var cell0 = row.insertCell(0);    
     cell0.innerHTML = " <input type='hidden' name='historiasclinicas[" + index + "].documentId'> "
@@ -135,6 +166,38 @@ function eliminarHC (i) {
     document.getElementById("tabla_historiaclinica").deleteRow(i);
 }
 
+function findEspecialidades(profesional) {
+	  var especialidades = callEspecialidadesByProfesional(profesional.value);
+		$('#especialidad')
+		.empty()
+	    .append('<option selected="selected" value="-1">Seleccione Especialidad ...</option>')
+	;
+		$.each(especialidades, function(key, value) {   
+		     $('#especialidad')
+		          .append($('<option>', { value : value.id })
+		          .text(value.value)); 
+		});
+	  
+} 
+
+function callEspecialidadesByProfesional(profesionalId) {
+		var retorno;
+		$.ajax({
+			url : "/nuova/ajaxGetEspecialidadesByProfesional?profesionalId="+profesionalId,
+			type : "GET",
+			contentType : "application/json; charset=utf-8",
+			//    data: jsonString, //Stringified Json Object
+			async : false, //Cross-domain requests and dataType: "jsonp" requests do not support synchronous operation
+			cache : false, //This will force requested pages not to be cached by the browser          
+			processData : false, //To avoid making query String instead of JSON
+			success : function(page) {
+				// Success Message Handler
+				retorno = page;
+			}
+		});
+
+		return retorno;
+	}
 </script>
 
 <style>
@@ -149,8 +212,9 @@ function eliminarHC (i) {
 enctype="multipart/form-data">
 <form:hidden path="ordenId"/>
 <div class="mainContainer">	
+
 	<div class="panelContainer">		
-		<div class="panel panel-info">
+		<div class="panel panel-info">	
 			<!-- Cabecera y Titulo -->
 			<div class="panel-heading">
    				<div class="panel-title">
@@ -164,27 +228,28 @@ enctype="multipart/form-data">
 					<div class="row-fluid" >
 		   				<div class="span12">
 		   					<div class="tableContainer">	
-		   					
+		   					<jsp:include page="../message.jsp"></jsp:include>
 							<!-- Declaracion de tabs -->
 							<ul class="nav nav-tabs">
 								<li class="active"><a data-toggle="tab" href="#tb_paciente" onclick="setObservacionInvisible()">Paciente</a></li>
-								<li><a data-toggle="tab" href="#tb_requisitos" onclick="setObservacionInvisible()">Requisitos</a></li>
-								<li><a data-toggle="tab" href="#tb_autorizacion" onclick="setObservacionInvisible()">Autorizacion</a></li>
+								<li><a data-toggle="tab" href="#tb_requisitos" >Requisitos</a></li>
+								<li><a data-toggle="tab" href="#tb_profesional">Profesional</a></li>
+								<li><a data-toggle="tab" href="#tb_autorizacion" >Autorizaci&oacute;n</a></li>
 								<li>
-									<a data-toggle="tab" href="#tb_observacion" onclick="setObservacionVisible()">
+									<a data-toggle="tab" href="#tb_observacion" >
 									Observaciones 
 									<c:if test="${observacionCount > 0}">
 										<span class="badge">${observacionCount}</span>
 									</c:if>
 									</a>
 								</li>
-								<li><a data-toggle="tab" href="#tb_historiaclinica" onclick="setObservacionInvisible()">Historia Clinica</a></li>
-								<li><a data-toggle="tab" href="#tb_flujo" onclick="setObservacionInvisible()">Flujo de Estados</a></li>								
+								<li><a data-toggle="tab" href="#tb_historiaclinica" >Historia Cl&iacute;nica</a></li>								
+								<li><a data-toggle="tab" href="#tb_flujo" >Flujo de Estados</a></li>								
 							</ul>
 							<!-- Fin Declaracion de tabs -->							
 							
 							<!-- Contenedor de Tabs -->
-							<div class="tab-content" style="height: 350px">
+							<div class="tab-content">
 								<!-- ** Tab Paciente -->
 								<div id="tb_paciente" class="tab-pane fade in active">							
 									<jsp:include page="formEditOrdenTabPaciente.jsp"></jsp:include>
@@ -195,6 +260,11 @@ enctype="multipart/form-data">
 									<jsp:include page="formEditOrdenTabRequisitos.jsp"></jsp:include>		
 								</div>
 								
+								<!-- ** Tab Profesional -->
+								<div id="tb_profesional" class="tab-pane fade">
+									<jsp:include page="formEditOrdenTabProfesional.jsp"></jsp:include>
+								</div>
+
 								<!-- ** Tab Autorizaciones -->
 								<div id="tb_autorizacion" class="tab-pane fade">
 									<jsp:include page="formEditOrdenTabAutorizacion.jsp"></jsp:include>
@@ -216,21 +286,9 @@ enctype="multipart/form-data">
 		 						</div>							
 		 		
 							</div>
-							<!-- Fin Contenedor de Tabs -->
-							
-							<div id="addObservacion" style="visibility:hidden;">		
-							<table class="table"  style="width: 100%">    					
-								<tr>		
-									<td style="width: 15%"><form:label path="observacion">Observacion</form:label></td>
-									<td  style="text-align:left" colspan="5">			
-										<form:textarea path="observacion" cssStyle="width:90%"/>
-									</td>
-								</tr>		
-							</table>
-							</div>
+							<!-- Fin Contenedor de Tabs -->					
 		
-							<div style="float:right;"></div>	
-						
+							<div style="float:right;"></div>						
 							</div>						
 		 				</div>
 		 			</div>
@@ -242,9 +300,9 @@ enctype="multipart/form-data">
 		<div class="panel panel-info">
 			<div class="panel-body">
 				<div class="row-fluid">
-				<div class="span12">
+				<div class="span12">					
 					<div style="float:right;">
-						<input type="button" value="Cancelar" onclick="location.href = document.referrer; return false;" class="btn"/>	
+						<input type="button" value="Cancelar" onclick="location.href = '/nuova/mainOrdenPractica'; return false;" class="btn"/>	
 					</div>
 					<div style="float:right;padding-right:2%;">
 						<input class="btn btn-lg btn-primary btn-block btn-info" type="submit" value="  Guardar  "/>

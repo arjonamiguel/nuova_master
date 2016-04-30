@@ -40,10 +40,14 @@ public class OrdenDTO {
   private String ordenTipoDesc;
 
   private Integer profesionalId;
+  private Integer especialidad;
+
 
   private Double monto;
 
   private ProfesionalDTO profesional;
+  private String apellidoNombreProfesional;
+  private String especialidadView;
 
   private List<OrdenDocumentDTO> historiasclinicas = new ArrayList<OrdenDocumentDTO>();
 
@@ -287,6 +291,28 @@ public class OrdenDTO {
     this.historiasclinicas = historiasclinicas;
   }
 
+  public String getApellidoNombreProfesional() {
+    return apellidoNombreProfesional;
+  }
 
+  public void setApellidoNombreProfesional(String apellidoNombreProfesional) {
+    this.apellidoNombreProfesional = apellidoNombreProfesional;
+  }
+
+  public Integer getEspecialidad() {
+    return especialidad;
+  }
+
+  public void setEspecialidad(Integer especialidad) {
+    this.especialidad = especialidad;
+  }
+
+  public String getEspecialidadView() {
+    return especialidadView;
+  }
+
+  public void setEspecialidadView(String especialidadView) {
+    this.especialidadView = especialidadView;
+  }
 
 }

@@ -57,9 +57,17 @@
 	
 
 		 <ul class="nav navbar-nav">
+		 		<li class="dropdown" >
+					<a href="/nuova/home" id="home"  class="dropdown-toggle">
+					<img src="/nuova/resources/img/home_24x24.png">
+					&nbsp;&nbsp;Inicio</a>
+
+				</li>
 		 		<sec:authorize access="hasRole('ROLE_ADMIN')">
 		 		<li class="dropdown">
-		            <a href="#" id="configuracion" class="dropdown-toggle" data-toggle="dropdown"><i class="icon-cog"></i>&nbsp;&nbsp;Configuracion<span class="caret"></a>
+		            <a href="#" id="configuracion" class="dropdown-toggle" data-toggle="dropdown">
+		            <img src="/nuova/resources/img/gears_24x24.png">
+		            &nbsp;&nbsp;Configuracion<span class="caret"></a>
 		            <ul class="dropdown-menu">
 		            	
 						<li><a href="/nuova/mainProfesional" id="mainProfesional">Administrar Profesionales</a></li>
@@ -91,9 +99,13 @@
 				
 				<sec:authorize access="hasRole('ROLE_ADMIN') OR hasRole('ROLE_USER')">
 				<li class="dropdown" >
-					<a href="#" id="mainPaciente"  class="dropdown-toggle" data-toggle="dropdown"><i class="icon-file"></i>&nbsp;&nbsp;Administracion de Pacientes<span class="caret"></a>
+					<a href="#" id="mainPaciente"  class="dropdown-toggle" data-toggle="dropdown">
+					<img src="/nuova/resources/img/tasks_24x24.png">
+					&nbsp;&nbsp;Pacientes<span class="caret"></a>
 					<ul class="dropdown-menu" role="menu">
 		                <li><a href="/nuova/mainPaciente">Administrar Pacientes</a></li>
+		                <li><a href="/nuova/formBuscarPaciente">Buscar Paciente ...</a></li>	
+		                <li><a href="/nuova/mainReintegro">Administrar Reintegros</a></li>	                
 		                <li><a href="/nuova/showReportePacientes">Reporte de Pacientes</a></li>
               		</ul>  
 				</li>
@@ -101,18 +113,21 @@
 				
 				<sec:authorize access="hasRole('ROLE_ADMIN') OR hasRole('ROLE_USER')">
 				<li class="dropdown">
-				<a href="#" id="mainOrden" class="dropdown-toggle" data-toggle="dropdown"><i class="icon-briefcase"></i>&nbsp;&nbsp;Administracion de Ordenes<span class="caret"></span></a>			
+				<a href="#" id="mainOrden" class="dropdown-toggle" data-toggle="dropdown">
+				<img src="/nuova/resources/img/briefcase_24x24.png">
+				&nbsp;&nbsp;Ordenes<span class="caret"></span></a>			
 			  		<ul class="dropdown-menu" role="menu">
 			  			<li><a href="/nuova/mainConsulta">Administrar Consultas</a></li>
 			  			<li><a href="/nuova/mainOrdenPractica">Administrar Practicas</a></li>
-						<li><a href="/nuova/mainConsultaOdontologica">Administrar Practicas Odontologicas</a></li>						
               		</ul>                
 				</li>
 				</sec:authorize>
 				
 				<sec:authorize access="hasRole('ROLE_ADMIN')">
 				<li class="dropdown" >
-				<a href="#" id="calendario"  class="dropdown-toggle" data-toggle="dropdown"><i class="icon-calendar"></i>&nbsp;&nbsp;Calendario<span class="caret"></a>
+				<a href="#" id="calendario"  class="dropdown-toggle" data-toggle="dropdown">
+				<img src="/nuova/resources/img/calendar_24x24.png">
+				&nbsp;&nbsp;Calendario<span class="caret"></a>
 				<ul class="dropdown-menu" role="menu">
 		                <li><a href="/nuova/mainCalendario">Visualizar Calendario</a></li>	
 		                <li><a href="/nuova/formAddCalendario">Agregar Calendario</a></li>	
@@ -123,7 +138,9 @@
 				
 				<sec:authorize access="hasRole('ROLE_ADMIN')">
 				<li class="dropdown" >
-				<a href="#" id="caja"  class="dropdown-toggle" data-toggle="dropdown"><i class="icon-list-alt"></i>&nbsp;&nbsp;Caja<span class="caret"></a>
+				<a href="#" id="caja"  class="dropdown-toggle" data-toggle="dropdown">
+				<img src="/nuova/resources/img/tag_24x24.png">
+				&nbsp;&nbsp;Caja<span class="caret"></a>
 				<ul class="dropdown-menu" role="menu">
 		                <li><a href="/nuova/mainCaja/null">Administracion de Caja</a></li>
 		                <li><a href="/nuova/formUpdateCaja">Nuevo Movimiento de Caja</a></li>
@@ -135,7 +152,9 @@
 				
 				<sec:authorize access="hasRole('ROLE_ADMIN')">
 				<li class="dropdown" >
-				<a href="#" id="reportes"  class="dropdown-toggle" data-toggle="dropdown"><i class="icon-th-list"></i>&nbsp;&nbsp;Reportes<span class="caret"></a>
+				<a href="#" id="reportes"  class="dropdown-toggle" data-toggle="dropdown">
+				<img src="/nuova/resources/img/list-alt_24x24.png">
+				&nbsp;&nbsp;Reportes<span class="caret"></a>
 				<ul class="dropdown-menu" role="menu">
 		                <li><a href="#">Reporte 1</a></li>
 		                <li><a href="#">Reporte 2</a></li>

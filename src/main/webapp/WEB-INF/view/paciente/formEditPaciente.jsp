@@ -30,6 +30,83 @@ label.error {
   width:58%;
 }
 </style>		
+<script type="text/javascript">
+$(function() {
+	  $('#btnLaunch').click(function() {
+		  document.getElementById("empresaNombre").value="";
+	    $('#myModal').modal('show');
+	  });
+	  
+	  $('#btnSave').click(function() {
+	    var nombreEmpresa = document.getElementById("empresaNombre").value;
+	    var resp = callNuevaEmpresa(getJsonEmpresa(nombreEmpresa));
+	    refreshEmpresas();
+	    $('#myModal').modal('hide');
+	  });
+	});
+	
+
+function showEmpresaTitular(){
+	var titular = document.getElementById("parentesco").value;
+	if (titular != 0) {
+		document.getElementById("empresaId").value = "-1";
+		document.getElementById("empresaId").disabled = "false";
+		document.getElementById("trabajaEn").value = "-1";
+		document.getElementById("trabajaEn").disabled = "false";
+	}else {
+		document.getElementById("empresaId").disabled = "";
+		document.getElementById("trabajaEn").disabled = "";
+	}
+
+}
+	
+	  function refreshEmpresas() {
+			var empresas = callEmpresas();
+			$('#empresaId')
+					.empty()
+					.append(
+							'<option selected="selected" value="-1">Seleccione Empresa...</option>');
+			$.each(empresas, function(key, value) {
+				$('#empresaId').append($('<option>', {
+					value : value.id
+				}).text(value.value));
+			});
+
+		}
+
+
+	$(document).ready(function() {
+		var map = new Object();
+		var objects = [];
+
+		$('input.typeahead').typeahead({
+			source : function(query, process) {
+				$.ajax({
+					url : '/nuova/ajaxGetAutoCompleteLocalidades',
+					type : 'POST',
+					dataType : 'JSON',
+					data : 'query=' + query,
+					success : function(data) {
+						console.log(data);
+						$.each(data, function(i, object) {
+							map[object.value] = object;
+							if (objects[i] == null) {
+								objects.push(object.value);
+							}
+						});
+						process(objects);
+						objects = [];
+					}
+				});
+			},
+			updater : function(item) {
+				$('#localidadId').val(map[item].id);
+				return item;
+			}
+		});
+	});
+</script>	
+
 	
 <SCRIPT language="javascript">
     
@@ -105,7 +182,7 @@ label.error {
 
 		function nuevoAdherente() {
 			var titularId = document.getElementById("pacienteId").value;
-			window.location.href = "/nuova/formAddAdherente/"+titularId;
+			window.open( "/nuova/formAddAdherente/"+titularId,"_blank");
 		}
 		function updateDate(){
 			document.getElementById("fechaNacimiento").value=document.getElementById("registration-date").value;
@@ -114,18 +191,24 @@ label.error {
 			if(document.getElementById("coseguro").value=="true" && coseguroFlag==0){
 			//validacion on load
 				coseguroFlag=1;
-				if($( "#coseguro").prop( "checked" )){
-					$("#coseguroAux").click();
+				if(!$( "#coseguro").prop( "checked" )){
+					$("#coseguro").click();
+					$("#razonCoseguro").val("NONE");
+					$("#razonCoseguro").prop("disabled", true);
 				}
 			}else{
 			//validacion on change
 				if($( "#coseguro").prop( "checked" )){
 					 $("#coseguro").removeAttr("checked");
+					 $("#razonCoseguro").prop("disabled", false);
 				}else{
 					$("#coseguro").click();
+					$("#razonCoseguro").val("NONE");
+					$("#razonCoseguro").prop("disabled", true);
 				}
 			}	
 		}
+		
 		function updateTitular(){
 			if(document.getElementById("titular").value=="true" && titularFlag==0){
 			//validacion on load
@@ -142,11 +225,25 @@ label.error {
 				}
 			}	
 		}
+
+		function showEmpresas() {	
+		if(document.getElementById("trabajaEn")!=null){					
+			var trabajo = document.getElementById("trabajaEn").value;
+			var t = parseInt(trabajo); 
+			if( t == 0) {
+				document.getElementById("empresaId").disabled = "";
+				
+			}else {
+				document.getElementById("empresaId").value = "-1";
+				document.getElementById("empresaId").disabled = "false";
+			}
+		}
+		}
+		
         </SCRIPT>
 </head>
 <body style="background-color:#e5e5e5;">
 <jsp:include page="../sec_menu.jsp"></jsp:include>
-<jsp:include page="../breadcrumb.jsp"></jsp:include>
 
 <div class="mainContainer"> 
 <div class="panelContainer">
@@ -198,47 +295,50 @@ label.error {
         					<div class="formInput"><form:input path="mail" /></div>
 			   		</div>
 			   	</div>
-			   	<div class="row-fluid">
+			   	
+			   	 	<div class="row-fluid">
 			   		<div class="span4">
 			   				<div class="formLabel"><form:label path="provincia">Provincia Origen:</form:label></div>
         					<div class="formInput">
-        						<form:select path="provincia" style="width:83%; margin-bottom:0px">
+        						<form:select path="provincia" style=" margin-bottom:0px">
 									<form:option value="NONE" label="Seleccione Provincia ..."/>
 									<form:options items="${provinciaList}"  />			    
 								</form:select>
         					</div>
 			   		</div>
 			   		<div class="span4">
-			   				<div class="formLabel"><form:label path="domicilio">Domicilio:</form:label></div>
-        					<div class="formInput"><form:textarea path="domicilio" cssStyle="width:78%"/></div>
-			   		</div>
-			   		<div class="span4">
-			   				<div class="formLabel" style="padding-top:6px;padding-right:5px;"><form:label path="coseguro">Coseguro:</form:label></div>
-			   				<div style="visibility:hidden;"><form:checkbox path="coseguro" id="coseguro"/></div>
-							<div class="material-switch pull-left">
-									<input id="coseguroAux" name="coseguroAux" type="checkbox" value="true" >
-									<label for="coseguroAux" class="label-success" onclick="updatecoseguro()"></label>
-									<div style="padding-top:10%;">
-										NO - SI
-									</div>
+			   				<div class="formLabel"><form:label path="domicilio">Localidad:</form:label></div>
+        					<div class="formInput">
+        					<form:hidden path="localidadId"/>
+        					<form:input path="localidadString"
+        						data-provide="typeahead" 
+								class="typeahead"								
+								type="text"								
+								placeholder="Ingrese Localidad ..."
+								autocomplete="off"
+        					/> 
+        					<a href="#" title="Nueva Localidad">
+								<img src="/nuova/resources/img/list_add_16x16.png">
+							</a>
 							</div>
 			   		</div>
 			   	
-						
-			   					   
+			   		<div class="span4">
+			   				<div class="formLabel"><form:label path="domicilio">Domicilio:</form:label></div>
+        					<div class="formInput"><form:textarea path="domicilio" cssStyle="width:78%"/></div>
+			   		</div>
 			   	</div>
-			   	<div class="row-fluid">
+			   	
+			   		<div class="row-fluid">
 			   		<div class="span4">
 			   				<div class="formLabel"><form:label path="titular">Parentesco:</form:label></div>
-							<div class="formInput">
-								<form:select path="parentesco" style="width:83%; margin-bottom:0px">
+							<div  class="formInput">
+								<form:select path="parentesco" style="width:83%; margin-bottom:0px" onchange="showEmpresaTitular()">
 									<form:option value="-1" label="Seleccione Parentesco ..."/>
 									<form:options items="${parentescosList}"  itemLabel="value" itemValue="id"/>			    
 								</form:select>
 							</div>
 			   		</div>
-			   		
-			   		<c:if test="${paciente.parentesco == 0}">			   		
 			   		<div class="span4">
 			   				<div class="formLabel"><form:label path="zonaAfiliacion">Zona Afiliación:</form:label></div>
         					<div class="formInput">
@@ -248,11 +348,84 @@ label.error {
 								</form:select>
         					</div>
 			   		</div>
-			   		</c:if>
+			   		
 			   	</div>
+				<br>
+			   	<c:if test="${paciente.parentesco == 0}">     		
+			   		<div class="row-fluid">
+			   		<c:if test="${paciente.parentesco == 0}">
+			   		<div class="span4">
+			   				<div class="formLabel"><form:label path="trabajaEn">Trabaja En:</form:label></div>
+        					<div class="formInput">
+        						<form:select path="trabajaEn" style="width:83%; margin-bottom:0px" onChange="showEmpresas()">
+									<form:option value="-1" label="Seleccione donde Trabaja ..."/>
+									<form:options items="${trabajaEnList}"  itemLabel="value" itemValue="id"/>
+								</form:select>
+        					</div>
+			   		
+			   		</div>
+			   		<div class="span4">
+			   				<div class="formLabel"><form:label path="empresaId">Empresa:</form:label></div>
+        					<div class="formInput">
+        						<form:select path="empresaId" style="width:83%; margin-bottom:0px">
+									<form:option value="-1" label="Seleccione Empresa..."/>
+									<form:options items="${empresas}"  itemLabel="nombre" itemValue="empresaId"/>
+								</form:select>
+								<a href="#" title="Nueva Empresa" id="btnLaunch">
+								<img src="/nuova/resources/img/list_add_16x16.png">
+								</a>
+        					</div>
+			   		
+			   		</div>
+			   		</c:if>
+			   				   		
+			   	</div>	
+			   	<script>
+			   	showEmpresas();
+				showEmpresaTitular();
+			   	</script>
+			   	</c:if>
 		 </div>
 	</div>	
 </div>
+
+<div class="panel panel-info">
+	<div class="panel-heading">
+		<div class="panel-title">Coseguro</div>
+	</div>
+	<div class="panel-body">
+		<div class="row-fluid">
+					<div class="span4">
+			   				<div class="formLabel" style="padding-left:20px">
+			   				<form:label path="coseguro">Seleccione:</form:label>
+			   				</div>
+			   				
+			   				<div class="formInput">
+			   				<div class="material-switch pull-left" style="margin-top:1%; padding-left:20px">
+								<input id="coseguro" name="coseguro" type="checkbox" value="true">
+								<label for="coseguro" class="label-success" onclick="razonEnable()"></label>
+								<div style="padding-top:10%;">
+									NO - SI
+								</div>
+							</div>
+			   				</div>
+							
+			   		</div>
+			   		
+			   		<div class="span4">
+			   			<div class="formLabel"><form:label path="razonCoseguro">Razón Coseguro:</form:label></div>
+        					<div class="formInput">
+        						<form:select path="razonCoseguro" style="width:83%; margin-bottom:0px">
+									<form:option value="NONE" label="Seleccione Razón Coseguro ..."/>
+									<form:options items="${razonCoseguroList}"  />			    
+								</form:select>
+        					</div>
+			   		
+			   		</div>
+		</div>
+	</div>	
+</div>
+
 
 
 <div class="panel panel-info">
@@ -271,9 +444,12 @@ label.error {
         		</div>
 			 </div>
 			 
-			 <div class="span4">
+			  <div class="span4">
 			 	<div class="formLabel"><form:label path="obrasocial.credencial">Credencial:</form:label></div>
-        	 	<div class="formInput"><form:input path="obrasocial.credencial"/></div>
+        	 	<div class="formInput">
+        	 		<form:input path="obrasocial.credencial" cssStyle="width:25%"/><b>&nbsp;-&nbsp;</b>
+        	 		<form:input path="obrasocial.credencialSufijo" cssStyle="width:10%"/>
+        	 	</div>
 			 </div>
 		</div>
 						
@@ -344,6 +520,26 @@ label.error {
 </form:form>
 
 </body>
+
+<div class="modal fade" id="myModal">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only"></span></button>
+        <h4 class="modal-title">Nueva Empresa</h4>
+      </div>
+      <div class="modal-body">
+        <p>Nombre de la Empresa: </p>
+        <input type="text" id="empresaNombre" name="empresaNombre">
+      </div>
+      <div class="modal-footer">
+        <button type="button" id="btnSave" class="btn btn-info">Guardar</button>      
+        <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
 </html>
 <script>
 
@@ -359,17 +555,58 @@ function callExistDni(dni) {
 		processData : false, //To avoid making query String instead of JSON
 			
 		success : function(existDni) {
-			retorno = existDni;
 		}
 	});
 
 	return retorno;
 }
 
+function callNuevaEmpresa(jsonEmpresa) {
+	var retorno;
+	$.ajax({
+		url : "/nuova/ajaxPostNuevaEmpresa",
+		type : "POST",
+		contentType : "application/json; charset=utf-8",
+		data: jsonEmpresa, //Stringified Json Object
+		async : false, //Cross-domain requests and dataType: "jsonp" requests do not support synchronous operation
+		cache : false, //This will force requested pages not to be cached by the browser          
+		processData : false, //To avoid making query String instead of JSON
+		success : function(result) {
+			retorno = result;
+		}
+	});
+
+	return retorno;
+}
+
+
+function getJsonEmpresa(nombreEmpresa){
+	return '{ "nombre":"'+nombreEmpresa+'"}';
+}
+
+function callEmpresas() {
+	var retorno;
+	$.ajax({
+		url : "/nuova/ajaxGetEmpresas",
+		type : "GET",
+		contentType : "application/json; charset=utf-8",
+		//    data: jsonString, //Stringified Json Object
+		async : false, //Cross-domain requests and dataType: "jsonp" requests do not support synchronous operation
+		cache : false, //This will force requested pages not to be cached by the browser          
+		processData : false, //To avoid making query String instead of JSON
+		success : function(page) {
+			// Success Message Handler
+			retorno = page;
+		}
+	});
+
+	return retorno;
+}
+
+
 			document.getElementById("mainPaciente").parentNode.classList.add("active");
         	document.getElementById("registration-date").value=document.getElementById("fechaNacimiento").value;
-        	updatecoseguro();
-			$(".checkbox").checkbox();
+        	
 			
 			
 		$("#paciente").validate({
@@ -383,7 +620,7 @@ function callExistDni(dni) {
             },
             apellido: "required",
             nombre: "required",
-
+            localidadString: "required"
         },
         
         // Specify the validation error messages
@@ -395,6 +632,7 @@ function callExistDni(dni) {
             },
             apellido: "Ingrese apellido",
             nombre: "Ingrese nombre",
+            localidadString : "Seleccione Localidad"
 
         },
                 submitHandler: function(form) {
@@ -410,5 +648,13 @@ function callExistDni(dni) {
                     	form.submit();
                     }        
         }
-    });
+
+		});
+		
+		
+		$(".checkbox").checkbox();	
+		updatecoseguro();
+		// var valueDate=document.getElementById("fechaNacimiento").value.split('/')[2]+"-"+document.getElementById("fechaNacimiento").value.split('/')[1]+"-"+document.getElementById("fechaNacimiento").value.split('/')[0];
+		// document.getElementById("registration-date").value=valueDate;
+		
 </script>

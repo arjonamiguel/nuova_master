@@ -20,6 +20,38 @@
 		<script src="<c:url value="/resources/js/jquery/jquery.validate.min.js" />"></script>
 		<link href="<%=request.getContextPath()%>/resources/montrezorro-bootstrap-checkbox-fa865ff/css/bootstrap-checkbox.css" rel="stylesheet"/>
 		<script src="<%=request.getContextPath()%>/resources/montrezorro-bootstrap-checkbox-fa865ff/js/bootstrap-checkbox.js" /></script>
+	<script type="text/javascript">
+	$(document).ready(function() {
+		var map = new Object();
+		var objects = [];
+
+		$('input.typeahead').typeahead({
+			source : function(query, process) {
+				$.ajax({
+					url : '/nuova/ajaxGetAutoCompleteLocalidades',
+					type : 'POST',
+					dataType : 'JSON',
+					data : 'query=' + query,
+					success : function(data) {
+						console.log(data);
+						$.each(data, function(i, object) {
+							map[object.value] = object;
+							if (objects[i] == null) {
+								objects.push(object.value);
+							}
+						});
+						process(objects);
+						objects = [];
+					}
+				});
+			},
+			updater : function(item) {
+				$('#localidadId').val(map[item].id);
+				return item;
+			}
+		});
+	});
+</script>	
 	
 	  <SCRIPT language="javascript">
         var coseguro=0;
@@ -114,11 +146,17 @@ label.error {
   padding:1px 20px 1px 20px;
   width:58%;
 }
+ .label-error {
+		  color: #a94442;
+		  background-color: #f2dede;
+		  border-color: #ebccd1;
+		  padding:1px 20px 1px 20px;
+		  width:22%;
+		}
 </style>
 </head>
 <body style="background-color:#e5e5e5;">
 <jsp:include page="../sec_menu.jsp"></jsp:include>
-<jsp:include page="../breadcrumb.jsp"></jsp:include>
 
 <div class="mainContainer" style="padding-top:1%;"> 
 <form:form method="post" action="/nuova/addAdherente" commandName="paciente">
@@ -126,8 +164,9 @@ label.error {
 	 	<div class="panel-heading">
 	 	 	<div class="panel-title">
 			<b>Nuevo Adherente</b>
-	     	<h4>Titular: <a href="/nuova/formEditPaciente/${paciente.pacienteTitular.pacienteId}">${datosTitular}</a></h4>
+	     	<h4>Titular: <a href="/nuova/formEditPaciente/${paciente.titularId}">${datosTitular}</a></h4>
 	     	</div>
+	     	<div class="label-error" id="message" style="float:left;margin-left:8%;visibility:hidden;">El DNI ingresado ya existe.</div>
 	 	</div>
 	 	<div style="padding-top:30px" class="panel-body" >
 		 	<div class="container-fluid">
@@ -172,49 +211,106 @@ label.error {
 		 				<div class="formInput"><form:input path="mail" type="email"/></div>
 		 			</div>
 		 		</div>
-		 		<div class="row-fluid">
-		 			<div class="span4">
-		 				<div class="formLabel"><form:label path="provincia">Provincia Origen:</form:label></div>
-		 				<div class="formInput">	<form:select path="provincia" style="width:78%; margin-bottom:0px">
-							<form:option value="NONE" label="Seleccione Provincia ..."/>
-								<form:options items="${provinciaList}"  />			    
-							</form:select>
-						</div>
-		 			</div>
-		 			<div class="span4">
-		 				<div class="formLabel"><form:label path="domicilio">Domicilio:</form:label></div>
-		 				<div class="formInput"><form:textarea path="domicilio" cssStyle="width:65%"/></div>
-		 			</div>
-		 			<div class="span1" style="margin-top:2%;">
-			   				<div class="formLabel"><form:label path="coseguro">Coseguro:</form:label></div>
-			   				
-							
+		 				   	 	<div class="row-fluid">
+			   		<div class="span4">
+			   				<div class="formLabel"><form:label path="provincia">Provincia Origen:</form:label></div>
+        					<div class="formInput">
+        						<form:select path="provincia" style="width:83%; margin-bottom:0px">
+									<form:option value="NONE" label="Seleccione Provincia ..."/>
+									<form:options items="${provinciaList}"  />			    
+								</form:select>
+        					</div>
 			   		</div>
-			   		<div class="span3" style="margin-top:3%;">
-			   		
-							<div class="material-switch pull-left">
-								<input id="coseguro" name="coseguro" type="checkbox" value="true">
-								<label for="coseguro" class="label-info"></label>
+			   		<div class="span4">
+			   				<div class="formLabel"><form:label path="domicilio">Localidad:</form:label></div>
+        					<div class="formInput">
+        					<form:hidden path="localidadId"/>
+        					<form:input path="localidadString"
+        						data-provide="typeahead" 
+								class="typeahead"								
+								type="text"								
+								placeholder="Ingrese Localidad ..."
+								autocomplete="off"
+        					/>
+        					<a href="#" title="Nueva Localidad">
+								<img src="/nuova/resources/img/list_add_16x16.png">
+							</a>
 							</div>
 			   		</div>
-		 		</div>
-		 		<div class="row-fluid">
+			   	
+			   		<div class="span4">
+			   				<div class="formLabel"><form:label path="domicilio">Domicilio:</form:label></div>
+        					<div class="formInput"><form:textarea path="domicilio" cssStyle="width:78%"/></div>
+			   		</div>
+			   	</div>
+			   	
+			   		<div class="row-fluid">
 			   		<div class="span4">
 			   				<div class="formLabel"><form:label path="titular">Parentesco:</form:label></div>
-							<div class="formInput">
+							<div  class="formInput">
 								<form:select path="parentesco" style="width:83%; margin-bottom:0px">
 									<form:option value="-1" label="Seleccione Parentesco ..."/>
 									<form:options items="${parentescosList}"  itemLabel="value" itemValue="id"/>			    
 								</form:select>
 							</div>
 			   		</div>
+			   		<div class="span4">
+			   				<div class="formLabel"><form:label path="zonaAfiliacion">Zona Afiliación:</form:label></div>
+        					<div class="formInput">
+        						<form:select path="zonaAfiliacion" style="width:83%; margin-bottom:0px">
+									<form:option value="NONE" label="Seleccione Zona Afiliación ..."/>
+									<form:options items="${provinciaList}"  />			    
+								</form:select>
+        					</div>
+			   		</div>
+			   		
 			   		
 			   	</div>
+
+
 		 	</div>
 	 	</div>
 	 </div>
 	
-	 
+
+<div class="panel panel-info">
+	<div class="panel-heading">
+		<div class="panel-title">Coseguro</div>
+	</div>
+	<div class="panel-body">
+		<div class="row-fluid">
+					<div class="span4">
+			   				<div class="formLabel" style="padding-left:20px">
+			   				<form:label path="coseguro">Seleccione:</form:label>
+			   				</div>
+			   				
+			   				<div class="formInput">
+			   				<div class="material-switch pull-left" style="margin-top:1%; padding-left:20px">
+								<input id="coseguro" name="coseguro" type="checkbox" value="true">
+								<label for="coseguro" class="label-success" onclick="razonEnable()"></label>
+								<div style="padding-top:10%;">
+									NO - SI
+								</div>
+							</div>
+			   				</div>
+							
+			   		</div>
+			   		
+			   		<div class="span4">
+			   			<div class="formLabel"><form:label path="razonCoseguro">Razón Coseguro:</form:label></div>
+        					<div class="formInput">
+        						<form:select path="razonCoseguro" style="width:83%; margin-bottom:0px">
+									<form:option value="NONE" label="Seleccione Razón Coseguro ..."/>
+									<form:options items="${razonCoseguro}"  />			    
+								</form:select>
+        					</div>
+			   		
+			   		</div>
+		</div>
+	</div>	
+</div>
+
+
 <div class="panel panel-info">
 	<div class="panel-heading">
 		<div class="panel-title">Obra Social</div>
@@ -231,26 +327,28 @@ label.error {
         		</div>
 			 </div>
 			 
-			 <div class="span4">
+			  <div class="span4">
 			 	<div class="formLabel"><form:label path="obrasocial.credencial">Credencial:</form:label></div>
-        	 	<div class="formInput"><form:input path="obrasocial.credencial"/></div>
+        	 	<div class="formInput">
+        	 		<form:input path="obrasocial.credencial" cssStyle="width:25%"/><b>&nbsp;-&nbsp;</b>
+        	 		<form:input path="obrasocial.credencialSufijo" cssStyle="width:10%"/>
+        	 	</div>
 			 </div>
 		</div>
 						
 	</div>		
 </div>
-	 
-	
-	 <div class="row-fluid">
-			<div class="span8">
+
+<div class="panel panel-info">
+			<div class="panel-body">
+				<div class="row-fluid">
+					<div class="span12">
+					<div style="float:right;"><input type="button" value="Cancelar" onclick="location.href='/nuova/mainPaciente';" class="btn"/></div>
+						<div style="float:right;padding-right:2%;"><input type="submit" value="Guardar" class="btn btn-info"/></div> 
+			 			
+					</div>
+				</div>
 			</div>
-			<div class="span4">
-			<div style="float:right;"><input type="button" value="Cancelar" onclick="location.href = document.referrer; return false;" class="btn"/></div>
-				<div style="float:right;padding-right:2%;"><input type="submit" value="Guardar" class="btn btn-info"/></div> 
-	 			
-			</div>
-		</div>
-	 </div>
 </div>
 </form:form>
  </div>
@@ -279,7 +377,7 @@ function callExistDni(dni) {
 	return retorno;
 }
 
-			$(".checkbox").checkbox();
+			
 			$("#paciente").validate({
     
         // Specify the validation rules
@@ -287,10 +385,11 @@ function callExistDni(dni) {
         	 dni: {
                 required: true,
                 minlength: 7,
-                maxlenght: 10
+                maxlength: 10
             },
             apellido: "required",
             nombre: "required",
+            localidadString: "required", 
             email: {
                 required: true,
                 email: true
@@ -306,17 +405,32 @@ function callExistDni(dni) {
             },
             apellido: "Ingrese apellido",
             nombre: "Ingrese nombre",
+            localidadString : "Seleccione Localidad"
            
         },
                 submitHandler: function(form) {
                 	var dni = document.getElementById("dni");            
                     if (callExistDni(dni.value)){
-                        alert("El DNI ingresado ya existe.");
+                        $("#message").css("visibility","visible");
                         dni.focus();
                     } else {
                     	form.submit();
                     }       
         }
     });
+			
+			function razonEnable(){
+				if($( "#coseguro").prop( "checked" )){
+					 $("#razonCoseguro").prop("disabled", false);
+				}else{
+					$("#razonCoseguro").val("NONE");
+					$("#razonCoseguro").prop("disabled", true);
+				}
+		
 
+		}
+	
+	$("#coseguro").click();	
+	$("#razonCoseguro").val("NONE");
+	$("#razonCoseguro").prop("disabled", true);
 </script>

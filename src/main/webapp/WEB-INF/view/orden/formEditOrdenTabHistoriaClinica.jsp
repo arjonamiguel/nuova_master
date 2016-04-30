@@ -5,9 +5,11 @@
 Adjuntar Nuevo Archivo</a>
 </div>
 <br><br>
+
+<div class="tab-content" style="height: 400px">	
 <% int index = 0;%>
 
-<table class="table"  style="width: 100%" height="100%" id="tabla_historiaclinica">			
+<table class="table"  style="width: 100%"  id="tabla_historiaclinica">		
 <c:forEach items="${ordenDto.historiasclinicas}" var="hc" varStatus="loop" >
 <tr>
 <td style="width: 40%">	
@@ -27,3 +29,4 @@ Adjuntar Nuevo Archivo</a>
 <%index++;%>
 </c:forEach>
 </table>
+</div>

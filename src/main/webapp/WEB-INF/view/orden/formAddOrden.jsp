@@ -22,7 +22,7 @@
 
 <body style="background-color:#e5e5e5;">
 <jsp:include page="../sec_menu.jsp"></jsp:include>
-
+<form:form method="post" action="/nuova/addAdherente" commandName="paciente">
 
 <div class="mainContainer"> 
 	<div class="panelContainer">		
@@ -33,7 +33,6 @@
           			</div>
     		</div>     
 			<div  class="panel-body" >
-			<form:form method="post" action="/nuova/addAdherente" commandName="paciente">
 			  				<div class="row-fluid" >
 			  						<div class="span9">
 			  						</div>
@@ -62,16 +61,29 @@
 									</TABLE>				
 					    		</div>	
 					    	</div>	
-					    	<div class="row-fluid" >	
-					    		<div class="span12">
-					    			<div style="float:right;padding-right:2%;"><input class="btn btn-lg btn-primary btn-block btn-signin" type="submit" value="Guardar"/></div>
-					    			<div style="float:right;"><input type="button" value="Cancelar" onclick="location.href = document.referrer; return false;" class="btn"/></div>
-					    		</div>
-					    	</div>
-	    	</form:form>			
-	    	</div>
+					    	
+			</div>
+			</div>
+			
+			<!-- Botoneras -->
+		<div class="panel panel-info">
+			<div class="panel-body">
+				<div class="row-fluid">
+				<div class="span12">					
+					<div style="float:right;">
+						<input type="button" value="Cancelar" onclick="location.href = document.referrer; return false;" class="btn"/>	
+					</div>
+					<div style="float:right;padding-right:2%;">
+						<input type="submit" value="Guardar" class="btn btn-info"/>
+					</div>								 			
+				</div>
+				</div>
+			</div>
+		</div>
+		<!-- Fin Botoneras -->
+			    	
+	  </div>
 </div>
-</div>
- 
+</form:form> 
 </body>
 </html>

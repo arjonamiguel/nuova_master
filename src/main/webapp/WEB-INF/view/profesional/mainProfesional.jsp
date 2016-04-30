@@ -81,14 +81,14 @@
 </head>
 <body style="background-color:#e5e5e5;">
 <jsp:include page="../sec_menu.jsp"></jsp:include>
-<jsp:include page="../breadcrumb.jsp"></jsp:include>
+
 <div class="mainContainer">
 		
 <div class="panelContainer">		
 		<div class="panel panel-info">
 			<div class="panel-heading">
           			<div class="panel-title">
-	          			Administración de Profesionales
+	          			<b>Administración de Profesionales</b>
 	           			<a href="formAddProfesional" class="pull-right"><b>+</b>&nbsp;&nbsp;Nuevo Profesional</a>
           			</div>
     		</div>     
