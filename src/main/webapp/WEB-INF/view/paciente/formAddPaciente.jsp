@@ -231,6 +231,16 @@ label.error {
 				document.getElementById("empresaId").disabled = "";
 				document.getElementById("trabajaEn").disabled = "";
 			}
+		}
+		
+		function razonEnable(){
+				if($( "#coseguro").prop( "checked" )){
+					 $("#razonCoseguro").prop("disabled", false);
+				}else{
+					$("#razonCoseguro").val("NONE");
+					$("#razonCoseguro").prop("disabled", true);
+				}
+		
 
 		}
 	
@@ -337,26 +347,10 @@ label.error {
 									<form:options items="${provinciaList}"  />			    
 								</form:select>
         					</div>
-			   		</div>
+			   		</div>			   		
 			   		
-			   		<div class="span1" style="">
-			   				<div class="formLabel"><form:label path="coseguro">Coseguro:</form:label></div>
-			   				
-							
-			   		</div>
-			   		<div class="span3" style="margin-top:1%;">
-			   		
-							<div class="material-switch pull-left">
-								<input id="coseguro" name="coseguro" type="checkbox" value="true">
-								<label for="coseguro" class="label-success"></label>
-								<div style="padding-top:10%;">
-									NO - SI
-								</div>
-							</div>
-							
-			   		</div>
 			   	</div>
-			   	
+			   	<br>
 			   	<div class="row-fluid">
 			   		<div class="span4">
 			   				<div class="formLabel"><form:label path="trabajaEn">Trabaja En:</form:label></div>
@@ -383,11 +377,48 @@ label.error {
 			   		</div>
 			   		
 			   	</div>	
-			   	
+			   				   	
 		 </div>
 	</div>	
 </div>
 
+
+<div class="panel panel-info">
+	<div class="panel-heading">
+		<div class="panel-title">Coseguro</div>
+	</div>
+	<div class="panel-body">
+		<div class="row-fluid">
+					<div class="span4">
+			   				<div class="formLabel" style="padding-left:20px">
+			   				<form:label path="coseguro">Seleccione:</form:label>
+			   				</div>
+			   				
+			   				<div class="formInput">
+			   				<div class="material-switch pull-left" style="margin-top:1%; padding-left:20px">
+								<input id="coseguro" name="coseguro" type="checkbox" value="true">
+								<label for="coseguro" class="label-success" onclick="razonEnable()"></label>
+								<div style="padding-top:10%;">
+									NO - SI
+								</div>
+							</div>
+			   				</div>
+							
+			   		</div>
+			   		
+			   		<div class="span4">
+			   			<div class="formLabel"><form:label path="razonCoseguro">Razón Coseguro:</form:label></div>
+        					<div class="formInput">
+        						<form:select path="razonCoseguro" style="width:83%; margin-bottom:0px">
+									<form:option value="NONE" label="Seleccione Razón Coseguro ..."/>
+									<form:options items="${razonCoseguroList}"  />			    
+								</form:select>
+        					</div>
+			   		
+			   		</div>
+		</div>
+	</div>	
+</div>
 
 <div class="panel panel-info">
 	<div class="panel-heading">
@@ -562,5 +593,7 @@ label.error {
             
         }
     });
-
+	$("#coseguro").click();	
+	$("#razonCoseguro").val("NONE");
+	$("#razonCoseguro").prop("disabled", true);
 </script>

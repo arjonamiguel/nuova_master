@@ -50,7 +50,10 @@ public class PacienteDTO {
     private int trabajaEn;
     private String empresa;
     private Integer empresaId;
-
+    
+    private List<String> razonCoseguroList;
+    private String razonCoseguro;
+    
     // private List<PacienteObrasocial> pacienteObrasocials = new ArrayList<PacienteObrasocial>(0);
 
     public Integer getPacienteId() {
@@ -165,7 +168,23 @@ public class PacienteDTO {
         this.provinciaList = provinciaList;
     }
 
-    public List<ObraSocialDTO> getObrasocialListEdit() {
+    public List<String> getRazonCoseguroList() {
+		return razonCoseguroList;
+	}
+
+	public void setRazonCoseguroList(List<String> razonCoseguroList) {
+		this.razonCoseguroList = razonCoseguroList;
+	}
+
+	public String getRazonCoseguro() {
+		return razonCoseguro;
+	}
+
+	public void setRazonCoseguro(String razonCoseguro) {
+		this.razonCoseguro = razonCoseguro;
+	}
+
+	public List<ObraSocialDTO> getObrasocialListEdit() {
         return obrasocialListEdit;
     }
 
@@ -346,8 +365,9 @@ public class PacienteDTO {
     public void setEmpresaId(Integer empresaId) {
         this.empresaId = empresaId;
     }
+    
 
-    public String getCredencialSufijo() {
+	public String getCredencialSufijo() {
         return credencialSufijo;
     }
 

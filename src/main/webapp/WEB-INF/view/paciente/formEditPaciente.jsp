@@ -191,18 +191,24 @@ function showEmpresaTitular(){
 			if(document.getElementById("coseguro").value=="true" && coseguroFlag==0){
 			//validacion on load
 				coseguroFlag=1;
-				if($( "#coseguro").prop( "checked" )){
-					$("#coseguroAux").click();
+				if(!$( "#coseguro").prop( "checked" )){
+					$("#coseguro").click();
+					$("#razonCoseguro").val("NONE");
+					$("#razonCoseguro").prop("disabled", true);
 				}
 			}else{
 			//validacion on change
 				if($( "#coseguro").prop( "checked" )){
 					 $("#coseguro").removeAttr("checked");
+					 $("#razonCoseguro").prop("disabled", false);
 				}else{
 					$("#coseguro").click();
+					$("#razonCoseguro").val("NONE");
+					$("#razonCoseguro").prop("disabled", true);
 				}
 			}	
 		}
+		
 		function updateTitular(){
 			if(document.getElementById("titular").value=="true" && titularFlag==0){
 			//validacion on load
@@ -220,7 +226,8 @@ function showEmpresaTitular(){
 			}	
 		}
 
-		function showEmpresas() {						
+		function showEmpresas() {	
+		if(document.getElementById("trabajaEn")!=null){					
 			var trabajo = document.getElementById("trabajaEn").value;
 			var t = parseInt(trabajo); 
 			if( t == 0) {
@@ -230,7 +237,7 @@ function showEmpresaTitular(){
 				document.getElementById("empresaId").value = "-1";
 				document.getElementById("empresaId").disabled = "false";
 			}
-
+		}
 		}
 		
         </SCRIPT>
@@ -342,25 +349,11 @@ function showEmpresaTitular(){
         					</div>
 			   		</div>
 			   		
-			   		<div class="span1" style="">
-			   				<div class="formLabel"><form:label path="coseguro">Coseguro:</form:label></div>
-			   				<div style="visibility:hidden;"><form:checkbox path="coseguro" id="coseguro"/></div>
-							
-			   		</div>
-			   		<div class="span3" style="margin-top:1%;">			   		
-							<div class="material-switch pull-left">
-								<input id="coseguroAux" name="coseguroAux" type="checkbox" value="true" >
-									<label for="coseguroAux" class="label-success" onclick="updatecoseguro()"></label>
-								<div style="padding-top:10%;">
-									NO - SI
-								</div>
-							</div>
-							
-			   		</div>
 			   	</div>
-
+				<br>
 			   	<c:if test="${paciente.parentesco == 0}">     		
 			   		<div class="row-fluid">
+			   		<c:if test="${paciente.parentesco == 0}">
 			   		<div class="span4">
 			   				<div class="formLabel"><form:label path="trabajaEn">Trabaja En:</form:label></div>
         					<div class="formInput">
@@ -384,7 +377,8 @@ function showEmpresaTitular(){
         					</div>
 			   		
 			   		</div>
-			   		
+			   		</c:if>
+			   				   		
 			   	</div>	
 			   	<script>
 			   	showEmpresas();
@@ -394,6 +388,44 @@ function showEmpresaTitular(){
 		 </div>
 	</div>	
 </div>
+
+<div class="panel panel-info">
+	<div class="panel-heading">
+		<div class="panel-title">Coseguro</div>
+	</div>
+	<div class="panel-body">
+		<div class="row-fluid">
+					<div class="span4">
+			   				<div class="formLabel" style="padding-left:20px">
+			   				<form:label path="coseguro">Seleccione:</form:label>
+			   				</div>
+			   				
+			   				<div class="formInput">
+			   				<div class="material-switch pull-left" style="margin-top:1%; padding-left:20px">
+								<input id="coseguro" name="coseguro" type="checkbox" value="true">
+								<label for="coseguro" class="label-success" onclick="razonEnable()"></label>
+								<div style="padding-top:10%;">
+									NO - SI
+								</div>
+							</div>
+			   				</div>
+							
+			   		</div>
+			   		
+			   		<div class="span4">
+			   			<div class="formLabel"><form:label path="razonCoseguro">Razón Coseguro:</form:label></div>
+        					<div class="formInput">
+        						<form:select path="razonCoseguro" style="width:83%; margin-bottom:0px">
+									<form:option value="NONE" label="Seleccione Razón Coseguro ..."/>
+									<form:options items="${razonCoseguroList}"  />			    
+								</form:select>
+        					</div>
+			   		
+			   		</div>
+		</div>
+	</div>	
+</div>
+
 
 
 <div class="panel panel-info">
@@ -619,6 +651,10 @@ function callEmpresas() {
 
 		});
 		
+		
+		$(".checkbox").checkbox();	
 		updatecoseguro();
-		$(".checkbox").checkbox();
+		// var valueDate=document.getElementById("fechaNacimiento").value.split('/')[2]+"-"+document.getElementById("fechaNacimiento").value.split('/')[1]+"-"+document.getElementById("fechaNacimiento").value.split('/')[0];
+		// document.getElementById("registration-date").value=valueDate;
+		
 </script>
