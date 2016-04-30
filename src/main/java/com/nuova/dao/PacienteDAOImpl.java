@@ -115,11 +115,10 @@ public class PacienteDAOImpl implements PacienteDAO {
 
   @Override
   public List<Paciente> findPacienteAutocomplete(String search) {
-    Query query =
-        this.sessionFactory.getCurrentSession()
-            .createQuery("FROM Paciente p " + " WHERE upper(p.apellido) LIKE '%"
-                + search.toUpperCase() + "%' " + " OR p.dni LIKE '%" + search.toUpperCase() + "%' "
-                + " ORDER BY p.apellido ASC");
+    Query query = this.sessionFactory.getCurrentSession()
+        .createQuery("FROM Paciente p " + " WHERE upper(p.apellido) LIKE '%" + search.toUpperCase()
+            + "%' " + " OR p.dni LIKE '%" + search.toUpperCase() + "%' "
+            + " ORDER BY p.apellido, p.nroCredencial, p.nroCredencialSufijo ASC");
     // query.setFirstResult(pageable.getOffset());
     query.setMaxResults(20);
     List<Paciente> result = query.list();
@@ -172,7 +171,8 @@ public class PacienteDAOImpl implements PacienteDAO {
 
   @Override
   public List<Empresas> findAllEmpresas() {
-    return this.sessionFactory.getCurrentSession().createQuery("FROM Empresas").list();
+    return this.sessionFactory.getCurrentSession().createQuery("FROM Empresas e ORDER BY e.nombre")
+        .list();
 
   }
 
@@ -190,6 +190,11 @@ public class PacienteDAOImpl implements PacienteDAO {
     query.setMaxResults(20);
     List<Especialidad> result = query.list();
     return result;
+  }
+
+  @Override
+  public void add(Empresas empresa) {
+    this.sessionFactory.getCurrentSession().save(empresa);
   }
 
 }

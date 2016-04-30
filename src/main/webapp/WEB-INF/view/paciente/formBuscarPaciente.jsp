@@ -81,7 +81,7 @@ if (pacienteId == "") {
 			<div  class="panel-body" >
 				<div class="container-fluid" >
 				  	<div class="row-fluid">
-				  	<center>
+				  	<div style="margin: auto;width: 100%; padding-left: 20%;">
 										<input type="hidden" name="pacienteId" id="pacienteId" value="">										
 											<input
 												data-provide="typeahead" 
@@ -89,7 +89,7 @@ if (pacienteId == "") {
 												name="searchPaciente"
 												type="text"
 												id="searchPaciente"
-												placeholder="Para realizar la busqueda usted debe ingresar DNI o el Apellido ..."
+												placeholder="Ingresar DNI o el Apellido ..."
 												autocomplete="off"
 												style="height: 40px; width: 50%;margin-top: 10px">
 
@@ -99,11 +99,8 @@ if (pacienteId == "") {
 										onclick="goInfoPaciente()">
 										<i class="ico icon-user">
 										</i>&nbsp;Buscar Paciente
-										</button>
-										
-					  	</center>
-										
-						
+										</button>				
+						</div>
 		 			</div>
 		 		</div>		
 	  	

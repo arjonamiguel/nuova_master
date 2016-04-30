@@ -51,4 +51,7 @@ public interface PacienteDAO {
 
   public Empresas findEmpresaById(Integer empresaId);
 
+  public void add(Empresas empresa);
+
+
 }

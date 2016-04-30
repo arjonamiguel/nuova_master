@@ -26,6 +26,7 @@ import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -66,7 +67,9 @@ public class PacienteController {
   @RequestMapping(value = ConstantControllers.FORM_INFO_PACIENTE, method = RequestMethod.GET)
   public String formInfoPaciente(ModelMap map, @PathVariable("pacienteId") Integer pacienteId) {
     if (pacienteId != null) {
-      PacienteDTO dto = transformPacienteToDto(pacienteManager.fin1dPacienteById(pacienteId));
+      Paciente p = pacienteManager.fin1dPacienteById(pacienteId);
+      PacienteDTO dto = transformPacienteToDto(p);
+      dto.setFechaNacimiento(Util.parseToStringDate(p.getFechaNacimiento()));
       map.addAttribute("paciente", dto);
     }
     return ConstantRedirect.VIEW_FORM_INFO_PACIENTE;
@@ -81,7 +84,8 @@ public class PacienteController {
     map.addAttribute("trabajaEnList", Util.getTrabajaEn());
     map.addAttribute("obrasocialList", obrasocialList);
     map.addAttribute("obrasocialDTOList", new ArrayList<ObraSocialDTO>());
-    map.addAttribute("paciente", new PacienteDTO());
+    PacienteDTO pacienteDto = new PacienteDTO();
+    map.addAttribute("paciente", pacienteDto);
     map.addAttribute("empresas", empresas);
 
     return ConstantRedirect.VIEW_FORM_ADD_PACIENTE;
@@ -227,7 +231,8 @@ public class PacienteController {
     List<ComboItemDTO> retorno = new ArrayList<ComboItemDTO>();
     for (Paciente p : pacienteManager.findPacienteAutocomplete(query)) {
       retorno.add(new ComboItemDTO(p.getPacienteId() + "",
-          "[" + p.getDni() + "] - " + p.getApellido() + ", " + p.getNombre()));
+          "[DNI: " + p.getDni() + "] [Cred: " + p.getNroCredencial() + "-"
+              + p.getNroCredencialSufijo() + "] " + p.getApellido() + ", " + p.getNombre()));
     }
 
     return retorno;
@@ -254,6 +259,27 @@ public class PacienteController {
     } else {
       return false;
     }
+  }
+
+  @RequestMapping(value = ConstantControllers.AJAX_POST_NUEVAEMPRESA, method = RequestMethod.POST,
+      headers = {"content-type=application/json"})
+  public @ResponseBody String saveCodigoNomenclador(@RequestBody Empresas empresa)
+      throws Exception {
+    empresa.setNombre(empresa.getNombre().toUpperCase());
+    pacienteManager.add(empresa);
+
+    return empresa.getEmpresaId() != null ? empresa.getEmpresaId() + "" : "-1";
+  }
+
+  @RequestMapping(value = ConstantControllers.AJAX_GET_EMPRESAS, method = RequestMethod.GET)
+  public @ResponseBody List<ComboItemDTO> getEmpresas() {
+    List<ComboItemDTO> retorno = new ArrayList<ComboItemDTO>();
+    List<Empresas> empresas = pacienteManager.findAllEmpresas();
+
+    for (Empresas p : empresas) {
+      retorno.add(new ComboItemDTO(p.getEmpresaId() + "", p.getNombre()));
+    }
+    return retorno;
   }
 
   // Adherentes --------------------------------------------
@@ -309,7 +335,7 @@ public class PacienteController {
     dto.setApellido(p.getApellido());
     dto.setNombre(p.getNombre());
     dto.setDomicilio(p.getDomicilio());
-    dto.setFechaNacimiento(Util.parseToStringDate(p.getFechaNacimiento()));
+    dto.setFechaNacimiento(p.getFechaNacimiento() + "");
     dto.setCoseguro(p.getCoseguro().intValue() == 1 ? true : false);
     dto.setCheckedLiberado(p.getCoseguro().intValue() == 1 ? "checked" : "");
     dto.setMail(p.getMail());

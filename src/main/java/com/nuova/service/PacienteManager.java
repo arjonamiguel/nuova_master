@@ -48,4 +48,7 @@ public interface PacienteManager {
 
   public Empresas findEmpresaById(Integer empresaId);
 
+  public void add(Empresas empresa);
+
+
 }

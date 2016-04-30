@@ -93,6 +93,8 @@ public class ConstantControllers {
       "/ajaxGetPracticasByPacientePaginados/{pacienteId}";
   public final static String DOWNLOAD = "/download-document/{documentId}";
   public final static String AJAX_POST_SAVECODIGONOMENCLADOR = "/ajaxPostSaveCodigoNomenclador";
+  public final static String AJAX_POST_NUEVAEMPRESA = "/ajaxPostNuevaEmpresa";
+  public final static String AJAX_GET_EMPRESAS = "/ajaxGetEmpresas";
   public final static String AJAX_GET_PROFESIONALESBYESPECIALIDAD =
       "/ajaxGetProfesionalByEspecialidad";
 

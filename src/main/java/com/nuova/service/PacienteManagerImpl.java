@@ -127,4 +127,11 @@ public class PacienteManagerImpl implements PacienteManager {
   public List<Especialidad> findEspecialidadesAutocomplete(String search) {
     return pacienteDAO.findEspecialidadesAutocomplete(search);
   }
+
+  @Override
+  @Transactional
+  public void add(Empresas empresa) {
+    pacienteDAO.add(empresa);
+  }
+
 }

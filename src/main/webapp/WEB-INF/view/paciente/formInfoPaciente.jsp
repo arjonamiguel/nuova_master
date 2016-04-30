@@ -134,8 +134,8 @@ function createReintegro(){
 										</a>
 										
 										<c:if test="${paciente.parentesco > 0}">
-     			<h5>Titular: <a href="/nuova/formInfoPaciente/${paciente.pacienteTitular.pacienteId}" target="_blank">${paciente.pacienteTitular.apellido}, ${paciente.pacienteTitular.nombre} </a></h5>
-     		</c:if>
+							     			<h5>Titular: <a href="/nuova/formInfoPaciente/${paciente.pacienteTitular.pacienteId}" target="_blank">${paciente.pacienteTitular.apellido} ${paciente.pacienteTitular.nombre} </a></h5>
+							     		</c:if>
 										
 										</div>
 								</td>
@@ -171,9 +171,14 @@ function createReintegro(){
 
 						<!-- Declaracion de tabs -->
 						<ul class="nav nav-tabs">
+							<c:if test="${paciente.parentesco == 0}">
 							<li class="active"><a data-toggle="tab"
 								href="#tb_adherentes"><b>Adherentes</b></a></li>
-							<li><a data-toggle="tab" href="#tb_consultas"><b>Consultas</b></a></li>
+								<li><a data-toggle="tab" href="#tb_consultas"><b>Consultas</b></a></li>
+							</c:if>	
+							<c:if test="${paciente.parentesco > 0}">
+								<li class="active"><a data-toggle="tab" href="#tb_consultas"><b>Consultas</b></a></li>
+							</c:if>	
 							<li><a data-toggle="tab" href="#tb_practicas"><b>Practicas</b></a></li>
 							<li><a data-toggle="tab" href="#tb_reintegros"><b>Reintegros</b></a></li>
 						</ul>
@@ -181,15 +186,24 @@ function createReintegro(){
 
 						<!-- Contenedor de Tabs -->
 						<div class="tab-content">
+							<c:if test="${paciente.parentesco == 0}">
 							<!-- ** Tab Adhenrentes -->
 							<div id="tb_adherentes" class="tab-pane fade in active">
 								<jsp:include page="formInfoPacienteTabAdherente.jsp"></jsp:include>
 							</div>
-
 							<!-- ** Tab Consultas -->
 							<div id="tb_consultas" class="tab-pane fade">
 								<jsp:include page="formInfoPacienteTabConsultas.jsp"></jsp:include>
 							</div>
+							</c:if>
+							
+							<c:if test="${paciente.parentesco > 0}">
+
+							<!-- ** Tab Consultas -->
+							<div id="tb_consultas" class="tab-pane fade in active">
+								<jsp:include page="formInfoPacienteTabConsultas.jsp"></jsp:include>
+							</div>
+							</c:if>
 
 							<!-- ** Tab Practicas -->
 							<div id="tb_practicas" class="tab-pane fade">
