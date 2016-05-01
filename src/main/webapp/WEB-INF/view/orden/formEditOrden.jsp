@@ -202,11 +202,6 @@ function callEspecialidadesByProfesional(profesionalId) {
 
 <style>
 .chkbox {padding-left: 10px;font-weight: bold;}
-input.largerCheckbox
-{
-	width: 20px;
-	height: 20px;
-}
 </style>
 </head>
 

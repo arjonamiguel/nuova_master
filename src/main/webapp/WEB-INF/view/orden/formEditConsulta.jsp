@@ -235,11 +235,6 @@
 	padding: 1px 20px 1px 20px;
 	width: 22%;
 }
-input.largerCheckbox
-{
-	width: 20px;
-	height: 20px;
-}
 	</style>
 	
 </head>
