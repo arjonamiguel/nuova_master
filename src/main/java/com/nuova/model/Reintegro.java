@@ -27,17 +27,19 @@ public class Reintegro implements java.io.Serializable {
   private Date fechaDesde;
   private Date fechaReintegro;
   private String profesional;
+  private String observaciones;
   private BigDecimal monto;
   private String estado;
 
   public Reintegro() {}
 
-  public Reintegro(Integer pacienteId, Date fechaDesde, Date fechaReintegro, String profesional,
+  public Reintegro(Integer pacienteId, Date fechaDesde, Date fechaReintegro, String profesional,String observaciones,
       BigDecimal monto) {
     this.pacienteId = pacienteId;
     this.fechaDesde = fechaDesde;
     this.fechaReintegro = fechaReintegro;
     this.profesional = profesional;
+    this.observaciones = observaciones;
     this.monto = monto;
   }
 
@@ -88,6 +90,15 @@ public class Reintegro implements java.io.Serializable {
 
   public void setProfesional(String profesional) {
     this.profesional = profesional;
+  }
+  
+  @Column(name = "observaciones", length = 256)
+  public String getObservaciones() {
+    return this.observaciones;
+  }
+
+  public void setObservaciones(String observaciones) {
+    this.observaciones = observaciones;
   }
 
   @Column(name = "monto", precision = 10)
