@@ -151,6 +151,7 @@ public class ReintegroController {
     dto.setMonto(r.getMonto());
     dto.setPacienteId(r.getPacienteId());
     dto.setProfesional(r.getProfesional());
+    dto.setObservaciones(r.getObservaciones());
     dto.setReintegroId(r.getReintegroId());
 
     // paciente
@@ -180,6 +181,7 @@ public class ReintegroController {
     r.setMonto(dto.getMonto());
     r.setPacienteId(dto.getPacienteId());
     r.setProfesional(dto.getProfesional());
+    r.setObservaciones(dto.getObservaciones());
     r.setEstado(dto.getEstado());
     return r;
   }

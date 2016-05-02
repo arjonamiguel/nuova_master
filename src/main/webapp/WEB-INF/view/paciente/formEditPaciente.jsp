@@ -188,25 +188,11 @@ function showEmpresaTitular(){
 			document.getElementById("fechaNacimiento").value=document.getElementById("registration-date").value;
 		}
 		function updatecoseguro(){
-			if(document.getElementById("coseguro").value=="true" && coseguroFlag==0){
-			//validacion on load
-				coseguroFlag=1;
-				if(!$( "#coseguro").prop( "checked" )){
-					$("#coseguro").click();
-					$("#razonCoseguro").val("NONE");
-					$("#razonCoseguro").prop("disabled", true);
-				}
-			}else{
-			//validacion on change
-				if($( "#coseguro").prop( "checked" )){
-					 $("#coseguro").removeAttr("checked");
-					 $("#razonCoseguro").prop("disabled", false);
-				}else{
-					$("#coseguro").click();
-					$("#razonCoseguro").val("NONE");
-					$("#razonCoseguro").prop("disabled", true);
-				}
-			}	
+			if($("#razonCoseguro").val()=="NONE")
+			{
+				$("#coseguro").click();
+				$("#razonCoseguro").prop("disabled", true);
+			}
 		}
 		
 		function updateTitular(){
@@ -227,17 +213,25 @@ function showEmpresaTitular(){
 		}
 
 		function showEmpresas() {	
-		if(document.getElementById("trabajaEn")!=null){					
-			var trabajo = document.getElementById("trabajaEn").value;
-			var t = parseInt(trabajo); 
-			if( t == 0) {
-				document.getElementById("empresaId").disabled = "";
-				
-			}else {
-				document.getElementById("empresaId").value = "-1";
-				document.getElementById("empresaId").disabled = "false";
+			if(document.getElementById("trabajaEn")!=null){					
+				var trabajo = document.getElementById("trabajaEn").value;
+				var t = parseInt(trabajo); 
+				if( t == 0) {
+					document.getElementById("empresaId").disabled = "";
+					
+				}else {
+					document.getElementById("empresaId").value = "-1";
+					document.getElementById("empresaId").disabled = "false";
+				}
 			}
 		}
+		function razonEnable(){
+				if($( "#coseguro").prop( "checked" )){
+					 $("#razonCoseguro").prop("disabled", false);
+				}else{
+					$("#razonCoseguro").val("NONE");
+					$("#razonCoseguro").prop("disabled", true);
+				}
 		}
 		
 		function razonEnable(){
@@ -413,7 +407,7 @@ function showEmpresaTitular(){
 			   				
 			   				<div class="formInput">
 			   				<div class="material-switch pull-left" style="margin-top:1%; padding-left:20px">
-								<input id="coseguro" name="coseguro" type="checkbox" value="true">
+								<input id="coseguro" name="coseguro" type="checkbox">
 								<label for="coseguro" class="label-success" onclick="razonEnable()"></label>
 								<div style="padding-top:10%;">
 									NO - SI
@@ -422,7 +416,6 @@ function showEmpresaTitular(){
 			   				</div>
 							
 			   		</div>
-			   		
 			   		<div class="span4">
 			   			<div class="formLabel"><form:label path="razonCoseguro">Razón Coseguro:</form:label></div>
         					<div class="formInput">
@@ -661,9 +654,7 @@ function callEmpresas() {
         }
 
 		});
-		
-		
-		$(".checkbox").checkbox();	
+			
 		updatecoseguro();
 		// var valueDate=document.getElementById("fechaNacimiento").value.split('/')[2]+"-"+document.getElementById("fechaNacimiento").value.split('/')[1]+"-"+document.getElementById("fechaNacimiento").value.split('/')[0];
 		// document.getElementById("registration-date").value=valueDate;

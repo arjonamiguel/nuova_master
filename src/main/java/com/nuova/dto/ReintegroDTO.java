@@ -9,6 +9,7 @@ public class ReintegroDTO {
   private String fechaDesde;
   private String fechaReintegro;
   private String profesional;
+  private String observaciones;
   private BigDecimal monto;
 
   private String estado;
@@ -55,6 +56,14 @@ public class ReintegroDTO {
 
   public void setProfesional(String profesional) {
     this.profesional = profesional;
+  }
+
+  public String getObservaciones() {
+	return observaciones;
+  }
+
+  public void setObservaciones(String observaciones) {
+	this.observaciones = observaciones;
   }
 
   public BigDecimal getMonto() {

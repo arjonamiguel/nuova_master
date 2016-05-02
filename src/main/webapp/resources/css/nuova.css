@@ -227,3 +227,8 @@
     background: inherit;
     left: 20px;
 }
+input.largerCheckbox
+{
+	width: 20px;
+	height: 20px;
+}
