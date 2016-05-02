@@ -190,7 +190,7 @@
 
 	function addRow(tableID) {
 		if (document
-				.getElementById("ContainerGeneralOverWrite_ContainerGeneral_sq").value == "") {
+				.getElementById("nomencladorString").value == "") {
 			return;
 		}
 
@@ -203,7 +203,7 @@
 
 		var cell0 = row.insertCell(0);
 		cell0.innerHTML = document
-				.getElementById("ContainerGeneralOverWrite_ContainerGeneral_sq").value
+				.getElementById("nomencladorString").value
 				+ " <input type='hidden' name='ordenpracticaListEdit[" + index + "].orddenPracticaId'> "
 				+ "<input type='hidden' name='ordenpracticaListEdit["
 				+ index
@@ -229,9 +229,9 @@
 
 		index++;
 		document
-				.getElementById("ContainerGeneralOverWrite_ContainerGeneral_sq").value = "";
+				.getElementById("nomencladorString").value = "";
 		document
-				.getElementById("ContainerGeneralOverWrite_ContainerGeneral_sq")
+				.getElementById("nomencladorString")
 				.focus();
 	}
 
