@@ -134,7 +134,8 @@ public class ReintegroController {
     // Sort sort = new Sort(Sort.Direction.DESC, "creationDate");
     Pageable pageable = new PageRequest(start, limit);
 
-    Page<Reintegro> reintegros = reintegroManager.findReintegrosByPageable(pageable);
+    Page<Reintegro> reintegros =
+        reintegroManager.findReintegrosByPacientePageable(pacienteId, pageable);
     List<ReintegroDTO> dtos = new ArrayList<ReintegroDTO>();
     for (Reintegro r : reintegros) {
       dtos.add(transformReintegroToDto(r));

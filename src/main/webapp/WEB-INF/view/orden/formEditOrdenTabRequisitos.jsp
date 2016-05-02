@@ -3,7 +3,7 @@
 <table class="table" style="width: 100%">
 <tr>
 	<td colspan="4" style="width:60%">
-		<b>Presentó la orden original del médico solicitante?</b>
+		<b>Presentó la orden de Práctica del médico solicitante?</b>
 	</td>
 	<td  style="text-align:left" colspan="2">			    
 		<form:checkbox path="reqOrdenMedico" type="checkbox" class="largerCheckbox"/>
@@ -11,7 +11,7 @@
 </tr>
 <tr>
 	<td colspan="4">
-		<b>Presentó fotocopia de la credencial de la prestadora OSPSIP?</b>
+		<b>Presentó la credencial de la prestadora OSPSIP?</b>
 	</td>
 	<td  style="text-align:left" colspan="2">				    
 		<form:checkbox path="reqCredecial" type="checkbox" class="largerCheckbox"/>
