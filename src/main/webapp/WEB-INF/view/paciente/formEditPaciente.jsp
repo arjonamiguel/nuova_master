@@ -240,6 +240,17 @@ function showEmpresaTitular(){
 		}
 		}
 		
+		function razonEnable(){
+			if($( "#coseguro").prop( "checked" )){
+				 $("#razonCoseguro").prop("disabled", false);
+			}else{
+				$("#razonCoseguro").val("NONE");
+				$("#razonCoseguro").prop("disabled", true);
+			}
+	
+
+	}
+
         </SCRIPT>
 </head>
 <body style="background-color:#e5e5e5;">

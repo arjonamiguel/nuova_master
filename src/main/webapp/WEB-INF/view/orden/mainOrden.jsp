@@ -143,6 +143,7 @@ function editColumnsChecked() {
 					});
 					
 function showReport(id){
+	$("#myModal").css("visibility", "visible");
 	var iframe = "<iframe src='/nuova/reporteOrdenEmitida/"+id+"' width='100%' height='150%' >";
 	document.getElementById("iframeReport").innerHTML = iframe;
 }
@@ -151,6 +152,7 @@ function showReport(id){
 </head>
 <body style="background-color:#e5e5e5;">
 <jsp:include page="../sec_menu.jsp"></jsp:include>
+
 <div class="mainContainer">   
 	<div class="panelContainer">		
 		<div class="panel panel-info">
@@ -189,9 +191,11 @@ function showReport(id){
 	
 	
 </div>
+</body>
+
 
 <!-- Modal -->
-<div id="myModal" class="modal fade" role="dialog">
+<div id="myModal" class="modal fade" role="dialog" style="visibility: hidden;">
   <div class="modal-dialog">
 
     <!-- Modal content-->
@@ -211,7 +215,7 @@ function showReport(id){
   </div>
 </div>
 <!-- Fin Modal -->
-</body>
+
 </html>
 <script>
 document.getElementById("mainOrden").parentNode.classList.add("active");
@@ -263,6 +267,8 @@ function loadStop() {
 	$('#wait').css("visibility","hidden");
 }
 
+
+$("#cerrarReportOrden").click()
 
 
 </script>

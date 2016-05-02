@@ -135,12 +135,25 @@ public class PacienteController {
     Paciente paciente = transformDtoToPaciente(dto);
     paciente.setEliminado(new Byte("0"));
 
-    Paciente t = getTitularByCredencial(paciente);
-    if (t != null) {
-      paciente.setPaciente(t);
+    if (dto.getParentesco() != 0) {
+      Paciente t = getTitularByCredencial(paciente);
+      if (t != null) {
+        paciente.setPaciente(t);
+      }
     }
 
     pacienteManager.add(paciente);
+
+    if (dto.getParentesco() == 0) {
+      List<Paciente> adherentes =
+          pacienteManager.findAllPacienteByCredencial(paciente.getNroCredencial());
+      for (Paciente pas : adherentes) {
+        if (pas.getPaciente() == null) {
+          pas.setPaciente(paciente);
+          pacienteManager.edit(pas);
+        }
+      }
+    }
 
 
     return "redirect:" + ConstantControllers.MAIN_PACIENTE;

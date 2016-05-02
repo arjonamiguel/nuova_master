@@ -180,18 +180,22 @@ public class OrdenController {
   public String formEditOrden(ModelMap map, @PathVariable("ordenId") Integer ordenId) {
     if (ordenId != null) {
       OrdenDTO ordenDto = transformOrdenToDto(ordenManager.findOrdenById(ordenId));
-      Especialidad e = especialidadManager.findEspecialidadById(ordenDto.getEspecialidad());
+      Especialidad e = null;
+      if (ordenDto.getEspecialidad() != null) {
+        e = especialidadManager.findEspecialidadById(ordenDto.getEspecialidad());
+      }
+
 
       List<Profesional> profesionales =
-          especialidadManager.findProfesionalByEspecialidadId(ordenDto.getProfesionalId());
+          especialidadManager.findProfesionalByEspecialidadId(ordenDto.getEspecialidad());
       User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
       int observacionCount = ordenDto.getObservacioneses().size();
       map.addAttribute("ordenDto", ordenDto);
       map.addAttribute("observacionCount", observacionCount);
       map.addAttribute("userNameLogged", user.getUsername());
       map.addAttribute("ordenEstadosList", Util.getOrdenEstadosList());
-      map.addAttribute("profesionales", profesionales);
-      map.addAttribute("especialidadView", e.getNombre());
+      map.addAttribute("profesionales", getProfesionalDTOList(profesionales));
+      map.addAttribute("especialidadView", e == null ? null : e.getNombre());
     }
 
     return ConstantRedirect.VIEW_FORM_EDIT_ORDEN;

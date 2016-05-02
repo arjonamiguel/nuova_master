@@ -196,4 +196,11 @@ public class PacienteDAOImpl implements PacienteDAO {
     this.sessionFactory.getCurrentSession().save(empresa);
   }
 
+  @Override
+  public List<Paciente> findAllPacienteByCredencial(String credencial) {
+    Query query = this.sessionFactory.getCurrentSession().createQuery("FROM Paciente p "
+        + " WHERE p.parentesco > 0 and p.nroCredencial = '" + credencial.trim() + "' ");
+    return (query.list().isEmpty()) ? null : query.list();
+  }
+
 }
