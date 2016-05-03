@@ -1,6 +1,7 @@
 package com.nuova.controller;
 
 import com.google.common.io.ByteSource;
+import com.nuova.dto.ComboItemDTO;
 import com.nuova.dto.EspecialidadDTO;
 import com.nuova.dto.ObraSocialDTO;
 import com.nuova.dto.ObservacionesDTO;
@@ -337,59 +338,54 @@ public class ReportController {
     return retorno;
   }
 
+
   public PacienteDTO transformPacienteToDto(Paciente p) {
     PacienteDTO dto = new PacienteDTO();
     dto.setPacienteId(p.getPacienteId());
+    dto.setEliminado(p.getEliminado().intValue());
     dto.setDni(Integer.valueOf(p.getDni()));
     dto.setApellido(p.getApellido());
     dto.setNombre(p.getNombre());
     dto.setDomicilio(p.getDomicilio());
-    dto.setFechaNacimiento("" + p.getFechaNacimiento());
+    dto.setFechaNacimiento(p.getFechaNacimiento() + "");
     dto.setCoseguro(p.getCoseguro().intValue() == 1 ? true : false);
     dto.setCheckedLiberado(p.getCoseguro().intValue() == 1 ? "checked" : "");
     dto.setMail(p.getMail());
     dto.setTelefono(p.getTelefono());
     dto.setProvincia(p.getProvincia());
-    Localidades loc = pacienteManager.findLocalidadById(p.getLocalidadId());
-    dto.setLocalidadId(loc.getLocalidadId());
-    dto.setLocalidadString(loc.getNombre());
+    dto.setRazonCoseguro(p.getRazonCoseguro());
+    dto.setZonaAfiliacion(p.getZonaAfiliacion());
+    dto.setEliminadoView(p.getEliminado().intValue() == 0 ? "ACTIVO" : "INACTIVO");
+    dto.setCrdencial(p.getNroCredencial());
+    dto.setCredencialSufijo(p.getNroCredencialSufijo());
 
-    dto.setTrabajaEn(p.getTrabajaEn());
-    dto.setEmpresa(p.getEmpresa());
-    dto.setEmpresaId(p.getEmpresaId());
+    if (p.getLocalidadId() != null) {
+      Localidades loc = pacienteManager.findLocalidadById(p.getLocalidadId());
+      dto.setLocalidadId(loc.getLocalidadId());
+      dto.setLocalidadString(loc.getNombre());
+    }
 
-
-
+    Obrasocial o = obrasocialManager.findObraSocialById(p.getObrasocialId());
+    ObraSocialDTO osdto = new ObraSocialDTO();
+    osdto.setObrasocialId(p.getObrasocialId());
+    osdto.setNombre(o.getNombre());
+    osdto.setCredencial(p.getNroCredencial());
+    osdto.setCredencialSufijo(p.getNroCredencialSufijo());
+    dto.setObrasocial(osdto);
     if (p.getPaciente() != null && p.getPaciente().getPacienteId() != null) {
       dto.setPacienteTitular(transformPacienteToDto(
           pacienteManager.fin1dPacienteById(p.getPaciente().getPacienteId())));
     }
 
-    Obrasocial os = obrasocialManager.findObraSocialById(p.getObrasocialId());
-    // ObraSocialDTO o = new ObraSocialDTO(po.getObrasocial().getObrasocialId(),
-    // po.getObrasocial().getNombre(),
-    // po.getNroCredencial(), po.getProvisorio() == 1 ? "checked" : "");
-    ObraSocialDTO o = new ObraSocialDTO();
-    o.setNombre(os.getNombre());
-    o.setCredencial(p.getNroCredencial());
-    o.setCredencialSufijo(p.getNroCredencialSufijo());
-    dto.setObrasocial(o);
+    dto.setParentesco(p.getParentesco().intValue());
+    for (ComboItemDTO item : Util.getParentescos()) {
+      if (dto.getParentesco() == Integer.valueOf(item.getId()).intValue())
+        dto.setParentescoDescription(item.getValue());
+    }
 
-    // Obrasocial os = obrasocialManager.findObraSocialById(p.getObrasocialId());
-    // dto.setCrdencial(p.getNroCredencial());
-    // ObraSocialDTO o = new ObraSocialDTO();
-    // o.setNombre(os.getNombre());
-    // o.setObrasocialId(os.getObrasocialId());
-    // dto.setObrasocial(o);
-    // for (PacienteObrasocial po : p.getPacienteObrasocials()) {
-    // ObraSocialDTO o = new ObraSocialDTO(po.getObrasocial().getObrasocialId(),
-    // po.getObrasocial().getNombre(),
-    // po.getNroCredencial(), po.getProvisorio() == 1 ? "checked" : "");
-    // dto.getObrasocialList().add(o);
-    // dto.setObrasocial(o);
-    // dto.setOriginal(po.getProvisorio().intValue() == 1 ? true : false);
-    // break;
-    // }
+    dto.setTrabajaEn(p.getTrabajaEn());
+    dto.setEmpresa(p.getEmpresa());
+    dto.setEmpresaId(p.getEmpresaId());
 
     for (Paciente ad : p.getPacientes()) {
       PacienteDTO dtoad = new PacienteDTO();
@@ -397,17 +393,22 @@ public class ReportController {
       dtoad.setApellido(ad.getApellido());
       dtoad.setNombre(ad.getNombre());
       dtoad.setDomicilio(ad.getDomicilio());
-      dtoad.setFechaNacimiento("" + ad.getFechaNacimiento());
+      dtoad.setFechaNacimiento(Util.parseToStringDate(ad.getFechaNacimiento()));
       dtoad.setCoseguro(ad.getCoseguro().intValue() == 1 ? true : false);
       dtoad.setCheckedLiberado(p.getCoseguro().intValue() == 1 ? "checked" : "");
       dtoad.setMail(ad.getMail());
       dtoad.setTelefono(ad.getTelefono());
       dtoad.setDni(Integer.valueOf(ad.getDni()));
+      dtoad.setZonaAfiliacion(p.getZonaAfiliacion());
+      dtoad.setParentesco(ad.getParentesco().intValue());
+      dtoad.setCrdencial(ad.getNroCredencial() + "-" + ad.getNroCredencialSufijo());
+      dtoad.setEliminado(p.getEliminado().intValue());
+      dtoad.setEmpresa(ad.getEmpresa());
 
-      // for (PacienteObrasocial poo : ad.getPacienteObrasocials()) {
-      // dtoad.setCrdencial(poo.getNroCredencial());
-      // break;
-      // }
+      for (ComboItemDTO item : Util.getParentescos()) {
+        if (dtoad.getParentesco() == Integer.valueOf(item.getId()).intValue())
+          dtoad.setParentescoDescription(item.getValue());
+      }
 
       dto.getAdherentes().add(dtoad);
     }
