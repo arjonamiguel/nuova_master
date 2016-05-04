@@ -91,6 +91,15 @@
 			        	});
 					});
 					
+function activarPaciente(id) {
+	var resp = callActivarPaciente(id);
+	if (resp == "1") {
+		alert("Activacion procesada con exito.\nSe procedera a recargar la página...");
+		window.location.href = "/nuova/mainPaciente";
+	}else {
+		alert("ERROR: No se pudo activar el paciente");
+	}
+}					
 </script>
 <!-- 	Fin Configuracion del paginador -->
 
@@ -200,6 +209,25 @@
 
 		return retorno;
 	}
+	
+	function callActivarPaciente(id) {
+		var retorno;
+		$.ajax({
+			url : "/nuova/ajaxPostActivarPaciente/"+id,
+			type : "POST",
+			contentType : "application/json; charset=utf-8",
+			// data: jsonEmpresa, //Stringified Json Object
+			async : false, //Cross-domain requests and dataType: "jsonp" requests do not support synchronous operation
+			cache : false, //This will force requested pages not to be cached by the browser          
+			processData : false, //To avoid making query String instead of JSON
+			success : function(result) {
+				retorno = result;
+			}
+		});
+
+		return retorno;
+	}
+	
 	function loadStart() {
 		$('#wait').css("visibility","visible");
 	}

@@ -41,4 +41,9 @@ xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns
   <listener>
     <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
   </listener>
+  
+  <session-config>
+    <!--Default to 30 minute session timeouts-->
+    <session-timeout>30</session-timeout>
+  </session-config>
 </web-app>

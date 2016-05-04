@@ -156,11 +156,7 @@
 				<img src="/nuova/resources/img/list-alt_24x24.png">
 				&nbsp;&nbsp;Reportes<span class="caret"></a>
 				<ul class="dropdown-menu" role="menu">
-		                <li><a href="#">Reporte 1</a></li>
-		                <li><a href="#">Reporte 2</a></li>
-		                <li><a href="#">Reporte 3</a></li>
-		                <li class="divider"></li>
-		                <li><a href="#">Reporte 4</a></li>
+		                <li><a href="/nuova/reportMonitor">Monitor de Reportes</a></li>		         
               	</ul>
 				</li>
 				</sec:authorize>

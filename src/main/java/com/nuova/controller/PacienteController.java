@@ -167,6 +167,21 @@ public class PacienteController {
     return "redirect:" + ConstantControllers.MAIN_PACIENTE;
   }
 
+  @RequestMapping(value = ConstantControllers.AJAX_POST_ACTIVAR_PACIENTE,
+      method = RequestMethod.POST, headers = {"content-type=application/json"})
+  public @ResponseBody String activarPaciente(@PathVariable("pacienteId") Integer pacienteId)
+      throws Exception {
+    String resp = "1";
+    Paciente paciente = pacienteManager.fin1dPacienteById(pacienteId);
+    paciente.setEliminado(new Byte("0"));
+    try {
+      pacienteManager.edit(paciente);
+    } catch (Exception e) {
+      resp = "0";
+    }
+    return resp;
+  }
+
   @RequestMapping(value = ConstantControllers.EDIT_PACIENTE, method = RequestMethod.POST)
   public String editPaciente(@ModelAttribute(value = "paciente") PacienteDTO dto) {
     Paciente pacienteOld = pacienteManager.fin1dPacienteById(dto.getPacienteId());

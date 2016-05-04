@@ -86,7 +86,8 @@ $(document).ready(function() {
 
 function nuevoAdherente() {
 	var titularId = document.getElementById("pacienteId").value;
-	window.location.href = "/nuova/formAddAdherente/"+titularId;
+	url = "/nuova/formAddAdherente/"+titularId;
+	window.open(url, '_blank');
 }
 
 function createOrden(ordenTipoId){

@@ -223,6 +223,12 @@ public class ReportController {
     return ConstantRedirect.VIEWER_REPORTE;
   }
 
+  @RequestMapping(value = ConstantControllers.REPORT_MONITOR, method = RequestMethod.GET)
+  public String reportMonitor(ModelMap map) throws IOException {
+
+    return ConstantRedirect.VIEW_REPORT_MONITOR;
+  }
+
   // Config Jasper Report
   private byte[] createReport(String template, Map<String, Object> parameters,
       JRBeanCollectionDataSource beanCollectionDataSource) {
