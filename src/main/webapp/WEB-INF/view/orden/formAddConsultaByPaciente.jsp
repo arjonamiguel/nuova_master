@@ -201,6 +201,22 @@
 		  return true;
 	  }
 	}
+	
+	function marcarTodos(){
+			if(document.getElementById("selectAll").checked==true)
+			{
+				$(".largerCheckbox")[1].checked=true;
+				$(".largerCheckbox")[2].checked=true;
+				$(".largerCheckbox")[3].checked=true;
+				$(".largerCheckbox")[4].checked=true;
+			}else
+			{
+				$(".largerCheckbox")[1].checked=false;
+				$(".largerCheckbox")[2].checked=false;
+				$(".largerCheckbox")[3].checked=false;
+				$(".largerCheckbox")[4].checked=false;
+			}
+		}
 </script>
 
 </head>
@@ -267,6 +283,12 @@
 											</div>
 
 											<div id="tb_requisitos" class="tab-pane fade">
+											<table class="table" style="width: 100%">
+										  		<tr>
+										  		<td style="width:60%;"><div style="float:right;">Seleccionar todos:</div></td>
+										  		<td><div style="float:left;"><input id="selectAll" type="checkbox" class="largerCheckbox" onchange="javascript:marcarTodos()"></div></td>
+										  		</tr>
+										  		</table>
 												<table class="table" style="width: 100%">
 
 													<tr>
@@ -275,7 +297,7 @@
 																orden original del médico solicitante?</b></td>
 														<td style="text-align: left" colspan="2"><input
 															type="checkbox" id="reqOrdenMedico" name="reqOrdenMedico"
-															class="checkbox" /></td>
+															class="largerCheckbox" /></td>
 													</tr>
 													<tr>
 
@@ -283,7 +305,7 @@
 																credencial de la prestadora OSPSIP?</b></td>
 														<td style="text-align: left" colspan="2"><input
 															type="checkbox" id="reqCredecial" name="reqCredecial"
-															class="checkbox" /></td>
+															class="largerCheckbox" /></td>
 													</tr>
 
 												</table>
@@ -295,7 +317,7 @@
 																Ama de Casa?</b></td>
 														<td style="text-align: left" colspan="2"><input
 															type="checkbox" id="reqMonotributista"
-															name="reqMonotributista" class="checkbox"
+															name="reqMonotributista" class="largerCheckbox"
 															onchange="monotributistaSelected()" /></td>
 													</tr>
 													<tr>
@@ -304,7 +326,7 @@
 																recibo de sueldo?</b></td>
 														<td style="text-align: left" colspan="2"><input
 															type="checkbox" id="reqReciboSueldo"
-															name="reqReciboSueldo" class="checkbox"
+															name="reqReciboSueldo" class="largerCheckbox"
 															onchange="recibosueldoSelected()" /></td>
 													</tr>
 

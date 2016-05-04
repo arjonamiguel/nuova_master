@@ -295,6 +295,22 @@
 
 		return retorno;
 	}
+	
+		function marcarTodos(){
+			if(document.getElementById("selectAll").checked==true)
+			{
+				$(".largerCheckbox")[1].checked=true;
+				$(".largerCheckbox")[2].checked=true;
+				$(".largerCheckbox")[3].checked=true;
+				$(".largerCheckbox")[4].checked=true;
+			}else
+			{
+				$(".largerCheckbox")[1].checked=false;
+				$(".largerCheckbox")[2].checked=false;
+				$(".largerCheckbox")[3].checked=false;
+				$(".largerCheckbox")[4].checked=false;
+			}
+		}
 </script>
 
 <style>

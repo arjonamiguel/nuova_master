@@ -219,6 +219,22 @@
 				$("#reqMonotributista").click();
 			}
 		}
+		
+		function marcarTodos(){
+			if(document.getElementById("selectAll").checked==true)
+			{
+				$(".largerCheckbox")[1].checked=true;
+				$(".largerCheckbox")[2].checked=true;
+				$(".largerCheckbox")[3].checked=true;
+				$(".largerCheckbox")[4].checked=true;
+			}else
+			{
+				$(".largerCheckbox")[1].checked=false;
+				$(".largerCheckbox")[2].checked=false;
+				$(".largerCheckbox")[3].checked=false;
+				$(".largerCheckbox")[4].checked=false;
+			}
+		}
 
 	</script>
 	
@@ -301,6 +317,12 @@
 										 		</div>
 										  
 										  		<div id="tb_requisitos" class="tab-pane fade">
+										  		<table class="table" style="width: 100%">
+										  		<tr>
+										  		<td style="width:60%;"><div style="float:right;">Seleccionar todos:</div></td>
+										  		<td><div style="float:left;"><input id="selectAll" type="checkbox" class="largerCheckbox" onchange="javascript:marcarTodos()"></div></td>
+										  		</tr>
+										  		</table>
 												<table class="table" style="width: 100%">
 													
 													<tr>

@@ -2,6 +2,12 @@
 <div class="tab-content" style="height: 400px">	
 <table class="table" style="width: 100%">
 <tr>
+<td style="width:60%;"><div style="float:right;">Seleccionar todos:</div></td>
+<td><div style="float:left;"><input id="selectAll" type="checkbox" class="largerCheckbox" onchange="javascript:marcarTodos()"></div></td>
+</tr>
+</table>
+<table class="table" style="width: 100%">
+<tr>
 	<td colspan="4" style="width:60%">
 		<b>Presentó la orden original del médico solicitante?</b>
 	</td>
