@@ -34,7 +34,8 @@
 <script
 	src="<%=request.getContextPath()%>/resources/montrezorro-bootstrap-checkbox-fa865ff/js/bootstrap-checkbox.js" /></script>
 
-
+<link href="<%=request.getContextPath()%>/resources/montrezorro-bootstrap-checkbox-fa865ff/css/bootstrap-checkbox.css" rel="stylesheet"/>
+		<script src="<%=request.getContextPath()%>/resources/montrezorro-bootstrap-checkbox-fa865ff/js/bootstrap-checkbox.js" /></script>
 <style>
 .chkbox {
 	padding-left: 10px;
@@ -202,6 +203,7 @@
 	  }
 	}
 	
+
 	function marcarTodos(){
 			if(document.getElementById("selectAll").checked==true)
 			{
@@ -217,6 +219,18 @@
 				$(".largerCheckbox")[4].checked=false;
 			}
 		}
+
+	function sinCosto(){
+		if ($("#coseguroSinCosto").is(':checked')) {
+			document.getElementById("monto").value = "0.00";
+			document.getElementById("monto").disabled = "false";
+		}else {
+			document.getElementById("monto").value = "";
+			document.getElementById("monto").disabled = "";
+		}	
+
+	}
+
 </script>
 
 </head>
@@ -293,16 +307,14 @@
 
 													<tr>
 
-														<td colspan="4" style="width: 60%"><b>Presentó la
-																orden original del médico solicitante?</b></td>
+														<td colspan="4" style="width: 60%"><b>Presentó la orden Práctica del médico solicitante?</b></td>
 														<td style="text-align: left" colspan="2"><input
 															type="checkbox" id="reqOrdenMedico" name="reqOrdenMedico"
 															class="largerCheckbox" /></td>
 													</tr>
 													<tr>
 
-														<td colspan="4"><b>Presentó fotocopia de la
-																credencial de la prestadora OSPSIP?</b></td>
+														<td colspan="4"><b>Presentó la credencial de la prestadora OSPSIP?</b></td>
 														<td style="text-align: left" colspan="2"><input
 															type="checkbox" id="reqCredecial" name="reqCredecial"
 															class="largerCheckbox" /></td>
@@ -372,8 +384,21 @@
 												<table class="table" style="width: 100%">
 													<tr>
 														<td style="width: 15%">Monto de Coseguro $:</td>
+														<td style="width: 35%">
+														<form:input path="monto" cssStyle="width: 40%"/>														
+														</td>
+														<td style="width: 10%">Sin Costo:</td>
 														<td>
-														<form:input path="monto" cssStyle="width: 10%"/>
+														<input
+															type="checkbox" id="coseguroSinCosto"
+															name="coseguroSinCosto" 
+															class="largerCheckbox"
+															onchange="sinCosto()" />														
+														</td>
+													</tr>
+													
+													<tr>
+														<td colspan="4">
 														<div class="alert alert-info">														
   														<strong>Importante!</strong> Usar "." (punto) en montos decimales<br>
   														Ejemplos: 2.00 / 5.50 / 12.00 / 161.20 / 5100.58

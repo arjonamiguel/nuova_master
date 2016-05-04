@@ -1,15 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="reportePacientes" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="2ff07269-4ac4-4b5b-8fd2-46f5d19821d2">
 	<property name="ireport.zoom" value="1.5"/>
-	<property name="ireport.x" value="0"/>
+	<property name="ireport.x" value="66"/>
 	<property name="ireport.y" value="0"/>
 	<field name="pacienteId" class="java.lang.Integer"/>
 	<field name="apellido" class="java.lang.String"/>
 	<field name="nombre" class="java.lang.String"/>
 	<field name="telefono" class="java.lang.String"/>
-	<field name="titularId" class="java.lang.String"/>
+	<field name="crdencial" class="java.lang.String"/>
 	<field name="fechaNacimiento" class="java.lang.String"/>
 	<field name="dni" class="java.lang.Integer"/>
+	<field name="credencialSufijo" class="java.lang.String"/>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
@@ -20,7 +21,7 @@
 				<textElement textAlignment="Center">
 					<font size="12" isUnderline="true"/>
 				</textElement>
-				<text><![CDATA[Listado de Pacientes registrados en Nuova]]></text>
+				<text><![CDATA[Listado de Pacientes Registrados en Nuova]]></text>
 			</staticText>
 			<textField>
 				<reportElement x="357" y="0" width="139" height="20" uuid="6e6c1389-20e9-4462-82bf-2361e021b827"/>
@@ -30,6 +31,10 @@
 			<textField evaluationTime="Report">
 				<reportElement x="497" y="0" width="58" height="20" uuid="346946b4-b397-42d6-915b-ac613c5842cd"/>
 				<textFieldExpression><![CDATA["De " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="0" y="0" width="100" height="20" uuid="b60734e2-a0cd-45cd-9446-74cf14d49b00"/>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
 			</textField>
 		</band>
 	</title>
@@ -87,11 +92,11 @@
 				<text><![CDATA[FECHA NAC.]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="448" y="3" width="106" height="15" uuid="12c1c72f-571e-4171-9367-876e75c05497"/>
-				<textElement>
+				<reportElement x="448" y="3" width="92" height="15" uuid="12c1c72f-571e-4171-9367-876e75c05497"/>
+				<textElement textAlignment="Right">
 					<font isBold="true"/>
 				</textElement>
-				<text><![CDATA[TIPO]]></text>
+				<text><![CDATA[CREDENCIAL]]></text>
 			</staticText>
 		</band>
 	</columnHeader>
@@ -125,9 +130,19 @@
 				<textFieldExpression><![CDATA[$F{fechaNacimiento}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="448" y="0" width="106" height="15" uuid="a0ff4513-bc41-4f6d-87ae-488d64f431b2"/>
-				<textFieldExpression><![CDATA[$F{titularId}==null?"TITULAR":"ADHERENTE"]]></textFieldExpression>
+				<reportElement x="446" y="0" width="62" height="15" uuid="f43be95a-14ee-47b9-aed5-a74adb149a59"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[$F{crdencial}]]></textFieldExpression>
 			</textField>
+			<textField>
+				<reportElement x="516" y="0" width="24" height="15" uuid="6f111a80-42d3-4de1-b9f1-48e66416ce06"/>
+				<textFieldExpression><![CDATA[$F{credencialSufijo}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="507" y="0" width="10" height="15" uuid="8f519a47-f738-4152-8975-c1d0ca2bdadc"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[-]]></text>
+			</staticText>
 		</band>
 	</detail>
 	<columnFooter>

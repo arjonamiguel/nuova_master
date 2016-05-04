@@ -142,7 +142,7 @@ public class PacienteDAOImpl implements PacienteDAO {
   @Override
   public List<Localidades> findLocalidadesAutocomplete(String search) {
     Query query = this.sessionFactory.getCurrentSession()
-        .createQuery("FROM Localidades loc " + " WHERE upper(loc.nombre) LIKE '%"
+        .createQuery("FROM Localidades loc " + " WHERE upper(loc.nombre) LIKE '"
             + search.toUpperCase() + "%'" + " ORDER BY loc.nombre ASC");
     // query.setFirstResult(pageable.getOffset());
     query.setMaxResults(20);

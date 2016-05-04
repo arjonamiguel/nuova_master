@@ -335,7 +335,7 @@
 												<tr>
 													
 													<td colspan="4" style="width:60%">
-														<b>Presentó la orden original del médico solicitante?</b>
+														<b>Presentó la orden Práctica del médico solicitante?</b>
 													</td>
 													<td  style="text-align:left" colspan="2">			
 													    <input type="checkbox" id="reqOrdenMedico" name = "reqOrdenMedico" type="checkbox" class="largerCheckbox"/>
@@ -344,7 +344,7 @@
 												<tr>
 													
 													<td colspan="4">
-														<b>Presentó fotocopia de la credencial de la prestadora OSPSIP?</b>
+														<b>Presentó la credencial de la prestadora OSPSIP?</b>
 													</td>
 													<td  style="text-align:left" colspan="2">			
 													    <input type="checkbox" id="reqCredecial" name="reqCredecial" type="checkbox" class="largerCheckbox"/>
