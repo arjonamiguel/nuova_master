@@ -34,6 +34,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Controller
@@ -134,6 +135,7 @@ public class PacienteController {
       BindingResult result) {
     Paciente paciente = transformDtoToPaciente(dto);
     paciente.setEliminado(new Byte("0"));
+    paciente.setFechaAlta(new Date());
 
     if (dto.getParentesco() != 0) {
       Paciente t = getTitularByCredencial(paciente);
@@ -354,6 +356,7 @@ public class PacienteController {
     Paciente paciente = transformDtoToPaciente(dto);
     paciente.setPaciente(titular);
     paciente.setEliminado(new Byte("0"));
+    paciente.setFechaAlta(new Date());
     pacienteManager.add(paciente);
     return "redirect:" + ConstantControllers.MAIN_PACIENTE;
   }

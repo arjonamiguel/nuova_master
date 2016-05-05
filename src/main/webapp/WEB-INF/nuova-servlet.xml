@@ -83,6 +83,7 @@
     <bean id="cajaDAO" class="com.nuova.dao.CajaDAOImpl"></bean>
     <bean id="calendarDAO" class="com.nuova.dao.CalendarDAOImpl"></bean>
     <bean id="reintegroDAO" class="com.nuova.dao.ReintegroDAOImpl"></bean>
+    <bean id="reportDAO" class="com.nuova.dao.ReportDAOImpl"></bean>
     
     <!-- Manager -->
     <bean id="profesionalManager" class="com.nuova.service.ProfesionalManagerImpl"></bean>
@@ -96,6 +97,7 @@
     <bean id="cajaManager" class="com.nuova.service.CajaManagerImpl"></bean>
     <bean id="calendarManager" class="com.nuova.service.CalendarManagerImpl"></bean>
     <bean id="reintegroManager" class="com.nuova.service.ReintegroManagerImpl"></bean>
+    <bean id="reportManager" class="com.nuova.service.report.ReportManagerImpl"></bean>
     <tx:annotation-driven />
     
     <bean id="transactionManager"

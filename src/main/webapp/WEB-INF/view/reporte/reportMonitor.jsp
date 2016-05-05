@@ -36,6 +36,18 @@
 	src="<%=request.getContextPath()%>/resources/simplepaginggrid/examples/pageNumbers/script/handlebars-1.0.rc.1.js"></script>
 <script type="text/javascript"
 	src="<%=request.getContextPath()%>/resources/simplepaginggrid/script/simplePagingGrid-0.5.0.2.js"></script>
+<style type="text/css">
+#myModal 
+{
+    width: 700px; 
+    margin-top: -300px !important;
+    margin-left:  -350px !important; 
+} 
+
+#myModal .modal-body {
+    height: 300px;
+}
+</style>
 
 </head>
 <body style="background-color: #e5e5e5;">
@@ -63,11 +75,11 @@
 											</div>
 											<div class="panel-body">
 											<ul>
-												<li><a href="#" onclick="">Cantidad de Afiliados Atendidos.</a> </li>
-												<li><a href="#" onclick="">Total de Pacientes Registrados.</a></li>
-												<li><a href="#" onclick="">Total de Pacientes Sin Coseguro.</a></li>												
-												<li><a href="#" onclick="">Pacientes Fuera de covertura (Mayores de 21 años).</a></li>
-												<li><a href="#" onclick="">Total de Pacientes Filtrados por Nomenclador.</a></li>
+												<li><a href="#" id="lnk_afiliados_atendidos">Cantidad de Afiliados Atendidos.</a> </li>
+												<li><a href="#" id="lnk_pacientes_registrados">Total de Pacientes Registrados.</a></li>
+												<li><a href="#" id="lnk_afiliados_sincoseguro">Total de Pacientes Sin Coseguro.</a></li>												
+												<li><a href="#" id="lnk_paciente_fueracobertura">Pacientes Fuera de cobertura (Mayores de 21 años).</a></li>
+												<li><a href="#" id="lnk_afiliados_filtrados_nomenclador">Total de Pacientes Filtrados por Nomenclador.</a></li>
 												
 											</ul>
 											</div>
@@ -126,8 +138,152 @@
 	</div>
 
 </body>
+
+<jsp:include page="modalAfiliadosAtendidos.jsp"></jsp:include>
+<jsp:include page="modalPacientesRegistrados.jsp"></jsp:include>
+
+
 </html>
 
 <script type="text/javascript">
-	document.getElementById("mainReporte").parentNode.classList.add("active");
+document.getElementById("reportes").parentNode.classList.add("active");
+
+
+function updatefechaDesdeAA(){
+	document.getElementById("fechaDesdeAA").value=document.getElementById("fecha_desde_aa").value;
+}
+
+function updatefechaHastaAA(){
+	document.getElementById("fechaHastaAA").value=document.getElementById("fecha_hasta_aa").value;
+}
+
+function updatefechaDesdePR(){
+	document.getElementById("fechaDesdePR").value=document.getElementById("fecha_desde_pr").value;
+}
+
+function updatefechaHastaPR(){
+	document.getElementById("fechaHastaPR").value=document.getElementById("fecha_hasta_pr").value;
+}
+//----------------------------------------------------------------------------
+//Actions Modal
+$(function() {
+	  $('#lnk_afiliados_atendidos').click(function() {
+		  $("#msj_afiliadoatendido").css("visibility","hidden");
+		  document.getElementById("especialidad").value="";
+		  document.getElementById("especialidadString").value="";
+		  
+	    $('#afiliadosAtendidos').modal('show');
+	  });
+	  
+	  $('#btnSave').click(function() {
+	    var fechaDesdeAA = document.getElementById("fechaDesdeAA").value;
+	    var fechaHastaAA = document.getElementById("fechaHastaAA").value;
+	    var especialidad = document.getElementById("especialidad").value;
+
+	    if (especialidad == "") {
+	    	especialidad = 0;
+	    }
+	    
+	    if (fechaDesdeAA == "" || fechaHastaAA == "") {
+            $("#msj_afiliadoatendido").css("visibility","visible");
+
+	    	return false;
+	    }
+	    
+	    callReportAfiliadosAtendidos(fechaDesdeAA, fechaHastaAA, especialidad);
+	    $('#afiliadosAtendidos').modal('hide');
+	  });
+	});
+
+$(function() {
+	  $('#lnk_pacientes_registrados').click(function() {
+		  $("#msj_pacienteregistrado").css("visibility","hidden");
+	    $('#pacienteregistrado').modal('show');
+	  });
+	  
+	  $('#btnSavePR').click(function() {
+	    var fechaDesdePR = document.getElementById("fechaDesdePR").value;
+	    var fechaHastaPR = document.getElementById("fechaHastaPR").value;
+
+	    if (fechaDesdePR == "" || fechaHastaPR == "") {
+          $("#msj_pacienteregistrado").css("visibility","visible");
+	    	return false;
+	    }
+	    
+	    callReportPacienteRegistrado(fechaDesdePR, fechaHastaPR);
+	    $('#pacienteregistrado').modal('hide');
+	  });
+	});
+
+$(function() {
+	  $('#lnk_afiliados_sincoseguro').click(function() {
+		  callReportAfiliadosSinCoseguro();			    
+	  });
+	});
+
+$(function() {
+	  $('#lnk_paciente_fueracobertura').click(function() {
+		  callReportAfiliadosSinCobertura();			    
+	  });
+	});
+
+
+// ----------------------------------------------------------------------------
+// Autocomplete Especialidades
+$(document).ready(function() {
+	var especialidadTH = $('#especialidadString.typeahead');
+
+	var map = new Object();
+	var objects = [];
+
+	especialidadTH.typeahead({
+		source : function(query, process) {
+			$.ajax({
+				url : '/nuova/ajaxGetAutoCompleteEspecialidades',
+				type : 'POST',
+				dataType : 'JSON',
+				data : 'query=' + query,
+				success : function(data) {
+					console.log(data);
+					$.each(data, function(i, object) {
+						map[object.value] = object;
+						if (objects[i] == null) {
+							objects.push(object.value);
+						}
+					});
+					process(objects);
+					objects = [];
+				}
+			});
+		},
+		updater : function(item) {
+			$('#especialidad').val(map[item].id);
+			return item;
+		}
+	});
+
+});
+
+//----------------------------------------------------------------------------
+//Call Ajax Reports
+
+function callReportAfiliadosAtendidos(fd, fh, esp) {
+	var url = "/nuova/ajaxGetReportAfiliadosAtendidos?fd="+fd+"&fh="+fh+"&esp="+esp;
+	window.open(url, '_blank');
+}
+
+function callReportPacienteRegistrado(fd, fh) {
+	var url = "/nuova/ajaxGetReportPacienteRegistrado?fd="+fd+"&fh="+fh;
+	window.open(url, '_blank');
+}
+
+function callReportAfiliadosSinCoseguro() {
+	var url = "/nuova/ajaxGetReportAfiliadosSinCoseguro";
+	window.open(url, '_blank');
+}
+
+function callReportAfiliadosSinCobertura() {
+	var url = "/nuova/ajaxGetReportAfiliadosSinCobertura";
+	window.open(url, '_blank');
+}
 </script>

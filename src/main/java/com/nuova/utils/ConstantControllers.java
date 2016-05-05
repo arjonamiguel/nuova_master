@@ -114,6 +114,11 @@ public class ConstantControllers {
   public final static String REPORT_PACIENTES = "/reportePacientes";
 
   public final static String REPORT_MONITOR = "/reportMonitor";
+  public final static String AJAX_GET_AFILIADOS_ATENDIDOS = "/ajaxGetReportAfiliadosAtendidos";
+  public final static String AJAX_GET_PACIENTES_REGISTRADOS = "/ajaxGetReportPacienteRegistrado";
+  public final static String AJAX_GET_AFILIADOS_SIN_COSEGURO = "/ajaxGetReportAfiliadosSinCoseguro";
+  public final static String AJAX_GET_AFILIADOS_SIN_COBERTURA =
+      "/ajaxGetReportAfiliadosSinCobertura";
 
 
   // Calendario

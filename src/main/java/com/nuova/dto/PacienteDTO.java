@@ -54,7 +54,9 @@ public class PacienteDTO {
   private List<String> razonCoseguroList;
   private String razonCoseguro;
 
-  // private List<PacienteObrasocial> pacienteObrasocials = new ArrayList<PacienteObrasocial>(0);
+
+  private String credencialCompleta;
+  private String tieneCoseguro;
 
   public Integer getPacienteId() {
     return pacienteId;
@@ -374,6 +376,24 @@ public class PacienteDTO {
 
   public void setCredencialSufijo(String credencialSufijo) {
     this.credencialSufijo = credencialSufijo;
+  }
+
+  public String getCredencialCompleta() {
+    this.credencialCompleta = getCrdencial() + "-" + getCredencialSufijo();
+    return credencialCompleta;
+  }
+
+  public void setCredencialCompleta(String credencialCompleta) {
+    this.credencialCompleta = credencialCompleta;
+  }
+
+  public String getTieneCoseguro() {
+    this.tieneCoseguro = getCoseguro() == true ? "Si" : "No";
+    return tieneCoseguro;
+  }
+
+  public void setTieneCoseguro(String tieneCoseguro) {
+    this.tieneCoseguro = tieneCoseguro;
   }
 
 }
