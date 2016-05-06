@@ -21,7 +21,7 @@ import java.util.Map;
 public class Util {
 
   static public String ESTADO_REINTEGRO_ENPROCESO = "EN PROCESO";
-  static public String ESTADO_REINTEGRO_PROCESADO = "PROCESADO";
+  static public String ESTADO_REINTEGRO_PROCESADO = "REINTEGRADO";
   static public String ESTADO_REINTEGRO_ANULADO = "ANULADO";
 
   static public int MESSAGE_SUCCESS = 1;

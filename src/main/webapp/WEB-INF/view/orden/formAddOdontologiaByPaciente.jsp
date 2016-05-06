@@ -156,7 +156,7 @@
 														<b>Presentó la orden original del médico solicitante?</b>
 													</td>
 													<td  style="text-align:left" colspan="2">			
-													    <input type="checkbox" id="reqOrdenMedico" name = "reqOrdenMedico" class="checkbox"/>
+													    <input type="checkbox" id="reqOrdenMedico" name = "reqOrdenMedico" type="checkbox" class="largerCheckbox"/>
 													</td>
 												</tr>
 												<tr>
@@ -165,7 +165,7 @@
 														<b>Presentó fotocopia de la credencial de la prestadora OSPSIP?</b>
 													</td>
 													<td  style="text-align:left" colspan="2">			
-													    <input type="checkbox" id="reqCredecial" name="reqCredecial" class="checkbox"/>
+													    <input type="checkbox" id="reqCredecial" name="reqCredecial" type="checkbox" class="largerCheckbox"/>
 													</td>
 												</tr>
 									
@@ -177,7 +177,7 @@
 														<b>Presentó fotocopia de los 3 último recibos como Monotributista o Ama de Casa?</b>
 													</td>
 													<td  style="text-align:left" colspan="2">			
-													    <input type="checkbox" id="reqMonotributista" name="reqMonotributista" class="checkbox" onchange="monotributistaSelected()"/>
+													    <input type="checkbox" id="reqMonotributista" name="reqMonotributista" type="checkbox" class="largerCheckbox" onchange="monotributistaSelected()"/>
 													</td>
 												</tr>	
 												<tr>
@@ -186,7 +186,7 @@
 														<b>Presentó fotocopia del último recibo de sueldo?</b>
 													</td>
 													<td  style="text-align:left" colspan="2">			
-													    <input type="checkbox" id="reqReciboSueldo" name="reqReciboSueldo" class="checkbox" onchange="recibosueldoSelected()"/>
+													    <input type="checkbox" id="reqReciboSueldo" name="reqReciboSueldo" type="checkbox" class="largerCheckbox" onchange="recibosueldoSelected()"/>
 													</td>
 												</tr>
 									

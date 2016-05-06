@@ -142,7 +142,7 @@ public class PacienteDAOImpl implements PacienteDAO {
   @Override
   public List<Localidades> findLocalidadesAutocomplete(String search) {
     Query query = this.sessionFactory.getCurrentSession()
-        .createQuery("FROM Localidades loc " + " WHERE upper(loc.nombre) LIKE '%"
+        .createQuery("FROM Localidades loc " + " WHERE upper(loc.nombre) LIKE '"
             + search.toUpperCase() + "%'" + " ORDER BY loc.nombre ASC");
     // query.setFirstResult(pageable.getOffset());
     query.setMaxResults(20);
@@ -194,6 +194,13 @@ public class PacienteDAOImpl implements PacienteDAO {
   @Override
   public void add(Empresas empresa) {
     this.sessionFactory.getCurrentSession().save(empresa);
+  }
+
+  @Override
+  public List<Paciente> findAllPacienteByCredencial(String credencial) {
+    Query query = this.sessionFactory.getCurrentSession().createQuery("FROM Paciente p "
+        + " WHERE p.parentesco > 0 and p.nroCredencial = '" + credencial.trim() + "' ");
+    return (query.list().isEmpty()) ? null : query.list();
   }
 
 }

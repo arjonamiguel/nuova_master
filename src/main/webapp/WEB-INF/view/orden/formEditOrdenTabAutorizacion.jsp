@@ -116,9 +116,9 @@ function updateDate(i){
 		<input
 			data-provide="typeahead" 
 			class="typeahead"
-			name="ctl00$ContainerGeneralOverWrite$ContainerGeneral$sq"
+			name="nomencladorString"
 			type="text"
-			id="ContainerGeneralOverWrite_ContainerGeneral_sq"
+			id="nomencladorString"
 			placeholder="Ingrese aqui, Codigo o Nombre del Nomenclador ..."
 			autocomplete="off"
 			style="height: 20px; width: 40%;margin-bottom:0px">

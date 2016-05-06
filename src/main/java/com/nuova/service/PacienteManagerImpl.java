@@ -16,122 +16,110 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 @Service
+@Transactional
 public class PacienteManagerImpl implements PacienteManager {
   @Autowired
   PacienteDAO pacienteDAO;
 
   @Override
-  @Transactional
   public void add(Paciente paciente) {
     pacienteDAO.add(paciente);
   }
 
   @Override
-  @Transactional
   public Paciente fin1dPacienteById(Integer pacienteId) {
     return pacienteDAO.fin1dPacienteById(pacienteId);
   }
 
   @Override
-  @Transactional
   public List<Paciente> findAll() {
     return pacienteDAO.findAll();
   }
 
   @Override
-  @Transactional
   public void delete(Integer pacienteId) {
     pacienteDAO.delete(pacienteId);
   }
 
   @Override
-  @Transactional
   public void edit(Paciente paciente) {
     pacienteDAO.edit(paciente);
   }
 
   @Override
-  @Transactional
   public void deleteAdherente(Integer pacienteId) {
     pacienteDAO.deleteAdherente(pacienteId);
   }
 
   @Override
-  @Transactional
   public void deletePacienteObrasocial(Integer pacienteId) {
     pacienteDAO.deletePacienteObrasocial(pacienteId);
   }
 
   @Override
-  @Transactional
   public Page<Paciente> findPacientesByPageable(Pageable pageable) {
     return pacienteDAO.findPacientesByPageable(pageable);
   }
 
   @Override
-  @Transactional
   public Page<Paciente> findPacientesBySearch(String search, Pageable pageable) {
     return pacienteDAO.findPacientesBySearch(search, pageable);
   }
 
   @Override
-  @Transactional
   public OrdenAlarmaDTO countPacientes() {
     return pacienteDAO.countPacientes();
   }
 
   @Override
-  @Transactional
   public List<Paciente> findPacienteAutocomplete(String search) {
     return pacienteDAO.findPacienteAutocomplete(search);
   }
 
   @Override
-  @Transactional
   public Paciente findPacienteByDni(Integer dni) {
     return pacienteDAO.findPacienteByDni(dni);
   }
 
   @Override
-  @Transactional
   public List<Localidades> findLocalidadesAutocomplete(String search) {
     return pacienteDAO.findLocalidadesAutocomplete(search);
   }
 
   @Override
-  @Transactional
   public Localidades findLocalidadById(Integer localidadId) {
     return pacienteDAO.findLocalidadById(localidadId);
   }
 
   @Override
-  @Transactional
   public Paciente findPacienteByCredencial(String credencial) {
     return pacienteDAO.findPacienteByCredencial(credencial);
   }
 
   @Override
-  @Transactional
   public List<Empresas> findAllEmpresas() {
     return pacienteDAO.findAllEmpresas();
   }
 
   @Override
-  @Transactional
   public Empresas findEmpresaById(Integer empresaId) {
     return pacienteDAO.findEmpresaById(empresaId);
   }
 
   @Override
-  @Transactional
   public List<Especialidad> findEspecialidadesAutocomplete(String search) {
     return pacienteDAO.findEspecialidadesAutocomplete(search);
   }
 
   @Override
-  @Transactional
+
   public void add(Empresas empresa) {
     pacienteDAO.add(empresa);
+  }
+
+  @Override
+  public List<Paciente> findAllPacienteByCredencial(String credencial) {
+    return pacienteDAO.findAllPacienteByCredencial(credencial);
   }
 
 }

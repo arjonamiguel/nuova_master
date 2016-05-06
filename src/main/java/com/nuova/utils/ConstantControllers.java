@@ -59,6 +59,8 @@ public class ConstantControllers {
   public final static String AJAX_GET_AUTOCOMPLETE_LOCALIDADES = "/ajaxGetAutoCompleteLocalidades";
   public final static String AJAX_GET_AUTOCOMPLETE_ESPECIALIDADES =
       "/ajaxGetAutoCompleteEspecialidades";
+  public final static String AJAX_POST_ACTIVAR_PACIENTE = "/ajaxPostActivarPaciente/{pacienteId}";
+
 
   // Adherente
   public final static String FORM_ADD_ADHERENTE = "/formAddAdherente/{titularId}";
@@ -110,6 +112,14 @@ public class ConstantControllers {
   public final static String REPORT_ESPECIALIDADES = "/reporteEspecialidades";
   public final static String REPORT_OBRASSOCIALES = "/reporteObrasSociales";
   public final static String REPORT_PACIENTES = "/reportePacientes";
+
+  public final static String REPORT_MONITOR = "/reportMonitor";
+  public final static String AJAX_GET_AFILIADOS_ATENDIDOS = "/ajaxGetReportAfiliadosAtendidos";
+  public final static String AJAX_GET_PACIENTES_REGISTRADOS = "/ajaxGetReportPacienteRegistrado";
+  public final static String AJAX_GET_AFILIADOS_SIN_COSEGURO = "/ajaxGetReportAfiliadosSinCoseguro";
+  public final static String AJAX_GET_AFILIADOS_SIN_COBERTURA =
+      "/ajaxGetReportAfiliadosSinCobertura";
+
 
   // Calendario
   public final static String MAIN_CALENDARIO = "/mainCalendario";

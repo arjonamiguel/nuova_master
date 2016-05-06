@@ -35,7 +35,7 @@
 						$("#profesionalGrid").simplePagingGrid(
 								{
 									columnNames : [ "ID", "APELLIDO", "NOMBRE",
-											"TELEFONO", "MATRIULA", 
+											"TELEFONO", "MATRICULA", 
 											 "TITULO", ""],
 									columnKeys : [ "profesionalId", "apellido",
 											"nombre", "telefono", "matricula",

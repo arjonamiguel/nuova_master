@@ -34,6 +34,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Controller
@@ -134,13 +135,27 @@ public class PacienteController {
       BindingResult result) {
     Paciente paciente = transformDtoToPaciente(dto);
     paciente.setEliminado(new Byte("0"));
+    paciente.setFechaAlta(new Date());
 
-    Paciente t = getTitularByCredencial(paciente);
-    if (t != null) {
-      paciente.setPaciente(t);
+    if (dto.getParentesco() != 0) {
+      Paciente t = getTitularByCredencial(paciente);
+      if (t != null) {
+        paciente.setPaciente(t);
+      }
     }
 
     pacienteManager.add(paciente);
+
+    if (dto.getParentesco() == 0) {
+      List<Paciente> adherentes =
+          pacienteManager.findAllPacienteByCredencial(paciente.getNroCredencial());
+      for (Paciente pas : adherentes) {
+        if (pas.getPaciente() == null) {
+          pas.setPaciente(paciente);
+          pacienteManager.edit(pas);
+        }
+      }
+    }
 
 
     return "redirect:" + ConstantControllers.MAIN_PACIENTE;
@@ -152,6 +167,21 @@ public class PacienteController {
     paciente.setEliminado(new Byte("1"));
     pacienteManager.edit(paciente);
     return "redirect:" + ConstantControllers.MAIN_PACIENTE;
+  }
+
+  @RequestMapping(value = ConstantControllers.AJAX_POST_ACTIVAR_PACIENTE,
+      method = RequestMethod.POST, headers = {"content-type=application/json"})
+  public @ResponseBody String activarPaciente(@PathVariable("pacienteId") Integer pacienteId)
+      throws Exception {
+    String resp = "1";
+    Paciente paciente = pacienteManager.fin1dPacienteById(pacienteId);
+    paciente.setEliminado(new Byte("0"));
+    try {
+      pacienteManager.edit(paciente);
+    } catch (Exception e) {
+      resp = "0";
+    }
+    return resp;
   }
 
   @RequestMapping(value = ConstantControllers.EDIT_PACIENTE, method = RequestMethod.POST)
@@ -326,6 +356,7 @@ public class PacienteController {
     Paciente paciente = transformDtoToPaciente(dto);
     paciente.setPaciente(titular);
     paciente.setEliminado(new Byte("0"));
+    paciente.setFechaAlta(new Date());
     pacienteManager.add(paciente);
     return "redirect:" + ConstantControllers.MAIN_PACIENTE;
   }

@@ -42,6 +42,8 @@ public interface PacienteDAO {
 
   public Paciente findPacienteByCredencial(String credencial);
 
+  public List<Paciente> findAllPacienteByCredencial(String credencial);
+
   public List<Paciente> findAllAdherentes();
 
   public List<Especialidad> findEspecialidadesAutocomplete(String search);

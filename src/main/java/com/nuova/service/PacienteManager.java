@@ -42,6 +42,9 @@ public interface PacienteManager {
 
   public Paciente findPacienteByCredencial(String credencial);
 
+  public List<Paciente> findAllPacienteByCredencial(String credencial);
+
+
   public List<Especialidad> findEspecialidadesAutocomplete(String search);
 
   public List<Empresas> findAllEmpresas();

@@ -47,6 +47,7 @@ $(document).ready(function() {
 		},
 		updater : function(item) {
 			$('#pacienteId').val(map[item].id);
+			setInterval(function(){ goInfoPaciente(); }, 1500);
 			return item;
 		}
 	});
@@ -95,7 +96,7 @@ if (pacienteId == "") {
 
 										<button id="breadButton" href="" 
 										class="btn btn-info" 
-										style="margin-top: 0px; height: 50px"
+										style="margin-top: 0px; height: 50px; visibility:hidden;"
 										onclick="goInfoPaciente()">
 										<i class="ico icon-user">
 										</i>&nbsp;Buscar Paciente

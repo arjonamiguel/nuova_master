@@ -108,17 +108,38 @@ function updateFechaReintegro(){
 										<form:input path="monto" type="text" />
 									</div>
 								</div>
+								<div class="span3">
+								</div>
+								<div class="span4">
+									<div class="formLabel">
+										<form:label path="observaciones">Observaciones:</form:label>
+									</div>
+									<div class="formInput">
+										<form:input path="observaciones" type="text" cssStyle="width:150%"/>
+									</div>
+								</div>
 							</div>
+					
+							
+							
 						</div>
+						
 					</div>
+					<div class="alert alert-info">														
+  														<strong>Importante!</strong> Usar "." (punto) en montos decimales<br>
+  														Ejemplos: 2.00 / 5.50 / 12.00 / 161.20 / 5100.58
+  														</div>
 				</div>
-
+		
+					
+							
 
 				<div class="panel panel-info">
 					<div class="panel-body">
 						<div class="row-fluid">
-							<div class="span12">
+							<div class="span12">							
 								<div style="float: right;">
+								
 									<input type="button" value="Cancelar"
 										onclick="location.href='/nuova/mainPaciente';" class="btn" />
 								</div>

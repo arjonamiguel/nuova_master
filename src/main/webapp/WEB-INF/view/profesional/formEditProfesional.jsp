@@ -365,8 +365,8 @@ label.error {
 		            tituloProfesional: "required",
 		            nroRegistro: "required",
 		            nroLibro: "required",
-		            nroFolio: "required",
-		            nroPoliza: "required"
+		            nroFolio: "required"
+		            
 		        },
 		        
 		        // Specify the validation error messages
@@ -377,8 +377,8 @@ label.error {
 		        	tituloProfesional: "Ingrese Título Profesional",
 		        	nroRegistro: "Ingrese Número de Registro",
 		        	nroLibro: "Ingrese Número de Libro",
-		        	nroFolio: "Ingrese Número de Folio",
-		        	nroPoliza: "Ingrese Número de Poliza"
+		        	nroFolio: "Ingrese Número de Folio"
+		        	
 		        },
 		                submitHandler: function(form) {
 		            form.submit();

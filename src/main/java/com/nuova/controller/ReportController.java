@@ -1,9 +1,11 @@
 package com.nuova.controller;
 
 import com.google.common.io.ByteSource;
+import com.nuova.dto.ComboItemDTO;
 import com.nuova.dto.EspecialidadDTO;
 import com.nuova.dto.ObraSocialDTO;
 import com.nuova.dto.ObservacionesDTO;
+import com.nuova.dto.OrdenAlarmaDTO;
 import com.nuova.dto.OrdenDTO;
 import com.nuova.dto.OrdenDocumentDTO;
 import com.nuova.dto.OrdenPracticaDTO;
@@ -32,6 +34,7 @@ import com.nuova.service.ObraSocialManager;
 import com.nuova.service.OrdenManager;
 import com.nuova.service.PacienteManager;
 import com.nuova.service.ProfesionalManager;
+import com.nuova.service.report.ReportManager;
 import com.nuova.utils.ConstantControllers;
 import com.nuova.utils.ConstantRedirect;
 import com.nuova.utils.Util;
@@ -42,10 +45,13 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -81,6 +87,17 @@ public class ReportController {
   private static final String ESPECIALIDADES_SUBREPORT_JRXML =
       "reports/reporteEspecialidades_Profesionales.jrxml";
 
+  // Monitor de Reportes
+  private static final String REPORT_AFILIADOS_ATENDIDOS = "reports/reportAfiliadosAtendidos.jrxml";
+  private static final String REPORT_PACIENTES_REGISTRADOS =
+      "reports/reportPacientesRegistrados.jrxml";
+  private static final String REPORT_AFILIADOS_SIN_COSEGURO =
+      "reports/reportAfiliadosSinCoseguro.jrxml";
+  private static final String REPORT_AFILIADOS_SIN_COBERTURA =
+      "reports/reportAfiliadosSinCobertura.jrxml";
+
+  @Autowired
+  ReportManager reportManager;
   @Autowired
   ServletContext context;
   @Autowired
@@ -94,6 +111,151 @@ public class ReportController {
   @Autowired
   ObraSocialManager obrasocialManager;
 
+  // ------------------------------------------------------------------------------------------------
+  // Ajax Reports
+  @RequestMapping(value = ConstantControllers.AJAX_GET_AFILIADOS_ATENDIDOS,
+      method = RequestMethod.GET)
+  public @ResponseBody String reportAfiliadosAtendidos(HttpServletResponse response,
+      @RequestParam(required = false, defaultValue = "") String fd,
+      @RequestParam(required = false, defaultValue = "") String fh,
+      @RequestParam(required = false, defaultValue = "") Integer esp) throws IOException {
+
+    String especialidad = "";
+    if (esp.intValue() == 0) {
+      especialidad = "Todas las Especialidades";
+    } else {
+      Especialidad e = especialidadManager.findEspecialidadById(esp);
+      especialidad = e != null ? e.getNombre() : "Especialidad Descono";
+    }
+
+    // Cantidad de pacientes
+    OrdenAlarmaDTO cantPaciente = pacienteManager.countPacientes();
+
+    // Afiliados atendidos
+    List<Paciente> afiliadosAtendidos =
+        reportManager.getAfiliadosAtendidos(Util.parseToDate(fd), Util.parseToDate(fh), esp);
+
+    /*
+     * canttotal --- 100% cantatendi -- x %
+     */
+    Double porcentaje = new Double(0);
+    DecimalFormat df = new DecimalFormat("#,###,##0.00");
+    if (cantPaciente.getCantidad() > 0) {
+      porcentaje = new Double((afiliadosAtendidos.size() * 100) / cantPaciente.getCantidad());
+    }
+
+    List<PacienteDTO> listAA = getPacientesDto(afiliadosAtendidos);
+    JRBeanCollectionDataSource beanCollectionDataSource = new JRBeanCollectionDataSource(listAA);
+
+    Map<String, Object> parameters = new HashMap<String, Object>();
+    parameters.put("fechaDesde", Util.parseToStringDate(Util.parseToDate(fd)));
+    parameters.put("fechaHasta", Util.parseToStringDate(Util.parseToDate(fh)));
+    parameters.put("especialidad", especialidad);
+    parameters.put("totalPacientes", cantPaciente.getCantidad());
+    parameters.put("totalAfiliadosAtendidos", afiliadosAtendidos.size());
+    parameters.put("porcentajeAfiliados", df.format(porcentaje));
+
+    ByteSource source = ByteSource
+        .wrap(createReport(REPORT_AFILIADOS_ATENDIDOS, parameters, beanCollectionDataSource));
+    source.copyTo(response.getOutputStream());
+
+    response.setContentType("application/pdf");
+    response.getOutputStream().write(source.read());
+    response.getOutputStream().flush();
+    response.getOutputStream().close();
+
+    // return ConstantRedirect.VIEWER_REPORTE;
+    return "OK";
+  }
+
+  @RequestMapping(value = ConstantControllers.AJAX_GET_PACIENTES_REGISTRADOS,
+      method = RequestMethod.GET)
+  public @ResponseBody String reportPacientesRegistrados(HttpServletResponse response,
+      @RequestParam(required = false, defaultValue = "") String fd,
+      @RequestParam(required = false, defaultValue = "") String fh) throws IOException {
+
+    // Afiliados atendidos
+    List<Paciente> pacientesregistrados =
+        reportManager.getPacientesRegistrados(Util.parseToDate(fd), Util.parseToDate(fh));
+
+
+    List<PacienteDTO> listPR = getPacientesDto(pacientesregistrados);
+    JRBeanCollectionDataSource beanCollectionDataSource = new JRBeanCollectionDataSource(listPR);
+
+    Map<String, Object> parameters = new HashMap<String, Object>();
+    parameters.put("fechaDesde", Util.parseToStringDate(Util.parseToDate(fd)));
+    parameters.put("fechaHasta", Util.parseToStringDate(Util.parseToDate(fh)));
+    parameters.put("totalPacientes", listPR.size());
+
+    ByteSource source = ByteSource
+        .wrap(createReport(REPORT_PACIENTES_REGISTRADOS, parameters, beanCollectionDataSource));
+    source.copyTo(response.getOutputStream());
+
+    response.setContentType("application/pdf");
+    response.getOutputStream().write(source.read());
+    response.getOutputStream().flush();
+    response.getOutputStream().close();
+
+    return "OK";
+  }
+
+
+  @RequestMapping(value = ConstantControllers.AJAX_GET_AFILIADOS_SIN_COSEGURO,
+      method = RequestMethod.GET)
+  public @ResponseBody String reportAfiliadosSinCoseguro(HttpServletResponse response)
+      throws IOException {
+
+    // Afiliados atendidos
+    List<Paciente> afiliadossincoseguro = reportManager.getAfiliadosSinCoseguro();
+
+    List<PacienteDTO> listASC = getPacientesDto(afiliadossincoseguro);
+    JRBeanCollectionDataSource beanCollectionDataSource = new JRBeanCollectionDataSource(listASC);
+
+    Map<String, Object> parameters = new HashMap<String, Object>();
+    parameters.put("totalPacientes", listASC.size());
+
+    ByteSource source = ByteSource
+        .wrap(createReport(REPORT_AFILIADOS_SIN_COSEGURO, parameters, beanCollectionDataSource));
+    source.copyTo(response.getOutputStream());
+
+    response.setContentType("application/pdf");
+    response.getOutputStream().write(source.read());
+    response.getOutputStream().flush();
+    response.getOutputStream().close();
+
+    return "OK";
+  }
+
+
+  @RequestMapping(value = ConstantControllers.AJAX_GET_AFILIADOS_SIN_COBERTURA,
+      method = RequestMethod.GET)
+  public @ResponseBody String reportAfiliadosSinCobertura(HttpServletResponse response)
+      throws IOException {
+
+    // Afiliados atendidos
+    List<Paciente> afiliadossincobertura = reportManager.getAfiliadosSinCobertura();
+
+    List<PacienteDTO> listASC = getPacientesDto(afiliadossincobertura);
+
+
+    JRBeanCollectionDataSource beanCollectionDataSource = new JRBeanCollectionDataSource(listASC);
+
+    Map<String, Object> parameters = new HashMap<String, Object>();
+    parameters.put("totalPacientes", listASC.size());
+
+    ByteSource source = ByteSource
+        .wrap(createReport(REPORT_AFILIADOS_SIN_COBERTURA, parameters, beanCollectionDataSource));
+    source.copyTo(response.getOutputStream());
+
+    response.setContentType("application/pdf");
+    response.getOutputStream().write(source.read());
+    response.getOutputStream().flush();
+    response.getOutputStream().close();
+
+    return "OK";
+  }
+
+  // ------------------------------------------------------------------------------------------------
   // Viewer Reports
   @RequestMapping(value = ConstantControllers.SHOW_REPORT_PROFESIONALES, method = RequestMethod.GET)
   public String showReportProfesionales(ModelMap map) {
@@ -222,6 +384,12 @@ public class ReportController {
     return ConstantRedirect.VIEWER_REPORTE;
   }
 
+  @RequestMapping(value = ConstantControllers.REPORT_MONITOR, method = RequestMethod.GET)
+  public String reportMonitor(ModelMap map) throws IOException {
+
+    return ConstantRedirect.VIEW_REPORT_MONITOR;
+  }
+
   // Config Jasper Report
   private byte[] createReport(String template, Map<String, Object> parameters,
       JRBeanCollectionDataSource beanCollectionDataSource) {
@@ -337,59 +505,55 @@ public class ReportController {
     return retorno;
   }
 
+
   public PacienteDTO transformPacienteToDto(Paciente p) {
     PacienteDTO dto = new PacienteDTO();
     dto.setPacienteId(p.getPacienteId());
+    dto.setEliminado(p.getEliminado().intValue());
     dto.setDni(Integer.valueOf(p.getDni()));
     dto.setApellido(p.getApellido());
-    dto.setNombre(p.getNombre());
+    dto.setNombre(p.getNombre() == null ? "" : p.getNombre());
     dto.setDomicilio(p.getDomicilio());
-    dto.setFechaNacimiento("" + p.getFechaNacimiento());
+    dto.setFechaNacimiento(
+        p.getFechaNacimiento() == null ? "" : Util.parseToStringDate(p.getFechaNacimiento()));
     dto.setCoseguro(p.getCoseguro().intValue() == 1 ? true : false);
     dto.setCheckedLiberado(p.getCoseguro().intValue() == 1 ? "checked" : "");
     dto.setMail(p.getMail());
     dto.setTelefono(p.getTelefono());
     dto.setProvincia(p.getProvincia());
-    Localidades loc = pacienteManager.findLocalidadById(p.getLocalidadId());
-    dto.setLocalidadId(loc.getLocalidadId());
-    dto.setLocalidadString(loc.getNombre());
+    dto.setRazonCoseguro(p.getRazonCoseguro() == null ? "" : p.getRazonCoseguro());
+    dto.setZonaAfiliacion(p.getZonaAfiliacion());
+    dto.setEliminadoView(p.getEliminado().intValue() == 0 ? "ACTIVO" : "INACTIVO");
+    dto.setCrdencial(p.getNroCredencial());
+    dto.setCredencialSufijo(p.getNroCredencialSufijo());
 
-    dto.setTrabajaEn(p.getTrabajaEn());
-    dto.setEmpresa(p.getEmpresa());
-    dto.setEmpresaId(p.getEmpresaId());
+    if (p.getLocalidadId() != null) {
+      Localidades loc = pacienteManager.findLocalidadById(p.getLocalidadId());
+      dto.setLocalidadId(loc.getLocalidadId());
+      dto.setLocalidadString(loc.getNombre());
+    }
 
-
-
+    Obrasocial o = obrasocialManager.findObraSocialById(p.getObrasocialId());
+    ObraSocialDTO osdto = new ObraSocialDTO();
+    osdto.setObrasocialId(p.getObrasocialId());
+    osdto.setNombre(o.getNombre());
+    osdto.setCredencial(p.getNroCredencial());
+    osdto.setCredencialSufijo(p.getNroCredencialSufijo());
+    dto.setObrasocial(osdto);
     if (p.getPaciente() != null && p.getPaciente().getPacienteId() != null) {
       dto.setPacienteTitular(transformPacienteToDto(
           pacienteManager.fin1dPacienteById(p.getPaciente().getPacienteId())));
     }
 
-    Obrasocial os = obrasocialManager.findObraSocialById(p.getObrasocialId());
-    // ObraSocialDTO o = new ObraSocialDTO(po.getObrasocial().getObrasocialId(),
-    // po.getObrasocial().getNombre(),
-    // po.getNroCredencial(), po.getProvisorio() == 1 ? "checked" : "");
-    ObraSocialDTO o = new ObraSocialDTO();
-    o.setNombre(os.getNombre());
-    o.setCredencial(p.getNroCredencial());
-    o.setCredencialSufijo(p.getNroCredencialSufijo());
-    dto.setObrasocial(o);
+    dto.setParentesco(p.getParentesco().intValue());
+    for (ComboItemDTO item : Util.getParentescos()) {
+      if (dto.getParentesco() == Integer.valueOf(item.getId()).intValue())
+        dto.setParentescoDescription(item.getValue());
+    }
 
-    // Obrasocial os = obrasocialManager.findObraSocialById(p.getObrasocialId());
-    // dto.setCrdencial(p.getNroCredencial());
-    // ObraSocialDTO o = new ObraSocialDTO();
-    // o.setNombre(os.getNombre());
-    // o.setObrasocialId(os.getObrasocialId());
-    // dto.setObrasocial(o);
-    // for (PacienteObrasocial po : p.getPacienteObrasocials()) {
-    // ObraSocialDTO o = new ObraSocialDTO(po.getObrasocial().getObrasocialId(),
-    // po.getObrasocial().getNombre(),
-    // po.getNroCredencial(), po.getProvisorio() == 1 ? "checked" : "");
-    // dto.getObrasocialList().add(o);
-    // dto.setObrasocial(o);
-    // dto.setOriginal(po.getProvisorio().intValue() == 1 ? true : false);
-    // break;
-    // }
+    dto.setTrabajaEn(p.getTrabajaEn());
+    dto.setEmpresa(p.getEmpresa());
+    dto.setEmpresaId(p.getEmpresaId());
 
     for (Paciente ad : p.getPacientes()) {
       PacienteDTO dtoad = new PacienteDTO();
@@ -397,17 +561,22 @@ public class ReportController {
       dtoad.setApellido(ad.getApellido());
       dtoad.setNombre(ad.getNombre());
       dtoad.setDomicilio(ad.getDomicilio());
-      dtoad.setFechaNacimiento("" + ad.getFechaNacimiento());
+      dtoad.setFechaNacimiento(Util.parseToStringDate(ad.getFechaNacimiento()));
       dtoad.setCoseguro(ad.getCoseguro().intValue() == 1 ? true : false);
       dtoad.setCheckedLiberado(p.getCoseguro().intValue() == 1 ? "checked" : "");
       dtoad.setMail(ad.getMail());
       dtoad.setTelefono(ad.getTelefono());
       dtoad.setDni(Integer.valueOf(ad.getDni()));
+      dtoad.setZonaAfiliacion(p.getZonaAfiliacion());
+      dtoad.setParentesco(ad.getParentesco().intValue());
+      dtoad.setCrdencial(ad.getNroCredencial() + "-" + ad.getNroCredencialSufijo());
+      dtoad.setEliminado(p.getEliminado().intValue());
+      dtoad.setEmpresa(ad.getEmpresa());
 
-      // for (PacienteObrasocial poo : ad.getPacienteObrasocials()) {
-      // dtoad.setCrdencial(poo.getNroCredencial());
-      // break;
-      // }
+      for (ComboItemDTO item : Util.getParentescos()) {
+        if (dtoad.getParentesco() == Integer.valueOf(item.getId()).intValue())
+          dtoad.setParentescoDescription(item.getValue());
+      }
 
       dto.getAdherentes().add(dtoad);
     }

@@ -177,7 +177,6 @@ function goInfoPaciente() {
 										</c:forEach>
 									</ul>
 									<a href="/nuova/mainOrdenPractica">Ir al Administrador Ordenes de Pr&aacute;cticas</a>
-									<a href="/nuova/mainConsultaOdontologica">Ir al Administrador de Ordenes de Pr&aacute;cticas Odontol&oacute;gicas</a>
 									
 								</div>
 

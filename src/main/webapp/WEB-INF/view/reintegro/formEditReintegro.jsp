@@ -120,9 +120,21 @@ function updateFechaReintegro(){
 										</form:select>
 									</div>
 								</div>
+								<div class="span4">
+									<div class="formLabel">
+										<form:label path="observaciones">Observaciones:</form:label>
+									</div>
+									<div class="formInput">
+										<form:input path="observaciones" type="text" cssStyle="width:150%"/>
+									</div>
+								</div>
 							</div>
 						</div>
 					</div>
+						<div class="alert alert-info">														
+  														<strong>Importante!</strong> Usar "." (punto) en montos decimales<br>
+  														Ejemplos: 2.00 / 5.50 / 12.00 / 161.20 / 5100.58
+  														</div>
 				</div>
 
 
