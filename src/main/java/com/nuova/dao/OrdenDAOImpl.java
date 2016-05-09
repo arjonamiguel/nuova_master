@@ -3,6 +3,7 @@ package com.nuova.dao;
 import com.nuova.dto.OrdenAlarmaDTO;
 import com.nuova.model.Orden;
 import com.nuova.model.OrdenDocument;
+import com.nuova.model.OrdenFueraCartilla;
 import com.nuova.model.OrdenTipo;
 
 import org.hibernate.Query;
@@ -164,6 +165,12 @@ public class OrdenDAOImpl implements OrdenDAO {
     // query.setMaxResults(pageable.getPageNumber());
     List<Orden> result = query.list();
     return new PageImpl<Orden>(result, pageable, result.size());
+  }
+
+  @Override
+  public void add(OrdenFueraCartilla ofc) {
+    this.sessionFactory.getCurrentSession().save(ofc);
+
   }
 
 }

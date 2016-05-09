@@ -3,6 +3,7 @@ package com.nuova.dao;
 import com.nuova.dto.OrdenAlarmaDTO;
 import com.nuova.model.Orden;
 import com.nuova.model.OrdenDocument;
+import com.nuova.model.OrdenFueraCartilla;
 import com.nuova.model.OrdenTipo;
 
 import org.springframework.data.domain.Page;
@@ -49,5 +50,8 @@ public interface OrdenDAO {
   public Page<Orden> findConsultasByPageableANDPaciente(Pageable pageable, Integer pacienteId);
 
   public Page<Orden> findPracticasByPageableANDPaciente(Pageable pageable, Integer pacienteId);
+
+
+  public void add(OrdenFueraCartilla ofc);
 
 }

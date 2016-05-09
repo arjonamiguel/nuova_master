@@ -401,6 +401,7 @@
 											<div id="tb_coseguro" class="tab-pane fade">
 												<jsp:include page="formEditOrdenTabCoseguro.jsp"></jsp:include>
 											</div>
+											
 
 										</div>
 										<!-- Fin Contenedor de Tabs -->

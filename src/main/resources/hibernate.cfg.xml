@@ -26,5 +26,7 @@
         <mapping class="com.nuova.model.Localidades" />
         <mapping class="com.nuova.model.Reintegro" />
         <mapping class="com.nuova.model.Empresas" />
+        <mapping class="com.nuova.model.OrdenFueraCartilla" />
+        
     </session-factory>
 </hibernate-configuration>

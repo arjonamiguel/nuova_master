@@ -4,6 +4,7 @@ import com.nuova.dao.OrdenDAO;
 import com.nuova.dto.OrdenAlarmaDTO;
 import com.nuova.model.Orden;
 import com.nuova.model.OrdenDocument;
+import com.nuova.model.OrdenFueraCartilla;
 import com.nuova.model.OrdenTipo;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -114,6 +115,11 @@ public class OrdenManagerImpl implements OrdenManager {
   @Override
   public Page<Orden> findPracticasByPageableANDPaciente(Pageable pageable, Integer pacienteId) {
     return ordenDAO.findPracticasByPageableANDPaciente(pageable, pacienteId);
+  }
+
+  @Override
+  public void add(OrdenFueraCartilla ofc) {
+    ordenDAO.add(ofc);
   }
 
 }
