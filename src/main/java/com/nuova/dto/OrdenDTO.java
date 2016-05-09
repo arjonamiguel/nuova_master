@@ -42,7 +42,6 @@ public class OrdenDTO {
   private Integer profesionalId;
   private Integer especialidad;
 
-
   private Double monto;
 
   private ProfesionalDTO profesional;
@@ -50,6 +49,13 @@ public class OrdenDTO {
   private String especialidadView;
 
   private List<OrdenDocumentDTO> historiasclinicas = new ArrayList<OrdenDocumentDTO>();
+
+  // Fuera de Cartilla
+  private boolean fueraCartilla;
+  private Integer ordenFueraCartillaId;
+  private String entidad;
+  private String observacionFueraCartilla;
+
 
   public Integer getOrdenId() {
     return ordenId;
@@ -314,5 +320,38 @@ public class OrdenDTO {
   public void setEspecialidadView(String especialidadView) {
     this.especialidadView = especialidadView;
   }
+
+  public Integer getOrdenFueraCartillaId() {
+    return ordenFueraCartillaId;
+  }
+
+  public void setOrdenFueraCartillaId(Integer ordenFueraCartillaId) {
+    this.ordenFueraCartillaId = ordenFueraCartillaId;
+  }
+
+  public String getEntidad() {
+    return entidad;
+  }
+
+  public void setEntidad(String entidad) {
+    this.entidad = entidad;
+  }
+
+  public String getObservacionFueraCartilla() {
+    return observacionFueraCartilla;
+  }
+
+  public void setObservacionFueraCartilla(String observacionFueraCartilla) {
+    this.observacionFueraCartilla = observacionFueraCartilla;
+  }
+
+  public boolean getFueraCartilla() {
+    return fueraCartilla;
+  }
+
+  public void setFueraCartilla(boolean fueraCartilla) {
+    this.fueraCartilla = fueraCartilla;
+  }
+
 
 }

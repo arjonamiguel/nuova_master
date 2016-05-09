@@ -359,8 +359,9 @@
 											</a></li>
 											<li><a data-toggle="tab" href="#tb_historiaclinica">Historia
 													Cl&iacute;nica</a></li>
-											<li><a data-toggle="tab" href="#tb_flujo">Flujo de
-													Estados</a></li>
+											<li><a data-toggle="tab" href="#tb_coseguro">Coseguro</a></li>
+													
+											
 										</ul>
 										<!-- Fin Declaracion de tabs -->
 
@@ -396,9 +397,9 @@
 												<jsp:include page="formEditOrdenTabHistoriaClinica.jsp"></jsp:include>
 											</div>
 
-											<!-- ** Tab Flujos -->
-											<div id="tb_flujo" class="tab-pane fade">
-												<jsp:include page="formEditOrdenTabFlujo.jsp"></jsp:include>
+											<!-- ** Tab Coseguro -->
+											<div id="tb_coseguro" class="tab-pane fade">
+												<jsp:include page="formEditOrdenTabCoseguro.jsp"></jsp:include>
 											</div>
 
 										</div>

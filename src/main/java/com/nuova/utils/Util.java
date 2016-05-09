@@ -34,6 +34,7 @@ public class Util {
   static public int CONCEPTO_INGRESO_INICIOCAJA = 0;
   static public int CONCEPTO_INGRESO_ORDENCONSULTA = 1;
   static public int CONCEPTO_INGRESO_ORDENCONSULTAODONTOLOGICA = 2;
+  static public int CONCEPTO_INGRESO_ORDENPRACTICA = 3;
   static public int CONCEPTO_EGRESO_ARTICULOLIBRERIA = 100;
   static public int CONCEPTO_EGRESO_ARTICULOLIMIEZA = 101;
   static public int CONCEPTO_EGRESO_SERVIMOTO = 102;
@@ -47,10 +48,11 @@ public class Util {
     hashMap.put(CONCEPTO_INGRESO_INICIOCAJA, "Inicio de Caja");
     hashMap.put(CONCEPTO_INGRESO_ORDENCONSULTA, "Orden de Consulta");
     hashMap.put(CONCEPTO_INGRESO_ORDENCONSULTAODONTOLOGICA, "Orden de Consulta Odontologica");
-    hashMap.put(CONCEPTO_EGRESO_ARTICULOLIBRERIA, "Articulo de Libreria");
-    hashMap.put(CONCEPTO_EGRESO_ARTICULOLIMIEZA, "Articulo de Limpieza");
-    hashMap.put(CONCEPTO_EGRESO_SERVIMOTO, "Servi Moto");
-    hashMap.put(CONCEPTO_EGRESO_GENERAL, "Egreso General");
+    hashMap.put(CONCEPTO_INGRESO_ORDENPRACTICA, "Orden de Práctica");
+    hashMap.put(CONCEPTO_EGRESO_ARTICULOLIBRERIA, "Artículos de Libreria");
+    hashMap.put(CONCEPTO_EGRESO_ARTICULOLIMIEZA, "Artículos de Limpieza");
+    hashMap.put(CONCEPTO_EGRESO_SERVIMOTO, "Servicio de Cadeteria");
+    hashMap.put(CONCEPTO_EGRESO_GENERAL, "Egresos Generales");
 
     return hashMap;
   }
@@ -153,16 +155,16 @@ public class Util {
     provincias.add("Tierra del Fuego");
     return provincias;
   }
-  
+
   static public List<String> getRazonCoseguro() {
-	    List<String> razonCoseguro = new ArrayList<String>();
-	    razonCoseguro.add("Discapacitado");
-	    razonCoseguro.add("PMI");
-	    razonCoseguro.add("Embarazo");
-	    razonCoseguro.add("Oncológico");
-	    razonCoseguro.add("Otro");
-	    return razonCoseguro;
-	  }
+    List<String> razonCoseguro = new ArrayList<String>();
+    razonCoseguro.add("Discapacitado");
+    razonCoseguro.add("PMI");
+    razonCoseguro.add("Embarazo");
+    razonCoseguro.add("Oncológico");
+    razonCoseguro.add("Otro");
+    return razonCoseguro;
+  }
 
   static public Obrasocial transformDtoToObraSocial(ObraSocialDTO dto) {
     Obrasocial obrasocial = new Obrasocial();

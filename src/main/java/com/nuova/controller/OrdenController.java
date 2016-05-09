@@ -394,28 +394,34 @@ public class OrdenController {
           .add(new Observaciones(orden, ordenDto.getObservacion(), user.getUsername(), new Date()));
     }
 
-    if (ordenDto.getOrdenTipo().getOrdenTipoId().intValue() == 1
-        || ordenDto.getOrdenTipo().getOrdenTipoId().intValue() == 2) {
-      // Caja
-      Caja caja = new Caja();
-      if (ordenDto.getOrdenTipo().getOrdenTipoId().intValue() == 1) {
-        caja.setConcepto(Util.CONCEPTO_INGRESO_ORDENCONSULTA);
+    if (ordenDto.getMonto() != null && ordenDto.getMonto() > 0) {
+      if (ordenDto.getOrdenTipo().getOrdenTipoId().intValue() == 1
+          || ordenDto.getOrdenTipo().getOrdenTipoId().intValue() == 3) {
+        // Caja
+        Caja caja = new Caja();
+        if (ordenDto.getOrdenTipo().getOrdenTipoId().intValue() == 1) {
+          caja.setConcepto(Util.CONCEPTO_INGRESO_ORDENCONSULTA);
+        }
+
+        if (ordenDto.getOrdenTipo().getOrdenTipoId().intValue() == 3) {
+          caja.setConcepto(Util.CONCEPTO_INGRESO_ORDENPRACTICA);
+        }
+
+        caja.setIngreso(ordenDto.getMonto());
+        caja.setEgreso(0.00);
+        caja.setFecha(new Date());
+
+        cajaManager.add(caja);
+        CajaOrden cajaorden = new CajaOrden(caja, orden);
+        Set<CajaOrden> cajaordenes = new HashSet<CajaOrden>();
+        cajaordenes.add(cajaorden);
+        orden.setCajaOrdens(cajaordenes);
       }
-
-      if (ordenDto.getOrdenTipo().getOrdenTipoId().intValue() == 2) {
-        caja.setConcepto(Util.CONCEPTO_INGRESO_ORDENCONSULTAODONTOLOGICA);
-      }
-
-      caja.setIngreso(ordenDto.getMonto());
-      caja.setEgreso(0.00);
-      caja.setFecha(new Date());
-
-      cajaManager.add(caja);
-      CajaOrden cajaorden = new CajaOrden(caja, orden);
-      Set<CajaOrden> cajaordenes = new HashSet<CajaOrden>();
-      cajaordenes.add(cajaorden);
-      orden.setCajaOrdens(cajaordenes);
     }
+
+    // Fuera de Cartilla
+    System.out.println("**** " + ordenDto.getFueraCartilla());
+
 
     // Orden
     ordenManager.add(orden);
@@ -718,10 +724,12 @@ public class OrdenController {
   }
 
   private OrdenDTO transformOrdenToDto(Orden orden) {
+
     OrdenDTO dto = new OrdenDTO();
     dto.setOrdenId(orden.getOrdenId());
     dto.setFecha(orden.getFecha() + "");
     dto.setEstado(orden.getEstado());
+    dto.setMonto(orden.getMonto());
 
     // Paciente
     dto.setPaciente(transformPacienteToDto(orden.getPaciente()));
@@ -909,6 +917,7 @@ public class OrdenController {
     orden.setReqReciboSueldo(Util.getByteFlag(dto.isReqReciboSueldo()));
     orden.setPaciente(transformDtoToPaciente(dto.getPaciente()));
     orden.setOrdenTipo(transformDtoToOrdenTipo(dto.getOrdenTipo()));
+    orden.setMonto(dto.getMonto() == null ? 0.00 : dto.getMonto());
 
     if (dto.getProfesionalId() != null) {
       Set<OrdenProfesional> ordenProfesionals = new HashSet<OrdenProfesional>();
