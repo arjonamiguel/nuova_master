@@ -188,7 +188,7 @@ function showEmpresaTitular(){
 			document.getElementById("fechaNacimiento").value=document.getElementById("registration-date").value;
 		}
 		function updatecoseguro(){
-			if($("#razonCoseguro").val()=="NONE")
+			if(${paciente.coseguro})
 			{
 				$("#coseguro").click();
 				$("#razonCoseguro").prop("disabled", true);
@@ -234,16 +234,7 @@ function showEmpresaTitular(){
 				}
 		}
 		
-		function razonEnable(){
-			if($( "#coseguro").prop( "checked" )){
-				 $("#razonCoseguro").prop("disabled", false);
-			}else{
-				$("#razonCoseguro").val("NONE");
-				$("#razonCoseguro").prop("disabled", true);
-			}
 	
-
-	}
 
         </SCRIPT>
 </head>

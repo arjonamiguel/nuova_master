@@ -36,7 +36,7 @@ public class PacienteDTO {
   private String checkedTitular;
   private PacienteDTO pacienteTitular;
 
-  private boolean coseguro = false;
+  private boolean coseguro;
   private String checkedLiberado;
 
   private String acciones;

@@ -158,8 +158,8 @@ public class PacienteDAOImpl implements PacienteDAO {
 
   @Override
   public Paciente findPacienteByCredencial(String credencial) {
-    Query query = this.sessionFactory.getCurrentSession()
-        .createQuery("FROM Paciente p " + " WHERE p.nroCredencial = '" + credencial + "' ");
+    Query query = this.sessionFactory.getCurrentSession().createQuery(
+        "FROM Paciente p " + " WHERE p.nroCredencial = '" + credencial + "' AND p.parentesco = 0 ");
     return (Paciente) ((query.list().isEmpty()) ? null : query.list().get(0));
   }
 

@@ -14,7 +14,6 @@ import com.nuova.dto.OrdenWorkflowDTO;
 import com.nuova.dto.PacienteDTO;
 import com.nuova.dto.ProfesionalDTO;
 import com.nuova.dto.ProfesionalEspecialidadDTO;
-import com.nuova.model.Empresas;
 import com.nuova.model.Especialidad;
 import com.nuova.model.Localidades;
 import com.nuova.model.Nomenclador;
@@ -311,8 +310,8 @@ public class ReportController {
     parameters.put("orden_internacion", "");
     parameters.put("trabaja_en", Util.getTrbajaEnValue(dto.getPaciente().getTrabajaEn() + ""));
 
-    Empresas e = pacienteManager.findEmpresaById(dto.getPaciente().getEmpresaId());
-    parameters.put("empresa", e == null ? "" : e.getNombre());
+    // Empresas e = pacienteManager.findEmpresaById(dto.getPaciente().getEmpresaId());
+    // parameters.put("empresa", e == null ? "" : e.getNombre());
     parameters.put("coseguro", "");
     parameters.put("tipo_orden", dto.getOrdenTipo().getNombre());
 
