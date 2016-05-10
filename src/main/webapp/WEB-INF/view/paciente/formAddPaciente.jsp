@@ -240,10 +240,13 @@ label.error {
 					$("#razonCoseguro").val("NONE");
 					$("#razonCoseguro").prop("disabled", true);
 				}
-		
-
 		}
-	
+		
+		function validateDniRepetido(){
+			if($("#flagDni").val()=="repetido"){
+				document.getElementById("messageAlert").innerHTML='<div class="alert alert-danger alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button><strong>ERROR GRAVE!</strong> Se intentó ingresar un paciente con DNI repetido. Intente nuevamente</div>';
+			}
+		}
 
        </SCRIPT>
 </head>
@@ -254,7 +257,9 @@ label.error {
 <div class="panelContainer">
 <form:form method="post" action="addPaciente" commandName="paciente">
 	<div class="panel panel-info">
+	<div id="messageAlert"></div>
 	<div class="panel-heading">
+		<input id="flagDni" type="hidden" value="${dniRepetido}">
 		<div class="panel-title">Nuevo Paciente</div>
 		<div class="label-error" id="message" style="float:left;margin-left:8%;visibility:hidden;">El DNI ingresado ya existe.</div>
 	</div>
@@ -596,4 +601,5 @@ label.error {
 	$("#coseguro").click();	
 	$("#razonCoseguro").val("NONE");
 	$("#razonCoseguro").prop("disabled", true);
+	validateDniRepetido();
 </script>

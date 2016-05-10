@@ -45,6 +45,8 @@ public class PacienteController {
   ObraSocialManager obrasocialManager;
   @Autowired
   OrdenManager ordenManager;
+  
+  String flag="";
 
   @RequestMapping(value = ConstantControllers.TIPO_ORDEN, method = RequestMethod.GET)
   public String tipoOrden(ModelMap map, @PathVariable("pacienteId") Integer pacienteId) {
@@ -89,6 +91,7 @@ public class PacienteController {
     map.addAttribute("paciente", pacienteDto);
     map.addAttribute("empresas", empresas);
     map.addAttribute("razonCoseguroList", Util.getRazonCoseguro());
+    map.addAttribute("dniRepetido", flag);
 
     return ConstantRedirect.VIEW_FORM_ADD_PACIENTE;
   }
@@ -133,6 +136,13 @@ public class PacienteController {
   @RequestMapping(value = ConstantControllers.ADD_PACIENTE, method = RequestMethod.POST)
   public String addPaciente(@ModelAttribute(value = "paciente") PacienteDTO dto,
       BindingResult result) {
+	 Paciente p = pacienteManager.findPacienteByDni(dto.getDni());
+	 if(p!=null){
+		 flag="repetido";
+		 return "redirect:" + ConstantControllers.FORM_ADD_PACIENTE;
+	 }
+
+	  
     Paciente paciente = transformDtoToPaciente(dto);
     paciente.setEliminado(new Byte("0"));
     paciente.setFechaAlta(new Date());
@@ -149,12 +159,16 @@ public class PacienteController {
     if (dto.getParentesco() == 0) {
       List<Paciente> adherentes =
           pacienteManager.findAllPacienteByCredencial(paciente.getNroCredencial());
+      
+      if(adherentes!=null){
       for (Paciente pas : adherentes) {
         if (pas.getPaciente() == null) {
           pas.setPaciente(paciente);
           pacienteManager.edit(pas);
         }
       }
+      }
+      
     }
 
 
