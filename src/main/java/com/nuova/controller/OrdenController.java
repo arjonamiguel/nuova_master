@@ -23,6 +23,7 @@ import com.nuova.model.Obrasocial;
 import com.nuova.model.Observaciones;
 import com.nuova.model.Orden;
 import com.nuova.model.OrdenDocument;
+import com.nuova.model.OrdenFueraCartilla;
 import com.nuova.model.OrdenPractica;
 import com.nuova.model.OrdenProfesional;
 import com.nuova.model.OrdenTipo;
@@ -419,12 +420,18 @@ public class OrdenController {
       }
     }
 
-    // Fuera de Cartilla
-    System.out.println("**** " + ordenDto.getFueraCartilla());
-
 
     // Orden
     ordenManager.add(orden);
+
+    // Fuera de Cartilla
+    if (ordenDto.getFueraCartilla()) {
+      OrdenFueraCartilla ofc = new OrdenFueraCartilla();
+      ofc.setEntidad(ordenDto.getEntidad());
+      ofc.setObservacion(ordenDto.getObservacionFueraCartilla());
+      ofc.setOrdenId(orden.getOrdenId());
+      ordenManager.add(ofc);
+    }
 
     String redirect = "";
     if (orden.getOrdenTipo().getCodigo().intValue() == 100) {
@@ -806,6 +813,7 @@ public class OrdenController {
       dto.getHistoriasclinicas().add(oddto);
     }
 
+
     // boton paciente
     String botonpaciente =
         dto.getPaciente().getApellido().toUpperCase() + ", " + dto.getPaciente().getNombre();
@@ -928,6 +936,10 @@ public class OrdenController {
       ordenProfesionals.add(op);
       orden.setOrdenProfesionals(ordenProfesionals);
     }
+
+    // Fuera de Cartilla
+    orden.setFueraCartilla(dto.getFueraCartilla() == true ? 1 : 0);
+
 
     return orden;
   }

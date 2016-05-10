@@ -51,7 +51,7 @@ public class OrdenDTO {
   private List<OrdenDocumentDTO> historiasclinicas = new ArrayList<OrdenDocumentDTO>();
 
   // Fuera de Cartilla
-  private boolean fueraCartilla;
+  private boolean fueraCartilla = false;
   private Integer ordenFueraCartillaId;
   private String entidad;
   private String observacionFueraCartilla;

@@ -185,6 +185,16 @@
 			$("#message2").css("visibility", "visible");
 			return false;
 		}
+		
+		if ($("#fueraCartilla").is(':checked')) {
+			if (document.getElementById("entidad").value == "") {
+				$("#message2").text("Debe completar la informacion Entidad, Fuera de Cartilla");
+				$("#message2").css("visibility", "visible");
+				return false;
+			}
+			
+
+		}
 
 		// 		if ($("#monto").val() == '') {
 		// 			$("#message").css("visibility", "visible");
@@ -269,6 +279,35 @@
 			$(".largerCheckbox")[4].checked = false;
 		}
 	}
+	
+
+	function sinCosto(){
+		if ($("#coseguroSinCosto").is(':checked')) {
+			document.getElementById("monto").value = "0.00";
+			document.getElementById("monto").disabled = "false";
+		}else {
+			document.getElementById("monto").value = "";
+			document.getElementById("monto").disabled = "";
+		}	
+
+	}
+	
+	function enabledFueraCartilla(){
+	
+		if ($("#fueraCartilla").is(':checked')) {
+			document.getElementById("entidad").disabled = "";
+			document.getElementById("observacionFueraCartilla").disabled = "";
+			document.getElementById("entidad").focus();
+
+		}else {
+			document.getElementById("entidad").disabled = "false";
+			document.getElementById("observacionFueraCartilla").disabled = "false";
+			document.getElementById("entidad").value = "";
+			document.getElementById("observacionFueraCartilla").value = "";
+		}	
+		
+	}
+
 </script>
 
 </head>
@@ -466,7 +505,22 @@
 														<tr>														
 															<td style="width: 10%">Fuera de Cartilla:</td>
 															<td>
-															<form:checkbox path="fueraCartilla" cssClass="largerCheckbox"/>
+															<input type="checkbox" id="fueraCartilla"
+																name="fueraCartilla" class="largerCheckbox"
+																onchange="enabledFueraCartilla()" />
+															
+															</td>
+														</tr>
+														<tr>														
+															<td style="width: 10%">Entidad de Procedencia:</td>
+															<td>
+															<form:input path="entidad" disabled="true"/>
+															</td>
+														</tr>
+														<tr>														
+															<td style="width: 10%">Observacion:</td>
+															<td>
+															<form:textarea path="observacionFueraCartilla" disabled="true"/>
 															</td>
 														</tr>
 														
