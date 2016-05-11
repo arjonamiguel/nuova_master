@@ -187,6 +187,15 @@ function showEmpresaTitular(){
 		function updateDate(){
 			document.getElementById("fechaNacimiento").value=document.getElementById("registration-date").value;
 		}
+
+		function updateDateVenc(){
+			document.getElementById("vencCarnet").value=document.getElementById("registration-date-venc").value;
+		}
+		
+		function initDateVenc(){
+			document.getElementById("registration-date-venc").value=document.getElementById("vencCarnet").value;
+		}
+		
 		function updatecoseguro(){
 			if(${paciente.coseguro})
 			{
@@ -231,10 +240,23 @@ function showEmpresaTitular(){
 				}else{
 					$("#razonCoseguro").val("NONE");
 					$("#razonCoseguro").prop("disabled", true);
+					$("#vencCarnetDiv").css("visibility","hidden");
 				}
 		}
 		
-	
+		function enableVencCarnet(){
+			if($("#razonCoseguro").val()=="Discapacitado"){
+				$("#vencCarnetDiv").css("visibility","visible");
+				initDateVenc();
+			}
+		}
+		function validateDiscapacitado(){
+			if($('#razonCoseguro').val()=="Discapacitado"){
+				$("#vencCarnetDiv").css("visibility","visible");
+			}else{
+				$("#vencCarnetDiv").css("visibility","hidden");
+			}
+		}
 
         </SCRIPT>
 </head>
@@ -410,12 +432,25 @@ function showEmpresaTitular(){
 			   		<div class="span4">
 			   			<div class="formLabel"><form:label path="razonCoseguro">Razón Coseguro:</form:label></div>
         					<div class="formInput">
-        						<form:select path="razonCoseguro" style="width:83%; margin-bottom:0px">
+        						<form:select path="razonCoseguro" style="width:83%; margin-bottom:0px" onchange="validateDiscapacitado()">
 									<form:option value="NONE" label="Seleccione Razón Coseguro ..."/>
 									<form:options items="${razonCoseguroList}"  />			    
 								</form:select>
         					</div>
 			   		
+			   		</div>
+			   		<div class="span4" id="vencCarnetDiv" style="visibility:hidden;">
+			   		<div style="visibility:hidden;height:0px;">
+						<form:input path="vencCarnet" class="date"/>
+					</div>
+			   		<div class="formLabel"><form:label path="vencCarnet">Vencimiento Carnet:</form:label></div>
+			   			<div class="formInput">
+							<div id="calendar">
+								<div class="input-group registration-date-time" style="padding-top:0%;">
+									<input class="form-control" name="registration-date-venc" id="registration-date-venc" type="date"  onchange="javascript:updateDateVenc();">
+	            				</div>
+	            			</div>
+	            		</div>	
 			   		</div>
 		</div>
 	</div>	
@@ -649,5 +684,6 @@ function callEmpresas() {
 		updatecoseguro();
 		// var valueDate=document.getElementById("fechaNacimiento").value.split('/')[2]+"-"+document.getElementById("fechaNacimiento").value.split('/')[1]+"-"+document.getElementById("fechaNacimiento").value.split('/')[0];
 		// document.getElementById("registration-date").value=valueDate;
+		enableVencCarnet();
 		
 </script>
