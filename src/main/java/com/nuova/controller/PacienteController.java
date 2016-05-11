@@ -206,8 +206,10 @@ public class PacienteController {
     paciente.setEliminado(pacienteOld.getEliminado());
     paciente.setFechaAlta(pacienteOld.getFechaAlta());
     if (!pacienteOld.getNroCredencial().equals(paciente.getNroCredencial())) {
-      Paciente t = getTitularByCredencial(paciente);
-      paciente.setPaciente(t);
+      if (paciente.getParentesco().intValue() != 0) {
+        Paciente t = getTitularByCredencial(paciente);
+        paciente.setPaciente(t);
+      }
     }
 
     pacienteManager.edit(paciente);
