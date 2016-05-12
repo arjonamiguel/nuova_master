@@ -206,6 +206,10 @@ label.error {
 		function updateDate(){
 			document.getElementById("fechaNacimiento").value=document.getElementById("registration-date").value;
 		}
+		
+		function updateDateVenc(){
+			document.getElementById("vencCarnet").value=document.getElementById("registration-date-venc").value;
+		}
 
 		function showEmpresas() {						
 			var trabajo = document.getElementById("trabajaEn").value;
@@ -239,12 +243,21 @@ label.error {
 				}else{
 					$("#razonCoseguro").val("NONE");
 					$("#razonCoseguro").prop("disabled", true);
+					$("#vencCarnetDiv").css("visibility","hidden");
 				}
 		}
 		
 		function validateDniRepetido(){
 			if($("#flagDni").val()=="repetido"){
 				document.getElementById("messageAlert").innerHTML='<div class="alert alert-danger alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button><strong>ERROR GRAVE!</strong> Se intentó ingresar un paciente con DNI repetido. Intente nuevamente</div>';
+			}
+		}
+		
+		function validateDiscapacitado(){
+			if($('#razonCoseguro').val()=="Discapacitado"){
+				$("#vencCarnetDiv").css("visibility","visible");
+			}else{
+				$("#vencCarnetDiv").css("visibility","hidden");
 			}
 		}
 
@@ -414,12 +427,24 @@ label.error {
 			   		<div class="span4">
 			   			<div class="formLabel"><form:label path="razonCoseguro">Razón Coseguro:</form:label></div>
         					<div class="formInput">
-        						<form:select path="razonCoseguro" style="width:83%; margin-bottom:0px">
+        						<form:select path="razonCoseguro" style="width:83%; margin-bottom:0px" onchange="validateDiscapacitado()">
 									<form:option value="NONE" label="Seleccione Razón Coseguro ..."/>
 									<form:options items="${razonCoseguroList}"  />			    
 								</form:select>
         					</div>
-			   		
+			   		</div>
+			   		<div class="span4" id="vencCarnetDiv" style="visibility:hidden;">
+			   		<div style="visibility:hidden;height:0px;">
+						<form:input path="vencCarnet" class="date"/>
+					</div>
+			   		<div class="formLabel"><form:label path="vencCarnet">Vencimiento Carnet:</form:label></div>
+			   			<div class="formInput">
+							<div id="calendar">
+								<div class="input-group registration-date-time" style="padding-top:0%;">
+									<input class="form-control" name="registration-date-venc" id="registration-date-venc" type="date"  onchange="javascript:updateDateVenc();">
+	            				</div>
+	            			</div>
+	            		</div>	
 			   		</div>
 		</div>
 	</div>	

@@ -389,6 +389,7 @@ public class PacienteController {
     dto.setNombre(p.getNombre());
     dto.setDomicilio(p.getDomicilio());
     dto.setFechaNacimiento(p.getFechaNacimiento() + "");
+    dto.setVencCarnet(p.getVencCarnet() + "");
     dto.setCoseguro(p.getCoseguro().intValue() == 1 ? true : false);
     dto.setCheckedLiberado(p.getCoseguro().intValue() == 1 ? "checked" : "");
     dto.setMail(p.getMail());
@@ -433,6 +434,7 @@ public class PacienteController {
       dtoad.setNombre(ad.getNombre());
       dtoad.setDomicilio(ad.getDomicilio());
       dtoad.setFechaNacimiento(Util.parseToStringDate(ad.getFechaNacimiento()));
+      dtoad.setVencCarnet(Util.parseToStringDate(ad.getVencCarnet()));
       dtoad.setCoseguro(ad.getCoseguro().intValue() == 1 ? true : false);
       dtoad.setCheckedLiberado(p.getCoseguro().intValue() == 1 ? "checked" : "");
       dtoad.setMail(ad.getMail());
@@ -465,6 +467,7 @@ public class PacienteController {
       dto.setNombre(p.getNombre());
       dto.setDomicilio(p.getDomicilio());
       dto.setFechaNacimiento(Util.parseToStringDate(p.getFechaNacimiento()));
+      dto.setVencCarnet(Util.parseToStringDate(p.getVencCarnet()));
       dto.setCoseguro(p.getCoseguro().intValue() == 1 ? true : false);
       dto.setCheckedLiberado(p.getCoseguro().intValue() == 1 ? "checked" : "");
       dto.setMail(p.getMail());
@@ -475,8 +478,8 @@ public class PacienteController {
         dtoad.setApellido(ad.getApellido());
         dtoad.setNombre(ad.getNombre());
         dtoad.setDomicilio(ad.getDomicilio());
-
         dtoad.setFechaNacimiento(Util.parseToStringDate(ad.getFechaNacimiento()));
+        dtoad.setVencCarnet(Util.parseToStringDate(ad.getVencCarnet()));
         dtoad.setCoseguro(ad.getCoseguro().intValue() == 1 ? true : false);
         dtoad.setCheckedLiberado(p.getCoseguro().intValue() == 1 ? "checked" : "");
         dtoad.setMail(ad.getMail());
@@ -497,6 +500,7 @@ public class PacienteController {
     paciente.setNombre(dto.getNombre());
     paciente.setDomicilio(dto.getDomicilio());
     paciente.setFechaNacimiento(Util.parseToDate(dto.getFechaNacimiento()));
+    paciente.setVencCarnet(Util.parseToDate(dto.getVencCarnet()));
     paciente.setCoseguro(dto.getCoseguro() ? new Byte("1") : new Byte("0"));
     paciente.setMail(dto.getMail());
     paciente.setTelefono(dto.getTelefono());

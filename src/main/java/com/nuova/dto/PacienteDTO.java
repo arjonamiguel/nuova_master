@@ -14,6 +14,7 @@ public class PacienteDTO {
   private String apellido;
   private String nombre;
   private String fechaNacimiento;
+  private String vencCarnet;
   private String domicilio;
   private String telefono;
   private String mail;
@@ -97,6 +98,15 @@ public class PacienteDTO {
   public void setFechaNacimiento(String fechaNacimiento) {
     this.fechaNacimiento = fechaNacimiento;
   }
+  
+  public String getVencCarnet() {
+	    return vencCarnet;
+  }
+
+  public void setVencCarnet(String vencCarnet) {
+	    this.vencCarnet = vencCarnet;
+  }
+
 
   public String getDomicilio() {
     return domicilio;
