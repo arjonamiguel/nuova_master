@@ -19,7 +19,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.nuova.dto.PrestadorDTO;
+import com.nuova.model.Especialidad;
 import com.nuova.model.Prestadores;
+import com.nuova.service.EspecialidadManager;
 import com.nuova.service.PrestadoresManager;
 import com.nuova.utils.ConstantControllers;
 import com.nuova.utils.ConstantRedirect;
@@ -29,9 +31,13 @@ import com.nuova.utils.Util;
 public class PrestadorController {
     @Autowired
     PrestadoresManager prestadorManager;
+    @Autowired
+    EspecialidadManager especialidadManager;
 
     @RequestMapping(value = ConstantControllers.FORM_ADD_PRESTADOR, method = RequestMethod.GET)
     public String formAddPrestador(ModelMap map) {
+        List<Especialidad> especialidadList = especialidadManager.findAll();
+        map.addAttribute("especialidadList", especialidadList);
         map.addAttribute("prestador", new PrestadorDTO());
         map.addAttribute("provinciasList", Util.getProvincias());
         return ConstantRedirect.VIEW_FORM_ADD_PRESTADOR;
@@ -66,6 +72,11 @@ public class PrestadorController {
 
         if (dto != null) {
             prestadorManager.add(transformDtoToPrestadores(dto));
+        }
+        // Especialidades
+        for (Integer id : dto.getEspecialidadList()) {
+            Especialidad especialidad = especialidadManager.findEspecialidadById(id);
+            // profesionalEspecialidades.add(new ProfesionalEspecialidad(profesional, especialidad));
         }
 
         return "redirect:" + ConstantControllers.MAIN_PRESTADOR;
@@ -148,4 +159,5 @@ public class PrestadorController {
 
         return retorno;
     }
+
 }

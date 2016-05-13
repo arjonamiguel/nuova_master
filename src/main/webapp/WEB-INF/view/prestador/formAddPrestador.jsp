@@ -27,7 +27,33 @@
 		  width:24%;
 		}
 	</style>
-	
+	<script type="text/javascript">
+	function addRow(tableID) {
+		 
+        var table = document.getElementById(tableID);
+
+        var rowCount = table.rows.length;
+        var row = table.insertRow(rowCount);
+
+        if(document.getElementById("especialidad").value=="NONE"){
+        	return;
+        }  
+
+        var cell2 = row.insertCell(0);      
+          
+        cell2.innerHTML = document.getElementById("especialidad").value+"<input type='hidden' name='especialidadList' value='"+document.getElementById("especialidad").value+"'>";
+        var cell3 = row.insertCell(1);
+        cell3.innerHTML = document.getElementById('especialidad').options[document.getElementById('especialidad').selectedIndex].text;
+        
+       	var cell4 = row.insertCell(2);
+        cell4.innerHTML=  "<button type='button' class='btn btn-danger btn-xs' onClick='Eliminar(this.parentNode.parentNode.rowIndex)'><span class='icon icon-remove' title='Eliminar'></span></button>";
+
+    }
+
+	function Eliminar (i) {    	 
+	    document.getElementById("dataTable").deleteRow(i);
+	}
+	</script>
 </head>
 <body style="background-color:#e5e5e5;">
 <jsp:include page="../sec_menu.jsp"></jsp:include>
@@ -74,6 +100,40 @@
 				</div>
 			</div>
 	</div>
+	
+	<div class="panel panel-info">
+	<div class="panel-heading">
+	          <div class="panel-title">Agregar Especialidades</div>
+	</div>  
+<div style="padding-top:30px" class="panel-body" >
+   	
+	<div class="row-fluid">		
+    		<div class="span12">
+	    		<div style="float:right;padding-right:1%;">
+	    			<INPUT type="button" value="Agregar" onclick="addRow('dataTable')" class="btn btn-info"/>
+	    		</div>
+	    		<div style="float:right;">
+	    		<form:select path="especialidad">
+					   <form:option value="NONE" label="Seleccione Especialidad ..."/>
+					   <form:options items="${especialidadList}" itemLabel="nombre" itemValue="especialidadId" />			    
+				</form:select>
+				</div>
+    			
+    		</div>
+    </div>
+    <div class="tableContainer">
+	    <TABLE id="dataTable" class="table"  style="margin-top:0px;">
+	        <TR>      	
+	            <TD>ID</TD>
+	            <TD>Especialidad</TD> 
+	            <TD></TD>       
+	        </TR>
+	    </TABLE>
+	   	
+ 	</div>
+
+</div>
+</div>   
 	
 		<!-- Botoneras -->
 		<div class="panel panel-info">

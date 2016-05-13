@@ -1,5 +1,8 @@
 package com.nuova.dto;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class PrestadorDTO {
     private Integer prestadorId;
     private String nombre;
@@ -9,6 +12,11 @@ public class PrestadorDTO {
     private String acciones;
 
     private String provincia;
+    private Integer tipo;
+
+    private String especialidad;
+
+    private List<Integer> especialidadList = new ArrayList<Integer>();
 
     public PrestadorDTO() {
     }
@@ -73,6 +81,30 @@ public class PrestadorDTO {
 
     public void setAcciones(String acciones) {
         this.acciones = acciones;
+    }
+
+    public Integer getTipo() {
+        return tipo;
+    }
+
+    public void setTipo(Integer tipo) {
+        this.tipo = tipo;
+    }
+
+    public List<Integer> getEspecialidadList() {
+        return especialidadList;
+    }
+
+    public void setEspecialidadList(List<Integer> especialidadList) {
+        this.especialidadList = especialidadList;
+    }
+
+    public String getEspecialidad() {
+        return especialidad;
+    }
+
+    public void setEspecialidad(String especialidad) {
+        this.especialidad = especialidad;
     }
 
 }
