@@ -435,13 +435,13 @@ public class OrdenController {
 
     String redirect = "";
     if (orden.getOrdenTipo().getCodigo().intValue() == 100) {
-      redirect = ConstantControllers.MAIN_CONSULTA;
+      redirect = ConstantControllers.ORDEN_MESSAGE;
     }
     if (orden.getOrdenTipo().getCodigo().intValue() == 101) {
       redirect = ConstantControllers.MAIN_CONSULTA_ODONTOLOGICA;
     }
     if (orden.getOrdenTipo().getCodigo().intValue() == 102) {
-      redirect = ConstantControllers.MAIN_ORDEN_PRACTICA;
+      redirect = ConstantControllers.ORDEN_MESSAGE;
     }
 
     return "redirect:" + redirect;
@@ -579,8 +579,17 @@ public class OrdenController {
 
   @RequestMapping(value = ConstantControllers.MAIN_ORDEN_PRACTICA, method = RequestMethod.GET)
   public String mainOrden(ModelMap map) {
-    // map.addAttribute("ordenList", ordenManager.findAll());
+     //map.addAttribute("ordenList", ordenManager.findAll().get(1));
     return ConstantRedirect.VIEW_MAIN_ORDEN;
+  }
+  
+  @RequestMapping(value = ConstantControllers.ORDEN_MESSAGE, method = RequestMethod.GET)
+  public String ordenMessage(ModelMap map) {
+	  
+	 List<Orden> ordenes =  ordenManager.findAll();
+	 Orden orden = ordenes.get(ordenes.size()-1);
+     map.addAttribute("ordenId", orden.getOrdenId());
+    return ConstantRedirect.VIEW_ORDEN_MESSAGE;
   }
 
   @RequestMapping(value = ConstantControllers.MAIN_CONSULTA, method = RequestMethod.GET)

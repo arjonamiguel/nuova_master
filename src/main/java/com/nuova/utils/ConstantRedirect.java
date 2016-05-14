@@ -36,6 +36,7 @@ public class ConstantRedirect {
 
   // Orden
   public final static String VIEW_MAIN_ORDEN = "/orden/mainOrden";
+  public final static String VIEW_ORDEN_MESSAGE = "/orden/ordenMessage";
   public final static String VIEW_MAIN_CONSULTA = "/orden/mainConsulta";
   public final static String VIEW_MAIN_CONSULTA_ODONTOLOGICA = "/orden/mainConsultaOdontologica";
 

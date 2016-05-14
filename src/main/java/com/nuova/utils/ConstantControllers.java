@@ -69,6 +69,7 @@ public class ConstantControllers {
 
   // Orden
   public final static String MAIN_ORDEN_PRACTICA = "/mainOrdenPractica";
+  public final static String ORDEN_MESSAGE = "/ordenMessage";
   public final static String MAIN_CONSULTA = "/mainConsulta";
   public final static String MAIN_CONSULTA_ODONTOLOGICA = "/mainConsultaOdontologica";
 
