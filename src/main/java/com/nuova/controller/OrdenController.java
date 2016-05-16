@@ -482,6 +482,7 @@ public class OrdenController {
           op.setEstado(opdto.getEstado());
           op.setValor(opdto.getValor());
           op.setAutorizarAutomatico(Util.parseToDate(opdto.getAutorizarAutomatico()));
+          op.setPiezaDental(opdto.getPiezaDental());
 
           persistOrdenPracticaList.add(op);
         }
@@ -917,6 +918,7 @@ public class OrdenController {
       dto.setEstado(op.getEstado());
       dto.setValor(op.getValor());
       dto.setAutorizarAutomatico(op.getAutorizarAutomatico() + "");
+      dto.setPiezaDental(op.getPiezaDental());
       retorno.add(dto);
     }
 

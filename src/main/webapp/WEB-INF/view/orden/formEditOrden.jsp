@@ -209,23 +209,31 @@
 				+ index
 				+ "].practicaId' value='"
 				+ document.getElementById("nomencladorId").value + "'>";
-
+				
 		var cell1 = row.insertCell(1);
-		cell1.innerHTML = "<input type='text' name='ordenpracticaListEdit[" + index + "].valor' value='0.00'>";
-
+		var str1 = document.getElementById("nomencladorString").value;
+		var str2 = "ODON";
+		
+		if(str1.indexOf(str2) != -1){
+			cell1.innerHTML = "<input type='text' name='ordenpracticaListEdit[" + index + "].piezaDental' placeholder='pieza dental'>";
+		}
 		var cell2 = row.insertCell(2);
-		cell2.innerHTML = createSelectEstados("ordenpracticaListEdit[" + index
-				+ "].estado");
+		cell2.innerHTML = "<input type='text' name='ordenpracticaListEdit[" + index + "].valor' value='0.00'>";
+
 
 		var cell3 = row.insertCell(3);
-		cell3.innerHTML = createDatePicker(index);
+		cell3.innerHTML = createSelectEstados("ordenpracticaListEdit[" + index
+				+ "].estado");
 
 		var cell4 = row.insertCell(4);
-		row.valign = "BASELINE";
-		cell4.innerHTML = "<button type='button' class='btn btn-link' onClick='Eliminar(this.parentNode.parentNode.rowIndex)'>Eliminar</button>";
+		cell4.innerHTML = createDatePicker(index);
 
 		var cell5 = row.insertCell(5);
-		cell5.innerHTML = "";
+		row.valign = "BASELINE";
+		cell5.innerHTML = "<button type='button' class='btn btn-link' onClick='Eliminar(this.parentNode.parentNode.rowIndex)'>Eliminar</button>";
+
+		var cell6 = row.insertCell(6);
+		cell6.innerHTML = "";
 
 		index++;
 		document
