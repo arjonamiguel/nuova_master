@@ -592,7 +592,7 @@ public class ReportController {
       // PracticaDTO dto = new PracticaDTO(p.getPracticaId(), "[" + p.getCodigo() + "]-" +
       // p.getNombre());
       OrdenPracticaDTO dto = new OrdenPracticaDTO(op.getOrddenPracticaId(), o.getOrdenId(),
-          p.getNombre(), p.getNomencladorId(), op.getEstado());
+          p.getNombre(), p.getNomencladorId(), op.getEstado(), op.getPiezaDental());
       // dto.setOrddenPracticaId(op.getOrddenPracticaId());
       retorno.add(dto);
     }

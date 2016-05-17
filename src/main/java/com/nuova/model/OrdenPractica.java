@@ -35,14 +35,16 @@ public class OrdenPractica implements java.io.Serializable {
   private String estado;
   private BigDecimal valor;
   private Date autorizarAutomatico;
+  private String piezaDental;
 
   public OrdenPractica() {}
 
-  public OrdenPractica(Orden orden, Nomenclador nomenclador, Date fecha, String estado) {
+  public OrdenPractica(Orden orden, Nomenclador nomenclador, Date fecha, String estado, String piezaDental) {
     this.orden = orden;
     this.nomenclador = nomenclador;
     this.fecha = fecha;
     this.estado = estado;
+    this.piezaDental = piezaDental;
   }
 
   @Id
@@ -114,5 +116,13 @@ public class OrdenPractica implements java.io.Serializable {
     this.autorizarAutomatico = autorizarAutomatico;
   }
 
+  @Column(name = "pieza_dental", length = 256)
+  public String getPiezaDental() {
+    return piezaDental;
+  }
+
+  public void setPiezaDental(String piezaDental) {
+    this.piezaDental = piezaDental;
+  }
 
 }

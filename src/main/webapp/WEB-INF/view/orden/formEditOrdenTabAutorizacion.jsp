@@ -62,6 +62,7 @@ function addRowNuevoNom(tableID, nomencladorId) {
 		alert("Los campos Codigo y Nombre del Nomenclador, no pueden ser vacios.");
 		return;
 	}
+	
   
 	var index = document.getElementById(tableID).getElementsByTagName('tr').length;
 	index ++;	
@@ -74,21 +75,29 @@ function addRowNuevoNom(tableID, nomencladorId) {
     cell0.innerHTML = "["+codigo+"] - [MANUAL] - "+nombre+" " + 
     " <input type='hidden' name='ordenpracticaListEdit[" + index + "].orddenPracticaId'> " +
     " <input type='hidden' name='ordenpracticaListEdit[" + index + "].practicaId' value='" + nomencladorId + "'>"; 
-
-    var cell1 = row.insertCell(1);
-    cell1.innerHTML = "<input type='text' name='ordenpracticaListEdit[" + index + "].valor' value='0.00'>"; 
     
+    var cell1 = row.insertCell(1);
+		var str1 = nombre;
+		var str2 = "ODON";
+		
+		if(str1.indexOf(str2) != -1){
+			cell1.innerHTML = "<input type='text' name='ordenpracticaListEdit[" + index + "].piezaDental' placeholder='pieza dental'>";
+		}
+
     var cell2 = row.insertCell(2);
-    cell2.innerHTML = createSelectEstados("ordenpracticaListEdit[" + index + "].estado");
+    cell2.innerHTML = "<input type='text' name='ordenpracticaListEdit[" + index + "].valor' value='0.00'>"; 
     
     var cell3 = row.insertCell(3);
-    cell3.innerHTML = createDatePicker(index); 
-
-    var cell4 = row.insertCell(4);
-    row.valign = "BASELINE";
-    cell4.innerHTML = "<button type='button' class='btn btn-link' onClick='Eliminar(this.parentNode.parentNode.rowIndex)'>Eliminar</button>";
+    cell3.innerHTML = createSelectEstados("ordenpracticaListEdit[" + index + "].estado");
     
-   	var cell5 = row.insertCell(5);    
+    var cell4 = row.insertCell(4);
+    cell4.innerHTML = createDatePicker(index); 
+
+    var cell5 = row.insertCell(5);
+    row.valign = "BASELINE";
+    cell5.innerHTML = "<button type='button' class='btn btn-link' onClick='Eliminar(this.parentNode.parentNode.rowIndex)'>Eliminar</button>";
+    
+   	var cell6 = row.insertCell(6);    
    	cell5.innerHTML = "";
    	
     index ++;
@@ -160,6 +169,7 @@ Imprimir</a>
 		<thead>
 		<tr>													        	
 			<td style="width: 40%"><b>Nomenclador</b></td>
+			<td style="width: 10%"></td>
 			<td style="width: 10%"><b>Valor</b></td>
 			<td style="width: 31%"><b>Estados</b></td>
 			<td style="width: 20%"><b>Automatico</b></td>
@@ -177,6 +187,12 @@ Imprimir</a>
 			<input type="hidden" name = "ordenpracticaListEdit[<%=index%>].orddenPracticaId" value = "${pa.orddenPracticaId}" />
 			<input type="hidden" name = "ordenpracticaListEdit[<%=index%>].practicaId" value = "${pa.practicaId}" />
 			${pa.nombre}
+			</td>
+			<td>
+		
+			<input type="text" name = "ordenpracticaListEdit[<%=index%>].piezaDental" value = "${pa.piezaDental}" />
+			
+			
 			</td>
 			<td>
 			<input type="text" name = "ordenpracticaListEdit[<%=index%>].valor" value = "${pa.valor}" />
@@ -232,3 +248,17 @@ Imprimir</a>
 </tr>
 </table>
 </div>
+<script>
+    $("#tb_practicas tr:gt(0)").each(function () {
+	var isOdon;
+        var this_row = $(this);
+        var str1 = $.trim(this_row.find('td:eq(0)').html());//td:eq(0) means first td of this row
+        var str2="ODON";
+	if(str1.indexOf(str2) != -1){
+		isOdon=true;
+	}
+	if(isOdon!=true){
+		this_row.find('td:eq(1)').html('');
+	}
+    });
+</script>
