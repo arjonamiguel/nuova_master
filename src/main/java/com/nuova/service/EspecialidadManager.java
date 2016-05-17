@@ -1,30 +1,33 @@
 package com.nuova.service;
 
-import com.nuova.dto.OrdenAlarmaDTO;
-import com.nuova.model.Especialidad;
-import com.nuova.model.Profesional;
+import java.util.List;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
-import java.util.List;
+import com.nuova.dto.OrdenAlarmaDTO;
+import com.nuova.model.Especialidad;
+import com.nuova.model.Profesional;
 
 public interface EspecialidadManager {
-  public void add(Especialidad especalidad);
+    public void add(Especialidad especalidad);
 
-  public Especialidad findEspecialidadById(Integer id);
+    public Especialidad findEspecialidadById(Integer id);
 
-  public List<Especialidad> findAll();
+    public List<Especialidad> findAll();
 
-  public void delete(Integer id);
+    public void delete(Integer id);
 
-  public void edit(Especialidad especialidad);
+    public void edit(Especialidad especialidad);
 
-  public Page<Especialidad> findEspecialidadesByPageable(Pageable pageable);
+    public Page<Especialidad> findEspecialidadesByPageable(Pageable pageable);
 
-  public Page<Especialidad> findEspecialidadesBySearch(String search, Pageable pageable);
+    public Page<Especialidad> findEspecialidadesBySearch(String search, Pageable pageable);
 
-  public OrdenAlarmaDTO countEspecialidades();
+    public OrdenAlarmaDTO countEspecialidades();
 
-  public List<Profesional> findProfesionalByEspecialidadId(Integer especialidadId);
+    public List<Profesional> findProfesionalByEspecialidadId(Integer especialidadId);
+
+    public List<Especialidad> findAllByTipo(Integer tipo);
+
 }

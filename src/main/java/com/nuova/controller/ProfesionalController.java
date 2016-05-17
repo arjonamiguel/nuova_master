@@ -43,18 +43,20 @@ public class ProfesionalController {
     EspecialidadManager especialidadManager;
 
     @RequestMapping(value = ConstantControllers.FORM_ADD_PROFESIONAL, method = RequestMethod.GET)
-    public String formAddEspecialidad(ModelMap map) {
-        List<Especialidad> especialidadList = especialidadManager.findAll();
+    public String formAddProfesional(ModelMap map) {
+        Integer tipoProfesional = new Integer(0);
+        List<Especialidad> especialidadList = especialidadManager.findAllByTipo(tipoProfesional);
         map.addAttribute("especialidadList", especialidadList);
         map.addAttribute("profesional", new ProfesionalDTO());
         return ConstantRedirect.VIEW_FORM_ADD_PROFESIONAL;
     }
 
     @RequestMapping(value = ConstantControllers.FORM_EDIT_PROFESIONAL, method = RequestMethod.GET)
-    public String formEditEspecialidad(ModelMap map,
+    public String formEditProfesional(ModelMap map,
             @PathVariable("profesionalId") Integer profesionalId) {
         if (profesionalId != null) {
-            List<Especialidad> especialidadList = especialidadManager.findAll();
+            Integer tipoProfesional = new Integer(0);
+            List<Especialidad> especialidadList = especialidadManager.findAllByTipo(tipoProfesional);
             ProfesionalDTO dto =
                     transformProfesionalToDto(profesionalManager.findProfesionalById(profesionalId));
 
@@ -66,7 +68,7 @@ public class ProfesionalController {
     }
 
     @RequestMapping(value = ConstantControllers.FORM_DELETE_PROFESIONAL, method = RequestMethod.GET)
-    public String formDeleteEspecialidad(ModelMap map,
+    public String formDeleteProfesional(ModelMap map,
             @PathVariable("profesionalId") Integer profesionalId) {
         if (profesionalId != null) {
             ProfesionalDTO dto =
@@ -88,7 +90,7 @@ public class ProfesionalController {
     }
 
     @RequestMapping(value = ConstantControllers.DELETE_PROFESIONAL, method = RequestMethod.POST)
-    public String deleteEspecialidad(@ModelAttribute(value = "profesional") ProfesionalDTO dto) {
+    public String deleteProfesional(@ModelAttribute(value = "profesional") ProfesionalDTO dto) {
         Profesional profesionalOld = profesionalManager.findProfesionalById(dto.getProfesionalId());
         Profesional profesional = transformDtoToProfesional(dto);
         for (ProfesionalEspecialidad pe : profesionalOld.getProfesionalEspecialidads()) {
@@ -100,7 +102,7 @@ public class ProfesionalController {
     }
 
     @RequestMapping(value = ConstantControllers.EDIT_PROFESIONAL, method = RequestMethod.POST)
-    public String editEspecialidad(@ModelAttribute(value = "profesional") ProfesionalDTO dto) {
+    public String editProfesional(@ModelAttribute(value = "profesional") ProfesionalDTO dto) {
         Profesional profesionalOld = profesionalManager.findProfesionalById(dto.getProfesionalId());
         Profesional profesional = transformDtoToProfesional(dto);
         for (ProfesionalEspecialidad pe : profesionalOld.getProfesionalEspecialidads()) {

@@ -73,6 +73,63 @@
 				</div>
 			</div>
 	</div>
+	
+	
+<div class="panel panel-info">
+	<div class="panel-heading">
+	          <div class="panel-title">Eliminar Especialidades</div>
+	</div>  
+<div style="padding-top:30px" class="panel-body" >
+
+	<div class="row-fluid">
+			<div class="span6">
+			</div>
+			<div class="span6">
+				<div style="float:right;padding-right:2%;">
+						<INPUT type="button" value="Agregar" onclick="addRow('dataTable')" class="btn btn-info" disabled="disabled"/>
+				</div>
+				<div style="float:right;padding-right:2%;">
+					
+				<form:select path="especialidad" disabled="true">
+				   <form:option value="NONE" label="Seleccione Especialidad ..."/>
+				   <form:options items="${especialidadList}" itemLabel="nombre" itemValue="especialidadId" />			    
+				</form:select>
+				</div>
+			</div>
+    
+    </div>
+    <div class="tableContainer"> 
+
+	    <TABLE id="dataTable" class="table"  style="margin-top:0px;">
+	        <TR>
+	        <TR>      	
+	            <TD>ID</TD>
+	            <TD>Especialidad</TD> 
+	            <TD></TD>       
+	        </TR>       
+	        </TR>
+	       	<c:forEach items="${especialidadListEdit}" var="esp">
+		    <tr>
+
+		        <td>${esp.key} <input type="hidden" name="especialidadList" value="${esp.key}"></td>
+		        <td>${esp.value}</td>       
+		        <td>
+		        <button ditype='button' 
+		        	class='btn btn-danger btn-xs' 
+		        	onClick='Eliminar(this.parentNode.parentNode.rowIndex)'
+		        	disabled="disabled">
+		        	<span class='icon icon-remove' title='Eliminar'></span>
+		        </button>
+		        </td> 
+		    </tr>
+	</c:forEach>
+	    </TABLE>
+	   	
+ 	</div>
+</div>
+</div>  
+	
+	
 		<!-- Botoneras -->
 		<div class="panel panel-info">
 			<div class="panel-body">
