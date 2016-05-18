@@ -7,6 +7,7 @@ import org.springframework.data.domain.Pageable;
 
 import com.nuova.dto.OrdenAlarmaDTO;
 import com.nuova.model.Especialidad;
+import com.nuova.model.Prestadores;
 import com.nuova.model.Profesional;
 
 public interface EspecialidadManager {
@@ -29,5 +30,7 @@ public interface EspecialidadManager {
     public List<Profesional> findProfesionalByEspecialidadId(Integer especialidadId);
 
     public List<Especialidad> findAllByTipo(Integer tipo);
+
+    public List<Prestadores> findPrestadorByEspecialidadId(Integer especialidadId);
 
 }

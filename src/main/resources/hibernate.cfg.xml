@@ -28,5 +28,7 @@
         <mapping class="com.nuova.model.Empresas" />
         <mapping class="com.nuova.model.OrdenFueraCartilla" />
         <mapping class="com.nuova.model.PrestadoresEspecialidad" /> 
+        <mapping class="com.nuova.model.OrdenPrestador" /> 
+        
     </session-factory>
 </hibernate-configuration>

@@ -24,7 +24,7 @@
 <div class="mainContainer"> 
 <div class="panelContainer">
 	<form:form method="post" action="/nuova/deleteEspecialidad" commandName="especialidad">
-	<form:hidden path="especialidadId" />
+	<form:hidden path="id" />
 	<div class="panel panel-info">
 			<div class="panel-heading">
 				<div class="panel-title">Eliminar Especialidad</div>
@@ -36,9 +36,14 @@
 								<div class="formLabel"><form:label path="nombre">Nombre Especialidad:</form:label></div>
         						<div class="formInput"><form:input path="nombre" class="input-block-level" disabled="true"/></div>
 							</div>
-							<div class="span6">
-								<div class="formLabel"></div>
-        						<div class="formInput"></div>
+							<div class="span4">
+								<div class="formLabel">Tipo:</div>
+        						<div class="formInput">
+        						<form:select path="tipo" style="width:83%; margin-bottom:0px" disabled="true">
+									<form:option value="-1" label="Seleccione Tipo ..."/>
+									<form:options items="${especialidadTipos}"  itemLabel="value" itemValue="id"/>			    
+								</form:select>
+        						</div>
 							</div>
 						</div>
 						

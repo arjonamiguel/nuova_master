@@ -75,6 +75,7 @@
 	$(document).ready(function() {
 		var especialidadTH = $('#especialidadString.typeahead');
 		var nomencladorTH = $('#nomencladorString.typeahead');
+		var especialidadPrestadorTH = $('#especialidadPrestadorString.typeahead')
 
 		var map = new Object();
 		var objects = [];
@@ -136,8 +137,55 @@
 	        }
 	      });
 
+		  var mapesppres = new Object();
+	  	  var objectsesppres = [];
+	  	  
+	  	especialidadPrestadorTH.typeahead({
+	        source: function (query, process) {
+	          $.ajax({
+	            url: '/nuova/ajaxGetAutoCompleteEspecialidadesPrestador',
+	            type: 'POST',             
+	            dataType: 'JSON',
+	            minLength: 3,                           
+	            data: 'query=' + query,
+	            success: function(data) { 
+	              console.log(data);
+	              $.each(data, function(i, object) {
+	                  mapesppres[object.value] = object;
+	                  if (objectsesppres[i] == null) {
+	                  	objectsesppres.push(object.value);
+	                  }
+	              });
+	              process(objectsesppres);
+	              objectsesppres = [];
+	            }
+	          });
+	        },
+	        updater: function(item) {
+	            $('#especialidadPrestador').val(mapesppres[item].id);
+				findPrestadores($('#especialidadPrestador'));	            
+	            return item;
+	        }
+	      });
+	  	
 	});
 
+	function findPrestadores(especialidadPrestador) {
+		var especialidades = callPrestadoresByEspecialidad(especialidadPrestador
+				.attr('value'));
+		$('#prestadorId')
+				.empty()
+				.append(
+						'<option selected="selected" value="-1">Seleccione Prestador ...</option>');
+		$.each(especialidades, function(key, value) {
+			$('#prestadorId').append($('<option>', {
+				value : value.id
+			}).text(value.value));
+		});
+
+		hideMessage();
+	}
+	
 	function findProfesinoales(especialidad) {
 		var especialidades = callProfesionalByEspecialidad(especialidad
 				.attr('value'));
@@ -161,6 +209,26 @@
 		var retorno;
 		$.ajax({
 			url : "/nuova/ajaxGetProfesionalByEspecialidad?especialidadId="
+					+ especialidadId,
+			type : "GET",
+			contentType : "application/json; charset=utf-8",
+			//    data: jsonString, //Stringified Json Object
+			async : false, //Cross-domain requests and dataType: "jsonp" requests do not support synchronous operation
+			cache : false, //This will force requested pages not to be cached by the browser          
+			processData : false, //To avoid making query String instead of JSON
+			success : function(page) {
+				// Success Message Handler
+				retorno = page;
+			}
+		});
+
+		return retorno;
+	}
+
+	function callPrestadoresByEspecialidad(especialidadId) {
+		var retorno;
+		$.ajax({
+			url : "/nuova/ajaxGetPrestadorByEspecialidad?especialidadId="
 					+ especialidadId,
 			type : "GET",
 			contentType : "application/json; charset=utf-8",
@@ -360,6 +428,7 @@
 											<li><a data-toggle="tab" href="#tb_requisitos">Requisitos</a></li>
 											<li><a data-toggle="tab" href="#tb_profesional">Profesional</a></li>
 											<li><a data-toggle="tab" href="#tb_autorizacion">Autorizaci&oacute;n</a></li>
+											<li><a data-toggle="tab" href="#tb_prestador">Prestador</a></li>
 											<li><a data-toggle="tab" href="#tb_observacion">
 													Observaciones <c:if test="${observacionCount > 0}">
 														<span class="badge">${observacionCount}</span>
@@ -394,6 +463,12 @@
 											<div id="tb_autorizacion" class="tab-pane fade">
 												<jsp:include page="formEditOrdenTabAutorizacion.jsp"></jsp:include>
 											</div>
+											
+											<!-- ** Tab Prestador -->
+											<div id="tb_prestador" class="tab-pane fade">
+												<jsp:include page="formEditOrdenTabPrestador.jsp"></jsp:include>
+											</div>
+											
 
 											<!-- ** Tab Observaciones -->
 											<div id="tb_observacion" class="tab-pane fade" style="">

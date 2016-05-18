@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.nuova.dao.EspecialidadDAO;
 import com.nuova.dto.OrdenAlarmaDTO;
 import com.nuova.model.Especialidad;
+import com.nuova.model.Prestadores;
 import com.nuova.model.Profesional;
 
 @Service
@@ -77,5 +78,11 @@ public class EspecialidadManagerImpl implements EspecialidadManager {
     @Transactional
     public List<Especialidad> findAllByTipo(Integer tipo) {
         return especialidadDAO.findAllByTipo(tipo);
+    }
+
+    @Override
+    @Transactional
+    public List<Prestadores> findPrestadorByEspecialidadId(Integer especialidadId) {
+        return especialidadDAO.findPrestadorByEspecialidadId(especialidadId);
     }
 }

@@ -13,6 +13,8 @@ import org.springframework.stereotype.Repository;
 
 import com.nuova.dto.OrdenAlarmaDTO;
 import com.nuova.model.Especialidad;
+import com.nuova.model.Prestadores;
+import com.nuova.model.PrestadoresEspecialidad;
 import com.nuova.model.Profesional;
 import com.nuova.model.ProfesionalEspecialidad;
 
@@ -112,5 +114,26 @@ public class EspecialidadDAOImpl implements EspecialidadDAO {
                 .createQuery("FROM Especialidad e  WHERE  e.tipo = " + tipo + " ORDER BY e.nombre");
 
         return query.list();
+    }
+
+    @Override
+    public List<Prestadores> findPrestadorByEspecialidadId(Integer especialidadId) {
+        Query query =
+                this.sessionFactory.getCurrentSession().createQuery("FROM PrestadoresEspecialidad e "
+                        + " WHERE e.especialidad.especialidadId = " + especialidadId);
+        // query.setFirstResult(pageable.getOffset());
+        // query.setMaxResults(pageable.getPageNumber());
+        List<PrestadoresEspecialidad> result = query.list();
+
+        List<Prestadores> prestadores = new ArrayList<Prestadores>();
+        for (PrestadoresEspecialidad pe : result) {
+            Prestadores p = new Prestadores();
+            p.setPrestadorId(pe.getPrestadores().getPrestadorId());
+            p.setNombre(pe.getPrestadores().getNombre());
+
+            prestadores.add(p);
+        }
+
+        return prestadores;
     }
 }
