@@ -2,14 +2,20 @@ package com.nuova.controller;
 
 import com.nuova.dto.ComboItemDTO;
 import com.nuova.dto.ObraSocialDTO;
+import com.nuova.dto.ObservacionesDTO;
+import com.nuova.dto.OrdenDTO;
 import com.nuova.dto.OrdenTipoDTO;
 import com.nuova.dto.PacienteDTO;
+import com.nuova.dto.ReintegroDTO;
 import com.nuova.model.Empresas;
 import com.nuova.model.Localidades;
 import com.nuova.model.Obrasocial;
+import com.nuova.model.Observaciones;
 import com.nuova.model.OrdenTipo;
 import com.nuova.model.Paciente;
+import com.nuova.model.Reintegro;
 import com.nuova.service.ObraSocialManager;
+import com.nuova.service.ObservacionManager;
 import com.nuova.service.OrdenManager;
 import com.nuova.service.PacienteManager;
 import com.nuova.utils.ConstantControllers;
@@ -45,6 +51,9 @@ public class PacienteController {
   ObraSocialManager obrasocialManager;
   @Autowired
   OrdenManager ordenManager;
+  
+  @Autowired
+  ObservacionManager observacionManager;
 
   String flag = "";
 
@@ -331,6 +340,21 @@ public class PacienteController {
     }
     return retorno;
   }
+  
+  @RequestMapping(value = ConstantControllers.AJAX_GET_OBSERVACIONESBYPACIENTE_PAGINADOS,
+	      method = RequestMethod.GET)
+	  public @ResponseBody String getObservacionesByPacientePaginados(
+	      @PathVariable("pacienteId") Integer pacienteId,
+	      @RequestParam(required = false, defaultValue = "0") Integer start,
+	      @RequestParam(required = false, defaultValue = "50") Integer limit) {
+
+
+	  
+	  
+	  //  return "[{'observacionId':'1','observacion':'hola gus'},{'observacionId':'2','observacion':'hola gustavo'}]";
+	  return "{'observacionId':'1', 'observacion':'hola gus','fecha':'24/05/2016'}";
+
+	  }
 
   // Adherentes --------------------------------------------
   @RequestMapping(value = ConstantControllers.FORM_ADD_ADHERENTE, method = RequestMethod.GET)

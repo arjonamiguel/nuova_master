@@ -3,11 +3,14 @@ package com.nuova.service;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.nuova.dao.ObservacionDAO;
 import com.nuova.model.Observaciones;
+import com.nuova.model.Reintegro;
 
 @Service
 public class ObservacionManagerImpl implements ObservacionManager {

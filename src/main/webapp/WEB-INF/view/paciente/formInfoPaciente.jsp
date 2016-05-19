@@ -44,9 +44,12 @@ $(document).ready(function() {
 	var rowsConsultas = [];
 	var rowsPracticas = [];
 	var rowsReintegros = [];
+	var rowsObservaciones = [];
 	rowsConsultas = callConsultas();
 	rowsPracticas = callPracticas();
 	rowsReintegros = callReintegros();
+	rowsObservaciones = callObservaciones();
+	//rowsObservaciones= [{'observacionId':'1', 'observacion':'hola gus','fecha':'24/05/2016'}];
 
 	$("#consultasGrid").simplePagingGrid(
 			{
@@ -62,9 +65,9 @@ $(document).ready(function() {
 
 	$("#practicasGrid").simplePagingGrid(
 			{
-				columnNames : [ "NRO.ORDEN","PACIENTE","TIPO" ,"FECHA","PROFESIONAL","ESPECIALIDAD", "ESTADO", "" ],
+				columnNames : [ "NRO.ORDEN","PACIENTE","TIPO" ,"FECHA","PROFESIONAL","ESPECIALIDAD", "ESTADO","PRACTICA", "" ],
 				columnKeys : [ "nroOrden","botonpaciente","ordenTipoDesc" , "fecha", "apellidoNombreProfesional"
-								, "especialidadView", "etiqestado", "acciones"],
+								, "especialidadView", "etiqestado","practica", "acciones"],
 				columnWidths : [ "10%", "20%"],
 				sortable : [ true, true,],
 				data : rowsPracticas,
@@ -79,6 +82,17 @@ $(document).ready(function() {
 				columnWidths : [ "10%", "10%"],
 				sortable : [ true, true,],
 				data : rowsReintegros,
+				pageSize : 5,
+				minimumVisibleRows: 5
+			});
+			
+	$("#observacionesGrid").simplePagingGrid(
+			{
+				columnNames : [ "ID","OBSERVACION","FECHA"],
+				columnKeys : ["observacionId", "observacion", "fecha"],
+				columnWidths : [ "10%", "10%"],
+				sortable : [ true, true,],
+				data : rowsObservaciones,
 				pageSize : 5,
 				minimumVisibleRows: 5
 			});
@@ -115,7 +129,7 @@ function createReintegro(){
 		<div class="panelContainer">
 			<div class="panel panel-info">
 				<input type="hidden" value="${paciente.pacienteId}" id="pacienteId">
-
+				<div id="jsonObservaciones"></div>
 				<div class="panel-heading">
 					<div class="panel-title">Informacion del Paciente</div>
 				</div>
@@ -182,6 +196,7 @@ function createReintegro(){
 							</c:if>	
 							<li><a data-toggle="tab" href="#tb_practicas"><b>Practicas</b></a></li>
 							<li><a data-toggle="tab" href="#tb_reintegros"><b>Reintegros</b></a></li>
+							<li><a data-toggle="tab" href="#tb_observaciones"><b>Observaciones</b></a></li>
 						</ul>
 						<!-- Fin Declaracion de tabs -->
 
@@ -214,6 +229,10 @@ function createReintegro(){
 							<!-- ** Tab Reintegros -->
 							<div id="tb_reintegros" class="tab-pane fade">
 								<jsp:include page="formInfoPacienteTabReintegros.jsp"></jsp:include>
+							</div>
+							<!-- ** Tab Observaciones -->
+							<div id="tb_observaciones" class="tab-pane fade">
+								<jsp:include page="formInfoPacienteTabObservaciones.jsp"></jsp:include>
 							</div>
 						</div>
 						<!-- Fin Contenedor de Tabs -->
@@ -317,4 +336,28 @@ function callReintegros() {
 
 	return retorno;
 }
+
+function callObservaciones() {
+	var retorno;
+		$.ajax(
+		    {
+		        url : "/nuova/ajaxGetObservacionesByPacientePaginados/${paciente.pacienteId}",
+		        type: "GET",
+		        //data : postData,
+		         contentType: "application/x-www-form-urlencoded",
+		        success:function(data, textStatus, jqXHR) 
+		        {
+					//alert(data);
+					document.getElementById("jsonObservaciones").innerHTML=data;					
+					//rowsObservaciones=data;
+		        },
+		        error: function(jqXHR, textStatus, errorThrown) 
+		        {
+					alert("fracaso");
+		        }
+		    });
+	return document.getElementById("jsonObservaciones").innerHTML;
+	
+}
+		    
 </script>

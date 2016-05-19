@@ -2,6 +2,9 @@ package com.nuova.dao;
 
 import java.util.List;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+
 import com.nuova.model.Observaciones;
 
 public interface ObservacionDAO {
