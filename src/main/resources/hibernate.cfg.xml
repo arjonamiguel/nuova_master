@@ -29,6 +29,7 @@
         <mapping class="com.nuova.model.OrdenFueraCartilla" />
         <mapping class="com.nuova.model.PrestadoresEspecialidad" /> 
         <mapping class="com.nuova.model.OrdenPrestador" /> 
+        <mapping class="com.nuova.model.PacienteObservaciones" />       
         
     </session-factory>
 </hibernate-configuration>

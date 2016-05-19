@@ -43,7 +43,7 @@ xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns
   </listener>
   
   <session-config>
-    <!--Default to 30 minute session timeouts-->
-    <session-timeout>30</session-timeout>
+    <!--Default to 60 minute session timeouts-->
+    <session-timeout>60</session-timeout>
   </session-config>
 </web-app>
