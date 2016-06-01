@@ -240,13 +240,13 @@ function showEmpresaTitular(){
 				}else{
 					$("#razonCoseguro").val("NONE");
 					$("#razonCoseguro").prop("disabled", true);
-					$("#vencCarnetDiv").css("visibility","hidden");
+					 $("#vencCarnetDiv").css("visibility","hidden");
 				}
 		}
 		
 		function enableVencCarnet(){
 			if($("#razonCoseguro").val()=="Discapacitado"){
-				$("#vencCarnetDiv").css("visibility","visible");
+				 $("#vencCarnetDiv").css("visibility","visible");
 				initDateVenc();
 			}
 		}
@@ -439,15 +439,15 @@ function showEmpresaTitular(){
         					</div>
 			   		
 			   		</div>
+			   		
 			   		<div class="span4" id="vencCarnetDiv" style="visibility:hidden;">
-			   		<div style="visibility:hidden;height:0px;">
-						<form:input path="vencCarnet" class="date"/>
-					</div>
-			   		<div class="formLabel"><form:label path="vencCarnet">Vencimiento Carnet:</form:label></div>
+					<div class="formLabel"><form:label path="vencCarnet">Vencimiento Carnet:</form:label></div>
+			   		<div style="visibility:hidden;height:0px;"><form:input path="vencCarnet" class="date"/></div>
+			   		
 			   			<div class="formInput">
 							<div id="calendar">
 								<div class="input-group registration-date-time" style="padding-top:0%;">
-									<input class="form-control" name="registration-date-venc" id="registration-date-venc" type="date"  onchange="javascript:updateDateVenc();">
+									<input class="form-control" name="registration_date_venc" id="registration-date-venc" type="date"  onchange="javascript:updateDateVenc();">
 	            				</div>
 	            			</div>
 	            		</div>	
@@ -682,8 +682,14 @@ function callEmpresas() {
 		});
 			
 		updatecoseguro();
-		// var valueDate=document.getElementById("fechaNacimiento").value.split('/')[2]+"-"+document.getElementById("fechaNacimiento").value.split('/')[1]+"-"+document.getElementById("fechaNacimiento").value.split('/')[0];
-		// document.getElementById("registration-date").value=valueDate;
+	
+
+		if(document.getElementById("fechaNacimiento").value=="null"){
+			document.getElementById("registration-date").value= "";
+		}else{
+			document.getElementById("registration-date").value= document.getElementById("fechaNacimiento").value;
+		}
+		
 		enableVencCarnet();
 		
 </script>

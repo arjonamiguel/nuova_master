@@ -176,8 +176,9 @@ function goInfoPaciente() {
 													${al.descripcion}</span></li>
 										</c:forEach>
 									</ul>
+									<sec:authorize access="hasRole('ROLE_ADMIN')">
 									<a href="/nuova/mainOrdenPractica">Ir al Administrador Ordenes de Pr&aacute;cticas</a>
-									
+									</sec:authorize>
 								</div>
 
 							</div>

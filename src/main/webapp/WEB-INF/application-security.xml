@@ -12,7 +12,7 @@
 		<intercept-url pattern="/login" access="permitAll" />
 		<intercept-url pattern="/logout" access="permitAll" />
 		<intercept-url pattern="/accessdenied" access="permitAll" />
-        <intercept-url pattern="/**" access="hasRole('ROLE_USER') OR hasRole('ROLE_ADMIN')" />
+        <intercept-url pattern="/**" access="hasRole('ROLE_USER') OR hasRole('ROLE_ADMIN') OR hasRole('ROLE_USER_CONF')" />
 		<form-login
              login-page="/login" 
              default-target-url="/home" 
