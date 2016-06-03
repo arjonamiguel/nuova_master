@@ -1,15 +1,15 @@
 package com.nuova.service;
 
+import java.util.List;
+
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+
 import com.nuova.dto.OrdenAlarmaDTO;
 import com.nuova.model.Empresas;
 import com.nuova.model.Especialidad;
 import com.nuova.model.Localidades;
 import com.nuova.model.Paciente;
-
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-
-import java.util.List;
 
 public interface PacienteManager {
     public void add(Paciente paciente);
@@ -51,5 +51,7 @@ public interface PacienteManager {
     public Empresas findEmpresaById(Integer empresaId);
 
     public void add(Empresas empresa);
+
+    public void addLocalidad(Localidades localidad);
 
 }

@@ -203,4 +203,9 @@ public class PacienteDAOImpl implements PacienteDAO {
         return (query.list().isEmpty()) ? null : query.list();
     }
 
+    @Override
+    public void addLocalidad(Localidades localidad) {
+        this.sessionFactory.getCurrentSession().save(localidad);
+    }
+
 }
