@@ -55,4 +55,6 @@ public interface PacienteDAO {
 
     public void add(Empresas empresa);
 
+    public void addLocalidad(Localidades localidad);
+
 }

@@ -14,7 +14,7 @@ public class PacienteDTO {
     private String apellido;
     private String nombre;
     private String fechaNacimiento;
-    private String vencCarnet = null;
+    private String vencCarnet;
     private String domicilio;
     private String telefono;
     private String mail;

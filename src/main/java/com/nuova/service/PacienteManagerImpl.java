@@ -121,4 +121,9 @@ public class PacienteManagerImpl implements PacienteManager {
         return pacienteDAO.findAllPacienteByCredencial(credencial);
     }
 
+    @Override
+    public void addLocalidad(Localidades localidad) {
+        pacienteDAO.addLocalidad(localidad);
+    }
+
 }
