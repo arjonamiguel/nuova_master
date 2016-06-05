@@ -3,10 +3,10 @@
 	<tr>
 		<td style="width: 15%">Monto de Coseguro $:</td>
 		<td style="width: 35%"><form:input path="monto"
-				cssStyle="width: 40%" disabled="true"/></td>
+				cssStyle="width: 40%" /></td>
 		<td style="width: 10%">Sin Costo:</td>
 		<td><input type="checkbox" id="coseguroSinCosto"
-			name="coseguroSinCosto" class="largerCheckbox" onchange="sinCosto()" disabled="disabled"/>
+			name="coseguroSinCosto" class="largerCheckbox" onchange="sinCosto()" />
 		</td>
 	</tr>
 

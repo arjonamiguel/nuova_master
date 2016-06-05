@@ -291,7 +291,7 @@ $(function() {
 											<li class="active"><a data-toggle="tab"
 												href="#tb_paciente">Paciente</a></li>
 											<li><a data-toggle="tab" href="#tb_requisitos">Requisitos</a></li>
-											<li><a data-toggle="tab" href="#tb_profesional">Profesional</a></li>
+											<li><a data-toggle="tab" href="#tb_profesional">Medico Solicitante</a></li>
 											<li><a data-toggle="tab" href="#tb_coseguro">Coseguro</a></li>
 										</ul>
 

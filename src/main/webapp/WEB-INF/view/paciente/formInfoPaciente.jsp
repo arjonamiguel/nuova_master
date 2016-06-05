@@ -62,10 +62,10 @@ $(document).ready(function() {
 
 	$("#practicasGrid").simplePagingGrid(
 			{
-				columnNames : [ "NRO.ORDEN","PACIENTE","TIPO" ,"FECHA","PROFESIONAL","ESPECIALIDAD", "ESTADO", "" ],
-				columnKeys : [ "nroOrden","botonpaciente","ordenTipoDesc" , "fecha", "apellidoNombreProfesional"
-								, "especialidadView", "etiqestado", "acciones"],
-				columnWidths : [ "10%", "20%"],
+				columnNames : [ "NRO.ORDEN","FECHA","MEDICO SOLICITANTE","PRACTICAS", ""],
+				columnKeys : [ "nroOrden","fecha","solicitante", "practica"
+								, "acciones"],
+				columnWidths : [ "10%", "10%", "20%"],
 				sortable : [ true, true,],
 				data : rowsPracticas,
 				pageSize : 5,

@@ -284,7 +284,7 @@
 		    								<ul class="nav nav-tabs">
 											  <li class="active"><a data-toggle="tab" href="#tb_paciente" onclick="setObservacionInvisible()">Paciente</a></li>
 											  <li><a data-toggle="tab" href="#tb_requisitos" onclick="setObservacionInvisible()">Requisitos</a></li>
-											  <li><a data-toggle="tab" href="#tb_profesional">Profesional</a></li>
+											  <li><a data-toggle="tab" href="#tb_profesional">Medico Solicitante</a></li>
 											  <li><a data-toggle="tab" href="#tb_coseguro">Coseguro</a></li>											  											 
 											  <li><a data-toggle="tab" href="#tb_flujo" >Usuario Creador</a></li>
 											</ul>

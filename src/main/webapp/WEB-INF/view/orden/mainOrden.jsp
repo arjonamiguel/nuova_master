@@ -38,9 +38,9 @@
 
 						$("#ordenGrid").simplePagingGrid(
 								{
-									columnNames : [ "NRO.ORDEN","PACIENTE","TIPO" ,"FECHA","PROFESIONAL","ESPECIALIDAD", "ESTADO", "" ],
+									columnNames : [ "NRO.ORDEN","PACIENTE","TIPO" ,"FECHA","MEDICO SOLICITANTE","ESPECIALIDAD", "" ],
 									columnKeys : [ "nroOrden","botonpaciente","ordenTipoDesc" , "fecha", "apellidoNombreProfesional"
-													, "especialidadView", "etiqestado", "acciones"],
+													, "especialidadView", "acciones"],
 									columnWidths : [ "10%", "20%", ],
 									sortable : [ true, false, true,true,true ],
 									data : rows

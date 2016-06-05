@@ -71,6 +71,16 @@
 		return selectEstado;
 	}
 
+	function sinCosto(){
+		if ($("#coseguroSinCosto").is(':checked')) {
+			document.getElementById("monto").value = "0.00";
+			document.getElementById("monto").disabled = "false";
+		}else {
+			document.getElementById("monto").value = "";
+			document.getElementById("monto").disabled = "";
+		}	
+
+	}
 
 	$(document).ready(function() {
 		var especialidadTH = $('#especialidadString.typeahead');
@@ -426,9 +436,9 @@
 											<li class="active"><a data-toggle="tab"
 												href="#tb_paciente" onclick="setObservacionInvisible()">Paciente</a></li>
 											<li><a data-toggle="tab" href="#tb_requisitos">Requisitos</a></li>
-											<li><a data-toggle="tab" href="#tb_profesional">Profesional</a></li>
+											<li><a data-toggle="tab" href="#tb_profesional">Medico Solicitante</a></li>
 											<li><a data-toggle="tab" href="#tb_autorizacion">Autorizaci&oacute;n</a></li>
-											<li><a data-toggle="tab" href="#tb_prestador">Prestador</a></li>
+											<li><a data-toggle="tab" href="#tb_prestador">Prestador Derivado</a></li>
 											<li><a data-toggle="tab" href="#tb_observacion">
 													Observaciones <c:if test="${observacionCount > 0}">
 														<span class="badge">${observacionCount}</span>
