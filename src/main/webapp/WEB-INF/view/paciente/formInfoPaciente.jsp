@@ -69,6 +69,7 @@ $(document).ready(function() {
 				columnKeys : [ "nroOrden","botonpaciente","ordenTipoDesc" , "fecha", "apellidoNombreProfesional"
 								, "especialidadView", "etiqestado","practica", "acciones"],
 				columnWidths : [ "10%", "20%"],
+
 				sortable : [ true, true,],
 				data : rowsPracticas,
 				pageSize : 5,
