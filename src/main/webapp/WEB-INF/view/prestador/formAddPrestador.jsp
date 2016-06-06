@@ -53,6 +53,55 @@
 	function Eliminar (i) {    	 
 	    document.getElementById("dataTable").deleteRow(i);
 	}
+	
+	$(function(){
+		
+			$(document.body).on('click', '.changeType' ,function(){
+				$(this).closest('.phone-input').find('.type-input').val($(this).data('type-value'));
+			});
+			
+			$(document.body).on('click', '.btn-remove-phone' ,function(){
+				$(this).closest('.phone-input').remove();
+			});
+			
+			
+			$('.btn-add-phone').click(function(){
+
+				var index = $('.phone-input').length + 1;
+				
+				$('.phone-list').append(''+
+						'<div class="input-group phone-input">'+
+							'<input type="text" name="phone['+index+'][number]" class="form-control" placeholder="+1 (999) 999 9999 int: 123" style="width:20.5%;padding-bottom:3px;"/>'+
+							'<input type="hidden" name="phone['+index+'][type]" class="type-input" value="" />'+
+							'<span class="input-group-btn" style="padding-left:1%;">'+
+								'<button class="btn btn-danger btn-remove-phone" type="button"><span class="icon icon-remove"></span></button>'+
+							'</span>'+
+						'</div>'
+				);
+
+			});
+			
+		});
+	
+function procesarSubmit()
+	{
+		var jsonPhones='';
+		var line='';
+		$( '.form-control' ).each(function( index ) {
+			var trimStr=$( this ).val();
+			trimStr=trimStr.replace(/\s/g, "");
+  			line= '{"id":"'+index + '", "value":"' + trimStr+'"},';
+  			jsonPhones=jsonPhones+line;
+		});
+		var str=jsonPhones;
+		var newStr = str.substring(0, str.length-1);
+		jsonPhones=newStr;
+		jsonPhones='['+jsonPhones+']';
+		$('#telefono').val(jsonPhones);
+		$( '#prestador' ).submit();
+	}
+	
+	
 	</script>
 </head>
 <body style="background-color:#e5e5e5;">
@@ -89,12 +138,20 @@
 								<div class="formLabel"><form:label path="domicilio">Domicilio:</form:label></div>
         						<div class="formInput"><form:textarea path="domicilio" class="input-block-level" type="text"/></div>
 							</div>				
-							<div class="span6">
+							<div class="span6" style="visibility:hidden;">
 								<div class="formLabel"><form:label path="telefono">Telefono:</form:label></div>
-        						<div class="formInput"><form:input path="telefono" class="input-block-level" type="text" cssStyle="width:53%"/></div>
+        						<div class="formInput"><form:textarea path="telefono" class="input-block-level" type="text" cssStyle="width:53%" placeholder="Enter Choice#1 &#10;Enter Choice#2 &#10;Enter Choice#3"/></div>
 							</div>
 							
 							
+						</div>
+						<div class="row-fluid" style="padding-top:2%;">	
+										<div style="float:left;">Telefonos:</div><div style="padding-left:38%;"><button type="button" class="btn btn-success btn-sm btn-add-phone"><span class="icon icon-plus"></span> Agregar Telefono</button></div>
+										<div class="phone-list" style="padding-left:14.5%;">
+											<div class="input-group phone-input">
+											</div>
+										</div>
+										
 						</div>
 				
 				</div>
@@ -144,7 +201,7 @@
 						<input class="btn" type="button" value="Cancelar" onclick="location.href='/nuova/mainPrestador';"/>	
 					</div>
 					<div style="float:right;padding-right:2%;">
-						<input type="submit" value="Guardar" class="btn btn-info"/>
+						<input type="button" value="Guardar" class="btn btn-info" onclick="procesarSubmit()"/>
 					</div>								 			
 				</div>
 				</div>
