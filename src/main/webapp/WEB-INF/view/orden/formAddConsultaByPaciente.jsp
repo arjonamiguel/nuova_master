@@ -245,7 +245,9 @@ $(function() {
 		        success:function(data, textStatus, jqXHR) 
 		        {
 		            var element = '<div class="alert alert-success alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button><div style="float:left;"><strong>Orden Creada con Exito!</strong> La orden fué creada con el siguiente identificador:</div> <div style="float:left;font-size: 20px;">'+data+'</div>.</div>';
-		            document.getElementById("alert").innerHTML=element;
+		            document.getElementById("alert").innerHTML=element;  
+		            $("#btnGuardar").attr("disabled", "disabled");
+		            
 		        },
 		        error: function(jqXHR, textStatus, errorThrown) 
 		        {
@@ -460,7 +462,7 @@ $(function() {
 								class="btn" />
 						</div>
 						<div style="float: right; padding-right: 2%;">
-							<input type="button" value="Guardar" class="btn btn-info" />
+							<input type="button" value="Guardar" class="btn btn-info" id="btnGuardar" />
 						</div>
 					</div>
 				</div>

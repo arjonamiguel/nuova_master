@@ -107,6 +107,8 @@ public class OrdenController {
     private String rechazada = "<span style='color:white;background: gray'>RECHAZADA</span>";
     private String cerrada = "<span style='color:white;background: black'>CERRADA</span>";
     private String anulada = "<span style='color:white;background: tomato'>ANULADA</span>";
+    
+    private int lastOrdenId ;
 
     @RequestMapping(value = ConstantControllers.REDIRECT_ORDEN, method = RequestMethod.POST)
     public String redirectOrden(ModelMap map,
@@ -465,6 +467,8 @@ public class OrdenController {
 
         // Orden
         ordenManager.add(orden);
+        System.out.println("gustavito: " +  orden.getOrdenId());
+        lastOrdenId = orden.getOrdenId();
 
         // Fuera de Cartilla
         if (ordenDto.getFueraCartilla()) {
@@ -637,10 +641,7 @@ public class OrdenController {
 
     @RequestMapping(value = ConstantControllers.ORDEN_MESSAGE, method = RequestMethod.GET)
     public String ordenMessage(ModelMap map) {
-
-        List<Orden> ordenes = ordenManager.findAll();
-        Orden orden = ordenes.get(ordenes.size() - 1);
-        map.addAttribute("ordenId", orden.getOrdenId());
+    	 map.addAttribute("ordenId", lastOrdenId);
         return ConstantRedirect.VIEW_ORDEN_MESSAGE;
     }
 
