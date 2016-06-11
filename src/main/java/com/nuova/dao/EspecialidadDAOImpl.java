@@ -120,7 +120,7 @@ public class EspecialidadDAOImpl implements EspecialidadDAO {
     public List<Prestadores> findPrestadorByEspecialidadId(Integer especialidadId) {
         Query query =
                 this.sessionFactory.getCurrentSession().createQuery("FROM PrestadoresEspecialidad e "
-                        + " WHERE e.especialidad.especialidadId = " + especialidadId);
+                        + " WHERE e.prestadores.eliminado=0 and  e.especialidad.especialidadId = " + especialidadId);
         // query.setFirstResult(pageable.getOffset());
         // query.setMaxResults(pageable.getPageNumber());
         List<PrestadoresEspecialidad> result = query.list();

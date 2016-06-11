@@ -467,7 +467,7 @@ public class OrdenController {
 
         // Orden
         ordenManager.add(orden);
-        System.out.println("gustavito: " +  orden.getOrdenId());
+        // System.out.println("gustavito: " +  orden.getOrdenId());
         lastOrdenId = orden.getOrdenId();
 
         // Fuera de Cartilla
@@ -496,8 +496,8 @@ public class OrdenController {
     @RequestMapping(value = ConstantControllers.EDIT_ORDEN, method = RequestMethod.POST)
     public String editOrden(ModelMap map, @ModelAttribute(value = "ordenDto") OrdenDTO dto) {
         int message = Util.MESSAGE_SUCCESS;
-        Orden orden = ordenManager.findOrdenById(dto.getOrdenId());
-
+        Orden orden = ordenManager.findOrdenById(dto.getOrdenId());        
+        
         try {
 
             User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
@@ -569,6 +569,52 @@ public class OrdenController {
             orden.setReqOrdenMedico(Util.getByteFlag(dto.isReqOrdenMedico()));
             orden.setReqReciboSueldo(Util.getByteFlag(dto.isReqReciboSueldo()));
 
+            // actualizo monto
+            if (orden.getCajaOrdens().isEmpty()) {
+
+                if (dto.getMonto() != null && dto.getMonto() > 0 
+                		&& dto.getMonto().doubleValue() != orden.getMonto().doubleValue()) {
+                    if (orden.getOrdenTipo().getOrdenTipoId().intValue() == 1
+                            || orden.getOrdenTipo().getOrdenTipoId().intValue() == 3) {
+                        // Caja
+                        Caja caja = new Caja();
+                        if (orden.getOrdenTipo().getOrdenTipoId().intValue() == 1) {
+                            caja.setConcepto(Util.CONCEPTO_INGRESO_ORDENCONSULTA);
+                        }
+
+                        if (orden.getOrdenTipo().getOrdenTipoId().intValue() == 3) {
+                            caja.setConcepto(Util.CONCEPTO_INGRESO_ORDENPRACTICA);
+                        }
+
+                        caja.setIngreso(dto.getMonto());
+                        caja.setEgreso(0.00);
+                        caja.setFecha(orden.getFecha());
+
+                        cajaManager.add(caja);
+                        CajaOrden cajaorden = new CajaOrden(caja, orden);
+                        Set<CajaOrden> cajaordenes = new HashSet<CajaOrden>();
+                        cajaordenes.add(cajaorden);
+                        orden.setCajaOrdens(cajaordenes);
+                    }
+                }
+            	
+            } else {
+            	CajaOrden coo = null;
+            	for (CajaOrden co : orden.getCajaOrdens()) {
+            		co.getCaja().setIngreso(dto.getMonto());
+            		coo = co;
+            	}
+            	orden.getCajaOrdens().clear();
+            	 Set<CajaOrden> cajaordenes = new HashSet<CajaOrden>();
+                 cajaordenes.add(coo);
+                 orden.setCajaOrdens(cajaordenes);
+                 
+                 cajaManager.edit(coo.getCaja());
+                 
+                 
+            }
+            
+            orden.setMonto(dto.getMonto());
             // Actualizo Orden
             ordenManager.edit(orden);
 

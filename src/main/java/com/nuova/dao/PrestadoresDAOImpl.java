@@ -58,7 +58,7 @@ public class PrestadoresDAOImpl implements PrestadoresDAO {
     @SuppressWarnings("unchecked")
     public Page<Prestadores> findPrestadoresByPageable(Pageable pageable) {
         Query query = this.sessionFactory.getCurrentSession()
-                .createQuery("FROM Prestadores p ORDER BY p.prestadorId DESC");
+                .createQuery("FROM Prestadores p WHERE p.eliminado = 0 ORDER BY p.prestadorId DESC");
         // query.setFirstResult(pageable.getOffset());
         // query.setMaxResults(pageable.getPageNumber());
         List<Prestadores> result = query.list();
@@ -70,7 +70,7 @@ public class PrestadoresDAOImpl implements PrestadoresDAO {
     public Page<Prestadores> findPrestadoresBySearch(String search, Pageable pageable) {
         Query query = this.sessionFactory.getCurrentSession()
                 .createQuery("FROM Prestadores p " + " WHERE upper(p.nombre) LIKE '%" + search.toUpperCase()
-                        + "%' " + " ORDER BY p.nombre ASC");
+                        + "%' " + " AND p.eliminado=0 ORDER BY p.nombre ASC");
 
         // query.setFirstResult(pageable.getOffset());
         // query.setMaxResults(pageable.getPageNumber());

@@ -11,6 +11,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
 
 import com.nuova.dto.OrdenAlarmaDTO;
+import com.nuova.model.CajaOrden;
 import com.nuova.model.Orden;
 import com.nuova.model.OrdenDocument;
 import com.nuova.model.OrdenFueraCartilla;
@@ -180,5 +181,11 @@ public class OrdenDAOImpl implements OrdenDAO {
                 .setInteger("ordenId", ordenId).executeUpdate();
 
     }
+
+	@Override
+	public CajaOrden findCajaOrdenByOrdenId(Orden orden) {
+		return (CajaOrden) this.sessionFactory.getCurrentSession().get(CajaOrden.class,
+                orden);
+	}
 
 }

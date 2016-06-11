@@ -145,18 +145,33 @@ function procesarSubmit()
 							
 							
 						</div>
-						<div class="row-fluid" style="padding-top:2%;">	
-										<div style="float:left;">Telefonos:</div><div style="padding-left:38%;"><button type="button" class="btn btn-success btn-sm btn-add-phone"><span class="icon icon-plus"></span> Agregar Telefono</button></div>
-										<div class="phone-list" style="padding-left:14.5%;">
-											<div class="input-group phone-input">
-											</div>
-										</div>
-										
-						</div>
-				
+						
 				</div>
 			</div>
 	</div>
+
+
+	<div class="panel panel-info">
+	<div class="panel-heading">
+	          <div class="panel-title">Agregar Telefonos</div>
+	</div>  
+<div style="padding-top:30px" class="panel-body" >
+   	
+	<div class="row-fluid">		
+    		<div class="span12">
+	    		<div style="float:right;padding-right:1%;">
+	    			<button type="button" class="btn btn-success btn-sm btn-add-phone"><span class="icon icon-plus"></span> Agregar Telefono</button>
+	    		</div>
+	    		
+    		</div>
+    </div>
+    <div class="tableContainer"><div class="phone-list" style="padding-left:14.5%;">
+											<div class="input-group phone-input">
+											</div>
+										</div>	
+ 	</div>
+</div>
+</div>
 	
 	<div class="panel panel-info">
 	<div class="panel-heading">

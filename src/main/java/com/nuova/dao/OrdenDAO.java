@@ -6,6 +6,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 import com.nuova.dto.OrdenAlarmaDTO;
+import com.nuova.model.CajaOrden;
 import com.nuova.model.Orden;
 import com.nuova.model.OrdenDocument;
 import com.nuova.model.OrdenFueraCartilla;
@@ -54,5 +55,7 @@ public interface OrdenDAO {
     public void add(OrdenFueraCartilla ofc);
 
     public void deleteOrdenPrestador(Integer ordenId);
+    
+    public CajaOrden findCajaOrdenByOrdenId(Orden orden);
 
 }

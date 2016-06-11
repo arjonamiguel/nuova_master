@@ -15,7 +15,7 @@ public class PacienteDTO {
     private String nombre;
     private String fechaNacimiento;
     private String vencCarnet;
-    private String domicilio;
+    private String domicilio="";
     private String telefono;
     private String mail;
     private Integer localidadId;
@@ -75,19 +75,19 @@ public class PacienteDTO {
     }
 
     public String getApellido() {
-        return apellido;
+        return apellido==null? "" :apellido.toUpperCase();
     }
 
     public void setApellido(String apellido) {
-        this.apellido = apellido;
+        this.apellido = apellido.toUpperCase();
     }
 
     public String getNombre() {
-        return nombre;
+        return nombre == null ?  "" :nombre.toUpperCase();
     }
 
     public void setNombre(String nombre) {
-        this.nombre = nombre;
+        this.nombre = nombre.toUpperCase();
     }
 
     public String getFechaNacimiento() {
@@ -107,11 +107,11 @@ public class PacienteDTO {
     }
 
     public String getDomicilio() {
-        return domicilio;
+        return domicilio.toUpperCase();
     }
 
     public void setDomicilio(String domicilio) {
-        this.domicilio = domicilio;
+        this.domicilio = domicilio.toUpperCase();
     }
 
     public String getTelefono() {

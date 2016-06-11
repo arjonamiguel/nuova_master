@@ -82,7 +82,9 @@ public class PrestadorController {
             BindingResult result) {
 
         if (dto != null) {
-            prestadorManager.add(transformDtoToPrestadores(dto));
+        	Prestadores p  = transformDtoToPrestadores(dto);
+            p.setEliminado(0); // 0=activo / 1=eliminado logico
+        	prestadorManager.add(p);
         }
         // Especialidades
         for (Integer id : dto.getEspecialidadList()) {
@@ -95,8 +97,11 @@ public class PrestadorController {
 
     @RequestMapping(value = ConstantControllers.DELETE_PRESTADOR, method = RequestMethod.POST)
     public String deletePrestador(@ModelAttribute(value = "prestador") PrestadorDTO dto) {
-        prestadorManager.delete(dto.getPrestadorId());
-        return "redirect:" + ConstantControllers.MAIN_PRESTADOR;
+    	Prestadores prestador = prestadorManager.findPrestadorById(dto.getPrestadorId());
+        prestador.setEliminado(1);
+    	// prestadorManager.delete(dto.getPrestadorId());
+        prestadorManager.edit(prestador);
+    	return "redirect:" + ConstantControllers.MAIN_PRESTADOR;
     }
 
     @RequestMapping(value = ConstantControllers.EDIT_PRESTADOR, method = RequestMethod.POST)

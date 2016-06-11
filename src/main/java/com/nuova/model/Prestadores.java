@@ -29,6 +29,7 @@ public class Prestadores implements java.io.Serializable {
   private String provincia;
   private Set<PrestadoresEspecialidad> prestadoresEspecialidads =
       new HashSet<PrestadoresEspecialidad>(0);
+  private Integer eliminado;
 
   public Prestadores() {}
 
@@ -96,5 +97,15 @@ public class Prestadores implements java.io.Serializable {
   public void setPrestadoresEspecialidads(Set<PrestadoresEspecialidad> prestadoresEspecialidads) {
     this.prestadoresEspecialidads = prestadoresEspecialidads;
   }
+
+  @Column(name = "eliminado")
+  public Integer getEliminado() {
+	return eliminado;
+  }
+
+  public void setEliminado(Integer eliminado) {
+	this.eliminado = eliminado;
+  }
+  
 
 }

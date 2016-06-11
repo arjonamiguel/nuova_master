@@ -7,8 +7,8 @@ import java.util.Map;
 
 public class PrestadorDTO {
   private Integer prestadorId;
-  private String nombre;
-  private String domicilio;
+  private String nombre="";
+  private String domicilio="";
   private String telefono;
 
   private String acciones;
@@ -38,19 +38,19 @@ public class PrestadorDTO {
   }
 
   public String getNombre() {
-    return nombre;
+    return nombre.toUpperCase();
   }
 
   public void setNombre(String nombre) {
-    this.nombre = nombre;
+    this.nombre = nombre.toUpperCase();
   }
 
   public String getDomicilio() {
-    return domicilio;
+    return domicilio.toUpperCase();
   }
 
   public void setDomicilio(String domicilio) {
-    this.domicilio = domicilio;
+    this.domicilio = domicilio.toUpperCase();
   }
 
   public String getTelefono() {

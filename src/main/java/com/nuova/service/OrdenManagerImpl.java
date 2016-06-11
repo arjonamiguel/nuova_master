@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.nuova.dao.OrdenDAO;
 import com.nuova.dto.OrdenAlarmaDTO;
+import com.nuova.model.CajaOrden;
 import com.nuova.model.Orden;
 import com.nuova.model.OrdenDocument;
 import com.nuova.model.OrdenFueraCartilla;
@@ -126,5 +127,10 @@ public class OrdenManagerImpl implements OrdenManager {
     public void deleteOrdenPrestador(Integer ordenId) {
         ordenDAO.deleteOrdenPrestador(ordenId);
     }
+
+	@Override
+	public CajaOrden findCajaOrdenByOrdenId(Orden orden) {
+		return ordenDAO.findCajaOrdenByOrdenId(orden);
+	}
 
 }
