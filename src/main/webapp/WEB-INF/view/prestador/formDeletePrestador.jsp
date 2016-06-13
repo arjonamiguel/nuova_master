@@ -28,6 +28,31 @@
 		}
 	</style>
 	
+	<script>
+		function updatePhones(){
+	
+		var jsonPhones='';
+		jsonPhones=$("#telefono").val();
+	
+		var obj = jQuery.parseJSON( jsonPhones);
+		
+		$(obj).each(function(index, element) {
+    		var id=element.id;
+    		var value=element.value;
+    		
+    		$('.phone-list').append(''+
+						'<div class="input-group phone-input">'+
+							'<input type="text" name="phone['+id+'][number]" class="form-control" placeholder="+1 (999) 999 9999 int: 123" disabled="disabled" style="width:20.5%;margin-bottom:3px;" value='+ value+'>'+
+							'<span class="input-group-btn" style="padding-left:1%;">'+
+								'<button class="btn btn-danger btn-remove-phone" type="button" disabled="disabled"><span class="icon icon-remove"></span></button>'+
+							'</span>'+
+						'</div>'
+				);
+		});
+	
+	}
+	</script>
+	
 </head>
 <body style="background-color:#e5e5e5;">
 <jsp:include page="../sec_menu.jsp"></jsp:include>
@@ -64,7 +89,7 @@
 								<div class="formLabel"><form:label path="domicilio">Domicilio:</form:label></div>
         						<div class="formInput"><form:textarea path="domicilio" class="input-block-level" type="text" disabled="true"/></div>
 							</div>				
-							<div class="span6">
+							<div class="span6" style="visibility:hidden;">
 								<div class="formLabel"><form:label path="telefono">Telefono:</form:label></div>
         						<div class="formInput"><form:input path="telefono" class="input-block-level" type="text" cssStyle="width:53%" disabled="true"/></div>
 							</div>							
@@ -73,7 +98,23 @@
 				</div>
 			</div>
 	</div>
-	
+	<div class="panel panel-info">
+		<div class="panel-heading">
+		          <div class="panel-title">Agregar Telefonos</div>
+		</div>  
+		<div style="padding-top:30px" class="panel-body" >	
+			<div class="row-fluid">		
+	    		<div class="span12">
+		    		<div style="float:right;padding-right:1%;">
+		    			<button type="button" class="btn btn-success btn-sm btn-add-phone"><span class="icon icon-plus"></span> Agregar Telefono</button>
+		    		</div>	
+	    		</div>
+    		</div>
+    		<div class="phone-list" style="padding-left:14.5%;">
+				<div class="input-group phone-input"></div>
+			</div>	
+		</div>
+	</div>	
 	
 <div class="panel panel-info">
 	<div class="panel-heading">
@@ -151,3 +192,6 @@
 </div>
 </body>
 </html>
+<script>
+updatePhones();
+</script>

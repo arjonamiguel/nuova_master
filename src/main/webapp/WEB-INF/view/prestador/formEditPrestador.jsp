@@ -62,7 +62,6 @@
 		var obj = jQuery.parseJSON( jsonPhones);
 		
 		$(obj).each(function(index, element) {
-    		console.log('id: ' + element.id + ', value: ' + element.value);
     		var id=element.id;
     		var value=element.value;
     		
@@ -95,7 +94,7 @@
 				
 				$('.phone-list').append(''+
 						'<div class="input-group phone-input">'+
-							'<input type="text" name="phone['+index+'][number]" class="form-control" placeholder="+1 (999) 999 9999 int: 123" style="width:20.5%;padding-bottom:3px;"/>'+
+							'<input type="text" name="phone['+index+'][number]" class="form-control" placeholder="+1 (999) 999 9999 int: 123" style="width:20.5%;margin-bottom:0px;"/>'+
 							'<input type="hidden" name="phone['+index+'][type]" class="type-input" value="" />'+
 							'<span class="input-group-btn" style="padding-left:1%;">'+
 								'<button class="btn btn-danger btn-remove-phone" type="button"><span class="icon icon-remove"></span></button>'+
@@ -167,20 +166,29 @@ function procesarSubmit()
         						<div class="formInput"><form:input path="telefono" class="input-block-level" type="text" cssStyle="width:53%"/></div>
 							</div>	
 						</div>
-						<div class="row-fluid" style="padding-top:2%;">	
-										<div style="float:left;">Telefonos:</div><div style="padding-left:38%;"><button type="button" class="btn btn-success btn-sm btn-add-phone"><span class="icon icon-plus"></span> Agregar Telefono</button></div>
-										<div class="phone-list" style="padding-left:14.5%;">
-											<div class="input-group phone-input">
-											</div>
-										</div>
-										
-						</div>
+
 						
 				</div>
 			</div>
 	</div>
 	
-	
+	<div class="panel panel-info">
+		<div class="panel-heading">
+		          <div class="panel-title">Agregar Telefonos</div>
+		</div>  
+		<div style="padding-top:30px" class="panel-body" >	
+			<div class="row-fluid">		
+	    		<div class="span12">
+		    		<div style="float:right;padding-right:1%;">
+		    			<button type="button" class="btn btn-success btn-sm btn-add-phone"><span class="icon icon-plus"></span> Agregar Telefono</button>
+		    		</div>	
+	    		</div>
+    		</div>
+    		<div class="phone-list" style="padding-left:14.5%;">
+				<div class="input-group phone-input"></div>
+			</div>	
+		</div>
+	</div>	
 
 <div class="panel panel-info">
 	<div class="panel-heading">
