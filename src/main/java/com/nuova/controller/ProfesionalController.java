@@ -92,12 +92,12 @@ public class ProfesionalController {
     @RequestMapping(value = ConstantControllers.DELETE_PROFESIONAL, method = RequestMethod.POST)
     public String deleteProfesional(@ModelAttribute(value = "profesional") ProfesionalDTO dto) {
         Profesional profesionalOld = profesionalManager.findProfesionalById(dto.getProfesionalId());
-        Profesional profesional = transformDtoToProfesional(dto);
-        for (ProfesionalEspecialidad pe : profesionalOld.getProfesionalEspecialidads()) {
-            profesionalManager.deleteProfesionalEspecialidad(pe.getProfesional().getProfesionalId());
-        }
-        profesional.setEliminado(new Byte("1"));
-        profesionalManager.edit(profesional);
+		//        Profesional profesional = transformDtoToProfesional(dto);
+		//        for (ProfesionalEspecialidad pe : profesionalOld.getProfesionalEspecialidads()) {
+		//            profesionalManager.deleteProfesionalEspecialidad(pe.getProfesional().getProfesionalId());
+		//        }
+        profesionalOld.setEliminado(new Byte("1"));
+        profesionalManager.edit(profesionalOld);
         return "redirect:" + ConstantControllers.MAIN_PROFESIONAL;
     }
 

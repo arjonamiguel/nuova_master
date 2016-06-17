@@ -1045,9 +1045,12 @@ public class OrdenController {
         // String botonDelete = "<a class='btn btn-danger btn-xs' href='/nuova/formDeleteOrden/"
         // + dto.getOrdenId() + "'><span class='icon icon-remove'></span></a>";
 
-        String botonPrint =
-                "<a class='btn btn-default btn-xs' data-toggle='modal' data-target='#myModal' onClick='showReport("
+        
+        String botonPrint = "";
+        if (dto.getOrdenTipo().getCodigo().intValue() != 100) {
+               botonPrint =  "<a class='btn btn-default btn-xs' data-toggle='modal' data-target='#myModal' onClick='showReport("
                         + dto.getOrdenId() + ")'><span class='icon icon-print'></span></a>";
+        }                
         // String botonPrint = "<button type='button' class='btn btn-info btn-lg' data-toggle='modal'
         // data-target='#myModal'>Open Modal</button>";
 
@@ -1181,7 +1184,7 @@ public class OrdenController {
         dto.setTituloProfesional(p.getTituloProfesional());
         dto.setRegistroNacional(p.getRegistroNacional());
         dto.setProfesionalId(p.getProfesionalId());
-        dto.setHabilitacionSiprosa(p.getHabilitacionSiprosa().toString());
+        dto.setHabilitacionSiprosa(p.getHabilitacionSiprosa()!=null?p.getHabilitacionSiprosa().toString():"");
         dto.setMatricula(p.getMatricula());
         dto.setFechaVencimientoHabilitacion(p.getFechaVencimientoHabilitacion() + "");
 
