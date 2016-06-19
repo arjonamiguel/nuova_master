@@ -37,4 +37,10 @@ public class ReportManagerImpl implements ReportManager {
     return reportDAO.getAfiliadosSinCobertura();
   }
 
+@Override
+public List<Paciente> getFiltroAfiliado(Date fechaDesdeAfiliado, Date fechaHastaAfiliado, Date fechaNacimiento,
+		Integer localidadId, String zonaAfiliacion) {
+	return reportDAO.getFiltroAfiliado(fechaDesdeAfiliado, fechaHastaAfiliado, fechaNacimiento, localidadId, zonaAfiliacion);
+}
+
 }

@@ -140,29 +140,29 @@ public class Util {
 
     static public List<String> getProvincias() {
         List<String> provincias = new ArrayList<String>();
-        provincias.add("Tucumán");
-        provincias.add("Buenos Aires");
-        provincias.add("Catamarca");
-        provincias.add("Chaco");
-        provincias.add("Chubut");
-        provincias.add("Córdoba");
-        provincias.add("Corrientes");
-        provincias.add("Entre Ríos");
-        provincias.add("Formosa");
-        provincias.add("Jujuy");
-        provincias.add("La Pampa");
-        provincias.add("La Rioja");
-        provincias.add("Mendoza");
-        provincias.add("Misiones");
-        provincias.add("Neuquén");
-        provincias.add("Río Negro");
-        provincias.add("Salta");
-        provincias.add("San Juan");
-        provincias.add("San Luis");
-        provincias.add("Santa Cruz");
-        provincias.add("Santa Fe");
-        provincias.add("Santiago del Estero");
-        provincias.add("Tierra del Fuego");
+        provincias.add("TUCUMAN");
+        provincias.add("BUENOS AIRES");
+        provincias.add("CATAMARCA");
+        provincias.add("CHACO");
+        provincias.add("CHUBUT");
+        provincias.add("CORDOBA");
+        provincias.add("CORRIENTES");
+        provincias.add("ENTRE RIOS");
+        provincias.add("FORMOSA");
+        provincias.add("JUJUY");
+        provincias.add("LA PAMPA");
+        provincias.add("LA RIOJA");
+        provincias.add("MENDOZA");
+        provincias.add("MISIONES");
+        provincias.add("NEUQUEN");
+        provincias.add("RIO NEGRO");
+        provincias.add("SALTA");
+        provincias.add("SAN JUAN");
+        provincias.add("SAN LUIS");
+        provincias.add("SANTA CRUZ");
+        provincias.add("SANTA FE");
+        provincias.add("SANTIAGO DEL ESTERO");
+        provincias.add("TIERRA DEL FUEGO");
         return provincias;
     }
 
@@ -201,7 +201,9 @@ public class Util {
         Date fechaHabilitacion = null;
         if (date != null) {
             try {
-                fechaHabilitacion = formatter.parse(date);
+            	if (!date.equals("")) {
+            		fechaHabilitacion = formatter.parse(date);
+            	}
             } catch (ParseException e) {
                 // TODO Auto-generated catch block
                 e.printStackTrace();

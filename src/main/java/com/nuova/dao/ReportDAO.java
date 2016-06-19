@@ -15,4 +15,7 @@ public interface ReportDAO {
   public List<Paciente> getAfiliadosSinCoseguro();
 
   public List<Paciente> getAfiliadosSinCobertura();
+  
+  public List<Paciente> getFiltroAfiliado(Date fechaDesdeAfiliado, Date fechaHastaAfiliado,
+		  Date fechaNacimiento, Integer localidadId, String zonaAfiliacion);
 }
