@@ -34,9 +34,9 @@
 
 						$("#prestadorGrid").simplePagingGrid(
 								{
-									columnNames : [ "ID", "NOMBRE", "DOMICILIO", "TELEFONO", "PROVINCIA",""],
-									columnKeys : [ "prestadorId", "nombre", "domicilio","telefono", "provincia","acciones"],
-									columnWidths : [ "5%", "30%","25%"],
+									columnNames : [ "ID", "NOMBRE", "DOMICILIO",  "PROVINCIA",""],
+									columnKeys : [ "prestadorId", "nombre", "domicilio", "provincia","acciones"],
+									columnWidths : [ "5%", "30%","35%"],
 									sortable : [ false, true ],
 									data : rows
 								});

@@ -28,6 +28,31 @@
 		}
 	</style>
 	
+	<script>
+		function updatePhones(){
+	
+		var jsonPhones='';
+		jsonPhones=$("#telefono").val();
+	
+		var obj = jQuery.parseJSON( jsonPhones);
+		
+		$(obj).each(function(index, element) {
+    		var id=element.id;
+    		var value=element.value;
+    		
+    		$('.phone-list').append(''+
+						'<div class="input-group phone-input">'+
+							'<input type="text" name="phone['+id+'][number]" class="form-control" placeholder="+1 (999) 999 9999 int: 123" disabled="disabled" style="width:20.5%;margin-bottom:3px;" value='+ value+'>'+
+							'<span class="input-group-btn" style="padding-left:1%;">'+
+								'<button class="btn btn-danger btn-remove-phone" type="button" disabled="disabled"><span class="icon icon-remove"></span></button>'+
+							'</span>'+
+						'</div>'
+				);
+		});
+	
+	}
+	</script>
+	
 </head>
 <body style="background-color:#e5e5e5;">
 <jsp:include page="../sec_menu.jsp"></jsp:include>
@@ -64,7 +89,7 @@
 								<div class="formLabel"><form:label path="domicilio">Domicilio:</form:label></div>
         						<div class="formInput"><form:textarea path="domicilio" class="input-block-level" type="text" disabled="true"/></div>
 							</div>				
-							<div class="span6">
+							<div class="span6" style="visibility:hidden;">
 								<div class="formLabel"><form:label path="telefono">Telefono:</form:label></div>
         						<div class="formInput"><form:input path="telefono" class="input-block-level" type="text" cssStyle="width:53%" disabled="true"/></div>
 							</div>							
@@ -73,6 +98,79 @@
 				</div>
 			</div>
 	</div>
+	<div class="panel panel-info">
+		<div class="panel-heading">
+		          <div class="panel-title">Agregar Telefonos</div>
+		</div>  
+		<div style="padding-top:30px" class="panel-body" >	
+			<div class="row-fluid">		
+	    		<div class="span12">
+		    		<div style="float:right;padding-right:1%;">
+		    			<button type="button" class="btn btn-success btn-sm btn-add-phone"><span class="icon icon-plus"></span> Agregar Telefono</button>
+		    		</div>	
+	    		</div>
+    		</div>
+    		<div class="phone-list" style="padding-left:14.5%;">
+				<div class="input-group phone-input"></div>
+			</div>	
+		</div>
+	</div>	
+	
+<div class="panel panel-info">
+	<div class="panel-heading">
+	          <div class="panel-title">Eliminar Especialidades</div>
+	</div>  
+<div style="padding-top:30px" class="panel-body" >
+
+	<div class="row-fluid">
+			<div class="span6">
+			</div>
+			<div class="span6">
+				<div style="float:right;padding-right:2%;">
+						<INPUT type="button" value="Agregar" onclick="addRow('dataTable')" class="btn btn-info" disabled="disabled"/>
+				</div>
+				<div style="float:right;padding-right:2%;">
+					
+				<form:select path="especialidad" disabled="true">
+				   <form:option value="NONE" label="Seleccione Especialidad ..."/>
+				   <form:options items="${especialidadList}" itemLabel="nombre" itemValue="especialidadId" />			    
+				</form:select>
+				</div>
+			</div>
+    
+    </div>
+    <div class="tableContainer"> 
+
+	    <TABLE id="dataTable" class="table"  style="margin-top:0px;">
+	        <TR>
+	        <TR>      	
+	            <TD>ID</TD>
+	            <TD>Especialidad</TD> 
+	            <TD></TD>       
+	        </TR>       
+	        </TR>
+	       	<c:forEach items="${especialidadListEdit}" var="esp">
+		    <tr>
+
+		        <td>${esp.key} <input type="hidden" name="especialidadList" value="${esp.key}"></td>
+		        <td>${esp.value}</td>       
+		        <td>
+		        <button ditype='button' 
+		        	class='btn btn-danger btn-xs' 
+		        	onClick='Eliminar(this.parentNode.parentNode.rowIndex)'
+		        	disabled="disabled">
+		        	<span class='icon icon-remove' title='Eliminar'></span>
+		        </button>
+		        </td> 
+		    </tr>
+	</c:forEach>
+	    </TABLE>
+	   	
+ 	</div>
+</div>
+</div>  
+	
+	
 		<!-- Botoneras -->
 		<div class="panel panel-info">
 			<div class="panel-body">
@@ -94,3 +192,6 @@
 </div>
 </body>
 </html>
+<script>
+updatePhones();
+</script>

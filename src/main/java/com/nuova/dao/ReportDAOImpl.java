@@ -54,4 +54,18 @@ public class ReportDAOImpl implements ReportDAO {
     return query.list();
   }
 
+@Override
+public List<Paciente> getFiltroAfiliado(Date fechaDesdeAfiliado, Date fechaHastaAfiliado, Date fechaNacimiento,
+		Integer localidadId, String zonaAfiliacion) {
+	 Query query = sessionFactory.getCurrentSession()
+		        .createSQLQuery("CALL zp_getFiltroAfiliado(:fechaDesdeAfiliado, :fechaHastaAfiliado, :fechaNacimiento, :localidadId, :zonaAfiliacion);").addEntity(Paciente.class)
+		        .setDate("fechaDesdeAfiliado", fechaDesdeAfiliado)
+		        .setDate("fechaHastaAfiliado", fechaHastaAfiliado)
+		        .setDate("fechaNacimiento", fechaNacimiento)
+		        .setInteger("localidadId", localidadId)
+		        .setString("zonaAfiliacion", zonaAfiliacion);
+
+	return query.list();
+}
+
 }

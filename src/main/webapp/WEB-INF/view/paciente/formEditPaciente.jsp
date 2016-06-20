@@ -17,17 +17,19 @@
 		<link href="<%=request.getContextPath()%>/resources/css/nuova.css" rel="stylesheet"/>
 		<link href="<%=request.getContextPath()%>/resources/css/panel.css" rel="stylesheet"/>
 		<link href="<%=request.getContextPath()%>/resources/css/bootstrap/bootstrap-responsive.css" rel="stylesheet"/>
-		<script src="<c:url value="/resources/js/jquery/jquery.validate.min.js" />"></script>
 		
 		<link href="<%=request.getContextPath()%>/resources/montrezorro-bootstrap-checkbox-fa865ff/css/bootstrap-checkbox.css" rel="stylesheet"/>
 		<script src="<%=request.getContextPath()%>/resources/montrezorro-bootstrap-checkbox-fa865ff/js/bootstrap-checkbox.js" /></script>
+				<script src="<%=request.getContextPath()%>/resources/js/jquery/jquery.validate.min.js" /></script>
+		
 <style>
-label.error {
+.error {
   color: #a94442;
   background-color: #f2dede;
   border-color: #ebccd1;
-  padding:1px 20px 1px 20px;
+  padding:1px 1px 1px 1px;
   width:58%;
+  height: 0;  
 }
 </style>		
 <script type="text/javascript">
@@ -45,6 +47,38 @@ $(function() {
 	  });
 	});
 	
+$(function() {
+	  $('#btnLocalidad').click(function() {
+		  document.getElementById("localidadNombre").value="";
+	    $('#modalLocalidad').modal('show');
+	  });
+	  
+	  $('#btnSaveLocalidad').click(function() {
+	    var localidad = document.getElementById("localidadNombre").value;
+	    var resp = callNuevaLocalidad(getJsonLocalidad(localidad));
+	    $('#modalLocalidad').modal('hide');
+	  });
+	});
+	
+
+function callExistDni(dni) {
+	var retorno;
+	$.ajax({
+		url : "/nuova/ajaxGetExistDni?dni=" + dni,
+		type : "GET",
+		contentType : "application/json; charset=utf-8",
+		//    data: jsonString, //Stringified Json Object
+		async : false, //Cross-domain requests and dataType: "jsonp" requests do not support synchronous operation
+		cache : false, //This will force requested pages not to be cached by the browser          
+		processData : false, //To avoid making query String instead of JSON
+			
+		success : function(existDni) {
+			retorno = existDni;
+		}
+	});
+
+	return retorno;
+}
 
 function showEmpresaTitular(){
 	var titular = document.getElementById("parentesco").value;
@@ -104,6 +138,8 @@ function showEmpresaTitular(){
 				return item;
 			}
 		});
+
+			
 	});
 </script>	
 
@@ -187,8 +223,17 @@ function showEmpresaTitular(){
 		function updateDate(){
 			document.getElementById("fechaNacimiento").value=document.getElementById("registration-date").value;
 		}
+
+		function updateDateVenc(){
+			document.getElementById("vencCarnet").value=document.getElementById("registration-date-venc").value;
+		}
+		
+		function initDateVenc(){
+			document.getElementById("registration-date-venc").value=document.getElementById("vencCarnet").value;
+		}
+		
 		function updatecoseguro(){
-			if($("#razonCoseguro").val()=="NONE")
+			if(${paciente.coseguro})
 			{
 				$("#coseguro").click();
 				$("#razonCoseguro").prop("disabled", true);
@@ -228,31 +273,131 @@ function showEmpresaTitular(){
 		function razonEnable(){
 				if($( "#coseguro").prop( "checked" )){
 					 $("#razonCoseguro").prop("disabled", false);
+					 document.getElementById("vencCarnet").value="";						 
+					 document.getElementById("registration-date-venc").value="";
 				}else{
 					$("#razonCoseguro").val("NONE");
 					$("#razonCoseguro").prop("disabled", true);
+					 $("#vencCarnetDiv").css("visibility","hidden");
 				}
 		}
 		
-		function razonEnable(){
-			if($( "#coseguro").prop( "checked" )){
-				 $("#razonCoseguro").prop("disabled", false);
-			}else{
-				$("#razonCoseguro").val("NONE");
-				$("#razonCoseguro").prop("disabled", true);
+		function enableVencCarnet(){
+			if($("#razonCoseguro").val()=="Discapacitado"){
+				 $("#vencCarnetDiv").css("visibility","visible");
+				initDateVenc();
 			}
-	
+		}
+		function validateDiscapacitado(){
+			if($('#razonCoseguro').val()=="Discapacitado"){
+				$("#vencCarnetDiv").css("visibility","visible");
+				document.getElementById("registration-date-venc").value="";
+				document.getElementById("vencCarnet").value="";
+			}else{
+				$("#vencCarnetDiv").css("visibility","hidden");
+			}
+		}
 
+
+function validateForm() {
+	document.getElementById("dni-error").style.height = "0";
+	document.getElementById("apellido-error").style.height = "0";
+	document.getElementById("nombre-error").style.height = "0";
+	document.getElementById("localidad-error").style.height = "0";
+
+	document.getElementById("dni-error").style.visibility = "hidden";
+	document.getElementById("apellido-error").style.visibility = "hidden";
+	document.getElementById("nombre-error").style.visibility = "hidden";
+	document.getElementById("localidad-error").style.visibility = "hidden";
+	
+	if (validateDni() 
+		&& validateApellido() 
+		&& validateNombre()
+		&& validateLocalidad()) {
+		return true;
+	} else {
+		return false;
+	}
+}
+
+function validateDni(){
+	var valid = true;
+	var dni = document.getElementById("dni").value;
+	// Requerido
+	if (dni == "") {
+		valid = false;
+	}
+	
+	if (valid) {
+		if (dni.length > 10 || dni.length < 7) {
+			valid = false;
+		}
 	}
 
-        </SCRIPT>
+	if (!valid) {
+		document.getElementById("dni-error").style.height = "20px";
+		document.getElementById("dni-error").style.marginBottom = "5px";
+		document.getElementById("dni-error").style.visibility = "";
+		document.getElementById("dni").focus();
+	}
+	
+	return valid;
+}
+
+function validateApellido(){
+	var valid = true;
+	var apellido = document.getElementById("apellido").value;
+	// Requerido
+	if(apellido == "") {
+		document.getElementById("apellido-error").style.height = "20px";
+		document.getElementById("apellido-error").style.marginBottom  = "5px";
+		document.getElementById("apellido-error").style.visibility = "";
+		document.getElementById("apellido").focus();
+		valid = false;
+	}
+	
+	return valid;
+}
+
+function validateNombre(){
+	var valid = true;
+	var nombre = document.getElementById("nombre").value;
+	// Requerido
+	if(nombre == "") {
+		document.getElementById("nombre-error").style.height = "20px";
+		document.getElementById("nombre-error").style.marginBottom  = "5px";
+		document.getElementById("nombre-error").style.visibility = "";
+		document.getElementById("nombre").focus();
+		valid = false;
+	}
+	
+	return valid;
+}
+
+function validateLocalidad(){
+	var valid = true;
+	var localidadId = document.getElementById("localidadId").value;
+	var localidadString = document.getElementById("localidadString").value;
+	
+	// Requerido
+	if(localidadId == "" || localidadString=="") {
+		document.getElementById("localidad-error").style.height = "20px";
+		document.getElementById("localidad-error").style.marginBottom  = "5px";
+		document.getElementById("localidad-error").style.visibility = "";
+		document.getElementById("localidadString").focus();
+		valid = false;
+	}
+	
+	return valid;
+}
+</SCRIPT>
 </head>
 <body style="background-color:#e5e5e5;">
 <jsp:include page="../sec_menu.jsp"></jsp:include>
 
 <div class="mainContainer"> 
 <div class="panelContainer">
-<form:form method="post" action="/nuova/editPaciente" commandName="paciente">
+<form:form method="post" action="/nuova/editPaciente" commandName="paciente" onsubmit="return validateForm()">
 <form:hidden path="pacienteId"/>
 	<div class="panel panel-info">
 	<div class="panel-heading">
@@ -268,15 +413,25 @@ function showEmpresaTitular(){
 		  		<div class="row-fluid">
 			   		<div class="span4">
 			   				<div class="formLabel"><form:label path="dni">DNI:</form:label></div>
-        					<div class="formInput"><form:input path="dni" /></div>
+        					<div class="formInput">        						
+        						<form:input path="dni" />
+        						<div id="dni-error" class="error" style="visibility: hidden;">DNI Incorrecto</div>
+        					</div>
+        					
 			   		</div>
 			   		<div class="span4">
 			   				<div class="formLabel"><form:label path="apellido">Apellido:</form:label></div>
-        					<div class="formInput"><form:input path="apellido" /></div>
+        					<div class="formInput">
+        						<form:input path="apellido" />
+        						<div id="apellido-error" class="error" style="visibility: hidden;">Ingrese Apellido</div>
+        					</div>
 			   		</div>
 			   		<div class="span4">
 			   				<div class="formLabel"><form:label path="nombre">Nombre:</form:label></div>
-        					<div class="formInput"><form:input path="nombre" /></div>
+        					<div class="formInput">
+        						<form:input path="nombre" />
+        						<div id="nombre-error" class="error" style="visibility: hidden;">Ingrese Nombre</div>
+        					</div>
 			   		</div>
 			   	</div>
 			   	<div class="row-fluid">
@@ -322,9 +477,10 @@ function showEmpresaTitular(){
 								placeholder="Ingrese Localidad ..."
 								autocomplete="off"
         					/> 
-        					<a href="#" title="Nueva Localidad">
+        					<a href="#" title="Nueva Localidad" id="btnLocalidad">
 								<img src="/nuova/resources/img/list_add_16x16.png">
 							</a>
+							<div id="localidad-error" class="error" style="visibility: hidden;">Seleccione Localidad</div>
 							</div>
 			   		</div>
 			   	
@@ -419,12 +575,24 @@ function showEmpresaTitular(){
 			   		<div class="span4">
 			   			<div class="formLabel"><form:label path="razonCoseguro">Razón Coseguro:</form:label></div>
         					<div class="formInput">
-        						<form:select path="razonCoseguro" style="width:83%; margin-bottom:0px">
+        						<form:select path="razonCoseguro" style="width:83%; margin-bottom:0px" onchange="validateDiscapacitado()">
 									<form:option value="NONE" label="Seleccione Razón Coseguro ..."/>
 									<form:options items="${razonCoseguroList}"  />			    
 								</form:select>
         					</div>
 			   		
+			   		</div>
+			   		
+			   		<div class="span4" id="vencCarnetDiv" style="visibility:hidden;">
+					<div class="formLabel"><form:label path="vencCarnet">Vencimiento Carnet:</form:label></div>		   		
+			   			<div class="formInput">
+			   				<form:hidden path="vencCarnet" class="date"/>
+							<div id="calendar">
+								<div class="input-group registration-date-time" style="padding-top:0%;">
+									<input class="form-control" name="registration_date_venc" id="registration-date-venc" type="date"  onchange="javascript:updateDateVenc();">
+	            				</div>
+	            			</div>
+	            		</div>	
 			   		</div>
 		</div>
 	</div>	
@@ -544,26 +712,30 @@ function showEmpresaTitular(){
   </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
 
+
+
+<div class="modal fade" id="modalLocalidad">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only"></span></button>
+        <h4 class="modal-title">Nueva Localidad</h4>
+      </div>
+      <div class="modal-body">
+        <p>Nombre de Localidad: </p>
+        <input type="text" id="localidadNombre" name="localidadNombre">
+      </div>
+      <div class="modal-footer">
+        <button type="button" id="btnSaveLocalidad" class="btn btn-info">Guardar</button>      
+        <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+
 </html>
 <script>
-
-function callExistDni(dni) {
-	var retorno;
-	$.ajax({
-		url : "/nuova/ajaxGetExistDni?dni=" + dni,
-		type : "GET",
-		contentType : "application/json; charset=utf-8",
-		//    data: jsonString, //Stringified Json Object
-		async : false, //Cross-domain requests and dataType: "jsonp" requests do not support synchronous operation
-		cache : false, //This will force requested pages not to be cached by the browser          
-		processData : false, //To avoid making query String instead of JSON
-			
-		success : function(existDni) {
-		}
-	});
-
-	return retorno;
-}
 
 function callNuevaEmpresa(jsonEmpresa) {
 	var retorno;
@@ -583,9 +755,30 @@ function callNuevaEmpresa(jsonEmpresa) {
 	return retorno;
 }
 
+function callNuevaLocalidad(jsonLocalidad) {
+	var retorno;
+	$.ajax({
+		url : "/nuova/ajaxPostNuevaLocalidad",
+		type : "POST",
+		contentType : "application/json; charset=utf-8",
+		data: jsonLocalidad, //Stringified Json Object
+		async : false, //Cross-domain requests and dataType: "jsonp" requests do not support synchronous operation
+		cache : false, //This will force requested pages not to be cached by the browser          
+		processData : false, //To avoid making query String instead of JSON
+		success : function(result) {
+			retorno = result;
+		}
+	});
+
+	return retorno;
+}
 
 function getJsonEmpresa(nombreEmpresa){
 	return '{ "nombre":"'+nombreEmpresa+'"}';
+}
+
+function getJsonLocalidad(localidad){
+	return '{ "nombre":"'+localidad+'"}';
 }
 
 function callEmpresas() {
@@ -610,53 +803,26 @@ function callEmpresas() {
 
 			document.getElementById("mainPaciente").parentNode.classList.add("active");
         	document.getElementById("registration-date").value=document.getElementById("fechaNacimiento").value;
-        	
+        	document.getElementById("registration-date-venc").value= document.getElementById("vencCarnet").value;
 			
 			
-		$("#paciente").validate({
-    
-        // Specify the validation rules
-        rules: {
-        	 dni: {
-                required: true,
-                minlength: 7,
-                maxlength:10
-            },
-            apellido: "required",
-            nombre: "required",
-            localidadString: "required"
-        },
-        
-        // Specify the validation error messages
-        messages: {
-        	 dni: {
-                required: "Ingrese DNI",
-                minlength: "DNI debe tener al menos 7 caracteres de largo",
-                maxlength: "DNI deber ser menor a 10 caracteres de largo"
-            },
-            apellido: "Ingrese apellido",
-            nombre: "Ingrese nombre",
-            localidadString : "Seleccione Localidad"
+			
+	
 
-        },
-                submitHandler: function(form) {
-                	var dni = document.getElementById("dni");            
-                    if (callExistDni(dni.value)){
-                        if(!confirm("El DNI ingresado ya existe.\nPresione Cancelar si deséa Cambiarlo?")){
-                        	dni.focus();
-                        }else {
-                        	form.submit();            	
-                        }
-                        
-                    } else {
-                    	form.submit();
-                    }        
-        }
+		if(document.getElementById("fechaNacimiento").value=="null"){
+			document.getElementById("registration-date").value= "";
+		}else{
+			document.getElementById("registration-date").value= document.getElementById("fechaNacimiento").value;
+		}
 
-		});
-			
+		if(document.getElementById("vencCarnet").value=="null"){
+			document.getElementById("registration-date-venc").value= "";
+		}else{
+			document.getElementById("registration-date-venc").value= document.getElementById("vencCarnet").value;
+		}
+
+		enableVencCarnet();
 		updatecoseguro();
-		// var valueDate=document.getElementById("fechaNacimiento").value.split('/')[2]+"-"+document.getElementById("fechaNacimiento").value.split('/')[1]+"-"+document.getElementById("fechaNacimiento").value.split('/')[0];
-		// document.getElementById("registration-date").value=valueDate;
 		
+	
 </script>

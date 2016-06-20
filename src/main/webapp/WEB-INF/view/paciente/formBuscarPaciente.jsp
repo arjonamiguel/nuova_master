@@ -24,6 +24,13 @@ $(document).ready(function() {
 	var map = new Object();
 	var objects = [];
 
+	$('#searchPaciente').keypress(function(event){
+	    var keycode = (event.keyCode ? event.keyCode : event.which);
+	    if(keycode == '13'){
+	    	goInfoPaciente();  
+	    }
+	});
+	
 	$('input.typeahead').typeahead({
 		source : function(query, process) {
 			$.ajax({
@@ -47,7 +54,7 @@ $(document).ready(function() {
 		},
 		updater : function(item) {
 			$('#pacienteId').val(map[item].id);
-			setInterval(function(){ goInfoPaciente(); }, 1500);
+			// setInterval(function(){ goInfoPaciente(); }, 1500);
 			return item;
 		}
 	});
@@ -76,6 +83,7 @@ if (pacienteId == "") {
 			<div class="panel-heading">
           			<div class="panel-title">
 	          			<b>Busqueda de Paciente</b>
+	          			<a href="formAddPaciente" class="pull-right" target="_blank"><b>+</b>&nbsp;&nbsp;Nuevo Paciente</a>	          			
           			</div>
     		</div>
     		
@@ -96,7 +104,7 @@ if (pacienteId == "") {
 
 										<button id="breadButton" href="" 
 										class="btn btn-info" 
-										style="margin-top: 0px; height: 50px; visibility:hidden;"
+										style="margin-top: 0px; height: 50px;"
 										onclick="goInfoPaciente()">
 										<i class="ico icon-user">
 										</i>&nbsp;Buscar Paciente
@@ -115,6 +123,8 @@ if (pacienteId == "") {
 </body>
 </html>
 <script>
-document.getElementById("paciente").parentNode.classList.add("active");
+document.getElementById("mainPaciente").parentNode.classList.add("active");
+
+
 
 </script>

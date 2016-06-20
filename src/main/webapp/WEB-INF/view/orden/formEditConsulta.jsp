@@ -284,7 +284,8 @@
 		    								<ul class="nav nav-tabs">
 											  <li class="active"><a data-toggle="tab" href="#tb_paciente" onclick="setObservacionInvisible()">Paciente</a></li>
 											  <li><a data-toggle="tab" href="#tb_requisitos" onclick="setObservacionInvisible()">Requisitos</a></li>
-											  <li><a data-toggle="tab" href="#tb_profesional">Profesional</a></li>											 
+											  <li><a data-toggle="tab" href="#tb_profesional">Medico Solicitante</a></li>
+											  <li><a data-toggle="tab" href="#tb_coseguro">Coseguro</a></li>											  											 
 											  <li><a data-toggle="tab" href="#tb_flujo" >Usuario Creador</a></li>
 											</ul>
 										
@@ -405,6 +406,39 @@
 												</tr>		
 												</table>
 									  			</div>
+									  			
+											<div id="tb_coseguro" class="tab-pane fade">
+												<table class="table" style="width: 100%">
+													<tr>
+														<td style="width: 15%">Monto de Coseguro $:</td>
+														<td style="width: 35%">
+														<form:input path="monto" cssStyle="width: 40%"
+														disabled="true"
+														/>														
+														</td>
+														<td style="width: 10%">Sin Costo:</td>
+														<td>
+														<input
+															type="checkbox" id="coseguroSinCosto"
+															name="coseguroSinCosto" 
+															class="largerCheckbox"
+															onchange="sinCosto()" disabled="disabled"/>														
+														</td>
+													</tr>
+													
+													<tr>
+														<td colspan="4">
+														<div class="alert alert-info">														
+  														<strong>Importante!</strong> Usar "." (punto) en montos decimales<br>
+  														Ejemplos: 2.00 / 5.50 / 12.00 / 161.20 / 5100.58
+  														</div>
+														</td>
+													</tr>
+												</table>
+
+										</div>
+									  			
+									  			
 										  		<div id="tb_flujo" class="tab-pane fade">  					
 													<c:forEach items="${ordenDto.ordenWorkflows}" var="ow" varStatus="loop" >			
 													<table class="table"  style="width: 100%">	

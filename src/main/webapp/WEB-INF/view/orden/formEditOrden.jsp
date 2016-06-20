@@ -71,10 +71,21 @@
 		return selectEstado;
 	}
 
+	function sinCosto(){
+		if ($("#coseguroSinCosto").is(':checked')) {
+			document.getElementById("monto").value = "0.00";
+			document.getElementById("monto").disabled = "false";
+		}else {
+			document.getElementById("monto").value = "";
+			document.getElementById("monto").disabled = "";
+		}	
+
+	}
 
 	$(document).ready(function() {
 		var especialidadTH = $('#especialidadString.typeahead');
 		var nomencladorTH = $('#nomencladorString.typeahead');
+		var especialidadPrestadorTH = $('#especialidadPrestadorString.typeahead')
 
 		var map = new Object();
 		var objects = [];
@@ -136,8 +147,55 @@
 	        }
 	      });
 
+		  var mapesppres = new Object();
+	  	  var objectsesppres = [];
+	  	  
+	  	especialidadPrestadorTH.typeahead({
+	        source: function (query, process) {
+	          $.ajax({
+	            url: '/nuova/ajaxGetAutoCompleteEspecialidadesPrestador',
+	            type: 'POST',             
+	            dataType: 'JSON',
+	            minLength: 3,                           
+	            data: 'query=' + query,
+	            success: function(data) { 
+	              console.log(data);
+	              $.each(data, function(i, object) {
+	                  mapesppres[object.value] = object;
+	                  if (objectsesppres[i] == null) {
+	                  	objectsesppres.push(object.value);
+	                  }
+	              });
+	              process(objectsesppres);
+	              objectsesppres = [];
+	            }
+	          });
+	        },
+	        updater: function(item) {
+	            $('#especialidadPrestador').val(mapesppres[item].id);
+				findPrestadores($('#especialidadPrestador'));	            
+	            return item;
+	        }
+	      });
+	  	
 	});
 
+	function findPrestadores(especialidadPrestador) {
+		var especialidades = callPrestadoresByEspecialidad(especialidadPrestador
+				.attr('value'));
+		$('#prestadorId')
+				.empty()
+				.append(
+						'<option selected="selected" value="-1">Seleccione Prestador ...</option>');
+		$.each(especialidades, function(key, value) {
+			$('#prestadorId').append($('<option>', {
+				value : value.id
+			}).text(value.value));
+		});
+
+		hideMessage();
+	}
+	
 	function findProfesinoales(especialidad) {
 		var especialidades = callProfesionalByEspecialidad(especialidad
 				.attr('value'));
@@ -161,6 +219,26 @@
 		var retorno;
 		$.ajax({
 			url : "/nuova/ajaxGetProfesionalByEspecialidad?especialidadId="
+					+ especialidadId,
+			type : "GET",
+			contentType : "application/json; charset=utf-8",
+			//    data: jsonString, //Stringified Json Object
+			async : false, //Cross-domain requests and dataType: "jsonp" requests do not support synchronous operation
+			cache : false, //This will force requested pages not to be cached by the browser          
+			processData : false, //To avoid making query String instead of JSON
+			success : function(page) {
+				// Success Message Handler
+				retorno = page;
+			}
+		});
+
+		return retorno;
+	}
+
+	function callPrestadoresByEspecialidad(especialidadId) {
+		var retorno;
+		$.ajax({
+			url : "/nuova/ajaxGetPrestadorByEspecialidad?especialidadId="
 					+ especialidadId,
 			type : "GET",
 			contentType : "application/json; charset=utf-8",
@@ -209,23 +287,31 @@
 				+ index
 				+ "].practicaId' value='"
 				+ document.getElementById("nomencladorId").value + "'>";
-
+				
 		var cell1 = row.insertCell(1);
-		cell1.innerHTML = "<input type='text' name='ordenpracticaListEdit[" + index + "].valor' value='0.00'>";
-
+		var str1 = document.getElementById("nomencladorString").value;
+		var str2 = "ODON";
+		
+		if(str1.indexOf(str2) != -1){
+			cell1.innerHTML = "<input type='text' name='ordenpracticaListEdit[" + index + "].piezaDental' placeholder='pieza dental'>";
+		}
 		var cell2 = row.insertCell(2);
-		cell2.innerHTML = createSelectEstados("ordenpracticaListEdit[" + index
-				+ "].estado");
+		cell2.innerHTML = "<input type='text' name='ordenpracticaListEdit[" + index + "].valor' value='0.00'>";
+
 
 		var cell3 = row.insertCell(3);
-		cell3.innerHTML = createDatePicker(index);
+		cell3.innerHTML = createSelectEstados("ordenpracticaListEdit[" + index
+				+ "].estado");
 
 		var cell4 = row.insertCell(4);
-		row.valign = "BASELINE";
-		cell4.innerHTML = "<button type='button' class='btn btn-link' onClick='Eliminar(this.parentNode.parentNode.rowIndex)'>Eliminar</button>";
+		cell4.innerHTML = createDatePicker(index);
 
 		var cell5 = row.insertCell(5);
-		cell5.innerHTML = "";
+		row.valign = "BASELINE";
+		cell5.innerHTML = "<button type='button' class='btn btn-link' onClick='Eliminar(this.parentNode.parentNode.rowIndex)'>Eliminar</button>";
+
+		var cell6 = row.insertCell(6);
+		cell6.innerHTML = "";
 
 		index++;
 		document
@@ -350,8 +436,9 @@
 											<li class="active"><a data-toggle="tab"
 												href="#tb_paciente" onclick="setObservacionInvisible()">Paciente</a></li>
 											<li><a data-toggle="tab" href="#tb_requisitos">Requisitos</a></li>
-											<li><a data-toggle="tab" href="#tb_profesional">Profesional</a></li>
+											<li><a data-toggle="tab" href="#tb_profesional">Medico Solicitante</a></li>
 											<li><a data-toggle="tab" href="#tb_autorizacion">Autorizaci&oacute;n</a></li>
+											<li><a data-toggle="tab" href="#tb_prestador">Prestador Derivado</a></li>
 											<li><a data-toggle="tab" href="#tb_observacion">
 													Observaciones <c:if test="${observacionCount > 0}">
 														<span class="badge">${observacionCount}</span>
@@ -359,8 +446,9 @@
 											</a></li>
 											<li><a data-toggle="tab" href="#tb_historiaclinica">Historia
 													Cl&iacute;nica</a></li>
-											<li><a data-toggle="tab" href="#tb_flujo">Flujo de
-													Estados</a></li>
+											<li><a data-toggle="tab" href="#tb_coseguro">Coseguro</a></li>
+													
+											
 										</ul>
 										<!-- Fin Declaracion de tabs -->
 
@@ -385,6 +473,12 @@
 											<div id="tb_autorizacion" class="tab-pane fade">
 												<jsp:include page="formEditOrdenTabAutorizacion.jsp"></jsp:include>
 											</div>
+											
+											<!-- ** Tab Prestador -->
+											<div id="tb_prestador" class="tab-pane fade">
+												<jsp:include page="formEditOrdenTabPrestador.jsp"></jsp:include>
+											</div>
+											
 
 											<!-- ** Tab Observaciones -->
 											<div id="tb_observacion" class="tab-pane fade" style="">
@@ -396,10 +490,11 @@
 												<jsp:include page="formEditOrdenTabHistoriaClinica.jsp"></jsp:include>
 											</div>
 
-											<!-- ** Tab Flujos -->
-											<div id="tb_flujo" class="tab-pane fade">
-												<jsp:include page="formEditOrdenTabFlujo.jsp"></jsp:include>
+											<!-- ** Tab Coseguro -->
+											<div id="tb_coseguro" class="tab-pane fade">
+												<jsp:include page="formEditOrdenTabCoseguro.jsp"></jsp:include>
 											</div>
+											
 
 										</div>
 										<!-- Fin Contenedor de Tabs -->

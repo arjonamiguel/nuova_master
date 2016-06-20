@@ -27,7 +27,104 @@
 		  width:24%;
 		}
 	</style>
+	<script type="text/javascript">
+	function addRow(tableID) {
+		 
+        var table = document.getElementById(tableID);
+
+        var rowCount = table.rows.length;
+        var row = table.insertRow(rowCount);
+
+        if(document.getElementById("especialidad").value=="NONE"){
+        	return;
+        }  
+
+        var cell2 = row.insertCell(0);      
+          
+        cell2.innerHTML = document.getElementById("especialidad").value+"<input type='hidden' name='especialidadList' value='"+document.getElementById("especialidad").value+"'>";
+        var cell3 = row.insertCell(1);
+        cell3.innerHTML = document.getElementById('especialidad').options[document.getElementById('especialidad').selectedIndex].text;
+        
+       	var cell4 = row.insertCell(2);
+        cell4.innerHTML=  "<button type='button' class='btn btn-danger btn-xs' onClick='Eliminar(this.parentNode.parentNode.rowIndex)'><span class='icon icon-remove' title='Eliminar'></span></button>";
+
+    }
+
+	function Eliminar (i) {    	 
+	    document.getElementById("dataTable").deleteRow(i);
+	}
 	
+	function updatePhones(){
+	
+		var jsonPhones='';
+		jsonPhones=$("#telefono").val();
+	
+		var obj = jQuery.parseJSON( jsonPhones);
+		
+		$(obj).each(function(index, element) {
+    		var id=element.id;
+    		var value=element.value;
+    		
+    		$('.phone-list').append(''+
+						'<div class="input-group phone-input">'+
+							'<input type="text" name="phone['+id+'][number]" class="form-control" placeholder="+1 (999) 999 9999 int: 123" style="width:20.5%;margin-bottom:3px;" value='+ value+'>'+
+							'<span class="input-group-btn" style="padding-left:1%;">'+
+								'<button class="btn btn-danger btn-remove-phone" type="button"><span class="icon icon-remove"></span></button>'+
+							'</span>'+
+						'</div>'
+				);
+		});
+	
+	}
+	
+	$(function(){
+		
+			$(document.body).on('click', '.changeType' ,function(){
+				$(this).closest('.phone-input').find('.type-input').val($(this).data('type-value'));
+			});
+			
+			$(document.body).on('click', '.btn-remove-phone' ,function(){
+				$(this).closest('.phone-input').remove();
+			});
+			
+			
+			$('.btn-add-phone').click(function(){
+
+				var index = $('.phone-input').length + 1;
+				
+				$('.phone-list').append(''+
+						'<div class="input-group phone-input">'+
+							'<input type="text" name="phone['+index+'][number]" class="form-control" placeholder="+1 (999) 999 9999 int: 123" style="width:20.5%;margin-bottom:0px;"/>'+
+							'<input type="hidden" name="phone['+index+'][type]" class="type-input" value="" />'+
+							'<span class="input-group-btn" style="padding-left:1%;">'+
+								'<button class="btn btn-danger btn-remove-phone" type="button"><span class="icon icon-remove"></span></button>'+
+							'</span>'+
+						'</div>'
+				);
+
+			});
+			
+		});
+		
+function procesarSubmit()
+	{
+		var jsonPhones='';
+		var line='';
+		$( '.form-control' ).each(function( index ) {
+			var trimStr=$( this ).val();
+			trimStr=trimStr.replace(/\s/g, "");
+  			line= '{"id":"'+index + '", "value":"' + trimStr+'"},';
+  			jsonPhones=jsonPhones+line;
+		});
+		var str=jsonPhones;
+		var newStr = str.substring(0, str.length-1);
+		jsonPhones=newStr;
+		jsonPhones='['+jsonPhones+']';
+		$('#telefono').val(jsonPhones);
+		$( '#prestador' ).submit();
+	}
+	
+	</script>
 </head>
 <body style="background-color:#e5e5e5;">
 <jsp:include page="../sec_menu.jsp"></jsp:include>
@@ -64,17 +161,83 @@
 								<div class="formLabel"><form:label path="domicilio">Domicilio:</form:label></div>
         						<div class="formInput"><form:textarea path="domicilio" class="input-block-level" type="text"/></div>
 							</div>				
-							<div class="span6">
+							<div class="span6" style="visibility:hidden;">
 								<div class="formLabel"><form:label path="telefono">Telefono:</form:label></div>
         						<div class="formInput"><form:input path="telefono" class="input-block-level" type="text" cssStyle="width:53%"/></div>
-							</div>
-							
-							
+							</div>	
 						</div>
+
 						
 				</div>
 			</div>
 	</div>
+	
+	<div class="panel panel-info">
+		<div class="panel-heading">
+		          <div class="panel-title">Agregar Telefonos</div>
+		</div>  
+		<div style="padding-top:30px" class="panel-body" >	
+			<div class="row-fluid">		
+	    		<div class="span12">
+		    		<div style="float:right;padding-right:1%;">
+		    			<button type="button" class="btn btn-success btn-sm btn-add-phone"><span class="icon icon-plus"></span> Agregar Telefono</button>
+		    		</div>	
+	    		</div>
+    		</div>
+    		<div class="phone-list" style="padding-left:14.5%;">
+				<div class="input-group phone-input"></div>
+			</div>	
+		</div>
+	</div>	
+
+<div class="panel panel-info">
+	<div class="panel-heading">
+	          <div class="panel-title">Editar Especialidades</div>
+	</div>  
+<div style="padding-top:30px" class="panel-body" >
+
+	<div class="row-fluid">
+			<div class="span6">
+			</div>
+			<div class="span6">
+				<div style="float:right;padding-right:2%;">
+						<INPUT type="button" value="Agregar" onclick="addRow('dataTable')" class="btn btn-info"/>
+				</div>
+				<div style="float:right;padding-right:2%;">
+					
+								 	<form:select path="especialidad">
+				   <form:option value="NONE" label="Seleccione Especialidad ..."/>
+				   <form:options items="${especialidadList}" itemLabel="nombre" itemValue="especialidadId" />			    
+				</form:select>
+				</div>
+			</div>
+    
+    </div>
+    <div class="tableContainer"> 
+
+	    <TABLE id="dataTable" class="table"  style="margin-top:0px;">
+	        <TR>
+	        <TR>      	
+	            <TD>ID</TD>
+	            <TD>Especialidad</TD> 
+	            <TD></TD>       
+	        </TR>       
+	        </TR>
+	       	<c:forEach items="${especialidadListEdit}" var="esp">
+		    <tr>
+
+		        <td>${esp.key} <input type="hidden" name="especialidadList" value="${esp.key}"></td>
+		        <td>${esp.value}</td>       
+		        <td>
+		        <button type='button' class='btn btn-danger btn-xs' onClick='Eliminar(this.parentNode.parentNode.rowIndex)'><span class='icon icon-remove' title='Eliminar'></span></button>
+		        </td> 
+		    </tr>
+	</c:forEach>
+	    </TABLE>
+	   	
+ 	</div>
+</div>
+</div>  
 	
 		<!-- Botoneras -->
 		<div class="panel panel-info">
@@ -85,7 +248,7 @@
 						<input class="btn" type="button" value="Cancelar" onclick="location.href='/nuova/mainPrestador';"/>	
 					</div>
 					<div style="float:right;padding-right:2%;">
-						<input type="submit" value="Guardar" class="btn btn-info"/>
+						<input type="button" value="Guardar" class="btn btn-info" onclick="procesarSubmit()"/>
 					</div>								 			
 				</div>
 				</div>
@@ -128,4 +291,6 @@ document.getElementById("configuracion").parentNode.classList.add("active");
 		            form.submit();
 		        }
 		    });
+		    
+		    updatePhones();
 </script>

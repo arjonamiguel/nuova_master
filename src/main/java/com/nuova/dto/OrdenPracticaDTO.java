@@ -11,19 +11,21 @@ public class OrdenPracticaDTO {
   private BigDecimal valor;
   private boolean imprimir;
   private String autorizarAutomatico;
+  private String piezaDental;
 
   public OrdenPracticaDTO() {
 
   }
 
   public OrdenPracticaDTO(Integer orddenPracticaId, Integer ordenId, String nombre,
-      Integer practicaId, String estado) {
+      Integer practicaId, String estado, String piezaDental) {
     super();
     this.orddenPracticaId = orddenPracticaId;
     this.ordenId = ordenId;
     this.nombre = nombre;
     this.practicaId = practicaId;
     this.estado = estado;
+    this.piezaDental = piezaDental;
   }
 
   public Integer getOrddenPracticaId() {
@@ -89,4 +91,14 @@ public class OrdenPracticaDTO {
   public void setAutorizarAutomatico(String autorizarAutomatico) {
     this.autorizarAutomatico = autorizarAutomatico;
   }
+
+  public String getPiezaDental() {
+		return piezaDental;
+  }
+	
+  public void setPiezaDental(String piezaDental) {
+		this.piezaDental = piezaDental;
+  }
+  
+  
 }

@@ -21,6 +21,10 @@
 		<link href="<%=request.getContextPath()%>/resources/montrezorro-bootstrap-checkbox-fa865ff/css/bootstrap-checkbox.css" rel="stylesheet"/>
 		<script src="<%=request.getContextPath()%>/resources/montrezorro-bootstrap-checkbox-fa865ff/js/bootstrap-checkbox.js" /></script>
 	<script type="text/javascript">
+	function getJsonLocalidad(localidad){
+		return '{ "nombre":"'+localidad+'"}';
+	}
+	
 	$(document).ready(function() {
 		var map = new Object();
 		var objects = [];
@@ -55,6 +59,19 @@
 	
 	  <SCRIPT language="javascript">
         var coseguro=0;
+
+        $(function() {
+  		  $('#btnLocalidad').click(function() {
+  			  document.getElementById("localidadNombre").value="";
+  		    $('#modalLocalidad').modal('show');
+  		  });
+  		  
+  		  $('#btnSaveLocalidad').click(function() {
+  		    var localidad = document.getElementById("localidadNombre").value;
+  		    var resp = callNuevaLocalidad(getJsonLocalidad(localidad));
+  		    $('#modalLocalidad').modal('hide');
+  		  });
+  		});
 		
         
         function addRow(tableID) {
@@ -232,7 +249,7 @@ label.error {
 								placeholder="Ingrese Localidad ..."
 								autocomplete="off"
         					/>
-        					<a href="#" title="Nueva Localidad">
+        					<a href="#" title="Nueva Localidad" id="btnLocalidad">
 								<img src="/nuova/resources/img/list_add_16x16.png">
 							</a>
 							</div>
@@ -355,8 +372,45 @@ label.error {
  
 
 </body>
+
+<div class="modal fade" id="modalLocalidad">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only"></span></button>
+        <h4 class="modal-title">Nueva Localidad</h4>
+      </div>
+      <div class="modal-body">
+        <p>Nombre de Localidad: </p>
+        <input type="text" id="localidadNombre" name="localidadNombre">
+      </div>
+      <div class="modal-footer">
+        <button type="button" id="btnSaveLocalidad" class="btn btn-info">Guardar</button>      
+        <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
 </html>
 <script>
+function callNuevaLocalidad(jsonLocalidad) {
+	var retorno;
+	$.ajax({
+		url : "/nuova/ajaxPostNuevaLocalidad",
+		type : "POST",
+		contentType : "application/json; charset=utf-8",
+		data: jsonLocalidad, //Stringified Json Object
+		async : false, //Cross-domain requests and dataType: "jsonp" requests do not support synchronous operation
+		cache : false, //This will force requested pages not to be cached by the browser          
+		processData : false, //To avoid making query String instead of JSON
+		success : function(result) {
+			retorno = result;
+		}
+	});
+
+	return retorno;
+}
 
 function callExistDni(dni) {
 	var retorno;

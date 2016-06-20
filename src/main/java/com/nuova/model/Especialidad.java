@@ -29,6 +29,7 @@ public class Especialidad implements java.io.Serializable {
     private Integer especialidadId;
     private String nombre;
     private Set<ProfesionalEspecialidad> profesionalEspecialidads = new HashSet<ProfesionalEspecialidad>(0);
+    private Integer tipo;
 
     public Especialidad() {
     }
@@ -65,6 +66,15 @@ public class Especialidad implements java.io.Serializable {
 
     public void setProfesionalEspecialidads(Set<ProfesionalEspecialidad> profesionalEspecialidads) {
         this.profesionalEspecialidads = profesionalEspecialidads;
+    }
+
+    @Column(name = "tipo")
+    public Integer getTipo() {
+        return tipo;
+    }
+
+    public void setTipo(Integer tipo) {
+        this.tipo = tipo;
     }
 
 }

@@ -75,6 +75,7 @@
 											</div>
 											<div class="panel-body">
 											<ul>
+												<li><a href="#" id="lnk_filtro_afiliados">Filtrar Afiliados.</a> </li>
 												<li><a href="#" id="lnk_afiliados_atendidos">Cantidad de Afiliados Atendidos.</a> </li>
 												<li><a href="#" id="lnk_pacientes_registrados">Total de Pacientes Registrados.</a></li>
 												<li><a href="#" id="lnk_afiliados_sincoseguro">Total de Pacientes Sin Coseguro.</a></li>												
@@ -141,13 +142,14 @@
 
 <jsp:include page="modalAfiliadosAtendidos.jsp"></jsp:include>
 <jsp:include page="modalPacientesRegistrados.jsp"></jsp:include>
+<jsp:include page="modalFiltroAfiliados.jsp"></jsp:include>
+
 
 
 </html>
 
 <script type="text/javascript">
 document.getElementById("reportes").parentNode.classList.add("active");
-
 
 function updatefechaDesdeAA(){
 	document.getElementById("fechaDesdeAA").value=document.getElementById("fecha_desde_aa").value;
@@ -164,8 +166,54 @@ function updatefechaDesdePR(){
 function updatefechaHastaPR(){
 	document.getElementById("fechaHastaPR").value=document.getElementById("fecha_hasta_pr").value;
 }
+
+function updatefechaDesdeAfiliado(){
+	document.getElementById("fechaDesdeAfiliado").value=document.getElementById("fecha_desde_afiliado").value;
+}
+
+function updatefechaHastaAfiliado(){
+	document.getElementById("fechaHastaAfiliado").value=document.getElementById("fecha_hasta_afiliado").value;
+}
+
+function updatefechaNacimiento(){
+	document.getElementById("fechaNacimiento").value=document.getElementById("fecha_nacimiento").value;
+}
+
+function updatefechaNacimiento(){
+	document.getElementById("fechaNacimiento").value=document.getElementById("fecha_nacimiento").value;
+}
 //----------------------------------------------------------------------------
+
 //Actions Modal
+$(function() {
+	  $('#lnk_filtro_afiliados').click(function() {
+		  // $("#msj_afiliadoatendido").css("visibility","hidden");
+		  document.getElementById("fechaDesdeAfiliado").value="";
+		  document.getElementById("fecha_desde_afiliado").value="";
+		  document.getElementById("fechaHastaAfiliado").value="";
+		  document.getElementById("fecha_hasta_afiliado").value="";
+		  document.getElementById("fechaNacimiento").value="";
+		  document.getElementById("fecha_nacimiento").value="";
+		  document.getElementById("localidadId").value="";
+		  document.getElementById("localidadString").value="";
+		  
+	    $('#filtroafiliados').modal('show');
+	  });
+	  
+	  $('#btnAceptarFiltro').click(function() {
+		  var fechaDesdeAfiliado = document.getElementById("fechaDesdeAfiliado").value;
+		  var fechaHastaAfiliado = document.getElementById("fechaHastaAfiliado").value;
+		  var fechaNacimiento = document.getElementById("fechaNacimiento").value;
+		  var localidadId = document.getElementById("localidadId").value;
+		  var zonaAfiliacion = document.getElementById("zonaAfiliacion").value;
+		  
+	    
+		resp = callReportFiltroAfiliado(fechaDesdeAfiliado, fechaHastaAfiliado, fechaNacimiento, localidadId, zonaAfiliacion );
+ 	    $('#filtroafiliados').modal('hide');
+	  });
+	});
+
+
 $(function() {
 	  $('#lnk_afiliados_atendidos').click(function() {
 		  $("#msj_afiliadoatendido").css("visibility","hidden");
@@ -232,9 +280,13 @@ $(function() {
 // Autocomplete Especialidades
 $(document).ready(function() {
 	var especialidadTH = $('#especialidadString.typeahead');
-
+	var localidadTH = $('#localidadString.typeahead');
+	
 	var map = new Object();
+	var mapLoc = new Object();
+
 	var objects = [];
+	var objectsLoc = [];
 
 	especialidadTH.typeahead({
 		source : function(query, process) {
@@ -262,6 +314,33 @@ $(document).ready(function() {
 		}
 	});
 
+
+	localidadTH.typeahead({
+		source : function(query, process) {
+			$.ajax({
+				url : '/nuova/ajaxGetAutoCompleteLocalidades',
+				type : 'POST',
+				dataType : 'JSON',
+				data : 'query=' + query,
+				success : function(data) {
+					console.log(data);
+					$.each(data, function(i, object) {
+						mapLoc[object.value] = object;
+						if (objectsLoc[i] == null) {
+							objectsLoc.push(object.value);
+						}
+					});
+					process(objectsLoc);
+					objectsLoc = [];
+				}
+			});
+		},
+		updater : function(item) {
+			$('#localidadId').val(mapLoc[item].id);
+			return item;
+		}
+	});
+	
 });
 
 //----------------------------------------------------------------------------
@@ -284,6 +363,18 @@ function callReportAfiliadosSinCoseguro() {
 
 function callReportAfiliadosSinCobertura() {
 	var url = "/nuova/ajaxGetReportAfiliadosSinCobertura";
+	window.open(url, '_blank');
+}
+
+function callReportFiltroAfiliado(fechaDesdeAfiliado, fechaHastaAfiliado
+		, fechaNacimiento, localidadId, zonaAfiliacion ) {
+	var parameters = "fechaDesdeAfiliado=" + fechaDesdeAfiliado 
+	+ "&fechaHastaAfiliado=" + fechaHastaAfiliado 
+	+ "&fechaNacimiento=" + fechaNacimiento 
+	+ "&localidadId=" + localidadId
+	+ "&zonaAfiliacion="+zonaAfiliacion;
+	
+	var url = "/nuova/ajaxGetReportFiltroAfiliado?"+parameters;
 	window.open(url, '_blank');
 }
 </script>

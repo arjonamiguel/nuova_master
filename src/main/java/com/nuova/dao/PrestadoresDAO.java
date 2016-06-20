@@ -22,4 +22,6 @@ public interface PrestadoresDAO {
 
     public Page<Prestadores> findPrestadoresBySearch(String search, Pageable pageable);
 
+    public void deletePrestadorEspecialidad(Integer prestadorId);
+
 }

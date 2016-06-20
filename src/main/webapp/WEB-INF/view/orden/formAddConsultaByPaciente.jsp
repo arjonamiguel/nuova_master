@@ -230,6 +230,36 @@
 		}	
 
 	}
+	
+$(function() {
+    $(".btn-info").click(function() {
+
+		 var postData = $("#ordenDto").serialize();
+		    var formURL = $("#ordenDto").attr("action");
+		    $.ajax(
+		    {
+		        url : formURL,
+		        type: "POST",
+		        data : postData,
+		         contentType: "application/x-www-form-urlencoded",
+		        success:function(data, textStatus, jqXHR) 
+		        {
+		            var element = '<div class="alert alert-success alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button><div style="float:left;"><strong>Orden Creada con Exito!</strong> La orden fué creada con el siguiente identificador:</div> <div style="float:left;font-size: 20px;">'+data+'</div>.</div>';
+		            document.getElementById("alert").innerHTML=element;  
+		            $("#btnGuardar").attr("disabled", "disabled");
+		            
+		        },
+		        error: function(jqXHR, textStatus, errorThrown) 
+		        {
+		            var element = '<div class="alert alert-danger alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button><strong>ERROR!</strong> Ha sucedido un problema al crear la orden. Intente nuevamente.</div>';
+		            document.getElementById("alert").innerHTML=element;
+		        }
+		    });
+		    e.preventDefault(); //STOP default action
+		    e.unbind(); //unbind. to stop multiple form submit.
+		});
+		 
+  });
 
 </script>
 
@@ -241,7 +271,7 @@
 		commandName="ordenDto">
 		<form:hidden path="ordenTipo.ordenTipoId" />
 		<div class="mainContainer">
-		
+		<div id="alert"></div>
 		<div class="panelContainer">
 			<div class="panel panel-info">
 				<div class="panel-heading">
@@ -263,7 +293,7 @@
 											<li class="active"><a data-toggle="tab"
 												href="#tb_paciente">Paciente</a></li>
 											<li><a data-toggle="tab" href="#tb_requisitos">Requisitos</a></li>
-											<li><a data-toggle="tab" href="#tb_profesional">Profesional</a></li>
+											<li><a data-toggle="tab" href="#tb_profesional">Medico Solicitante</a></li>
 											<li><a data-toggle="tab" href="#tb_coseguro">Coseguro</a></li>
 										</ul>
 
@@ -432,7 +462,7 @@
 								class="btn" />
 						</div>
 						<div style="float: right; padding-right: 2%;">
-							<input type="submit" value="Guardar" class="btn btn-info" />
+							<input type="button" value="Guardar" class="btn btn-info" id="btnGuardar" />
 						</div>
 					</div>
 				</div>

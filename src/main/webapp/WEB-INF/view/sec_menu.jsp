@@ -63,7 +63,7 @@
 					&nbsp;&nbsp;Inicio</a>
 
 				</li>
-		 		<sec:authorize access="hasRole('ROLE_ADMIN')">
+		 		<sec:authorize access="hasRole('ROLE_ADMIN') OR hasRole('ROLE_USER_CONF')">
 		 		<li class="dropdown">
 		            <a href="#" id="configuracion" class="dropdown-toggle" data-toggle="dropdown">
 		            <img src="/nuova/resources/img/gears_24x24.png">
@@ -75,29 +75,29 @@
 						
 						<li class="divider"></li>
 						
-						<sec:authorize access="hasRole('ROLE_ADMIN')">
+						
 						<li><a href="/nuova/mainEspecialidad" id="mainEspecialidad">Administrar Especialidades</a></li>
 						<li><a href="/nuova/showReporteEspecialidades" id="showReporteEspecialidades">Reporte de Especialidades</a></li>
 						<li class="divider"></li>
-						</sec:authorize>
-						<sec:authorize access="hasRole('ROLE_ADMIN')">
+						
+						
 						<li><a href="/nuova/mainObraSocial" id="mainObraSocial">Administrar Obras Sociales</a></li>
 						<li class="divider"></li>
-						</sec:authorize>
-						<sec:authorize access="hasRole('ROLE_ADMIN')">
+						
+						
 						<li><a href="/nuova/mainPrestador" id="mainPrestador">Administrar Prestadores</a></li>
 						<li><a href="/nuova/showReportePrestadores" id="showReportePrestador">Reporte de Prestadores</a></li>
 						<li class="divider"></li>						
-						</sec:authorize>						
-						<sec:authorize access="hasRole('ROLE_ADMIN')">
+												
+						
 						<li><a href="/nuova/mainPractica" id="mainPractica">Administrar Nomenclador</a></li>
 						<li><a href="/nuova/showReportePractica" id="showReportePractica">Reporte Nomenclador</a></li>
-						</sec:authorize>
+						
 		            </ul>
 				</li>
 				</sec:authorize>				
 				
-				<sec:authorize access="hasRole('ROLE_ADMIN') OR hasRole('ROLE_USER')">
+				<sec:authorize access="hasRole('ROLE_ADMIN') OR hasRole('ROLE_USER') OR hasRole('ROLE_USER_CONF')">
 				<li class="dropdown" >
 					<a href="#" id="mainPaciente"  class="dropdown-toggle" data-toggle="dropdown">
 					<img src="/nuova/resources/img/tasks_24x24.png">
@@ -111,7 +111,7 @@
 				</li>
 				</sec:authorize>
 				
-				<sec:authorize access="hasRole('ROLE_ADMIN') OR hasRole('ROLE_USER')">
+				<sec:authorize access="hasRole('ROLE_ADMIN') OR hasRole('ROLE_USER') OR hasRole('ROLE_USER_CONF')">
 				<li class="dropdown">
 				<a href="#" id="mainOrden" class="dropdown-toggle" data-toggle="dropdown">
 				<img src="/nuova/resources/img/briefcase_24x24.png">

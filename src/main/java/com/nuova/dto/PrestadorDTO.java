@@ -1,78 +1,121 @@
 package com.nuova.dto;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 public class PrestadorDTO {
-    private Integer prestadorId;
-    private String nombre;
-    private String domicilio;
-    private String telefono;
+  private Integer prestadorId;
+  private String nombre="";
+  private String domicilio="";
+  private String telefono;
 
-    private String acciones;
+  private String acciones;
 
-    private String provincia;
+  private String provincia;
+  private Integer tipo;
 
-    public PrestadorDTO() {
-    }
+  private String especialidad;
 
-    public PrestadorDTO(String nombre, String domicilio, String telefono) {
-        this.nombre = nombre;
-        this.domicilio = domicilio;
-        this.telefono = telefono;
-    }
+  private List<Integer> especialidadList = new ArrayList<Integer>();
+  private Map<Integer, String> especialidadListEdit = new HashMap<Integer, String>();
 
-    public Integer getPrestadorId() {
-        return prestadorId;
-    }
+  public PrestadorDTO() {}
 
-    public void setPrestadorId(Integer prestadorId) {
-        this.prestadorId = prestadorId;
-    }
+  public PrestadorDTO(String nombre, String domicilio, String telefono) {
+    this.nombre = nombre;
+    this.domicilio = domicilio;
+    this.telefono = telefono;
+  }
 
-    public String getNombre() {
-        return nombre;
-    }
+  public Integer getPrestadorId() {
+    return prestadorId;
+  }
 
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
-    }
+  public void setPrestadorId(Integer prestadorId) {
+    this.prestadorId = prestadorId;
+  }
 
-    public String getDomicilio() {
-        return domicilio;
-    }
+  public String getNombre() {
+    return nombre.toUpperCase();
+  }
 
-    public void setDomicilio(String domicilio) {
-        this.domicilio = domicilio;
-    }
+  public void setNombre(String nombre) {
+    this.nombre = nombre.toUpperCase();
+  }
 
-    public String getTelefono() {
-        return telefono;
-    }
+  public String getDomicilio() {
+    return domicilio.toUpperCase();
+  }
 
-    public void setTelefono(String telefono) {
-        this.telefono = telefono;
-    }
+  public void setDomicilio(String domicilio) {
+    this.domicilio = domicilio.toUpperCase();
+  }
 
-    public String getProvincia() {
-        return provincia;
-    }
+  public String getTelefono() {
+    return telefono;
+  }
 
-    public void setProvincia(String provincia) {
-        this.provincia = provincia;
-    }
+  public void setTelefono(String telefono) {
+    this.telefono = telefono;
+  }
 
-    public String getAcciones() {
-        String botonEdit = "<a class='btn btn-info btn-xs' href='/nuova/formEditPrestador/" + getPrestadorId()
-                + "'><span class='icon icon-edit'></span>Editar</a>";
+  public String getProvincia() {
+    return provincia;
+  }
 
-        String botonDelete = "<a class='btn btn-danger btn-xs' href='/nuova/formDeletePrestador/" + getPrestadorId()
-                + "'><span class='icon icon-remove'></span>Eliminar</a>";
+  public void setProvincia(String provincia) {
+    this.provincia = provincia;
+  }
 
-        this.acciones = botonEdit + botonDelete;
+  public String getAcciones() {
+    String botonEdit = "<a class='btn btn-info btn-xs' href='/nuova/formEditPrestador/"
+        + getPrestadorId() + "'><span class='icon icon-edit'></span>Editar</a>";
 
-        return acciones;
-    }
+    String botonDelete = "<a class='btn btn-danger btn-xs' href='/nuova/formDeletePrestador/"
+        + getPrestadorId() + "'><span class='icon icon-remove'></span>Eliminar</a>";
 
-    public void setAcciones(String acciones) {
-        this.acciones = acciones;
-    }
+    this.acciones = botonEdit + botonDelete;
+
+    return acciones;
+  }
+
+  public void setAcciones(String acciones) {
+    this.acciones = acciones;
+  }
+
+  public Integer getTipo() {
+    return tipo;
+  }
+
+  public void setTipo(Integer tipo) {
+    this.tipo = tipo;
+  }
+
+  public List<Integer> getEspecialidadList() {
+    return especialidadList;
+  }
+
+  public void setEspecialidadList(List<Integer> especialidadList) {
+    this.especialidadList = especialidadList;
+  }
+
+  public String getEspecialidad() {
+    return especialidad;
+  }
+
+  public void setEspecialidad(String especialidad) {
+    this.especialidad = especialidad;
+  }
+
+  public Map<Integer, String> getEspecialidadListEdit() {
+    return especialidadListEdit;
+  }
+
+  public void setEspecialidadListEdit(Map<Integer, String> especialidadListEdit) {
+    this.especialidadListEdit = especialidadListEdit;
+  }
+
 
 }

@@ -7,6 +7,7 @@ public class EspecialidadDTO {
     private Integer id;
     private String nombre;
     private List<ProfesionalDTO> profesionales = new ArrayList<ProfesionalDTO>();
+    private Integer tipo;
 
     private String acciones;
 
@@ -48,6 +49,14 @@ public class EspecialidadDTO {
 
     public void setProfesionales(List<ProfesionalDTO> profesionales) {
         this.profesionales = profesionales;
+    }
+
+    public Integer getTipo() {
+        return tipo;
+    }
+
+    public void setTipo(Integer tipo) {
+        this.tipo = tipo;
     }
 
 }
