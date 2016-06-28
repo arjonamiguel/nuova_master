@@ -920,7 +920,7 @@ public class OrdenController {
       action = "formEditOrden";
     }
 
-    String botonEdit = "<a class='btn btn-info btn-xs' href='/nuova/" + action + "/"
+    String botonEdit = "<a target='_blank' class='btn btn-info btn-xs' href='/nuova/" + action + "/"
         + orden.getOrdenId() + "'><span class='icon icon-edit'></span></a>";
 
     // String botonDelete = "<a class='btn btn-danger btn-xs' href='/nuova/formDeleteOrden/"
