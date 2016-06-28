@@ -933,6 +933,8 @@ public class OrdenController {
     // data-target='#myModal'>Open Modal</button>";
 
     dto.setAcciones(botonEdit + botonPrint);
+    
+    dto.setFueraCartilla(orden.getFueraCartilla());
 
     return dto;
   }
