@@ -296,7 +296,7 @@
 			cell1.innerHTML = "<input type='text' name='ordenpracticaListEdit[" + index + "].piezaDental' placeholder='pieza dental'>";
 		}
 		var cell2 = row.insertCell(2);
-		cell2.innerHTML = "<input type='text' name='ordenpracticaListEdit[" + index + "].valor' value='0.00'>";
+		cell2.innerHTML = "<input type='hidden' name='ordenpracticaListEdit[" + index + "].valor' value='0.00'>";
 
 
 		var cell3 = row.insertCell(3);
