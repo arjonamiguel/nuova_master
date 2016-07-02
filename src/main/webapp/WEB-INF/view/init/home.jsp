@@ -219,12 +219,19 @@ function goInfoPaciente() {
 									<h3>Historial de Registros efectuados hasta el dia:</h3>
 
 									<ul>
-
+										<sec:authorize access="hasRole('ROLE_ADMIN')">										
 										<li class="devclick cp"><a href="/nuova/mainPaciente">
 												<b>(${cantPaciente})</b> - Pacientes Registrados en Nuova.
 										</a> <span> <a href="/nuova/showReportePacientes">
 										<img src="/nuova/resources/img/others/export_excel_32x32.png"></a>
 										</span></li>
+										</sec:authorize>
+										
+										<sec:authorize access="hasRole('ROLE_USER') OR hasRole('ROLE_USER_CONF')">										
+										<li class="devclick cp">
+												<b>(${cantPaciente})</b> - Pacientes Registrados en Nuova.
+										</li>
+										</sec:authorize>
 										
 										<sec:authorize access="hasRole('ROLE_ADMIN')">
 										<li class="devclick cp"><a href="/nuova/mainProfesional">

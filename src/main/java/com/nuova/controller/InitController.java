@@ -2,6 +2,8 @@ package com.nuova.controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
@@ -12,11 +14,13 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.nuova.dto.OrdenAlarmaDTO;
 import com.nuova.dto.UsuarioDTO;
+import com.nuova.model.UserDetails;
 import com.nuova.service.EspecialidadManager;
 import com.nuova.service.ObraSocialManager;
 import com.nuova.service.OrdenManager;
 import com.nuova.service.PacienteManager;
 import com.nuova.service.ProfesionalManager;
+import com.nuova.service.UserManager;
 import com.nuova.utils.ConstantControllers;
 import com.nuova.utils.ConstantRedirect;
 
@@ -32,6 +36,8 @@ public class InitController {
     ObraSocialManager obrasocialManager;
     @Autowired
     ProfesionalManager profesionalManager;
+    @Autowired
+    UserManager userManager;
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public String defaultPage(ModelMap map) {
@@ -55,11 +61,16 @@ public class InitController {
     }
 
     @RequestMapping(value = ConstantControllers.HOME, method = RequestMethod.GET)
-    public String init(ModelMap map) {
+    public String init(ModelMap map, HttpSession session) {
         // Datos del Usuario
         User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
+        // Obtengo informacion del usuario en session
+        UserDetails userSession = userManager.findUserByUserName(user.getUsername());
         UsuarioDTO usuario = new UsuarioDTO();
-        usuario.setUsername(user.getUsername());
+        usuario.setUserId(userSession.getId());
+        usuario.setUsername(userSession.getUsername());
+        session.setAttribute("userSession", usuario);
 
         // Alarmas de practicas
         List<OrdenAlarmaDTO> alarmas = ordenManager.findAlarmaOrdenes();

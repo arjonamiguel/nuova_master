@@ -123,7 +123,6 @@ public class ConstantControllers {
             "/ajaxGetReportAfiliadosSinCobertura";
     public final static String AJAX_GET_FILTRO_AFILIADO = "/ajaxGetReportFiltroAfiliado";
 
-
     // Calendario
     public final static String MAIN_CALENDARIO = "/mainCalendario";
     public final static String FORM_ADD_CALENDARIO = "/formAddCalendario";
@@ -183,5 +182,8 @@ public class ConstantControllers {
             "/ajaxGetSearchReintegrosPaginados";
     public final static String AJAX_GET_REINTEGROSBYPACIENTE_PAGINADOS =
             "/ajaxGetReintegrosByPacientePaginados/{pacienteId}";
+
+    // User
+    public final static String AJAX_POST_UPDATE_PASSWORD = "/ajaxUpdatePassword";
 
 }

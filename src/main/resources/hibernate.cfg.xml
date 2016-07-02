@@ -29,7 +29,10 @@
         <mapping class="com.nuova.model.OrdenFueraCartilla" />
         <mapping class="com.nuova.model.PrestadoresEspecialidad" /> 
         <mapping class="com.nuova.model.OrdenPrestador" /> 
-        <mapping class="com.nuova.model.PacienteObservaciones" />       
+        <mapping class="com.nuova.model.PacienteObservaciones" />
+        <mapping class="com.nuova.model.UserDetails" />          
+        <mapping class="com.nuova.model.UserRoles" />
+        <mapping class="com.nuova.model.UsersRoleMap" />
         
     </session-factory>
 </hibernate-configuration>
