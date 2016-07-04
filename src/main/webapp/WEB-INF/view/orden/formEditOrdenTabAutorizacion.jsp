@@ -85,7 +85,7 @@ function addRowNuevoNom(tableID, nomencladorId) {
 		}
 
     var cell2 = row.insertCell(2);
-    cell2.innerHTML = "<input type='text' name='ordenpracticaListEdit[" + index + "].valor' value='0.00'>"; 
+    cell2.innerHTML = "<input type='hidden' name='ordenpracticaListEdit[" + index + "].valor' value='0.00'>"; 
     
     var cell3 = row.insertCell(3);
     cell3.innerHTML = createSelectEstados("ordenpracticaListEdit[" + index + "].estado");
@@ -170,7 +170,7 @@ Imprimir</a>
 		<tr>													        	
 			<td style="width: 40%"><b>Nomenclador</b></td>
 			<td style="width: 10%"></td>
-			<td style="width: 10%"><b>Valor</b></td>
+			<td style="width: 10%"></td>
 			<td style="width: 31%"><b>Estados</b></td>
 			<td style="width: 20%"><b>Automatico</b></td>
 			<td></td>
@@ -195,7 +195,7 @@ Imprimir</a>
 			
 			</td>
 			<td>
-			<input type="text" name = "ordenpracticaListEdit[<%=index%>].valor" value = "${pa.valor}" />
+			<input type="hidden" name = "ordenpracticaListEdit[<%=index%>].valor" value = "${pa.valor}" />
 			</td>			
 			<td>			
 				<select name = "ordenpracticaListEdit[<%=index%>].estado" 
