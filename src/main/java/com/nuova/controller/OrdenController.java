@@ -1017,7 +1017,8 @@ public class OrdenController {
             }
         } else {
             OrdenFueraCartilla ofc = ordenManager.findOrdenFueraCartilla(dto.getOrdenId());
-            dto.setApellidoNombreProfesional("<b>Entidad: </b><br>" + ofc.getEntidad());
+            String entidad = ofc != null ? ofc.getEntidad() : "";
+            dto.setApellidoNombreProfesional("<b>Entidad: </b><br>" + entidad);
         }
 
         // Set de Estados
