@@ -65,10 +65,10 @@ $(document).ready(function() {
 
 	$("#practicasGrid").simplePagingGrid(
 			{
-				columnNames : [ "NRO.ORDEN","FECHA","MEDICO SOLICITANTE","FUERA CARTILLA","PRACTICAS", ""],
-				columnKeys : [ "nroOrden","fecha","solicitante","fueraCartilla", "practica"
+				columnNames : [ "NRO.ORDEN","FECHA","F. C","SOLICITANTE","PRACTICAS", ""],
+				columnKeys : [ "nroOrden","fecha","fueraCartilla","solicitante","practica"
 				 					, "acciones"],
-				columnWidths : [ "10%", "10%", "20%"],
+				columnWidths : [ "10%", "10%", "8%"],
 
 				sortable : [ true, true,],
 				data : rowsPracticas,

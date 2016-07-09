@@ -8,6 +8,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 import com.nuova.dto.CalendarDTO;
 import com.nuova.dto.ComboItemDTO;
@@ -199,11 +200,11 @@ public class Util {
     static public Date parseToDate(String date) {
         DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
         Date fechaHabilitacion = null;
-        if (date != null) {
+        if (!Objects.equals(date, null) && !date.equals("null")) {
             try {
-            	if (!date.equals("")) {
-            		fechaHabilitacion = formatter.parse(date);
-            	}
+                if (!date.equals("")) {
+                    fechaHabilitacion = formatter.parse(date);
+                }
             } catch (ParseException e) {
                 // TODO Auto-generated catch block
                 e.printStackTrace();

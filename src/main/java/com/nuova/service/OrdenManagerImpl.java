@@ -128,9 +128,21 @@ public class OrdenManagerImpl implements OrdenManager {
         ordenDAO.deleteOrdenPrestador(ordenId);
     }
 
-	@Override
-	public CajaOrden findCajaOrdenByOrdenId(Orden orden) {
-		return ordenDAO.findCajaOrdenByOrdenId(orden);
-	}
+    @Override
+    public CajaOrden findCajaOrdenByOrdenId(Orden orden) {
+        return ordenDAO.findCajaOrdenByOrdenId(orden);
+    }
+
+    public OrdenFueraCartilla findOrdenFueraCartilla(Integer ordenId) {
+        return ordenDAO.findOrdenFueraCartilla(ordenId);
+    }
+
+    public void deleteOrdenFueraCartilla(Integer id) {
+        ordenDAO.deleteOrdenFueraCartilla(id);
+    }
+
+    public void editFueraCartilla(OrdenFueraCartilla ofc) {
+        ordenDAO.editFueraCartilla(ofc);
+    }
 
 }

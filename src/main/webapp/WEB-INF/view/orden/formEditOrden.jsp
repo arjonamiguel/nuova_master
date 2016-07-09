@@ -71,6 +71,36 @@
 		return selectEstado;
 	}
 
+
+	function enabledFueraCartilla(){
+	
+		if ($("#fueraCartilla").is(':checked')) {
+			document.getElementById("entidad").disabled = "";
+			document.getElementById("observacionFueraCartilla").disabled = "";
+
+			document.getElementById("especialidadString").value = "";
+			document.getElementById("especialidad").value = "";
+			document.getElementById("profesionalId").value = "";
+			document.getElementById("especialidadString").disabled = "false";
+			document.getElementById("profesionalId").disabled = "false";			
+	
+			document.getElementById("entidad").focus();
+
+		}else {
+			document.getElementById("entidad").disabled = "false";
+			document.getElementById("observacionFueraCartilla").disabled = "false";
+			document.getElementById("entidad").value = "";
+			document.getElementById("observacionFueraCartilla").value = "";
+
+			document.getElementById("especialidadString").disabled = "";
+			document.getElementById("profesionalId").disabled = "";
+			document.getElementById("especialidadString").focus();
+			
+	
+		}	
+
+	}
+	
 	function sinCosto(){
 		if ($("#coseguroSinCosto").is(':checked')) {
 			document.getElementById("monto").value = "0.00";
@@ -446,8 +476,7 @@
 											</a></li>
 											<li><a data-toggle="tab" href="#tb_historiaclinica">Historia
 													Cl&iacute;nica</a></li>
-											<li><a data-toggle="tab" href="#tb_coseguro">Coseguro</a></li>
-													
+											<li><a data-toggle="tab" href="#tb_coseguro">Coseguro</a></li>													
 											
 										</ul>
 										<!-- Fin Declaracion de tabs -->

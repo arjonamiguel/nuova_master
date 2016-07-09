@@ -297,6 +297,13 @@
 		if ($("#fueraCartilla").is(':checked')) {
 			document.getElementById("entidad").disabled = "";
 			document.getElementById("observacionFueraCartilla").disabled = "";
+
+			document.getElementById("especialidadString").value = "";
+			document.getElementById("especialidad").value = "";
+			document.getElementById("profesionalId").value = "";
+			document.getElementById("especialidadString").disabled = "false";
+			document.getElementById("profesionalId").disabled = "false";			
+	
 			document.getElementById("entidad").focus();
 
 		}else {
@@ -304,6 +311,12 @@
 			document.getElementById("observacionFueraCartilla").disabled = "false";
 			document.getElementById("entidad").value = "";
 			document.getElementById("observacionFueraCartilla").value = "";
+
+			document.getElementById("especialidadString").disabled = "";
+			document.getElementById("profesionalId").disabled = "";
+			document.getElementById("especialidadString").focus();
+			
+	
 		}	
 		
 	}
@@ -369,7 +382,6 @@
 												<li><a data-toggle="tab" href="#tb_profesional">Medico Solicitante</a></li>
 												<li><a data-toggle="tab" href="#tb_coseguro">Coseguro</a></li>
 												<li><a data-toggle="tab" href="#tb_observacion">Observaciones</a></li>
-												<li><a data-toggle="tab" href="#tb_fueradecartilla">Fuera de Cartilla</a></li>
 											</ul>
 
 											<div class="tab-content" style="height: 350px">
@@ -461,7 +473,7 @@
 													</table>
 												</div>
 
-												<div id="tb_profesional" class="tab-pane fade">
+												<div id="tb_profesional" class="tab-pane fade">												
 													<table class="table" style="width: 100%">
 														<tr>
 															<td style="width: 15%"><form:label
@@ -491,6 +503,32 @@
 
 														</tr>
 													</table>
+													<table class="table" style="width: 100%">
+														
+														<tr>														
+															<td style="width: 10%">Fuera de Cartilla:</td>
+															<td>
+															<input type="checkbox" id="fueraCartilla"
+																name="fueraCartilla" class="largerCheckbox"
+																onchange="enabledFueraCartilla()" />
+															
+															</td>
+														</tr>
+														<tr>														
+															<td style="width: 10%">Entidad de Procedencia:</td>
+															<td>
+															<form:input path="entidad" disabled="true"/>
+															</td>
+														</tr>
+														<tr>														
+															<td style="width: 10%">Observacion:</td>
+															<td>
+															<form:textarea path="observacionFueraCartilla" disabled="true"/>
+															</td>
+														</tr>
+														
+													</table>
+													
 												</div>
 
 												<div id="tb_coseguro" class="tab-pane fade">
@@ -528,33 +566,6 @@
 													</table>
 												</div>
 												
-												<div id="tb_fueradecartilla" class="tab-pane fade">
-													<table class="table" style="width: 100%">
-														
-														<tr>														
-															<td style="width: 10%">Fuera de Cartilla:</td>
-															<td>
-															<input type="checkbox" id="fueraCartilla"
-																name="fueraCartilla" class="largerCheckbox"
-																onchange="enabledFueraCartilla()" />
-															
-															</td>
-														</tr>
-														<tr>														
-															<td style="width: 10%">Entidad de Procedencia:</td>
-															<td>
-															<form:input path="entidad" disabled="true"/>
-															</td>
-														</tr>
-														<tr>														
-															<td style="width: 10%">Observacion:</td>
-															<td>
-															<form:textarea path="observacionFueraCartilla" disabled="true"/>
-															</td>
-														</tr>
-														
-													</table>
-												</div>
 											</div>
 
 										</div>

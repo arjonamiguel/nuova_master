@@ -182,10 +182,34 @@ public class OrdenDAOImpl implements OrdenDAO {
 
     }
 
-	@Override
-	public CajaOrden findCajaOrdenByOrdenId(Orden orden) {
-		return (CajaOrden) this.sessionFactory.getCurrentSession().get(CajaOrden.class,
+    @Override
+    public CajaOrden findCajaOrdenByOrdenId(Orden orden) {
+        return (CajaOrden) this.sessionFactory.getCurrentSession().get(CajaOrden.class,
                 orden);
-	}
+    }
+
+    public OrdenFueraCartilla findOrdenFueraCartilla(Integer ordenId) {
+        OrdenFueraCartilla retorno = null;
+        @SuppressWarnings("unchecked")
+        List<OrdenFueraCartilla> result = this.sessionFactory.getCurrentSession()
+                .createQuery(" SELECT p " + " FROM OrdenFueraCartilla p " + " WHERE p.ordenId = " + ordenId).list();
+
+        if (result != null && !result.isEmpty()) {
+            retorno = result.get(0);
+        }
+
+        return retorno;
+
+    }
+
+    public void deleteOrdenFueraCartilla(Integer id) {
+        this.sessionFactory.getCurrentSession()
+                .createQuery(" DELETE FROM OrdenFueraCartilla o WHERE o.id = :id ")
+                .setInteger("id", id).executeUpdate();
+    }
+
+    public void editFueraCartilla(OrdenFueraCartilla ofc) {
+        this.sessionFactory.getCurrentSession().saveOrUpdate(ofc);
+    }
 
 }

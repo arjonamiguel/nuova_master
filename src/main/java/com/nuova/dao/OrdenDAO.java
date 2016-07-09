@@ -55,7 +55,13 @@ public interface OrdenDAO {
     public void add(OrdenFueraCartilla ofc);
 
     public void deleteOrdenPrestador(Integer ordenId);
-    
+
     public CajaOrden findCajaOrdenByOrdenId(Orden orden);
+
+    public OrdenFueraCartilla findOrdenFueraCartilla(Integer ordenId);
+
+    public void deleteOrdenFueraCartilla(Integer id);
+
+    public void editFueraCartilla(OrdenFueraCartilla ofc);
 
 }
