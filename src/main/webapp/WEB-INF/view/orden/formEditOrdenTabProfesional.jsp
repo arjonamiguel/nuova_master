@@ -45,5 +45,7 @@
 		</tr>
 
 	</table>
-
+<script>
+enabledFueraCartilla();
+</script>
 </div>
