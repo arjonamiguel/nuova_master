@@ -5,11 +5,15 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
@@ -21,6 +25,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.fasterxml.jackson.core.JsonParser;
+import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonPrimitive;
 import com.nuova.dto.ComboItemDTO;
 import com.nuova.dto.ObraSocialDTO;
 import com.nuova.dto.OrdenTipoDTO;
@@ -35,6 +45,7 @@ import com.nuova.service.OrdenManager;
 import com.nuova.service.PacienteManager;
 import com.nuova.utils.ConstantControllers;
 import com.nuova.utils.ConstantRedirect;
+import com.nuova.utils.JsonObservaciones;
 import com.nuova.utils.Util;
 
 @Controller
@@ -74,6 +85,8 @@ public class PacienteController {
             PacienteDTO dto = transformPacienteToDto(p);
             dto.setFechaNacimiento(Util.parseToStringDate(p.getFechaNacimiento()));
             map.addAttribute("paciente", dto);
+            map.addAttribute("usuario", SecurityContextHolder.getContext().getAuthentication().getName());
+            map.addAttribute("fechaSistema", new Date());
         }
         return ConstantRedirect.VIEW_FORM_INFO_PACIENTE;
     }
@@ -301,12 +314,82 @@ public class PacienteController {
     @RequestMapping(value = ConstantControllers.AJAX_GET_EXIST_DNI, method = RequestMethod.GET)
     public @ResponseBody Boolean existDni(
             @RequestParam(required = false, defaultValue = "") String dni) {
-        Paciente p = pacienteManager.findPacienteByDni(Integer.valueOf(dni));
+        Paciente p = pacienteManager.findPacienteByDni(Integer.valueOf(dni));        
         if (p != null) {
             return true;
         } else {
             return false;
         }
+    }
+    
+    @RequestMapping(value = ConstantControllers.AJAX_GET_OBSERVACIONES, method = RequestMethod.GET)
+    public @ResponseBody Boolean saveObservaciones(
+            @RequestParam(required = false, defaultValue = "") String operacion,String dni, String observaciones) throws JSONException {
+
+        Paciente p = pacienteManager.findPacienteByDni(Integer.valueOf(dni));
+        if (p != null) {
+        	if(operacion.equals("delete")){
+        		deleteJsonObservaciones(p, observaciones);
+            	return true;
+        	}else{
+        		
+        		addJsonObservaciones(p,observaciones);
+        		return true;
+        	}
+        } else {
+            return false;
+        }
+    }
+    
+    private void deleteJsonObservaciones(Paciente p, String index) throws JSONException{
+    	
+    	JSONArray list = new JSONArray(); 
+    	String jsonString = p.getObservaciones();
+    	JSONArray jsonArray = new JSONArray(jsonString);
+
+		int len = jsonArray.length();
+		int pos = Integer.valueOf(index).intValue();
+		if (jsonArray != null) { 
+			   for (int i=0;i<len;i++)
+			   { 
+			       //Excluding the item at position
+			        if (i != pos) 
+			        {
+			            list.put(jsonArray.get(i));
+			        }
+			   } 
+		}
+		p.setObservaciones(list.toString());
+		pacienteManager.edit(p);
+    	
+    }
+    
+    private void addJsonObservaciones(Paciente p,String observaciones) throws JSONException{
+    	
+    	JSONObject jsonObject = new JSONObject(observaciones);
+    	String jsonString = p.getObservaciones();
+    	JSONArray jsonArray = new JSONArray(jsonString);
+    	jsonArray.put(jsonObject);
+    	p.setObservaciones(jsonArray.toString());
+		pacienteManager.edit(p);
+    
+
+//    	String oldJson =  p.getObservaciones();
+//    	String newJson ="";
+//    	String retorno="";
+//    	if(!oldJson.isEmpty()){
+//    		newJson = "," + observaciones.trim() + "]";
+//    		retorno = oldJson.substring(0, oldJson.length()-1);
+//    	}else{
+//    		newJson = "[" +observaciones.trim() + "]";
+//    	}     	
+//    	retorno = retorno.concat(newJson);
+//    	p.setObservaciones(retorno.trim());
+//    	pacienteManager.edit(p);
+    	
+    	
+    	
+        
     }
 
     @RequestMapping(value = ConstantControllers.AJAX_POST_NUEVAEMPRESA, method = RequestMethod.POST,
@@ -396,6 +479,7 @@ public class PacienteController {
         dto.setApellido(p.getApellido());
         dto.setNombre(p.getNombre());
         dto.setDomicilio(p.getDomicilio());
+        dto.setObservaciones(p.getObservaciones());
         dto.setFechaNacimiento(p.getFechaNacimiento() + "");
         dto.setVencCarnet(p.getVencCarnet() + "");
         dto.setCoseguro(p.getCoseguro().intValue() == 1 ? true : false);

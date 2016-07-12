@@ -33,6 +33,8 @@ public class Paciente implements java.io.Serializable {
     private Date fechaNacimiento;
     private Date vencCarnet;
     private String domicilio;
+    //gus
+    private String observaciones;
     private String telefono;
     private String mail;
     private Byte coseguro;
@@ -60,7 +62,7 @@ public class Paciente implements java.io.Serializable {
     }
 
     public Paciente(Paciente paciente, String apellido, String nombre, Date fechaNacimiento, Date vencCarnet,
-            String domicilio, String telefono, String mail, Byte coseguro, Integer dni, String provincia,
+            String domicilio,String observaciones, String telefono, String mail, Byte coseguro, Integer dni, String provincia,
             String razonCoseguro, Byte parentesco, String zonaAfiliacion, Integer obrasocialId,
             String nroCredencial, Byte eliminado, Set<Orden> ordens, Set<Paciente> pacientes) {
         this.paciente = paciente;
@@ -69,6 +71,7 @@ public class Paciente implements java.io.Serializable {
         this.fechaNacimiento = fechaNacimiento;
         this.vencCarnet = vencCarnet;
         this.domicilio = domicilio;
+        this.observaciones= observaciones;
         this.telefono = telefono;
         this.mail = mail;
         this.coseguro = coseguro;
@@ -150,6 +153,15 @@ public class Paciente implements java.io.Serializable {
 
     public void setDomicilio(String domicilio) {
         this.domicilio = domicilio;
+    }
+    
+    @Column(name = "observaciones", length = 512)
+    public String getObservaciones() {
+        return this.observaciones;
+    }
+
+    public void setObservaciones(String observaciones) {
+        this.observaciones = observaciones;
     }
 
     @Column(name = "telefono", length = 56)
