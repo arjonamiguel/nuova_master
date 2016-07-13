@@ -25,12 +25,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.fasterxml.jackson.core.JsonParser;
-import com.google.gson.Gson;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonPrimitive;
 import com.nuova.dto.ComboItemDTO;
 import com.nuova.dto.ObraSocialDTO;
 import com.nuova.dto.OrdenTipoDTO;
@@ -45,7 +39,6 @@ import com.nuova.service.OrdenManager;
 import com.nuova.service.PacienteManager;
 import com.nuova.utils.ConstantControllers;
 import com.nuova.utils.ConstantRedirect;
-import com.nuova.utils.JsonObservaciones;
 import com.nuova.utils.Util;
 
 @Controller
@@ -371,24 +364,7 @@ public class PacienteController {
     	JSONArray jsonArray = new JSONArray(jsonString);
     	jsonArray.put(jsonObject);
     	p.setObservaciones(jsonArray.toString());
-		pacienteManager.edit(p);
-    
-
-//    	String oldJson =  p.getObservaciones();
-//    	String newJson ="";
-//    	String retorno="";
-//    	if(!oldJson.isEmpty()){
-//    		newJson = "," + observaciones.trim() + "]";
-//    		retorno = oldJson.substring(0, oldJson.length()-1);
-//    	}else{
-//    		newJson = "[" +observaciones.trim() + "]";
-//    	}     	
-//    	retorno = retorno.concat(newJson);
-//    	p.setObservaciones(retorno.trim());
-//    	pacienteManager.edit(p);
-    	
-    	
-    	
+		pacienteManager.edit(p);	
         
     }
 
