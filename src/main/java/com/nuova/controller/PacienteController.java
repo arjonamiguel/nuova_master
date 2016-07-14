@@ -51,6 +51,7 @@ public class PacienteController {
     OrdenManager ordenManager;
 
     String flag = "";
+    String flagCredencial = "";
 
     @RequestMapping(value = ConstantControllers.TIPO_ORDEN, method = RequestMethod.GET)
     public String tipoOrden(ModelMap map, @PathVariable("pacienteId") Integer pacienteId) {
@@ -98,6 +99,8 @@ public class PacienteController {
         map.addAttribute("empresas", empresas);
         map.addAttribute("razonCoseguroList", Util.getRazonCoseguro());
         map.addAttribute("dniRepetido", flag);
+        map.addAttribute("credencialRepetido", flagCredencial);
+        
 
         return ConstantRedirect.VIEW_FORM_ADD_PACIENTE;
     }
@@ -147,6 +150,14 @@ public class PacienteController {
             flag = "repetido";
             return "redirect:" + ConstantControllers.FORM_ADD_PACIENTE;
         }
+        String nroCredencial = dto.getCrdencial();
+        String nroCredencialSufijo = dto.getCredencialSufijo();
+        p = pacienteManager.findPacienteByCredencialSufijo(nroCredencial, nroCredencialSufijo);
+        if (p != null) {
+            flagCredencial = "repetido";
+            return "redirect:" + ConstantControllers.FORM_ADD_PACIENTE;
+        }
+        
 
         Paciente paciente = transformDtoToPaciente(dto);
         paciente.setEliminado(new Byte("0"));

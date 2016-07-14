@@ -35,6 +35,8 @@ public interface PacienteDAO {
     public List<Paciente> findPacienteAutocomplete(String search);
 
     public Paciente findPacienteByDni(Integer dni);
+    
+    public Paciente findPacienteByCredencialSufijo(String nroCredencial, String nroCredencialSufijo);
 
     public List<Localidades> findLocalidadesAutocomplete(String search);
 

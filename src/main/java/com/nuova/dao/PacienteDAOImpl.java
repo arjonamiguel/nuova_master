@@ -140,6 +140,20 @@ public class PacienteDAOImpl implements PacienteDAO {
     }
 
     @Override
+    public Paciente findPacienteByCredencialSufijo(String nroCredencial, String nroCredencialSufijo) {
+        Paciente retorno = null;
+        @SuppressWarnings("unchecked")
+        List<Paciente> result = this.sessionFactory.getCurrentSession()
+                .createQuery(" SELECT p " + " FROM Paciente p " + " WHERE p.nroCredencial = " + nroCredencial+"AND p.nroCredencialSufijo =" + nroCredencialSufijo).list();
+
+        if (result != null && !result.isEmpty()) {
+            retorno = result.get(0);
+        }
+
+        return retorno;
+    }
+    
+    @Override
     public List<Localidades> findLocalidadesAutocomplete(String search) {
         Query query = this.sessionFactory.getCurrentSession()
                 .createQuery("FROM Localidades loc " + " WHERE upper(loc.nombre) LIKE '"

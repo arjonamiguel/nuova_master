@@ -267,6 +267,12 @@ label.error {
 			}
 		}
 		
+		function validateCredencialRepetido(){
+			if($("#flagCredencial").val()=="repetido"){
+				document.getElementById("messageAlert").innerHTML='<div class="alert alert-danger alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button><strong>ERROR GRAVE!</strong> Se intentó ingresar una credencial repetida. Intente nuevamente</div>';
+			}
+		}
+		
 		function validateDiscapacitado(){
 			if($('#razonCoseguro').val()=="Discapacitado"){
 				$("#vencCarnetDiv").css("visibility","visible");
@@ -287,6 +293,7 @@ label.error {
 	<div id="messageAlert"></div>
 	<div class="panel-heading">
 		<input id="flagDni" type="hidden" value="${dniRepetido}">
+		<input id="flagCredencial" type="hidden" value="${credencialRepetido}">
 		<div class="panel-title">Nuevo Paciente</div>
 		<div class="label-error" id="message" style="float:left;margin-left:8%;visibility:hidden;">El DNI ingresado ya existe.</div>
 	</div>
@@ -483,8 +490,8 @@ label.error {
 			 <div class="span4">
 			 	<div class="formLabel"><form:label path="obrasocial.credencial">Credencial:</form:label></div>
         	 	<div class="formInput">
-        	 		<form:input path="obrasocial.credencial" cssStyle="width:25%"/><b>&nbsp;-&nbsp;</b>
-        	 		<form:input path="obrasocial.credencialSufijo" cssStyle="width:10%"/>
+        	 		<form:input path="crdencial" cssStyle="width:25%"/><b>&nbsp;-&nbsp;</b>
+        	 		<form:input path="credencialSufijo" cssStyle="width:10%"/>
         	 	</div>
 			 </div>
 		</div>
@@ -685,4 +692,5 @@ label.error {
 	$("#razonCoseguro").val("NONE");
 	$("#razonCoseguro").prop("disabled", true);
 	validateDniRepetido();
+	validateCredencialRepetido();
 </script>

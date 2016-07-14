@@ -80,6 +80,11 @@ public class PacienteManagerImpl implements PacienteManager {
     public Paciente findPacienteByDni(Integer dni) {
         return pacienteDAO.findPacienteByDni(dni);
     }
+    
+    @Override
+    public Paciente findPacienteByCredencialSufijo(String nroCredencial, String nroCredencialSufijo) {
+        return pacienteDAO.findPacienteByCredencialSufijo(nroCredencial,nroCredencialSufijo);
+    }
 
     @Override
     public List<Localidades> findLocalidadesAutocomplete(String search) {
