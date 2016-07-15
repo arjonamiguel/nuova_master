@@ -17,6 +17,8 @@ public interface PacienteDAO {
     public Paciente fin1dPacienteById(Integer pacienteId);
 
     public List<Paciente> findAll();
+    
+    public List<Paciente> findAllActive();
 
     public void delete(Integer pacienteId);
 

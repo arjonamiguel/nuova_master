@@ -40,6 +40,12 @@ public class PacienteDAOImpl implements PacienteDAO {
     public List<Paciente> findAll() {
         return this.sessionFactory.getCurrentSession().createQuery("FROM Paciente").list();
     }
+    
+    @Override
+    @SuppressWarnings("unchecked")
+    public List<Paciente> findAllActive() {
+        return this.sessionFactory.getCurrentSession().createQuery("FROM Paciente p WHERE p.eliminado = 0").list();
+    }
 
     @Override
     public void delete(Integer pacienteId) {

@@ -35,6 +35,11 @@ public class PacienteManagerImpl implements PacienteManager {
     public List<Paciente> findAll() {
         return pacienteDAO.findAll();
     }
+    
+    @Override
+    public List<Paciente> findAllActive() {
+        return pacienteDAO.findAllActive();
+    }
 
     @Override
     public void delete(Integer pacienteId) {
