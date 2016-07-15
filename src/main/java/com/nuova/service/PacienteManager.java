@@ -6,6 +6,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 import com.nuova.dto.OrdenAlarmaDTO;
+import com.nuova.dto.PacienteAutocompleteDTO;
 import com.nuova.model.Empresas;
 import com.nuova.model.Especialidad;
 import com.nuova.model.Localidades;
@@ -32,7 +33,7 @@ public interface PacienteManager {
 
     public OrdenAlarmaDTO countPacientes();
 
-    public List<Paciente> findPacienteAutocomplete(String search);
+    public List<PacienteAutocompleteDTO> findPacienteAutocomplete(String search);
 
     public Paciente findPacienteByDni(Integer dni);
 

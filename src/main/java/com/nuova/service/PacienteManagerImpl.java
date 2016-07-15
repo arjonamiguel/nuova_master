@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.nuova.dao.PacienteDAO;
 import com.nuova.dto.OrdenAlarmaDTO;
+import com.nuova.dto.PacienteAutocompleteDTO;
 import com.nuova.model.Empresas;
 import com.nuova.model.Especialidad;
 import com.nuova.model.Localidades;
@@ -72,7 +73,7 @@ public class PacienteManagerImpl implements PacienteManager {
     }
 
     @Override
-    public List<Paciente> findPacienteAutocomplete(String search) {
+    public List<PacienteAutocompleteDTO> findPacienteAutocomplete(String search) {
         return pacienteDAO.findPacienteAutocomplete(search);
     }
 

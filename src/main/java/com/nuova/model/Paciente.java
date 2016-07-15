@@ -51,6 +51,7 @@ public class Paciente implements java.io.Serializable {
     private String empresa;
     private Integer empresaId;
     private String nroCredencialSufijo;
+    private String search;
 
     private Date fechaAlta;
 
@@ -331,6 +332,14 @@ public class Paciente implements java.io.Serializable {
 
     public void setPacienteObservacioneses(Set<PacienteObservaciones> pacienteObservacioneses) {
         this.pacienteObservacioneses = pacienteObservacioneses;
+    }
+
+    public String getSearch() {
+        return search;
+    }
+
+    public void setSearch(String search) {
+        this.search = search;
     }
 
 }

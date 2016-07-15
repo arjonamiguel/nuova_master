@@ -12,6 +12,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
 
 import com.nuova.dto.OrdenAlarmaDTO;
+import com.nuova.dto.PacienteAutocompleteDTO;
 import com.nuova.model.Empresas;
 import com.nuova.model.Especialidad;
 import com.nuova.model.Localidades;
@@ -24,6 +25,8 @@ public class PacienteDAOImpl implements PacienteDAO {
 
     @Override
     public void add(Paciente paciente) {
+        String search = paciente.getDni().trim() + paciente.getApellido().trim() + paciente.getNombre().trim();
+        paciente.setSearch(search.replace(" ", ""));
         this.sessionFactory.getCurrentSession().save(paciente);
         // for (PacienteObrasocial po : paciente.getPacienteObrasocials()) {
         // this.sessionFactory.getCurrentSession().save(po);
@@ -53,6 +56,8 @@ public class PacienteDAOImpl implements PacienteDAO {
         // for (PacienteObrasocial po : paciente.getPacienteObrasocials()) {
         // this.sessionFactory.getCurrentSession().saveOrUpdate(po);
         // }
+        String search = paciente.getDni().trim() + paciente.getApellido().trim() + paciente.getNombre().trim();
+        paciente.setSearch(search.replace(" ", ""));
         this.sessionFactory.getCurrentSession().saveOrUpdate(paciente);
     }
 
@@ -114,14 +119,28 @@ public class PacienteDAOImpl implements PacienteDAO {
     }
 
     @Override
-    public List<Paciente> findPacienteAutocomplete(String search) {
-        Query query = this.sessionFactory.getCurrentSession()
-                .createQuery("FROM Paciente p " + " WHERE upper(p.apellido) LIKE '%" + search.toUpperCase()
-                        + "%' " + " OR p.dni LIKE '%" + search.toUpperCase() + "%' "
-                        + " ORDER BY p.apellido, p.nroCredencial, p.nroCredencialSufijo ASC");
+    public List<PacienteAutocompleteDTO> findPacienteAutocomplete(String search) {
+        // Query query = this.sessionFactory.getCurrentSession()
+        // .createQuery("FROM Paciente p " + " WHERE upper(p.apellido) LIKE '%" + search.toUpperCase()
+        // + "%' " + " OR p.dni LIKE '%" + search.toUpperCase() + "%' "
+        // + " ORDER BY p.apellido, p.nroCredencial, p.nroCredencialSufijo ASC");
+        // // query.setFirstResult(pageable.getOffset());
+        // query.setMaxResults(20);
+        // List<Paciente> result = query.list();
+        // return result;
+
+        String sql = " SELECT new com.nuova.dto.PacienteAutocompleteDTO("
+                + " p.pacienteId, p.dni,p.apellido, "
+                + " p.nombre, concat(p.nroCredencial,'-',p.nroCredencialSufijo))"
+                + " FROM Paciente p"
+                + " WHERE upper(p.search) LIKE '%" + search.trim().toUpperCase().replace(" ", "") + "%'"
+                + " ORDER BY p.apellido, p.nroCredencial, p.nroCredencialSufijo ASC";
         // query.setFirstResult(pageable.getOffset());
+
+        Query query = this.sessionFactory.getCurrentSession().createQuery(sql);
         query.setMaxResults(20);
-        List<Paciente> result = query.list();
+        List<PacienteAutocompleteDTO> result = query.list();
+
         return result;
     }
 

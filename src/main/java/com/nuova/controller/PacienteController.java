@@ -24,6 +24,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.nuova.dto.ComboItemDTO;
 import com.nuova.dto.ObraSocialDTO;
 import com.nuova.dto.OrdenTipoDTO;
+import com.nuova.dto.PacienteAutocompleteDTO;
 import com.nuova.dto.PacienteDTO;
 import com.nuova.model.Empresas;
 import com.nuova.model.Localidades;
@@ -277,10 +278,10 @@ public class PacienteController {
     public @ResponseBody List<ComboItemDTO> getAutocompletePaciente(
             @RequestParam(required = false, defaultValue = "") String query) {
         List<ComboItemDTO> retorno = new ArrayList<ComboItemDTO>();
-        for (Paciente p : pacienteManager.findPacienteAutocomplete(query)) {
+        for (PacienteAutocompleteDTO p : pacienteManager.findPacienteAutocomplete(query)) {
             retorno.add(new ComboItemDTO(p.getPacienteId() + "",
-                    "[DNI: " + p.getDni() + "] [Cred: " + p.getNroCredencial() + "-"
-                            + p.getNroCredencialSufijo() + "] " + p.getApellido() + ", " + p.getNombre()));
+                    "[DNI: " + p.getDni() + "] [Cred: " + p.getNroCredencial() + "] " + p.getApellido() + " "
+                            + p.getNombre()));
         }
 
         return retorno;
