@@ -372,7 +372,10 @@ public class PacienteController {
     private void addJsonObservaciones(Paciente p,String observaciones) throws JSONException{
     	
     	JSONObject jsonObject = new JSONObject(observaciones);
-    	String jsonString = p.getObservaciones();
+    	String jsonString = "[]";
+    	if(p.getObservaciones()!=null){
+    		jsonString=p.getObservaciones();
+    	}
     	JSONArray jsonArray = new JSONArray(jsonString);
     	jsonArray.put(jsonObject);
     	p.setObservaciones(jsonArray.toString());
