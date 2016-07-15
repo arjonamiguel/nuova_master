@@ -18,6 +18,8 @@ public interface PacienteDAO {
     public Paciente fin1dPacienteById(Integer pacienteId);
 
     public List<Paciente> findAll();
+    
+    public List<Paciente> findAllActive();
 
     public void delete(Integer pacienteId);
 
@@ -36,6 +38,8 @@ public interface PacienteDAO {
     public List<PacienteAutocompleteDTO> findPacienteAutocomplete(String search);
 
     public Paciente findPacienteByDni(Integer dni);
+    
+    public Paciente findPacienteByCredencialSufijo(String nroCredencial, String nroCredencialSufijo);
 
     public List<Localidades> findLocalidadesAutocomplete(String search);
 

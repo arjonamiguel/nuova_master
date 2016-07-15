@@ -55,6 +55,7 @@ public class ConstantControllers {
             "/ajaxGetSearchPacientesPaginados";
     public final static String AJAX_GET_AUTOCOMPLETE_PACIENTES = "/ajaxGetAutoCompletePacientes";
     public final static String AJAX_GET_EXIST_DNI = "/ajaxGetExistDni";
+    public final static String AJAX_GET_OBSERVACIONES = "/ajaxObservaciones";
     public final static String AJAX_GET_AUTOCOMPLETE_LOCALIDADES = "/ajaxGetAutoCompleteLocalidades";
     public final static String AJAX_GET_AUTOCOMPLETE_ESPECIALIDADES =
             "/ajaxGetAutoCompleteEspecialidades";

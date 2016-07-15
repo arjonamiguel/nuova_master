@@ -36,6 +36,11 @@ public class PacienteManagerImpl implements PacienteManager {
     public List<Paciente> findAll() {
         return pacienteDAO.findAll();
     }
+    
+    @Override
+    public List<Paciente> findAllActive() {
+        return pacienteDAO.findAllActive();
+    }
 
     @Override
     public void delete(Integer pacienteId) {
@@ -80,6 +85,11 @@ public class PacienteManagerImpl implements PacienteManager {
     @Override
     public Paciente findPacienteByDni(Integer dni) {
         return pacienteDAO.findPacienteByDni(dni);
+    }
+    
+    @Override
+    public Paciente findPacienteByCredencialSufijo(String nroCredencial, String nroCredencialSufijo) {
+        return pacienteDAO.findPacienteByCredencialSufijo(nroCredencial,nroCredencialSufijo);
     }
 
     @Override

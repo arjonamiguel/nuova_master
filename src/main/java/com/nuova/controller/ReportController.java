@@ -429,7 +429,7 @@ public class ReportController {
 
   @RequestMapping(value = ConstantControllers.REPORT_PACIENTES, method = RequestMethod.GET)
   public String reportPacientes(ModelMap map, HttpServletResponse response) throws IOException {
-    List<PacienteDTO> pacientes = getPacientesDto(pacienteManager.findAll());
+    List<PacienteDTO> pacientes = getPacientesDto(pacienteManager.findAllActive());
     JRBeanCollectionDataSource beanCollectionDataSource = new JRBeanCollectionDataSource(pacientes);
 
     Map<String, Object> parameters = new HashMap<String, Object>();

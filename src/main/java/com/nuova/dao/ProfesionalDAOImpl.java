@@ -83,6 +83,7 @@ public class ProfesionalDAOImpl implements ProfesionalDAO {
         .createQuery("FROM Profesional p " + " WHERE " + " p.eliminado = 0 AND"
             + " upper(p.apellido) LIKE '%" + search.toUpperCase() + "%' "
             + " OR upper(p.nombre) LIKE '%" + search.toUpperCase() + "%' "
+            + " OR upper(p.tituloProfesional) LIKE '%" + search.toUpperCase() + "%' "
             + " ORDER BY p.apellido ");
     // query.setFirstResult(pageable.getOffset());
     // query.setMaxResults(pageable.getPageNumber());

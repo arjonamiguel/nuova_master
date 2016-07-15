@@ -43,6 +43,12 @@ public class PacienteDAOImpl implements PacienteDAO {
     public List<Paciente> findAll() {
         return this.sessionFactory.getCurrentSession().createQuery("FROM Paciente").list();
     }
+    
+    @Override
+    @SuppressWarnings("unchecked")
+    public List<Paciente> findAllActive() {
+        return this.sessionFactory.getCurrentSession().createQuery("FROM Paciente p WHERE p.eliminado = 0").list();
+    }
 
     @Override
     public void delete(Integer pacienteId) {
@@ -158,6 +164,20 @@ public class PacienteDAOImpl implements PacienteDAO {
         return retorno;
     }
 
+    @Override
+    public Paciente findPacienteByCredencialSufijo(String nroCredencial, String nroCredencialSufijo) {
+        Paciente retorno = null;
+        @SuppressWarnings("unchecked")
+        List<Paciente> result = this.sessionFactory.getCurrentSession()
+                .createQuery(" SELECT p " + " FROM Paciente p " + " WHERE p.nroCredencial = " + nroCredencial+"AND p.nroCredencialSufijo =" + nroCredencialSufijo).list();
+
+        if (result != null && !result.isEmpty()) {
+            retorno = result.get(0);
+        }
+
+        return retorno;
+    }
+    
     @Override
     public List<Localidades> findLocalidadesAutocomplete(String search) {
         Query query = this.sessionFactory.getCurrentSession()
