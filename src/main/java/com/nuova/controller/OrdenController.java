@@ -214,15 +214,21 @@ public class OrdenController {
     @RequestMapping(value = ConstantControllers.FORM_EDIT_CONSULTA, method = RequestMethod.GET)
     public String formEditConsulta(ModelMap map, @PathVariable("ordenId") Integer ordenId) {
         if (ordenId != null) {
+            List<ComboItemDTO> items = new ArrayList<ComboItemDTO>();
+            String nombre = "";
             OrdenDTO ordenDto = transformOrdenToDto(ordenManager.findOrdenById(ordenId));
-            Especialidad e = especialidadManager.findEspecialidadById(ordenDto.getEspecialidad());
-
-            List<Profesional> profesionales =
-                    especialidadManager.findProfesionalByEspecialidadId(ordenDto.getEspecialidad());
-
-            map.addAttribute("profesionales", getProfesionalDTOList(profesionales));
+            if (ordenDto.getEspecialidad() != null) {
+                Especialidad e = especialidadManager.findEspecialidadById(ordenDto.getEspecialidad());
+                nombre = e.getNombre();
+                List<Profesional> profesionales =
+                        especialidadManager.findProfesionalByEspecialidadId(ordenDto.getEspecialidad());
+                items = getProfesionalDTOList(profesionales);
+            } else {
+                items = getProfesionalDTOList(profesionalManager.findAll());
+            }
+            map.addAttribute("profesionales", items);
             map.addAttribute("ordenDto", ordenDto);
-            map.addAttribute("especialidadView", e.getNombre());
+            map.addAttribute("especialidadView", nombre);
 
         }
 

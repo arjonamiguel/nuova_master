@@ -6,6 +6,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 import com.nuova.model.Nomenclador;
+import com.nuova.model.NomencladorTipo;
 
 public interface PracticaManager {
     public void add(Nomenclador practica);
@@ -23,5 +24,7 @@ public interface PracticaManager {
     public Page<Nomenclador> findPracticaBySearch(String search, Pageable pageable);
 
     public List<Nomenclador> findNomencladorAutocomplete(String search);
+
+    public List<NomencladorTipo> findNomecladorTipo();
 
 }

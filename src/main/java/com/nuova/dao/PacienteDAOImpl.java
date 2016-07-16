@@ -43,7 +43,7 @@ public class PacienteDAOImpl implements PacienteDAO {
     public List<Paciente> findAll() {
         return this.sessionFactory.getCurrentSession().createQuery("FROM Paciente").list();
     }
-    
+
     @Override
     @SuppressWarnings("unchecked")
     public List<Paciente> findAllActive() {
@@ -168,8 +168,11 @@ public class PacienteDAOImpl implements PacienteDAO {
     public Paciente findPacienteByCredencialSufijo(String nroCredencial, String nroCredencialSufijo) {
         Paciente retorno = null;
         @SuppressWarnings("unchecked")
-        List<Paciente> result = this.sessionFactory.getCurrentSession()
-                .createQuery(" SELECT p " + " FROM Paciente p " + " WHERE p.nroCredencial = " + nroCredencial+"AND p.nroCredencialSufijo =" + nroCredencialSufijo).list();
+        List<Paciente> result = this.sessionFactory
+                .getCurrentSession()
+                .createQuery(
+                        " SELECT p " + " FROM Paciente p " + " WHERE p.nroCredencial = " + nroCredencial
+                                + "AND p.nroCredencialSufijo =" + nroCredencialSufijo).list();
 
         if (result != null && !result.isEmpty()) {
             retorno = result.get(0);
@@ -177,7 +180,7 @@ public class PacienteDAOImpl implements PacienteDAO {
 
         return retorno;
     }
-    
+
     @Override
     public List<Localidades> findLocalidadesAutocomplete(String search) {
         Query query = this.sessionFactory.getCurrentSession()
@@ -222,7 +225,7 @@ public class PacienteDAOImpl implements PacienteDAO {
     @Override
     public List<Especialidad> findEspecialidadesAutocomplete(String search, Integer tipo) {
         Query query = this.sessionFactory.getCurrentSession()
-                .createQuery("FROM Especialidad e " + " WHERE upper(e.nombre) LIKE '%"
+                .createQuery("FROM Especialidad e " + " WHERE e.eliminado=0 and upper(e.nombre) LIKE '%"
                         + search.toUpperCase() + "%' and e.tipo=" + tipo + " ORDER BY e.nombre ASC");
         // query.setFirstResult(pageable.getOffset());
         query.setMaxResults(20);

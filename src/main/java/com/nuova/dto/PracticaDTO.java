@@ -1,7 +1,7 @@
 package com.nuova.dto;
 
 public class PracticaDTO {
-    private Integer practicaId;
+    private Integer nomencladorId;
     private String nombre;
     private String codigo;
     private String tipo;
@@ -12,17 +12,17 @@ public class PracticaDTO {
 
     }
 
-    public PracticaDTO(Integer practicaId, String nombre) {
-        this.practicaId = practicaId;
+    public PracticaDTO(Integer nomencladorId, String nombre) {
+        this.nomencladorId = nomencladorId;
         this.nombre = nombre;
     }
 
-    public Integer getPracticaId() {
-        return practicaId;
+    public Integer getNomencladorId() {
+        return nomencladorId;
     }
 
-    public void setPracticaId(Integer practicaId) {
-        this.practicaId = practicaId;
+    public void setNomencladorId(Integer nomencladorId) {
+        this.nomencladorId = nomencladorId;
     }
 
     public String getNombre() {
@@ -42,10 +42,10 @@ public class PracticaDTO {
     }
 
     public String getAcciones() {
-        String botonEdit = "<a class='btn btn-info btn-xs' href='/nuova/formEditPractica/" + getPracticaId()
+        String botonEdit = "<a class='btn btn-info btn-xs' href='/nuova/formEditPractica/" + getNomencladorId()
                 + "'><span class='icon icon-edit'></span>Editar</a>";
 
-        String botonDelete = "<a class='btn btn-danger btn-xs' href='/nuova/formDeletePractica/" + getPracticaId()
+        String botonDelete = "<a class='btn btn-danger btn-xs' href='/nuova/formDeletePractica/" + getNomencladorId()
                 + "'><span class='icon icon-remove'></span>Eliminar</a>";
 
         this.acciones = botonEdit + botonDelete;

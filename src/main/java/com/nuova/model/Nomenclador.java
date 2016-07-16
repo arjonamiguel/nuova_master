@@ -37,6 +37,7 @@ public class Nomenclador implements java.io.Serializable {
     private String nomGrupo;
     private String estado;
     private Set<OrdenPractica> ordenPracticas = new HashSet<OrdenPractica>(0);
+    private Integer eliminado;
 
     public Nomenclador() {
     }
@@ -185,6 +186,15 @@ public class Nomenclador implements java.io.Serializable {
 
     public void setOrdenPracticas(Set<OrdenPractica> ordenPracticas) {
         this.ordenPracticas = ordenPracticas;
+    }
+
+    @Column(name = "eliminado")
+    public Integer getEliminado() {
+        return eliminado;
+    }
+
+    public void setEliminado(Integer eliminado) {
+        this.eliminado = eliminado;
     }
 
 }

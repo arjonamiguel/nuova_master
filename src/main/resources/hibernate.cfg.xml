@@ -33,6 +33,7 @@
         <mapping class="com.nuova.model.UserDetails" />          
         <mapping class="com.nuova.model.UserRoles" />
         <mapping class="com.nuova.model.UsersRoleMap" />
+        <mapping class="com.nuova.model.NomencladorTipo" />
         
     </session-factory>
 </hibernate-configuration>

@@ -32,6 +32,7 @@ public class PracticaController {
     @RequestMapping(value = ConstantControllers.FORM_ADD_PRACTICA, method = RequestMethod.GET)
     public String formAddPractica(ModelMap map) {
         map.addAttribute("practica", new PracticaDTO());
+        map.addAttribute("listNomencladorTipo", practicaManager.findNomecladorTipo());
         return ConstantRedirect.VIEW_FORM_ADD_PRACTICA;
     }
 
@@ -40,6 +41,8 @@ public class PracticaController {
             @PathVariable("practicaId") Integer practicaId) {
         if (practicaId != null) {
             map.addAttribute("practica", practicaManager.findPracticaById(practicaId));
+            map.addAttribute("listNomencladorTipo", practicaManager.findNomecladorTipo());
+
         }
 
         return ConstantRedirect.VIEW_FORM_EDIT_PRACTICA;
@@ -50,6 +53,8 @@ public class PracticaController {
             @PathVariable("practicaId") Integer practicaId) {
         if (practicaId != null) {
             map.addAttribute("practica", practicaManager.findPracticaById(practicaId));
+            map.addAttribute("listNomencladorTipo", practicaManager.findNomecladorTipo());
+
         }
 
         return ConstantRedirect.VIEW_FORM_DELETE_PRACTICA;
@@ -69,7 +74,10 @@ public class PracticaController {
 
     @RequestMapping(value = ConstantControllers.DELETE_PRACTICA, method = RequestMethod.POST)
     public String deletePractica(@ModelAttribute(value = "practica") PracticaDTO dto) {
-        practicaManager.deletePractica(dto.getPracticaId());
+        // practicaManager.deletePractica(dto.getNomencladorId());
+        Nomenclador n = practicaManager.findPracticaById(dto.getNomencladorId());
+        n.setEliminado(1);
+        practicaManager.edit(n);
         return "redirect:" + ConstantControllers.MAIN_PRACTICA;
     }
 
@@ -126,7 +134,7 @@ public class PracticaController {
     private PracticaDTO transformPrestadoresToDto(Nomenclador p) {
         PracticaDTO retorno = new PracticaDTO();
         retorno.setNombre(p.getNombre());
-        retorno.setPracticaId(p.getNomencladorId());
+        retorno.setNomencladorId(p.getNomencladorId());
         retorno.setCodigo(p.getCodigo());
         retorno.setTipo(p.getTipo());
         return retorno;
@@ -135,8 +143,9 @@ public class PracticaController {
     private Nomenclador transformDtoToPrestadores(PracticaDTO dto) {
         Nomenclador retorno = new Nomenclador();
         retorno.setNombre(dto.getNombre());
-        retorno.setNomencladorId(dto.getPracticaId());
+        retorno.setNomencladorId(dto.getNomencladorId());
         retorno.setCodigo(dto.getCodigo());
+        retorno.setTipo(dto.getTipo());
         return retorno;
     }
 
