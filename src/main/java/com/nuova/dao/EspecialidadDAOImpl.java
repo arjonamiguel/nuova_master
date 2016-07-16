@@ -25,6 +25,7 @@ public class EspecialidadDAOImpl implements EspecialidadDAO {
 
     @Override
     public void add(Especialidad especialidad) {
+        especialidad.setEliminado(0);
         this.sessionFactory.getCurrentSession().save(especialidad);
     }
 

@@ -20,6 +20,7 @@ public class PrestadoresDAOImpl implements PrestadoresDAO {
 
     @Override
     public void add(Prestadores prestador) {
+        prestador.setEliminado(0);
         this.sessionFactory.getCurrentSession().save(prestador);
         for (PrestadoresEspecialidad pe : prestador.getPrestadoresEspecialidads()) {
             this.sessionFactory.getCurrentSession().save(pe);

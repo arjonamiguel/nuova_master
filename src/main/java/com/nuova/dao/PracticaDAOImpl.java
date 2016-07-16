@@ -20,6 +20,7 @@ public class PracticaDAOImpl implements PracticaDAO {
 
     @Override
     public void add(Nomenclador practica) {
+        practica.setEliminado(0);
         this.sessionFactory.getCurrentSession().save(practica);
     }
 
