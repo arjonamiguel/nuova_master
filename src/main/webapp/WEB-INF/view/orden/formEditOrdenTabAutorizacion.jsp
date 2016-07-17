@@ -13,22 +13,28 @@ function showNuevoNomenclador() {
 }
 
 function nuevoNomencladorOk() {
+	var tipo = document.getElementById("nomenclador_tipo").value;
 	var codigo = document.getElementById("nomenclador_codigo").value;
 	var nombre = document.getElementById("nomenclador_nombre").value;
 	
-	if(codigo == "" && nombre == "") {
-		alert("Los campos Codigo y Nombre del Nomenclador, no pueden ser vacios.");
+	if(tipo == "NONE" && codigo == "" && nombre == "") {
+		alert("Los campos Tipo, Codigo y Nombre del Nomenclador, no pueden ser vacios.");
 		return;
 	}
 	
-	var nomencladorId = callSaveCodigoNomenclador(getJsonNomenclador(codigo, nombre));
+	var nomencladorId = callSaveCodigoNomenclador(getJsonNomenclador(tipo, codigo, nombre));
 	
 	if (nomencladorId != "-1") {
-		addRowNuevoNom('tb_practicas', nomencladorId);
-		document.getElementById("nuevoNomenclador").style.display = 'none';
+		// addRowNuevoNom('tb_practicas', nomencladorId);
+		// document.getElementById("nuevoNomenclador").style.display = 'none';
 	}else {
 		alert("ERROR: No se pudo agregar verifique los datos ingresados.");	
 	}
+	
+	document.getElementById("nomenclador_tipo").value="NONE";
+	document.getElementById("nomenclador_codigo").value="";
+	document.getElementById("nomenclador_nombre").value="";
+
 	
 }
 
@@ -50,8 +56,8 @@ function callSaveCodigoNomenclador(jsonString) {
 	return retorno;
 }
 
-function getJsonNomenclador(codigo, nombre){
-	return '{"codigo":"'+codigo+'", "nombre":"'+nombre+'"}';
+function getJsonNomenclador(tipo, codigo, nombre){
+	return '{"tipo":"'+tipo+'", "codigo":"'+codigo+'", "nombre":"'+nombre+'"}';
 }
 
 function addRowNuevoNom(tableID, nomencladorId) {
@@ -120,134 +126,188 @@ function updateDate(i){
 </script>
 <div>
 	<!-- Autocompletar Nomenclador de codigos -->
-	<div>										
-	<input type="hidden" name="nomencladorId" id="nomencladorId" value="">										
-		<input
-			data-provide="typeahead" 
-			class="typeahead"
-			name="nomencladorString"
-			type="text"
-			id="nomencladorString"
+	<div>
+		<input type="hidden" name="nomencladorId" id="nomencladorId" value="">
+		<input data-provide="typeahead" class="typeahead"
+			name="nomencladorString" type="text" id="nomencladorString"
 			placeholder="Ingrese aqui, Codigo o Nombre del Nomenclador ..."
 			autocomplete="off"
-			style="height: 20px; width: 40%;margin-bottom:0px">
-	
-		<input type="button" value="Agregar" onclick="addRow('tb_practicas')" class="btn btn-info"/>
-
-		<input type="button" value="..." onclick="javascript:showNuevoNomenclador()" class="btn"/>
-		<span style ="float:right;display: none;" id="nuevoNomenclador">
-			<input type="number" id="nomenclador_codigo"  
-			style="height: 20px; width: 20%;margin-top:2px"			
-			placeholder="C&oacute;digo"	> 
-			<input type="text" id="nomenclador_nombre"  
-			style="height: 20px; width: 60%;margin-top:2px"
-			placeholder="Nombre del Nomenclador">
-			<input type="button" 
-			value="OK" 
-			id="nuevo_nomenclador_ok" 
-			onclick="javascript:nuevoNomencladorOk()"
-			class="btn btn-info"
-			style="margin-bottom: 8px; height: 30px"/>			
-		</span>
+			style="height: 20px; width: 40%; margin-bottom: 0px"> <input
+			type="button" value="Agregar" onclick="addRow('tb_practicas')"
+			class="btn btn-info" /> 
+			<a href="#" title="Nueva Codigo" id="btnNuevoCodigo">
+								<img src="/nuova/resources/img/list_add_16x16.png">
+							</a> 
+			<span
+			style="float: right; display: none;" id="nuevoNomenclador">
+					</span>
 	</div>
 	<!-- Fin Autocompletar Nomenclador de codigos -->
 </div>
 <br>
-<div style = "float:right;padding-right: 20px">
-<a href="#">
-<img alt="Imprimir Orden" src="/nuova/resources/img/print_16x16.png" />
-Imprimir</a> 
+<div style="float: right; padding-right: 20px">
+	<a href="#"> <img alt="Imprimir Orden"
+		src="/nuova/resources/img/print_16x16.png" /> Imprimir
+	</a>
 </div>
 <br>
 
-<div class="tab-content" style="height: 400px">	
-<table class="scroll"  style="width: 100%">			
-<tr>
-	<td colspan="2">										           	
-	<div>		    
-		<table id="tb_practicas" class="table" style="width: 100%; margin: 2% 0;" >
-		<thead>
-		<tr>													        	
-			<td style="width: 40%"><b>Nomenclador</b></td>
-			<td style="width: 10%"></td>
-			<td style="width: 10%"></td>
-			<td style="width: 31%"><b>Estados</b></td>
-			<td style="width: 20%"><b>Automatico</b></td>
-			<td></td>
-			<td>
-				<input type="checkbox" name="selectImprimirAll" 
-				onclick="checkAll(this)">				
+<div class="tab-content" style="height: 400px">
+	<table class="scroll" style="width: 100%">
+		<tr>
+			<td colspan="2">
+				<div>
+					<table id="tb_practicas" class="table"
+						style="width: 100%; margin: 2% 0;">
+						<thead>
+							<tr>
+								<td style="width: 40%"><b>Nomenclador</b></td>
+								<td style="width: 10%"></td>
+								<td style="width: 10%"></td>
+								<td style="width: 31%"><b>Estados</b></td>
+								<td style="width: 20%"><b>Automatico</b></td>
+								<td></td>
+								<td><input type="checkbox" name="selectImprimirAll"
+									onclick="checkAll(this)"></td>
+							</tr>
+							<%
+							  int index = 0;
+							%>
+							<c:forEach items="${ordenDto.practicasListEdit}" var="pa"
+								varStatus="loop">
+								<tr>
+
+									<td><input type="hidden"
+										name="ordenpracticaListEdit[<%=index%>].orddenPracticaId"
+										value="${pa.orddenPracticaId}" /> <input type="hidden"
+										name="ordenpracticaListEdit[<%=index%>].practicaId"
+										value="${pa.practicaId}" /> ${pa.nombre}</td>
+									<td><input type="text"
+										name="ordenpracticaListEdit[<%=index%>].piezaDental"
+										value="${pa.piezaDental}" /></td>
+									<td><input type="hidden"
+										name="ordenpracticaListEdit[<%=index%>].valor"
+										value="${pa.valor}" /></td>
+									<td><select
+										name="ordenpracticaListEdit[<%=index%>].estado"
+										id="ordenpracticaListEdit[<%=index%>].estado"
+										style="width: 70%; margin-bottom: 0px">
+											<option value="NONE">Seleccione Estado ...</option>
+											<option value="AUTORIZACION DIRECTA">AUTORIZACION
+												DIRECTA</option>
+											<option value="PENDIENTE AFILIACIONES">PENDIENTE
+												AFILIACIONES</option>
+											<option value="AUTORIZADA POR AFILIACIONES">AUTORIZADA
+												POR AFILIACIONES</option>
+											<option value="RECHAZADA POR AFILIACIONES">RECHAZADA
+												POR AFILIACIONES</option>
+											<option value="PENDIENTE AUDITORIA">PENDIENTE
+												AUDITORIA</option>
+											<option value="AUTORIZADA POR AUDITORIA">AUTORIZADA
+												POR AUDITORIA</option>
+											<option value="RECHAZADA POR AUDITORIA">RECHAZADA
+												POR AUDITORIA</option>
+											<option value="RECHAZADA">RECHAZADA</option>
+											<option value="ANULADO">ANULADO</option>
+									</select> <script>
+				document.getElementById('ordenpracticaListEdit[<%=index%>].estado').value ='${pa.estado}'; 
+				</script></td>
+
+									<td align="left">
+										<div style="visibility: hidden; height: 0px;">
+											<input type="text"
+												name="ordenpracticaListEdit[<%=index%>].autorizarAutomatico"
+												id="ordenpracticaListEdit[<%=index%>].autorizarAutomatico"
+												value="${pa.autorizarAutomatico}" class="date" />
+										</div>
+
+										<div id="calendar">
+											<div class="input-group registration-date-time"
+												style="padding-top: 0%;">
+												<input class="form-control"
+													name="autorizar_automatico_<%=index%>"
+													id="autorizar_automatico_<%=index%>" type="date"
+													value="${pa.autorizarAutomatico}"
+													onchange="javascript:updateDate(<%=index%>);">
+											</div>
+										</div>
+
+									</td>
+									<td><button type='button' class='btn btn-link'
+											onClick='Eliminar(this.parentNode.parentNode.rowIndex)'>Eliminar</button></td>
+									<td><input type="checkbox"
+										name="ordenpracticaListEdit[<%=index%>].imprimir"></td>
+									<%
+									  index++;
+									%>
+								</tr>
+							</c:forEach>
+						</thead>
+					</table>
+				</div>
 			</td>
 		</tr>
-		<% int index = 0;%>
-		<c:forEach items="${ordenDto.practicasListEdit}" var="pa" varStatus="loop" >
-			<tr>
-			    
-			<td>
-			<input type="hidden" name = "ordenpracticaListEdit[<%=index%>].orddenPracticaId" value = "${pa.orddenPracticaId}" />
-			<input type="hidden" name = "ordenpracticaListEdit[<%=index%>].practicaId" value = "${pa.practicaId}" />
-			${pa.nombre}
-			</td>
-			<td>
-		
-			<input type="text" name = "ordenpracticaListEdit[<%=index%>].piezaDental" value = "${pa.piezaDental}" />
-			
-			
-			</td>
-			<td>
-			<input type="hidden" name = "ordenpracticaListEdit[<%=index%>].valor" value = "${pa.valor}" />
-			</td>			
-			<td>			
-				<select name = "ordenpracticaListEdit[<%=index%>].estado" 
-				id = "ordenpracticaListEdit[<%=index%>].estado" style="width:70%; margin-bottom:0px" >
-					<option value="NONE">Seleccione Estado ...</option>
-					<option value="AUTORIZACION DIRECTA">AUTORIZACION DIRECTA</option> 
-					<option value="PENDIENTE AFILIACIONES">PENDIENTE AFILIACIONES</option>
-					<option value="AUTORIZADA POR AFILIACIONES">AUTORIZADA POR AFILIACIONES</option>
-					<option value="RECHAZADA POR AFILIACIONES">RECHAZADA POR AFILIACIONES</option>
-					<option value="PENDIENTE AUDITORIA">PENDIENTE AUDITORIA</option>
-					<option value="AUTORIZADA POR AUDITORIA">AUTORIZADA POR AUDITORIA</option>
-					<option value="RECHAZADA POR AUDITORIA">RECHAZADA POR AUDITORIA</option>
-					<option value="RECHAZADA">RECHAZADA</option><option value="ANULADO">ANULADO</option>			    
-				</select>
-				<script>
-				document.getElementById('ordenpracticaListEdit[<%=index%>].estado').value ='${pa.estado}'; 
-				</script>
-			</td>
-			
-			<td align="left">				
-					<div style="visibility:hidden;height:0px;">
-						<input type="text" 
-							name = "ordenpracticaListEdit[<%=index%>].autorizarAutomatico"  
-							id = "ordenpracticaListEdit[<%=index%>].autorizarAutomatico"
-							value = "${pa.autorizarAutomatico}" 
-							class="date" />						
-					</div>
-					
-					<div id="calendar">
-					<div class="input-group registration-date-time" style="padding-top:0%;">
-						<input class="form-control" 
-							name="autorizar_automatico_<%=index%>" 
-							id="autorizar_automatico_<%=index%>" 
-							type="date"
-							value = "${pa.autorizarAutomatico}"  
-							onchange="javascript:updateDate(<%=index%>);">
-		            </div>
-		            </div>
-	           
-			</td>
-			<td><button type='button' class='btn btn-link' onClick='Eliminar(this.parentNode.parentNode.rowIndex)'>Eliminar</button></td>
-			<td><input type="checkbox" name="ordenpracticaListEdit[<%=index%>].imprimir"></td>
-			<%index++;%>
-			</tr>
-		</c:forEach>
-		</thead>	   
-		</table>
-	</div>		
-	</td>
-</tr>
-</table>
+	</table>
 </div>
+
+
+<div class="modal fade" id="nuevoCodigo">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only"></span></button>
+        <h4 class="modal-title">Nuevo Código Nomenclador</h4>
+      </div>
+      <div class="modal-body">
+      	<div class="container-fluid">      
+        <div class="row-fluid">
+        	<div class="span9">
+				<div class="formLabel"><form:label path="">Tipo:</form:label></div>				
+				<div class="formInput">
+					<form:select path="" id="nomenclador_tipo" style="width:83%; margin-bottom:0px">
+						<form:option value="NONE" label="Seleccione Tipo ..." />
+						<form:options items="${listNomencladorTipo}" itemLabel="nombre"
+							itemValue="nombre" />
+					</form:select>
+				</div>
+			</div>
+		</div><br>
+		<div class="row-fluid">	 
+			<div class="span9">
+				<div class="formLabel"><form:label path="">C&oacute;digo:</form:label></div>			
+			
+				<div class="formInput">
+				<input type="number" id="nomenclador_codigo"
+				style="height: 20px; width: 40%; margin-top: 2px"
+				placeholder="C&oacute;digo">
+				</div>  
+			</div> 
+		</div>
+		<div class="row-fluid">	
+			<div class="span9">
+				<div class="formLabel"><form:label path="">Nombre:</form:label></div>			
+			
+				<div class="formInput">
+				<input type="text"
+				id="nomenclador_nombre"
+				style="height: 20px; width: 100%; margin-top: 2px"
+				placeholder="Nombre del Nomenclador">
+				</div>  
+			</div> 
+		</div>	
+			
+	  </div>
+      </div>  
+      </div>
+      <div class="modal-footer">
+        <button type="button" id="btnSaveCodigo" class="btn btn-info">Guardar</button>      
+        <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+
 <script>
     $("#tb_practicas tr:gt(0)").each(function () {
 	var isOdon;
@@ -261,4 +321,19 @@ Imprimir</a>
 		this_row.find('td:eq(1)').html('');
 	}
     });
+
+	$(function() {
+		  $('#btnNuevoCodigo').click(function() {
+			 // document.getElementById("localidadNombre").value="";
+		    $('#nuevoCodigo').modal('show');
+		  });
+		  
+		  $('#btnSaveCodigo').click(function() {
+		   // var localidad = document.getElementById("localidadNombre").value;
+		   // var resp = callNuevaLocalidad(getJsonLocalidad(localidad));
+		   nuevoNomencladorOk();
+		    $('#nuevoCodigo').modal('hide');
+		  });
+		});
+    
 </script>
