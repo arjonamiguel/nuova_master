@@ -138,9 +138,7 @@ function updateDate(i){
 			<a href="#" title="Nueva Codigo" id="btnNuevoCodigo">
 								<img src="/nuova/resources/img/list_add_16x16.png">
 							</a> 
-			<span
-			style="float: right; display: none;" id="nuevoNomenclador">
-					</span>
+			
 	</div>
 	<!-- Fin Autocompletar Nomenclador de codigos -->
 </div>
@@ -252,61 +250,71 @@ function updateDate(i){
 
 
 <div class="modal fade" id="nuevoCodigo">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only"></span></button>
-        <h4 class="modal-title">Nuevo Código Nomenclador</h4>
-      </div>
-      <div class="modal-body">
-      	<div class="container-fluid">      
-        <div class="row-fluid">
-        	<div class="span9">
-				<div class="formLabel"><form:label path="">Tipo:</form:label></div>				
-				<div class="formInput">
-					<form:select path="" id="nomenclador_tipo" style="width:83%; margin-bottom:0px">
-						<form:option value="NONE" label="Seleccione Tipo ..." />
-						<form:options items="${listNomencladorTipo}" itemLabel="nombre"
-							itemValue="nombre" />
-					</form:select>
-				</div>
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal">
+					<span aria-hidden="true">×</span><span class="sr-only"></span>
+				</button>
+				<h4 class="modal-title">Nuevo Código Nomenclador</h4>
 			</div>
-		</div><br>
-		<div class="row-fluid">	 
-			<div class="span9">
-				<div class="formLabel"><form:label path="">C&oacute;digo:</form:label></div>			
-			
-				<div class="formInput">
-				<input type="number" id="nomenclador_codigo"
-				style="height: 20px; width: 40%; margin-top: 2px"
-				placeholder="C&oacute;digo">
-				</div>  
-			</div> 
-		</div>
-		<div class="row-fluid">	
-			<div class="span9">
-				<div class="formLabel"><form:label path="">Nombre:</form:label></div>			
-			
-				<div class="formInput">
-				<input type="text"
-				id="nomenclador_nombre"
-				style="height: 20px; width: 100%; margin-top: 2px"
-				placeholder="Nombre del Nomenclador">
-				</div>  
-			</div> 
-		</div>	
-			
-	  </div>
-      </div>  
-      </div>
-      <div class="modal-footer">
-        <button type="button" id="btnSaveCodigo" class="btn btn-info">Guardar</button>      
-        <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
-      </div>
-    </div><!-- /.modal-content -->
-  </div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
+			<div class="modal-body">
+				<div class="container-fluid">
+					<div class="row-fluid">
+						<div class="span9">
+							<div class="formLabel">
+								<form:label path="">Tipo:</form:label>
+							</div>
+							<div class="formInput">
+								<form:select path="" id="nomenclador_tipo"
+									style="width:83%; margin-bottom:0px">
+									<form:option value="NONE" label="Seleccione Tipo ..." />
+									<form:options items="${listNomencladorTipo}" itemLabel="nombre"
+										itemValue="nombre" />
+								</form:select>
+							</div>
+						</div>
+					</div>
+					<br>
+					<div class="row-fluid">
+						<div class="span9">
+							<div class="formLabel">
+								<form:label path="">C&oacute;digo:</form:label>
+							</div>
 
+							<div class="formInput">
+								<input type="number" id="nomenclador_codigo"
+									style="height: 20px; width: 40%; margin-top: 2px"
+									placeholder="C&oacute;digo">
+							</div>
+						</div>
+					</div>
+					<div class="row-fluid">
+						<div class="span9">
+							<div class="formLabel">
+								<form:label path="">Nombre:</form:label>
+							</div>
+
+							<div class="formInput">
+								<input type="text" id="nomenclador_nombre"
+									style="height: 20px; width: 100%; margin-top: 2px"
+									placeholder="Nombre del Nomenclador">
+							</div>
+						</div>
+					</div>
+
+				</div>
+				</div>
+		</div>
+		
+		<div class="modal-footer">
+			<button type="button" id="btnSaveCodigo" class="btn btn-info">Guardar</button>
+			<button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+		</div>
+	</div>
+	<!-- /.modal-content -->
+</div>
+<!-- /.modal-dialog -->
 
 <script>
     $("#tb_practicas tr:gt(0)").each(function () {
