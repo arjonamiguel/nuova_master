@@ -219,8 +219,10 @@ public class OrdenController {
       String nombre = "";
       OrdenDTO ordenDto = transformOrdenToDto(ordenManager.findOrdenById(ordenId));
       if (ordenDto.getEspecialidad() != null) {
-        Especialidad e = especialidadManager.findEspecialidadById(ordenDto.getEspecialidad());
-        nombre = e.getNombre();
+        if (ordenDto.getEspecialidad() != null) {
+          Especialidad e = especialidadManager.findEspecialidadById(ordenDto.getEspecialidad());
+          nombre = (e != null) ? e.getNombre() : "";
+        }
         List<Profesional> profesionales =
             especialidadManager.findProfesionalByEspecialidadId(ordenDto.getEspecialidad());
         items = getProfesionalDTOList(profesionales);
