@@ -1072,8 +1072,10 @@ public class OrdenController {
     for (OrdenPrestador op : orden.getOrdenPrestadors()) {
       dto.setEspecialidadPrestador(op.getEspecialidadId());
       Especialidad esp = especialidadManager.findEspecialidadById(op.getEspecialidadId());
-      dto.setPrestadorId(op.getPrestadores().getPrestadorId());
-      dto.setEspecialidadPrestadorView(esp.getNombre());
+      if (esp != null) {
+	      dto.setPrestadorId(op.getPrestadores().getPrestadorId());
+	      dto.setEspecialidadPrestadorView(esp.getNombre());
+      }
     }
 
     // boton paciente
