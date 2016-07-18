@@ -226,7 +226,7 @@ public class PacienteDAOImpl implements PacienteDAO {
     public List<Especialidad> findEspecialidadesAutocomplete(String search, Integer tipo) {
         Query query = this.sessionFactory.getCurrentSession()
                 .createQuery("FROM Especialidad e " + " WHERE e.eliminado=0 and upper(e.nombre) LIKE '%"
-                        + search.toUpperCase() + "%' and e.tipo=" + tipo + " ORDER BY e.nombre ASC");
+                        + search.toUpperCase() + "%' ORDER BY e.nombre ASC");
         // query.setFirstResult(pageable.getOffset());
         query.setMaxResults(20);
         List<Especialidad> result = query.list();
