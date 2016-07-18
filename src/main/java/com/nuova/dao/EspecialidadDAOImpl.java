@@ -115,7 +115,7 @@ public class EspecialidadDAOImpl implements EspecialidadDAO {
   @Override
   public List<Especialidad> findAllByTipo(Integer tipo) {
     Query query = this.sessionFactory.getCurrentSession()
-        .createQuery("FROM Especialidad e  WHERE  e.tipo = 0 and e.eliminado=0 ORDER BY e.nombre");
+        .createQuery("FROM Especialidad e  WHERE  e.eliminado=0 ORDER BY e.nombre");
 
     return query.list();
   }
