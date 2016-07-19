@@ -321,8 +321,10 @@
 		var cell1 = row.insertCell(1);
 		var str1 = document.getElementById("nomencladorString").value;
 		var str2 = "ODON";
+		var str3 = "odon";
+		var str4 = "Odon";
 		
-		if(str1.indexOf(str2) != -1){
+		if(str1.indexOf(str2) != -1 || str1.indexOf(str3) != -1 || str1.indexOf(str4) != -1){
 			cell1.innerHTML = "<input type='text' name='ordenpracticaListEdit[" + index + "].piezaDental' placeholder='pieza dental'>";
 		}
 		var cell2 = row.insertCell(2);
