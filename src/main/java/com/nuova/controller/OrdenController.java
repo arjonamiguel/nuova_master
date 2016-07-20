@@ -4,6 +4,7 @@ import com.google.common.base.Charsets;
 import com.google.common.io.ByteSource;
 import com.nuova.dto.ComboItemDTO;
 import com.nuova.dto.EspecialidadDTO;
+import com.nuova.dto.GridOrdenPracticaDTO;
 import com.nuova.dto.NomencladorDTO;
 import com.nuova.dto.ObraSocialDTO;
 import com.nuova.dto.ObservacionesDTO;
@@ -260,7 +261,7 @@ public class OrdenController {
   // Ajax --------------------------------------------
   @RequestMapping(value = ConstantControllers.AJAX_GET_ORDENES_PAGINADOS,
       method = RequestMethod.GET)
-  public @ResponseBody Page<OrdenDTO> getOrdenesPaginados(
+  public @ResponseBody Page<GridOrdenPracticaDTO> getOrdenesPaginados(
       @PathVariable("codigoOrdenTipo") Integer codigoOrdenTipo,
       @RequestParam(required = false, defaultValue = "0") Integer start,
       @RequestParam(required = false, defaultValue = "50") Integer limit) {
@@ -269,14 +270,11 @@ public class OrdenController {
     // Sort sort = new Sort(Sort.Direction.DESC, "creationDate");
     Pageable pageable = new PageRequest(start, limit);
 
-    Page<Orden> ordenes = ordenManager.findOrdenesByPageable(pageable, codigoOrdenTipo);
-    List<OrdenDTO> dtos = new ArrayList<OrdenDTO>();
-    for (Orden o : ordenes) {
-      OrdenDTO dto = transformOrdenToDto(o);
-      dtos.add(dto);
-    }
+    Page<GridOrdenPracticaDTO> ordenes =
+        ordenManager.findOrdenesByPageable(pageable, codigoOrdenTipo);
 
-    return new PageImpl<OrdenDTO>(dtos, pageable, ordenes.getTotalElements());
+    return new PageImpl<GridOrdenPracticaDTO>(ordenes.getContent(), pageable,
+        ordenes.getTotalElements());
   }
 
   @RequestMapping(value = ConstantControllers.AJAX_GET_CONSULTASBYPACIENTE_PAGINADOS,
@@ -1075,8 +1073,8 @@ public class OrdenController {
       dto.setEspecialidadPrestador(op.getEspecialidadId());
       Especialidad esp = especialidadManager.findEspecialidadById(op.getEspecialidadId());
       if (esp != null) {
-	      dto.setPrestadorId(op.getPrestadores().getPrestadorId());
-	      dto.setEspecialidadPrestadorView(esp.getNombre());
+        dto.setPrestadorId(op.getPrestadores().getPrestadorId());
+        dto.setEspecialidadPrestadorView(esp.getNombre());
       }
     }
 
@@ -1142,7 +1140,6 @@ public class OrdenController {
     }
 
     Collections.sort(retorno, new Comparator<ObservacionesDTO>() {
-      @Override
       public int compare(ObservacionesDTO a1, ObservacionesDTO a2) {
         return a2.getFecha().compareTo(a1.getFecha());
       }
@@ -1161,7 +1158,7 @@ public class OrdenController {
     }
 
     Collections.sort(retorno, new Comparator<OrdenWorkflowDTO>() {
-      @Override
+
       public int compare(OrdenWorkflowDTO a1, OrdenWorkflowDTO a2) {
         return a2.getFecha().compareTo(a1.getFecha());
       }
