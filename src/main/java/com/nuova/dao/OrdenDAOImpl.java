@@ -65,23 +65,8 @@ public class OrdenDAOImpl implements OrdenDAO {
 
   public Page<GridOrdenPracticaDTO> findOrdenesByPageable(Pageable pageable,
       Integer codigoOrdenTipo) {
-
-
-    // Query query = this.sessionFactory.getCurrentSession().createQuery("FROM Orden o "
-    // + " WHERE o.ordenTipo.codigo=" + codigoOrdenTipo + " ORDER BY o.ordenId DESC");
-
-    // query.setFirstResult(pageable.getOffset());
-    // query.setMaxResults(pageable.getPageNumber());
-
-    // Query query = this.sessionFactory.getCurrentSession().createQuery(
-    // " SELECT new com.nuova.dto.OrdenDTO(o.ordenId, concat(p.apellido,' ',p.nombre), ot.nombre,
-    // o.fecha, o.fueraCartilla, concat(op.profesional.apellido, ' ', op.profesional.nombre )) FROM
-    // Orden o "
-    // + " JOIN o.paciente p JOIN o.ordenTipo ot JOIN o.ordenProfesional op "
-    // + " WHERE o.ordenTipo.codigo=" + codigoOrdenTipo + " ORDER BY o.ordenId DESC");
-    // query.setMaxResults(20);
     Query query = sessionFactory.getCurrentSession()
-        .createSQLQuery("CALL zp_getAllPracticas(:codigoOrdenTipo);")
+        .createSQLQuery("CALL zp_getGridAllPracticas(:codigoOrdenTipo);")
         .setInteger("codigoOrdenTipo", codigoOrdenTipo)
         .setResultTransformer(Transformers.aliasToBean(GridOrdenPracticaDTO.class));
     List<GridOrdenPracticaDTO> result = query.list();
