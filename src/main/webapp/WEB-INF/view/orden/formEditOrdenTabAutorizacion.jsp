@@ -123,6 +123,21 @@ function updateDate(i){
 	document.getElementById("ordenpracticaListEdit["+i+"].autorizarAutomatico").value=document.getElementById("autorizar_automatico_"+i).value;
 }
 
+function marcarAll(){
+	
+	if(document.getElementById("authAll").checked==true){
+		$("#tb_practicas").find("select").each(function() {
+			$this = $(this);
+			$this.val("AUTORIZACION DIRECTA");
+		});
+	}else{
+		$("#tb_practicas").find("select").each(function() {
+			$this = $(this);
+			$this.val("NONE");
+		});
+	}		
+}
+
 </script>
 <div>
 	<!-- Autocompletar Nomenclador de codigos -->
@@ -143,12 +158,18 @@ function updateDate(i){
 	<!-- Fin Autocompletar Nomenclador de codigos -->
 </div>
 <br>
-<div style="float: right; padding-right: 20px">
+
+<table class="table" style="width: 100%">
+<tr>
+<td style="width:90%;"><div style="float:right;"><b>Autorizar todos:</b></div></td>
+<td><div style="float:left;"><input id="authAll" type="checkbox" class="largerCheckbox" onchange="javascript:marcarAll()"></div></td>
+<td>
 	<a href="#"> <img alt="Imprimir Orden"
 		src="/nuova/resources/img/print_16x16.png" /> Imprimir
 	</a>
-</div>
-<br>
+</td>
+</tr>
+</table>
 
 <div class="tab-content" style="height: 400px">
 	<table class="scroll" style="width: 100%">
@@ -160,7 +181,7 @@ function updateDate(i){
 						<thead>
 							<tr>
 								<td style="width: 40%"><b>Nomenclador</b></td>
-								<td style="width: 10%"></td>
+								<td style="width: 10%"><b>Pieza Dental</b></td>
 								<td style="width: 10%"></td>
 								<td style="width: 31%"><b>Estados</b></td>
 								<td style="width: 20%"><b>Automatico</b></td>
