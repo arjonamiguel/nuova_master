@@ -4,6 +4,7 @@ import com.google.common.base.Charsets;
 import com.google.common.io.ByteSource;
 import com.nuova.dto.ComboItemDTO;
 import com.nuova.dto.EspecialidadDTO;
+import com.nuova.dto.GridOrdenPracticaDTO;
 import com.nuova.dto.NomencladorDTO;
 import com.nuova.dto.ObraSocialDTO;
 import com.nuova.dto.ObservacionesDTO;
@@ -74,6 +75,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
+import java.util.Formatter;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -98,6 +100,8 @@ public class OrdenController {
   EspecialidadManager especialidadManager;
   @Autowired
   CajaManager cajaManager;
+
+  boolean isFormDelete = false;
 
   private String iniciada = " <span  style='color:black;background:gold'>INICIADA</span>";
   private String autorizada = "<span style='color:white;background: green'>AUTORIZADA</span>";
@@ -182,6 +186,19 @@ public class OrdenController {
     return ConstantRedirect.VIEW_FORM_ADD_ORDEN_BY_PACIENTE;
   }
 
+  @RequestMapping(value = ConstantControllers.FORM_DELETE_ORDEN, method = RequestMethod.GET)
+  public String formDelteOrden(ModelMap map, @PathVariable("ordenId") Integer ordenId) {
+    this.isFormDelete = true;
+    return formEditOrden(map, ordenId);
+  }
+
+  @RequestMapping(value = ConstantControllers.FORM_DELETE_ORDEN_CONSULTA,
+      method = RequestMethod.GET)
+  public String formDeleteConsulta(ModelMap map, @PathVariable("ordenId") Integer ordenId) {
+    this.isFormDelete = true;
+    return formEditConsulta(map, ordenId);
+  }
+
   @RequestMapping(value = ConstantControllers.FORM_EDIT_ORDEN, method = RequestMethod.GET)
   public String formEditOrden(ModelMap map, @PathVariable("ordenId") Integer ordenId) {
     if (ordenId != null) {
@@ -209,7 +226,13 @@ public class OrdenController {
       map.addAttribute("listNomencladorTipo", practicaManager.findNomecladorTipo());
     }
 
-    return ConstantRedirect.VIEW_FORM_EDIT_ORDEN;
+    if (!isFormDelete) {
+      return ConstantRedirect.VIEW_FORM_EDIT_ORDEN;
+    } else {
+      this.isFormDelete = false;
+      return ConstantRedirect.VIEW_FORM_DELETE_ORDEN;
+    }
+
   }
 
   @RequestMapping(value = ConstantControllers.FORM_EDIT_CONSULTA, method = RequestMethod.GET)
@@ -235,7 +258,13 @@ public class OrdenController {
 
     }
 
-    return ConstantRedirect.VIEW_FORM_EDIT_CONSULTA;
+    if (!isFormDelete) {
+      return ConstantRedirect.VIEW_FORM_EDIT_CONSULTA;
+    } else {
+      this.isFormDelete = false;
+      return ConstantRedirect.VIEW_FORM_DELETE_CONSULTA;
+    }
+
   }
 
   @RequestMapping(value = ConstantControllers.DOWNLOAD, method = RequestMethod.GET)
@@ -260,7 +289,7 @@ public class OrdenController {
   // Ajax --------------------------------------------
   @RequestMapping(value = ConstantControllers.AJAX_GET_ORDENES_PAGINADOS,
       method = RequestMethod.GET)
-  public @ResponseBody Page<OrdenDTO> getOrdenesPaginados(
+  public @ResponseBody Page<GridOrdenPracticaDTO> getOrdenesPaginados(
       @PathVariable("codigoOrdenTipo") Integer codigoOrdenTipo,
       @RequestParam(required = false, defaultValue = "0") Integer start,
       @RequestParam(required = false, defaultValue = "50") Integer limit) {
@@ -269,14 +298,11 @@ public class OrdenController {
     // Sort sort = new Sort(Sort.Direction.DESC, "creationDate");
     Pageable pageable = new PageRequest(start, limit);
 
-    Page<Orden> ordenes = ordenManager.findOrdenesByPageable(pageable, codigoOrdenTipo);
-    List<OrdenDTO> dtos = new ArrayList<OrdenDTO>();
-    for (Orden o : ordenes) {
-      OrdenDTO dto = transformOrdenToDto(o);
-      dtos.add(dto);
-    }
+    Page<GridOrdenPracticaDTO> ordenes =
+        ordenManager.findOrdenesByPageable(pageable, codigoOrdenTipo);
 
-    return new PageImpl<OrdenDTO>(dtos, pageable, ordenes.getTotalElements());
+    return new PageImpl<GridOrdenPracticaDTO>(ordenes.getContent(), pageable,
+        ordenes.getTotalElements());
   }
 
   @RequestMapping(value = ConstantControllers.AJAX_GET_CONSULTASBYPACIENTE_PAGINADOS,
@@ -504,6 +530,33 @@ public class OrdenController {
     return "redirect:" + redirect;
   }
 
+  @RequestMapping(value = ConstantControllers.DELETE_ORDEN, method = RequestMethod.POST)
+  public String deleteOrden(ModelMap map, @ModelAttribute(value = "ordenDto") OrdenDTO dto) {
+    int message = Util.MESSAGE_SUCCESS;
+    String redirect = "";
+    try {
+      Orden orden = ordenManager.findOrdenById(dto.getOrdenId());
+      ordenManager.delete(orden.getOrdenId());
+      if (orden.getOrdenTipo().getCodigo().intValue() == 100) {
+        redirect = ConstantRedirect.VIEW_MAIN_CONSULTA;
+      }
+      if (orden.getOrdenTipo().getCodigo().intValue() == 101) {
+        redirect = ConstantRedirect.VIEW_MAIN_CONSULTA;
+      }
+      if (orden.getOrdenTipo().getCodigo().intValue() == 102) {
+        redirect = ConstantRedirect.VIEW_MAIN_ORDEN;
+      }
+
+
+    } catch (Exception ex) {
+      ex.printStackTrace();
+    }
+
+
+
+    return redirect;
+  }
+
   @RequestMapping(value = ConstantControllers.EDIT_ORDEN, method = RequestMethod.POST)
   public String editOrden(ModelMap map, @ModelAttribute(value = "ordenDto") OrdenDTO dto) {
     int message = Util.MESSAGE_SUCCESS;
@@ -670,11 +723,16 @@ public class OrdenController {
         }
       }
 
+      Formatter fmt = new Formatter();
+      fmt.format("%08d", orden.getOrdenId());
+      String nroOrden = fmt.toString();
+
       for (OrdenDocumentDTO hc : dto.getHistoriasclinicas()) {
         if (hc.getDocumentId() == null && hc.getFileData() != null && !hc.getFileData().isEmpty()) {
           OrdenDocument content = new OrdenDocument();
           content.setContent(hc.getFileData().getBytes());
-          content.setFileName(hc.getFileData().getOriginalFilename());
+          content.setFileName("HC_" + nroOrden + "_" + orden.getPaciente().getApellido() + "_"
+              + orden.getPaciente().getNombre() + "_" + hc.getFileData().getOriginalFilename());
           content.setType(Util.DOCUMENT_TYPE);
           content.setFileType(hc.getFileData().getContentType());
           content.setOrdenId(orden.getOrdenId());
@@ -1075,8 +1133,8 @@ public class OrdenController {
       dto.setEspecialidadPrestador(op.getEspecialidadId());
       Especialidad esp = especialidadManager.findEspecialidadById(op.getEspecialidadId());
       if (esp != null) {
-	      dto.setPrestadorId(op.getPrestadores().getPrestadorId());
-	      dto.setEspecialidadPrestadorView(esp.getNombre());
+        dto.setPrestadorId(op.getPrestadores().getPrestadorId());
+        dto.setEspecialidadPrestadorView(esp.getNombre());
       }
     }
 
@@ -1142,7 +1200,6 @@ public class OrdenController {
     }
 
     Collections.sort(retorno, new Comparator<ObservacionesDTO>() {
-      @Override
       public int compare(ObservacionesDTO a1, ObservacionesDTO a2) {
         return a2.getFecha().compareTo(a1.getFecha());
       }
@@ -1161,7 +1218,7 @@ public class OrdenController {
     }
 
     Collections.sort(retorno, new Comparator<OrdenWorkflowDTO>() {
-      @Override
+
       public int compare(OrdenWorkflowDTO a1, OrdenWorkflowDTO a2) {
         return a2.getFecha().compareTo(a1.getFecha());
       }

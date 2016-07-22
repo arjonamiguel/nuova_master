@@ -131,7 +131,7 @@ function goInfoPaciente() {
 									</div>
 									<div class="info">
 										<h1>${usuario.username}</h1>
-										<h2>ROL:</h2>
+										<h2></h2>
 										<a href="http://www.nuovamed.com">Visitanos en: www.nuovamed.com</a> <a href="http://www.nuovamed.com"
 											class="block_link"> <span class="icon clip"></span> <span>Bienvenido
 												a SYSNUOVA</span>
@@ -168,6 +168,7 @@ function goInfoPaciente() {
 									</div>
 
 								</div>
+								<sec:authorize access="hasRole('ROLE_ADMIN')">
 								<div class="offers_insc">
 									<h3>Monitor de Pr&aacute;cticas Realizadas</h3>
 									<ul>
@@ -180,7 +181,7 @@ function goInfoPaciente() {
 									<a href="/nuova/mainOrdenPractica">Ir al Administrador Ordenes de Pr&aacute;cticas</a>
 									</sec:authorize>
 								</div>
-
+								</sec:authorize>
 							</div>
 
 							<div class="block_companies_courses">
@@ -215,6 +216,8 @@ function goInfoPaciente() {
 									</div>
 
 								</div>
+								
+								<sec:authorize access="hasRole('ROLE_ADMIN')">
 								<div class="offers_suggest">
 									<h3>Historial de Registros efectuados hasta el dia:</h3>
 
@@ -260,6 +263,7 @@ function goInfoPaciente() {
 									</ul>
 									
 								</div>
+								</sec:authorize>
 
 							</div>
 						</div>
