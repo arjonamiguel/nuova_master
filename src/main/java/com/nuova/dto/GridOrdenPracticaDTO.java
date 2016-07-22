@@ -101,8 +101,10 @@ public class GridOrdenPracticaDTO {
 
   public String getAcciones() {
     String action = "";
+    String actionDelete = "";
     if (getOrdenTipoCodigo().intValue() == 100) {
       action = "formEditConsulta";
+      actionDelete = "formDeleteConsulta";
     }
 
     if (getOrdenTipoCodigo().intValue() == 101) {
@@ -111,6 +113,7 @@ public class GridOrdenPracticaDTO {
 
     if (getOrdenTipoCodigo().intValue() == 102) {
       action = "formEditOrden";
+      actionDelete = "formDeleteOrden";
     }
 
     String botonEdit = "<a class='btn btn-info btn-xs' href='/nuova/" + action + "/" + getOrdenId()
@@ -128,7 +131,11 @@ public class GridOrdenPracticaDTO {
     // String botonPrint = "<button type='button' class='btn btn-info btn-lg' data-toggle='modal'
     // data-target='#myModal'>Open Modal</button>";
 
-    acciones = botonEdit + botonPrint;
+    String botonDelete = "<a class='btn btn-danger btn-xs' href='" + actionDelete + "/"
+        + getOrdenId() + "'><span class='icon icon-remove'></span></a>";
+
+
+    acciones = botonEdit + botonPrint + botonDelete;
 
     return acciones;
   }

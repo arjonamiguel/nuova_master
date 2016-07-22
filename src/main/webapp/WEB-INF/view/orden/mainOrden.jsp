@@ -41,7 +41,7 @@
 									columnNames : [ "NRO.ORDEN","PACIENTE","TIPO" ,"FECHA","SOLICITANTE","ESPECIALIDAD", "" ],
 									columnKeys : [ "nroOrden","botonpaciente","ordenTipoDesc" , "fecha", "apellidoNombreProfesional"
 													, "especialidadView", "acciones"],
-									columnWidths : [ "10%", "20%", ],
+									columnWidths : [ "10%", "15%", ],
 									sortable : [ true, false, true,true,true ],
 									data : rows
 								});

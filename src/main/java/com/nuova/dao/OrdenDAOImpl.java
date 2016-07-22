@@ -43,9 +43,12 @@ public class OrdenDAOImpl implements OrdenDAO {
 
 
   public void delete(Integer ordenId) {
-    this.sessionFactory.getCurrentSession()
-        .createQuery(" DELETE FROM Orden o WHERE o.ordenId = :ordenId ")
-        .setInteger("ordenId", ordenId).executeUpdate();
+    Query query = sessionFactory.getCurrentSession()
+        .createSQLQuery("CALL zp_deleteOrden(:ordenId);").setInteger("ordenId", ordenId);
+    query.executeUpdate();
+    // this.sessionFactory.getCurrentSession()
+    // .createQuery(" DELETE FROM Orden o WHERE o.ordenId = :ordenId ")
+    // .setInteger("ordenId", ordenId).executeUpdate();
 
   }
 
@@ -59,7 +62,6 @@ public class OrdenDAOImpl implements OrdenDAO {
     this.sessionFactory.getCurrentSession()
         .createQuery(" DELETE FROM OrdenPractica o WHERE o.orden.ordenId = :ordenId ")
         .setInteger("ordenId", ordenId).executeUpdate();
-
   }
 
 
