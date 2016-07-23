@@ -53,6 +53,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
@@ -463,7 +464,7 @@ public class OrdenController {
   }
 
   @RequestMapping(value = ConstantControllers.ADD_ORDEN, method = RequestMethod.POST)
-  public String addOrden(@ModelAttribute(value = "ordenDto") OrdenDTO ordenDto,
+  public String addOrden(ModelMap map, @ModelAttribute(value = "ordenDto") OrdenDTO ordenDto,
       BindingResult result) {
     User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
@@ -524,7 +525,30 @@ public class OrdenController {
       redirect = ConstantControllers.MAIN_CONSULTA_ODONTOLOGICA;
     }
     if (orden.getOrdenTipo().getCodigo().intValue() == 102) {
-      redirect = ConstantControllers.ORDEN_MESSAGE;
+      OrdenDTO ordenDt = transformOrdenToDto(ordenManager.findOrdenById(orden.getOrdenId()));
+      Especialidad e = null;
+      if (ordenDt.getEspecialidad() != null) {
+        e = especialidadManager.findEspecialidadById(ordenDt.getEspecialidad());
+      }
+
+      List<Profesional> profesionales =
+          especialidadManager.findProfesionalByEspecialidadId(ordenDt.getEspecialidad());
+
+      List<Prestadores> prestadores =
+          especialidadManager.findPrestadorByEspecialidadId(ordenDt.getEspecialidadPrestador());
+
+      User u = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+      int observacionCount = ordenDto.getObservacioneses().size();
+      map.addAttribute("ordenDto", ordenDt);
+      map.addAttribute("observacionCount", observacionCount);
+      map.addAttribute("userNameLogged", u.getUsername());
+      map.addAttribute("ordenEstadosList", Util.getOrdenEstadosList());
+      map.addAttribute("profesionales", getProfesionalDTOList(profesionales));
+      map.addAttribute("prestadores", getPrestadorDTOList(prestadores));
+      map.addAttribute("especialidadView", e == null ? null : e.getNombre());
+      map.addAttribute("listNomencladorTipo", practicaManager.findNomecladorTipo());
+
+      return ConstantRedirect.VIEW_FORM_EDIT_ORDEN;
     }
 
     return "redirect:" + redirect;
@@ -561,10 +585,15 @@ public class OrdenController {
   public String editOrden(ModelMap map, @ModelAttribute(value = "ordenDto") OrdenDTO dto) {
     int message = Util.MESSAGE_SUCCESS;
     Orden orden = ordenManager.findOrdenById(dto.getOrdenId());
+    boolean isRolAdmin = false;
 
     try {
 
       User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+      List<GrantedAuthority> ga = new ArrayList(user.getAuthorities());
+      GrantedAuthority rol = ga.get(0);
+      isRolAdmin = rol.getAuthority().equals("ROLE_ADMIN") ? true : false;
+
       List<OrdenPracticaDTO> practicas = dto.getOrdenpracticaListEdit();
 
       // Persisto Observacion
@@ -576,28 +605,30 @@ public class OrdenController {
       }
 
       // Persiste Practicas
-      for (OrdenPractica o : orden.getOrdenPracticas()) {
-        ordenManager.deleteOrdenPractica(o.getOrden().getOrdenId());
-      }
-
-      Set<OrdenPractica> persistOrdenPracticaList = new HashSet<OrdenPractica>();
-      for (OrdenPracticaDTO opdto : practicas) {
-        if (opdto.getPracticaId() != null) {
-          Nomenclador p = new Nomenclador();
-          p.setNomencladorId(opdto.getPracticaId());
-          OrdenPractica op = new OrdenPractica();
-          op.setFecha(new Date());
-          op.setOrden(orden);
-          op.setNomenclador(p);
-          op.setEstado(opdto.getEstado());
-          op.setValor(opdto.getValor());
-          op.setAutorizarAutomatico(Util.parseToDate(opdto.getAutorizarAutomatico()));
-          op.setPiezaDental(opdto.getPiezaDental());
-
-          persistOrdenPracticaList.add(op);
+      if (isRolAdmin) {
+        for (OrdenPractica o : orden.getOrdenPracticas()) {
+          ordenManager.deleteOrdenPractica(o.getOrden().getOrdenId());
         }
+
+        Set<OrdenPractica> persistOrdenPracticaList = new HashSet<OrdenPractica>();
+        for (OrdenPracticaDTO opdto : practicas) {
+          if (opdto.getPracticaId() != null) {
+            Nomenclador p = new Nomenclador();
+            p.setNomencladorId(opdto.getPracticaId());
+            OrdenPractica op = new OrdenPractica();
+            op.setFecha(new Date());
+            op.setOrden(orden);
+            op.setNomenclador(p);
+            op.setEstado(opdto.getEstado());
+            op.setValor(opdto.getValor());
+            op.setAutorizarAutomatico(Util.parseToDate(opdto.getAutorizarAutomatico()));
+            op.setPiezaDental(opdto.getPiezaDental());
+
+            persistOrdenPracticaList.add(op);
+          }
+        }
+        orden.setOrdenPracticas(persistOrdenPracticaList);
       }
-      orden.setOrdenPracticas(persistOrdenPracticaList);
 
       // Persiste Estado
       if (dto.getEstado() != null && !orden.getEstado().equals(dto.getEstado())) {
@@ -607,14 +638,16 @@ public class OrdenController {
         orden.setEstado(dto.getEstado());
       }
 
-      // Prestador
-      if (dto.getEspecialidadPrestador() != null && dto.getPrestadorId() != null) {
-        Set<OrdenPrestador> ordenPrestadores = new HashSet<OrdenPrestador>();
-        OrdenPrestador opr = transformDtoToOrdenPrestador(dto);
-        opr.setOrden(orden);
-        ordenPrestadores.add(opr);
-        ordenManager.deleteOrdenPrestador(orden.getOrdenId());
-        orden.setOrdenPrestadors(ordenPrestadores);
+      if (isRolAdmin) {
+        // Prestador
+        if (dto.getEspecialidadPrestador() != null && dto.getPrestadorId() != null) {
+          Set<OrdenPrestador> ordenPrestadores = new HashSet<OrdenPrestador>();
+          OrdenPrestador opr = transformDtoToOrdenPrestador(dto);
+          opr.setOrden(orden);
+          ordenPrestadores.add(opr);
+          ordenManager.deleteOrdenPrestador(orden.getOrdenId());
+          orden.setOrdenPrestadors(ordenPrestadores);
+        }
       }
 
       // requisitos
@@ -710,50 +743,52 @@ public class OrdenController {
 
       // Actualizo Orden Document
       // Historia Cinica - Archivos Adjuntos
-      List<OrdenDocument> documents = new ArrayList<OrdenDocument>();
-      List<OrdenDocument> documentsTotal = new ArrayList<OrdenDocument>();
-      List<OrdenDocument> documentsOld =
-          ordenManager.finAllOrdenDocumentByOrdenId(orden.getOrdenId());
-      for (OrdenDocumentDTO hc : dto.getHistoriasclinicas()) {
-        if (hc.getDocumentId() != null) {
-          OrdenDocument d = ordenManager.findOrdenDocumentById(hc.getDocumentId());
-          if (d != null) {
-            documents.add(d);
+      if (isRolAdmin) {
+        List<OrdenDocument> documents = new ArrayList<OrdenDocument>();
+        List<OrdenDocument> documentsTotal = new ArrayList<OrdenDocument>();
+        List<OrdenDocument> documentsOld =
+            ordenManager.finAllOrdenDocumentByOrdenId(orden.getOrdenId());
+        for (OrdenDocumentDTO hc : dto.getHistoriasclinicas()) {
+          if (hc.getDocumentId() != null) {
+            OrdenDocument d = ordenManager.findOrdenDocumentById(hc.getDocumentId());
+            if (d != null) {
+              documents.add(d);
+            }
           }
         }
-      }
 
-      Formatter fmt = new Formatter();
-      fmt.format("%08d", orden.getOrdenId());
-      String nroOrden = fmt.toString();
+        Formatter fmt = new Formatter();
+        fmt.format("%08d", orden.getOrdenId());
+        String nroOrden = fmt.toString();
 
-      for (OrdenDocumentDTO hc : dto.getHistoriasclinicas()) {
-        if (hc.getDocumentId() == null && hc.getFileData() != null && !hc.getFileData().isEmpty()) {
-          OrdenDocument content = new OrdenDocument();
-          content.setContent(hc.getFileData().getBytes());
-          content.setFileName("HC_" + nroOrden + "_" + orden.getPaciente().getApellido() + "_"
-              + orden.getPaciente().getNombre() + "_" + hc.getFileData().getOriginalFilename());
-          content.setType(Util.DOCUMENT_TYPE);
-          content.setFileType(hc.getFileData().getContentType());
-          content.setOrdenId(orden.getOrdenId());
-          content.setSize(hc.getFileData().getSize());
+        for (OrdenDocumentDTO hc : dto.getHistoriasclinicas()) {
+          if (hc.getDocumentId() == null && hc.getFileData() != null
+              && !hc.getFileData().isEmpty()) {
+            OrdenDocument content = new OrdenDocument();
+            content.setContent(hc.getFileData().getBytes());
+            content.setFileName("HC_" + nroOrden + "_" + orden.getPaciente().getApellido() + "_"
+                + orden.getPaciente().getNombre() + "_" + hc.getFileData().getOriginalFilename());
+            content.setType(Util.DOCUMENT_TYPE);
+            content.setFileType(hc.getFileData().getContentType());
+            content.setOrdenId(orden.getOrdenId());
+            content.setSize(hc.getFileData().getSize());
 
-          documentsTotal.add(content);
+            documentsTotal.add(content);
+          }
+        }
+
+        for (OrdenDocument od : documentsOld) {
+          ordenManager.deleteOrdenDocument(od.getDocumentId());
+        }
+
+        if (documents.size() > 0) {
+          documentsTotal.addAll(documents);
+        }
+
+        for (OrdenDocument od : documentsTotal) {
+          ordenManager.add(od);
         }
       }
-
-      for (OrdenDocument od : documentsOld) {
-        ordenManager.deleteOrdenDocument(od.getDocumentId());
-      }
-
-      if (documents.size() > 0) {
-        documentsTotal.addAll(documents);
-      }
-
-      for (OrdenDocument od : documentsTotal) {
-        ordenManager.add(od);
-      }
-
     } catch (Exception ex) {
       message = Util.MESSAGE_ERROR;
     }

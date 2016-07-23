@@ -4,6 +4,7 @@
 <%@taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 <%@taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@taglib uri="http://www.springframework.org/security/tags"  prefix="sec" %>
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
@@ -463,21 +464,43 @@
 								<div class="span12">
 									<div class="tableContainer">
 										<jsp:include page="../message.jsp"></jsp:include>
+										
+										<div class="tab-content">
+											<table class="table" style="width: 100%">
+												<tr>
+													<td style="width: 15%">
+														<span class="badge" style="padding: 5px 5px 5px 5px"><b>Nro de Orden: ${ordenDto.nroOrden}</b></span>
+													</td>
+													<td style="text-align: left" >
+														
+													</td>
+												
+										
+												</tr>
+										
+											</table>
+										</div>
+										
 										<!-- Declaracion de tabs -->
 										<ul class="nav nav-tabs">
 											<li class="active"><a data-toggle="tab"
 												href="#tb_paciente" onclick="setObservacionInvisible()">Paciente</a></li>
 											<li><a data-toggle="tab" href="#tb_requisitos">Requisitos</a></li>
 											<li><a data-toggle="tab" href="#tb_profesional">Medico Solicitante</a></li>
-											<li><a data-toggle="tab" href="#tb_autorizacion">Autorizaci&oacute;n</a></li>
-											<li><a data-toggle="tab" href="#tb_prestador">Prestador Derivado</a></li>
+											<sec:authorize access="hasRole('ROLE_ADMIN')">
+												<li><a data-toggle="tab" href="#tb_autorizacion">Autorizaci&oacute;n</a></li>
+												<li><a data-toggle="tab" href="#tb_prestador">Prestador Derivado</a></li>
+											</sec:authorize>
+											
 											<li><a data-toggle="tab" href="#tb_observacion">
 													Observaciones <c:if test="${observacionCount > 0}">
 														<span class="badge">${observacionCount}</span>
 													</c:if>
 											</a></li>
+											<sec:authorize access="hasRole('ROLE_ADMIN')">
 											<li><a data-toggle="tab" href="#tb_historiaclinica">Historia
 													Cl&iacute;nica</a></li>
+											</sec:authorize>		
 											<li><a data-toggle="tab" href="#tb_coseguro">Coseguro</a></li>													
 											
 										</ul>
@@ -499,7 +522,7 @@
 											<div id="tb_profesional" class="tab-pane fade">
 												<jsp:include page="formEditOrdenTabProfesional.jsp"></jsp:include>
 											</div>
-
+											<sec:authorize access="hasRole('ROLE_ADMIN')">
 											<!-- ** Tab Autorizaciones -->
 											<div id="tb_autorizacion" class="tab-pane fade">
 												<jsp:include page="formEditOrdenTabAutorizacion.jsp"></jsp:include>
@@ -509,18 +532,18 @@
 											<div id="tb_prestador" class="tab-pane fade">
 												<jsp:include page="formEditOrdenTabPrestador.jsp"></jsp:include>
 											</div>
-											
+											</sec:authorize>
 
 											<!-- ** Tab Observaciones -->
 											<div id="tb_observacion" class="tab-pane fade" style="">
 												<jsp:include page="formEditOrdenTabObservaciones.jsp"></jsp:include>
 											</div>
-
+											<sec:authorize access="hasRole('ROLE_ADMIN')">
 											<!-- ** Tab Historia Clinica -->
 											<div id="tb_historiaclinica" class="tab-pane fade">
 												<jsp:include page="formEditOrdenTabHistoriaClinica.jsp"></jsp:include>
 											</div>
-
+											</sec:authorize>
 											<!-- ** Tab Coseguro -->
 											<div id="tb_coseguro" class="tab-pane fade">
 												<jsp:include page="formEditOrdenTabCoseguro.jsp"></jsp:include>

@@ -161,13 +161,9 @@ function marcarAll(){
 
 <table class="table" style="width: 100%">
 <tr>
-<td style="width:90%;"><div style="float:right;"><b>Autorizar todos:</b></div></td>
-<td><div style="float:left;"><input id="authAll" type="checkbox" class="largerCheckbox" onchange="javascript:marcarAll()"></div></td>
-<td>
-	<a href="#"> <img alt="Imprimir Orden"
-		src="/nuova/resources/img/print_16x16.png" /> Imprimir
-	</a>
-</td>
+<td style="width:100%;"><div style="float:right;"><b>Autorizar todos:</b></div></td>
+<td><div style="float:right;"><input id="authAll" type="checkbox" class="largerCheckbox" onchange="javascript:marcarAll()"></div></td>
+
 </tr>
 </table>
 
@@ -186,7 +182,7 @@ function marcarAll(){
 								<td style="width: 31%"><b>Estados</b></td>
 								<td style="width: 20%"><b>Automatico</b></td>
 								<td></td>
-								<td><input type="checkbox" name="selectImprimirAll"
+								<td><input type="checkbox" name="selectImprimirAll" disabled="disabled"
 									onclick="checkAll(this)"></td>
 							</tr>
 							<%
@@ -201,7 +197,7 @@ function marcarAll(){
 										value="${pa.orddenPracticaId}" /> <input type="hidden"
 										name="ordenpracticaListEdit[<%=index%>].practicaId"
 										value="${pa.practicaId}" /> ${pa.nombre}</td>
-									<td><input type="text"
+									<td><input type="text" style="text-align: center"
 										name="ordenpracticaListEdit[<%=index%>].piezaDental"
 										value="${pa.piezaDental}" /></td>
 									<td><input type="hidden"
@@ -214,19 +210,22 @@ function marcarAll(){
 											<option value="NONE">Seleccione Estado ...</option>
 											<option value="AUTORIZACION DIRECTA">AUTORIZACION
 												DIRECTA</option>
-											<option value="PENDIENTE AFILIACIONES">PENDIENTE
-												AFILIACIONES</option>
 											<option value="AUTORIZADA POR AFILIACIONES">AUTORIZADA
-												POR AFILIACIONES</option>
-											<option value="RECHAZADA POR AFILIACIONES">RECHAZADA
-												POR AFILIACIONES</option>
-											<option value="PENDIENTE AUDITORIA">PENDIENTE
-												AUDITORIA</option>
+												POR AFILIACIONES</option>	
 											<option value="AUTORIZADA POR AUDITORIA">AUTORIZADA
 												POR AUDITORIA</option>
+											
+											<option value="PENDIENTE AFILIACIONES">PENDIENTE
+												AFILIACIONES</option>
+											<option value="PENDIENTE AUDITORIA">PENDIENTE
+												AUDITORIA</option>
+												
+											<option value="RECHAZADA">RECHAZADA</option>
+											<option value="RECHAZADA POR AFILIACIONES">RECHAZADA
+												POR AFILIACIONES</option>											
 											<option value="RECHAZADA POR AUDITORIA">RECHAZADA
 												POR AUDITORIA</option>
-											<option value="RECHAZADA">RECHAZADA</option>
+											
 											<option value="ANULADO">ANULADO</option>
 									</select> <script>
 				document.getElementById('ordenpracticaListEdit[<%=index%>].estado').value ='${pa.estado}'; 
@@ -254,7 +253,7 @@ function marcarAll(){
 									</td>
 									<td><button type='button' class='btn btn-link'
 											onClick='Eliminar(this.parentNode.parentNode.rowIndex)'>Eliminar</button></td>
-									<td><input type="checkbox"
+									<td><input type="checkbox" disabled="disabled"
 										name="ordenpracticaListEdit[<%=index%>].imprimir"></td>
 									<%
 									  index++;
@@ -343,7 +342,7 @@ function marcarAll(){
         var this_row = $(this);
         var str1 = $.trim(this_row.find('td:eq(0)').html());//td:eq(0) means first td of this row
         var str2="ODON";
-	if(str1.indexOf(str2) != -1){
+	if(str1.toUpperCase().indexOf(str2) != -1){
 		isOdon=true;
 	}
 	if(isOdon!=true){
