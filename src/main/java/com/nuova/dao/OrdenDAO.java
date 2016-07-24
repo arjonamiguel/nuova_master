@@ -30,7 +30,8 @@ public interface OrdenDAO {
   public Page<GridOrdenPracticaDTO> findOrdenesByPageable(Pageable pageable,
       Integer codigoOrdenTipo);
 
-  public Page<Orden> findOrdenesBySearch(String search, Pageable pageable, Integer codigoOrdenTipo);
+  public Page<GridOrdenPracticaDTO> findOrdenesBySearch(Integer typeSearch, Integer codigoOrdenTipo,
+      Integer ordenId, String paciente, Pageable pageable);
 
   public List<OrdenAlarmaDTO> findAlarmaOrdenes();
 

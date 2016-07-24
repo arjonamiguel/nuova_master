@@ -358,7 +358,7 @@ public class OrdenController {
 
   @RequestMapping(value = ConstantControllers.AJAX_GET_SEARCH_ORDENES_PAGINADOS,
       method = RequestMethod.GET)
-  public @ResponseBody Page<OrdenDTO> getSearchOrdenesPaginados(
+  public @ResponseBody Page<GridOrdenPracticaDTO> getSearchOrdenesPaginados(
       @PathVariable("codigoOrdenTipo") Integer codigoOrdenTipo,
       @RequestParam(required = false, defaultValue = "") String search,
       @RequestParam(required = false, defaultValue = "0") Integer start,
@@ -366,17 +366,24 @@ public class OrdenController {
 
     // Sort and Pagination
     // Sort sort = new Sort(Sort.Direction.DESC, "creationDate");
+    search = search.trim().toUpperCase().replace(" ", "");
+    boolean isNumber = Util.isNumber(search);
+    String paciente = (isNumber ? "" : search);
+    Integer ordenId = (isNumber ? Integer.parseInt(search) : 0);
+    Integer typeSearch = (isNumber ? 1 : 2);
+
+
+
     Pageable pageable = new PageRequest(start, limit);
 
-    Page<Orden> ordenes = ordenManager.findOrdenesBySearch(search, pageable, codigoOrdenTipo);
-    List<OrdenDTO> dtos = new ArrayList<OrdenDTO>();
-    for (Orden o : ordenes) {
-      OrdenDTO dto = transformOrdenToDto(o);
-      dtos.add(dto);
-    }
+    Page<GridOrdenPracticaDTO> ordenes =
+        ordenManager.findOrdenesBySearch(typeSearch, codigoOrdenTipo, ordenId, paciente, pageable);
 
-    return new PageImpl<OrdenDTO>(dtos, pageable, ordenes.getTotalElements());
+    return new PageImpl<GridOrdenPracticaDTO>(ordenes.getContent(), pageable,
+        ordenes.getTotalElements());
   }
+
+
 
   @RequestMapping(value = ConstantControllers.AJAX_GET_AUTOCOMPLETE_NOMENCLADOR,
       method = RequestMethod.POST)

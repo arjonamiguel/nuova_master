@@ -77,18 +77,29 @@ public class OrdenDAOImpl implements OrdenDAO {
   }
 
 
-  public Page<Orden> findOrdenesBySearch(String search, Pageable pageable,
-      Integer codigoOrdenTipo) {
-    Query query = this.sessionFactory.getCurrentSession()
-        .createQuery("FROM Orden o " + " WHERE o.ordenTipo.codigo=" + codigoOrdenTipo
-            + " AND CAST(o.ordenId AS string) LIKE '%" + search.toUpperCase() + "%' "
-            + " ORDER BY o.ordenId ASC");
+  public Page<GridOrdenPracticaDTO> findOrdenesBySearch(Integer typeSearch, Integer codigoOrdenTipo,
+      Integer ordenId, String paciente, Pageable pageable) {
+    // Query query = this.sessionFactory.getCurrentSession()
+    // .createQuery("FROM Orden o " + " WHERE o.ordenTipo.codigo=" + codigoOrdenTipo
+    // + " AND CAST(o.ordenId AS string) LIKE '%" + search.toUpperCase() + "%' "
+    // + " ORDER BY o.ordenId ASC");
 
     // query.setFirstResult(pageable.getOffset());
     // query.setMaxResults(pageable.getPageNumber());
-    query.setMaxResults(20);
-    List<Orden> result = query.list();
-    return new PageImpl<Orden>(result, pageable, result.size());
+
+    // query.setMaxResults(20);
+    Query query = sessionFactory.getCurrentSession()
+        .createSQLQuery(
+            "CALL zp_getGridAllPracticasBySearch(:typeSearch,:codigoOrdenTipo,:ordenId, :paciente);")
+        .setInteger("typeSearch", typeSearch).setInteger("codigoOrdenTipo", codigoOrdenTipo)
+        .setInteger("ordenId", ordenId).setString("paciente", paciente)
+        .setResultTransformer(Transformers.aliasToBean(GridOrdenPracticaDTO.class));
+    List<GridOrdenPracticaDTO> result = query.list();
+
+    return new PageImpl<GridOrdenPracticaDTO>(result, pageable, result.size());
+
+    // List<Orden> result = query.list();
+    // return new PageImpl<Orden>(result, pageable, result.size());
   }
 
 

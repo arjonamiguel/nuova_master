@@ -60,12 +60,10 @@ public class OrdenManagerImpl implements OrdenManager {
     return ordenDAO.findOrdenesByPageable(pageable, codigoOrdenTipo);
   }
 
-
-  public Page<Orden> findOrdenesBySearch(String search, Pageable pageable,
-      Integer codigoOrdenTipo) {
-    return ordenDAO.findOrdenesBySearch(search, pageable, codigoOrdenTipo);
+  public Page<GridOrdenPracticaDTO> findOrdenesBySearch(Integer typeSearch, Integer codigoOrdenTipo,
+      Integer ordenId, String paciente, Pageable pageable) {
+    return ordenDAO.findOrdenesBySearch(typeSearch, codigoOrdenTipo, ordenId, paciente, pageable);
   }
-
 
   public List<OrdenAlarmaDTO> findAlarmaOrdenes() {
     return ordenDAO.findAlarmaOrdenes();
@@ -76,11 +74,9 @@ public class OrdenManagerImpl implements OrdenManager {
     return ordenDAO.finAllOrdenTipo();
   }
 
-
   public OrdenTipo findOrdenTipoByCodigo(Integer codigo) {
     return ordenDAO.findOrdenTipoByCodigo(codigo);
   }
-
 
   public void deleteOrdenProfesional(Integer ordenId) {
     ordenDAO.deleteOrdenProfesional(ordenId);
