@@ -69,7 +69,6 @@ function addRowNuevoNom(tableID, nomencladorId) {
 		return;
 	}
 	
-  
 	var index = document.getElementById(tableID).getElementsByTagName('tr').length;
 	index ++;	
     var table = document.getElementById(tableID);

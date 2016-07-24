@@ -296,12 +296,40 @@
 	function Eliminar(i) {
 		document.getElementById("tb_practicas").deleteRow(i);
 	}
+	
+	function callCantidadSesiones(ordenId, nomencladorId) {
+		var retorno;
+		$.ajax({
+			url : "/nuova/ajaxGetCantidadSesiones?ordenId="
+					+ ordenId+"&nomencladorId="+nomencladorId,
+			type : "GET",
+			contentType : "application/json; charset=utf-8",
+			//    data: jsonString, //Stringified Json Object
+			async : false, //Cross-domain requests and dataType: "jsonp" requests do not support synchronous operation
+			cache : false, //This will force requested pages not to be cached by the browser          
+			processData : false, //To avoid making query String instead of JSON
+			success : function(page) {
+				// Success Message Handler
+				retorno = page;
+			}
+		});
+
+		return retorno;
+		
+	}
 
 	function addRow(tableID) {
 		if (document
 				.getElementById("nomencladorString").value == "") {
 			return;
 		}
+		
+		var ordenId = document.getElementById("ordenId").value;
+		var cantSesion = callCantidadSesiones(ordenId, document.getElementById("nomencladorId").value);
+		if (cantSesion != "0") {
+			alert(cantSesion);
+		}
+	  
 
 		var index = document.getElementById(tableID).getElementsByTagName('tr').length;
 		index++;

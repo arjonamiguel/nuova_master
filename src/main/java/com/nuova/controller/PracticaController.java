@@ -2,6 +2,8 @@ package com.nuova.controller;
 
 import com.nuova.dto.PracticaDTO;
 import com.nuova.model.Nomenclador;
+import com.nuova.model.OrdenPractica;
+import com.nuova.service.OrdenManager;
 import com.nuova.service.PracticaManager;
 import com.nuova.utils.ConstantControllers;
 import com.nuova.utils.ConstantRedirect;
@@ -28,6 +30,9 @@ import java.util.List;
 public class PracticaController {
   @Autowired
   PracticaManager practicaManager;
+
+  @Autowired
+  OrdenManager ordenManager;
 
   @RequestMapping(value = ConstantControllers.FORM_ADD_PRACTICA, method = RequestMethod.GET)
   public String formAddPractica(ModelMap map) {
@@ -133,12 +138,37 @@ public class PracticaController {
     return new PageImpl<PracticaDTO>(dtos, pageable, prestadores.getTotalElements());
   }
 
+  @RequestMapping(value = ConstantControllers.AJAX_GET_CANTIDAD_SESIONES,
+      method = RequestMethod.GET)
+  public @ResponseBody String getCantidadSesiones(
+      @RequestParam(required = false, defaultValue = "0") Integer nomencladorId,
+      @RequestParam(required = false, defaultValue = "0") Integer ordenId) {
+    String retorno = "";
+    Nomenclador n = practicaManager.findPracticaById(nomencladorId);
+    Integer cantidadSesion = n.getCantidadSesion();
+    List<OrdenPractica> practicas = ordenManager.getAllOrdenPracticaByOrden(ordenId, nomencladorId);
+    Integer cantidadSesionUsadas = practicas.size();
+
+    cantidadSesion = cantidadSesion == null ? 0 : cantidadSesion;
+
+    if (cantidadSesion.intValue() == 0) {
+      return "0";
+    }
+
+    Integer cantidadSesionDisponible = cantidadSesion.intValue() - cantidadSesionUsadas.intValue();
+    retorno = "Codigo: " + n.getCodigo() + "\nPractica: " + n.getNombre() + "\nSesiones: "
+        + n.getCantidadSesion() + "\nUsadas: " + cantidadSesionUsadas + "\nDisponibles: "
+        + cantidadSesionDisponible;
+    return retorno;
+  }
+
   private PracticaDTO transformPrestadoresToDto(Nomenclador p) {
     PracticaDTO retorno = new PracticaDTO();
     retorno.setNombre(p.getNombre());
     retorno.setNomencladorId(p.getNomencladorId());
     retorno.setCodigo(p.getCodigo());
     retorno.setTipo(p.getTipo());
+    retorno.setCantidadSesion(p.getCantidadSesion());
     return retorno;
   }
 
@@ -148,6 +178,7 @@ public class PracticaController {
     retorno.setNomencladorId(dto.getNomencladorId());
     retorno.setCodigo(dto.getCodigo());
     retorno.setTipo(dto.getTipo());
+    retorno.setCantidadSesion(dto.getCantidadSesion());
     return retorno;
   }
 

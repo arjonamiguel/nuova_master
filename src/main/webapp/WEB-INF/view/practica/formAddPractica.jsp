@@ -61,6 +61,12 @@
         						<div class="formInput"><form:input path="nombre" class="input-block-level" type="text"/></div>
 							</div>
 						</div>
+						<div class="row-fluid">
+						<div class="span4">
+							<div class="formLabel"><form:label path="cantidadSesion">Sesiones:</form:label></div>
+        					<div class="formInput"><form:input path="cantidadSesion" class="input-block-level" type="text" cssStyle="width:30%"/></div>
+						</div>
+						</div>
 						
 				</div>
 			</div>

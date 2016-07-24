@@ -31,6 +31,7 @@ public class Nomenclador implements java.io.Serializable {
   private String nomGrupo;
   private String estado;
   private Integer eliminado;
+  private Integer cantidadSesion;
 
   public Nomenclador() {}
 
@@ -178,5 +179,16 @@ public class Nomenclador implements java.io.Serializable {
   public void setEliminado(Integer eliminado) {
     this.eliminado = eliminado;
   }
+
+  @Column(name = "cantidad_sesiones")
+  public Integer getCantidadSesion() {
+    return cantidadSesion;
+  }
+
+  public void setCantidadSesion(Integer cantidadSesion) {
+    this.cantidadSesion = cantidadSesion;
+  }
+
+
 
 }

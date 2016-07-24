@@ -6,6 +6,7 @@ import com.nuova.model.CajaOrden;
 import com.nuova.model.Orden;
 import com.nuova.model.OrdenDocument;
 import com.nuova.model.OrdenFueraCartilla;
+import com.nuova.model.OrdenPractica;
 import com.nuova.model.OrdenProfesional;
 import com.nuova.model.OrdenTipo;
 
@@ -243,4 +244,10 @@ public class OrdenDAOImpl implements OrdenDAO {
         .get(OrdenFueraCartilla.class, ordenId);
   }
 
+  public List<OrdenPractica> getAllOrdenPracticaByOrden(Integer ordenId, Integer nomencladorId) {
+    return this.sessionFactory.getCurrentSession()
+        .createQuery("FROM OrdenPractica od " + " WHERE od.orden.ordenId = " + ordenId
+            + " and od.nomenclador.nomencladorId=" + nomencladorId)
+        .list();
+  }
 }

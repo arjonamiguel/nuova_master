@@ -6,6 +6,7 @@ import com.nuova.model.CajaOrden;
 import com.nuova.model.Orden;
 import com.nuova.model.OrdenDocument;
 import com.nuova.model.OrdenFueraCartilla;
+import com.nuova.model.OrdenPractica;
 import com.nuova.model.OrdenProfesional;
 import com.nuova.model.OrdenTipo;
 
@@ -71,5 +72,8 @@ public interface OrdenManager {
   public OrdenProfesional getOrdenProfesional(Integer ordenId);
 
   public OrdenFueraCartilla getOrdenFueraCartilla(Integer ordenId);
+
+  public List<OrdenPractica> getAllOrdenPracticaByOrden(Integer ordenId, Integer nomencladorId);
+
 
 }
