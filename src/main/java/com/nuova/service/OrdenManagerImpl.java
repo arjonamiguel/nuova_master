@@ -54,6 +54,10 @@ public class OrdenManagerImpl implements OrdenManager {
   public void deleteOrdenPractica(Integer id) {
     ordenDAO.deleteOrdenPractica(id);
   }
+  
+  public void updateAutorizarAutomatico(Integer ordenId){
+	  ordenDAO.updateAutorizarAutomatico(ordenId);
+  }
 
 
   public Page<GridOrdenPracticaDTO> findOrdenesByPageable(Pageable pageable,

@@ -74,6 +74,8 @@ public interface OrdenManager {
   public OrdenFueraCartilla getOrdenFueraCartilla(Integer ordenId);
 
   public List<OrdenPractica> getAllOrdenPracticaByOrden(Integer ordenId, Integer nomencladorId);
+  
+  public void updateAutorizarAutomatico(Integer ordenId);
 
 
 }

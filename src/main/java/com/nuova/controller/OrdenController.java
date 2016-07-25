@@ -204,6 +204,7 @@ public class OrdenController {
   public String formEditOrden(ModelMap map, @PathVariable("ordenId") Integer ordenId) {
     if (ordenId != null) {
       OrdenDTO ordenDto = transformOrdenToDto(ordenManager.findOrdenById(ordenId));
+      ordenManager.updateAutorizarAutomatico(ordenId);
       Especialidad e = null;
       if (ordenDto.getEspecialidad() != null) {
         e = especialidadManager.findEspecialidadById(ordenDto.getEspecialidad());

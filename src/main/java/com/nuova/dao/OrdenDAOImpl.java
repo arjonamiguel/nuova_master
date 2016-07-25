@@ -250,4 +250,10 @@ public class OrdenDAOImpl implements OrdenDAO {
             + " and od.nomenclador.nomencladorId=" + nomencladorId)
         .list();
   }
+  
+  public void updateAutorizarAutomatico(Integer ordenId) {
+	    this.sessionFactory.getCurrentSession()
+	        .createQuery(" UPDATE OrdenPractica o SET estado ='AUTORIZACION DIRECTA' WHERE o.orden.ordenId = :ordenId AND o.autorizarAutomatico < CURRENT_DATE()")
+	        .setInteger("ordenId", ordenId).executeUpdate();
+	  }
 }
