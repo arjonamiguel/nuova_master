@@ -16,6 +16,7 @@ public class PacienteDTO {
     private String fechaNacimiento;
     private String vencCarnet;
     private String domicilio="";
+    private String observaciones="";
     private String telefono;
     private String mail;
     private Integer localidadId;
@@ -114,7 +115,15 @@ public class PacienteDTO {
         this.domicilio = domicilio.toUpperCase();
     }
 
-    public String getTelefono() {
+    public String getObservaciones() {
+		return observaciones;
+	}
+
+	public void setObservaciones(String observaciones) {
+		this.observaciones = observaciones;
+	}
+
+	public String getTelefono() {
         return telefono;
     }
 

@@ -92,10 +92,10 @@ public class ProfesionalController {
     @RequestMapping(value = ConstantControllers.DELETE_PROFESIONAL, method = RequestMethod.POST)
     public String deleteProfesional(@ModelAttribute(value = "profesional") ProfesionalDTO dto) {
         Profesional profesionalOld = profesionalManager.findProfesionalById(dto.getProfesionalId());
-		//        Profesional profesional = transformDtoToProfesional(dto);
-		//        for (ProfesionalEspecialidad pe : profesionalOld.getProfesionalEspecialidads()) {
-		//            profesionalManager.deleteProfesionalEspecialidad(pe.getProfesional().getProfesionalId());
-		//        }
+        // Profesional profesional = transformDtoToProfesional(dto);
+        // for (ProfesionalEspecialidad pe : profesionalOld.getProfesionalEspecialidads()) {
+        // profesionalManager.deleteProfesionalEspecialidad(pe.getProfesional().getProfesionalId());
+        // }
         profesionalOld.setEliminado(new Byte("1"));
         profesionalManager.edit(profesionalOld);
         return "redirect:" + ConstantControllers.MAIN_PROFESIONAL;
@@ -195,9 +195,11 @@ public class ProfesionalController {
         }
 
         // Profesional
-        Profesional profesional = new Profesional(p.getApellido(), p.getNombre(), p.getTelefono(),
-                p.getMatricula(), p.getRegistroNacional(), p.getTituloProfesional(), hs, fechaHabilitacion,
-                p.getNroRegistro(), validoHasta, null, null, null, p.getNroPoliza(), vigenciaDesde, null,
+        Profesional profesional = new Profesional(p.getApellido().toUpperCase(), p.getNombre().toUpperCase(),
+                p.getTelefono(),
+                p.getMatricula(), p.getRegistroNacional(), p.getTituloProfesional().toUpperCase(), hs,
+                fechaHabilitacion,
+                p.getNroRegistro(), validoHasta, null, null, null, p.getNroPoliza().toUpperCase(), vigenciaDesde, null,
                 vigenciaHasta, null, null, null);
         profesional.setProfesionalId(p.getProfesionalId());
 

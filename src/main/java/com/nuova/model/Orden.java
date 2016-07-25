@@ -28,8 +28,8 @@ import javax.persistence.TemporalType;
 public class Orden implements java.io.Serializable {
 
     /**
-   * 
-   */
+  * 
+  */
     private static final long serialVersionUID = -5802572341613956318L;
     private Integer ordenId;
     private Paciente paciente;

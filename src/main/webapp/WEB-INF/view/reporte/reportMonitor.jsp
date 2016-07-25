@@ -141,8 +141,9 @@
 </body>
 
 <jsp:include page="modalAfiliadosAtendidos.jsp"></jsp:include>
-<jsp:include page="modalPacientesRegistrados.jsp"></jsp:include>
 <jsp:include page="modalFiltroAfiliados.jsp"></jsp:include>
+<jsp:include page="modalPacientesRegistrados.jsp"></jsp:include>
+
 
 
 
@@ -187,6 +188,7 @@ function updatefechaNacimiento(){
 //Actions Modal
 $(function() {
 	  $('#lnk_filtro_afiliados').click(function() {
+		  $("#filtroafiliados").css("visibility", "visible");
 		  // $("#msj_afiliadoatendido").css("visibility","hidden");
 		  document.getElementById("fechaDesdeAfiliado").value="";
 		  document.getElementById("fecha_desde_afiliado").value="";

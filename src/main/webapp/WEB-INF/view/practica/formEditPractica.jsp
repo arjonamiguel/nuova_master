@@ -43,6 +43,15 @@
 			<div class="panel-body" >
 				<div class="container-fluid">
 						<div class="row-fluid">
+								<div class="span4">
+								<div class="formLabel"><form:label path="codigo">Tipo:</form:label></div>
+        						<div class="formInput">
+        						<form:select path="tipo" style="width:83%; margin-bottom:0px">
+									<form:option value="NONE" label="Seleccione Tipo ..."/>
+									<form:options items="${listNomencladorTipo}" itemLabel="nombre" itemValue="nombre" />			    
+								</form:select>
+        						</div>
+							</div>
 							<div class="span4">
 								<div class="formLabel"><form:label path="codigo">Código:</form:label></div>
         						<div class="formInput"><form:input path="codigo" class="input-block-level" type="text" cssStyle="width:30%"/></div>
@@ -51,6 +60,12 @@
 								<div class="formLabel"><form:label path="nombre">Nombre Práctica:</form:label></div>
         						<div class="formInput"><form:input path="nombre" class="input-block-level" type="text"/></div>
 							</div>
+						</div>
+						<div class="row-fluid">
+						<div class="span4">
+							<div class="formLabel"><form:label path="cantidadSesion">Sesiones:</form:label></div>
+        					<div class="formInput"><form:input path="cantidadSesion" class="input-block-level" type="text" cssStyle="width:30%"/></div>
+						</div>
 						</div>
 						
 				</div>

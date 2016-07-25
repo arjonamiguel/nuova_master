@@ -1,6 +1,5 @@
 <%@taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
-
-<div class="modal fade" id="filtroafiliados">
+<div class="modal fade" id="filtroafiliados" style="visibility: hidden;">
 	<div class="modal-dialog">
 		<div class="modal-content">
 			<div class="modal-header">

@@ -3,7 +3,6 @@ package com.nuova.model;
 import static javax.persistence.GenerationType.IDENTITY;
 
 // Generated May 12, 2016 5:53:31 PM by Hibernate Tools 4.3.1
-
 import java.util.HashSet;
 import java.util.Set;
 
@@ -100,12 +99,11 @@ public class Prestadores implements java.io.Serializable {
 
   @Column(name = "eliminado")
   public Integer getEliminado() {
-	return eliminado;
+    return eliminado;
   }
 
   public void setEliminado(Integer eliminado) {
-	this.eliminado = eliminado;
+    this.eliminado = eliminado;
   }
-  
 
 }

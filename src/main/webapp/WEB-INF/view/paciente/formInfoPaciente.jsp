@@ -65,10 +65,10 @@ $(document).ready(function() {
 
 	$("#practicasGrid").simplePagingGrid(
 			{
-				columnNames : [ "NRO.ORDEN","FECHA","MEDICO SOLICITANTE","PRACTICAS", ""],
-				columnKeys : [ "nroOrden","fecha","solicitante", "practica"
+				columnNames : [ "NRO.ORDEN","FECHA","SOLICITANTE","PRACTICAS", ""],
+				columnKeys : [ "nroOrden","fecha","solicitante","practica"
 				 					, "acciones"],
-				columnWidths : [ "10%", "10%", "20%"],
+				columnWidths : [ "12%", "10%", "20%"],
 
 				sortable : [ true, true,],
 				data : rowsPracticas,
@@ -87,16 +87,7 @@ $(document).ready(function() {
 				minimumVisibleRows: 5
 			});
 			
-// 	$("#observacionesGrid").simplePagingGrid(
-// 			{
-// 				columnNames : [ "ID","OBSERVACION","FECHA"],
-// 				columnKeys : ["observacionId", "observacion", "fecha"],
-// 				columnWidths : [ "10%", "10%"],
-// 				sortable : [ true, true,],
-// 				data : rowsObservaciones,
-// 				pageSize : 5,
-// 				minimumVisibleRows: 5
-// 			});
+
 });
 
 function nuevoAdherente() {
@@ -122,6 +113,136 @@ function createReintegro(){
 	var url = "/nuova/formAddReintegro/"+pacienteId;
 	window.open(url, '_blank');
 }
+
+$(function(){
+		
+			$(document.body).on('click', '.changeType' ,function(){
+				$(this).closest('.phone-input').find('.type-input').val($(this).data('type-value'));
+			});
+			
+			$(document.body).on('click', '.btn-remove-phone' ,function(){
+				var id=$(this).closest('.phone-input').find('.form-control').attr('name');
+				deleteObservaciones('delete',id);
+				
+			});
+			
+			
+			$('.btn-add-phone').click(function(){
+				$("#btnGuardarObs").attr("disabled",false);
+				var index =$(".form-control").length;
+				
+				$('.phone-list').append(''+
+						'<div class="input-group phone-input">'+
+							'<textarea type="text" name="'+index+'" class="form-control" placeholder="Ingrese Observacion" style="width:60.5%;margin-bottom:3px;"/></textarea>'+
+							'<input type="hidden" name="phone['+index+'][type]" class="type-input" value="" />'+
+							'<span class="input-group-btn" style="padding-left:1%;">'+
+								'<button class="btn btn-danger btn-remove-phone" type="button"><span class="icon icon-remove"></span>Eliminar</button>'+
+							'</span>'+
+						'</div>'
+				);
+				
+				$('.btn-add-phone').attr("disabled","disabled");
+
+			});
+			
+		});
+		
+		
+	function updatePhones(){
+	
+		var jsonPhones='';
+		jsonPhones=$("#jsonObservaciones").html();
+		if(jsonPhones.length>2){
+			if(jsonPhones[jsonPhones.length-2]==","){
+				var str=jsonPhones;
+				var newStr = str.substring(0, str.length-2);
+				jsonPhones=newStr+"]";
+			}
+		}
+	
+		var obj = jQuery.parseJSON( jsonPhones);
+		
+		$(obj).each(function(index, element) {
+    		var id=element.id;
+    		var value=element.value;
+    		
+    		var trimStr=value;
+			//trimStr=trimStr.replace(/\s/g, "&nbsp;");
+    		
+    		$('.phone-list').append(''+
+						'<div class="input-group phone-input">'+
+							'<textarea disabled="disabled" name="'+index+'" class="form-control" placeholder="Ingrese Observacion" style="width:60.5%;margin-bottom:3px;">'+trimStr+'</textarea>'+
+							'<span class="input-group-btn" style="padding-left:1%;">'+
+								'<button class="btn btn-danger btn-remove-phone" type="button"><span class="icon icon-remove"></span>Eliminar</button>'+
+							'</span>'+
+						'</div>'
+				);
+		});
+
+	}
+	
+	function saveObservaciones(operacion,observaciones) {
+		var retorno;
+		var dni = $("#pacienteDni").html();
+			$.ajax({
+				url : '/nuova/ajaxObservaciones?operacion='+operacion+'&dni=' + dni + '&observaciones=' +observaciones,
+				type : "GET",
+				contentType : "application/json; charset=utf-8",
+				//    data: jsonString, //Stringified Json Object
+				async : false, //Cross-domain requests and dataType: "jsonp" requests do not support synchronous operation
+				cache : false, //This will force requested pages not to be cached by the browser          
+				processData : false, //To avoid making query String instead of JSON
+					
+				success : function(success) {
+					retorno = success;
+					location.reload();
+				}
+		});
+	
+		return retorno;
+}
+
+	function deleteObservaciones(operacion,observaciones) {
+		var retorno;
+		var dni = $("#pacienteDni").html();
+			$.ajax({
+				url : '/nuova/ajaxObservaciones?operacion='+operacion+'&dni='+dni+'&observaciones=' + observaciones,
+				type : "GET",
+				contentType : "application/json; charset=utf-8",
+				//    data: jsonString, //Stringified Json Object
+				async : false, //Cross-domain requests and dataType: "jsonp" requests do not support synchronous operation
+				cache : false, //This will force requested pages not to be cached by the browser          
+				processData : false, //To avoid making query String instead of JSON
+					
+				success : function(success) {
+					retorno = success;
+					location.reload();
+				}
+		});
+	
+		return retorno;
+}
+
+
+function procesarSubmit()
+	{
+		var jsonPhones='';
+		var line='';
+		var user = $("#usuario").html();
+		var date = $("#fechaSistema").html();
+		$( '.form-control' ).each(function( index ) {
+			var trimStr=$( this ).val();
+			if($( this ).attr("disabled")!="disabled"){
+				line= '{"id":"'+index + '", "value":"' +user+'('+date+'):'+ trimStr+'"},';
+			}
+  			jsonPhones=jsonPhones+line;
+		});
+		var str=jsonPhones;
+		var newStr = str.substring(0, str.length-1);
+		jsonPhones=newStr;
+		//jsonPhones='['+jsonPhones+']';
+		saveObservaciones('edit',jsonPhones);
+	}
 </script>
 </head>
 <body style="background-color: #e5e5e5;">
@@ -130,7 +251,7 @@ function createReintegro(){
 		<div class="panelContainer">
 			<div class="panel panel-info">
 				<input type="hidden" value="${paciente.pacienteId}" id="pacienteId">
-				<div id="jsonObservaciones"></div>
+				<div id="jsonObservaciones" style="visibility:hidden;height:0px;">${paciente.observaciones}</div><div id="fechaSistema" style="visibility:hidden;height:0px;">${fechaSistema}</div><div id="usuario" style="visibility:hidden;height:0px;">${usuario}</div>
 				<div class="panel-heading">
 					<div class="panel-title">Informacion del Paciente</div>
 				</div>
@@ -167,7 +288,7 @@ function createReintegro(){
 							</tr>
 							<tr>
 								<td width="150">D.N.I.</td>
-								<td width="400">${paciente.dni}</td>
+								<td width="400" id="pacienteDni">${paciente.dni}</td>
 								<td width="100">Tipo Afiliado</td>
 								<td>${paciente.parentescoDescription}</td>
 							</tr>
@@ -197,7 +318,7 @@ function createReintegro(){
 							</c:if>	
 							<li><a data-toggle="tab" href="#tb_practicas"><b>Practicas</b></a></li>
 							<li><a data-toggle="tab" href="#tb_reintegros"><b>Reintegros</b></a></li>
-<!-- 							<li><a data-toggle="tab" href="#tb_observaciones"><b>Observaciones</b></a></li> -->
+							<li><a data-toggle="tab" href="#tb_observaciones"><b>Observaciones</b></a></li>
 						</ul>
 						<!-- Fin Declaracion de tabs -->
 
@@ -230,11 +351,11 @@ function createReintegro(){
 							<!-- ** Tab Reintegros -->
 							<div id="tb_reintegros" class="tab-pane fade">
 								<jsp:include page="formInfoPacienteTabReintegros.jsp"></jsp:include>
-							</div>
+							</div> 
 							<!-- ** Tab Observaciones -->
-<!-- 							<div id="tb_observaciones" class="tab-pane fade"> -->
-<%-- 								<jsp:include page="formInfoPacienteTabObservaciones.jsp"></jsp:include> --%>
-<!-- 							</div> -->
+ 							<div id="tb_observaciones" class="tab-pane fade"> 
+ 								<jsp:include page="formInfoPacienteTabObservaciones.jsp"></jsp:include>
+ 							</div> 
 						</div>
 						<!-- Fin Contenedor de Tabs -->
 
@@ -337,28 +458,5 @@ function callReintegros() {
 
 	return retorno;
 }
-
-// function callObservaciones() {
-// 	var retorno;
-// 		$.ajax(
-// 		    {
-// 		        url : "/nuova/ajaxGetObservacionesByPacientePaginados/${paciente.pacienteId}",
-// 		        type: "GET",
-// 		        //data : postData,
-// 		         contentType: "application/x-www-form-urlencoded",
-// 		        success:function(data, textStatus, jqXHR) 
-// 		        {
-// 					//alert(data);
-// 					document.getElementById("jsonObservaciones").innerHTML=data;					
-// 					//rowsObservaciones=data;
-// 		        },
-// 		        error: function(jqXHR, textStatus, errorThrown) 
-// 		        {
-// 					alert("fracaso");
-// 		        }
-// 		    });
-// 	return document.getElementById("jsonObservaciones").innerHTML;
-	
-//}
-		    
+updatePhones();
 </script>

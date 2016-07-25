@@ -11,6 +11,7 @@ public class PacienteOrdenPracticaDTO {
     private String practica;
     private String estado;
     private String acciones;
+    private String fueraCartilla;
 
     public PacienteOrdenPracticaDTO() {
 
@@ -82,5 +83,20 @@ public class PacienteOrdenPracticaDTO {
     public void setId(Integer id) {
         this.id = id;
     }
+
+	public String getFueraCartilla() {
+		return fueraCartilla;
+	}
+
+	public void setFueraCartilla(Integer fueraCartilla) {
+		//this.fueraCartilla = fueraCartilla;
+		if(fueraCartilla==1){
+			this.fueraCartilla="SI";
+		}else{
+			this.fueraCartilla= "NO";
+		}
+	}
+    
+    
 
 }

@@ -26,311 +26,333 @@ import javax.persistence.TemporalType;
 @Table(name = "paciente", catalog = "nuova")
 public class Paciente implements java.io.Serializable {
 
-    private Integer pacienteId;
-    private Paciente paciente;
-    private String apellido;
-    private String nombre;
-    private Date fechaNacimiento;
-    private Date vencCarnet;
-    private String domicilio;
-    private String telefono;
-    private String mail;
-    private Byte coseguro;
-    private String dni;
-    private String provincia;
-    private String razonCoseguro;
-    private Byte parentesco;
-    private String zonaAfiliacion;
-    private Integer obrasocialId;
-    private String nroCredencial;
-    private Byte eliminado;
-    private Set<Orden> ordens = new HashSet<Orden>(0);
-    private Set<Paciente> pacientes = new HashSet<Paciente>(0);
-    private Integer localidadId;
-    private Integer trabajaEn;
-    private String empresa;
-    private Integer empresaId;
-    private String nroCredencialSufijo;
+  private Integer pacienteId;
+  private Paciente paciente;
+  private String apellido;
+  private String nombre;
+  private Date fechaNacimiento;
+  private Date vencCarnet;
+  private String domicilio;
+  // gus
+  private String observaciones;
+  private String telefono;
+  private String mail;
+  private Byte coseguro;
+  private String dni;
+  private String provincia;
+  private String razonCoseguro;
+  private Byte parentesco;
+  private String zonaAfiliacion;
+  private Integer obrasocialId;
+  private String nroCredencial;
+  private Byte eliminado;
+  private Set<Orden> ordens = new HashSet<Orden>(0);
+  private Set<Paciente> pacientes = new HashSet<Paciente>(0);
+  private Integer localidadId;
+  private Integer trabajaEn;
+  private String empresa;
+  private Integer empresaId;
+  private String nroCredencialSufijo;
+  private String search;
 
-    private Date fechaAlta;
+  private Date fechaAlta;
 
-    private Set<PacienteObservaciones> pacienteObservacioneses = new HashSet<PacienteObservaciones>(0);
+  private Set<PacienteObservaciones> pacienteObservacioneses =
+      new HashSet<PacienteObservaciones>(0);
 
-    public Paciente() {
-    }
+  public Paciente() {}
 
-    public Paciente(Paciente paciente, String apellido, String nombre, Date fechaNacimiento, Date vencCarnet,
-            String domicilio, String telefono, String mail, Byte coseguro, Integer dni, String provincia,
-            String razonCoseguro, Byte parentesco, String zonaAfiliacion, Integer obrasocialId,
-            String nroCredencial, Byte eliminado, Set<Orden> ordens, Set<Paciente> pacientes) {
-        this.paciente = paciente;
-        this.apellido = apellido;
-        this.nombre = nombre;
-        this.fechaNacimiento = fechaNacimiento;
-        this.vencCarnet = vencCarnet;
-        this.domicilio = domicilio;
-        this.telefono = telefono;
-        this.mail = mail;
-        this.coseguro = coseguro;
-        this.dni = dni.toString();
-        this.provincia = provincia;
-        this.razonCoseguro = razonCoseguro;
-        this.parentesco = parentesco;
-        this.zonaAfiliacion = zonaAfiliacion;
-        this.obrasocialId = obrasocialId;
-        this.nroCredencial = nroCredencial;
-        this.eliminado = eliminado;
-        this.ordens = ordens;
-        this.pacientes = pacientes;
-    }
+  public Paciente(Paciente paciente, String apellido, String nombre, Date fechaNacimiento,
+      Date vencCarnet, String domicilio, String observaciones, String telefono, String mail,
+      Byte coseguro, Integer dni, String provincia, String razonCoseguro, Byte parentesco,
+      String zonaAfiliacion, Integer obrasocialId, String nroCredencial, Byte eliminado,
+      Set<Orden> ordens, Set<Paciente> pacientes) {
+    this.paciente = paciente;
+    this.apellido = apellido;
+    this.nombre = nombre;
+    this.fechaNacimiento = fechaNacimiento;
+    this.vencCarnet = vencCarnet;
+    this.domicilio = domicilio;
+    this.observaciones = observaciones;
+    this.telefono = telefono;
+    this.mail = mail;
+    this.coseguro = coseguro;
+    this.dni = dni.toString();
+    this.provincia = provincia;
+    this.razonCoseguro = razonCoseguro;
+    this.parentesco = parentesco;
+    this.zonaAfiliacion = zonaAfiliacion;
+    this.obrasocialId = obrasocialId;
+    this.nroCredencial = nroCredencial;
+    this.eliminado = eliminado;
+    this.ordens = ordens;
+    this.pacientes = pacientes;
+  }
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "paciente_id", unique = true, nullable = false)
-    public Integer getPacienteId() {
-        return this.pacienteId;
-    }
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  @Column(name = "paciente_id", unique = true, nullable = false)
+  public Integer getPacienteId() {
+    return this.pacienteId;
+  }
 
-    public void setPacienteId(Integer pacienteId) {
-        this.pacienteId = pacienteId;
-    }
+  public void setPacienteId(Integer pacienteId) {
+    this.pacienteId = pacienteId;
+  }
 
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "adherente_id")
-    public Paciente getPaciente() {
-        return this.paciente;
-    }
+  @ManyToOne(fetch = FetchType.EAGER)
+  @JoinColumn(name = "adherente_id")
+  public Paciente getPaciente() {
+    return this.paciente;
+  }
 
-    public void setPaciente(Paciente paciente) {
-        this.paciente = paciente;
-    }
+  public void setPaciente(Paciente paciente) {
+    this.paciente = paciente;
+  }
 
-    @Column(name = "apellido", length = 256)
-    public String getApellido() {
-        return this.apellido;
-    }
+  @Column(name = "apellido", length = 256)
+  public String getApellido() {
+    return this.apellido;
+  }
 
-    public void setApellido(String apellido) {
-        this.apellido = apellido;
-    }
+  public void setApellido(String apellido) {
+    this.apellido = apellido;
+  }
 
-    @Column(name = "nombre", length = 256)
-    public String getNombre() {
-        return this.nombre;
-    }
+  @Column(name = "nombre", length = 256)
+  public String getNombre() {
+    return this.nombre;
+  }
 
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
-    }
+  public void setNombre(String nombre) {
+    this.nombre = nombre;
+  }
 
-    @Temporal(TemporalType.DATE)
-    @Column(name = "fecha_nacimiento", length = 10)
-    public Date getFechaNacimiento() {
-        return this.fechaNacimiento;
-    }
+  @Temporal(TemporalType.DATE)
+  @Column(name = "fecha_nacimiento", length = 10)
+  public Date getFechaNacimiento() {
+    return this.fechaNacimiento;
+  }
 
-    public void setFechaNacimiento(Date fechaNacimiento) {
-        this.fechaNacimiento = fechaNacimiento;
-    }
+  public void setFechaNacimiento(Date fechaNacimiento) {
+    this.fechaNacimiento = fechaNacimiento;
+  }
 
-    @Temporal(TemporalType.DATE)
-    @Column(name = "venc_carnet", length = 10)
-    public Date getVencCarnet() {
-        return this.vencCarnet;
-    }
+  @Temporal(TemporalType.DATE)
+  @Column(name = "venc_carnet", length = 10)
+  public Date getVencCarnet() {
+    return this.vencCarnet;
+  }
 
-    public void setVencCarnet(Date vencCarnet) {
-        this.vencCarnet = vencCarnet;
-    }
+  public void setVencCarnet(Date vencCarnet) {
+    this.vencCarnet = vencCarnet;
+  }
 
-    @Column(name = "domicilio", length = 512)
-    public String getDomicilio() {
-        return this.domicilio;
-    }
+  @Column(name = "domicilio", length = 512)
+  public String getDomicilio() {
+    return this.domicilio;
+  }
 
-    public void setDomicilio(String domicilio) {
-        this.domicilio = domicilio;
-    }
+  public void setDomicilio(String domicilio) {
+    this.domicilio = domicilio;
+  }
 
-    @Column(name = "telefono", length = 56)
-    public String getTelefono() {
-        return this.telefono;
-    }
+  @Column(name = "observaciones", length = 512)
+  public String getObservaciones() {
+    return this.observaciones;
+  }
 
-    public void setTelefono(String telefono) {
-        this.telefono = telefono;
-    }
+  public void setObservaciones(String observaciones) {
+    this.observaciones = observaciones;
+  }
 
-    @Column(name = "mail", length = 128)
-    public String getMail() {
-        return this.mail;
-    }
+  @Column(name = "telefono", length = 56)
+  public String getTelefono() {
+    return this.telefono;
+  }
 
-    public void setMail(String mail) {
-        this.mail = mail;
-    }
+  public void setTelefono(String telefono) {
+    this.telefono = telefono;
+  }
 
-    @Column(name = "coseguro")
-    public Byte getCoseguro() {
-        return this.coseguro;
-    }
+  @Column(name = "mail", length = 128)
+  public String getMail() {
+    return this.mail;
+  }
 
-    public void setCoseguro(Byte coseguro) {
-        this.coseguro = coseguro;
-    }
+  public void setMail(String mail) {
+    this.mail = mail;
+  }
 
-    @Column(name = "dni")
-    public String getDni() {
-        return this.dni;
-    }
+  @Column(name = "coseguro")
+  public Byte getCoseguro() {
+    return this.coseguro;
+  }
 
-    public void setDni(String dni) {
-        this.dni = dni;
-    }
+  public void setCoseguro(Byte coseguro) {
+    this.coseguro = coseguro;
+  }
 
-    @Column(name = "provincia", length = 156)
-    public String getProvincia() {
-        return this.provincia;
-    }
+  @Column(name = "dni")
+  public String getDni() {
+    return this.dni;
+  }
 
-    public void setProvincia(String provincia) {
-        this.provincia = provincia;
-    }
+  public void setDni(String dni) {
+    this.dni = dni;
+  }
 
-    @Column(name = "razon_coseguro", length = 156)
-    public String getRazonCoseguro() {
-        return this.razonCoseguro;
-    }
+  @Column(name = "provincia", length = 156)
+  public String getProvincia() {
+    return this.provincia;
+  }
 
-    public void setRazonCoseguro(String razonCoseguro) {
-        this.razonCoseguro = razonCoseguro;
-    }
+  public void setProvincia(String provincia) {
+    this.provincia = provincia;
+  }
 
-    @Column(name = "parentesco")
-    public Byte getParentesco() {
-        return this.parentesco;
-    }
+  @Column(name = "razon_coseguro", length = 156)
+  public String getRazonCoseguro() {
+    return this.razonCoseguro;
+  }
 
-    public void setParentesco(Byte parentesco) {
-        this.parentesco = parentesco;
-    }
+  public void setRazonCoseguro(String razonCoseguro) {
+    this.razonCoseguro = razonCoseguro;
+  }
 
-    @Column(name = "zona_afiliacion", length = 156)
-    public String getZonaAfiliacion() {
-        return this.zonaAfiliacion;
-    }
+  @Column(name = "parentesco")
+  public Byte getParentesco() {
+    return this.parentesco;
+  }
 
-    public void setZonaAfiliacion(String zonaAfiliacion) {
-        this.zonaAfiliacion = zonaAfiliacion;
-    }
+  public void setParentesco(Byte parentesco) {
+    this.parentesco = parentesco;
+  }
 
-    @Column(name = "obrasocial_id")
-    public Integer getObrasocialId() {
-        return this.obrasocialId;
-    }
+  @Column(name = "zona_afiliacion", length = 156)
+  public String getZonaAfiliacion() {
+    return this.zonaAfiliacion;
+  }
 
-    public void setObrasocialId(Integer obrasocialId) {
-        this.obrasocialId = obrasocialId;
-    }
+  public void setZonaAfiliacion(String zonaAfiliacion) {
+    this.zonaAfiliacion = zonaAfiliacion;
+  }
 
-    @Column(name = "nro_credencial", length = 64)
-    public String getNroCredencial() {
-        return this.nroCredencial;
-    }
+  @Column(name = "obrasocial_id")
+  public Integer getObrasocialId() {
+    return this.obrasocialId;
+  }
 
-    public void setNroCredencial(String nroCredencial) {
-        this.nroCredencial = nroCredencial;
-    }
+  public void setObrasocialId(Integer obrasocialId) {
+    this.obrasocialId = obrasocialId;
+  }
 
-    @Column(name = "eliminado")
-    public Byte getEliminado() {
-        return this.eliminado;
-    }
+  @Column(name = "nro_credencial", length = 64)
+  public String getNroCredencial() {
+    return (nroCredencial == null) ? "" : nroCredencial;
+  }
 
-    public void setEliminado(Byte eliminado) {
-        this.eliminado = eliminado;
-    }
+  public void setNroCredencial(String nroCredencial) {
+    this.nroCredencial = nroCredencial;
+  }
 
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "paciente")
-    public Set<Orden> getOrdens() {
-        return this.ordens;
-    }
+  @Column(name = "eliminado")
+  public Byte getEliminado() {
+    return this.eliminado;
+  }
 
-    public void setOrdens(Set<Orden> ordens) {
-        this.ordens = ordens;
-    }
+  public void setEliminado(Byte eliminado) {
+    this.eliminado = eliminado;
+  }
 
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "paciente")
-    public Set<Paciente> getPacientes() {
-        return this.pacientes;
-    }
+  @OneToMany(fetch = FetchType.EAGER, mappedBy = "paciente")
+  public Set<Orden> getOrdens() {
+    return this.ordens;
+  }
 
-    public void setPacientes(Set<Paciente> pacientes) {
-        this.pacientes = pacientes;
-    }
+  public void setOrdens(Set<Orden> ordens) {
+    this.ordens = ordens;
+  }
 
-    @Column(name = "localidad_id")
-    public Integer getLocalidadId() {
-        return localidadId;
-    }
+  @OneToMany(fetch = FetchType.EAGER, mappedBy = "paciente")
+  public Set<Paciente> getPacientes() {
+    return this.pacientes;
+  }
 
-    public void setLocalidadId(Integer localidadId) {
-        this.localidadId = localidadId;
-    }
+  public void setPacientes(Set<Paciente> pacientes) {
+    this.pacientes = pacientes;
+  }
 
-    @Column(name = "trabaja_en")
-    public Integer getTrabajaEn() {
-        return trabajaEn;
-    }
+  @Column(name = "localidad_id")
+  public Integer getLocalidadId() {
+    return localidadId;
+  }
 
-    public void setTrabajaEn(Integer trabajaEn) {
-        this.trabajaEn = trabajaEn;
-    }
+  public void setLocalidadId(Integer localidadId) {
+    this.localidadId = localidadId;
+  }
 
-    @Column(name = "empresa")
-    public String getEmpresa() {
-        return empresa;
-    }
+  @Column(name = "trabaja_en")
+  public Integer getTrabajaEn() {
+    return trabajaEn;
+  }
 
-    public void setEmpresa(String empresa) {
-        this.empresa = empresa;
-    }
+  public void setTrabajaEn(Integer trabajaEn) {
+    this.trabajaEn = trabajaEn;
+  }
 
-    @Column(name = "empresa_id")
-    public Integer getEmpresaId() {
-        return empresaId;
-    }
+  @Column(name = "empresa")
+  public String getEmpresa() {
+    return empresa;
+  }
 
-    public void setEmpresaId(Integer empresaId) {
-        this.empresaId = empresaId;
-    }
+  public void setEmpresa(String empresa) {
+    this.empresa = empresa;
+  }
 
-    @Column(name = "nro_credencial_sufijo")
-    public String getNroCredencialSufijo() {
-        return nroCredencialSufijo;
-    }
+  @Column(name = "empresa_id")
+  public Integer getEmpresaId() {
+    return empresaId;
+  }
 
-    public void setNroCredencialSufijo(String nroCredencialSufijo) {
-        this.nroCredencialSufijo = nroCredencialSufijo;
-    }
+  public void setEmpresaId(Integer empresaId) {
+    this.empresaId = empresaId;
+  }
 
-    @Temporal(TemporalType.DATE)
-    @Column(name = "fecha_alta", length = 10)
-    public Date getFechaAlta() {
-        return fechaAlta;
-    }
+  @Column(name = "nro_credencial_sufijo")
+  public String getNroCredencialSufijo() {
+    return (nroCredencialSufijo == null) ? "" : nroCredencialSufijo;
+  }
 
-    public void setFechaAlta(Date fechaAlta) {
-        this.fechaAlta = fechaAlta;
-    }
+  public void setNroCredencialSufijo(String nroCredencialSufijo) {
+    this.nroCredencialSufijo = nroCredencialSufijo;
+  }
 
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "paciente")
-    public Set<PacienteObservaciones> getPacienteObservacioneses() {
-        return this.pacienteObservacioneses;
-    }
+  @Temporal(TemporalType.DATE)
+  @Column(name = "fecha_alta", length = 10)
+  public Date getFechaAlta() {
+    return fechaAlta;
+  }
 
-    public void setPacienteObservacioneses(Set<PacienteObservaciones> pacienteObservacioneses) {
-        this.pacienteObservacioneses = pacienteObservacioneses;
-    }
+  public void setFechaAlta(Date fechaAlta) {
+    this.fechaAlta = fechaAlta;
+  }
+
+  @OneToMany(fetch = FetchType.EAGER, mappedBy = "paciente")
+  public Set<PacienteObservaciones> getPacienteObservacioneses() {
+    return this.pacienteObservacioneses;
+  }
+
+  public void setPacienteObservacioneses(Set<PacienteObservaciones> pacienteObservacioneses) {
+    this.pacienteObservacioneses = pacienteObservacioneses;
+  }
+
+  public String getSearch() {
+    return search;
+  }
+
+  public void setSearch(String search) {
+    this.search = search;
+  }
 
 }

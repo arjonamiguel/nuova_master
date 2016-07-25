@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.nuova.dao.PracticaDAO;
 import com.nuova.model.Nomenclador;
+import com.nuova.model.NomencladorTipo;
 
 @Service
 public class PracticaManagerImpl implements PracticaManager {
@@ -54,5 +55,10 @@ public class PracticaManagerImpl implements PracticaManager {
     @Transactional
     public List<Nomenclador> findNomencladorAutocomplete(String search) {
         return practicaDAO.findNomencladorAutocomplete(search);
+    }
+
+    @Transactional
+    public List<NomencladorTipo> findNomecladorTipo() {
+        return practicaDAO.findNomecladorTipo();
     }
 }

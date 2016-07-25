@@ -22,7 +22,7 @@
 	    </span> 
 	</sec:authorize> <b class="caret"></b></a>
                         <ul class="dropdown-menu">
-                            <li><a href=""><i class="icon-cog"></i> Preferencias</a></li>
+                            <li><a href="#"  id="lnk_cambio_password"><i class="icon-cog"></i> Cambio de Password</a></li>
                             <li><a href=""><i class="icon-envelope"></i> Contacto Soporte</a></li>
                             <li class="divider"></li>
                             <li><a href="/nuova/j_spring_security_logout"><i class="icon-off"></i> Salir</a></li>
@@ -71,13 +71,17 @@
 		            <ul class="dropdown-menu">
 		            	
 						<li><a href="/nuova/mainProfesional" id="mainProfesional">Administrar Profesionales</a></li>
+						<sec:authorize access="hasRole('ROLE_ADMIN')">						
 						<li><a href="/nuova/showReporteProfesionales" id="showReporteProfesionales">Reporte de Profesionales</a></li>
+						</sec:authorize>
 						
 						<li class="divider"></li>
 						
 						
 						<li><a href="/nuova/mainEspecialidad" id="mainEspecialidad">Administrar Especialidades</a></li>
+						<sec:authorize access="hasRole('ROLE_ADMIN')">						
 						<li><a href="/nuova/showReporteEspecialidades" id="showReporteEspecialidades">Reporte de Especialidades</a></li>
+						</sec:authorize>
 						<li class="divider"></li>
 						
 						
@@ -86,12 +90,16 @@
 						
 						
 						<li><a href="/nuova/mainPrestador" id="mainPrestador">Administrar Prestadores</a></li>
+						<sec:authorize access="hasRole('ROLE_ADMIN')">						
 						<li><a href="/nuova/showReportePrestadores" id="showReportePrestador">Reporte de Prestadores</a></li>
+						</sec:authorize>
 						<li class="divider"></li>						
 												
 						
 						<li><a href="/nuova/mainPractica" id="mainPractica">Administrar Nomenclador</a></li>
+						<sec:authorize access="hasRole('ROLE_ADMIN')">						
 						<li><a href="/nuova/showReportePractica" id="showReportePractica">Reporte Nomenclador</a></li>
+						</sec:authorize>
 						
 		            </ul>
 				</li>
@@ -104,9 +112,13 @@
 					&nbsp;&nbsp;Pacientes<span class="caret"></a>
 					<ul class="dropdown-menu" role="menu">
 		                <li><a href="/nuova/mainPaciente">Administrar Pacientes</a></li>
-		                <li><a href="/nuova/formBuscarPaciente">Buscar Paciente ...</a></li>	
-		                <li><a href="/nuova/mainReintegro">Administrar Reintegros</a></li>	                
+		                <li><a href="/nuova/formBuscarPaciente">Buscar Paciente ...</a></li>
+		                <sec:authorize access="hasRole('ROLE_ADMIN')">		
+		                <li><a href="/nuova/mainReintegro">Administrar Reintegros</a></li>
+		                </sec:authorize>	
+		                <sec:authorize access="hasRole('ROLE_ADMIN')">		                                
 		                <li><a href="/nuova/showReportePacientes">Reporte de Pacientes</a></li>
+		                </sec:authorize>
               		</ul>  
 				</li>
 				</sec:authorize>
@@ -187,4 +199,60 @@ $(document).ready(function(){
         }
     );
 });
+
+
+
+	$(function() {
+		$('#lnk_cambio_password').click(function() {
+			$("#cambioPassword").css("visibility", "visible");
+
+			//$("#msj_pacienteregistrado").css("visibility","hidden");
+			$('#cambioPassword').modal('show');
+		});
+
+		$('#btnAGuardarPassword').click(function() {
+			var userId = document.getElementById("user_id").value;
+			var nuevaPassword = document.getElementById("txt_nuava_password").value;
+			var repitePassword = document.getElementById("txt_repite_password").value;
+
+			if (nuevaPassword != repitePassword) {
+				alert("Los passwords ingrsados no coinciden.");
+				return;
+			}
+// 			if (fechaDesdePR == "" || fechaHastaPR == "") {
+// 				$("#msj_pacienteregistrado").css("visibility","visible");
+// 				return false;
+// 			}
+			
+			
+			callUpdatePassword(toJsonUser(userId,nuevaPassword));
+			$('#cambioPassword').modal('hide');
+		});
+	});
+
+function toJsonUser(userId, nuevaPassword) {
+	return '{ "userId":"'+userId+'", "nuevaPassword":"'+nuevaPassword+'" }';
+}
+	
+// Ajax -----------------------------------
+	function callUpdatePassword(json) {
+		var retorno;
+		$.ajax({
+			url : "/nuova/ajaxUpdatePassword",
+			type : "POST",
+			contentType : "application/json; charset=utf-8",
+			data: json, //Stringified Json Object
+			async : false, //Cross-domain requests and dataType: "jsonp" requests do not support synchronous operation
+			cache : false, //This will force requested pages not to be cached by the browser          
+			processData : false, //To avoid making query String instead of JSON
+
+			success : function(data) {
+				retorno = data;
+			}
+		});
+
+		return retorno;
+	}
 </script>
+
+<jsp:include page="user/formEditUser.jsp"></jsp:include>

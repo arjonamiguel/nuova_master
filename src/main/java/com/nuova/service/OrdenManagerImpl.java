@@ -1,6 +1,15 @@
 package com.nuova.service;
 
-import java.util.List;
+import com.nuova.dao.OrdenDAO;
+import com.nuova.dto.GridOrdenPracticaDTO;
+import com.nuova.dto.OrdenAlarmaDTO;
+import com.nuova.model.CajaOrden;
+import com.nuova.model.Orden;
+import com.nuova.model.OrdenDocument;
+import com.nuova.model.OrdenFueraCartilla;
+import com.nuova.model.OrdenPractica;
+import com.nuova.model.OrdenProfesional;
+import com.nuova.model.OrdenTipo;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -8,129 +17,146 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.nuova.dao.OrdenDAO;
-import com.nuova.dto.OrdenAlarmaDTO;
-import com.nuova.model.CajaOrden;
-import com.nuova.model.Orden;
-import com.nuova.model.OrdenDocument;
-import com.nuova.model.OrdenFueraCartilla;
-import com.nuova.model.OrdenTipo;
+import java.util.List;
 
 @Transactional
 @Service
 public class OrdenManagerImpl implements OrdenManager {
-    @Autowired
-    OrdenDAO ordenDAO;
+  @Autowired
+  OrdenDAO ordenDAO;
 
-    @Override
-    public void add(Orden orden) {
-        ordenDAO.add(orden);
-    }
 
-    @Override
-    public Orden findOrdenById(Integer ordenId) {
-        return ordenDAO.findOrdenById(ordenId);
-    }
+  public void add(Orden orden) {
+    ordenDAO.add(orden);
+  }
 
-    @Override
-    public List<Orden> findAll() {
-        return ordenDAO.findAll();
-    }
 
-    @Override
-    public void delete(Integer ordenId) {
-        ordenDAO.delete(ordenId);
-    }
+  public Orden findOrdenById(Integer ordenId) {
+    return ordenDAO.findOrdenById(ordenId);
+  }
 
-    @Override
-    public void edit(Orden orden) {
-        ordenDAO.edit(orden);
-    }
 
-    @Override
-    public void deleteOrdenPractica(Integer id) {
-        ordenDAO.deleteOrdenPractica(id);
-    }
+  public List<Orden> findAll() {
+    return ordenDAO.findAll();
+  }
 
-    @Override
-    public Page<Orden> findOrdenesByPageable(Pageable pageable, Integer codigoOrdenTipo) {
-        return ordenDAO.findOrdenesByPageable(pageable, codigoOrdenTipo);
-    }
 
-    @Override
-    public Page<Orden> findOrdenesBySearch(String search, Pageable pageable,
-            Integer codigoOrdenTipo) {
-        return ordenDAO.findOrdenesBySearch(search, pageable, codigoOrdenTipo);
-    }
+  public void delete(Integer ordenId) {
+    ordenDAO.delete(ordenId);
+  }
 
-    @Override
-    public List<OrdenAlarmaDTO> findAlarmaOrdenes() {
-        return ordenDAO.findAlarmaOrdenes();
-    }
 
-    @Override
-    public List<OrdenTipo> finAllOrdenTipo() {
-        return ordenDAO.finAllOrdenTipo();
-    }
+  public void edit(Orden orden) {
+    ordenDAO.edit(orden);
+  }
 
-    @Override
-    public OrdenTipo findOrdenTipoByCodigo(Integer codigo) {
-        return ordenDAO.findOrdenTipoByCodigo(codigo);
-    }
 
-    @Override
-    public void deleteOrdenProfesional(Integer ordenId) {
-        ordenDAO.deleteOrdenProfesional(ordenId);
-    }
+  public void deleteOrdenPractica(Integer id) {
+    ordenDAO.deleteOrdenPractica(id);
+  }
 
-    @Override
-    public OrdenTipo findOrdenTipoById(Integer id) {
-        return ordenDAO.findOrdenTipoById(id);
-    }
 
-    @Override
-    public void add(OrdenDocument document) {
-        ordenDAO.add(document);
-    }
+  public Page<GridOrdenPracticaDTO> findOrdenesByPageable(Pageable pageable,
+      Integer codigoOrdenTipo) {
+    return ordenDAO.findOrdenesByPageable(pageable, codigoOrdenTipo);
+  }
 
-    @Override
-    public OrdenDocument findOrdenDocumentById(Integer documentId) {
-        return ordenDAO.findOrdenDocumentById(documentId);
-    }
+  public Page<GridOrdenPracticaDTO> findOrdenesBySearch(Integer typeSearch, Integer codigoOrdenTipo,
+      Integer ordenId, String paciente, Pageable pageable) {
+    return ordenDAO.findOrdenesBySearch(typeSearch, codigoOrdenTipo, ordenId, paciente, pageable);
+  }
 
-    @Override
-    public void deleteOrdenDocument(Integer docuementId) {
-        ordenDAO.deleteOrdenDocument(docuementId);
-    }
+  public List<OrdenAlarmaDTO> findAlarmaOrdenes() {
+    return ordenDAO.findAlarmaOrdenes();
+  }
 
-    @Override
-    public List<OrdenDocument> finAllOrdenDocumentByOrdenId(Integer ordenId) {
-        return ordenDAO.finAllOrdenDocumentByOrdenId(ordenId);
-    }
 
-    @Override
-    public Page<Orden> findConsultasByPageableANDPaciente(Pageable pageable, Integer pacienteId) {
-        return ordenDAO.findConsultasByPageableANDPaciente(pageable, pacienteId);
-    }
+  public List<OrdenTipo> finAllOrdenTipo() {
+    return ordenDAO.finAllOrdenTipo();
+  }
 
-    @Override
-    public Page<Orden> findPracticasByPageableANDPaciente(Pageable pageable, Integer pacienteId) {
-        return ordenDAO.findPracticasByPageableANDPaciente(pageable, pacienteId);
-    }
+  public OrdenTipo findOrdenTipoByCodigo(Integer codigo) {
+    return ordenDAO.findOrdenTipoByCodigo(codigo);
+  }
 
-    @Override
-    public void add(OrdenFueraCartilla ofc) {
-        ordenDAO.add(ofc);
-    }
+  public void deleteOrdenProfesional(Integer ordenId) {
+    ordenDAO.deleteOrdenProfesional(ordenId);
+  }
 
-    @Override
-    public void deleteOrdenPrestador(Integer ordenId) {
-        ordenDAO.deleteOrdenPrestador(ordenId);
-    }
 
-	@Override
-	public CajaOrden findCajaOrdenByOrdenId(Orden orden) {
-		return ordenDAO.findCajaOrdenByOrdenId(orden);
-	}
+  public OrdenTipo findOrdenTipoById(Integer id) {
+    return ordenDAO.findOrdenTipoById(id);
+  }
+
+
+  public void add(OrdenDocument document) {
+    ordenDAO.add(document);
+  }
+
+
+  public OrdenDocument findOrdenDocumentById(Integer documentId) {
+    return ordenDAO.findOrdenDocumentById(documentId);
+  }
+
+
+  public void deleteOrdenDocument(Integer docuementId) {
+    ordenDAO.deleteOrdenDocument(docuementId);
+  }
+
+
+  public List<OrdenDocument> finAllOrdenDocumentByOrdenId(Integer ordenId) {
+    return ordenDAO.finAllOrdenDocumentByOrdenId(ordenId);
+  }
+
+
+  public Page<Orden> findConsultasByPageableANDPaciente(Pageable pageable, Integer pacienteId) {
+    return ordenDAO.findConsultasByPageableANDPaciente(pageable, pacienteId);
+  }
+
+
+  public Page<Orden> findPracticasByPageableANDPaciente(Pageable pageable, Integer pacienteId) {
+    return ordenDAO.findPracticasByPageableANDPaciente(pageable, pacienteId);
+  }
+
+
+  public void add(OrdenFueraCartilla ofc) {
+    ordenDAO.add(ofc);
+  }
+
+
+  public void deleteOrdenPrestador(Integer ordenId) {
+    ordenDAO.deleteOrdenPrestador(ordenId);
+  }
+
+
+  public CajaOrden findCajaOrdenByOrdenId(Orden orden) {
+    return ordenDAO.findCajaOrdenByOrdenId(orden);
+  }
+
+  public OrdenFueraCartilla findOrdenFueraCartilla(Integer ordenId) {
+    return ordenDAO.findOrdenFueraCartilla(ordenId);
+  }
+
+  public void deleteOrdenFueraCartilla(Integer id) {
+    ordenDAO.deleteOrdenFueraCartilla(id);
+  }
+
+  public void editFueraCartilla(OrdenFueraCartilla ofc) {
+    ordenDAO.editFueraCartilla(ofc);
+  }
+
+
+  public OrdenProfesional getOrdenProfesional(Integer ordenId) {
+    return ordenDAO.getOrdenProfesional(ordenId);
+  }
+
+
+  public OrdenFueraCartilla getOrdenFueraCartilla(Integer ordenId) {
+    return ordenDAO.getOrdenFueraCartilla(ordenId);
+  }
+
+  public List<OrdenPractica> getAllOrdenPracticaByOrden(Integer ordenId, Integer nomencladorId) {
+    return ordenDAO.getAllOrdenPracticaByOrden(ordenId, nomencladorId);
+  }
 
 }

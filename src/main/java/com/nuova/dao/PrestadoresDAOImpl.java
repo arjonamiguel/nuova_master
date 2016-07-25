@@ -20,6 +20,7 @@ public class PrestadoresDAOImpl implements PrestadoresDAO {
 
     @Override
     public void add(Prestadores prestador) {
+        prestador.setEliminado(0);
         this.sessionFactory.getCurrentSession().save(prestador);
         for (PrestadoresEspecialidad pe : prestador.getPrestadoresEspecialidads()) {
             this.sessionFactory.getCurrentSession().save(pe);
@@ -41,9 +42,13 @@ public class PrestadoresDAOImpl implements PrestadoresDAO {
 
     @Override
     public void delete(Integer prestadorId) {
-        this.sessionFactory.getCurrentSession()
-                .createQuery(" DELETE FROM Prestadores p WHERE p.prestadorId = :prestadorId ")
-                .setInteger("prestadorId", prestadorId).executeUpdate();
+        // this.sessionFactory.getCurrentSession()
+        // .createQuery(" DELETE FROM Prestadores p WHERE p.prestadorId = :prestadorId ")
+        // .setInteger("prestadorId", prestadorId).executeUpdate();
+        Prestadores p = findPrestadorById(prestadorId);
+        p.setEliminado(1);
+        this.sessionFactory.getCurrentSession().saveOrUpdate(p);
+
     }
 
     @Override

@@ -1,57 +1,63 @@
 package com.nuova.service;
 
-import java.util.List;
-
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-
+import com.nuova.dto.GridPacienteDTO;
 import com.nuova.dto.OrdenAlarmaDTO;
+import com.nuova.dto.PacienteAutocompleteDTO;
 import com.nuova.model.Empresas;
 import com.nuova.model.Especialidad;
 import com.nuova.model.Localidades;
 import com.nuova.model.Paciente;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+
+import java.util.List;
+
 public interface PacienteManager {
-    public void add(Paciente paciente);
+  public void add(Paciente paciente);
 
-    public Paciente fin1dPacienteById(Integer pacienteId);
+  public Paciente fin1dPacienteById(Integer pacienteId);
 
-    public List<Paciente> findAll();
+  public List<Paciente> findAll();
 
-    public void delete(Integer pacienteId);
+  public List<Paciente> findAllActive();
 
-    public void edit(Paciente paciente);
+  public void delete(Integer pacienteId);
 
-    public void deleteAdherente(Integer pacienteId);
+  public void edit(Paciente paciente);
 
-    public void deletePacienteObrasocial(Integer pacienteId);
+  public void deleteAdherente(Integer pacienteId);
 
-    public Page<Paciente> findPacientesByPageable(Pageable pageable);
+  public void deletePacienteObrasocial(Integer pacienteId);
 
-    public Page<Paciente> findPacientesBySearch(String search, Pageable pageable);
+  public Page<GridPacienteDTO> findPacientesByPageable(Pageable pageable);
 
-    public OrdenAlarmaDTO countPacientes();
+  public Page<Paciente> findPacientesBySearch(String search, Pageable pageable);
 
-    public List<Paciente> findPacienteAutocomplete(String search);
+  public OrdenAlarmaDTO countPacientes();
 
-    public Paciente findPacienteByDni(Integer dni);
+  public List<PacienteAutocompleteDTO> findPacienteAutocomplete(String search);
 
-    public List<Localidades> findLocalidadesAutocomplete(String search);
+  public Paciente findPacienteByDni(Integer dni);
 
-    public Localidades findLocalidadById(Integer localidadId);
+  public Paciente findPacienteByCredencialSufijo(String nroCredencial, String nroCredencialSufijo);
 
-    public Paciente findPacienteByCredencial(String credencial);
+  public List<Localidades> findLocalidadesAutocomplete(String search);
 
-    public List<Paciente> findAllPacienteByCredencial(String credencial);
+  public Localidades findLocalidadById(Integer localidadId);
 
-    public List<Especialidad> findEspecialidadesAutocomplete(String search, Integer tipo);
+  public Paciente findPacienteByCredencial(String credencial);
 
-    public List<Empresas> findAllEmpresas();
+  public List<Paciente> findAllPacienteByCredencial(String credencial);
 
-    public Empresas findEmpresaById(Integer empresaId);
+  public List<Especialidad> findEspecialidadesAutocomplete(String search, Integer tipo);
 
-    public void add(Empresas empresa);
+  public List<Empresas> findAllEmpresas();
 
-    public void addLocalidad(Localidades localidad);
+  public Empresas findEmpresaById(Integer empresaId);
+
+  public void add(Empresas empresa);
+
+  public void addLocalidad(Localidades localidad);
 
 }
