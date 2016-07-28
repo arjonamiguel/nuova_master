@@ -160,7 +160,9 @@ public class PacienteController {
       return "redirect:" + ConstantControllers.FORM_ADD_PACIENTE;
     }
 
-
+    
+    dto.getObrasocial().setCredencial(nroCredencial);
+    dto.getObrasocial().setCredencialSufijo(nroCredencialSufijo);
     Paciente paciente = transformDtoToPaciente(dto);
     paciente.setEliminado(new Byte("0"));
     paciente.setFechaAlta(new Date());
