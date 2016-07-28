@@ -2,8 +2,14 @@ package com.nuova.dto;
 
 import com.nuova.utils.Util;
 
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.User;
+
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.Formatter;
+import java.util.List;
 
 public class GridOrdenPracticaDTO {
   Integer ordenId;
@@ -135,7 +141,14 @@ public class GridOrdenPracticaDTO {
         + getOrdenId() + "'><span class='icon icon-remove'></span></a>";
 
 
-    acciones = botonEdit + botonPrint + botonDelete;
+    acciones = botonEdit + botonPrint;
+
+    User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+    List<GrantedAuthority> ga = new ArrayList(user.getAuthorities());
+    GrantedAuthority rol = ga.get(0);
+    boolean isRolAdmin = rol.getAuthority().equals("ROLE_ADMIN") ? true : false;
+
+    acciones = isRolAdmin == true ? acciones + botonDelete : acciones;
 
     return acciones;
   }
