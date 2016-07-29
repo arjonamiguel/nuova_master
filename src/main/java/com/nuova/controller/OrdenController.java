@@ -204,7 +204,6 @@ public class OrdenController {
   public String formEditOrden(ModelMap map, @PathVariable("ordenId") Integer ordenId) {
     if (ordenId != null) {
       OrdenDTO ordenDto = transformOrdenToDto(ordenManager.findOrdenById(ordenId));
-      ordenManager.updateAutorizarAutomatico(ordenId);
       Especialidad e = null;
       if (ordenDto.getEspecialidad() != null) {
         e = especialidadManager.findEspecialidadById(ordenDto.getEspecialidad());
@@ -844,49 +843,55 @@ public class OrdenController {
 
   private String getPracticaEstado(OrdenPractica op) {
     String retorno = "";
+    
+    if(op.getAutorizarAutomatico()!=null && op.getAutorizarAutomatico().compareTo(new Date())<0){
+    	 return "<span style='color:white;background: grey'>" + "AUTOMATICO"
+   	          + "</span>";
+    	
+    }else{
 
-    if (op.getEstado() != null && op.getEstado().equals(ConstantOrdenEstado.ANULADO)) {
-      return "<span style='color:white;background: tomato'>" + ConstantOrdenEstado.ANULADO
-          + "</span>";
+	    if (op.getEstado() != null && op.getEstado().equals(ConstantOrdenEstado.ANULADO)) {
+	      return "<span style='color:white;background: tomato'>" + ConstantOrdenEstado.ANULADO
+	          + "</span>";
+	    }
+	    if (op.getEstado() != null && op.getEstado().equals(ConstantOrdenEstado.AUTORIZACION_DIRECTA)) {
+	      return "<span style='color:white;background: green'>"
+	          + ConstantOrdenEstado.AUTORIZACION_DIRECTA + "</span>";
+	    }
+	    if (op.getEstado() != null
+	        && op.getEstado().equals(ConstantOrdenEstado.AUTORIZADA_POR_AFILIACIONES)) {
+	      return "<span style='color:white;background: green'>"
+	          + ConstantOrdenEstado.AUTORIZADA_POR_AFILIACIONES + "</span>";
+	    }
+	    if (op.getEstado() != null
+	        && op.getEstado().equals(ConstantOrdenEstado.AUTORIZADA_POR_AUDITORIA)) {
+	      return "<span style='color:white;background: green'>"
+	          + ConstantOrdenEstado.AUTORIZADA_POR_AUDITORIA + "</span>";
+	    }
+	    if (op.getEstado() != null
+	        && op.getEstado().equals(ConstantOrdenEstado.PENDIENTE_AFILIACIONES)) {
+	      return "<span  style='color:white;background: sienna'>"
+	          + ConstantOrdenEstado.PENDIENTE_AFILIACIONES + "</span>";
+	    }
+	    if (op.getEstado() != null && op.getEstado().equals(ConstantOrdenEstado.PENDIENTE_AUDITORIA)) {
+	      return "<span  style='color:white;background: sienna'>"
+	          + ConstantOrdenEstado.PENDIENTE_AUDITORIA + "</span>";
+	    }
+	    if (op.getEstado() != null && op.getEstado().equals(ConstantOrdenEstado.RECHAZADA)) {
+	      return "<span style='color:white;background: gray'>" + ConstantOrdenEstado.RECHAZADA
+	          + "</span>";
+	    }
+	    if (op.getEstado() != null
+	        && op.getEstado().equals(ConstantOrdenEstado.RECHAZADA_POR_AFILIACIONES)) {
+	      return "<span style='color:white;background: gray'>"
+	          + ConstantOrdenEstado.RECHAZADA_POR_AFILIACIONES + "</span>";
+	    }
+	    if (op.getEstado() != null
+	        && op.getEstado().equals(ConstantOrdenEstado.RECHAZADA_POR_AUDITORIA)) {
+	      return "<span style='color:white;background: gray'>"
+	          + ConstantOrdenEstado.RECHAZADA_POR_AUDITORIA + "</span>";
+	    }
     }
-    if (op.getEstado() != null && op.getEstado().equals(ConstantOrdenEstado.AUTORIZACION_DIRECTA)) {
-      return "<span style='color:white;background: green'>"
-          + ConstantOrdenEstado.AUTORIZACION_DIRECTA + "</span>";
-    }
-    if (op.getEstado() != null
-        && op.getEstado().equals(ConstantOrdenEstado.AUTORIZADA_POR_AFILIACIONES)) {
-      return "<span style='color:white;background: green'>"
-          + ConstantOrdenEstado.AUTORIZADA_POR_AFILIACIONES + "</span>";
-    }
-    if (op.getEstado() != null
-        && op.getEstado().equals(ConstantOrdenEstado.AUTORIZADA_POR_AUDITORIA)) {
-      return "<span style='color:white;background: green'>"
-          + ConstantOrdenEstado.AUTORIZADA_POR_AUDITORIA + "</span>";
-    }
-    if (op.getEstado() != null
-        && op.getEstado().equals(ConstantOrdenEstado.PENDIENTE_AFILIACIONES)) {
-      return "<span  style='color:white;background: sienna'>"
-          + ConstantOrdenEstado.PENDIENTE_AFILIACIONES + "</span>";
-    }
-    if (op.getEstado() != null && op.getEstado().equals(ConstantOrdenEstado.PENDIENTE_AUDITORIA)) {
-      return "<span  style='color:white;background: sienna'>"
-          + ConstantOrdenEstado.PENDIENTE_AUDITORIA + "</span>";
-    }
-    if (op.getEstado() != null && op.getEstado().equals(ConstantOrdenEstado.RECHAZADA)) {
-      return "<span style='color:white;background: gray'>" + ConstantOrdenEstado.RECHAZADA
-          + "</span>";
-    }
-    if (op.getEstado() != null
-        && op.getEstado().equals(ConstantOrdenEstado.RECHAZADA_POR_AFILIACIONES)) {
-      return "<span style='color:white;background: gray'>"
-          + ConstantOrdenEstado.RECHAZADA_POR_AFILIACIONES + "</span>";
-    }
-    if (op.getEstado() != null
-        && op.getEstado().equals(ConstantOrdenEstado.RECHAZADA_POR_AUDITORIA)) {
-      return "<span style='color:white;background: gray'>"
-          + ConstantOrdenEstado.RECHAZADA_POR_AUDITORIA + "</span>";
-    }
-
     return retorno;
   }
 

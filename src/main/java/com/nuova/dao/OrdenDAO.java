@@ -75,6 +75,4 @@ public interface OrdenDAO {
 
   public List<OrdenPractica> getAllOrdenPracticaByOrden(Integer ordenId, Integer nomencladorId);
 
-  public void updateAutorizarAutomatico(Integer ordenId);
-
 }
