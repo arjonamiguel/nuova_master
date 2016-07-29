@@ -357,7 +357,7 @@
 <body style="background-color: #e5e5e5;">
 	<jsp:include page="../sec_menu.jsp"></jsp:include>
 	<form:form method="post" action="/nuova/addOrden"
-		commandName="ordenDto">
+		commandName="ordenDto" onsubmit="javascript:disabledSubmit()">
 		<form:hidden path="ordenTipo.ordenTipoId" />
 		<div class="mainContainer">
 		<div id="alert"></div>
@@ -588,7 +588,7 @@
 										class="btn" />
 								</div>
 								<div style="float: right; padding-right: 2%;">
-									<input type="submit" value="Guardar" class="btn btn-info" id="btnGuardar"/>
+									<input type="submit" value="Guardar" class="btn btn-info" id="btn_submit"/>
 								</div>
 							</div>
 						</div>
@@ -631,4 +631,10 @@
 			}
 		}
 	});
+</script>
+
+<script>
+function disabledSubmit() {
+	document.getElementById("btn_submit").disabled = true;
+}
 </script>

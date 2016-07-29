@@ -22,7 +22,7 @@
 
 <body style="background-color:#e5e5e5;">
 <jsp:include page="../sec_menu.jsp"></jsp:include>
-<form:form method="post" action="/nuova/addAdherente" commandName="paciente">
+<form:form method="post" action="/nuova/addAdherente" commandName="paciente" onsubmit="javascript:disabledSubmit()">
 
 <div class="mainContainer"> 
 	<div class="panelContainer">		
@@ -74,7 +74,7 @@
 						<input type="button" value="Cancelar" onclick="location.href = document.referrer; return false;" class="btn"/>	
 					</div>
 					<div style="float:right;padding-right:2%;">
-						<input type="submit" value="Guardar" class="btn btn-info"/>
+						<input type="submit" value="Guardar" class="btn btn-info" id="btn_submit"/>
 					</div>								 			
 				</div>
 				</div>
@@ -87,3 +87,9 @@
 </form:form> 
 </body>
 </html>
+
+<script>
+function disabledSubmit() {
+	document.getElementById("btn_submit").disabled = true;
+}
+</script>

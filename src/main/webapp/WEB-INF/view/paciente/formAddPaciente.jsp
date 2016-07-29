@@ -288,7 +288,7 @@ label.error {
 
 <div class="mainContainer"> 
 <div class="panelContainer">
-<form:form method="post" action="addPaciente" commandName="paciente">
+<form:form method="post" action="addPaciente" commandName="paciente" onsubmit="javascript:disabledSubmit()">
 	<div class="panel panel-info">
 	<div id="messageAlert"></div>
 	<div class="panel-heading">
@@ -546,7 +546,7 @@ label.error {
         <input type="text" id="localidadNombre" name="localidadNombre">
       </div>
       <div class="modal-footer">
-        <button type="button" id="btnSaveLocalidad" class="btn btn-info">Guardar</button>      
+        <button type="button" id="btnSaveLocalidad" class="btn btn-info"  id="btn_submit">Guardar</button>      
         <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
       </div>
     </div><!-- /.modal-content -->
@@ -555,6 +555,11 @@ label.error {
 
 </html>
 <script>
+
+function disabledSubmit() {
+	document.getElementById("btn_submit").disabled = true;
+}
+
 		document.getElementById("mainPaciente").parentNode.classList.add("active");
 		showEmpresas();
 
@@ -661,7 +666,8 @@ label.error {
                 required: true,
                 email: true
             },
-            fechaNacimiento: "required"
+            fechaNacimiento: "required",
+            credencialSufijo: "required"
         },
         
         // Specify the validation error messages
@@ -675,7 +681,8 @@ label.error {
             nombre: "Ingrese nombre",
             localidadString : "Seleccione Localidad",
 
-			fechaNacimiento : "Ingrese fecha de nacimiento"
+			fechaNacimiento : "Ingrese fecha de nacimiento",
+			credencialSufijo : "Ingrese Nro Credencial"
         },
         submitHandler: function(form) {
         	var dni = document.getElementById("dni");            

@@ -233,7 +233,7 @@
 	
 $(function() {
     $(".btn-info").click(function() {
-
+    	document.getElementById("btnGuardar").disabled = true;
 		 var postData = $("#ordenDto").serialize();
 		    var formURL = $("#ordenDto").attr("action");
 		    $.ajax(
@@ -253,6 +253,7 @@ $(function() {
 		        {
 		            var element = '<div class="alert alert-danger alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button><strong>ERROR!</strong> Ha sucedido un problema al crear la orden. Intente nuevamente.</div>';
 		            document.getElementById("alert").innerHTML=element;
+		            document.getElementById("btnGuardar").disabled = false;
 		        }
 		    });
 		    e.preventDefault(); //STOP default action
@@ -268,7 +269,7 @@ $(function() {
 <body style="background-color: #e5e5e5;">
 	<jsp:include page="../sec_menu.jsp"></jsp:include>
 	<form:form method="post" action="/nuova/addOrden"
-		commandName="ordenDto">
+		commandName="ordenDto" >
 		<form:hidden path="ordenTipo.ordenTipoId" />
 		<div class="mainContainer">
 		<div id="alert"></div>

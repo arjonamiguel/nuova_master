@@ -480,8 +480,8 @@
 <body style="background-color: #e5e5e5;">
 	<jsp:include page="../sec_menu.jsp"></jsp:include>
 
-	<form:form method="post" action="/nuova/editOrden"
-		commandName="ordenDto" enctype="multipart/form-data">
+	<form:form method="post" action="/nuova/editOrden" 
+		commandName="ordenDto" enctype="multipart/form-data" onsubmit="javascript:disabledSubmit()">
 		<form:hidden path="ordenId" />
 		<div class="mainContainer">
 
@@ -610,7 +610,7 @@
 								</div>
 								<div style="float: right; padding-right: 2%;">
 									<input class="btn btn-lg btn-primary btn-block btn-info"
-										type="submit" value="  Guardar  " />
+										type="submit" value="  Guardar  " id="btn_submit"/>
 								</div>
 							</div>
 						</div>
@@ -624,6 +624,9 @@
 </body>
 </html>
 <script>
+function disabledSubmit() {
+	document.getElementById("btn_submit").disabled = true;
+}
 	document.getElementById("mainOrden").parentNode.classList.add("active");
 	$(".checkbox").checkbox();
 </script>
