@@ -126,7 +126,7 @@
 
 <div class="mainContainer"> 	
 <div class="panelContainer">
-<form:form method="post" action="/nuova/addProfesional" commandName="profesional">
+<form:form method="post" action="/nuova/addProfesional" commandName="profesional" onsubmit="javascript:disabledSubmit()">
 <div class="panel panel-info">
 	<div class="panel-heading">
           <div class="panel-title">Datos del Profesional</div>
@@ -291,7 +291,7 @@
 						<input type="button" value="Cancelar" onclick="location.href='/nuova/mainProfesional';" class="btn"/>	
 					</div>
 					<div style="float:right;padding-right:2%;">
-						<input type="submit" value="Guardar" class="btn btn-info"/>
+						<input type="submit" value="Guardar" class="btn btn-info" id="btn_submit"/>
 					</div>								 			
 				</div>
 				</div>
@@ -347,4 +347,8 @@
 
 	document.getElementById("vigenciaDesde").value="";
 	document.getElementById("vigenciaHasta").value="";
+
+	function disabledSubmit() {
+		document.getElementById("btn_submit").disabled = true;
+	}
 </script>

@@ -34,7 +34,7 @@
 
 <div class="mainContainer"> 
 <div class="panelContainer">
-	<form:form method="post" action="/nuova/addPractica" commandName="practica">
+	<form:form method="post" action="/nuova/addPractica" commandName="practica" onsubmit="javascript:disabledSubmit()">
 	<div class="panel panel-info">
 			<div class="panel-heading">
 				<div class="panel-title">Nuevo Código de Práctica</div>
@@ -80,7 +80,7 @@
 						<input class="btn" type="button" value="Cancelar" onclick="location.href='/nuova/mainPractica';"/>	
 					</div>
 					<div style="float:right;padding-right:2%;">
-						<input type="submit" value="Guardar" class="btn btn-info"/>
+						<input type="submit" value="Guardar" class="btn btn-info" id="btn_submit"/>
 					</div>								 			
 				</div>
 				</div>
@@ -93,6 +93,10 @@
 </body>
 </html>
 <script>
+function disabledSubmit() {
+	document.getElementById("btn_submit").disabled = true;
+}
+
 document.getElementById("configuracion").parentNode.classList.add("active");
 			$("#practica").validate({
     

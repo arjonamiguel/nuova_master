@@ -34,7 +34,7 @@
 <jsp:include page="../sec_menu.jsp"></jsp:include>
 <div class="mainContainer"> 
 <div class="panelContainer">
-	<form:form method="post" action="addEspecialidad" commandName="especialidad">
+	<form:form method="post" action="addEspecialidad" commandName="especialidad" onsubmit="javascript:disabledSubmit()">
 	<div class="panel panel-info">
 			<div class="panel-heading">
 				<div class="panel-title">Nueva Especialidad</div>
@@ -63,7 +63,7 @@
 						<input class="btn" type="button" value="Cancelar" onclick="location.href='/nuova/mainEspecialidad';"/>	
 					</div>
 					<div style="float:right;padding-right:2%;">
-						<input type="submit" value="Guardar" class="btn btn-info"/>
+						<input type="submit" value="Guardar" class="btn btn-info" id="btn_submit"/>
 					</div>								 			
 				</div>
 				</div>
@@ -76,6 +76,10 @@
 </body>
 </html>
 <script>
+
+function disabledSubmit() {
+	document.getElementById("btn_submit").disabled = true;
+}
 	$("#especialidad").validate({
     
 		        // Specify the validation rules
