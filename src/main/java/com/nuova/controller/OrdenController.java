@@ -949,7 +949,7 @@ public class OrdenController {
     // po.getNroCredencial(), po.getProvisorio() == 1 ? "checked" : "");
     ObraSocialDTO o = new ObraSocialDTO();
     o.setNombre(os.getNombre());
-    o.setCredencial(p.getNroCredencial());
+    o.setCredencial(p.getNroCredencial() + "-" + p.getNroCredencialSufijo());
     dto.setObrasocial(o);
 
     // Obrasocial os = obrasocialManager.findObraSocialById(p.getObrasocialId());
@@ -1274,14 +1274,15 @@ public class OrdenController {
     List<OrdenPracticaDTO> retorno = new ArrayList<OrdenPracticaDTO>(0);
     for (OrdenPractica op : list) {
       Nomenclador p = op.getNomenclador();
-      p.setNombre("[" + p.getCodigo() + "] - [" + p.getTipo() + "] - " + p.getNombre());
+      // p.setNombre("[" + p.getCodigo() + "] - [" + p.getTipo() + "] - " + p.getNombre());
+      String nombrePractica = "[" + p.getCodigo() + "] - [" + p.getTipo() + "] - " + p.getNombre();
       Orden o = op.getOrden();
       // PracticaDTO dto = new PracticaDTO(p.getPracticaId(), "[" + p.getCodigo() + "]-" +
       // p.getNombre());
       OrdenPracticaDTO dto = new OrdenPracticaDTO();
       dto.setOrddenPracticaId(op.getOrddenPracticaId());
       dto.setOrdenId(o.getOrdenId());
-      dto.setNombre(p.getNombre());
+      dto.setNombre(nombrePractica);
       dto.setPracticaId(p.getNomencladorId());
       dto.setEstado(op.getEstado());
       dto.setValor(op.getValor());
@@ -1289,6 +1290,12 @@ public class OrdenController {
       dto.setPiezaDental(op.getPiezaDental());
       retorno.add(dto);
     }
+
+    Collections.sort(retorno, new Comparator<OrdenPracticaDTO>() {
+      public int compare(OrdenPracticaDTO a1, OrdenPracticaDTO a2) {
+        return a1.getPracticaId().compareTo(a2.getPracticaId());
+      }
+    });
 
     return retorno;
   }

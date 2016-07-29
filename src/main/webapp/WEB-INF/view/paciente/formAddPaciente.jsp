@@ -661,7 +661,8 @@ label.error {
                 required: true,
                 email: true
             },
-            fechaNacimiento: "required"
+            fechaNacimiento: "required",
+            credencialSufijo: "required"
         },
         
         // Specify the validation error messages
@@ -675,7 +676,8 @@ label.error {
             nombre: "Ingrese nombre",
             localidadString : "Seleccione Localidad",
 
-			fechaNacimiento : "Ingrese fecha de nacimiento"
+			fechaNacimiento : "Ingrese fecha de nacimiento",
+			credencialSufijo : "Ingrese Nro Credencial"
         },
         submitHandler: function(form) {
         	var dni = document.getElementById("dni");            
