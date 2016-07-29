@@ -381,6 +381,14 @@
 				.getElementById("nomencladorString")
 				.focus();
 	}
+	function bindElement(){
+		$('.myFile').bind('change', function() {
+		  if(this.files[0].size>4000000){
+			alert("El archivo es demasiado grande -  " + this.files[0].size+ " bytes");
+			eliminarHC(this.parentNode.parentNode.rowIndex)
+			return;}
+		});
+	}
 
 	function addRowHistoriaClinica(tableID) {
 
@@ -393,7 +401,7 @@
 
 		var cell0 = row.insertCell(0);
 		cell0.innerHTML = " <input type='hidden' name='historiasclinicas[" + index + "].documentId'> "
-				+ "<input type='file' name='historiasclinicas[" + index + "].fileData'>";
+				+ "<input class='myFile' type='file' name='historiasclinicas[" + index + "].fileData'>";
 
 		var cell1 = row.insertCell(1);
 		cell1.innerHTML = "";
@@ -403,7 +411,7 @@
 		cell2.innerHTML = "<a href='#' onclick='eliminarHC(this.parentNode.parentNode.rowIndex)'>Eliminar</a>";
 
 		index++;
-
+		bindElement();
 	}
 	function eliminarHC(i) {
 		document.getElementById("tabla_historiaclinica").deleteRow(i);
@@ -458,6 +466,7 @@
 				$(".largerCheckbox")[4].checked=false;
 			}
 		}
+		
 </script>
 
 <style>
