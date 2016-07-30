@@ -295,6 +295,11 @@ $(function() {
 												href="#tb_paciente">Paciente</a></li>
 											<li><a data-toggle="tab" href="#tb_requisitos">Requisitos</a></li>
 											<li><a data-toggle="tab" href="#tb_profesional">Medico Solicitante</a></li>
+											<li><a data-toggle="tab" href="#tb_observacion">
+													Observaciones <c:if test="${observacionCount > 0}">
+														<span class="badge">${observacionCount}</span>
+													</c:if>
+											</a></li>
 											<li><a data-toggle="tab" href="#tb_coseguro">Coseguro</a></li>
 										</ul>
 
@@ -409,6 +414,11 @@ $(function() {
 															
 														</td>													</tr>
 												</table>
+											</div>
+											
+											<!-- ** Tab Observaciones -->
+											<div id="tb_observacion" class="tab-pane fade" style="">
+												<jsp:include page="formEditOrdenTabObservaciones.jsp"></jsp:include>
 											</div>
 
 											<div id="tb_coseguro" class="tab-pane fade">

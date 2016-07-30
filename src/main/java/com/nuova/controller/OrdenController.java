@@ -705,8 +705,7 @@ public class OrdenController {
 
         if (dto.getMonto() != null && dto.getMonto() > 0
             && dto.getMonto().doubleValue() != orden.getMonto().doubleValue()) {
-          if (orden.getOrdenTipo().getOrdenTipoId().intValue() == 1
-              || orden.getOrdenTipo().getOrdenTipoId().intValue() == 3) {
+          if (orden.getOrdenTipo().getOrdenTipoId().intValue() == 1) {
             // Caja
             Caja caja = new Caja();
             if (orden.getOrdenTipo().getOrdenTipoId().intValue() == 1) {

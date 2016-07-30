@@ -258,7 +258,7 @@
 <body style="background-color:#e5e5e5;">
 <jsp:include page="../sec_menu.jsp"></jsp:include>
 
-<form:form method="post" action="/nuova/editOrden" commandName="ordenDto">
+<form:form method="post" action="/nuova/editOrden" commandName="ordenDto"  onsubmit="javascript:disabledSubmit()">
 <form:hidden path="ordenId"/>
 <div class="mainContainer">
 	
@@ -285,6 +285,11 @@
 											  <li class="active"><a data-toggle="tab" href="#tb_paciente" onclick="setObservacionInvisible()">Paciente</a></li>
 											  <li><a data-toggle="tab" href="#tb_requisitos" onclick="setObservacionInvisible()">Requisitos</a></li>
 											  <li><a data-toggle="tab" href="#tb_profesional">Medico Solicitante</a></li>
+											  <li><a data-toggle="tab" href="#tb_observacion">
+													Observaciones <c:if test="${observacionCount > 0}">
+														<span class="badge">${observacionCount}</span>
+													</c:if>
+											</a></li>
 											  <li><a data-toggle="tab" href="#tb_coseguro">Coseguro</a></li>											  											 
 											  <li><a data-toggle="tab" href="#tb_flujo" >Usuario Creador</a></li>
 											</ul>
@@ -406,6 +411,11 @@
 												</tr>		
 												</table>
 									  			</div>
+									  	
+									  		<!-- ** Tab Observaciones -->
+											<div id="tb_observacion" class="tab-pane fade" style="">
+												<jsp:include page="formEditOrdenTabObservaciones.jsp"></jsp:include>
+											</div>		
 									  			
 											<div id="tb_coseguro" class="tab-pane fade">
 												<table class="table" style="width: 100%">
@@ -413,7 +423,6 @@
 														<td style="width: 15%">Monto de Coseguro $:</td>
 														<td style="width: 35%">
 														<form:input path="monto" cssStyle="width: 40%"
-														disabled="true"
 														/>														
 														</td>
 														<td style="width: 10%">Sin Costo:</td>
@@ -473,7 +482,7 @@
 						<input type="button" value="Cancelar" onclick="location.href = document.referrer; return false;" class="btn"/>	
 					</div>
 					<div style="float:right;padding-right:2%;">
-						<input type="submit" value="Guardar" class="btn btn-info"/>
+						<input type="submit" value="Guardar" class="btn btn-info"  id="btn_submit"/>
 					</div>								 			
 				</div>
 				</div>
@@ -520,5 +529,8 @@ $("#ordenDto").validate({
 	}
 });
 
+function disabledSubmit() {
+	document.getElementById("btn_submit").disabled = true;
+}
 
 </script>
