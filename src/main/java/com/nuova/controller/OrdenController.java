@@ -1089,7 +1089,11 @@ public class OrdenController {
   }
 
   private OrdenDTO transformOrdenToDto(Orden orden) {
-
+	  User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+      List<GrantedAuthority> ga = new ArrayList(user.getAuthorities());
+      GrantedAuthority rol = ga.get(0);
+      boolean isRolAdmin = rol.getAuthority().equals("ROLE_ADMIN") ? true : false;
+	  
     OrdenDTO dto = new OrdenDTO();
     dto.setOrdenId(orden.getOrdenId());
     dto.setFecha(orden.getFecha() + "");
@@ -1217,7 +1221,7 @@ public class OrdenController {
     // + dto.getOrdenId() + "'><span class='icon icon-remove'></span></a>";
 
     String botonPrint = "";
-    if (dto.getOrdenTipo().getCodigo().intValue() != 100) {
+    if (isRolAdmin) {
       botonPrint =
           "<a class='btn btn-default btn-xs' data-toggle='modal' data-target='#myModal' onClick='showReport("
               + dto.getOrdenId() + ")'><span class='icon icon-print'></span></a>";

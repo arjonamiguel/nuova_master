@@ -100,9 +100,9 @@ function goInfoPaciente() {
 	<jsp:include page="../sec_menu.jsp"></jsp:include>
 	<div class="mainContainer">
 		<div class="panelContainer">
-			<div class="panel panel-info">
-				<div id="ContainerGeneralOverWrite_MainContainer" class="container">
-					<div id="MainContainer" class="">
+			<div>
+				<div id="ContainerGeneralOverWrite_MainContainer">
+					<div id="MainContainer" >
 
 						<div class="home_ac_v2">
 
