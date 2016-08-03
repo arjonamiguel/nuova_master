@@ -266,7 +266,15 @@
 		<div class="panel panel-info">
 			<div class="panel-heading">
           			<div class="panel-title">
-	          		Editar Consultas 
+	          		Editar Consultas
+	          		<a class="btn btn-default btn-xs" 
+	          			data-toggle="modal" 
+	          			data-target="#myModal" 
+	          			style="float:right; padding: 1px 3px 1px 4px"
+	          			onclick="showReport(${ordenDto.ordenId})" 
+	          			data-original-title="" title="">
+	          			<span class="icon icon-print"></span> Imprimir
+	          		</a>
           			</div>
           			<div class="label-error" id="message"
 						style="float: left; margin-left: 8%; visibility: hidden;">Falta
@@ -280,6 +288,21 @@
 	  				<div class="row-fluid" >
 		    				<div class="span12">
 		    					<div class="tableContainer">
+		    					<div class="tab-content">
+											<table class="table" style="width: 100%">
+												<tr>
+													<td style="width: 15%">
+														<span class="badge" style="padding: 5px 5px 5px 5px"><b>Nro de Consulta: ${ordenDto.nroOrden}</b></span>
+													</td>
+													<td style="text-align: left" >
+														
+													</td>
+												
+										
+												</tr>
+										
+											</table>
+										</div>
 		    					
 		    								<ul class="nav nav-tabs">
 											  <li class="active"><a data-toggle="tab" href="#tb_paciente" onclick="setObservacionInvisible()">Paciente</a></li>
@@ -479,7 +502,7 @@
 				<div class="row-fluid">
 				<div class="span12">					
 					<div style="float:right;">
-						<input type="button" value="Cancelar" onclick="location.href = document.referrer; return false;" class="btn"/>	
+						<input type="button" value="Cancelar" onclick="location.href = '/nuova/mainConsulta'" class="btn"/>	
 					</div>
 					<div style="float:right;padding-right:2%;">
 						<input type="submit" value="Guardar" class="btn btn-info"  id="btn_submit"/>
@@ -494,9 +517,32 @@
 	
 </div> 
 		</div>
+			
 </form:form>
 
 </body>
+
+<!-- Modal -->
+<div id="myModal" class="modal fade" role="dialog" style="visibility: hidden;">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Comprobante de Orden</h4>
+      </div>
+      <div class="modal-body custom-height-modal">
+        <div id="iframeReport" style="height: 800px">	</div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+<!-- Fin Modal -->
 </html>
 <script>
 document.getElementById("mainOrden").parentNode.classList.add("active");
@@ -533,4 +579,9 @@ function disabledSubmit() {
 	document.getElementById("btn_submit").disabled = true;
 }
 
+function showReport(id){
+	$("#myModal").css("visibility", "visible");
+	var iframe = "<iframe src='/nuova/reporteOrdenEmitida/"+id+"' width='100%' height='150%' >";
+	document.getElementById("iframeReport").innerHTML = iframe;
+}
 </script>

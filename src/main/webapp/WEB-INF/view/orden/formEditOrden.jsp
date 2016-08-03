@@ -60,11 +60,11 @@
 				+ '" style="width:70%; margin-bottom:0px">'
 				+ ' <option value="NONE">Seleccione Estado ...</option>'
 				+ ' <option value="AUTORIZACION DIRECTA">AUTORIZACION DIRECTA</option>'
-				+ ' <option value="PENDIENTE AFILIACIONES">PENDIENTE AFILIACIONES</option>'
 				+ ' <option value="AUTORIZADA POR AFILIACIONES">AUTORIZADA POR AFILIACIONES</option>'
-				+ ' <option value="RECHAZADA POR AFILIACIONES">RECHAZADA POR AFILIACIONES</option>'
-				+ ' <option value="PENDIENTE AUDITORIA">PENDIENTE AUDITORIA</option>'
 				+ ' <option value="AUTORIZADA POR AUDITORIA">AUTORIZADA POR AUDITORIA</option>'
+				+ ' <option value="PENDIENTE AFILIACIONES">PENDIENTE AFILIACIONES</option>'
+				+ ' <option value="PENDIENTE AUDITORIA">PENDIENTE AUDITORIA</option>'
+				+ ' <option value="RECHAZADA POR AFILIACIONES">RECHAZADA POR AFILIACIONES</option>'
 				+ ' <option value="RECHAZADA POR AUDITORIA">RECHAZADA POR AUDITORIA</option>'
 				+ ' <option value="RECHAZADA">RECHAZADA</option><option value="ANULADO">ANULADO</option>'
 				+ ' </select>';
@@ -491,6 +491,14 @@
 					<div class="panel-heading">
 						<div class="panel-title">
 							<b>Editar Prácticas</b>
+							<a class="btn btn-default btn-xs" 
+	          			data-toggle="modal" 
+	          			data-target="#myModal" 
+	          			style="float:right; padding: 1px 3px 1px 4px"
+	          			onclick="showReport(${ordenDto.ordenId})" 
+	          			data-original-title="" title="">
+	          			<span class="icon icon-print"></span> Imprimir
+	          		</a>
 						</div>
 					</div>
 					<!-- Fin Cabecera y Titulo -->
@@ -605,7 +613,7 @@
 							<div class="span12">
 								<div style="float: right;">
 									<input type="button" value="Cancelar"
-										onclick="location.href = '/nuova/mainOrdenPractica'; return false;"
+										onclick="location.href = '/nuova/mainOrdenPractica'"
 										class="btn" />
 								</div>
 								<div style="float: right; padding-right: 2%;">
@@ -622,11 +630,39 @@
 		</div>
 	</form:form>
 </body>
+<!-- Modal -->
+<div id="myModal" class="modal fade" role="dialog" style="visibility: hidden;">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Comprobante de Orden</h4>
+      </div>
+      <div class="modal-body custom-height-modal">
+        <div id="iframeReport" style="height: 800px">	</div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+<!-- Fin Modal -->
 </html>
 <script>
 function disabledSubmit() {
 	document.getElementById("btn_submit").disabled = true;
 }
-	document.getElementById("mainOrden").parentNode.classList.add("active");
-	$(".checkbox").checkbox();
+
+document.getElementById("mainOrden").parentNode.classList.add("active");
+$(".checkbox").checkbox();
+
+function showReport(id){
+	$("#myModal").css("visibility", "visible");
+	var iframe = "<iframe src='/nuova/reporteOrdenEmitida/"+id+"' width='100%' height='150%' >";
+	document.getElementById("iframeReport").innerHTML = iframe;
+}	
 </script>

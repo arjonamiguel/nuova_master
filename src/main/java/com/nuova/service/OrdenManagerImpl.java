@@ -35,7 +35,6 @@ public class OrdenManagerImpl implements OrdenManager {
     return ordenDAO.findOrdenById(ordenId);
   }
 
-
   public List<Orden> findAll() {
     return ordenDAO.findAll();
   }

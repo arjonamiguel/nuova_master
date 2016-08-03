@@ -526,7 +526,25 @@ public class OrdenController {
 
     String redirect = "";
     if (orden.getOrdenTipo().getCodigo().intValue() == 100) {
-      redirect = ConstantControllers.ORDEN_MESSAGE;
+      List<ComboItemDTO> items = new ArrayList<ComboItemDTO>();
+      String nombre = "";
+      OrdenDTO oDto = transformOrdenToDto(ordenManager.findOrdenById(orden.getOrdenId()));
+      if (oDto.getEspecialidad() != null) {
+        if (oDto.getEspecialidad() != null) {
+          Especialidad e = especialidadManager.findEspecialidadById(oDto.getEspecialidad());
+          nombre = (e != null) ? e.getNombre() : "";
+        }
+        List<Profesional> profesionales =
+            especialidadManager.findProfesionalByEspecialidadId(oDto.getEspecialidad());
+        items = getProfesionalDTOList(profesionales);
+      } else {
+        items = getProfesionalDTOList(profesionalManager.findAll());
+      }
+      map.addAttribute("profesionales", items);
+      map.addAttribute("ordenDto", oDto);
+      map.addAttribute("especialidadView", nombre);
+      return ConstantRedirect.VIEW_FORM_EDIT_CONSULTA;
+
     }
     if (orden.getOrdenTipo().getCodigo().intValue() == 101) {
       redirect = ConstantControllers.MAIN_CONSULTA_ODONTOLOGICA;
@@ -801,7 +819,8 @@ public class OrdenController {
 
     String redirect = "";
     if (orden.getOrdenTipo().getCodigo().intValue() == 100) {
-      redirect = ConstantControllers.MAIN_CONSULTA;
+      redirect = "/formEditConsulta/" + orden.getOrdenId();
+
     }
     if (orden.getOrdenTipo().getCodigo().intValue() == 101) {
       redirect = ConstantControllers.MAIN_CONSULTA_ODONTOLOGICA;
@@ -845,7 +864,7 @@ public class OrdenController {
     Date fechaActual = new Date();
     if (op.getAutorizarAutomatico() != null
         && fechaActual.compareTo(op.getAutorizarAutomatico()) < 0) {
-      return "<span style='color:white;background: grey'>" + "AUTOMATICO "
+      return "<span style='color:white;background: grey'>" + "PENDIENTE AL "
           + Util.parseToStringDate(op.getAutorizarAutomatico()) + "</span>";
 
     } else {
@@ -1089,11 +1108,11 @@ public class OrdenController {
   }
 
   private OrdenDTO transformOrdenToDto(Orden orden) {
-	  User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-      List<GrantedAuthority> ga = new ArrayList(user.getAuthorities());
-      GrantedAuthority rol = ga.get(0);
-      boolean isRolAdmin = rol.getAuthority().equals("ROLE_ADMIN") ? true : false;
-	  
+    User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+    List<GrantedAuthority> ga = new ArrayList(user.getAuthorities());
+    GrantedAuthority rol = ga.get(0);
+    boolean isRolAdmin = rol.getAuthority().equals("ROLE_ADMIN") ? true : false;
+
     OrdenDTO dto = new OrdenDTO();
     dto.setOrdenId(orden.getOrdenId());
     dto.setFecha(orden.getFecha() + "");
