@@ -92,9 +92,10 @@ public class EspecialidadDAOImpl implements EspecialidadDAO {
 
   @Override
   public List<Profesional> findProfesionalByEspecialidadId(Integer especialidadId) {
-    Query query =
-        this.sessionFactory.getCurrentSession().createQuery("FROM ProfesionalEspecialidad e "
-            + " WHERE e.especialidad.especialidadId = " + especialidadId);
+    Query query = this.sessionFactory.getCurrentSession()
+        .createQuery("FROM ProfesionalEspecialidad e "
+            + " WHERE e.profesional.eliminado = 0 and e.especialidad.especialidadId = "
+            + especialidadId);
     // query.setFirstResult(pageable.getOffset());
     // query.setMaxResults(pageable.getPageNumber());
     List<ProfesionalEspecialidad> result = query.list();
