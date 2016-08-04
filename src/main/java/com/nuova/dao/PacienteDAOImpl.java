@@ -178,9 +178,10 @@ public class PacienteDAOImpl implements PacienteDAO {
     Paciente retorno = null;
     @SuppressWarnings("unchecked")
     List<Paciente> result = this.sessionFactory.getCurrentSession()
-        .createQuery(" SELECT p " + " FROM Paciente p " + " WHERE p.nroCredencial = "
-            + nroCredencial + "AND p.nroCredencialSufijo =" + nroCredencialSufijo)
-        .list();
+        .createQuery(" SELECT p FROM Paciente p WHERE p.nroCredencial = :nroCredencial "
+            + " AND p.nroCredencialSufijo = :nroCredencialSufijo")
+        .setString("nroCredencial", nroCredencial)
+        .setString("nroCredencialSufijo", nroCredencialSufijo).list();
 
     if (result != null && !result.isEmpty()) {
       retorno = result.get(0);

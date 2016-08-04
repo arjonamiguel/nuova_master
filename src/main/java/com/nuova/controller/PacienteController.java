@@ -97,6 +97,9 @@ public class PacienteController {
     map.addAttribute("obrasocialList", obrasocialList);
     map.addAttribute("obrasocialDTOList", new ArrayList<ObraSocialDTO>());
     PacienteDTO pacienteDto = new PacienteDTO();
+    ObraSocialDTO o = new ObraSocialDTO();
+    o.setObrasocialId(1);
+    pacienteDto.setObrasocial(o);
     map.addAttribute("paciente", pacienteDto);
     map.addAttribute("empresas", empresas);
     map.addAttribute("razonCoseguroList", Util.getRazonCoseguro());
@@ -160,7 +163,7 @@ public class PacienteController {
       return "redirect:" + ConstantControllers.FORM_ADD_PACIENTE;
     }
 
-    
+
     dto.getObrasocial().setCredencial(nroCredencial);
     dto.getObrasocial().setCredencialSufijo(nroCredencialSufijo);
     Paciente paciente = transformDtoToPaciente(dto);
@@ -229,6 +232,10 @@ public class PacienteController {
         Paciente t = getTitularByCredencial(paciente);
         paciente.setPaciente(t);
       }
+    }
+
+    if (pacienteOld.getPaciente() != null && paciente.getParentesco().intValue() == 0) {
+      paciente.setPaciente(null);
     }
 
     pacienteManager.edit(paciente);
