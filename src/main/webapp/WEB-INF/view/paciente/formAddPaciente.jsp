@@ -481,8 +481,8 @@ label.error {
 			   <div class="formLabel"><form:label path="obrasocial">Obra Social:</form:label></div>
         		<div class="formInput">
         		<form:select path="obrasocial.obrasocialId" style="width:83%; margin-bottom:0px">
-				<form:option value="-1" label="Seleccione Obra Social ..."/>
-				<form:options items="${obrasocialList}" itemLabel="nombre" itemValue="obrasocialId" />
+				<form:option value="NONE" label="Seleccione Obra Social ..."/>
+				<form:options items="${obrasocialList}" itemLabel="nombre" itemValue="obrasocialId" selected="selected"/>
 				</form:select>
         		</div>
 			 </div>
