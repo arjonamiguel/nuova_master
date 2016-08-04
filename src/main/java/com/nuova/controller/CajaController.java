@@ -5,6 +5,7 @@ import com.nuova.dto.CierreCajaDTO;
 import com.nuova.dto.ComboItemDTO;
 import com.nuova.model.Caja;
 import com.nuova.model.CajaCierre;
+import com.nuova.model.CajaOrden;
 import com.nuova.service.CajaManager;
 import com.nuova.utils.ConstantControllers;
 import com.nuova.utils.ConstantRedirect;
@@ -28,6 +29,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Formatter;
 import java.util.List;
 
 @Controller
@@ -181,7 +183,15 @@ public class CajaController {
     retorno.setIngreso(c.getIngreso());
     retorno.setEgreso(c.getEgreso());
     retorno.setFecha(c.getFecha());
-    retorno.setConceptoDesc(Util.CAJA_CONCEPTOS.get(c.getConcepto()));
+    List<CajaOrden> co = new ArrayList<CajaOrden>();
+    co.addAll(c.getCajaOrdens());
+    CajaOrden cajaOrden = co.get(0);
+    Formatter fmt = new Formatter();
+    fmt.format("%08d", cajaOrden.getOrden().getOrdenId());
+
+    retorno.setConceptoDesc(Util.CAJA_CONCEPTOS.get(c.getConcepto())
+        + " Nro. <a target='_blank' href='/nuova/formEditOrden/" + cajaOrden.getOrden().getOrdenId()
+        + "'>" + fmt.toString() + " </a>");
 
     return retorno;
   }

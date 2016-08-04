@@ -301,15 +301,15 @@ label.error {
 		<div class="container-fluid">
 		  		<div class="row-fluid">
 			   		<div class="span4">
-			   				<div class="formLabel"><form:label path="dni">DNI:</form:label></div>
+			   				<div class="formLabel"><form:label path="dni">DNI*:</form:label></div>
         					<div class="formInput"><form:input path="dni" type="number" /></div>
 			   		</div>
 			   		<div class="span4">
-			   				<div class="formLabel"><form:label path="apellido">Apellido:</form:label></div>
+			   				<div class="formLabel"><form:label path="apellido">Apellido*:</form:label></div>
         					<div class="formInput"><form:input path="apellido" type="text"/></div>
 			   		</div>
 			   		<div class="span4">
-			   				<div class="formLabel"><form:label path="nombre">Nombre:</form:label></div>
+			   				<div class="formLabel"><form:label path="nombre">Nombre*:</form:label></div>
         					<div class="formInput"><form:input path="nombre" type="text"/></div>
 			   		</div>
 			   	</div>
@@ -345,7 +345,7 @@ label.error {
         					</div>
 			   		</div>
 			   		<div class="span4">
-			   				<div class="formLabel"><form:label path="localidadString">Localidad:</form:label></div>
+			   				<div class="formLabel"><form:label path="localidadString">Localidad*:</form:label></div>
         					<div class="formInput">
         					<input type="hidden" name="localidadId" id="localidadId" value="">										
 							<input
@@ -481,14 +481,14 @@ label.error {
 			   <div class="formLabel"><form:label path="obrasocial">Obra Social:</form:label></div>
         		<div class="formInput">
         		<form:select path="obrasocial.obrasocialId" style="width:83%; margin-bottom:0px">
-				<form:option value="NONE" label="Seleccione Obra Social ..."/>
+				<form:option value="-1" label="Seleccione Obra Social ..."/>
 				<form:options items="${obrasocialList}" itemLabel="nombre" itemValue="obrasocialId" />
 				</form:select>
         		</div>
 			 </div>
 			 
 			 <div class="span4">
-			 	<div class="formLabel"><form:label path="obrasocial.credencial">Credencial:</form:label></div>
+			 	<div class="formLabel"><form:label path="obrasocial.credencial">Credencial*:</form:label></div>
         	 	<div class="formInput">
         	 		<form:input path="crdencial" cssStyle="width:25%"/><b>&nbsp;-&nbsp;</b>
         	 		<form:input path="credencialSufijo" cssStyle="width:10%"/>

@@ -191,15 +191,15 @@ label.error {
 		 			<div class="span4">
 		 				<form:hidden path="pacienteId"/>
     					<form:hidden path="titularId"/>
-    					<div class="formLabel"><form:label path="dni">DNI:</form:label></div>
+    					<div class="formLabel"><form:label path="dni">DNI*:</form:label></div>
     					<div class="formInput"><form:input path="dni" type="number"/></div>
 		 			</div>
 		 			<div class="span4">
-		 				<div class="formLabel"><form:label path="apellido">Apellido:</form:label></div>
+		 				<div class="formLabel"><form:label path="apellido">Apellido*:</form:label></div>
 		 				<div class="formInput"><form:input path="apellido" /></div>
 		 			</div>
 		 			<div class="span4">
-		 				<div class="formLabel"><form:label path="nombre">Nombre:</form:label></div>
+		 				<div class="formLabel"><form:label path="nombre">Nombre*:</form:label></div>
 		 				<div class="formInput"><form:input path="nombre" /></div>
 		 			</div>
 		 		</div>
@@ -239,7 +239,7 @@ label.error {
         					</div>
 			   		</div>
 			   		<div class="span4">
-			   				<div class="formLabel"><form:label path="domicilio">Localidad:</form:label></div>
+			   				<div class="formLabel"><form:label path="domicilio">Localidad*:</form:label></div>
         					<div class="formInput">
         					<form:hidden path="localidadId"/>
         					<form:input path="localidadString"
@@ -345,7 +345,7 @@ label.error {
 			 </div>
 			 
 			  <div class="span4">
-			 	<div class="formLabel"><form:label path="obrasocial.credencial">Credencial:</form:label></div>
+			 	<div class="formLabel"><form:label path="obrasocial.credencial">Credencial*:</form:label></div>
         	 	<div class="formInput">
         	 		<form:input path="obrasocial.credencial" cssStyle="width:25%"/><b>&nbsp;-&nbsp;</b>
         	 		<form:input path="obrasocial.credencialSufijo" cssStyle="width:10%"/>
