@@ -720,11 +720,6 @@ public class OrdenController {
 
       // actualizo monto
       
-//      Caja caja1 = new Caja();
-//      caja1.setIngreso(dto.getMonto());
-//      caja1.setEgreso(0.00);
-//      caja1.setFecha(new Date());
-//      cajaManager.add(caja1);
       if (orden.getCajaOrdens().isEmpty()) {
 
         if (dto.getMonto() != null && dto.getMonto() > 0

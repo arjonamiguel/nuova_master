@@ -1,5 +1,6 @@
 package com.nuova.controller;
 
+import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -14,8 +15,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.nuova.dto.OrdenAlarmaDTO;
 import com.nuova.dto.UsuarioDTO;
+import com.nuova.model.LogIngresos;
 import com.nuova.model.UserDetails;
 import com.nuova.service.EspecialidadManager;
+import com.nuova.service.LogIngresosManager;
 import com.nuova.service.ObraSocialManager;
 import com.nuova.service.OrdenManager;
 import com.nuova.service.PacienteManager;
@@ -38,6 +41,8 @@ public class InitController {
     ProfesionalManager profesionalManager;
     @Autowired
     UserManager userManager;
+    @Autowired
+    LogIngresosManager logIngresosManager;
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public String defaultPage(ModelMap map) {
@@ -71,6 +76,11 @@ public class InitController {
         usuario.setUserId(userSession.getId());
         usuario.setUsername(userSession.getUsername());
         session.setAttribute("userSession", usuario);
+        
+        //guardo en log quien y cuando hace el log in
+        LogIngresos log = new LogIngresos(usuario, new Date());
+        logIngresosManager.add(log);
+        
 
         // Alarmas de practicas
         List<OrdenAlarmaDTO> alarmas = ordenManager.findAlarmaOrdenes();
