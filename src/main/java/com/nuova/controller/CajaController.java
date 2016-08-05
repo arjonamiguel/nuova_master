@@ -189,8 +189,16 @@ public class CajaController {
     Formatter fmt = new Formatter();
     fmt.format("%08d", cajaOrden.getOrden().getOrdenId());
 
-    retorno.setConceptoDesc(Util.CAJA_CONCEPTOS.get(c.getConcepto())
-        + " Nro. <a target='_blank' href='/nuova/formEditOrden/" + cajaOrden.getOrden().getOrdenId()
+    int ordenTipo = cajaOrden.getOrden().getOrdenTipo().getOrdenTipoId().intValue();
+    String formRedirect = "";
+    if(ordenTipo==1){
+    	formRedirect = "/nuova/formEditConsulta/";
+    }else if (ordenTipo ==3){
+    	formRedirect = "/nuova/formEditOrden/";
+    }
+    
+    retorno.setConceptoDesc(Util.CAJA_CONCEPTOS.get(ordenTipo)
+        + " Nro. <a target='_blank' href='"+formRedirect + cajaOrden.getOrden().getOrdenId()
         + "'>" + fmt.toString() + " </a>");
 
     return retorno;

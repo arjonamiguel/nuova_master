@@ -67,8 +67,8 @@ if (pacienteId == "") {
 	alert("Usted debe seleccionar un paciente.");
 	document.getElementById("searchPaciente").focus();
 	
-}else {
-	window.location.href = "/nuova/formInfoPaciente/"+pacienteId;
+}else {	
+	window.open("/nuova/formInfoPaciente/"+pacienteId, '_blank');
 }
 }	
 </script>
