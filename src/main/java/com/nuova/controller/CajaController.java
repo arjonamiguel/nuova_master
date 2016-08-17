@@ -190,16 +190,16 @@ public class CajaController {
     fmt.format("%08d", cajaOrden.getOrden().getOrdenId());
 
     int ordenTipo = cajaOrden.getOrden().getOrdenTipo().getOrdenTipoId().intValue();
+    System.out.println("*** ordentipo: " + ordenTipo);
     String formRedirect = "";
-    if(ordenTipo==1){
-    	formRedirect = "/nuova/formEditConsulta/";
-    }else if (ordenTipo ==3){
-    	formRedirect = "/nuova/formEditOrden/";
+    if (ordenTipo == 1) {
+      formRedirect = "/nuova/formEditConsulta/";
+    } else if (ordenTipo == 3) {
+      formRedirect = "/nuova/formEditOrden/";
     }
-    
-    retorno.setConceptoDesc(Util.CAJA_CONCEPTOS.get(ordenTipo)
-        + " Nro. <a target='_blank' href='"+formRedirect + cajaOrden.getOrden().getOrdenId()
-        + "'>" + fmt.toString() + " </a>");
+
+    retorno.setConceptoDesc(Util.CAJA_CONCEPTOS.get(ordenTipo) + " Nro. <a target='_blank' href='"
+        + formRedirect + cajaOrden.getOrden().getOrdenId() + "'>" + fmt.toString() + " </a>");
 
     return retorno;
   }
