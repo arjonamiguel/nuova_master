@@ -137,6 +137,17 @@ function marcarAll(){
 	}		
 }
 
+function automaticoTodos() {
+	var dateSelected = document.getElementById("auto_todos").value;
+	for(i=0;i<100; i++) {
+		datepicker = document.getElementById("autorizar_automatico_"+i);		
+		if (datepicker != null){
+			document.getElementById("autorizar_automatico_"+i).value=dateSelected;
+			updateDate(i);
+		}	
+	}
+}
+
 </script>
 <div>
 	<!-- Autocompletar Nomenclador de codigos -->
@@ -158,12 +169,29 @@ function marcarAll(){
 </div>
 <br>
 
-<table class="table" style="width: 100%">
-<tr>
-<td style="width:100%;"><div style="float:right;"><b>Autorizar todos:</b></div></td>
-<td><div style="float:right;"><input id="authAll" type="checkbox" class="largerCheckbox" onchange="javascript:marcarAll()"></div></td>
-
-</tr>
+<table class="table" style="background: rgb(245, 245, 245); width: 100%">
+	<tr>
+		<td style="width: 80%;"><div style="float: right;">
+				<b>Autorizar todos:</b>
+			</div></td>
+		<td><div style="float: right;">
+				<input id="authAll" type="checkbox" class="largerCheckbox"
+					onchange="javascript:marcarAll()">
+			</div></td>
+		<td style="width: 30%"><div style="float: right;">
+				<b>Automatizar todos:</b>
+			</div></td>
+		<td>
+			<div id="calendar">
+								<div class="input-group registration-date-time" style="padding-top:0%;">
+									<input class="form-control" 
+									name="auto_todos" id="auto_todos" 
+									type="date"  
+									onchange="javascript:automaticoTodos();">
+	            				</div>
+	            			</div>
+		</td>
+	</tr>
 </table>
 
 <div class="tab-content" style="height: 400px">

@@ -719,7 +719,7 @@ public class OrdenController {
       }
 
       // actualizo monto
-      
+
       if (orden.getCajaOrdens().isEmpty()) {
 
         if (dto.getMonto() != null && dto.getMonto() > 0
@@ -1116,7 +1116,7 @@ public class OrdenController {
 
     OrdenDTO dto = new OrdenDTO();
     dto.setOrdenId(orden.getOrdenId());
-    dto.setFecha(orden.getFecha() + "");
+    dto.setFecha(Util.parseToStringDate(orden.getFecha()));
     dto.setEstado(orden.getEstado());
     dto.setMonto(orden.getMonto());
 

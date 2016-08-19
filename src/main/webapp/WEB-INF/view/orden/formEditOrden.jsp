@@ -516,8 +516,8 @@
 													<td style="width: 15%">
 														<span class="badge" style="padding: 5px 5px 5px 5px"><b>Nro de Orden: ${ordenDto.nroOrden}</b></span>
 													</td>
-													<td style="text-align: left" >
-														<b>Fecha de la Práctica:</b> ${ordenDto.fecha}
+													<td style="text-align: right" >
+														<b>Fecha de Creación:</b> ${ordenDto.fecha}
 													</td>
 												
 										
