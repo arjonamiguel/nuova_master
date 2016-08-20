@@ -1,6 +1,6 @@
 <%@taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<c:if test="${paciente.parentesco == 0}">
+<c:if test="${paciente.parentescoVO == 0}">
 	<div class="panel panel-info">
 
 		<div class="panel-body">

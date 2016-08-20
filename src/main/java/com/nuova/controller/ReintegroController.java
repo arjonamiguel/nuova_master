@@ -1,7 +1,7 @@
 package com.nuova.controller;
 
+import com.nuova.dto.PacienteInfoDTO;
 import com.nuova.dto.ReintegroDTO;
-import com.nuova.model.Paciente;
 import com.nuova.model.Reintegro;
 import com.nuova.service.PacienteManager;
 import com.nuova.service.ReintegroManager;
@@ -156,7 +156,7 @@ public class ReintegroController {
     dto.setReintegroId(r.getReintegroId());
 
     // paciente
-    Paciente p = pacienteManager.fin1dPacienteById(r.getPacienteId());
+    PacienteInfoDTO p = pacienteManager.findPacientesInfo(r.getPacienteId());
     if (p != null) {
       dto.setApellidoNombrePaciente(p.getApellido() + " " + p.getNombre());
     }

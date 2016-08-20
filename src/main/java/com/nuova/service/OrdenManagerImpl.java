@@ -3,6 +3,7 @@ package com.nuova.service;
 import com.nuova.dao.OrdenDAO;
 import com.nuova.dto.GridOrdenPracticaDTO;
 import com.nuova.dto.OrdenAlarmaDTO;
+import com.nuova.dto.PracticasListDTO;
 import com.nuova.model.CajaOrden;
 import com.nuova.model.Orden;
 import com.nuova.model.OrdenDocument;
@@ -108,13 +109,15 @@ public class OrdenManagerImpl implements OrdenManager {
   }
 
 
-  public Page<Orden> findConsultasByPageableANDPaciente(Pageable pageable, Integer pacienteId) {
-    return ordenDAO.findConsultasByPageableANDPaciente(pageable, pacienteId);
+  public Page<GridOrdenPracticaDTO> findConsultasByPageableANDPaciente(Pageable pageable,
+      Integer pacienteId, Integer tipo) {
+    return ordenDAO.findConsultasByPageableANDPaciente(pageable, pacienteId, tipo);
   }
 
 
-  public Page<Orden> findPracticasByPageableANDPaciente(Pageable pageable, Integer pacienteId) {
-    return ordenDAO.findPracticasByPageableANDPaciente(pageable, pacienteId);
+  public Page<GridOrdenPracticaDTO> findPracticasByPageableANDPaciente(Pageable pageable,
+      Integer pacienteId, Integer tipo) {
+    return ordenDAO.findPracticasByPageableANDPaciente(pageable, pacienteId, tipo);
   }
 
 
@@ -158,4 +161,7 @@ public class OrdenManagerImpl implements OrdenManager {
     return ordenDAO.getAllOrdenPracticaByOrden(ordenId, nomencladorId);
   }
 
+  public List<PracticasListDTO> getAllPracticasByOrden(Integer ordenId) {
+    return ordenDAO.getAllPracticasByOrden(ordenId);
+  }
 }

@@ -3,6 +3,8 @@ package com.nuova.dao;
 import com.nuova.dto.GridPacienteDTO;
 import com.nuova.dto.OrdenAlarmaDTO;
 import com.nuova.dto.PacienteAutocompleteDTO;
+import com.nuova.dto.PacienteDTO;
+import com.nuova.dto.PacienteInfoDTO;
 import com.nuova.model.Empresas;
 import com.nuova.model.Especialidad;
 import com.nuova.model.Localidades;
@@ -257,6 +259,25 @@ public class PacienteDAOImpl implements PacienteDAO {
 
   public void addLocalidad(Localidades localidad) {
     this.sessionFactory.getCurrentSession().save(localidad);
+  }
+
+  public PacienteInfoDTO findPacientesInfo(Integer pacienteId) {
+
+    Query query =
+        sessionFactory.getCurrentSession().createSQLQuery("CALL zp_getInfoPaciente(:pacienteId);")
+            .setInteger("pacienteId", pacienteId)
+            .setResultTransformer(Transformers.aliasToBean(PacienteInfoDTO.class));
+    PacienteInfoDTO result = (PacienteInfoDTO) query.list().get(0);
+    return result;
+  }
+
+
+  public List<PacienteDTO> getAdherentes(Integer titular) {
+    Query query = sessionFactory.getCurrentSession()
+        .createSQLQuery("CALL zp_getAdherentesByTitular(:titular);").setInteger("titular", titular)
+        .setResultTransformer(Transformers.aliasToBean(PacienteDTO.class));
+
+    return query.list();
   }
 
 }

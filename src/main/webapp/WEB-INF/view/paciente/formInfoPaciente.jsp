@@ -66,7 +66,7 @@ $(document).ready(function() {
 	$("#practicasGrid").simplePagingGrid(
 			{
 				columnNames : [ "NRO.ORDEN","FECHA","SOLICITANTE","PRACTICAS", ""],
-				columnKeys : [ "nroOrden","fecha","solicitante","practica"
+				columnKeys : [ "nroOrden","fecha","apellidoNombreProfesional","practicas"
 				 					, "acciones"],
 				columnWidths : [ "12%", "10%", "20%"],
 
@@ -270,8 +270,8 @@ function procesarSubmit()
 											<span class="icon icon-edit" title="Editar"></span>
 										</a>
 										
-										<c:if test="${paciente.parentesco > 0}">
-							     			<h5>Titular: <a href="/nuova/formInfoPaciente/${paciente.pacienteTitular.pacienteId}" target="_blank">${paciente.pacienteTitular.apellido} ${paciente.pacienteTitular.nombre} </a></h5>
+										<c:if test="${paciente.parentescoVO > 0}">
+							     			<h5>Titular: <a href="/nuova/formInfoPaciente/${paciente.titularId}" target="_blank">${paciente.infoTitular} </a></h5>
 							     		</c:if>
 										
 										</div>
@@ -290,30 +290,30 @@ function procesarSubmit()
 								<td width="150">D.N.I.</td>
 								<td width="400" id="pacienteDni">${paciente.dni}</td>
 								<td width="100">Tipo Afiliado</td>
-								<td>${paciente.parentescoDescription}</td>
+								<td>${paciente.parentescoDescripcion}</td>
 							</tr>
 							<tr>
 								<td>Fecha Nacimiento</td>
-								<td>${paciente.fechaNacimiento}</td>
+								<td>${paciente.fechaNacimientoFormateada}</td>
 								<td>Obra Social</td>
-								<td>${paciente.obrasocial.nombre}</td>
+								<td>${paciente.obrasocial}</td>
 							</tr>
 							<tr>
 								<td>Domicilio</td>
 								<td>${paciente.domicilio}</td>
 								<td>Nro. Credencial</td>
-								<td>${paciente.obrasocial.credencial}-${paciente.obrasocial.credencialSufijo} </td>
+								<td>${paciente.credencial}</td>
 							</tr>
 						</table>
 
 						<!-- Declaracion de tabs -->
 						<ul class="nav nav-tabs">
-							<c:if test="${paciente.parentesco == 0}">
+							<c:if test="${paciente.parentescoVO == 0}">
 							<li class="active"><a data-toggle="tab"
 								href="#tb_adherentes"><b>Adherentes</b></a></li>
 								<li><a data-toggle="tab" href="#tb_consultas"><b>Consultas</b></a></li>
 							</c:if>	
-							<c:if test="${paciente.parentesco > 0}">
+							<c:if test="${paciente.parentescoVO > 0}">
 								<li class="active"><a data-toggle="tab" href="#tb_consultas"><b>Consultas</b></a></li>
 							</c:if>	
 							<li><a data-toggle="tab" href="#tb_practicas"><b>Practicas</b></a></li>
@@ -324,7 +324,7 @@ function procesarSubmit()
 
 						<!-- Contenedor de Tabs -->
 						<div class="tab-content">
-							<c:if test="${paciente.parentesco == 0}">
+							<c:if test="${paciente.parentescoVO == 0}">
 							<!-- ** Tab Adhenrentes -->
 							<div id="tb_adherentes" class="tab-pane fade in active">
 								<jsp:include page="formInfoPacienteTabAdherente.jsp"></jsp:include>
@@ -335,7 +335,7 @@ function procesarSubmit()
 							</div>
 							</c:if>
 							
-							<c:if test="${paciente.parentesco > 0}">
+							<c:if test="${paciente.parentescoVO > 0}">
 
 							<!-- ** Tab Consultas -->
 							<div id="tb_consultas" class="tab-pane fade in active">
@@ -443,7 +443,7 @@ function callPracticas() {
 function callReintegros() {
 	var retorno;
 	$.ajax({
-		url : "/nuova/ajaxGetReintegrosByPacientePaginados/${paciente.pacienteId}",
+		url : "/nuova/ /${paciente.pacienteId}",
 		type : "GET",
 		contentType : "application/json; charset=utf-8",
 		//    data: jsonString, //Stringified Json Object

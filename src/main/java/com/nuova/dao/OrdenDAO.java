@@ -2,6 +2,7 @@ package com.nuova.dao;
 
 import com.nuova.dto.GridOrdenPracticaDTO;
 import com.nuova.dto.OrdenAlarmaDTO;
+import com.nuova.dto.PracticasListDTO;
 import com.nuova.model.CajaOrden;
 import com.nuova.model.Orden;
 import com.nuova.model.OrdenDocument;
@@ -53,9 +54,11 @@ public interface OrdenDAO {
 
   public List<OrdenDocument> finAllOrdenDocumentByOrdenId(Integer ordenId);
 
-  public Page<Orden> findConsultasByPageableANDPaciente(Pageable pageable, Integer pacienteId);
+  public Page<GridOrdenPracticaDTO> findConsultasByPageableANDPaciente(Pageable pageable,
+      Integer pacienteId, Integer tipo);
 
-  public Page<Orden> findPracticasByPageableANDPaciente(Pageable pageable, Integer pacienteId);
+  public Page<GridOrdenPracticaDTO> findPracticasByPageableANDPaciente(Pageable pageable,
+      Integer pacienteId, Integer tipo);
 
   public void add(OrdenFueraCartilla ofc);
 
@@ -74,5 +77,7 @@ public interface OrdenDAO {
   public OrdenFueraCartilla getOrdenFueraCartilla(Integer ordenId);
 
   public List<OrdenPractica> getAllOrdenPracticaByOrden(Integer ordenId, Integer nomencladorId);
+
+  public List<PracticasListDTO> getAllPracticasByOrden(Integer ordenId);
 
 }

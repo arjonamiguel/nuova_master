@@ -3,6 +3,8 @@ package com.nuova.dao;
 import com.nuova.dto.GridPacienteDTO;
 import com.nuova.dto.OrdenAlarmaDTO;
 import com.nuova.dto.PacienteAutocompleteDTO;
+import com.nuova.dto.PacienteDTO;
+import com.nuova.dto.PacienteInfoDTO;
 import com.nuova.model.Empresas;
 import com.nuova.model.Especialidad;
 import com.nuova.model.Localidades;
@@ -62,5 +64,9 @@ public interface PacienteDAO {
   public void add(Empresas empresa);
 
   public void addLocalidad(Localidades localidad);
+
+  public PacienteInfoDTO findPacientesInfo(Integer pacienteId);
+
+  public List<PacienteDTO> getAdherentes(Integer titular);
 
 }

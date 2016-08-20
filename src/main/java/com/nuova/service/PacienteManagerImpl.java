@@ -4,6 +4,8 @@ import com.nuova.dao.PacienteDAO;
 import com.nuova.dto.GridPacienteDTO;
 import com.nuova.dto.OrdenAlarmaDTO;
 import com.nuova.dto.PacienteAutocompleteDTO;
+import com.nuova.dto.PacienteDTO;
+import com.nuova.dto.PacienteInfoDTO;
 import com.nuova.model.Empresas;
 import com.nuova.model.Especialidad;
 import com.nuova.model.Localidades;
@@ -136,6 +138,15 @@ public class PacienteManagerImpl implements PacienteManager {
 
   public void addLocalidad(Localidades localidad) {
     pacienteDAO.addLocalidad(localidad);
+  }
+
+  public PacienteInfoDTO findPacientesInfo(Integer pacienteId) {
+    return pacienteDAO.findPacientesInfo(pacienteId);
+  }
+
+
+  public List<PacienteDTO> getAdherentes(Integer titular) {
+    return pacienteDAO.getAdherentes(titular);
   }
 
 }

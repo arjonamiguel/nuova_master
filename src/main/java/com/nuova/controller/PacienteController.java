@@ -6,6 +6,7 @@ import com.nuova.dto.ObraSocialDTO;
 import com.nuova.dto.OrdenTipoDTO;
 import com.nuova.dto.PacienteAutocompleteDTO;
 import com.nuova.dto.PacienteDTO;
+import com.nuova.dto.PacienteInfoDTO;
 import com.nuova.model.Empresas;
 import com.nuova.model.Localidades;
 import com.nuova.model.Obrasocial;
@@ -77,9 +78,11 @@ public class PacienteController {
   @RequestMapping(value = ConstantControllers.FORM_INFO_PACIENTE, method = RequestMethod.GET)
   public String formInfoPaciente(ModelMap map, @PathVariable("pacienteId") Integer pacienteId) {
     if (pacienteId != null) {
-      Paciente p = pacienteManager.fin1dPacienteById(pacienteId);
-      PacienteDTO dto = transformPacienteToDto(p);
-      dto.setFechaNacimiento(Util.parseToStringDate(p.getFechaNacimiento()));
+      // Paciente p = pacienteManager.fin1dPacienteById(pacienteId);
+      PacienteInfoDTO dto = pacienteManager.findPacientesInfo(pacienteId);
+      dto.setAdherentes(pacienteManager.getAdherentes(pacienteId));
+      // PacienteDTO dto = transformPacienteToDto(p);
+      dto.setFechaNacimientoFormateada(Util.parseToStringDate(dto.getFechaNacimiento()));
       map.addAttribute("paciente", dto);
       map.addAttribute("usuario", SecurityContextHolder.getContext().getAuthentication().getName());
       map.addAttribute("fechaSistema", new Date());
@@ -150,7 +153,7 @@ public class PacienteController {
   @RequestMapping(value = ConstantControllers.ADD_PACIENTE, method = RequestMethod.POST)
   public String addPaciente(@ModelAttribute(value = "paciente") PacienteDTO dto,
       BindingResult result) {
-    Paciente p = pacienteManager.findPacienteByDni(dto.getDni());
+    Paciente p = pacienteManager.findPacienteByDni(Integer.valueOf(dto.getDni()));
     if (p != null) {
       flag = "repetido";
       return "redirect:" + ConstantControllers.FORM_ADD_PACIENTE;
@@ -474,7 +477,7 @@ public class PacienteController {
     PacienteDTO dto = new PacienteDTO();
     dto.setPacienteId(p.getPacienteId());
     dto.setEliminado(p.getEliminado().intValue());
-    dto.setDni(Integer.valueOf(p.getDni()));
+    dto.setDni(p.getDni());
     dto.setApellido(p.getApellido());
     dto.setNombre(p.getNombre());
     dto.setDomicilio(p.getDomicilio());
@@ -530,7 +533,7 @@ public class PacienteController {
       dtoad.setCheckedLiberado(p.getCoseguro().intValue() == 1 ? "checked" : "");
       dtoad.setMail(ad.getMail());
       dtoad.setTelefono(ad.getTelefono());
-      dtoad.setDni(Integer.valueOf(ad.getDni()));
+      dtoad.setDni(ad.getDni());
       dtoad.setZonaAfiliacion(p.getZonaAfiliacion());
       dtoad.setParentesco(ad.getParentesco().intValue());
       dtoad.setCrdencial(ad.getNroCredencial() + "-" + ad.getNroCredencialSufijo());
@@ -553,7 +556,7 @@ public class PacienteController {
     for (Paciente p : listPacientes) {
       PacienteDTO dto = new PacienteDTO();
       dto.setPacienteId(p.getPacienteId());
-      dto.setDni(Integer.valueOf(p.getDni()));
+      dto.setDni(p.getDni());
       dto.setApellido(p.getApellido());
       dto.setNombre(p.getNombre());
       dto.setDomicilio(p.getDomicilio());

@@ -2,6 +2,7 @@ package com.nuova.dao;
 
 import com.nuova.dto.GridOrdenPracticaDTO;
 import com.nuova.dto.OrdenAlarmaDTO;
+import com.nuova.dto.PracticasListDTO;
 import com.nuova.model.CajaOrden;
 import com.nuova.model.Orden;
 import com.nuova.model.OrdenDocument;
@@ -164,26 +165,27 @@ public class OrdenDAOImpl implements OrdenDAO {
   }
 
 
-  public Page<Orden> findConsultasByPageableANDPaciente(Pageable pageable, Integer pacienteId) {
-    Query query = this.sessionFactory.getCurrentSession()
-        .createQuery("FROM Orden o WHERE o.ordenTipo.codigo= 100 AND o.paciente.pacienteId = "
-            + pacienteId + " ORDER BY o.ordenId DESC");
-    // query.setFirstResult(pageable.getOffset());
-    // query.setMaxResults(pageable.getPageNumber());
-    List<Orden> result = query.list();
-    return new PageImpl<Orden>(result, pageable, result.size());
+  public Page<GridOrdenPracticaDTO> findConsultasByPageableANDPaciente(Pageable pageable,
+      Integer pacienteId, Integer tipo) {
+    Query query = sessionFactory.getCurrentSession()
+        .createSQLQuery("CALL zp_getGridAllConsultas(:pacienteId, :tipo);")
+        .setInteger("pacienteId", pacienteId).setInteger("tipo", tipo)
+        .setResultTransformer(Transformers.aliasToBean(GridOrdenPracticaDTO.class));
+    List<GridOrdenPracticaDTO> result = query.list();
 
+    return new PageImpl<GridOrdenPracticaDTO>(result, pageable, result.size());
   }
 
 
-  public Page<Orden> findPracticasByPageableANDPaciente(Pageable pageable, Integer pacienteId) {
-    Query query = this.sessionFactory.getCurrentSession()
-        .createQuery("FROM Orden o WHERE o.ordenTipo.codigo=102  AND o.paciente.pacienteId = "
-            + pacienteId + " ORDER BY o.ordenId DESC");
-    // query.setFirstResult(pageable.getOffset());
-    // query.setMaxResults(pageable.getPageNumber());
-    List<Orden> result = query.list();
-    return new PageImpl<Orden>(result, pageable, result.size());
+  public Page<GridOrdenPracticaDTO> findPracticasByPageableANDPaciente(Pageable pageable,
+      Integer pacienteId, Integer tipo) {
+    Query query = sessionFactory.getCurrentSession()
+        .createSQLQuery("CALL zp_getGridAllConsultas(:pacienteId, :tipo);")
+        .setInteger("pacienteId", pacienteId).setInteger("tipo", tipo)
+        .setResultTransformer(Transformers.aliasToBean(GridOrdenPracticaDTO.class));
+    List<GridOrdenPracticaDTO> result = query.list();
+
+    return new PageImpl<GridOrdenPracticaDTO>(result, pageable, result.size());
   }
 
 
@@ -250,5 +252,15 @@ public class OrdenDAOImpl implements OrdenDAO {
             + " and od.nomenclador.nomencladorId=" + nomencladorId)
         .list();
   }
-  
+
+
+  public List<PracticasListDTO> getAllPracticasByOrden(Integer ordenId) {
+    Query query = sessionFactory.getCurrentSession()
+        .createSQLQuery("CALL zp_getPracticasByOrden(:ordenId);").setInteger("ordenId", ordenId)
+        .setResultTransformer(Transformers.aliasToBean(PracticasListDTO.class));
+    List<PracticasListDTO> result = query.list();
+
+    return result;
+  }
+
 }

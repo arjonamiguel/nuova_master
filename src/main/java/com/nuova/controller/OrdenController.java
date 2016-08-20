@@ -15,6 +15,7 @@ import com.nuova.dto.OrdenTipoDTO;
 import com.nuova.dto.OrdenWorkflowDTO;
 import com.nuova.dto.PacienteDTO;
 import com.nuova.dto.PacienteOrdenPracticaDTO;
+import com.nuova.dto.PracticasListDTO;
 import com.nuova.dto.ProfesionalDTO;
 import com.nuova.dto.ProfesionalEspecialidadDTO;
 import com.nuova.model.Caja;
@@ -301,14 +302,30 @@ public class OrdenController {
 
     Page<GridOrdenPracticaDTO> ordenes =
         ordenManager.findOrdenesByPageable(pageable, codigoOrdenTipo);
+    List<GridOrdenPracticaDTO> aux = new ArrayList<GridOrdenPracticaDTO>();
 
-    return new PageImpl<GridOrdenPracticaDTO>(ordenes.getContent(), pageable,
-        ordenes.getTotalElements());
+    for (GridOrdenPracticaDTO o : ordenes.getContent()) {
+      // PacienteOrdenPracticaDTO dto = transformoOrdenToPacienteOrdenPracticaDTO(o);
+      String practicas = "";
+      List<PracticasListDTO> practicasList = ordenManager.getAllPracticasByOrden(o.getOrdenId());
+      for (PracticasListDTO op : practicasList) {
+        practicas = practicas + "<li>[" + op.getCodigo() + "] - " + op.getNombre() + " "
+            + getPracticaEstado(op) + "</li>";
+
+      }
+
+      String listpracticas = "<ul>" + practicas + "</ul>";
+      o.setPracticas(listpracticas);
+      aux.add(o);
+    }
+
+
+    return new PageImpl<GridOrdenPracticaDTO>(aux, pageable, ordenes.getTotalElements());
   }
 
   @RequestMapping(value = ConstantControllers.AJAX_GET_CONSULTASBYPACIENTE_PAGINADOS,
       method = RequestMethod.GET)
-  public @ResponseBody Page<OrdenDTO> getConsultasByPacientePaginados(
+  public @ResponseBody Page<GridOrdenPracticaDTO> getConsultasByPacientePaginados(
       @PathVariable("pacienteId") Integer pacienteId,
       @RequestParam(required = false, defaultValue = "0") Integer start,
       @RequestParam(required = false, defaultValue = "50") Integer limit) {
@@ -317,19 +334,15 @@ public class OrdenController {
     // Sort sort = new Sort(Sort.Direction.DESC, "creationDate");
     Pageable pageable = new PageRequest(start, limit);
 
-    Page<Orden> ordenes = ordenManager.findConsultasByPageableANDPaciente(pageable, pacienteId);
-    List<OrdenDTO> dtos = new ArrayList<OrdenDTO>();
-    for (Orden o : ordenes) {
-      OrdenDTO dto = transformOrdenToDto(o);
-      dtos.add(dto);
-    }
+    Page<GridOrdenPracticaDTO> dtos =
+        ordenManager.findConsultasByPageableANDPaciente(pageable, pacienteId, 100);
 
-    return new PageImpl<OrdenDTO>(dtos, pageable, ordenes.getTotalElements());
+    return new PageImpl<GridOrdenPracticaDTO>(dtos.getContent(), pageable, dtos.getTotalElements());
   }
 
   @RequestMapping(value = ConstantControllers.AJAX_GET_PRACTICASBYPACIENTE_PAGINADOS,
       method = RequestMethod.GET)
-  public @ResponseBody Page<PacienteOrdenPracticaDTO> getPracticasByPacientePaginados(
+  public @ResponseBody Page<GridOrdenPracticaDTO> getPracticasByPacientePaginados(
       @PathVariable("pacienteId") Integer pacienteId,
       @RequestParam(required = false, defaultValue = "0") Integer start,
       @RequestParam(required = false, defaultValue = "50") Integer limit) {
@@ -338,22 +351,26 @@ public class OrdenController {
     // Sort sort = new Sort(Sort.Direction.DESC, "creationDate");
     Pageable pageable = new PageRequest(start, limit);
 
-    Page<Orden> ordenes = ordenManager.findPracticasByPageableANDPaciente(pageable, pacienteId);
-    List<PacienteOrdenPracticaDTO> dtos = new ArrayList<PacienteOrdenPracticaDTO>();
-    for (Orden o : ordenes) {
-      PacienteOrdenPracticaDTO dto = transformoOrdenToPacienteOrdenPracticaDTO(o);
+    Page<GridOrdenPracticaDTO> ordenes =
+        ordenManager.findPracticasByPageableANDPaciente(pageable, pacienteId, 102);
+    List<GridOrdenPracticaDTO> aux = new ArrayList<GridOrdenPracticaDTO>();
+
+
+    for (GridOrdenPracticaDTO o : ordenes.getContent()) {
+      // PacienteOrdenPracticaDTO dto = transformoOrdenToPacienteOrdenPracticaDTO(o);
       String practicas = "";
-      for (OrdenPractica op : o.getOrdenPracticas()) {
-        practicas = practicas + "<li>[" + op.getNomenclador().getCodigo() + "] - "
-            + op.getNomenclador().getNombre() + " " + getPracticaEstado(op) + "</li>";
+      List<PracticasListDTO> practicasList = ordenManager.getAllPracticasByOrden(o.getOrdenId());
+      for (PracticasListDTO op : practicasList) {
+        practicas = practicas + "<li>[" + op.getCodigo() + "] - " + op.getNombre() + " "
+            + getPracticaEstado(op) + "</li>";
 
       }
-      String listpracticas = "<ul>" + practicas + "</ul>";
-      dto.setPractica(listpracticas);
-      dtos.add(dto);
-    }
 
-    return new PageImpl<PacienteOrdenPracticaDTO>(dtos, pageable, dtos.size());
+      String listpracticas = "<ul>" + practicas + "</ul>";
+      o.setPracticas(listpracticas);
+      aux.add(o);
+    }
+    return new PageImpl<GridOrdenPracticaDTO>(aux, pageable, ordenes.getTotalElements());
   }
 
   @RequestMapping(value = ConstantControllers.AJAX_GET_SEARCH_ORDENES_PAGINADOS,
@@ -379,8 +396,23 @@ public class OrdenController {
     Page<GridOrdenPracticaDTO> ordenes =
         ordenManager.findOrdenesBySearch(typeSearch, codigoOrdenTipo, ordenId, paciente, pageable);
 
-    return new PageImpl<GridOrdenPracticaDTO>(ordenes.getContent(), pageable,
-        ordenes.getTotalElements());
+    List<GridOrdenPracticaDTO> aux = new ArrayList<GridOrdenPracticaDTO>();
+
+    for (GridOrdenPracticaDTO o : ordenes.getContent()) {
+      // PacienteOrdenPracticaDTO dto = transformoOrdenToPacienteOrdenPracticaDTO(o);
+      String practicas = "";
+      List<PracticasListDTO> practicasList = ordenManager.getAllPracticasByOrden(o.getOrdenId());
+      for (PracticasListDTO op : practicasList) {
+        practicas = practicas + "<li>[" + op.getCodigo() + "] - " + op.getNombre() + " "
+            + getPracticaEstado(op) + "</li>";
+
+      }
+
+      String listpracticas = "<ul>" + practicas + "</ul>";
+      o.setPracticas(listpracticas);
+      aux.add(o);
+    }
+    return new PageImpl<GridOrdenPracticaDTO>(aux, pageable, ordenes.getTotalElements());
   }
 
 
@@ -860,7 +892,7 @@ public class OrdenController {
     return ConstantRedirect.VIEW_MAIN_CONSULTA_ODONTOLOGICA;
   }
 
-  private String getPracticaEstado(OrdenPractica op) {
+  private String getPracticaEstado(PracticasListDTO op) {
     String retorno = "";
     Date fechaActual = new Date();
     if (op.getAutorizarAutomatico() != null
@@ -953,7 +985,7 @@ public class OrdenController {
     PacienteDTO dto = new PacienteDTO();
     dto.setPacienteId(p.getPacienteId());
     dto.setEliminado(p.getEliminado().intValue());
-    dto.setDni(Integer.valueOf(p.getDni()));
+    dto.setDni(p.getDni());
     dto.setApellido(p.getApellido());
     dto.setNombre(p.getNombre());
     dto.setDomicilio(p.getDomicilio());
@@ -1006,7 +1038,7 @@ public class OrdenController {
       dtoad.setCheckedLiberado(p.getCoseguro().intValue() == 1 ? "checked" : "");
       dtoad.setMail(ad.getMail());
       dtoad.setTelefono(ad.getTelefono());
-      dtoad.setDni(Integer.valueOf(ad.getDni()));
+      dtoad.setDni(ad.getDni());
       dtoad.setEliminado(ad.getEliminado().intValue());
 
       // for (PacienteObrasocial poo : ad.getPacienteObrasocials()) {

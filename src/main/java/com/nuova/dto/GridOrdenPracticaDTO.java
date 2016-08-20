@@ -22,6 +22,7 @@ public class GridOrdenPracticaDTO {
   String nroOrden;
   String acciones;
   Integer ordenTipoCodigo;
+  String practicas;
 
   public GridOrdenPracticaDTO() {
 
@@ -130,9 +131,12 @@ public class GridOrdenPracticaDTO {
 
     String botonPrint = "";
     if (getOrdenTipoCodigo().intValue() != 100) {
-      botonPrint =
-          "<a class='btn btn-default btn-xs' data-toggle='modal' data-target='#myModal' onClick='showReport("
-              + getOrdenId() + ")'><span class='icon icon-print'></span></a>";
+      boolean puedeImprimir = !practicas.contains("PENDIENTE AL");
+      if (puedeImprimir) {
+        botonPrint =
+            "<a class='btn btn-default btn-xs' data-toggle='modal' data-target='#myModal' onClick='showReport("
+                + getOrdenId() + ")'><span class='icon icon-print'></span></a>";
+      }
     }
     // String botonPrint = "<button type='button' class='btn btn-info btn-lg' data-toggle='modal'
     // data-target='#myModal'>Open Modal</button>";
@@ -163,6 +167,14 @@ public class GridOrdenPracticaDTO {
 
   public void setOrdenTipoCodigo(Integer ordenTipoCodigo) {
     this.ordenTipoCodigo = ordenTipoCodigo;
+  }
+
+  public String getPracticas() {
+    return practicas;
+  }
+
+  public void setPracticas(String practicas) {
+    this.practicas = practicas;
   }
 
 

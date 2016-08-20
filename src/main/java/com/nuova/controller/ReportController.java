@@ -96,9 +96,8 @@ public class ReportController {
       "reports/reportAfiliadosSinCoseguro.jrxml";
   private static final String REPORT_AFILIADOS_SIN_COBERTURA =
       "reports/reportAfiliadosSinCobertura.jrxml";
-  private static final String REPORT_FILTRO_AFILIADOS =
-	      "reports/reportFiltroAfiliados.jrxml";
-  
+  private static final String REPORT_FILTRO_AFILIADOS = "reports/reportFiltroAfiliados.jrxml";
+
   @Autowired
   ReportManager reportManager;
   @Autowired
@@ -113,67 +112,69 @@ public class ReportController {
   PacienteManager pacienteManager;
   @Autowired
   ObraSocialManager obrasocialManager;
-  
+
   public static String cleanString(String texto) {
-      texto = Normalizer.normalize(texto, Normalizer.Form.NFD);
-      texto = texto.replaceAll("[\\p{InCombiningDiacriticalMarks}]", "");
-      return texto;
+    texto = Normalizer.normalize(texto, Normalizer.Form.NFD);
+    texto = texto.replaceAll("[\\p{InCombiningDiacriticalMarks}]", "");
+    return texto;
   }
 
   // ------------------------------------------------------------------------------------------------
   // Ajax Reports
-  @RequestMapping(value = ConstantControllers.AJAX_GET_FILTRO_AFILIADO,
-	      method = RequestMethod.GET)
-	  public @ResponseBody String reportFiltroAfiliados(HttpServletResponse response,
-	      @RequestParam(required = false, defaultValue = "") String fechaDesdeAfiliado,
-	      @RequestParam(required = false, defaultValue = "") String fechaHastaAfiliado,
-	      @RequestParam(required = false, defaultValue = "") String fechaNacimiento,
-	      @RequestParam(required = false, defaultValue = "") String localidadId,
-	      @RequestParam(required = false, defaultValue = "") String zonaAfiliacion) throws IOException {	  
+  @RequestMapping(value = ConstantControllers.AJAX_GET_FILTRO_AFILIADO, method = RequestMethod.GET)
+  public @ResponseBody String reportFiltroAfiliados(HttpServletResponse response,
+      @RequestParam(required = false, defaultValue = "") String fechaDesdeAfiliado,
+      @RequestParam(required = false, defaultValue = "") String fechaHastaAfiliado,
+      @RequestParam(required = false, defaultValue = "") String fechaNacimiento,
+      @RequestParam(required = false, defaultValue = "") String localidadId,
+      @RequestParam(required = false, defaultValue = "") String zonaAfiliacion) throws IOException {
 
-	    //
-	    Date fd = Util.parseToDate(fechaDesdeAfiliado);
-	    Date fh = Util.parseToDate(fechaHastaAfiliado);
-	    Date fn = Util.parseToDate(fechaNacimiento);
-	    int loc = Integer.valueOf(!localidadId.equals("") ? localidadId : "0");
-	    String za = !zonaAfiliacion.equals("NONE") ? zonaAfiliacion : "";
-	  
-	    // Afiliados atendidos
-	    List<Paciente> afiliadosAtendidos = reportManager.getFiltroAfiliado(fd,fh,fn,loc,za);
-	  
-	    String filtroDesc = "";
-	    filtroDesc = filtroDesc + (fd != null ? " [Fecha Desde: " + Util.parseToStringDate(fd)+"]" : "");
-	    filtroDesc = filtroDesc + (fh != null ? " [Fecha Hasta: " + Util.parseToStringDate(fh)+"]" : "");
-	    filtroDesc = filtroDesc + (fn != null ? " [Fecha Nacimiento Mayores a: " + Util.parseToStringDate(fn)+"]" : "");
-	    String localidadString="";
-	    if (loc > 0) {
-	    	Localidades l = pacienteManager.findLocalidadById(loc);
-	    	localidadString = l.getNombre();
-	    }
-	    filtroDesc = filtroDesc + (loc > 0 ? " [Localidad: " + localidadString + "]" : "");
-	    filtroDesc = filtroDesc + (!za.equals("") ? " [Zona de Afiliacion: " + za + "]" : "");
-	    
-	    List<PacienteDTO> listAA = getPacientesDto(afiliadosAtendidos);
-	    JRBeanCollectionDataSource beanCollectionDataSource = new JRBeanCollectionDataSource(listAA);
+    //
+    Date fd = Util.parseToDate(fechaDesdeAfiliado);
+    Date fh = Util.parseToDate(fechaHastaAfiliado);
+    Date fn = Util.parseToDate(fechaNacimiento);
+    int loc = Integer.valueOf(!localidadId.equals("") ? localidadId : "0");
+    String za = !zonaAfiliacion.equals("NONE") ? zonaAfiliacion : "";
 
-	    Map<String, Object> parameters = new HashMap<String, Object>();
-	    parameters.put("totalPacientes", listAA.size());
-	    parameters.put("filtroDesc", filtroDesc);
-	    ByteSource source = ByteSource
-	        .wrap(createReport(REPORT_FILTRO_AFILIADOS, parameters, beanCollectionDataSource));
-	    source.copyTo(response.getOutputStream());
+    // Afiliados atendidos
+    List<Paciente> afiliadosAtendidos = reportManager.getFiltroAfiliado(fd, fh, fn, loc, za);
 
-	    response.setContentType("application/pdf");
-	    response.getOutputStream().write(source.read());
-	    response.getOutputStream().flush();
-	    response.getOutputStream().close();
+    String filtroDesc = "";
+    filtroDesc =
+        filtroDesc + (fd != null ? " [Fecha Desde: " + Util.parseToStringDate(fd) + "]" : "");
+    filtroDesc =
+        filtroDesc + (fh != null ? " [Fecha Hasta: " + Util.parseToStringDate(fh) + "]" : "");
+    filtroDesc = filtroDesc
+        + (fn != null ? " [Fecha Nacimiento Mayores a: " + Util.parseToStringDate(fn) + "]" : "");
+    String localidadString = "";
+    if (loc > 0) {
+      Localidades l = pacienteManager.findLocalidadById(loc);
+      localidadString = l.getNombre();
+    }
+    filtroDesc = filtroDesc + (loc > 0 ? " [Localidad: " + localidadString + "]" : "");
+    filtroDesc = filtroDesc + (!za.equals("") ? " [Zona de Afiliacion: " + za + "]" : "");
 
-	    // return ConstantRedirect.VIEWER_REPORTE;
-	    return "OK";
-	  }
+    List<PacienteDTO> listAA = getPacientesDto(afiliadosAtendidos);
+    JRBeanCollectionDataSource beanCollectionDataSource = new JRBeanCollectionDataSource(listAA);
 
-  
-  
+    Map<String, Object> parameters = new HashMap<String, Object>();
+    parameters.put("totalPacientes", listAA.size());
+    parameters.put("filtroDesc", filtroDesc);
+    ByteSource source = ByteSource
+        .wrap(createReport(REPORT_FILTRO_AFILIADOS, parameters, beanCollectionDataSource));
+    source.copyTo(response.getOutputStream());
+
+    response.setContentType("application/pdf");
+    response.getOutputStream().write(source.read());
+    response.getOutputStream().flush();
+    response.getOutputStream().close();
+
+    // return ConstantRedirect.VIEWER_REPORTE;
+    return "OK";
+  }
+
+
+
   @RequestMapping(value = ConstantControllers.AJAX_GET_AFILIADOS_ATENDIDOS,
       method = RequestMethod.GET)
   public @ResponseBody String reportAfiliadosAtendidos(HttpServletResponse response,
@@ -454,7 +455,7 @@ public class ReportController {
     map.addAttribute("localidadString", new String());
 
     map.addAttribute("zonaAfiliacion", new String());
-    
+
     return ConstantRedirect.VIEW_REPORT_MONITOR;
   }
 
@@ -578,7 +579,7 @@ public class ReportController {
     PacienteDTO dto = new PacienteDTO();
     dto.setPacienteId(p.getPacienteId());
     dto.setEliminado(p.getEliminado().intValue());
-    dto.setDni(Integer.valueOf(p.getDni()));
+    dto.setDni(p.getDni());
     dto.setApellido(p.getApellido());
     dto.setNombre(p.getNombre() == null ? "" : p.getNombre());
     dto.setDomicilio(p.getDomicilio());
@@ -634,7 +635,7 @@ public class ReportController {
       dtoad.setCheckedLiberado(p.getCoseguro().intValue() == 1 ? "checked" : "");
       dtoad.setMail(ad.getMail());
       dtoad.setTelefono(ad.getTelefono());
-      dtoad.setDni(Integer.valueOf(ad.getDni()));
+      dtoad.setDni(ad.getDni());
       dtoad.setZonaAfiliacion(p.getZonaAfiliacion());
       dtoad.setParentesco(ad.getParentesco().intValue());
       dtoad.setCrdencial(ad.getNroCredencial() + "-" + ad.getNroCredencialSufijo());
@@ -680,7 +681,6 @@ public class ReportController {
     }
 
     Collections.sort(retorno, new Comparator<ObservacionesDTO>() {
-      @Override
       public int compare(ObservacionesDTO a1, ObservacionesDTO a2) {
         return a2.getFecha().compareTo(a1.getFecha());
       }
@@ -699,7 +699,6 @@ public class ReportController {
     }
 
     Collections.sort(retorno, new Comparator<OrdenWorkflowDTO>() {
-      @Override
       public int compare(OrdenWorkflowDTO a1, OrdenWorkflowDTO a2) {
         return a2.getFecha().compareTo(a1.getFecha());
       }
