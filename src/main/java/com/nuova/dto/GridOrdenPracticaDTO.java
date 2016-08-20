@@ -131,7 +131,7 @@ public class GridOrdenPracticaDTO {
 
     String botonPrint = "";
     if (getOrdenTipoCodigo().intValue() != 100) {
-      boolean puedeImprimir = !practicas.contains("PENDIENTE AL");
+      boolean puedeImprimir = practicas.contains("AUTORIZA");
       if (puedeImprimir) {
         botonPrint =
             "<a class='btn btn-default btn-xs' data-toggle='modal' data-target='#myModal' onClick='showReport("
