@@ -205,6 +205,8 @@ public class OrdenController {
   public String formEditOrden(ModelMap map, @PathVariable("ordenId") Integer ordenId) {
     if (ordenId != null) {
       OrdenDTO ordenDto = transformOrdenToDto(ordenManager.findOrdenById(ordenId));
+
+
       Especialidad e = null;
       if (ordenDto.getEspecialidad() != null) {
         e = especialidadManager.findEspecialidadById(ordenDto.getEspecialidad());
@@ -309,12 +311,13 @@ public class OrdenController {
       String practicas = "";
       List<PracticasListDTO> practicasList = ordenManager.getAllPracticasByOrden(o.getOrdenId());
       for (PracticasListDTO op : practicasList) {
-        practicas = practicas + "<li>[" + op.getCodigo() + "] - " + op.getNombre() + " "
-            + getPracticaEstado(op) + "</li>";
+        practicas = practicas + "<tr> <td style='width:20%'>" + op.getCodigo()
+            + "</td> <td style='width:50%'>" + op.getNombre() + "</td> " + " <td>"
+            + getPracticaEstado(op) + "</td></tr>";
 
       }
 
-      String listpracticas = "<ul>" + practicas + "</ul>";
+      String listpracticas = "<table>" + practicas + "</table>";
       o.setPracticas(listpracticas);
       aux.add(o);
     }
@@ -361,12 +364,13 @@ public class OrdenController {
       String practicas = "";
       List<PracticasListDTO> practicasList = ordenManager.getAllPracticasByOrden(o.getOrdenId());
       for (PracticasListDTO op : practicasList) {
-        practicas = practicas + "<li>[" + op.getCodigo() + "] - " + op.getNombre() + " "
-            + getPracticaEstado(op) + "</li>";
+        practicas = practicas + "<tr> <td style='width:20%'>" + op.getCodigo()
+            + "</td> <td style='width:50%'>" + op.getNombre() + "</td> " + " <td>"
+            + getPracticaEstado(op) + "</td></tr>";
 
       }
 
-      String listpracticas = "<ul>" + practicas + "</ul>";
+      String listpracticas = "<table>" + practicas + "</table>";
       o.setPracticas(listpracticas);
       aux.add(o);
     }
@@ -403,12 +407,12 @@ public class OrdenController {
       String practicas = "";
       List<PracticasListDTO> practicasList = ordenManager.getAllPracticasByOrden(o.getOrdenId());
       for (PracticasListDTO op : practicasList) {
-        practicas = practicas + "<li>[" + op.getCodigo() + "] - " + op.getNombre() + " "
-            + getPracticaEstado(op) + "</li>";
-
+        practicas = practicas + "<tr> <td style='width:20%'>" + op.getCodigo()
+            + "</td> <td style='width:50%'>" + op.getNombre() + "</td> " + " <td>"
+            + getPracticaEstado(op) + "</td></tr>";
       }
 
-      String listpracticas = "<ul>" + practicas + "</ul>";
+      String listpracticas = "<table>" + practicas + "</table>";
       o.setPracticas(listpracticas);
       aux.add(o);
     }

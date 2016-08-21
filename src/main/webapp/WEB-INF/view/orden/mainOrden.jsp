@@ -38,8 +38,8 @@
 
 						$("#ordenGrid").simplePagingGrid(
 								{
-									columnNames : [ "NRO.ORDEN","FECHA","SOLICITANTE","ESPECIALIDAD","PRACTICAS" ,"" ],
-									columnKeys : [ "nroOrden", "fecha", "apellidoNombreProfesional"
+									columnNames : [ "NRO.ORDEN", "PACIENTE","FECHA","SOLICITANTE","ESPECIALIDAD","PRACTICAS" ,"" ],
+									columnKeys : [ "nroOrden", "botonpaciente","fecha", "apellidoNombreProfesional"
 													, "especialidadView", "practicas","acciones"],
 									columnWidths : [ "10%","8%","15%", "10%" ],
 									sortable : [ true, false, true,true,true ],
@@ -56,7 +56,7 @@
 												var search = document
 														.getElementById("search").value;
 												// rows = callSearchPaciente(search);
-												rows.length = [];
+												rows.length = 0;
 												$("#ordenGrid")
 														.simplePagingGrid(
 																"refresh");
