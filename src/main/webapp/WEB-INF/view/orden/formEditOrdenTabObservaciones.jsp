@@ -10,7 +10,7 @@
 </table>
 <div class="tab-content" style="height: 400px">	
 <c:forEach items="${ordenDto.observacioneses}" var="obs" varStatus="loop" >
-	<table class="table"  style="width: 100%;">	
+	<table class="table"  style="width: 100%;" id ="observacion_${obs.observacionId}">	
 	<tr style="background-color:#f5f5f5;">
 		<td></td>
 		<td></td>
@@ -23,12 +23,10 @@
 			<b>${obs.userName}</b> <span style="font-size: 12px">${obs.fecha}</span>
 		</td>
 		<td style="padding: 1px 1px; text-align: right;">
-			<a class="btn btn-link" href="#">
+			<a class="btn btn-link" href="#" onclick="callRemoveObservaciones(${obs.observacionId})" title="Eliminar Observacion">
 				<i class="icon-trash"></i>
 			</a>
-			<a class="btn btn-link" href="#">
-				<i class="icon-pencil"></i>
-			</a>
+		
 		</td>
 		<td style="background-color:#f5f5f5;border-top:none;"></td>
 	</tr>

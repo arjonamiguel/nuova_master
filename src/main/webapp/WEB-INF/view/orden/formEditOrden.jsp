@@ -35,6 +35,9 @@
 
 
 <script type="text/javascript">
+var observacionCount = 0;
+
+
 	function createDatePicker(idx) {
 		return '	<div style="visibility:hidden;height:0px;"> '
 				+ ' <input type="text"' + 
@@ -466,7 +469,31 @@
 				$(".largerCheckbox")[4].checked=false;
 			}
 		}
+	
 		
+		function callRemoveObservaciones(observacionId) {
+			var retorno;
+			$.ajax({
+				url : "/nuova/ajaxPostRemoveObservacion/"+observacionId,
+				type : "POST",
+				contentType : "application/json; charset=utf-8",
+				//    data: jsonString, //Stringified Json Object
+				async : false, //Cross-domain requests and dataType: "jsonp" requests do not support synchronous operation
+				cache : false, //This will force requested pages not to be cached by the browser          
+				processData : false, //To avoid making query String instead of JSON
+				success : function(data) {
+					// Success Message Handler
+					retorno = data;
+				}
+			});
+			if (retorno = "OK") {
+				var tbl = document.getElementById("observacion_"+observacionId);
+		        if(tbl) tbl.parentNode.removeChild(tbl);
+		        observacionCount = observacionCount - 1;
+		        document.getElementById("observacionCount").innerHTML=observacionCount+"";
+			}
+			return retorno;
+		}
 </script>
 
 <style>
@@ -539,7 +566,7 @@
 											
 											<li><a data-toggle="tab" href="#tb_observacion">
 													Observaciones <c:if test="${observacionCount > 0}">
-														<span class="badge">${observacionCount}</span>
+														<span class="badge" id="observacionCount">${observacionCount}</span>
 													</c:if>
 											</a></li>
 											<sec:authorize access="hasRole('ROLE_ADMIN')">
@@ -628,6 +655,10 @@
 
 			</div>
 		</div>
+		
+		<script>
+		observacionCount = ${observacionCount};
+		</script>
 	</form:form>
 </body>
 <!-- Modal -->

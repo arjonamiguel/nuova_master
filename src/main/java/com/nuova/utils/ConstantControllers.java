@@ -103,6 +103,8 @@ public class ConstantControllers {
       "/ajaxGetProfesionalByEspecialidad";
   public final static String AJAX_GET_PRESTADORESBYESPECIALIDAD = "/ajaxGetPrestadorByEspecialidad";
   public final static String AJAX_POST_NUEVALOCALIDAD = "/ajaxPostNuevaLocalidad";
+  public final static String AJAX_POST_REMOVE_OBSERVACION =
+      "/ajaxPostRemoveObservacion/{observacionId}";
 
   // Reportes
   public final static String SHOW_REPORT_ORDEN_EMITIDA = "/showReporteOrdenEmitida/{ordenId}";

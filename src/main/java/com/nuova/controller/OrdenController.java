@@ -419,7 +419,18 @@ public class OrdenController {
     return new PageImpl<GridOrdenPracticaDTO>(aux, pageable, ordenes.getTotalElements());
   }
 
+  @RequestMapping(value = ConstantControllers.AJAX_POST_REMOVE_OBSERVACION,
+      method = RequestMethod.POST)
+  public @ResponseBody String removeObservacion(@PathVariable("observacionId") Integer id) {
+    String retorno = "ERROR";
+    try {
+      observacionManager.deleteObservaciones(Integer.valueOf(id));
+      retorno = "OK";
+    } catch (Exception e) {
 
+    }
+    return retorno;
+  }
 
   @RequestMapping(value = ConstantControllers.AJAX_GET_AUTOCOMPLETE_NOMENCLADOR,
       method = RequestMethod.POST)
@@ -1306,6 +1317,7 @@ public class OrdenController {
       odto.setOrdenId(o.getOrden().getOrdenId());
       ObservacionesDTO dto =
           new ObservacionesDTO(odto, o.getObservacion(), o.getUserName(), o.getFecha());
+      dto.setObservacionId(o.getObservacionId());
       retorno.add(dto);
     }
 
