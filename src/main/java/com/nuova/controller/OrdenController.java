@@ -769,29 +769,29 @@ public class OrdenController {
 
       if (orden.getCajaOrdens().isEmpty()) {
 
-        if (dto.getMonto() != null && dto.getMonto() > 0
-            && dto.getMonto().doubleValue() != orden.getMonto().doubleValue()) {
+        if (dto.getMonto() != null && dto.getMonto() > 0 && dto.getMonto()
+            .doubleValue() != (orden.getMonto() == null ? 0 : orden.getMonto().doubleValue())) {
+
+          // Caja
+          Caja caja = new Caja();
           if (orden.getOrdenTipo().getOrdenTipoId().intValue() == 1) {
-            // Caja
-            Caja caja = new Caja();
-            if (orden.getOrdenTipo().getOrdenTipoId().intValue() == 1) {
-              caja.setConcepto(Util.CONCEPTO_INGRESO_ORDENCONSULTA);
-            }
-
-            if (orden.getOrdenTipo().getOrdenTipoId().intValue() == 3) {
-              caja.setConcepto(Util.CONCEPTO_INGRESO_ORDENPRACTICA);
-            }
-
-            caja.setIngreso(dto.getMonto());
-            caja.setEgreso(0.00);
-            caja.setFecha(new Date());
-
-            cajaManager.add(caja);
-            CajaOrden cajaorden = new CajaOrden(caja, orden);
-            Set<CajaOrden> cajaordenes = new HashSet<CajaOrden>();
-            cajaordenes.add(cajaorden);
-            orden.setCajaOrdens(cajaordenes);
+            caja.setConcepto(Util.CONCEPTO_INGRESO_ORDENCONSULTA);
           }
+
+          if (orden.getOrdenTipo().getOrdenTipoId().intValue() == 3) {
+            caja.setConcepto(Util.CONCEPTO_INGRESO_ORDENPRACTICA);
+          }
+
+          caja.setIngreso(dto.getMonto());
+          caja.setEgreso(0.00);
+          caja.setFecha(new Date());
+
+          cajaManager.add(caja);
+          CajaOrden cajaorden = new CajaOrden(caja, orden);
+          Set<CajaOrden> cajaordenes = new HashSet<CajaOrden>();
+          cajaordenes.add(cajaorden);
+          orden.setCajaOrdens(cajaordenes);
+
         }
 
       } else {
@@ -800,11 +800,12 @@ public class OrdenController {
           co.getCaja().setIngreso(dto.getMonto());
           coo = co;
         }
+
         orden.getCajaOrdens().clear();
         Set<CajaOrden> cajaordenes = new HashSet<CajaOrden>();
         cajaordenes.add(coo);
         orden.setCajaOrdens(cajaordenes);
-
+        coo.getCaja().setFecha(new Date());
         cajaManager.edit(coo.getCaja());
 
       }
