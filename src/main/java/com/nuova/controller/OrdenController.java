@@ -5,6 +5,7 @@ import com.google.common.io.ByteSource;
 import com.nuova.dto.ComboItemDTO;
 import com.nuova.dto.EspecialidadDTO;
 import com.nuova.dto.GridOrdenPracticaDTO;
+import com.nuova.dto.HistoriaClinicaDTO;
 import com.nuova.dto.NomencladorDTO;
 import com.nuova.dto.ObraSocialDTO;
 import com.nuova.dto.ObservacionesDTO;
@@ -376,6 +377,23 @@ public class OrdenController {
     }
     return new PageImpl<GridOrdenPracticaDTO>(aux, pageable, ordenes.getTotalElements());
   }
+
+  @RequestMapping(value = ConstantControllers.AJAX_GET_HISTORIACLINICABYPACIENTE_PAGINADOS,
+      method = RequestMethod.GET)
+  public @ResponseBody Page<HistoriaClinicaDTO> getHistoriaClinicaByPacientePaginados(
+      @PathVariable("pacienteId") Integer pacienteId,
+      @RequestParam(required = false, defaultValue = "0") Integer start,
+      @RequestParam(required = false, defaultValue = "50") Integer limit) {
+
+    // Sort and Pagination
+    // Sort sort = new Sort(Sort.Direction.DESC, "creationDate");
+    Pageable pageable = new PageRequest(start, limit);
+
+    Page<HistoriaClinicaDTO> ordenes = ordenManager.findHistoriaClinica(pageable, pacienteId);
+    return new PageImpl<HistoriaClinicaDTO>(ordenes.getContent(), pageable,
+        ordenes.getTotalElements());
+  }
+
 
   @RequestMapping(value = ConstantControllers.AJAX_GET_SEARCH_ORDENES_PAGINADOS,
       method = RequestMethod.GET)

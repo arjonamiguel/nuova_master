@@ -1,6 +1,7 @@
 package com.nuova.dao;
 
 import com.nuova.dto.GridOrdenPracticaDTO;
+import com.nuova.dto.HistoriaClinicaDTO;
 import com.nuova.dto.OrdenAlarmaDTO;
 import com.nuova.dto.PracticasListDTO;
 import com.nuova.model.CajaOrden;
@@ -262,5 +263,18 @@ public class OrdenDAOImpl implements OrdenDAO {
 
     return result;
   }
+
+
+  public Page<HistoriaClinicaDTO> findHistoriaClinica(Pageable pageable, Integer pacienteId) {
+    Query query = sessionFactory.getCurrentSession()
+        .createSQLQuery("CALL zp_getGridAllHistoriaClinica(:pacienteId);")
+        .setInteger("pacienteId", pacienteId)
+        .setResultTransformer(Transformers.aliasToBean(HistoriaClinicaDTO.class));
+    List<HistoriaClinicaDTO> result = query.list();
+
+    return new PageImpl<HistoriaClinicaDTO>(result, pageable, result.size());
+  }
+
+
 
 }

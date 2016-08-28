@@ -1,13 +1,19 @@
 package com.nuova.controller;
 
+import com.google.common.base.Charsets;
+import com.google.common.io.ByteSource;
 import com.nuova.dto.ComboItemDTO;
 import com.nuova.dto.GridPacienteDTO;
+import com.nuova.dto.HistoriaClinicaObservacionesDTO;
 import com.nuova.dto.ObraSocialDTO;
 import com.nuova.dto.OrdenTipoDTO;
 import com.nuova.dto.PacienteAutocompleteDTO;
 import com.nuova.dto.PacienteDTO;
 import com.nuova.dto.PacienteInfoDTO;
 import com.nuova.model.Empresas;
+import com.nuova.model.HistoriaClinica;
+import com.nuova.model.HistoriaClinicaAdjuntos;
+import com.nuova.model.HistoriaClinicaObservaciones;
 import com.nuova.model.Localidades;
 import com.nuova.model.Obrasocial;
 import com.nuova.model.OrdenTipo;
@@ -38,11 +44,21 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.nio.charset.CharsetEncoder;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
+
+import javax.servlet.http.HttpServletResponse;
 
 @Controller
 public class PacienteController {
@@ -397,8 +413,7 @@ public class PacienteController {
 
   @RequestMapping(value = ConstantControllers.AJAX_POST_NUEVAEMPRESA, method = RequestMethod.POST,
       headers = {"content-type=application/json"})
-  public @ResponseBody String saveCodigoNomenclador(@RequestBody Empresas empresa)
-      throws Exception {
+  public @ResponseBody String nuevaEmpresa(@RequestBody Empresas empresa) throws Exception {
     empresa.setNombre(empresa.getNombre().toUpperCase());
     pacienteManager.add(empresa);
 
@@ -407,7 +422,7 @@ public class PacienteController {
 
   @RequestMapping(value = ConstantControllers.AJAX_POST_NUEVALOCALIDAD, method = RequestMethod.POST,
       headers = {"content-type=application/json"})
-  public @ResponseBody String saveLocalidad(@RequestBody Localidades localidad) throws Exception {
+  public @ResponseBody String nuevaLocalidad(@RequestBody Localidades localidad) throws Exception {
     localidad.setNombre(localidad.getNombre().toUpperCase());
     pacienteManager.addLocalidad(localidad);
 
@@ -469,6 +484,79 @@ public class PacienteController {
     paciente.setFechaAlta(new Date());
     pacienteManager.add(paciente);
     return "redirect:" + ConstantControllers.MAIN_PACIENTE;
+  }
+
+  @RequestMapping(value = ConstantControllers.AJAX_POST_NUEVAOBSERVACION,
+      method = RequestMethod.POST, headers = {"content-type=application/json"})
+  public @ResponseBody String nuevaObservacion(@RequestBody HistoriaClinicaObservacionesDTO dto)
+      throws Exception {
+
+    HistoriaClinicaObservaciones hco = transformDtoToHistoriaClinicaObservaciones(dto);
+    HistoriaClinica hc = pacienteManager.findHistoriaClinicaByFecha(new Date());
+
+    if (hc != null) {
+      hco.setHistoriaClinicaId(hc.getId());
+    } else {
+      HistoriaClinica _hc = new HistoriaClinica();
+      _hc.setFecha(new Date());
+      _hc.setPacienteId(dto.getPacienteId());
+      pacienteManager.addHistoriaClinica(_hc);
+
+      hco.setHistoriaClinicaId(_hc.getId());
+    }
+
+    pacienteManager.addHistoriaClinicaObservaciones(hco);
+
+    return hco.getId() != null ? hco.getId() + "" : "-1";
+  }
+
+  @RequestMapping(value = ConstantControllers.AJAX_POST_NUEVOADJUNTO, method = RequestMethod.POST)
+  public @ResponseBody String upload(MultipartHttpServletRequest request,
+      HttpServletResponse response,
+      @RequestParam(required = false, defaultValue = "0") Integer pacienteId) throws IOException {
+    Iterator<String> itr = request.getFileNames();
+    MultipartFile mpf = request.getFile(itr.next());
+
+    HistoriaClinicaAdjuntos hca = new HistoriaClinicaAdjuntos();
+    HistoriaClinica hc = pacienteManager.findHistoriaClinicaByFecha(new Date());
+
+    if (hc != null) {
+      hca.setHistoriaClinicaId(hc.getId());
+    } else {
+      HistoriaClinica _hc = new HistoriaClinica();
+      _hc.setFecha(new Date());
+      _hc.setPacienteId(pacienteId);
+      pacienteManager.addHistoriaClinica(_hc);
+
+      hca.setHistoriaClinicaId(_hc.getId());
+    }
+
+    hca.setFecha(hc.getFecha());
+    hca.setAdjunto(mpf.getBytes());
+    hca.setNombreArchivo(mpf.getOriginalFilename());
+    hca.setFileType(mpf.getContentType());
+    pacienteManager.addHistoriaClinicaAdjuntos(hca);
+
+    return hca.getId() != null ? hca.getId() + "" : "-1";
+  }
+
+  @RequestMapping(value = ConstantControllers.AJAX_GET_DOWNLOADADJUNTO, method = RequestMethod.GET)
+  public void downloadAdjunto(HttpServletResponse response, ModelMap map,
+      @RequestParam(required = false, defaultValue = "0") Integer adjuntoId) throws IOException {
+
+    HistoriaClinicaAdjuntos doc = pacienteManager.findAdjuntoById(adjuntoId);
+    String typeFile = "." + doc.getFileType().split("/")[1];
+
+    byte[] content = doc.getAdjunto();
+    ByteSource source = ByteSource.wrap(content);
+    source.copyTo(response.getOutputStream());
+
+    response.setContentType(doc.getFileType());
+    String contentDispositionValue = getContentDispositionValue(doc.getNombreArchivo(), typeFile);
+    response.setHeader(com.google.common.net.HttpHeaders.CONTENT_DISPOSITION,
+        contentDispositionValue);
+    response.setHeader(com.google.common.net.HttpHeaders.ACCESS_CONTROL_EXPOSE_HEADERS,
+        com.google.common.net.HttpHeaders.CONTENT_DISPOSITION);
   }
 
   // -------------------------------------------------------
@@ -645,6 +733,50 @@ public class PacienteController {
     }
 
     return titular;
+  }
+
+  public HistoriaClinicaObservaciones transformDtoToHistoriaClinicaObservaciones(
+      HistoriaClinicaObservacionesDTO dto) {
+    HistoriaClinicaObservaciones hco = new HistoriaClinicaObservaciones();
+    hco.setObservacion(dto.getObservacion());
+    hco.setId(dto.getId());
+    hco.setHistoriaClinicaId(dto.getHistoriaClinicaId());
+    hco.setFecha(Util.parseToDate(dto.getFecha()));
+
+    return hco;
+  }
+
+  public HistoriaClinicaObservacionesDTO transformHistoriaClinicaObservacionesToDto(
+      HistoriaClinicaObservaciones hco) {
+    HistoriaClinicaObservacionesDTO dto = new HistoriaClinicaObservacionesDTO();
+    dto.setObservacion(hco.getObservacion());
+    dto.setId(hco.getId());
+    dto.setHistoriaClinicaId(hco.getHistoriaClinicaId());
+    dto.setFecha(Util.parseToStringDate(hco.getFecha()));
+
+    return dto;
+  }
+
+  private String getContentDispositionValue(String fileName, String typeFile) {
+    StringBuilder contentDisposition = new StringBuilder("attachment");
+    contentDisposition.append("; filename=").append('"').append(fileName).append(typeFile)
+        .append('"');
+    CharsetEncoder enc = StandardCharsets.US_ASCII.newEncoder();
+    boolean canEncode = enc.canEncode(fileName);
+    if (!canEncode) {
+
+      try {
+        URI uri = new URI(null, null, fileName, null);
+        // for browsers supporting utf-8 encoding
+        contentDisposition.append("; filename*=").append(Charsets.UTF_8).append("''")
+            .append(uri.toASCIIString()).append(typeFile);
+      } catch (URISyntaxException e) {
+
+      }
+
+    }
+
+    return contentDisposition.toString();
   }
 
 }

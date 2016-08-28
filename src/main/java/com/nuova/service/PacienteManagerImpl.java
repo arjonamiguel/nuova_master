@@ -8,6 +8,9 @@ import com.nuova.dto.PacienteDTO;
 import com.nuova.dto.PacienteInfoDTO;
 import com.nuova.model.Empresas;
 import com.nuova.model.Especialidad;
+import com.nuova.model.HistoriaClinica;
+import com.nuova.model.HistoriaClinicaAdjuntos;
+import com.nuova.model.HistoriaClinicaObservaciones;
 import com.nuova.model.Localidades;
 import com.nuova.model.Paciente;
 
@@ -17,6 +20,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -147,6 +151,34 @@ public class PacienteManagerImpl implements PacienteManager {
 
   public List<PacienteDTO> getAdherentes(Integer titular) {
     return pacienteDAO.getAdherentes(titular);
+  }
+
+
+  public void addHistoriaClinica(HistoriaClinica hc) {
+    pacienteDAO.addHistoriaClinica(hc);
+
+  }
+
+
+  public void addHistoriaClinicaObservaciones(HistoriaClinicaObservaciones hco) {
+    pacienteDAO.addHistoriaClinicaObservaciones(hco);
+
+  }
+
+
+  public void addHistoriaClinicaAdjuntos(HistoriaClinicaAdjuntos hca) {
+    pacienteDAO.addHistoriaClinicaAdjuntos(hca);
+
+  }
+
+
+  public HistoriaClinica findHistoriaClinicaByFecha(Date fecha) {
+    return pacienteDAO.findHistoriaClinicaByFecha(fecha);
+  }
+
+
+  public HistoriaClinicaAdjuntos findAdjuntoById(Integer adjuntoId) {
+    return pacienteDAO.findAdjuntoById(adjuntoId);
   }
 
 }

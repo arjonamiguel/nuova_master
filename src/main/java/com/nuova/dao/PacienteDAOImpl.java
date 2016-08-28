@@ -7,6 +7,9 @@ import com.nuova.dto.PacienteDTO;
 import com.nuova.dto.PacienteInfoDTO;
 import com.nuova.model.Empresas;
 import com.nuova.model.Especialidad;
+import com.nuova.model.HistoriaClinica;
+import com.nuova.model.HistoriaClinicaAdjuntos;
+import com.nuova.model.HistoriaClinicaObservaciones;
 import com.nuova.model.Localidades;
 import com.nuova.model.Paciente;
 
@@ -20,6 +23,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
 
 import java.io.UnsupportedEncodingException;
+import java.util.Date;
 import java.util.List;
 
 @Repository
@@ -278,6 +282,45 @@ public class PacienteDAOImpl implements PacienteDAO {
         .setResultTransformer(Transformers.aliasToBean(PacienteDTO.class));
 
     return query.list();
+  }
+
+
+  public void addHistoriaClinica(HistoriaClinica hc) {
+    this.sessionFactory.getCurrentSession().save(hc);
+
+  }
+
+
+  public void addHistoriaClinicaObservaciones(HistoriaClinicaObservaciones hco) {
+    this.sessionFactory.getCurrentSession().save(hco);
+
+  }
+
+
+  public void addHistoriaClinicaAdjuntos(HistoriaClinicaAdjuntos hca) {
+    this.sessionFactory.getCurrentSession().save(hca);
+
+  }
+
+
+  public HistoriaClinica findHistoriaClinicaByFecha(Date fecha) {
+    HistoriaClinica retorno = null;
+    @SuppressWarnings("unchecked")
+    List<HistoriaClinica> result = this.sessionFactory.getCurrentSession()
+        .createQuery(" SELECT hc FROM HistoriaClinica hc WHERE hc.fecha = :fecha")
+        .setDate("fecha", fecha).list();
+
+    if (result != null && !result.isEmpty()) {
+      retorno = result.get(0);
+    }
+
+    return retorno;
+  }
+
+
+  public HistoriaClinicaAdjuntos findAdjuntoById(Integer adjuntoId) {
+    return (HistoriaClinicaAdjuntos) this.sessionFactory.getCurrentSession()
+        .get(HistoriaClinicaAdjuntos.class, adjuntoId);
   }
 
 }

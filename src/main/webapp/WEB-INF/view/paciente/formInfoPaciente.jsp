@@ -40,14 +40,50 @@
 
 
 <script type="text/javascript">
+function descargaAdjunto(id) {
+	window.open('/nuova/ajaxGetDownloadAdjunto?adjuntoId='+id,'NUOVA - Descarga de Adjunto','width=500,height=150')
+}
+
+$(function() {
+	  $('#btnNuevaObservacion').click(function() {
+		  document.getElementById("observacion_value").value="";
+	    $('#modalNuevaObservacion').modal('show');
+	  });
+	  
+	  $('#btnSaveObservacion').click(function() {
+	    var observacion = document.getElementById("observacion_value").value;
+	    var resp = callNuevaObservacion(getJsonObservacion(observacion));
+	    $('#modalNuevaObservacion').modal('hide');
+	  });
+	});
+
+$(function() {
+	  $('#btnNuevoAdjunto').click(function() {		
+
+	    $('#modalNuevoAdjunto').modal('show');
+	  });
+	  
+	  $('#btnSaveAdjunto').click(function() {
+	   // var observacion = document.getElementById("uploadFile").value;
+	   // var resp = callNuevaObservacion(getJsonObservacion(observacion));
+	   	var file_data = $('#uploadFile').prop('files')[0];   
+    	var form_data = new FormData();                  
+    	form_data.append('file', file_data);
+    	var resp = callNuevoAdjunto(form_data);
+	    $('#modalNuevoAdjunto').modal('hide');
+	  });
+	});
+
 $(document).ready(function() {	
 	var rowsConsultas = [];
 	var rowsPracticas = [];
 	var rowsReintegros = [];
+	var rowaHc = [];
 	// var rowsObservaciones = [];
 	rowsConsultas = callConsultas();
 	rowsPracticas = callPracticas();
 	rowsReintegros = callReintegros();
+	rowsHc = callHistoriaClinica();
 	// rowsObservaciones = callObservaciones();
 	//rowsObservaciones= [{'observacionId':'1', 'observacion':'hola gus','fecha':'24/05/2016'}];
 
@@ -83,6 +119,16 @@ $(document).ready(function() {
 				columnWidths : [ "10%", "10%"],
 				sortable : [ true, true,],
 				data : rowsReintegros,
+				pageSize : 5,
+				minimumVisibleRows: 5
+			});
+	$("#hcGrid").simplePagingGrid(
+			{
+				columnNames : [ "FECHA","ORDENES","OBSERVACIONES" , "ARCHIVOS ADJUNTOS","" ],
+				columnKeys : [ "fecha", "ordenes","observaciones" , "adjuntos", "acciones"],
+				columnWidths : [ "10%", "20%"],
+				sortable : [ true, true,],
+				data : rowsHc,
 				pageSize : 5,
 				minimumVisibleRows: 5
 			});
@@ -318,7 +364,7 @@ function procesarSubmit()
 							</c:if>	
 							<li><a data-toggle="tab" href="#tb_practicas"><b>Practicas</b></a></li>
 							<li><a data-toggle="tab" href="#tb_reintegros"><b>Reintegros</b></a></li>
-							<li><a data-toggle="tab" href="#tb_observaciones"><b>Observaciones</b></a></li>
+							<li><a data-toggle="tab" href="#tb_historia_clinica"><b>Historia Clinica</b></a></li>
 						</ul>
 						<!-- Fin Declaracion de tabs -->
 
@@ -352,9 +398,9 @@ function procesarSubmit()
 							<div id="tb_reintegros" class="tab-pane fade">
 								<jsp:include page="formInfoPacienteTabReintegros.jsp"></jsp:include>
 							</div> 
-							<!-- ** Tab Observaciones -->
- 							<div id="tb_observaciones" class="tab-pane fade"> 
- 								<jsp:include page="formInfoPacienteTabObservaciones.jsp"></jsp:include>
+							<!-- ** Tab Historia clinica -->
+ 							<div id="tb_historia_clinica" class="tab-pane fade"> 
+ 								<jsp:include page="formInfoPacienteHistoriaClinica.jsp"></jsp:include>
  							</div> 
 						</div>
 						<!-- Fin Contenedor de Tabs -->
@@ -399,9 +445,59 @@ function procesarSubmit()
 	<!-- Fin Modal -->
 
 </body>
+
+<div class="modal fade" id="modalNuevaObservacion">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only"></span></button>
+        <h4 class="modal-title">Nueva Observacion</h4>
+      </div>
+      <div class="modal-body">
+        <p>Observacion: </p>
+        <textarea name="observacion_value" id="observacion_value" form="usrform"></textarea>
+        
+      </div>
+      <div class="modal-footer">
+        <button type="button" id="btnSaveObservacion" class="btn btn-info"  id="btn_submit">Guardar</button>      
+        <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+
+<div class="modal fade" id="modalNuevoAdjunto">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only"></span></button>
+        <h4 class="modal-title">Nuevo Archivo Adjunto</h4>
+      </div>
+      <div class="modal-body">
+        <p><img alt="" src="<%=request.getContextPath()%>/resources/img/atach16x16.png"> Adjunto: </p>
+		
+		<input class='myFile' type='file' name='uploadFile' id='uploadFile' >
+         
+      </div>
+      <div class="modal-footer">
+        <button type="button" id="btnSaveAdjunto" class="btn btn-info"  id="btn_submit">Guardar</button>      
+        <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
 </html>
 <script>
 document.getElementById("mainPaciente").parentNode.classList.add("active");
+
+
+function getJsonObservacion(observacion) {	
+	return '{"observacion":"' + observacion + '", "pacienteId":' + ${paciente.pacienteId} + '}';
+}
+
+
 function callConsultas() {
 	var retorno;
 	$.ajax({
@@ -443,7 +539,7 @@ function callPracticas() {
 function callReintegros() {
 	var retorno;
 	$.ajax({
-		url : "/nuova/ /${paciente.pacienteId}",
+		url : "/nuova/ajaxGetReintegrosByPacientePaginados/${paciente.pacienteId}",
 		type : "GET",
 		contentType : "application/json; charset=utf-8",
 		//    data: jsonString, //Stringified Json Object
@@ -458,5 +554,60 @@ function callReintegros() {
 
 	return retorno;
 }
+
+function callHistoriaClinica() {
+	var retorno;
+	$.ajax({
+		url : "/nuova/ajaxGetHistoriaClinica/${paciente.pacienteId}",
+		type : "GET",
+		contentType : "application/json; charset=utf-8",
+		//    data: jsonString, //Stringified Json Object
+		async : false, //Cross-domain requests and dataType: "jsonp" requests do not support synchronous operation
+		cache : false, //This will force requested pages not to be cached by the browser          
+		processData : false, //To avoid making query String instead of JSON
+		success : function(page) {
+			// Success Message Handler
+			retorno = page.content;
+		}
+	});
+
+	return retorno;
+}
+
+function callNuevaObservacion(jsonObservacion) {
+	var retorno;
+	$.ajax({
+		url : "/nuova/ajaxPostNuevaObservacion",
+		type : "POST",
+		contentType : "application/json; charset=utf-8",
+		data: jsonObservacion, //Stringified Json Object
+		async : false, //Cross-domain requests and dataType: "jsonp" requests do not support synchronous operation
+		cache : false, //This will force requested pages not to be cached by the browser          
+		processData : false, //To avoid making query String instead of JSON
+		success : function(result) {
+			retorno = result;
+		}
+	});
+
+	return retorno;
+}
+
+function callNuevoAdjunto(formData) {
+	var retorno;
+	$.ajax({
+		url : "/nuova/ajaxPostNuevoAdjunto",
+		type : "POST",		
+		data: formData, //Stringified Json Object
+		dataType: 'text',
+	    processData: false,
+	    contentType: false,
+		success : function(result) {
+			retorno = result;
+		}
+	});
+
+	return retorno;
+}		
+
 updatePhones();
 </script>

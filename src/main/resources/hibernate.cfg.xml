@@ -35,6 +35,9 @@
         <mapping class="com.nuova.model.UserRoles" />
         <mapping class="com.nuova.model.UsersRoleMap" />
         <mapping class="com.nuova.model.NomencladorTipo" />
+        <mapping class="com.nuova.model.HistoriaClinica" />
+        <mapping class="com.nuova.model.HistoriaClinicaObservaciones" />
+        <mapping class="com.nuova.model.HistoriaClinicaAdjuntos" />
         
     </session-factory>
 </hibernate-configuration>

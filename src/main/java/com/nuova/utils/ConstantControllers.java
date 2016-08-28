@@ -60,6 +60,8 @@ public class ConstantControllers {
   public final static String AJAX_GET_AUTOCOMPLETE_ESPECIALIDADES =
       "/ajaxGetAutoCompleteEspecialidades";
   public final static String AJAX_POST_ACTIVAR_PACIENTE = "/ajaxPostActivarPaciente/{pacienteId}";
+  public final static String AJAX_POST_NUEVOADJUNTO = "/ajaxPostNuevoAdjunto";
+  public final static String AJAX_GET_DOWNLOADADJUNTO = "/ajaxGetDownloadAdjunto";
 
   // Adherente
   public final static String FORM_ADD_ADHERENTE = "/formAddAdherente/{titularId}";
@@ -105,6 +107,9 @@ public class ConstantControllers {
   public final static String AJAX_POST_NUEVALOCALIDAD = "/ajaxPostNuevaLocalidad";
   public final static String AJAX_POST_REMOVE_OBSERVACION =
       "/ajaxPostRemoveObservacion/{observacionId}";
+  public final static String AJAX_GET_HISTORIACLINICABYPACIENTE_PAGINADOS =
+      "/ajaxGetHistoriaClinica/{pacienteId}";
+  public final static String AJAX_POST_NUEVAOBSERVACION = "/ajaxPostNuevaObservacion";
 
   // Reportes
   public final static String SHOW_REPORT_ORDEN_EMITIDA = "/showReporteOrdenEmitida/{ordenId}";

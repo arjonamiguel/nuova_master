@@ -1,6 +1,7 @@
 package com.nuova.service;
 
 import com.nuova.dto.GridOrdenPracticaDTO;
+import com.nuova.dto.HistoriaClinicaDTO;
 import com.nuova.dto.OrdenAlarmaDTO;
 import com.nuova.dto.PracticasListDTO;
 import com.nuova.model.CajaOrden;
@@ -79,4 +80,6 @@ public interface OrdenManager {
   public List<OrdenPractica> getAllOrdenPracticaByOrden(Integer ordenId, Integer nomencladorId);
 
   public List<PracticasListDTO> getAllPracticasByOrden(Integer ordenId);
+
+  public Page<HistoriaClinicaDTO> findHistoriaClinica(Pageable pageable, Integer pacienteId);
 }

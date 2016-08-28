@@ -7,12 +7,16 @@ import com.nuova.dto.PacienteDTO;
 import com.nuova.dto.PacienteInfoDTO;
 import com.nuova.model.Empresas;
 import com.nuova.model.Especialidad;
+import com.nuova.model.HistoriaClinica;
+import com.nuova.model.HistoriaClinicaAdjuntos;
+import com.nuova.model.HistoriaClinicaObservaciones;
 import com.nuova.model.Localidades;
 import com.nuova.model.Paciente;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
+import java.util.Date;
 import java.util.List;
 
 public interface PacienteDAO {
@@ -68,5 +72,15 @@ public interface PacienteDAO {
   public PacienteInfoDTO findPacientesInfo(Integer pacienteId);
 
   public List<PacienteDTO> getAdherentes(Integer titular);
+
+  public void addHistoriaClinica(HistoriaClinica hc);
+
+  public void addHistoriaClinicaObservaciones(HistoriaClinicaObservaciones hco);
+
+  public void addHistoriaClinicaAdjuntos(HistoriaClinicaAdjuntos hca);
+
+  public HistoriaClinica findHistoriaClinicaByFecha(Date fecha);
+
+  public HistoriaClinicaAdjuntos findAdjuntoById(Integer adjuntoId);
 
 }
