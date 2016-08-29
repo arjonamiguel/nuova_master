@@ -185,7 +185,7 @@ public class CajaController {
     retorno.setFecha(c.getFecha());
     List<CajaOrden> co = new ArrayList<CajaOrden>();
     co.addAll(c.getCajaOrdens());
-    if (co.get(0) != null) {
+    if (!co.isEmpty()) {
       CajaOrden cajaOrden = co.get(0);
       Formatter fmt = new Formatter();
       fmt.format("%08d", cajaOrden.getOrden().getOrdenId());
