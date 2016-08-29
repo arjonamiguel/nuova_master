@@ -79,7 +79,7 @@ public interface PacienteDAO {
 
   public void addHistoriaClinicaAdjuntos(HistoriaClinicaAdjuntos hca);
 
-  public HistoriaClinica findHistoriaClinicaByFecha(Date fecha);
+  public HistoriaClinica findHistoriaClinicaByFecha(Date fecha, Integer pacienteId);
 
   public HistoriaClinicaAdjuntos findAdjuntoById(Integer adjuntoId);
 

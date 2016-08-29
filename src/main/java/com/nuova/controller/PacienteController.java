@@ -492,10 +492,12 @@ public class PacienteController {
       throws Exception {
 
     HistoriaClinicaObservaciones hco = transformDtoToHistoriaClinicaObservaciones(dto);
-    HistoriaClinica hc = pacienteManager.findHistoriaClinicaByFecha(new Date());
+    HistoriaClinica hc =
+        pacienteManager.findHistoriaClinicaByFecha(new Date(), dto.getPacienteId());
 
     if (hc != null) {
       hco.setHistoriaClinicaId(hc.getId());
+      hco.setFecha(new Date());
     } else {
       HistoriaClinica _hc = new HistoriaClinica();
       _hc.setFecha(new Date());
@@ -518,7 +520,7 @@ public class PacienteController {
     MultipartFile mpf = request.getFile(itr.next());
 
     HistoriaClinicaAdjuntos hca = new HistoriaClinicaAdjuntos();
-    HistoriaClinica hc = pacienteManager.findHistoriaClinicaByFecha(new Date());
+    HistoriaClinica hc = pacienteManager.findHistoriaClinicaByFecha(new Date(), pacienteId);
 
     if (hc != null) {
       hca.setHistoriaClinicaId(hc.getId());

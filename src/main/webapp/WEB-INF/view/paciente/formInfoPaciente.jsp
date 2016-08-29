@@ -595,7 +595,7 @@ function callNuevaObservacion(jsonObservacion) {
 function callNuevoAdjunto(formData) {
 	var retorno;
 	$.ajax({
-		url : "/nuova/ajaxPostNuevoAdjunto",
+		url : "/nuova/ajaxPostNuevoAdjunto?pacienteId="+${paciente.pacienteId},
 		type : "POST",		
 		data: formData, //Stringified Json Object
 		dataType: 'text',

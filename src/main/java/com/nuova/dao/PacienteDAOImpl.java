@@ -303,12 +303,13 @@ public class PacienteDAOImpl implements PacienteDAO {
   }
 
 
-  public HistoriaClinica findHistoriaClinicaByFecha(Date fecha) {
+  public HistoriaClinica findHistoriaClinicaByFecha(Date fecha, Integer pacienteId) {
     HistoriaClinica retorno = null;
     @SuppressWarnings("unchecked")
     List<HistoriaClinica> result = this.sessionFactory.getCurrentSession()
-        .createQuery(" SELECT hc FROM HistoriaClinica hc WHERE hc.fecha = :fecha")
-        .setDate("fecha", fecha).list();
+        .createQuery(
+            " SELECT hc FROM HistoriaClinica hc WHERE hc.fecha = :fecha and hc.pacienteId = :pacienteId")
+        .setDate("fecha", fecha).setInteger("pacienteId", pacienteId).list();
 
     if (result != null && !result.isEmpty()) {
       retorno = result.get(0);

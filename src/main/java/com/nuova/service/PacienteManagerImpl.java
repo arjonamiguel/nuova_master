@@ -172,8 +172,8 @@ public class PacienteManagerImpl implements PacienteManager {
   }
 
 
-  public HistoriaClinica findHistoriaClinicaByFecha(Date fecha) {
-    return pacienteDAO.findHistoriaClinicaByFecha(fecha);
+  public HistoriaClinica findHistoriaClinicaByFecha(Date fecha, Integer pacienteId) {
+    return pacienteDAO.findHistoriaClinicaByFecha(fecha, pacienteId);
   }
 
 
