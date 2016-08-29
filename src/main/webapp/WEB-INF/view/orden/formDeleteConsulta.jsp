@@ -266,7 +266,7 @@
 		<div class="panel panel-info">
 			<div class="panel-heading">
           			<div class="panel-title">
-	          		Elimiar Consultas 
+	          		Eliminar Consultas 
           			</div>
           			<div class="label-error" id="message"
 						style="float: left; margin-left: 8%; visibility: hidden;">Falta

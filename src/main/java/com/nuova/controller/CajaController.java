@@ -185,22 +185,23 @@ public class CajaController {
     retorno.setFecha(c.getFecha());
     List<CajaOrden> co = new ArrayList<CajaOrden>();
     co.addAll(c.getCajaOrdens());
-    CajaOrden cajaOrden = co.get(0);
-    Formatter fmt = new Formatter();
-    fmt.format("%08d", cajaOrden.getOrden().getOrdenId());
+    if (co.get(0) != null) {
+      CajaOrden cajaOrden = co.get(0);
+      Formatter fmt = new Formatter();
+      fmt.format("%08d", cajaOrden.getOrden().getOrdenId());
 
-    int ordenTipo = cajaOrden.getOrden().getOrdenTipo().getOrdenTipoId().intValue();
-    System.out.println("*** ordentipo: " + ordenTipo);
-    String formRedirect = "";
-    if (ordenTipo == 1) {
-      formRedirect = "/nuova/formEditConsulta/";
-    } else if (ordenTipo == 3) {
-      formRedirect = "/nuova/formEditOrden/";
+      int ordenTipo = cajaOrden.getOrden().getOrdenTipo().getOrdenTipoId().intValue();
+      System.out.println("*** ordentipo: " + ordenTipo);
+      String formRedirect = "";
+      if (ordenTipo == 1) {
+        formRedirect = "/nuova/formEditConsulta/";
+      } else if (ordenTipo == 3) {
+        formRedirect = "/nuova/formEditOrden/";
+      }
+
+      retorno.setConceptoDesc(Util.CAJA_CONCEPTOS.get(ordenTipo) + " Nro. <a target='_blank' href='"
+          + formRedirect + cajaOrden.getOrden().getOrdenId() + "'>" + fmt.toString() + " </a>");
     }
-
-    retorno.setConceptoDesc(Util.CAJA_CONCEPTOS.get(ordenTipo) + " Nro. <a target='_blank' href='"
-        + formRedirect + cajaOrden.getOrden().getOrdenId() + "'>" + fmt.toString() + " </a>");
-
     return retorno;
   }
 
