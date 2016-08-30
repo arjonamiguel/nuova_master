@@ -1,10 +1,12 @@
 package com.nuova.dao;
 
+import com.nuova.dto.CajaDTO;
 import com.nuova.model.Caja;
 import com.nuova.model.CajaCierre;
 
 import org.hibernate.Query;
 import org.hibernate.SessionFactory;
+import org.hibernate.transform.Transformers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -71,15 +73,19 @@ public class CajaDAOImpl implements CajaDAO {
   }
 
   @Override
-  public List<Caja> findAllByfecha(Date fecha) {
-    Query query = this.sessionFactory.getCurrentSession().createQuery(
-        "FROM Caja c " + " WHERE CAST(c.fecha as date) = :fecha" + " ORDER BY c.cajaId")
-
-        .setDate("fecha", fecha);
+  public List<CajaDTO> findAllByfecha(Date fecha) {
+    // Query query = this.sessionFactory.getCurrentSession().createQuery(
+    // "FROM Caja c " + " WHERE CAST(c.fecha as date) = :fecha" + " ORDER BY c.cajaId")
+    //
+    // .setDate("fecha", fecha);
 
     // query.setFirstResult(pageable.getOffset());
     // query.setMaxResults(pageable.getPageNumber());
-    List<Caja> result = query.list();
+    Query query =
+        sessionFactory.getCurrentSession().createSQLQuery("CALL zp_getCajaByFecha(:fecha);")
+            .setDate("fecha", fecha).setResultTransformer(Transformers.aliasToBean(CajaDTO.class));
+
+    List<CajaDTO> result = query.list();
 
     return result;
   }

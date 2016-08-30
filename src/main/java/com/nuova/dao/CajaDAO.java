@@ -1,5 +1,6 @@
 package com.nuova.dao;
 
+import com.nuova.dto.CajaDTO;
 import com.nuova.model.Caja;
 import com.nuova.model.CajaCierre;
 
@@ -25,7 +26,7 @@ public interface CajaDAO {
 
   public Page<Caja> findCajaBySearch(String search, Pageable pageable);
 
-  public List<Caja> findAllByfecha(Date fecha);
+  public List<CajaDTO> findAllByfecha(Date fecha);
 
   public void addCajaCierre(CajaCierre cierre);
 

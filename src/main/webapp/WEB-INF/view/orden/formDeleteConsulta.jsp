@@ -260,6 +260,8 @@
 
 <form:form method="post" action="/nuova/deleteOrden" commandName="ordenDto">
 <form:hidden path="ordenId"/>
+<form:hidden path="ordenTipo.ordenTipoId"/>
+<form:hidden path="ordenTipo.codigo"/>
 <div class="mainContainer">
 	
 	<div class="panelContainer">		

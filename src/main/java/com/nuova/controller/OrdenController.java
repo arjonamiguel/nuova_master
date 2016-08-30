@@ -649,15 +649,15 @@ public class OrdenController {
     int message = Util.MESSAGE_SUCCESS;
     String redirect = "";
     try {
-      Orden orden = ordenManager.findOrdenById(dto.getOrdenId());
-      ordenManager.delete(orden.getOrdenId());
-      if (orden.getOrdenTipo().getCodigo().intValue() == 100) {
+      // Orden orden = ordenManager.findOrdenById(dto.getOrdenId();
+      ordenManager.delete(dto.getOrdenId());
+      if (dto.getOrdenTipo().getCodigo().intValue() == 100) {
         redirect = ConstantRedirect.VIEW_MAIN_CONSULTA;
       }
-      if (orden.getOrdenTipo().getCodigo().intValue() == 101) {
+      if (dto.getOrdenTipo().getCodigo().intValue() == 101) {
         redirect = ConstantRedirect.VIEW_MAIN_CONSULTA;
       }
-      if (orden.getOrdenTipo().getCodigo().intValue() == 102) {
+      if (dto.getOrdenTipo().getCodigo().intValue() == 102) {
         redirect = ConstantRedirect.VIEW_MAIN_ORDEN;
       }
 

@@ -26,6 +26,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -101,9 +102,9 @@ public class CajaController {
 
     SimpleDateFormat formatbot = new SimpleDateFormat("dd/MM/yyyy");
     SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-    List<Caja> cajas = cajaManager.findAllByfecha(fecha);
+    List<CajaDTO> cajas = cajaManager.findAllByfecha(fecha);
     map.addAttribute("caja", cajaDTO);
-    map.addAttribute("cajaList", getCajasList(cajas));
+    map.addAttribute("cajaList", cajas);
     map.addAttribute("total", getTotalCaja(cajas));
     map.addAttribute("fechaBoton", "Cerrar Caja " + formatbot.format(fecha));
     map.addAttribute("fecha", format.format(fecha));
@@ -180,8 +181,8 @@ public class CajaController {
     CajaDTO retorno = new CajaDTO();
     retorno.setCajaId(c.getCajaId());
     retorno.setConcepto(c.getConcepto());
-    retorno.setIngreso(c.getIngreso());
-    retorno.setEgreso(c.getEgreso());
+    retorno.setIngreso(new BigDecimal(c.getIngreso()));
+    retorno.setEgreso(new BigDecimal(c.getEgreso()));
     retorno.setFecha(c.getFecha());
     List<CajaOrden> co = new ArrayList<CajaOrden>();
     co.addAll(c.getCajaOrdens());
@@ -213,10 +214,10 @@ public class CajaController {
     return retorno;
   }
 
-  private Double getTotalCaja(List<Caja> list) {
+  private Double getTotalCaja(List<CajaDTO> list) {
     double ingreso = 0.0;
     double egreso = 0.0;
-    for (Caja c : list) {
+    for (CajaDTO c : list) {
       ingreso = ingreso + (c.getIngreso() == null ? 0.0 : c.getIngreso().doubleValue());
       egreso = egreso + (c.getEgreso() == null ? 0.0 : c.getEgreso().doubleValue());
     }

@@ -1,6 +1,7 @@
 package com.nuova.service;
 
 import com.nuova.dao.CajaDAO;
+import com.nuova.dto.CajaDTO;
 import com.nuova.model.Caja;
 import com.nuova.model.CajaCierre;
 
@@ -55,7 +56,7 @@ public class CajaManagerImpl implements CajaManager {
   }
 
   @Override
-  public List<Caja> findAllByfecha(Date fecha) {
+  public List<CajaDTO> findAllByfecha(Date fecha) {
     return cajaDAO.findAllByfecha(fecha);
   }
 
