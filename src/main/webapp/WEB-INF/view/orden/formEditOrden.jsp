@@ -494,6 +494,10 @@ var observacionCount = 0;
 			}
 			return retorno;
 		}
+
+		function updateDateCaja(){
+			document.getElementById("fechaCaja").value=document.getElementById("fechaCajaId").value;
+		}
 </script>
 
 <style>

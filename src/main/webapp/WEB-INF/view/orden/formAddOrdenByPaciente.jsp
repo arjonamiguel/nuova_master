@@ -350,6 +350,10 @@
 		 
 //   });
 
+
+function updateDate(){
+	document.getElementById("fecha").value=document.getElementById("fechaCreacion").value;
+}
 </script>
 
 </head>
@@ -374,7 +378,28 @@
 							<div class="row-fluid">
 								<div class="span12">
 									<div class="tableContainer">
-										<div class="row col-md-6 col-md-offset-2 custyle">
+									<table class="table" style="width: 100%">
+												<tr>
+													<td style="width: 15%">
+														
+													</td>
+													<td style="text-align: right" >
+														<b>Fecha de Creación:</b>
+														
+													</td>
+													<td style="width:16%">
+													<div style="visibility:hidden;height:0px;"><form:input path="fecha" class="date"/></div>
+														<div id="calendar">
+															<div class="input-group registration-date-time" style="padding-top:0%;">
+																<input class="form-control" name="fechaCreacion" id="fechaCreacion" type="date"  onchange="javascript:updateDate();">
+								            				</div>
+								            			</div>
+													</td>
+										
+												</tr>
+										
+											</table>
+<!-- 										<div class="row col-md-6 col-md-offset-2 custyle"> -->
 											<ul class="nav nav-tabs">
 												<li class="active"><a data-toggle="tab"
 													href="#tb_paciente">Paciente</a></li>
@@ -568,7 +593,7 @@
 												
 											</div>
 
-										</div>
+<!-- 										</div> -->
 
 									</div>
 								</div>

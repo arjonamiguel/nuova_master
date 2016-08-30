@@ -542,7 +542,9 @@ public class OrdenController {
 
     ordenDto.setEstado(Util.getEstadoInicial(ordenDto));
     Orden orden = transformDtoToOrden(ordenDto);
-    orden.setFecha(new Date());
+    Date fechaCreacion =
+        ordenDto.getFecha().equals("") ? new Date() : Util.parseToDate(ordenDto.getFecha());
+    orden.setFecha(fechaCreacion);
     orden.getOrdenWorkflows()
         .add(new OrdenWorkflow(orden, user.getUsername(), orden.getEstado(), new Date()));
     if (ordenDto.getObservacion() != null && !ordenDto.getObservacion().trim().equals("")) {
@@ -563,9 +565,11 @@ public class OrdenController {
           caja.setConcepto(Util.CONCEPTO_INGRESO_ORDENPRACTICA);
         }
 
+        Date fechaCaja = ordenDto.getFechaCaja().equals("") ? fechaCreacion
+            : Util.parseToDate(ordenDto.getFechaCaja());
         caja.setIngreso(ordenDto.getMonto());
         caja.setEgreso(0.00);
-        caja.setFecha(new Date());
+        caja.setFecha(fechaCaja);
 
         cajaManager.add(caja);
         CajaOrden cajaorden = new CajaOrden(caja, orden);
@@ -785,6 +789,8 @@ public class OrdenController {
 
       // actualizo monto
 
+      Date fechaCaja =
+          dto.getFechaCaja().equals("") ? new Date() : Util.parseToDate(dto.getFechaCaja());
       if (orden.getCajaOrdens().isEmpty()) {
 
         if (dto.getMonto() != null && dto.getMonto() > 0 && dto.getMonto()
@@ -800,9 +806,10 @@ public class OrdenController {
             caja.setConcepto(Util.CONCEPTO_INGRESO_ORDENPRACTICA);
           }
 
+
           caja.setIngreso(dto.getMonto());
           caja.setEgreso(0.00);
-          caja.setFecha(new Date());
+          caja.setFecha(fechaCaja);
 
           cajaManager.add(caja);
           CajaOrden cajaorden = new CajaOrden(caja, orden);
@@ -823,7 +830,7 @@ public class OrdenController {
         Set<CajaOrden> cajaordenes = new HashSet<CajaOrden>();
         cajaordenes.add(coo);
         orden.setCajaOrdens(cajaordenes);
-        coo.getCaja().setFecha(new Date());
+        coo.getCaja().setFecha(fechaCaja);
         cajaManager.edit(coo.getCaja());
 
       }
