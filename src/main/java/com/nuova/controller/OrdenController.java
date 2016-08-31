@@ -125,24 +125,18 @@ public class OrdenController {
     Paciente paciente = pacienteManager.fin1dPacienteById(ordenTipo.getPacienteId());
     OrdenDTO ordenDto = new OrdenDTO();
     ordenDto.setPaciente(transformPacienteToDto(paciente));
-    OrdenTipo ot = ordenManager.findOrdenTipoByCodigo(codigo);
-    ordenDto.setOrdenTipo(transformOrdenTipoToDto(ot));
+    // OrdenTipo ot = ordenManager.findOrdenTipoByCodigo(codigo);
+    ordenDto.setOrdenTipo(ordenTipo);
 
-    List<Profesional> profesionales = profesionalManager.findAll();
+    // List<Profesional> profesionales = profesionalManager.findAll();
+    List<Profesional> profesionales = new ArrayList<Profesional>();
 
     if (codigo == Util.ORDEN_CONSULTA) {
-      OrdenTipoDTO otdto = transformOrdenTipoToDto(ot);
+      // OrdenTipoDTO otdto = transformOrdenTipoToDto(ot);
       map.addAttribute("profesionales", getProfesionalDTOList(profesionales));
-      map.addAttribute("ordenTipoDto", otdto);
-      map.addAttribute("montosorden", getMontosOrden(otdto));
+      map.addAttribute("ordenTipoDto", ordenTipo);
+      // map.addAttribute("montosorden", getMontosOrden(otdto));
       redirect = ConstantRedirect.VIEW_FORM_CONSULTA_BY_PACIENTE;
-
-    } else if (codigo == Util.ORDEN_ODONTOLOGICA) {
-      OrdenTipoDTO otdto = transformOrdenTipoToDto(ot);
-      map.addAttribute("montosorden", getMontosOrden(otdto));
-      map.addAttribute("ordenTipoDto", otdto);
-      map.addAttribute("montosorden", getMontosOrden(otdto));
-      redirect = ConstantRedirect.VIEW_FORM_ODONTOLOGIA_BY_PACIENTE;
 
     } else if (codigo == Util.ORDEN_PRACTICA) {
       map.addAttribute("profesionales", getProfesionalDTOList(profesionales));
@@ -1038,57 +1032,41 @@ public class OrdenController {
     dto.setProvincia(p.getProvincia());
     dto.setEliminadoView(p.getEliminado().intValue() == 0 ? "ACTIVO" : "INACTIVO");
 
-    if (p.getPaciente() != null && p.getPaciente().getPacienteId() != null) {
-      dto.setPacienteTitular(transformPacienteToDto(
-          pacienteManager.fin1dPacienteById(p.getPaciente().getPacienteId())));
-    }
+    // if (p.getTitularId() != null) {
+    // dto.setPacienteTitular(
+    // transformPacienteToDto(pacienteManager.fin1dPacienteById(p.getTitularId())));
+    // }
 
     Obrasocial os = obrasocialManager.findObraSocialById(p.getObrasocialId());
-    // ObraSocialDTO o = new ObraSocialDTO(po.getObrasocial().getObrasocialId(),
-    // po.getObrasocial().getNombre(),
-    // po.getNroCredencial(), po.getProvisorio() == 1 ? "checked" : "");
     ObraSocialDTO o = new ObraSocialDTO();
     o.setNombre(os.getNombre());
     o.setCredencial(p.getNroCredencial() + "-" + p.getNroCredencialSufijo());
     dto.setObrasocial(o);
-
-    // Obrasocial os = obrasocialManager.findObraSocialById(p.getObrasocialId());
-    // dto.setCrdencial(p.getNroCredencial());
-    // ObraSocialDTO o = new ObraSocialDTO();
-    // o.setNombre(os.getNombre());
-    // o.setObrasocialId(os.getObrasocialId());
-    // dto.setObrasocial(o);
-    // for (PacienteObrasocial po : p.getPacienteObrasocials()) {
-    // ObraSocialDTO o = new ObraSocialDTO(po.getObrasocial().getObrasocialId(),
-    // po.getObrasocial().getNombre(),
-    // po.getNroCredencial(), po.getProvisorio() == 1 ? "checked" : "");
-    // dto.getObrasocialList().add(o);
-    // dto.setObrasocial(o);
-    // dto.setOriginal(po.getProvisorio().intValue() == 1 ? true : false);
-    // break;
+    //
+    // if (p.getTitularId() != null) {
+    // dto.getAdherentes().addAll(pacienteManager.getAdherentes(p.getTitularId()));
     // }
-
-    for (Paciente ad : p.getPacientes()) {
-      PacienteDTO dtoad = new PacienteDTO();
-      dtoad.setPacienteId(ad.getPacienteId());
-      dtoad.setApellido(ad.getApellido());
-      dtoad.setNombre(ad.getNombre());
-      dtoad.setDomicilio(ad.getDomicilio());
-      dtoad.setFechaNacimiento("" + ad.getFechaNacimiento());
-      dtoad.setCoseguro(ad.getCoseguro().intValue() == 1 ? true : false);
-      dtoad.setCheckedLiberado(p.getCoseguro().intValue() == 1 ? "checked" : "");
-      dtoad.setMail(ad.getMail());
-      dtoad.setTelefono(ad.getTelefono());
-      dtoad.setDni(ad.getDni());
-      dtoad.setEliminado(ad.getEliminado().intValue());
-
-      // for (PacienteObrasocial poo : ad.getPacienteObrasocials()) {
-      // dtoad.setCrdencial(poo.getNroCredencial());
-      // break;
-      // }
-
-      dto.getAdherentes().add(dtoad);
-    }
+    // for (Paciente ad : p.getPacientes()) {
+    // PacienteDTO dtoad = new PacienteDTO();
+    // dtoad.setPacienteId(ad.getPacienteId());
+    // dtoad.setApellido(ad.getApellido());
+    // dtoad.setNombre(ad.getNombre());
+    // dtoad.setDomicilio(ad.getDomicilio());
+    // dtoad.setFechaNacimiento("" + ad.getFechaNacimiento());
+    // dtoad.setCoseguro(ad.getCoseguro().intValue() == 1 ? true : false);
+    // dtoad.setCheckedLiberado(p.getCoseguro().intValue() == 1 ? "checked" : "");
+    // dtoad.setMail(ad.getMail());
+    // dtoad.setTelefono(ad.getTelefono());
+    // dtoad.setDni(ad.getDni());
+    // dtoad.setEliminado(ad.getEliminado().intValue());
+    //
+    // // for (PacienteObrasocial poo : ad.getPacienteObrasocials()) {
+    // // dtoad.setCrdencial(poo.getNroCredencial());
+    // // break;
+    // // }
+    //
+    // dto.getAdherentes().add(dtoad);
+    // }
 
     dto.setEliminado(p.getEliminado().intValue());
     return dto;

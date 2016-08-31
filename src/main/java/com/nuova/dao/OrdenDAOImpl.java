@@ -136,7 +136,13 @@ public class OrdenDAOImpl implements OrdenDAO {
 
 
   public OrdenTipo findOrdenTipoById(Integer id) {
-    return (OrdenTipo) this.sessionFactory.getCurrentSession().get(OrdenTipo.class, id);
+    // return (OrdenTipo) this.sessionFactory.getCurrentSession().get(OrdenTipo.class, id);
+    Query query = sessionFactory.getCurrentSession()
+        .createSQLQuery("CALL zp_getOrdenTipoById(:ordenId);").setInteger("ordenId", id)
+        .setResultTransformer(Transformers.aliasToBean(OrdenTipo.class));
+    List<OrdenTipo> result = query.list();
+
+    return result.isEmpty() ? null : result.get(0);
   }
 
   // Orden Document

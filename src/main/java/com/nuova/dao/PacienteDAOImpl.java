@@ -44,7 +44,13 @@ public class PacienteDAOImpl implements PacienteDAO {
 
 
   public Paciente fin1dPacienteById(Integer pacienteId) {
-    return (Paciente) this.sessionFactory.getCurrentSession().get(Paciente.class, pacienteId);
+    // return (Paciente) this.sessionFactory.getCurrentSession().get(Paciente.class, pacienteId);
+    Query query =
+        sessionFactory.getCurrentSession().createSQLQuery("CALL zp_getPacienteById(:pacienteId);")
+            .setInteger("pacienteId", pacienteId)
+            .setResultTransformer(Transformers.aliasToBean(Paciente.class));
+    List<Paciente> result = query.list();
+    return result.isEmpty() ? null : result.get(0);
   }
 
 
