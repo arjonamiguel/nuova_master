@@ -86,7 +86,12 @@
 
 
 <script>
+
 	var checkBoxSelectedFlag = "false";
+
+	function updateDateCaja(){
+		document.getElementById("fechaCaja").value=document.getElementById("fechaCajaId").value;
+	}
 
 	function validatedSelects() {
 		$("#message2").css("visibility", "hidden");
@@ -429,6 +434,22 @@ function updateDate(){
 															name="coseguroSinCosto" 
 															class="largerCheckbox"
 															onchange="sinCosto()" />														
+														</td>
+
+														<td style="width: 20%; text-align: right;">Fecha
+															Caja:</td>
+														<td>
+															<div style="visibility: hidden; height: 0px;">
+																<form:input path="fechaCaja" class="date" />
+															</div>
+															<div id="calendar">
+																<div class="input-group registration-date-time"
+																	style="padding-top: 0%;">
+																	<input class="form-control" name="fechaCajaName"
+																		id="fechaCajaId" type="date"
+																		onchange="javascript:updateDateCaja();">
+																</div>
+															</div>
 														</td>
 													</tr>
 													
