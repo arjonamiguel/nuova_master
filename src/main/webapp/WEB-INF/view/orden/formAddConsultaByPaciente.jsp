@@ -454,7 +454,7 @@ function updateDate(){
 													</tr>
 													
 													<tr>
-														<td colspan="4">
+														<td colspan="6">
 														<div class="alert alert-info">														
   														<strong>Importante!</strong> Usar "." (punto) en montos decimales<br>
   														Ejemplos: 2.00 / 5.50 / 12.00 / 161.20 / 5100.58
