@@ -169,4 +169,15 @@ public class OrdenManagerImpl implements OrdenManager {
   public Page<HistoriaClinicaDTO> findHistoriaClinica(Pageable pageable, Integer pacienteId) {
     return ordenDAO.findHistoriaClinica(pageable, pacienteId);
   }
+
+
+  public List<OrdenPractica> getAllOrdenPracticaByOrden(Integer ordenId) {
+
+    return ordenDAO.getAllOrdenPracticaByOrden(ordenId);
+  }
+
+
+  public List<OrdenDocument> getAllOrdenDocumentByOrden(Integer ordenId) {
+    return ordenDAO.getAllOrdenDocumentByOrden(ordenId);
+  }
 }

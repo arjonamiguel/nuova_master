@@ -330,4 +330,13 @@ public class PacienteDAOImpl implements PacienteDAO {
         .get(HistoriaClinicaAdjuntos.class, adjuntoId);
   }
 
+
+  public Paciente findPacienteByOrdenId(Integer ordenId) {
+    Query query = sessionFactory.getCurrentSession()
+        .createSQLQuery("CALL zp_getPacienteByOrdenId(:ordenId);").setInteger("ordenId", ordenId)
+        .setResultTransformer(Transformers.aliasToBean(Paciente.class));
+    List<Paciente> result = query.list();
+    return result.isEmpty() ? null : result.get(0);
+  }
+
 }

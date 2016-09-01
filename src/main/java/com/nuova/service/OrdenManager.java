@@ -82,4 +82,8 @@ public interface OrdenManager {
   public List<PracticasListDTO> getAllPracticasByOrden(Integer ordenId);
 
   public Page<HistoriaClinicaDTO> findHistoriaClinica(Pageable pageable, Integer pacienteId);
+
+  public List<OrdenPractica> getAllOrdenPracticaByOrden(Integer ordenId);
+
+  public List<OrdenDocument> getAllOrdenDocumentByOrden(Integer ordenId);
 }

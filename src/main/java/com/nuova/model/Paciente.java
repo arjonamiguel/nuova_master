@@ -341,7 +341,7 @@ public class Paciente implements java.io.Serializable {
     this.fechaAlta = fechaAlta;
   }
 
-  @OneToMany(fetch = FetchType.EAGER, mappedBy = "paciente")
+  @OneToMany(fetch = FetchType.LAZY, mappedBy = "paciente")
   public Set<PacienteObservaciones> getPacienteObservacioneses() {
     return this.pacienteObservacioneses;
   }

@@ -349,6 +349,6 @@
 	document.getElementById("vigenciaHasta").value="";
 
 	function disabledSubmit() {
-		document.getElementById("btn_submit").disabled = true;
+		// document.getElementById("btn_submit").disabled = true;
 	}
 </script>

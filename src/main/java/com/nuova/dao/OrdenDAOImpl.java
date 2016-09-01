@@ -35,7 +35,16 @@ public class OrdenDAOImpl implements OrdenDAO {
 
 
   public Orden findOrdenById(Integer ordenId) {
-    return (Orden) this.sessionFactory.getCurrentSession().get(Orden.class, ordenId);
+    return (Orden) this.sessionFactory.getCurrentSession()
+        .createQuery(" SELECT o FROM Orden o WHERE o.ordenId = :ordenId")
+        .setInteger("ordenId", ordenId).list().get(0);
+    // return (Orden) this.sessionFactory.getCurrentSession().get(Orden.class, ordenId);
+    // Query query = sessionFactory.getCurrentSession()
+    // .createSQLQuery("CALL zp_getOrdenById(:ordenId);").setInteger("ordenId", ordenId)
+    // .setResultTransformer(Transformers.aliasToBean(Orden.class));
+    // List<Orden> result = query.list();
+    //
+    // return result.isEmpty() ? null : result.get(0);
   }
 
 
@@ -279,6 +288,32 @@ public class OrdenDAOImpl implements OrdenDAO {
     List<HistoriaClinicaDTO> result = query.list();
 
     return new PageImpl<HistoriaClinicaDTO>(result, pageable, result.size());
+  }
+
+
+  public List<OrdenPractica> getAllOrdenPracticaByOrden(Integer ordenId) {
+    Query query = sessionFactory.getCurrentSession()
+        .createSQLQuery("CALL zp_getAllOrdenPracticaByOrden(:ordenId);")
+        .setInteger("ordenId", ordenId)
+        .setResultTransformer(Transformers.aliasToBean(OrdenPractica.class));
+    List<OrdenPractica> result = query.list();
+
+    return result;
+    // return this.sessionFactory.getCurrentSession()
+    // .createQuery(" SELECT o FROM OrdenPractica o WHERE o.ordenId = :ordenId")
+    // .setInteger("ordenId", ordenId).list();
+
+  }
+
+
+  public List<OrdenDocument> getAllOrdenDocumentByOrden(Integer ordenId) {
+    Query query = sessionFactory.getCurrentSession()
+        .createSQLQuery("CALL zp_getAllOrdenDocumentByOrden(:ordenId);")
+        .setInteger("ordenId", ordenId)
+        .setResultTransformer(Transformers.aliasToBean(OrdenDocument.class));
+    List<OrdenDocument> result = query.list();
+
+    return result;
   }
 
 

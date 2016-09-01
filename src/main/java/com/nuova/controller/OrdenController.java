@@ -70,6 +70,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.io.IOException;
+import java.math.BigInteger;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.nio.charset.CharsetEncoder;
@@ -559,8 +560,12 @@ public class OrdenController {
           caja.setConcepto(Util.CONCEPTO_INGRESO_ORDENPRACTICA);
         }
 
-        Date fechaCaja = ordenDto.getFechaCaja().equals("") ? fechaCreacion
-            : Util.parseToDate(ordenDto.getFechaCaja());
+        Date fechaCaja = fechaCreacion;
+        if (ordenDto.getFechaCaja() != null && !ordenDto.getFechaCaja().equals("")) {
+          fechaCaja = Util.parseToDate(ordenDto.getFechaCaja());
+        }
+
+
         caja.setIngreso(ordenDto.getMonto());
         caja.setEgreso(0.00);
         caja.setFecha(fechaCaja);
@@ -591,7 +596,7 @@ public class OrdenController {
     if (orden.getOrdenTipo().getCodigo().intValue() == 100) {
       List<ComboItemDTO> items = new ArrayList<ComboItemDTO>();
       String nombre = "";
-      OrdenDTO oDto = transformOrdenToDto(ordenManager.findOrdenById(orden.getOrdenId()));
+      OrdenDTO oDto = transformOrdenToDto(orden);
       if (oDto.getEspecialidad() != null) {
         if (oDto.getEspecialidad() != null) {
           Especialidad e = especialidadManager.findEspecialidadById(oDto.getEspecialidad());
@@ -613,7 +618,7 @@ public class OrdenController {
       redirect = ConstantControllers.MAIN_CONSULTA_ODONTOLOGICA;
     }
     if (orden.getOrdenTipo().getCodigo().intValue() == 102) {
-      OrdenDTO ordenDt = transformOrdenToDto(ordenManager.findOrdenById(orden.getOrdenId()));
+      OrdenDTO ordenDt = transformOrdenToDto(orden);
       Especialidad e = null;
       if (ordenDt.getEspecialidad() != null) {
         e = especialidadManager.findEspecialidadById(ordenDt.getEspecialidad());
@@ -722,7 +727,7 @@ public class OrdenController {
       if (dto.getEstado() != null && !orden.getEstado().equals(dto.getEstado())) {
         OrdenWorkflow ow =
             new OrdenWorkflow(orden, user.getUsername(), dto.getEstado(), new Date());
-        orden.getOrdenWorkflows().add(ow);
+        // orden.getOrdenWorkflows().add(ow);
         orden.setEstado(dto.getEstado());
       }
 
@@ -863,7 +868,7 @@ public class OrdenController {
             content.setType(Util.DOCUMENT_TYPE);
             content.setFileType(hc.getFileData().getContentType());
             content.setOrdenId(orden.getOrdenId());
-            content.setSize(hc.getFileData().getSize());
+            content.setSize(new BigInteger(hc.getFileData().getSize() + ""));
 
             documentsTotal.add(content);
           }
@@ -1174,7 +1179,9 @@ public class OrdenController {
     dto.setFueraCartilla(orden.getFueraCartilla().intValue() == 1 ? true : false);
 
     // Paciente
-    dto.setPaciente(transformPacienteToDto(orden.getPaciente()));
+    dto.setPaciente(transformPacienteToDto(
+        pacienteManager.fin1dPacienteById(orden.getPaciente().getPacienteId())));
+    // dto.setPaciente(transformPacienteToDto(orden.getPaciente()));
 
     // requisitos
     dto.setReqCredecial(orden.getReqCredecial().intValue() == 1 ? true : false);
@@ -1183,7 +1190,8 @@ public class OrdenController {
     dto.setReqReciboSueldo(orden.getReqReciboSueldo().intValue() == 1 ? true : false);
 
     // Autorizacion
-    dto.setPracticasListEdit(getPracticaDto(orden.getOrdenPracticas()));
+    dto.setPracticasListEdit(
+        getPracticaDto(ordenManager.getAllOrdenPracticaByOrden(orden.getOrdenId())));
 
     // Observaciones
     dto.setObservacioneses(getObservacionesDto(orden.getObservacioneses()));
@@ -1245,7 +1253,7 @@ public class OrdenController {
       dto.setEtiqestado(anulada);
     }
     // Historia Clinica
-    List<OrdenDocument> documents = ordenManager.finAllOrdenDocumentByOrdenId(dto.getOrdenId());
+    List<OrdenDocument> documents = ordenManager.getAllOrdenDocumentByOrden(dto.getOrdenId());
     for (OrdenDocument od : documents) {
       OrdenDocumentDTO oddto = new OrdenDocumentDTO(od.getDocumentId(), od.getType(),
           od.getFileName(), od.getFileType(), od.getOrdenId(), null);
@@ -1353,18 +1361,18 @@ public class OrdenController {
     return retorno;
   }
 
-  private List<OrdenPracticaDTO> getPracticaDto(Set<OrdenPractica> list) {
+  private List<OrdenPracticaDTO> getPracticaDto(List<OrdenPractica> list) {
     List<OrdenPracticaDTO> retorno = new ArrayList<OrdenPracticaDTO>(0);
     for (OrdenPractica op : list) {
-      Nomenclador p = op.getNomenclador();
+      Nomenclador p = practicaManager.findPracticaById(op.getNomencladorId());
       // p.setNombre("[" + p.getCodigo() + "] - [" + p.getTipo() + "] - " + p.getNombre());
       String nombrePractica = "[" + p.getCodigo() + "] - [" + p.getTipo() + "] - " + p.getNombre();
-      Orden o = op.getOrden();
+      // Orden o = op.getOrden();
       // PracticaDTO dto = new PracticaDTO(p.getPracticaId(), "[" + p.getCodigo() + "]-" +
       // p.getNombre());
       OrdenPracticaDTO dto = new OrdenPracticaDTO();
       dto.setOrddenPracticaId(op.getOrddenPracticaId());
-      dto.setOrdenId(o.getOrdenId());
+      dto.setOrdenId(op.getOrdenId());
       dto.setNombre(nombrePractica);
       dto.setPracticaId(p.getNomencladorId());
       dto.setEstado(op.getEstado());

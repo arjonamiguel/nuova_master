@@ -59,7 +59,7 @@ public class Especialidad implements java.io.Serializable {
     this.nombre = nombre;
   }
 
-  @OneToMany(fetch = FetchType.EAGER, mappedBy = "especialidad")
+  @OneToMany(fetch = FetchType.LAZY, mappedBy = "especialidad")
   public Set<ProfesionalEspecialidad> getProfesionalEspecialidads() {
     return this.profesionalEspecialidads;
   }

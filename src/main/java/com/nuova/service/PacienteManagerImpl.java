@@ -181,4 +181,9 @@ public class PacienteManagerImpl implements PacienteManager {
     return pacienteDAO.findAdjuntoById(adjuntoId);
   }
 
+
+  public Paciente findPacienteByOrdenId(Integer ordenId) {
+    return pacienteDAO.findPacienteByOrdenId(ordenId);
+  }
+
 }

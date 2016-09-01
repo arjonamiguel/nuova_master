@@ -83,4 +83,6 @@ public interface PacienteDAO {
 
   public HistoriaClinicaAdjuntos findAdjuntoById(Integer adjuntoId);
 
+  public Paciente findPacienteByOrdenId(Integer ordenId);
+
 }

@@ -1,5 +1,7 @@
 package com.nuova.model;
 
+import java.math.BigInteger;
+
 // Generated Mar 22, 2016 12:01:41 PM by Hibernate Tools 4.3.1
 
 import javax.persistence.Column;
@@ -22,7 +24,7 @@ public class OrdenDocument implements java.io.Serializable {
   private String fileType;
   private byte[] content;
   private Integer ordenId;
-  private Long size;
+  private BigInteger size;
 
   public OrdenDocument() {}
 
@@ -96,11 +98,11 @@ public class OrdenDocument implements java.io.Serializable {
   }
 
   @Column(name = "size")
-  public Long getSize() {
+  public BigInteger getSize() {
     return this.size;
   }
 
-  public void setSize(Long size) {
+  public void setSize(BigInteger size) {
     this.size = size;
   }
 

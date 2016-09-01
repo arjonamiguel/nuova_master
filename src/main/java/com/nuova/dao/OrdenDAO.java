@@ -83,4 +83,8 @@ public interface OrdenDAO {
 
   public Page<HistoriaClinicaDTO> findHistoriaClinica(Pageable pageable, Integer pacienteId);
 
+  public List<OrdenPractica> getAllOrdenPracticaByOrden(Integer ordenId);
+
+  public List<OrdenDocument> getAllOrdenDocumentByOrden(Integer ordenId);
+
 }

@@ -7,7 +7,6 @@ import com.nuova.dto.ObraSocialDTO;
 import com.nuova.dto.ObservacionesDTO;
 import com.nuova.dto.OrdenAlarmaDTO;
 import com.nuova.dto.OrdenDTO;
-import com.nuova.dto.OrdenDocumentDTO;
 import com.nuova.dto.OrdenPracticaDTO;
 import com.nuova.dto.OrdenTipoDTO;
 import com.nuova.dto.OrdenWorkflowDTO;
@@ -20,9 +19,7 @@ import com.nuova.model.Nomenclador;
 import com.nuova.model.Obrasocial;
 import com.nuova.model.Observaciones;
 import com.nuova.model.Orden;
-import com.nuova.model.OrdenDocument;
 import com.nuova.model.OrdenPractica;
-import com.nuova.model.OrdenProfesional;
 import com.nuova.model.OrdenTipo;
 import com.nuova.model.OrdenWorkflow;
 import com.nuova.model.Paciente;
@@ -352,6 +349,7 @@ public class ReportController {
   public String reportOrdenEmitida(ModelMap map, @PathVariable("ordenId") Integer ordenId,
       HttpServletResponse response) throws IOException {
     Orden orden = ordenManager.findOrdenById(ordenId);
+
     Map<String, Object> parameters = new HashMap<String, Object>();
     OrdenDTO dto = transformOrdenToDto(orden);
     parameters.put("nro_orden", dto.getNroOrden());
@@ -376,7 +374,7 @@ public class ReportController {
     // Empresas e = pacienteManager.findEmpresaById(dto.getPaciente().getEmpresaId());
     // parameters.put("empresa", e == null ? "" : e.getNombre());
     parameters.put("coseguro", "");
-    parameters.put("tipo_orden", dto.getOrdenTipo().getNombre());
+    parameters.put("tipo_orden", "PRÁCTICA");
 
     ByteSource source = ByteSource.wrap(createReport(ORDEN_EMITIDA_REPORT_JRXML, parameters, null));
     source.copyTo(response.getOutputStream());
@@ -490,7 +488,8 @@ public class ReportController {
     dto.setEstado(orden.getEstado());
 
     // Paciente
-    dto.setPaciente(transformPacienteToDto(orden.getPaciente()));
+    Paciente p = pacienteManager.findPacienteByOrdenId(orden.getOrdenId());
+    dto.setPaciente(transformPacienteToDto(p));
 
     // requisitos
     dto.setReqCredecial(orden.getReqCredecial().intValue() == 1 ? true : false);
@@ -499,65 +498,66 @@ public class ReportController {
     dto.setReqReciboSueldo(orden.getReqReciboSueldo().intValue() == 1 ? true : false);
 
     // Autorizacion
-    dto.setPracticasListEdit(getPracticaDto(orden.getOrdenPracticas()));
+    // dto.setPracticasListEdit(getPracticaDto(orden.getOrdenPracticas()));
 
     // Observaciones
-    dto.setObservacioneses(getObservacionesDto(orden.getObservacioneses()));
+    // dto.setObservacioneses(getObservacionesDto(orden.getObservacioneses()));
 
     // Flujo de Estados
-    dto.setOrdenWorkflows(getOrdenWorkflowToDto(orden.getOrdenWorkflows()));
+    // dto.setOrdenWorkflows(getOrdenWorkflowToDto(orden.getOrdenWorkflows()));
 
     // Profesional
-    for (OrdenProfesional op : orden.getOrdenProfesionals()) {
-      if (op.getProfesional() != null) {
-        dto.setProfesional(transformProfesionalToDto(op.getProfesional()));
-      }
-    }
+    // for (OrdenProfesional op : orden.getOrdenProfesionals()) {
+    // if (op.getProfesional() != null) {
+    // dto.setProfesional(transformProfesionalToDto(op.getProfesional()));
+    // }
+    // }
 
     // Historia Clinica
-    List<OrdenDocument> documents = ordenManager.finAllOrdenDocumentByOrdenId(dto.getOrdenId());
-    for (OrdenDocument od : documents) {
-      OrdenDocumentDTO oddto = new OrdenDocumentDTO(od.getDocumentId(), od.getType(),
-          od.getFileName(), od.getFileType(), od.getOrdenId(), null);
-
-      dto.getHistoriasclinicas().add(oddto);
-    }
+    // List<OrdenDocument> documents = ordenManager.finAllOrdenDocumentByOrdenId(dto.getOrdenId());
+    // for (OrdenDocument od : documents) {
+    // OrdenDocumentDTO oddto = new OrdenDocumentDTO(od.getDocumentId(), od.getType(),
+    // od.getFileName(), od.getFileType(), od.getOrdenId(), null);
+    //
+    // dto.getHistoriasclinicas().add(oddto);
+    // }
 
     // boton paciente
-    String botonpaciente =
-        dto.getPaciente().getApellido().toUpperCase() + ", " + dto.getPaciente().getNombre();
-    dto.setBotonpaciente(botonpaciente);
-
-    dto.setOrdenTipo(transformOrdenTipoToDto(orden.getOrdenTipo()));
-    dto.setOrdenTipoDesc(dto.getOrdenTipo().getNombre());
-
-    // botones de acciones
-    String action = "";
-    if (dto.getOrdenTipo().getCodigo().intValue() == 100) {
-      action = "formEditConsulta";
-    }
-
-    if (dto.getOrdenTipo().getCodigo().intValue() == 101) {
-      action = "formEditOrden";
-    }
-
-    if (dto.getOrdenTipo().getCodigo().intValue() == 102) {
-      action = "formEditOrden";
-    }
-
-    String botonEdit = "<a class='btn btn-info btn-xs' href='/nuova/" + action + "/"
-        + dto.getOrdenId() + "'><span class='icon icon-edit'></span></a>";
-
-    String botonDelete = "<a class='btn btn-danger btn-xs' href='/nuova/formDeleteOrden/"
-        + dto.getOrdenId() + "'><span class='icon icon-remove'></span></a>";
-
-    String botonPrint =
-        "<a class='btn btn-default btn-xs' data-toggle='modal' data-target='#myModal' onClick='showReport("
-            + dto.getOrdenId() + ")'><span class='icon icon-print'></span></a>";
-    // String botonPrint = "<button type='button' class='btn btn-info btn-lg' data-toggle='modal'
-    // data-target='#myModal'>Open Modal</button>";
-
-    dto.setAcciones(botonEdit + botonDelete + botonPrint);
+    // String botonpaciente =
+    // dto.getPaciente().getApellido().toUpperCase() + ", " + dto.getPaciente().getNombre();
+    // dto.setBotonpaciente(botonpaciente);
+    //
+    // dto.setOrdenTipo(transformOrdenTipoToDto(orden.getOrdenTipo()));
+    // dto.setOrdenTipoDesc(dto.getOrdenTipo().getNombre());
+    //
+    // // botones de acciones
+    // String action = "";
+    // if (dto.getOrdenTipo().getCodigo().intValue() == 100) {
+    // action = "formEditConsulta";
+    // }
+    //
+    // if (dto.getOrdenTipo().getCodigo().intValue() == 101) {
+    // action = "formEditOrden";
+    // }
+    //
+    // if (dto.getOrdenTipo().getCodigo().intValue() == 102) {
+    // action = "formEditOrden";
+    // }
+    //
+    // String botonEdit = "<a class='btn btn-info btn-xs' href='/nuova/" + action + "/"
+    // + dto.getOrdenId() + "'><span class='icon icon-edit'></span></a>";
+    //
+    // String botonDelete = "<a class='btn btn-danger btn-xs' href='/nuova/formDeleteOrden/"
+    // + dto.getOrdenId() + "'><span class='icon icon-remove'></span></a>";
+    //
+    // String botonPrint =
+    // "<a class='btn btn-default btn-xs' data-toggle='modal' data-target='#myModal'
+    // onClick='showReport("
+    // + dto.getOrdenId() + ")'><span class='icon icon-print'></span></a>";
+    // // String botonPrint = "<button type='button' class='btn btn-info btn-lg' data-toggle='modal'
+    // // data-target='#myModal'>Open Modal</button>";
+    //
+    // dto.setAcciones(botonEdit + botonDelete + botonPrint);
 
     return dto;
   }
