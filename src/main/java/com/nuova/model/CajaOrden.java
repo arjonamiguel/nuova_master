@@ -41,7 +41,7 @@ public class CajaOrden implements java.io.Serializable {
     this.cajaOrdenId = cajaOrdenId;
   }
 
-  @ManyToOne(fetch = FetchType.LAZY)
+  @ManyToOne()
   @JoinColumn(name = "caja_id")
   public Caja getCaja() {
     return this.caja;

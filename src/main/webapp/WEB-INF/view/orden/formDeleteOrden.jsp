@@ -445,6 +445,7 @@
 	<form:form method="post" action="/nuova/deleteOrden"
 		commandName="ordenDto" enctype="multipart/form-data">
 		<form:hidden path="ordenId" />
+		<form:hidden path="ordenTipo.ordenTipoId" />
 		<div class="mainContainer">
 
 			<div class="panelContainer">
