@@ -53,7 +53,10 @@ $(function() {
 	  $('#btnSaveObservacion').click(function() {
 	    var observacion = document.getElementById("observacion_value").value;
 	    var resp = callNuevaObservacion(getJsonObservacion(observacion));
-	    $('#modalNuevaObservacion').modal('hide');
+	    if (resp > 0 ){
+	    	$('#modalNuevaObservacion').modal('hide');	    	
+	    	location.reload();	    
+	    }
 	  });
 	});
 
@@ -70,20 +73,40 @@ $(function() {
     	var form_data = new FormData();                  
     	form_data.append('file', file_data);
     	var resp = callNuevoAdjunto(form_data);
-	    $('#modalNuevoAdjunto').modal('hide');
+    	if (resp > 0 ){
+    		$('#modalNuevoAdjunto').modal('hide');	    	
+	    	location.reload();	    
+	    }
+	    
 	  });
 	});
+
+
+function showHcGrid() {
+	var rowaHc = [];
+	rowsHc = callHistoriaClinica();
+	$("#hcGrid").simplePagingGrid(
+			{
+				columnNames : [ "FECHA","ORDENES","OBSERVACIONES" , "ARCHIVOS ADJUNTOS","" ],
+				columnKeys : [ "fecha", "ordenes","observaciones" , "adjuntos", "acciones"],
+				columnWidths : [ "10%", "20%"],
+				sortable : [ true, true,],
+				data : rowsHc,
+				pageSize : 5,
+				minimumVisibleRows: 5
+			});
+}
 
 $(document).ready(function() {	
 	var rowsConsultas = [];
 	var rowsPracticas = [];
 	var rowsReintegros = [];
-	var rowaHc = [];
+	
 	// var rowsObservaciones = [];
 	rowsConsultas = callConsultas();
 	rowsPracticas = callPracticas();
 	rowsReintegros = callReintegros();
-	rowsHc = callHistoriaClinica();
+	
 	// rowsObservaciones = callObservaciones();
 	//rowsObservaciones= [{'observacionId':'1', 'observacion':'hola gus','fecha':'24/05/2016'}];
 
@@ -122,19 +145,26 @@ $(document).ready(function() {
 				pageSize : 5,
 				minimumVisibleRows: 5
 			});
-	$("#hcGrid").simplePagingGrid(
-			{
-				columnNames : [ "FECHA","ORDENES","OBSERVACIONES" , "ARCHIVOS ADJUNTOS","" ],
-				columnKeys : [ "fecha", "ordenes","observaciones" , "adjuntos", "acciones"],
-				columnWidths : [ "10%", "20%"],
-				sortable : [ true, true,],
-				data : rowsHc,
-				pageSize : 5,
-				minimumVisibleRows: 5
-			});
-			
-
+	
+	showHcGrid();	
+	
+	
+	currentTab();
 });
+
+function storageCurrentTab() {
+	$('a[data-toggle="tab"]').on('show.bs.tab', function(e) {
+        localStorage.setItem('activeTab', $(e.target).attr('href'));
+    });
+
+}
+
+function currentTab() {
+    var activeTab = localStorage.getItem('activeTab');
+    if(activeTab){
+        $('#myTab a[href="' + activeTab + '"]').tab('show');
+    }
+}
 
 function nuevoAdherente() {
 	var titularId = document.getElementById("pacienteId").value;
@@ -297,7 +327,9 @@ function procesarSubmit()
 		<div class="panelContainer">
 			<div class="panel panel-info">
 				<input type="hidden" value="${paciente.pacienteId}" id="pacienteId">
-				<div id="jsonObservaciones" style="visibility:hidden;height:0px;">${paciente.observaciones}</div><div id="fechaSistema" style="visibility:hidden;height:0px;">${fechaSistema}</div><div id="usuario" style="visibility:hidden;height:0px;">${usuario}</div>
+				<div id="jsonObservaciones" style="visibility: hidden; height: 0px;">${paciente.observaciones}</div>
+				<div id="fechaSistema" style="visibility: hidden; height: 0px;">${fechaSistema}</div>
+				<div id="usuario" style="visibility: hidden; height: 0px;">${usuario}</div>
 				<div class="panel-heading">
 					<div class="panel-title">Informacion del Paciente</div>
 				</div>
@@ -310,17 +342,21 @@ function procesarSubmit()
 									src="/nuova/resources/img/user_128x128.png"></td>
 								<td colspan="2">
 									<div class="panel-title">${paciente.apellido}
-										${paciente.nombre}
-										<a class="btn btn-info btn-xs" href="/nuova/formEditPaciente/${paciente.pacienteId}" title="Editar" target="_blank"
-										> 
-											<span class="icon icon-edit" title="Editar"></span>
+										${paciente.nombre} <a class="btn btn-info btn-xs"
+											href="/nuova/formEditPaciente/${paciente.pacienteId}"
+											title="Editar" target="_blank"> <span
+											class="icon icon-edit" title="Editar"></span>
 										</a>
-										
+
 										<c:if test="${paciente.parentescoVO > 0}">
-							     			<h5>Titular: <a href="/nuova/formInfoPaciente/${paciente.titularId}" target="_blank">${paciente.infoTitular} </a></h5>
-							     		</c:if>
-										
-										</div>
+											<h5>
+												Titular: <a
+													href="/nuova/formInfoPaciente/${paciente.titularId}"
+													target="_blank">${paciente.infoTitular} </a>
+											</h5>
+										</c:if>
+
+									</div>
 								</td>
 
 								<td>Estado</td>
@@ -353,40 +389,42 @@ function procesarSubmit()
 						</table>
 
 						<!-- Declaracion de tabs -->
-						<ul class="nav nav-tabs">
+						<ul class="nav nav-tabs" id="myTab">
 							<c:if test="${paciente.parentescoVO == 0}">
-							<li class="active"><a data-toggle="tab"
-								href="#tb_adherentes"><b>Adherentes</b></a></li>
-								<li><a data-toggle="tab" href="#tb_consultas"><b>Consultas</b></a></li>
-							</c:if>	
+								<li class="active"><a data-toggle="tab"
+									href="#tb_adherentes" onclick="storageCurrentTab()"><b>Adherentes</b></a></li>
+								<li><a data-toggle="tab" href="#tb_consultas" onclick="storageCurrentTab()"><b>Consultas</b></a></li>
+							</c:if>
 							<c:if test="${paciente.parentescoVO > 0}">
-								<li class="active"><a data-toggle="tab" href="#tb_consultas"><b>Consultas</b></a></li>
-							</c:if>	
-							<li><a data-toggle="tab" href="#tb_practicas"><b>Practicas</b></a></li>
-							<li><a data-toggle="tab" href="#tb_reintegros"><b>Reintegros</b></a></li>
-							<li><a data-toggle="tab" href="#tb_historia_clinica"><b>Historia Clinica</b></a></li>
+								<li class="active"><a data-toggle="tab"
+									href="#tb_consultas" onclick="storageCurrentTab()"><b>Consultas</b></a></li>
+							</c:if>
+							<li><a data-toggle="tab" href="#tb_practicas" onclick="storageCurrentTab()"><b>Practicas</b></a></li>
+							<li><a data-toggle="tab" href="#tb_reintegros" onclick="storageCurrentTab()"><b>Reintegros</b></a></li>
+							<li><a data-toggle="tab" href="#tb_historia_clinica" onclick="storageCurrentTab()"><b>Historia
+										Clinica</b></a></li>
 						</ul>
 						<!-- Fin Declaracion de tabs -->
 
 						<!-- Contenedor de Tabs -->
 						<div class="tab-content">
 							<c:if test="${paciente.parentescoVO == 0}">
-							<!-- ** Tab Adhenrentes -->
-							<div id="tb_adherentes" class="tab-pane fade in active">
-								<jsp:include page="formInfoPacienteTabAdherente.jsp"></jsp:include>
-							</div>
-							<!-- ** Tab Consultas -->
-							<div id="tb_consultas" class="tab-pane fade">
-								<jsp:include page="formInfoPacienteTabConsultas.jsp"></jsp:include>
-							</div>
+								<!-- ** Tab Adhenrentes -->
+								<div id="tb_adherentes" class="tab-pane fade in active">
+									<jsp:include page="formInfoPacienteTabAdherente.jsp"></jsp:include>
+								</div>
+								<!-- ** Tab Consultas -->
+								<div id="tb_consultas" class="tab-pane fade">
+									<jsp:include page="formInfoPacienteTabConsultas.jsp"></jsp:include>
+								</div>
 							</c:if>
-							
+
 							<c:if test="${paciente.parentescoVO > 0}">
 
-							<!-- ** Tab Consultas -->
-							<div id="tb_consultas" class="tab-pane fade in active">
-								<jsp:include page="formInfoPacienteTabConsultas.jsp"></jsp:include>
-							</div>
+								<!-- ** Tab Consultas -->
+								<div id="tb_consultas" class="tab-pane fade in active">
+									<jsp:include page="formInfoPacienteTabConsultas.jsp"></jsp:include>
+								</div>
 							</c:if>
 
 							<!-- ** Tab Practicas -->
@@ -397,11 +435,11 @@ function procesarSubmit()
 							<!-- ** Tab Reintegros -->
 							<div id="tb_reintegros" class="tab-pane fade">
 								<jsp:include page="formInfoPacienteTabReintegros.jsp"></jsp:include>
-							</div> 
+							</div>
 							<!-- ** Tab Historia clinica -->
- 							<div id="tb_historia_clinica" class="tab-pane fade"> 
- 								<jsp:include page="formInfoPacienteHistoriaClinica.jsp"></jsp:include>
- 							</div> 
+							<div id="tb_historia_clinica" class="tab-pane fade">
+								<jsp:include page="formInfoPacienteHistoriaClinica.jsp"></jsp:include>
+							</div>
 						</div>
 						<!-- Fin Contenedor de Tabs -->
 
@@ -447,46 +485,63 @@ function procesarSubmit()
 </body>
 
 <div class="modal fade" id="modalNuevaObservacion">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only"></span></button>
-        <h4 class="modal-title">Nueva Observacion</h4>
-      </div>
-      <div class="modal-body">
-        <p>Observacion: </p>
-        <textarea name="observacion_value" id="observacion_value" form="usrform"></textarea>
-        
-      </div>
-      <div class="modal-footer">
-        <button type="button" id="btnSaveObservacion" class="btn btn-info"  id="btn_submit">Guardar</button>      
-        <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
-      </div>
-    </div><!-- /.modal-content -->
-  </div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal">
+					<span aria-hidden="true">×</span><span class="sr-only"></span>
+				</button>
+				<h4 class="modal-title">Nueva Observacion</h4>
+			</div>
+			<div class="modal-body">
+				<p>Observacion:</p>
+				<textarea name="observacion_value" id="observacion_value"
+					form="usrform"></textarea>
+
+			</div>
+			<div class="modal-footer">
+				<button type="button" id="btnSaveObservacion" class="btn btn-info"
+					id="btn_submit">Guardar</button>
+				<button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+			</div>
+		</div>
+		<!-- /.modal-content -->
+	</div>
+	<!-- /.modal-dialog -->
+</div>
+<!-- /.modal -->
 
 
 <div class="modal fade" id="modalNuevoAdjunto">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only"></span></button>
-        <h4 class="modal-title">Nuevo Archivo Adjunto</h4>
-      </div>
-      <div class="modal-body">
-        <p><img alt="" src="<%=request.getContextPath()%>/resources/img/atach16x16.png"> Adjunto: </p>
-		
-		<input class='myFile' type='file' name='uploadFile' id='uploadFile' >
-         
-      </div>
-      <div class="modal-footer">
-        <button type="button" id="btnSaveAdjunto" class="btn btn-info"  id="btn_submit">Guardar</button>      
-        <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
-      </div>
-    </div><!-- /.modal-content -->
-  </div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal">
+					<span aria-hidden="true">×</span><span class="sr-only"></span>
+				</button>
+				<h4 class="modal-title">Nuevo Archivo Adjunto</h4>
+			</div>
+			<div class="modal-body">
+				<p>
+					<img alt=""
+						src="<%=request.getContextPath()%>/resources/img/atach16x16.png">
+					Adjunto:
+				</p>
+
+				<input class='myFile' type='file' name='uploadFile' id='uploadFile'>
+
+			</div>
+			<div class="modal-footer">
+				<button type="button" id="btnSaveAdjunto" class="btn btn-info"
+					id="btn_submit">Guardar</button>
+				<button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+			</div>
+		</div>
+		<!-- /.modal-content -->
+	</div>
+	<!-- /.modal-dialog -->
+</div>
+<!-- /.modal -->
 
 </html>
 <script>
@@ -601,6 +656,7 @@ function callNuevoAdjunto(formData) {
 		dataType: 'text',
 	    processData: false,
 	    contentType: false,
+	    async : false,
 		success : function(result) {
 			retorno = result;
 		}

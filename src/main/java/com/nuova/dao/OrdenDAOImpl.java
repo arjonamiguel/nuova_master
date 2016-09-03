@@ -35,16 +35,21 @@ public class OrdenDAOImpl implements OrdenDAO {
 
 
   public Orden findOrdenById(Integer ordenId) {
-    return (Orden) this.sessionFactory.getCurrentSession()
+    Orden o = (Orden) this.sessionFactory.getCurrentSession()
         .createQuery(" SELECT o FROM Orden o WHERE o.ordenId = :ordenId")
         .setInteger("ordenId", ordenId).list().get(0);
-    // return (Orden) this.sessionFactory.getCurrentSession().get(Orden.class, ordenId);
-    // Query query = sessionFactory.getCurrentSession()
-    // .createSQLQuery("CALL zp_getOrdenById(:ordenId);").setInteger("ordenId", ordenId)
-    // .setResultTransformer(Transformers.aliasToBean(Orden.class));
-    // List<Orden> result = query.list();
-    //
-    // return result.isEmpty() ? null : result.get(0);
+
+    Orden o2 = null;
+    Query query = sessionFactory.getCurrentSession()
+        .createSQLQuery("CALL zp_getOrdenById(:ordenId);").setInteger("ordenId", ordenId)
+        .setResultTransformer(Transformers.aliasToBean(Orden.class));
+    List<Orden> result = query.list();
+
+    o2 = result.isEmpty() ? null : result.get(0);
+
+    o.setPacienteId(o2.getPacienteId());
+
+    return o;
   }
 
 
@@ -315,7 +320,6 @@ public class OrdenDAOImpl implements OrdenDAO {
 
     return result;
   }
-
 
 
 }
