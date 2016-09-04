@@ -185,7 +185,7 @@ public class OrdenController {
   }
 
   @RequestMapping(value = ConstantControllers.FORM_DELETE_ORDEN, method = RequestMethod.GET)
-  public String formDelteOrden(ModelMap map, @PathVariable("ordenId") Integer ordenId) {
+  public String formDeleteOrden(ModelMap map, @PathVariable("ordenId") Integer ordenId) {
     this.isFormDelete = true;
     return formEditOrden(map, ordenId);
   }
@@ -661,22 +661,18 @@ public class OrdenController {
     try {
       // Orden orden = ordenManager.findOrdenById(dto.getOrdenId();
       ordenManager.delete(dto.getOrdenId());
-      if (dto.getOrdenTipo().getCodigo().intValue() == 100) {
+      if (dto.getOrdenTipo().getOrdenTipoId() != null
+          && dto.getOrdenTipo().getOrdenTipoId().intValue() == 1) {
         redirect = ConstantRedirect.VIEW_MAIN_CONSULTA;
       }
-      if (dto.getOrdenTipo().getCodigo().intValue() == 101) {
-        redirect = ConstantRedirect.VIEW_MAIN_CONSULTA;
-      }
-      if (dto.getOrdenTipo().getCodigo().intValue() == 102) {
+      if (dto.getOrdenTipo().getOrdenTipoId() != null
+          && dto.getOrdenTipo().getOrdenTipoId().intValue() == 3) {
         redirect = ConstantRedirect.VIEW_MAIN_ORDEN;
       }
-
 
     } catch (Exception ex) {
       ex.printStackTrace();
     }
-
-
 
     return redirect;
   }
