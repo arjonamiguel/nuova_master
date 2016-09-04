@@ -199,18 +199,23 @@ public class Util {
 
   static public Date parseToDate(String date) {
     DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
-    Date fechaHabilitacion = null;
+    Date retorno = null;
     if (!Objects.equals(date, null) && !date.equals("null")) {
       try {
         if (!date.equals("")) {
-          fechaHabilitacion = formatter.parse(date);
+          Date currentDate = new Date();
+          retorno = formatter.parse(date);
+          retorno.setHours(currentDate.getHours());
+          retorno.setMinutes(currentDate.getMinutes());
+          retorno.setSeconds(currentDate.getSeconds());
+          retorno.setYear(currentDate.getYear());
         }
       } catch (ParseException e) {
         // TODO Auto-generated catch block
         e.printStackTrace();
       }
     }
-    return fechaHabilitacion;
+    return retorno;
   }
 
   static public String parseToStringDate(Date date) {
