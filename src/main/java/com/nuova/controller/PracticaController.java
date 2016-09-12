@@ -145,11 +145,14 @@ public class PracticaController {
       @RequestParam(required = false, defaultValue = "0") Integer ordenId) {
     String retorno = "";
     Nomenclador n = practicaManager.findPracticaById(nomencladorId);
-    Integer cantidadSesion = n.getCantidadSesion();
+    Integer cantidadSesion = (n.getCantidadSesion() == null ? 0 : n.getCantidadSesion());
     List<OrdenPractica> practicas = ordenManager.getAllOrdenPracticaByOrden(ordenId, nomencladorId);
-    Integer cantidadSesionUsadas = practicas.size();
-
-    cantidadSesion = cantidadSesion == null ? 0 : cantidadSesion;
+    int sesionesUsadas = 0;
+    for (OrdenPractica op : practicas) {
+      sesionesUsadas =
+          sesionesUsadas + (op.getCantidad() == null ? 1 : op.getCantidad().intValue());
+    }
+    Integer cantidadSesionUsadas = sesionesUsadas;
 
     if (cantidadSesion.intValue() == 0) {
       return "0";

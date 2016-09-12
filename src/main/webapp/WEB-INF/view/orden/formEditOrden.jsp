@@ -349,18 +349,22 @@ var observacionCount = 0;
 				+ index
 				+ "].practicaId' value='"
 				+ document.getElementById("nomencladorId").value + "'>";
-				
+		
 		var cell1 = row.insertCell(1);
+		cell1.innerHTML = "<input type='text' name='ordenpracticaListEdit[" + index + "].cantidad' placeholder='Cantidad' value='1' style='width:60px'>";
+		
+		var cell2 = row.insertCell(2);
 		var str1 = document.getElementById("nomencladorString").value;
 		var str2 = "ODON";
 		var str3 = "odon";
 		var str4 = "Odon";
 		
 		if(str1.indexOf(str2) != -1 || str1.indexOf(str3) != -1 || str1.indexOf(str4) != -1){
-			cell1.innerHTML = "<input type='text' name='ordenpracticaListEdit[" + index + "].piezaDental' placeholder='pieza dental'>";
+			cell2.innerHTML = "<input type='text' name='ordenpracticaListEdit[" + index + "].piezaDental' placeholder='pieza dental'>";
 		}
-		var cell2 = row.insertCell(2);
-		cell2.innerHTML = "<input type='hidden' name='ordenpracticaListEdit[" + index + "].valor' value='0.00'>";
+		
+// 		var cell3 = row.insertCell(3);
+// 		cell3.innerHTML = "<input type='hidden' name='ordenpracticaListEdit[" + index + "].valor' value='0.00'>";
 
 
 		var cell3 = row.insertCell(3);
@@ -374,9 +378,7 @@ var observacionCount = 0;
 		row.valign = "BASELINE";
 		cell5.innerHTML = "<button type='button' class='btn btn-link' onClick='Eliminar(this.parentNode.parentNode.rowIndex)'>Eliminar</button>";
 
-		var cell6 = row.insertCell(6);
-		cell6.innerHTML = "";
-
+	
 		index++;
 		document
 				.getElementById("nomencladorString").value = "";

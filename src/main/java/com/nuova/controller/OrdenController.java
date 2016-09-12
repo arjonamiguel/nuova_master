@@ -70,6 +70,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -716,9 +717,10 @@ public class OrdenController {
             op.setOrden(orden);
             op.setNomenclador(p);
             op.setEstado(opdto.getEstado());
-            op.setValor(opdto.getValor());
+            op.setValor(opdto.getValor() == null ? new BigDecimal(0) : opdto.getValor());
             op.setAutorizarAutomatico(Util.parseToDate(opdto.getAutorizarAutomatico()));
             op.setPiezaDental(opdto.getPiezaDental());
+            op.setCantidad(opdto.getCantidad());
 
             persistOrdenPracticaList.add(op);
           }
@@ -1375,11 +1377,8 @@ public class OrdenController {
     List<OrdenPracticaDTO> retorno = new ArrayList<OrdenPracticaDTO>(0);
     for (OrdenPractica op : list) {
       Nomenclador p = practicaManager.findPracticaById(op.getNomencladorId());
-      // p.setNombre("[" + p.getCodigo() + "] - [" + p.getTipo() + "] - " + p.getNombre());
       String nombrePractica = "[" + p.getCodigo() + "] - [" + p.getTipo() + "] - " + p.getNombre();
-      // Orden o = op.getOrden();
-      // PracticaDTO dto = new PracticaDTO(p.getPracticaId(), "[" + p.getCodigo() + "]-" +
-      // p.getNombre());
+
       OrdenPracticaDTO dto = new OrdenPracticaDTO();
       dto.setOrddenPracticaId(op.getOrddenPracticaId());
       dto.setOrdenId(op.getOrdenId());
@@ -1389,6 +1388,7 @@ public class OrdenController {
       dto.setValor(op.getValor());
       dto.setAutorizarAutomatico(op.getAutorizarAutomatico() + "");
       dto.setPiezaDental(op.getPiezaDental());
+      dto.setCantidad(op.getCantidad() == null ? 1 : op.getCantidad());
       retorno.add(dto);
     }
 

@@ -39,6 +39,7 @@ public class OrdenPractica implements java.io.Serializable {
   private String piezaDental;
   private Integer nomencladorId;
   private Integer ordenId;
+  private Integer cantidad;
 
   public OrdenPractica() {}
 
@@ -147,6 +148,13 @@ public class OrdenPractica implements java.io.Serializable {
     this.ordenId = ordenId;
   }
 
+  @Column(name = "cantidad")
+  public Integer getCantidad() {
+    return cantidad;
+  }
 
+  public void setCantidad(Integer cantidad) {
+    this.cantidad = cantidad;
+  }
 
 }

@@ -12,6 +12,7 @@ public class OrdenPracticaDTO {
   private boolean imprimir;
   private String autorizarAutomatico;
   private String piezaDental;
+  private Integer cantidad;
 
   public OrdenPracticaDTO() {
 
@@ -93,12 +94,21 @@ public class OrdenPracticaDTO {
   }
 
   public String getPiezaDental() {
-		return piezaDental;
+    return piezaDental;
   }
-	
+
   public void setPiezaDental(String piezaDental) {
-		this.piezaDental = piezaDental;
+    this.piezaDental = piezaDental;
   }
-  
-  
+
+  public Integer getCantidad() {
+    return cantidad == null ? 1 : cantidad;
+  }
+
+  public void setCantidad(Integer cantidad) {
+    this.cantidad = cantidad == null ? 1 : cantidad;
+  }
+
+
+
 }

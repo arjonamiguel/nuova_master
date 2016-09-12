@@ -82,28 +82,31 @@ function addRowNuevoNom(tableID, nomencladorId) {
     " <input type='hidden' name='ordenpracticaListEdit[" + index + "].practicaId' value='" + nomencladorId + "'>"; 
     
     var cell1 = row.insertCell(1);
+    cell1.innerHTML = "<input type='text' name='ordenpracticaListEdit[" + index + "].cantidad' placeholder='pieza dental'>";
+    
+    var cell2 = row.insertCell(2);
 		var str1 = nombre;
 		var str2 = "ODON";
 		
-		if(str1.indexOf(str2) != -1){
-			cell1.innerHTML = "<input type='text' name='ordenpracticaListEdit[" + index + "].piezaDental' placeholder='pieza dental'>";
+		if(str2.indexOf(str2) != -1){
+			cell2.innerHTML = "<input type='text' name='ordenpracticaListEdit[" + index + "].piezaDental' placeholder='pieza dental'>";
 		}
 
-    var cell2 = row.insertCell(2);
-    cell2.innerHTML = "<input type='hidden' name='ordenpracticaListEdit[" + index + "].valor' value='0.00'>"; 
-    
     var cell3 = row.insertCell(3);
-    cell3.innerHTML = createSelectEstados("ordenpracticaListEdit[" + index + "].estado");
+    cell3.innerHTML = "<input type='hidden' name='ordenpracticaListEdit[" + index + "].valor' value='0.00'>"; 
     
     var cell4 = row.insertCell(4);
-    cell4.innerHTML = createDatePicker(index); 
-
-    var cell5 = row.insertCell(5);
-    row.valign = "BASELINE";
-    cell5.innerHTML = "<button type='button' class='btn btn-link' onClick='Eliminar(this.parentNode.parentNode.rowIndex)'>Eliminar</button>";
+    cell4.innerHTML = createSelectEstados("ordenpracticaListEdit[" + index + "].estado");
     
-   	var cell6 = row.insertCell(6);    
-   	cell5.innerHTML = "";
+    var cell5 = row.insertCell(5);
+    cell5.innerHTML = createDatePicker(index); 
+
+    var cell6 = row.insertCell(6);
+    row.valign = "BASELINE";
+    cell6.innerHTML = "<button type='button' class='btn btn-link' onClick='Eliminar(this.parentNode.parentNode.rowIndex)'>Eliminar</button>";
+    
+   	var cell7 = row.insertCell(7);    
+   	cell7.innerHTML = "";
    	
     index ++;
     document.getElementById("nomenclador_codigo").value = "";
@@ -204,14 +207,13 @@ function automaticoTodos() {
 						<thead>
 							<tr>
 								<td style="width: 40%"><b>Nomenclador</b></td>
+								<td style="width: 8%"><b>Cantidad</b></td>
 								<td style="width: 10%"><b>Pieza Dental</b></td>
-								<td style="width: 10%"></td>
-								<td style="width: 31%"><b>Estados</b></td>
+								<td style="width: 35%"><b>Estados</b></td>
 								<td style="width: 20%"><b>Automatico</b></td>
 								<td></td>
-								<td><input type="checkbox" name="selectImprimirAll" disabled="disabled"
-									onclick="checkAll(this)"></td>
 							</tr>
+							</thead>
 							<%
 							  int index = 0;
 							%>
@@ -219,18 +221,25 @@ function automaticoTodos() {
 								varStatus="loop">
 								<tr>
 
-									<td><input type="hidden"
+									<td>
+										<input type="hidden"
 										name="ordenpracticaListEdit[<%=index%>].orddenPracticaId"
 										value="${pa.orddenPracticaId}" /> <input type="hidden"
 										name="ordenpracticaListEdit[<%=index%>].practicaId"
-										value="${pa.practicaId}" /> ${pa.nombre}</td>
-									<td><input type="text" style="text-align: center"
+										value="${pa.practicaId}" /> ${pa.nombre}
+									</td>
+									<td>
+										<input type="text" 
+										name="ordenpracticaListEdit[<%=index%>].cantidad"
+										value="${pa.cantidad}" />
+									</td>	
+									<td>
+										<input type="text" style="text-align: center"
 										name="ordenpracticaListEdit[<%=index%>].piezaDental"
-										value="${pa.piezaDental}" /></td>
-									<td><input type="hidden"
-										name="ordenpracticaListEdit[<%=index%>].valor"
-										value="${pa.valor}" /></td>
-									<td><select
+										value="${pa.piezaDental}" />
+									</td>									
+									<td>
+										<select
 										name="ordenpracticaListEdit[<%=index%>].estado"
 										id="ordenpracticaListEdit[<%=index%>].estado"
 										style="width: 70%; margin-bottom: 0px">
@@ -255,8 +264,9 @@ function automaticoTodos() {
 											
 											<option value="ANULADO">ANULADO</option>
 									</select> <script>
-				document.getElementById('ordenpracticaListEdit[<%=index%>].estado').value ='${pa.estado}'; 
-				</script></td>
+									document.getElementById('ordenpracticaListEdit[<%=index%>].estado').value ='${pa.estado}'; 
+									</script>
+									</td>
 
 									<td align="left">
 										<div style="visibility: hidden; height: 0px;">
@@ -280,14 +290,13 @@ function automaticoTodos() {
 									</td>
 									<td><button type='button' class='btn btn-link'
 											onClick='Eliminar(this.parentNode.parentNode.rowIndex)'>Eliminar</button></td>
-									<td><input type="checkbox" disabled="disabled"
-										name="ordenpracticaListEdit[<%=index%>].imprimir"></td>
+									
 									<%
 									  index++;
 									%>
 								</tr>
 							</c:forEach>
-						</thead>
+						
 					</table>
 				</div>
 			</td>
@@ -373,7 +382,7 @@ function automaticoTodos() {
 		isOdon=true;
 	}
 	if(isOdon!=true){
-		this_row.find('td:eq(1)').html('');
+		this_row.find('td:eq(2)').html('');
 	}
     });
 
