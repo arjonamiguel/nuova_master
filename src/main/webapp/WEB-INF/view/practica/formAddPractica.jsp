@@ -53,7 +53,7 @@
 							</div>
 							<div class="span4">
 								<div class="formLabel"><form:label path="codigo">Código:</form:label></div>
-        						<div class="formInput"><form:input path="codigo" class="input-block-level" type="text" cssStyle="width:30%"/></div>
+        						<div class="formInput"><form:input path="codigo" class="input-block-level" type="text" cssStyle="width:38%"/></div>
 							</div>
 							
 							<div class="span4">
@@ -65,6 +65,16 @@
 						<div class="span4">
 							<div class="formLabel"><form:label path="cantidadSesion">Sesiones:</form:label></div>
         					<div class="formInput"><form:input path="cantidadSesion" class="input-block-level" type="text" cssStyle="width:30%"/></div>
+						</div>
+							<div class="span4">
+							<div class="formLabel"><form:label path="validaCada">Validar cada:</form:label></div>
+        					<div class="formInput">
+        						<form:input path="validaCada" class="input-block-level" type="text" cssStyle="width:11%"/>
+        						<form:select path="mesAno" cssStyle="width:25%">
+        							<form:option value="1">Mes</form:option>
+        							<form:option value="2">Año</form:option>
+        						</form:select>
+        					</div>
 						</div>
 						</div>
 						

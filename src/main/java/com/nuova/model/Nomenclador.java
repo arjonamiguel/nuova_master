@@ -32,6 +32,8 @@ public class Nomenclador implements java.io.Serializable {
   private String estado;
   private Integer eliminado;
   private Integer cantidadSesion;
+  private Integer validaCada;
+  private Integer mesAno;
 
   public Nomenclador() {}
 
@@ -189,6 +191,22 @@ public class Nomenclador implements java.io.Serializable {
     this.cantidadSesion = cantidadSesion;
   }
 
+  @Column(name = "valida_cada")
+  public Integer getValidaCada() {
+    return validaCada;
+  }
 
+  public void setValidaCada(Integer validaCada) {
+    this.validaCada = validaCada;
+  }
+
+  @Column(name = "mes_ano")
+  public Integer getMesAno() {
+    return mesAno;
+  }
+
+  public void setMesAno(Integer mesAno) {
+    this.mesAno = mesAno;
+  }
 
 }

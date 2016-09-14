@@ -46,7 +46,6 @@ public class PracticaController {
     if (practicaId != null) {
       map.addAttribute("practica", practicaManager.findPracticaById(practicaId));
       map.addAttribute("listNomencladorTipo", practicaManager.findNomecladorTipo());
-
     }
 
     return ConstantRedirect.VIEW_FORM_EDIT_PRACTICA;
@@ -172,6 +171,8 @@ public class PracticaController {
     retorno.setCodigo(p.getCodigo());
     retorno.setTipo(p.getTipo());
     retorno.setCantidadSesion(p.getCantidadSesion());
+    retorno.setValidaCada(p.getValidaCada());
+    retorno.setMesAno(p.getMesAno());
     return retorno;
   }
 
@@ -182,6 +183,8 @@ public class PracticaController {
     retorno.setCodigo(dto.getCodigo());
     retorno.setTipo(dto.getTipo());
     retorno.setCantidadSesion(dto.getCantidadSesion());
+    retorno.setValidaCada(dto.getValidaCada());
+    retorno.setMesAno(dto.getMesAno());
     return retorno;
   }
 

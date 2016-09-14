@@ -5,9 +5,10 @@ public class PracticaDTO {
   private String nombre;
   private String codigo;
   private String tipo;
-
   private String acciones;
   private Integer cantidadSesion;
+  private Integer validaCada;
+  private Integer mesAno;
 
   public PracticaDTO() {
 
@@ -74,6 +75,20 @@ public class PracticaDTO {
     this.cantidadSesion = cantidadSesion;
   }
 
+  public Integer getValidaCada() {
+    return validaCada;
+  }
 
+  public void setValidaCada(Integer validaCada) {
+    this.validaCada = validaCada;
+  }
+
+  public Integer getMesAno() {
+    return mesAno;
+  }
+
+  public void setMesAno(Integer mesAno) {
+    this.mesAno = mesAno;
+  }
 
 }
