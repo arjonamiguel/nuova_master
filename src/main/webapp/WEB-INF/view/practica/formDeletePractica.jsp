@@ -68,8 +68,8 @@
 							<div class="span4">
 							<div class="formLabel"><form:label path="validaCada">Validar cada:</form:label></div>
         					<div class="formInput">
-        						<form:input path="validaCada" class="input-block-level" type="text" cssStyle="width:11%"/>
-        						<form:select path="mesAno" cssStyle="width:25%">
+        						<form:input path="validaCada" class="input-block-level" type="text" cssStyle="width:11%" disabled="true"/>
+        						<form:select path="mesAno" cssStyle="width:25%" disabled="true">
         							<form:option value="1">Mes</form:option>
         							<form:option value="2">Año</form:option>
         						</form:select>

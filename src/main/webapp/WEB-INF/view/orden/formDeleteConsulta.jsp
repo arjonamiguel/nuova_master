@@ -282,6 +282,21 @@
 	  				<div class="row-fluid" >
 		    				<div class="span12">
 		    					<div class="tableContainer">
+		    					<div class="tab-content">
+											<table class="table" style="width: 100%">
+												<tr>
+													<td style="width: 15%">
+														<span class="badge" style="padding: 5px 5px 5px 5px"><b>Nro de Orden: ${ordenDto.nroOrden}</b></span>
+													</td>
+													<td style="text-align: right" >
+														<b>Fecha de Creación:</b> ${ordenDto.fecha}
+													</td>
+												
+										
+												</tr>
+										
+											</table>
+										</div>
 		    					
 		    								<ul class="nav nav-tabs">
 											  <li class="active"><a data-toggle="tab" href="#tb_paciente" onclick="setObservacionInvisible()">Paciente</a></li>

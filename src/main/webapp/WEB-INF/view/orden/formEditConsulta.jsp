@@ -236,6 +236,10 @@
 			}
 		}
 
+		function updateDateCaja(){
+			document.getElementById("fechaCaja").value=document.getElementById("fechaCajaId").value;
+		}
+
 	</script>
 	
 	<style>
@@ -267,14 +271,7 @@
 			<div class="panel-heading">
           			<div class="panel-title">
 	          		Editar Consultas
-	          		<a class="btn btn-default btn-xs" 
-	          			data-toggle="modal" 
-	          			data-target="#myModal" 
-	          			style="float:right; padding: 1px 3px 1px 4px"
-	          			onclick="showReport(${ordenDto.ordenId})" 
-	          			data-original-title="" title="">
-	          			<span class="icon icon-print"></span> Imprimir
-	          		</a>
+	          		
           			</div>
           			<div class="label-error" id="message"
 						style="float: left; margin-left: 8%; visibility: hidden;">Falta
@@ -297,7 +294,9 @@
 													<td style="text-align: left" >
 														
 													</td>
-												
+													<td style="text-align: right" >
+														<b>Fecha de Creación:</b> ${ordenDto.fecha}
+													</td>
 										
 												</tr>
 										
@@ -456,10 +455,24 @@
 															class="largerCheckbox"
 															onchange="sinCosto()" disabled="disabled"/>														
 														</td>
+														
+																<td style="width: 20%; text-align: right;">Fecha Caja:</td>
+		<td>
+			<div style="visibility: hidden; height: 0px;">
+				<form:input path="fechaCaja" class="date" />
+			</div>
+			<div id="calendar">
+				<div class="input-group registration-date-time"
+					style="padding-top: 0%;">
+					<input class="form-control" name="fechaCajaName" id="fechaCajaId"
+						type="date" onchange="javascript:updateDateCaja();">
+				</div>
+			</div>
+		</td>
 													</tr>
 													
 													<tr>
-														<td colspan="4">
+														<td colspan="6">
 														<div class="alert alert-info">														
   														<strong>Importante!</strong> Usar "." (punto) en montos decimales<br>
   														Ejemplos: 2.00 / 5.50 / 12.00 / 161.20 / 5100.58
