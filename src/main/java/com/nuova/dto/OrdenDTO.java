@@ -62,6 +62,8 @@ public class OrdenDTO {
   private Integer especialidadPrestador;
   private String especialidadPrestadorView;
 
+  private boolean ordenEntregada;
+
   public Integer getOrdenId() {
     return ordenId;
   }
@@ -389,6 +391,15 @@ public class OrdenDTO {
   public void setFechaCaja(String fechaCaja) {
     this.fechaCaja = fechaCaja;
   }
+
+  public boolean isOrdenEntregada() {
+    return ordenEntregada;
+  }
+
+  public void setOrdenEntregada(boolean ordenEntregada) {
+    this.ordenEntregada = ordenEntregada;
+  }
+
 
 
 }

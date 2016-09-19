@@ -13,11 +13,42 @@
 <link rel="shortcut icon"
 	href="<%=request.getContextPath()%>/resources/img/favicon/favicon.ico">
 
+<script src="<c:url value="/resources/js/jquery/jquery-2.0.3.min.js" />"></script>
+<!-- Scripts Toaster ------------------------------------------- -->
+<link href="<%=request.getContextPath()%>/resources/css/bootstrap-combined.min.css" rel="stylesheet" />
+<link href="<%=request.getContextPath()%>/resources/css/toastr.css" rel="stylesheet" />
+<style>
+.row {margin-left: 0;}
+</style>
+
+<script src="<%=request.getContextPath()%>/resources/js/toastr.js" /></script>
+<script type="text/javascript">
+toastr.options = {
+  "closeButton": false,
+  "debug": false,
+  "newestOnTop": false,
+  "progressBar": false,
+  "rtl": false,
+  "positionClass": "toast-bottom-right",
+  "preventDuplicates": false,
+  "onclick": null,
+  "showDuration": 300,
+  "hideDuration": 1000,
+  "timeOut": 3000,
+  "extendedTimeOut": 1000,
+  "showEasing": "swing",
+  "hideEasing": "linear",
+  "showMethod": "fadeIn",
+  "hideMethod": "fadeOut"
+}
+</script>
+<!-- Fin Scripts Toaster ---------------------------------------- -->
+
+<script src="<c:url value="/resources/js/bootstrap/bootstrap.min.js" />"></script>
+
 <link
 	href="<%=request.getContextPath()%>/resources/css/bootstrap/bootstrap.min.css"
 	rel="stylesheet" />
-<script src="<c:url value="/resources/js/jquery/jquery-2.0.3.min.js" />"></script>
-<script src="<c:url value="/resources/js/bootstrap/bootstrap.min.js" />"></script>
 <script
 	src="<%=request.getContextPath()%>/resources/js/jquery/bootstrap-collapse.js" /></script>
 <link href="<%=request.getContextPath()%>/resources/css/nuova.css"
@@ -32,6 +63,7 @@
 	rel="stylesheet" />
 <script
 	src="<%=request.getContextPath()%>/resources/montrezorro-bootstrap-checkbox-fa865ff/js/bootstrap-checkbox.js" /></script>
+
 
 
 <script type="text/javascript">
@@ -459,16 +491,18 @@ var observacionCount = 0;
 		function marcarTodos(){
 			if(document.getElementById("selectAll").checked==true)
 			{
-				$(".largerCheckbox")[1].checked=true;
 				$(".largerCheckbox")[2].checked=true;
 				$(".largerCheckbox")[3].checked=true;
 				$(".largerCheckbox")[4].checked=true;
+				$(".largerCheckbox")[5].checked=true;
+				//$(".largerCheckbox")[5].checked=true;
 			}else
 			{
-				$(".largerCheckbox")[1].checked=false;
 				$(".largerCheckbox")[2].checked=false;
 				$(".largerCheckbox")[3].checked=false;
 				$(".largerCheckbox")[4].checked=false;
+				$(".largerCheckbox")[5].checked=false;
+				// $(".largerCheckbox")[5].checked=true;
 			}
 		}
 	
@@ -500,6 +534,41 @@ var observacionCount = 0;
 		function updateDateCaja(){
 			document.getElementById("fechaCaja").value=document.getElementById("fechaCajaId").value;
 		}
+
+		function checkOrdenEntregada(){	
+			var resp;		
+			if ($("#ordenEntregada").is(':checked')) {
+				resp = callOrdenEntregada(1);
+			}else {
+				resp = callOrdenEntregada(0)		
+			}	
+
+			if (resp == "OK") {
+				toastr["success"]("El proceso finalizo CORRECTAMENTE");				
+			}
+		}
+		
+		function callOrdenEntregada(ordenEntregada) {
+			var retorno;
+			var ordenId = document.getElementById("ordenId").value;
+			$.ajax({
+				url : "/nuova/ajaxPosOrdenEntregada?entregada="
+						+ ordenEntregada + "&ordenId=" + ordenId,
+				type : "POST",
+				contentType : "application/json; charset=utf-8",
+				//    data: jsonString, //Stringified Json Object
+				async : false, //Cross-domain requests and dataType: "jsonp" requests do not support synchronous operation
+				cache : false, //This will force requested pages not to be cached by the browser          
+				processData : false, //To avoid making query String instead of JSON
+				success : function(data) {
+					// Success Message Handler
+					retorno = data;
+				}
+			});
+
+			return retorno;
+		}
+				
 </script>
 
 <style>
@@ -524,14 +593,22 @@ var observacionCount = 0;
 					<div class="panel-heading">
 						<div class="panel-title">
 							<b>Editar Prácticas</b>
-							<a class="btn btn-default btn-xs" 
+						
+						<a class="btn btn-default btn-xs" 
 	          			data-toggle="modal" 
 	          			data-target="#myModal" 
 	          			style="float:right; padding: 1px 3px 1px 4px"
 	          			onclick="showReport(${ordenDto.ordenId})" 
 	          			data-original-title="" title="">
 	          			<span class="icon icon-print"></span> Imprimir
+	          			
 	          		</a>
+	          		<div style = "float:right; padding-right:5%">	
+	          			<span style="font-size: 14px;">Entregado</span>
+						<form:checkbox path="ordenEntregada" id="ordenEntregada" cssClass="largerCheckbox" 
+						onchange="javascript:checkOrdenEntregada()"/>
+						
+						</div>
 						</div>
 					</div>
 					<!-- Fin Cabecera y Titulo -->

@@ -446,6 +446,21 @@ public class OrdenController {
     return retorno;
   }
 
+  @RequestMapping(value = ConstantControllers.AJAX_POST_ORDEN_ENTREGADA,
+      method = RequestMethod.POST)
+  public @ResponseBody String setOrdenEntregada(
+      @RequestParam(required = false, defaultValue = "") String entregada,
+      @RequestParam(required = false, defaultValue = "") String ordenId) {
+    String retorno = "ERROR";
+    try {
+      ordenManager.updateOrdenEntregada(Integer.valueOf(entregada), Integer.valueOf(ordenId));
+      retorno = "OK";
+    } catch (Exception e) {
+
+    }
+    return retorno;
+  }
+
   @RequestMapping(value = ConstantControllers.AJAX_GET_AUTOCOMPLETE_NOMENCLADOR,
       method = RequestMethod.POST)
   public @ResponseBody List<ComboItemDTO> getAutocompleteNomenclador(
@@ -899,7 +914,7 @@ public class OrdenController {
         }
       }
     } catch (Exception ex) {
-      message = Util.MESSAGE_ERROR;
+      ex.printStackTrace();;
     }
 
     String redirect = "";
@@ -1189,6 +1204,7 @@ public class OrdenController {
     dto.setMonto(orden.getMonto());
 
     dto.setFueraCartilla(orden.getFueraCartilla().intValue() == 1 ? true : false);
+    dto.setOrdenEntregada(orden.getOrdenEntregada().intValue() == 1 ? true : false);
 
     // Paciente
     dto.setPaciente(transformPacienteToDto(

@@ -1,5 +1,10 @@
 package com.nuova.dao;
 
+import java.util.List;
+
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+
 import com.nuova.dto.GridOrdenPracticaDTO;
 import com.nuova.dto.HistoriaClinicaDTO;
 import com.nuova.dto.OrdenAlarmaDTO;
@@ -11,11 +16,6 @@ import com.nuova.model.OrdenFueraCartilla;
 import com.nuova.model.OrdenPractica;
 import com.nuova.model.OrdenProfesional;
 import com.nuova.model.OrdenTipo;
-
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-
-import java.util.List;
 
 public interface OrdenDAO {
   public void add(Orden orden);
@@ -87,4 +87,5 @@ public interface OrdenDAO {
 
   public List<OrdenDocument> getAllOrdenDocumentByOrden(Integer ordenId);
 
+  public void updateOrdenEntregada(Integer ordenEntregada, Integer ordenId);
 }

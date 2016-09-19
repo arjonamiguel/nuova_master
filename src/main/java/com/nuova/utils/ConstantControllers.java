@@ -110,6 +110,7 @@ public class ConstantControllers {
   public final static String AJAX_GET_HISTORIACLINICABYPACIENTE_PAGINADOS =
       "/ajaxGetHistoriaClinica/{pacienteId}";
   public final static String AJAX_POST_NUEVAOBSERVACION = "/ajaxPostNuevaObservacion";
+  public final static String AJAX_POST_ORDEN_ENTREGADA = "/ajaxPosOrdenEntregada";
 
   // Reportes
   public final static String SHOW_REPORT_ORDEN_EMITIDA = "/showReporteOrdenEmitida/{ordenId}";

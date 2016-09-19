@@ -1,15 +1,15 @@
 package com.nuova.dto;
 
-import com.nuova.utils.Util;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.Formatter;
+import java.util.List;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.Formatter;
-import java.util.List;
+import com.nuova.utils.Util;
 
 public class GridOrdenPracticaDTO {
   Integer ordenId;
@@ -23,6 +23,7 @@ public class GridOrdenPracticaDTO {
   String acciones;
   Integer ordenTipoCodigo;
   String practicas;
+  String alarmas;
 
   public GridOrdenPracticaDTO() {
 
@@ -177,6 +178,13 @@ public class GridOrdenPracticaDTO {
     this.practicas = practicas;
   }
 
+  public String getAlarmas() {
+    return alarmas;
+  }
+
+  public void setAlarmas(String alarmas) {
+    this.alarmas = alarmas;
+  }
 
 
 }

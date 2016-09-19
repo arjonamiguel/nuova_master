@@ -1,5 +1,16 @@
 package com.nuova.dao;
 
+import java.util.List;
+
+import org.hibernate.Query;
+import org.hibernate.SessionFactory;
+import org.hibernate.transform.Transformers;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
+import org.springframework.stereotype.Repository;
+
 import com.nuova.dto.GridOrdenPracticaDTO;
 import com.nuova.dto.HistoriaClinicaDTO;
 import com.nuova.dto.OrdenAlarmaDTO;
@@ -11,17 +22,6 @@ import com.nuova.model.OrdenFueraCartilla;
 import com.nuova.model.OrdenPractica;
 import com.nuova.model.OrdenProfesional;
 import com.nuova.model.OrdenTipo;
-
-import org.hibernate.Query;
-import org.hibernate.SessionFactory;
-import org.hibernate.transform.Transformers;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.Pageable;
-import org.springframework.stereotype.Repository;
-
-import java.util.List;
 
 @Repository
 public class OrdenDAOImpl implements OrdenDAO {
@@ -319,6 +319,16 @@ public class OrdenDAOImpl implements OrdenDAO {
     List<OrdenDocument> result = query.list();
 
     return result;
+  }
+
+
+  @Override
+  public void updateOrdenEntregada(Integer ordenEntregada, Integer ordenId) {
+    Query query = sessionFactory.getCurrentSession()
+        .createSQLQuery("CALL zp_updateOrdenEntregada(:ordenEntregada, :ordenId);")
+        .setInteger("ordenEntregada", ordenEntregada).setInteger("ordenId", ordenId);
+    query.executeUpdate();
+
   }
 
 

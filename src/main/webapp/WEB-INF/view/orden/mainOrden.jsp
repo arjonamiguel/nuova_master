@@ -38,11 +38,11 @@
 
 						$("#ordenGrid").simplePagingGrid(
 								{
-									columnNames : [ "NRO.ORDEN", "PACIENTE","FECHA","SOLICITANTE","ESPECIALIDAD","PRACTICAS" ,"" ],
-									columnKeys : [ "nroOrden", "botonpaciente","fecha", "apellidoNombreProfesional"
+									columnNames : [ "","NRO.ORDEN", "PACIENTE","FECHA","SOLICITANTE","ESPECIALIDAD","PRACTICAS" ,"" ],
+									columnKeys : [ "alarmas","nroOrden", "botonpaciente","fecha", "apellidoNombreProfesional"
 													, "especialidadView", "practicas","acciones"],
-									columnWidths : [ "10%","8%","15%", "10%" ],
-									sortable : [ true, false, true,true,true ],
+									columnWidths : [ "3%","8%","15%", "10%" ],
+									sortable : [ false, false, true,true,true ],
 									data : rows
 								});
 

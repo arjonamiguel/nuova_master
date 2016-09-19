@@ -53,6 +53,8 @@ public class Orden implements java.io.Serializable {
 
   private Integer pacienteId;
 
+  private Integer ordenEntregada;
+
   public Orden() {}
 
   public Orden(Paciente paciente, Date fecha, Byte reqOrdenMedico, Byte reqCredecial,
@@ -239,5 +241,13 @@ public class Orden implements java.io.Serializable {
     this.pacienteId = pacienteId;
   }
 
+  @Column(name = "orden_entregada")
+  public Integer getOrdenEntregada() {
+    return ordenEntregada;
+  }
+
+  public void setOrdenEntregada(Integer ordenEntregada) {
+    this.ordenEntregada = ordenEntregada;
+  }
 
 }

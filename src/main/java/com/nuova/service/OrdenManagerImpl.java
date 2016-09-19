@@ -1,5 +1,13 @@
 package com.nuova.service;
 
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
 import com.nuova.dao.OrdenDAO;
 import com.nuova.dto.GridOrdenPracticaDTO;
 import com.nuova.dto.HistoriaClinicaDTO;
@@ -12,14 +20,6 @@ import com.nuova.model.OrdenFueraCartilla;
 import com.nuova.model.OrdenPractica;
 import com.nuova.model.OrdenProfesional;
 import com.nuova.model.OrdenTipo;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
-import java.util.List;
 
 @Transactional
 @Service
@@ -179,5 +179,9 @@ public class OrdenManagerImpl implements OrdenManager {
 
   public List<OrdenDocument> getAllOrdenDocumentByOrden(Integer ordenId) {
     return ordenDAO.getAllOrdenDocumentByOrden(ordenId);
+  }
+
+  public void updateOrdenEntregada(Integer ordenEntregada, Integer ordenId) {
+    ordenDAO.updateOrdenEntregada(ordenEntregada, ordenId);
   }
 }
