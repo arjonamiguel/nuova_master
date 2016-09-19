@@ -1204,6 +1204,9 @@ public class OrdenController {
     dto.setMonto(orden.getMonto());
 
     dto.setFueraCartilla(orden.getFueraCartilla().intValue() == 1 ? true : false);
+    if (orden.getOrdenEntregada() == null) {
+      orden.setOrdenEntregada(0);
+    }
     dto.setOrdenEntregada(orden.getOrdenEntregada().intValue() == 1 ? true : false);
 
     // Paciente
