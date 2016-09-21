@@ -1,5 +1,14 @@
 package com.nuova.utils;
 
+import com.nuova.dto.CalendarDTO;
+import com.nuova.dto.ComboItemDTO;
+import com.nuova.dto.ObraSocialDTO;
+import com.nuova.dto.OrdenDTO;
+import com.nuova.model.Calendario;
+import com.nuova.model.Nomenclador;
+import com.nuova.model.Obrasocial;
+import com.nuova.model.Paciente;
+
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -9,15 +18,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
-
-import com.nuova.dto.CalendarDTO;
-import com.nuova.dto.ComboItemDTO;
-import com.nuova.dto.ObraSocialDTO;
-import com.nuova.dto.OrdenDTO;
-import com.nuova.model.Calendario;
-import com.nuova.model.Nomenclador;
-import com.nuova.model.Obrasocial;
-import com.nuova.model.Paciente;
 
 public class Util {
 
@@ -208,7 +208,6 @@ public class Util {
           retorno.setHours(currentDate.getHours());
           retorno.setMinutes(currentDate.getMinutes());
           retorno.setSeconds(currentDate.getSeconds());
-          retorno.setYear(currentDate.getYear());
         }
       } catch (ParseException e) {
         // TODO Auto-generated catch block
