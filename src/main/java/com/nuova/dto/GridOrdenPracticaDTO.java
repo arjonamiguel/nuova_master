@@ -1,15 +1,15 @@
 package com.nuova.dto;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.Formatter;
-import java.util.List;
+import com.nuova.utils.Util;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
 
-import com.nuova.utils.Util;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.Formatter;
+import java.util.List;
 
 public class GridOrdenPracticaDTO {
   Integer ordenId;
@@ -142,7 +142,7 @@ public class GridOrdenPracticaDTO {
     // String botonPrint = "<button type='button' class='btn btn-info btn-lg' data-toggle='modal'
     // data-target='#myModal'>Open Modal</button>";
 
-    String botonDelete = "<a class='btn btn-danger btn-xs' href='" + actionDelete + "/"
+    String botonDelete = "<a class='btn btn-danger btn-xs' href='/nuova/" + actionDelete + "/"
         + getOrdenId() + "'><span class='icon icon-remove'></span></a>";
 
 
