@@ -124,12 +124,12 @@ $(document).ready(function() {
 
 	$("#practicasGrid").simplePagingGrid(
 			{
-				columnNames : [ "NRO.ORDEN","FECHA","SOLICITANTE","PRACTICAS", ""],
-				columnKeys : [ "nroOrden","fecha","apellidoNombreProfesional","practicas"
+				columnNames : [ "","NRO.ORDEN","FECHA","SOLICITANTE","PRACTICAS", ""],
+				columnKeys : [ "alarmas","nroOrden","fecha","apellidoNombreProfesional","practicas"
 				 					, "acciones"],
-				columnWidths : [ "12%", "10%", "20%"],
+				columnWidths : [ "5%", "10%", "20%"],
 
-				sortable : [ true, true,],
+				sortable : [ ,true,],
 				data : rowsPracticas,
 				pageSize : 5,
 				minimumVisibleRows: 5
