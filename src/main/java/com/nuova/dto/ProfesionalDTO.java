@@ -8,6 +8,7 @@ import java.util.Map;
 public class ProfesionalDTO {
 
   private Integer profesionalId;
+  private String apellidoRazonSocial;
   private String apellido;
   private String nombre;
   private String apellidoNombre;
@@ -34,6 +35,8 @@ public class ProfesionalDTO {
   private String tipoMatricula;
 
   private String acciones;
+
+  private Integer tipo;
 
   public Integer getProfesionalId() {
     return profesionalId;
@@ -235,5 +238,23 @@ public class ProfesionalDTO {
   public void setApellidoNombre(String apellidoNombre) {
     this.apellidoNombre = apellidoNombre;
   }
+
+  public Integer getTipo() {
+    return tipo;
+  }
+
+  public void setTipo(Integer tipo) {
+    this.tipo = tipo;
+  }
+
+  public String getApellidoRazonSocial() {
+    return apellidoRazonSocial;
+  }
+
+  public void setApellidoRazonSocial(String apellidoRazonSocial) {
+    this.apellidoRazonSocial = apellidoRazonSocial;
+  }
+
+
 
 }

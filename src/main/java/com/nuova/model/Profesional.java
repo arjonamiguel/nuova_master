@@ -46,6 +46,7 @@ public class Profesional implements java.io.Serializable {
   private Set<ProfesionalEspecialidad> profesionalEspecialidads =
       new HashSet<ProfesionalEspecialidad>(0);
   private Set<OrdenProfesional> ordenProfesionals = new HashSet<OrdenProfesional>(0);
+  private Integer tipo;
 
   public Profesional() {}
 
@@ -272,6 +273,15 @@ public class Profesional implements java.io.Serializable {
 
   public void setOrdenProfesionals(Set<OrdenProfesional> ordenProfesionals) {
     this.ordenProfesionals = ordenProfesionals;
+  }
+
+  @Column(name = "tipo_profesional")
+  public Integer getTipo() {
+    return tipo;
+  }
+
+  public void setTipo(Integer tipo) {
+    this.tipo = tipo;
   }
 
 }

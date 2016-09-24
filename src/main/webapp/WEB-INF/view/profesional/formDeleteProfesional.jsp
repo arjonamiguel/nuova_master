@@ -100,38 +100,51 @@
 <form:form method="post" action="/nuova/deleteProfesional" commandName="profesional">
 <div class="panel panel-info">
 	<div class="panel-heading">
-          <div class="panel-title">Eliminar Datos del Profesional</div>
+          <div class="panel-title">Eliminar Datos del Profesional / Institucion</div>
     </div>     
 	<div style="padding-top:30px" class="panel-body" >
-		<div class="container-fluid">
-	  		<div class="row-fluid">
-			    <div class="span4">
-			      <div><form:hidden path="profesionalId" /></div>
-		        	<div class="formLabel"><form:label path="apellido" >Apellido:</form:label></div>
-		        	<div class="formInput"><form:input path="apellido" placeholder="Apellido" disabled="true"/></div>
-			    </div>
-			    <div class="span4">
-					<div class="formLabel"><form:label path="nombre">Nombre:</form:label></div>
-		        	<div class="formInput"><form:input path="nombre" placeholder="Nombre" disabled="true"/></div>
-			    </div>
-			    <div class="span4">
-					<div class="formLabel"><form:label path="telefono">Telefono:</form:label></div>
-			        <div class="formInput"><form:input path="telefono" placeholder="Telefono" disabled="true"/></div>
-			    </div>
-		  		</div>
-			    <div class="row-fluid">
-				    <div class="span4">
-						<div class="formLabel"><form:label path="matricula">Matricula:</form:label></div>
-				        <div class="formInput"><form:input path="matricula" placeholder="Matricula" disabled="true"/></div>
-				    </div>
-				  
-				    <div class="span4">
-				     	<div class="formLabel"><form:label path="tituloProfesional">Titulo Profesional:</form:label></div>
-				        <div class="formInput"><form:input path="tituloProfesional" placeholder="Titulo Profesional" disabled="true"/></div>
-				    </div>
-			  	</div>
-		
-	</div>            
+<div class="container-fluid">
+  <div class="row-fluid">
+  		<div class="span4">
+  		    <div class="formLabel"><form:label path="tipo">Tipo:</form:label></div>  
+  		    <div class="formInput">		
+  			<form:select path="tipo" disabled="true">
+				<form:option value="-1" label="Seleccione Tipo ..."/>
+				<form:option value="0" label="PROFESIONAL"/>
+				<form:option value="1" label="INSTITUCION"/>
+			</form:select>
+			</div>
+  		</div>
+  			
+	    <div class="span4">
+	      <div><form:hidden path="profesionalId" /></div>
+        	<div class="formLabel"><form:label path="apellido">Apellido:</form:label></div>
+        	<div class="formInput"><form:input path="apellido" type="text" disabled="true"/></div>
+	    </div>
+	    <div class="span4">
+			<div class="formLabel"><form:label path="nombre">Nombre:</form:label></div>
+        	<div class="formInput"><form:input path="nombre" type="text" disabled="true"/></div>
+	    </div>
+	
+  </div>
+    <div class="row-fluid">
+        <div class="span4">
+			<div class="formLabel"><form:label path="telefono">Tel&eacutefono:</form:label></div>
+	        <div class="formInput"><form:input path="telefono" type="number" disabled="true"/></div>
+	    </div>
+	    
+	    <div class="span4">
+			<div class="formLabel"><form:label path="matricula">Matr&iacutecula:</form:label></div>
+	        <div class="formInput"><form:input path="matricula" type="number" onkeypress='return isNumberKey(event)' disabled="true"/></div>
+	    </div>
+	   
+	    <div class="span4">
+	     	<div class="formLabel"><form:label path="tituloProfesional">T&iacutetulo Profesional:</form:label></div>
+	        <div class="formInput"><form:input path="tituloProfesional" type="text" disabled="true"/></div>
+	    </div>
+  </div>
+
+</div>               
 </div>       
 </div>   
 

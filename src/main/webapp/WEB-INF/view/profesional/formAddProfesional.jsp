@@ -19,6 +19,8 @@
 		<link href="<%=request.getContextPath()%>/resources/css/panel.css" rel="stylesheet"/>
 		<link href="<%=request.getContextPath()%>/resources/css/bootstrap/bootstrap-responsive.css" rel="stylesheet"/>
 		<script src="<c:url value="/resources/js/jquery/jquery.validate.min.js" />"></script>
+		<script src="<%=request.getContextPath()%>/resources/js/validateForm.js" /></script>
+		
 		<style>	
 		.btn-info {
     		color: #fff;
@@ -119,6 +121,21 @@
 		        return false;
 		    return true;
 		}
+		
+		
+		function validaRequerido() {
+			window.scrollTo(0,0);
+			var selectedTipo = document.getElementById("tipo").value;
+			var requireds = [];
+			if(selectedTipo == 1) {
+				requireds = [ 'tipo:Tipo','apellido:Apellido'];	
+			} else {
+				requireds = [ 'tipo:Tipo','apellido:Apellido', 'nombre:Nombre','matricula:Matricula'
+			                  , 'tituloProfesional:Titulo Profesional', 'nroRegistro:Nro de Reg'];
+			}
+			
+			return isValidForm("validaion_requeridos", requireds);			
+		}
     </SCRIPT>
 </head>
 <body style="background-color:#e5e5e5;">
@@ -126,44 +143,62 @@
 
 <div class="mainContainer"> 	
 <div class="panelContainer">
-<form:form method="post" action="/nuova/addProfesional" commandName="profesional" onsubmit="javascript:disabledSubmit()">
+<form:form method="post" action="/nuova/addProfesional" commandName="profesional" onsubmit="return disabledSubmit()">
+
 <div class="panel panel-info">
+
+<div id="validaion_requeridos"></div>
+	
 	<div class="panel-heading">
-          <div class="panel-title">Datos del Profesional</div>
+          <div class="panel-title">Datos del Profesional / Institucion</div>
     </div>     
-	<div  class="panel-body">
+
+<div  class="panel-body">
 	
 <div class="container-fluid">
   <div class="row-fluid">
+  		<div class="span4">
+  		    <div class="formLabel"><form:label path="tipo">Tipo*:</form:label></div>  
+  		    <div class="formInput">		
+  			<form:select path="tipo">
+				<form:option value="-1" label="Seleccione Tipo ..."/>
+				<form:option value="0" label="PROFESIONAL"/>
+				<form:option value="1" label="INSTITUCION"/>
+			</form:select>
+			</div>
+  		</div>
+  			
 	    <div class="span4">
 	      <div><form:hidden path="profesionalId" /></div>
-        	<div class="formLabel"><form:label path="apellido">Apellido:</form:label></div>
+        	<div class="formLabel"><form:label path="apellido">Apellido* :</form:label></div>
         	<div class="formInput"><form:input path="apellido" type="text"/></div>
 	    </div>
 	    <div class="span4">
-			<div class="formLabel"><form:label path="nombre">Nombre:</form:label></div>
+			<div class="formLabel"><form:label path="nombre">Nombre*:</form:label></div>
         	<div class="formInput"><form:input path="nombre" type="text"/></div>
 	    </div>
-	    <div class="span4">
+	
+  </div>
+    <div class="row-fluid">
+        <div class="span4">
 			<div class="formLabel"><form:label path="telefono">Tel&eacutefono:</form:label></div>
 	        <div class="formInput"><form:input path="telefono" type="number"/></div>
 	    </div>
-  </div>
-    <div class="row-fluid">
+	    
 	    <div class="span4">
-			<div class="formLabel"><form:label path="matricula">Matr&iacutecula:</form:label></div>
+			<div class="formLabel"><form:label path="matricula">Matr&iacutecula*:</form:label></div>
 	        <div class="formInput"><form:input path="matricula" type="number" onkeypress='return isNumberKey(event)'/></div>
 	    </div>
 	   
 	    <div class="span4">
-	     	<div class="formLabel"><form:label path="tituloProfesional">T&iacutetulo Profesional:</form:label></div>
+	     	<div class="formLabel"><form:label path="tituloProfesional">T&iacutetulo Prof.*:</form:label></div>
 	        <div class="formInput"><form:input path="tituloProfesional" type="text"/></div>
 	    </div>
   </div>
 
 </div>        
         
-     </div>   
+</div>   
     
         
 </div>   
@@ -178,7 +213,7 @@
   <div class="row-fluid">
 	    <div class="span4">
 	      <div><form:hidden path="profesionalId" /></div>
-        	<div class="formLabel"><form:label path="apellido">Nro Registro:</form:label></div>
+        	<div class="formLabel"><form:label path="apellido">Nro Registro*:</form:label></div>
         	<div class="formInput"><form:input path="nroRegistro" type="text" onkeypress='return isNumberKey(event)'/></div>
 	    </div>
 	    <div class="span4">	
@@ -310,45 +345,18 @@
 
 <script>
 	document.getElementById("configuracion").parentNode.classList.add("active");
-		
-			$("#profesional").validate({
-    
-		        // Specify the validation rules
-		        rules: {
-		            apellido: "required",
-		            nombre: "required",
-		            matricula: "required",
-		            tituloProfesional: "required",
-		            nroRegistro: "required",
-		            nroLibro: "required",
-		            nroFolio: "required"
-		            
-		        },
-		        
-		        // Specify the validation error messages
-		        messages: {
-		            apellido: "Ingrese apellido",
-		            nombre: "Ingrese nombre",
-		        	matricula: "Ingrese Matrícula",
-		        	tituloProfesional: "Ingrese Título Profesional",
-		        	nroRegistro: "Ingrese Número de Registro",
-		        	nroLibro: "Ingrese Número de Libro",
-		        	nroFolio: "Ingrese Número de Folio",
-		        	
-		        },
-		                submitHandler: function(form) {
-		            form.submit();
-		        }
-		    });
-		
-		
-
 	document.getElementById("validoHasta").value="";
-
 	document.getElementById("vigenciaDesde").value="";
 	document.getElementById("vigenciaHasta").value="";
 
 	function disabledSubmit() {
-		// document.getElementById("btn_submit").disabled = true;
+		var retorno = true;
+		if ( !validaRequerido() ) {
+			retorno = false;
+		} else {
+			document.getElementById("btn_submit").disabled = true;
+		}
+		
+		return retorno;
 	}
 </script>
