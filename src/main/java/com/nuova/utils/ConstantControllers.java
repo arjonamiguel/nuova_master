@@ -14,6 +14,8 @@ public class ConstantControllers {
   public final static String AJAX_GET_PROFESIONALES_PAGINADOS = "/ajaxGetProfesionalesPaginados";
   public final static String AJAX_GET_SEARCH_PROFESIONALES_PAGINADOS =
       "/ajaxGetSearchProfesionalesPaginados";
+  public final static String AJAX_GET_AUTOCOMPLETE_PROFESIONAL = "/ajaxGetAutocompleteProfesional";
+  public final static String AJAX_POST_SAVEPROFESIONAL = "/ajaxPostSaveProfesional";
 
   // Especialidad
   public final static String MAIN_ESPECIALIDAD = "/mainEspecialidad";
@@ -26,6 +28,7 @@ public class ConstantControllers {
   public final static String AJAX_GET_ESPECIALIDADES_PAGINADOS = "/ajaxGetEspecialidadesPaginados";
   public final static String AJAX_GET_SEARCH_ESPECIALIDADES_PAGINADOS =
       "/ajaxGetSearchEspecialidadesPaginados";
+  public final static String AJAX_POST_SAVEESPECIALIDAD = "/ajaxPostSaveEspecialidad";
 
   // Obra Social
   public final static String MAIN_OBRASOCIAL = "/mainObraSocial";

@@ -1,6 +1,8 @@
 package com.nuova.controller;
 
+import com.nuova.dto.ComboItemDTO;
 import com.nuova.dto.EspecialidadDTO;
+import com.nuova.dto.ProfesionalAjaxDto;
 import com.nuova.dto.ProfesionalDTO;
 import com.nuova.dto.ProfesionalEspecialidadDTO;
 import com.nuova.model.Especialidad;
@@ -21,6 +23,7 @@ import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -162,6 +165,48 @@ public class ProfesionalController {
     }
 
     return new PageImpl<ProfesionalDTO>(dtos, pageable, profesionales.getTotalElements());
+  }
+
+  @RequestMapping(value = ConstantControllers.AJAX_GET_AUTOCOMPLETE_PROFESIONAL,
+      method = RequestMethod.POST)
+  public @ResponseBody List<ComboItemDTO> getAutocompleteProfesional(
+      @RequestParam(required = false, defaultValue = "") String query) {
+    List<ComboItemDTO> retorno = new ArrayList<ComboItemDTO>();
+    for (Profesional p : profesionalManager.findAutocompleteProfesional(query)) {
+      retorno
+          .add(new ComboItemDTO(p.getProfesionalId() + "", p.getApellido() + " " + p.getNombre()));
+    }
+
+    return retorno;
+  }
+
+  @RequestMapping(value = ConstantControllers.AJAX_POST_SAVEPROFESIONAL,
+      method = RequestMethod.POST, headers = {"content-type=application/json"})
+  public @ResponseBody String saveProfesional(@RequestBody ProfesionalAjaxDto dto)
+      throws Exception {
+
+    Profesional p = new Profesional();
+    p.setApellido(dto.getApellido());
+    p.setProfesionalId(dto.getProfesionalId());
+    p.setTipo(p.getTipo());
+
+    Set<ProfesionalEspecialidad> esps = new HashSet<ProfesionalEspecialidad>();
+    Especialidad es = new Especialidad();
+    es.setEliminado(0);
+    es.setEspecialidadId(dto.getEspecialidadId());
+    ProfesionalEspecialidad pe = new ProfesionalEspecialidad();
+    pe.setEspecialidad(es);
+    pe.setProfesional(p);
+    esps.add(pe);
+    p.getProfesionalEspecialidads().addAll(esps);
+
+    if (p.getProfesionalId().intValue() == 0) {
+      profesionalManager.add(p);
+    } else {
+      profesionalManager.addProfesionalEspecialidad(pe);
+    }
+
+    return p.getProfesionalId() != null ? p.getProfesionalId() + "" : "-1";
   }
 
   private Profesional transformDtoToProfesional(ProfesionalDTO p) {

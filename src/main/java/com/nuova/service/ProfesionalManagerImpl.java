@@ -1,6 +1,9 @@
 package com.nuova.service;
 
-import java.util.List;
+import com.nuova.dao.ProfesionalDAO;
+import com.nuova.dto.OrdenAlarmaDTO;
+import com.nuova.model.Profesional;
+import com.nuova.model.ProfesionalEspecialidad;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -8,58 +11,65 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.nuova.dao.ProfesionalDAO;
-import com.nuova.dto.OrdenAlarmaDTO;
-import com.nuova.model.Profesional;
+import java.util.List;
 
 @Service
 public class ProfesionalManagerImpl implements ProfesionalManager {
-    @Autowired
-    ProfesionalDAO profesionalDAO;
+  @Autowired
+  ProfesionalDAO profesionalDAO;
 
-    @Transactional
-    public void add(Profesional profesional) {
-        this.profesionalDAO.add(profesional);
-    }
+  @Transactional
+  public void add(Profesional profesional) {
+    this.profesionalDAO.add(profesional);
+  }
 
-    @Transactional
-    public List<Profesional> findAll() {
-        return profesionalDAO.findAll();
-    }
+  @Transactional
+  public List<Profesional> findAll() {
+    return profesionalDAO.findAll();
+  }
 
-    @Transactional
-    public void delete(Integer id) {
-        this.profesionalDAO.delete(id);
-    }
+  @Transactional
+  public void delete(Integer id) {
+    this.profesionalDAO.delete(id);
+  }
 
-    @Transactional
-    public Profesional findProfesionalById(Integer profesionalId) {
-        return profesionalDAO.findProfesionalById(profesionalId);
-    }
+  @Transactional
+  public Profesional findProfesionalById(Integer profesionalId) {
+    return profesionalDAO.findProfesionalById(profesionalId);
+  }
 
-    @Transactional
-    public void edit(Profesional profesional) {
-        this.profesionalDAO.edit(profesional);
-    }
+  @Transactional
+  public void edit(Profesional profesional) {
+    this.profesionalDAO.edit(profesional);
+  }
 
-    @Transactional
-    public void deleteProfesionalEspecialidad(Integer profesionalId) {
-        this.profesionalDAO.deleteProfesionalEspecialidad(profesionalId);
-    }
+  @Transactional
+  public void deleteProfesionalEspecialidad(Integer profesionalId) {
+    this.profesionalDAO.deleteProfesionalEspecialidad(profesionalId);
+  }
 
-    @Transactional
-    public Page<Profesional> findProfesionalesByPageable(Pageable pageable) {
-        return profesionalDAO.findProfesionalesByPageable(pageable);
-    }
+  @Transactional
+  public Page<Profesional> findProfesionalesByPageable(Pageable pageable) {
+    return profesionalDAO.findProfesionalesByPageable(pageable);
+  }
 
-    @Transactional
-    public Page<Profesional> findProfesionalesBySearch(String search, Pageable pageable) {
-        return profesionalDAO.findProfesionalesBySearch(search, pageable);
-    }
+  @Transactional
+  public Page<Profesional> findProfesionalesBySearch(String search, Pageable pageable) {
+    return profesionalDAO.findProfesionalesBySearch(search, pageable);
+  }
 
-    @Transactional
-    public OrdenAlarmaDTO countProfesionales() {
-        return profesionalDAO.countProfesionales();
-    }
+  @Transactional
+  public OrdenAlarmaDTO countProfesionales() {
+    return profesionalDAO.countProfesionales();
+  }
 
+  @Transactional
+  public List<Profesional> findAutocompleteProfesional(String query) {
+    return profesionalDAO.findAutocompleteProfesional(query);
+  }
+
+  @Transactional
+  public void addProfesionalEspecialidad(ProfesionalEspecialidad pe) {
+    profesionalDAO.addProfesionalEspecialidad(pe);
+  }
 }

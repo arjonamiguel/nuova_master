@@ -17,6 +17,7 @@ import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -129,6 +130,18 @@ public class EspecialidadController {
     }
 
     return new PageImpl<EspecialidadDTO>(dtos, pageable, especialidades.getTotalElements());
+  }
+
+  @RequestMapping(value = ConstantControllers.AJAX_POST_SAVEESPECIALIDAD,
+      method = RequestMethod.POST, headers = {"content-type=application/json"})
+  public @ResponseBody String addEspecialidad(@RequestBody EspecialidadDTO dto) throws Exception {
+    Especialidad e = new Especialidad();
+    e.setEliminado(0);
+    e.setNombre(dto.getNombre());
+    e.setTipo(dto.getTipo());
+
+    especialidadManager.add(e);
+    return e.getEspecialidadId() != null ? e.getEspecialidadId() + "" : "-1";
   }
 
   private EspecialidadDTO transformEspecialidadToDTO(Especialidad e) {

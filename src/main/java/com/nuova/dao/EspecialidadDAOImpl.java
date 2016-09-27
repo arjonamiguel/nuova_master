@@ -33,7 +33,7 @@ public class EspecialidadDAOImpl implements EspecialidadDAO {
   @SuppressWarnings("unchecked")
   public List<Especialidad> findAll() {
     return this.sessionFactory.getCurrentSession()
-        .createQuery("FROM Especialidad e ORDER BY e.nombre ASC").list();
+        .createQuery("FROM Especialidad e where e.eliminado = 0 ORDER BY e.nombre ASC").list();
   }
 
   @Override
