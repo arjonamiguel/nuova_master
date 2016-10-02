@@ -17,6 +17,7 @@
 	href="<%=request.getContextPath()%>/resources/css/bootstrap/bootstrap.min.css"
 	rel="stylesheet" />
 <script src="<c:url value="/resources/js/jquery/jquery-2.0.3.min.js" />"></script>
+
 <script src="<c:url value="/resources/js/bootstrap/bootstrap.min.js" />"></script>
 <script
 	src="<%=request.getContextPath()%>/resources/js/jquery/bootstrap-collapse.js" /></script>
@@ -127,7 +128,7 @@ $(document).ready(function() {
 				columnNames : [ "","NRO.ORDEN","FECHA","SOLICITANTE","PRACTICAS", ""],
 				columnKeys : [ "alarmas","nroOrden","fecha","apellidoNombreProfesional","practicas"
 				 					, "acciones"],
-				columnWidths : [ "5%", "10%", "20%"],
+				columnWidths : [ "3%", "10%", "10%"],
 
 				sortable : [ ,true,],
 				data : rowsPracticas,
@@ -223,40 +224,7 @@ $(function(){
 			
 		});
 		
-		
-	function updatePhones(){
-	
-		var jsonPhones='';
-		jsonPhones=$("#jsonObservaciones").html();
-		if(jsonPhones.length>2){
-			if(jsonPhones[jsonPhones.length-2]==","){
-				var str=jsonPhones;
-				var newStr = str.substring(0, str.length-2);
-				jsonPhones=newStr+"]";
-			}
-		}
-	
-		var obj = jQuery.parseJSON( jsonPhones);
-		
-		$(obj).each(function(index, element) {
-    		var id=element.id;
-    		var value=element.value;
-    		
-    		var trimStr=value;
-			//trimStr=trimStr.replace(/\s/g, "&nbsp;");
-    		
-    		$('.phone-list').append(''+
-						'<div class="input-group phone-input">'+
-							'<textarea disabled="disabled" name="'+index+'" class="form-control" placeholder="Ingrese Observacion" style="width:60.5%;margin-bottom:3px;">'+trimStr+'</textarea>'+
-							'<span class="input-group-btn" style="padding-left:1%;">'+
-								'<button class="btn btn-danger btn-remove-phone" type="button"><span class="icon icon-remove"></span>Eliminar</button>'+
-							'</span>'+
-						'</div>'
-				);
-		});
-
-	}
-	
+			
 	function saveObservaciones(operacion,observaciones) {
 		var retorno;
 		var dni = $("#pacienteDni").html();
@@ -665,5 +633,4 @@ function callNuevoAdjunto(formData) {
 	return retorno;
 }		
 
-updatePhones();
 </script>

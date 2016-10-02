@@ -8,7 +8,7 @@ function isValidForm(container, fieldsRequired) {
 		var _id = arrField[0];
 		var _label = arrField[1];
 		var field = document.getElementById(_id).value;
-		if(field == "" || field == "-1" || field == "NONE") {
+		if(field == "" || field == "-1" || field == "NONE" || (!$("#"+_id).is(':checked') && field=="on")) {
 			itemsRequired = itemsRequired + "<li>" + _label + "</li>";
 			if (retorno) {
 				retorno = false;

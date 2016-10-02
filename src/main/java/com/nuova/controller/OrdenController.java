@@ -516,7 +516,7 @@ public class OrdenController {
 
     for (Profesional p : profesionales) {
       retorno.add(new ComboItemDTO(p.getProfesionalId() + "",
-          p.getApellido() + " " + p.getNombre() == null ? "" : p.getNombre()));
+          p.getApellido() + " " + (p.getNombre() == null ? "" : p.getNombre())));
     }
     return retorno;
   }

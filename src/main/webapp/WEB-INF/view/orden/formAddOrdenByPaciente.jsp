@@ -16,6 +16,37 @@
 	href="<%=request.getContextPath()%>/resources/css/bootstrap/bootstrap.min.css"
 	rel="stylesheet" />
 <script src="<c:url value="/resources/js/jquery/jquery-2.0.3.min.js" />"></script>
+<!-- Scripts Toaster ------------------------------------------- -->
+<link href="<%=request.getContextPath()%>/resources/css/bootstrap-combined.min.css" rel="stylesheet" />
+<link href="<%=request.getContextPath()%>/resources/css/toastr.css" rel="stylesheet" />
+<style>
+.row {margin-left: 0;}
+</style>
+
+<script src="<%=request.getContextPath()%>/resources/js/toastr.js" /></script>
+<script type="text/javascript">
+toastr.options = {
+  "closeButton": false,
+  "debug": false,
+  "newestOnTop": false,
+  "progressBar": false,
+  "rtl": false,
+  "positionClass": "toast-bottom-right",
+  "preventDuplicates": false,
+  "onclick": null,
+  "showDuration": 300,
+  "hideDuration": 1000,
+  "timeOut": 3000,
+  "extendedTimeOut": 1000,
+  "showEasing": "swing",
+  "hideEasing": "linear",
+  "showMethod": "fadeIn",
+  "hideMethod": "fadeOut"
+}
+</script>
+<!-- Fin Scripts Toaster ---------------------------------------- -->
+
+
 <script src="<c:url value="/resources/js/bootstrap/bootstrap.min.js" />"></script>
 <script
 	src="<%=request.getContextPath()%>/resources/js/jquery/bootstrap-collapse.js" /></script>
@@ -33,6 +64,8 @@
 	rel="stylesheet" />
 <script
 	src="<%=request.getContextPath()%>/resources/montrezorro-bootstrap-checkbox-fa865ff/js/bootstrap-checkbox.js" /></script>
+
+<script src="<%=request.getContextPath()%>/resources/js/validateForm.js" /></script>
 
 <style>
 .chkbox {
@@ -437,6 +470,10 @@ $(function() {
 	    var especialidad = document.getElementById("especialidadNombre").value;
 	    var resp = callNuevaEspecialidad(getJsonEspecialidad(especialidad, 0));
 	    $('#modalEspecialidad').modal('hide');
+	    if (resp > 0) {
+			toastr["success"]("Se agrego una nueva especialidad");				
+		}
+	    
 	  });
 	});
 	
@@ -466,6 +503,9 @@ $(function() {
 	    
 	    var resp = callNuevoProfesional(getJsonProfesional(apellidoRazonSocial, tipo, profesional, especialidadProf));
 	    $('#modalProfesional').modal('hide');
+	    if (resp > 0) {
+			toastr["success"]("Se agrego un nuevo Profesional / Institucion");				
+		}
 	  });
 	});
 	
@@ -511,12 +551,14 @@ function callNuevoProfesional(jsonProfesional) {
 <body style="background-color: #e5e5e5;">
 	<jsp:include page="../sec_menu.jsp"></jsp:include>
 	<form:form method="post" action="/nuova/addOrden"
-		commandName="ordenDto" onsubmit="javascript:disabledSubmit()">
+		commandName="ordenDto"  onsubmit="return disabledSubmit()">
 		<form:hidden path="ordenTipo.ordenTipoId" />
 		<div class="mainContainer">
 		<div id="alert"></div>
 			<div class="panelContainer">
 				<div class="panel panel-info">
+				<div id="validacion_requeridos"></div>
+				
 					<div class="panel-heading">
 						<div class="panel-title">Nueva Práctica</div>
 						<div class="label-error" id="message2"
@@ -652,7 +694,7 @@ function callNuevoProfesional(jsonProfesional) {
 													<table class="table" style="width: 100%">
 														<tr>
 															<td style="width: 15%"><form:label
-																	path="especialidad">Especialidad</form:label></td>
+																	path="especialidad">Especialidad*</form:label></td>
 															<td style="text-align: left" colspan="5"><input
 																type="hidden" name="especialidad" id="especialidad"
 																value="${ordenDto.especialidad}"> <input
@@ -666,7 +708,7 @@ function callNuevoProfesional(jsonProfesional) {
 																</a>
 															</a></td>
 															<td style="width: 15%"><form:label
-																	path="profesionalId">Profesional</form:label>
+																	path="profesionalId">Profesional*</form:label>
 															</td>
 															<td style="text-align: left" colspan="5">
 																<form:select
@@ -695,7 +737,7 @@ function callNuevoProfesional(jsonProfesional) {
 															</td>
 														</tr>
 														<tr>														
-															<td style="width: 10%">Entidad de Procedencia:</td>
+															<td style="width: 10%">Entidad de Procedencia*:</td>
 															<td>
 															<form:input path="entidad" disabled="true"/>
 															</td>
@@ -875,38 +917,36 @@ function callNuevoProfesional(jsonProfesional) {
 <script>
 	document.getElementById("mainPaciente").parentNode.classList.add("active");
 	$(".checkbox").checkbox();
-	$("#ordenDto").validate({
-
-		// Specify the validation rules
-		rules : {
-			dni : {
-				required : true,
-				minlength : 7
-			},
-			apellido : "required",
-			nombre : "required"
-		},
-
-		// Specify the validation error messages
-		messages : {
-			apellido : "Ingrese apellido",
-			nombre : "Ingrese nombre",
-			dni : {
-				required : "Ingrese DNI",
-				minlength : "DNI debe tener al menos 7 caracteres de largo"
-			}
-		},
-		submitHandler : function(form) {
-			if (validatedSelects()) {
-				form.submit();
-			}
-		}
-	});
 </script>
 
 <script> 
 
+function validaRequerido() {
+	window.scrollTo(0,0);
+	var requireds = ['reqOrdenMedico: Presentó la orden Práctica del médico solicitante?'
+					, 'reqCredecial: Presentó la credencial de la prestadora OSPSIP?'
+					, 'reqMonotributista: Presentó fotocopia de los 3 último recibos como Monotributista o Ama de Casa?'
+					];
+	
+	if ($("#fueraCartilla").is(':checked')) {
+		requireds.push('entidad:Entidad o Procedencia');
+
+	}else {
+		requireds.push('especialidad:Especialidad','profesionalId: Profesional');	
+	}	
+	
+	return isValidForm("validacion_requeridos", requireds);			
+}
+
 function disabledSubmit() {
-	document.getElementById("btn_submit").disabled = true;
+	var retorno = true;
+	if ( !validaRequerido() ) {
+		retorno = false;
+	} else {
+		document.getElementById("btnSaveProfesional").disabled = true;				
+
+	}
+	
+	return retorno;
 }
 </script>
