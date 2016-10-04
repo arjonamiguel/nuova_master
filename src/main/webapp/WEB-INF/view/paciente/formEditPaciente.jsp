@@ -20,7 +20,8 @@
 		
 		<link href="<%=request.getContextPath()%>/resources/montrezorro-bootstrap-checkbox-fa865ff/css/bootstrap-checkbox.css" rel="stylesheet"/>
 		<script src="<%=request.getContextPath()%>/resources/montrezorro-bootstrap-checkbox-fa865ff/js/bootstrap-checkbox.js" /></script>
-				<script src="<%=request.getContextPath()%>/resources/js/jquery/jquery.validate.min.js" /></script>
+		<script src="<%=request.getContextPath()%>/resources/js/jquery/jquery.validate.min.js" /></script>
+		<script src="<%=request.getContextPath()%>/resources/js/validateForm.js" /></script>
 		
 <style>
 .error {
@@ -298,98 +299,7 @@ function showEmpresaTitular(){
 			}
 		}
 
-
-function validateForm() {
-	document.getElementById("dni-error").style.height = "0";
-	document.getElementById("apellido-error").style.height = "0";
-	document.getElementById("nombre-error").style.height = "0";
-	document.getElementById("localidad-error").style.height = "0";
-
-	document.getElementById("dni-error").style.visibility = "hidden";
-	document.getElementById("apellido-error").style.visibility = "hidden";
-	document.getElementById("nombre-error").style.visibility = "hidden";
-	document.getElementById("localidad-error").style.visibility = "hidden";
-	
-	if (validateDni() 
-		&& validateApellido() 
-		&& validateNombre()
-		&& validateLocalidad()) {
-		return true;
-	} else {
-		return false;
-	}
-}
-
-function validateDni(){
-	var valid = true;
-	var dni = document.getElementById("dni").value;
-	// Requerido
-	if (dni == "") {
-		valid = false;
-	}
-	
-	if (valid) {
-		if (dni.length > 10 || dni.length < 7) {
-			valid = false;
-		}
-	}
-
-	if (!valid) {
-		document.getElementById("dni-error").style.height = "20px";
-		document.getElementById("dni-error").style.marginBottom = "5px";
-		document.getElementById("dni-error").style.visibility = "";
-		document.getElementById("dni").focus();
-	}
-	
-	return valid;
-}
-
-function validateApellido(){
-	var valid = true;
-	var apellido = document.getElementById("apellido").value;
-	// Requerido
-	if(apellido == "") {
-		document.getElementById("apellido-error").style.height = "20px";
-		document.getElementById("apellido-error").style.marginBottom  = "5px";
-		document.getElementById("apellido-error").style.visibility = "";
-		document.getElementById("apellido").focus();
-		valid = false;
-	}
-	
-	return valid;
-}
-
-function validateNombre(){
-	var valid = true;
-	var nombre = document.getElementById("nombre").value;
-	// Requerido
-	if(nombre == "") {
-		document.getElementById("nombre-error").style.height = "20px";
-		document.getElementById("nombre-error").style.marginBottom  = "5px";
-		document.getElementById("nombre-error").style.visibility = "";
-		document.getElementById("nombre").focus();
-		valid = false;
-	}
-	
-	return valid;
-}
-
-function validateLocalidad(){
-	var valid = true;
-	var localidadId = document.getElementById("localidadId").value;
-	var localidadString = document.getElementById("localidadString").value;
-	
-	// Requerido
-	if(localidadId == "" || localidadString=="") {
-		document.getElementById("localidad-error").style.height = "20px";
-		document.getElementById("localidad-error").style.marginBottom  = "5px";
-		document.getElementById("localidad-error").style.visibility = "";
-		document.getElementById("localidadString").focus();
-		valid = false;
-	}
-	
-	return valid;
-}
+				
 </SCRIPT>
 </head>
 <body style="background-color:#e5e5e5;">
@@ -397,9 +307,11 @@ function validateLocalidad(){
 
 <div class="mainContainer"> 
 <div class="panelContainer">
-<form:form method="post" action="/nuova/editPaciente" commandName="paciente" onsubmit="return validateForm()">
+<form:form method="post" action="/nuova/editPaciente" commandName="paciente" onsubmit="return disabledSubmit()">
 <form:hidden path="pacienteId"/>
 	<div class="panel panel-info">
+	<div id="validacion_requeridos"></div>
+	
 	<div class="panel-heading">
 		<div class="panel-title">
 		<b>Editar Paciente</b>
@@ -681,7 +593,7 @@ function validateLocalidad(){
 					<div class="row-fluid">
 						<div class="span12">
 						<div style="float:right;"><input type="button" value="Cancelar" onclick="location.href='/nuova/mainPaciente';" class="btn"/></div>
-							<div style="float:right;padding-right:2%;"><input type="submit" value="Guardar" class="btn btn-info"/></div> 
+							<div style="float:right;padding-right:2%;"><input type="submit" value="Guardar" class="btn btn-info" id="btnSubmit"/></div> 
 			 				
 						</div>
 					</div>
@@ -823,6 +735,31 @@ function callEmpresas() {
 
 		enableVencCarnet();
 		updatecoseguro();
+		
+		function validaRequerido() {
+			window.scrollTo(0,0);
+			var requireds = ['dni: Dni, de 7 a 10 caracteres'
+							, 'apellido: Apellido'
+							, 'nombre: Nombre'
+							, 'localidadId: Localidad'
+							, 'obrasocial.credencial: Credencial. Ejem. 99999-00'
+							];
+					
+			return isValidForm("validacion_requeridos", requireds);			
+		}
+
+		
+		function disabledSubmit() {
+			var retorno = true;
+			if ( !validaRequerido() ) {
+				retorno = false;
+			} else {
+				document.getElementById("btnSubmit").disabled = true;				
+
+			}
+			
+			return retorno;
+		}
 		
 	
 </script>

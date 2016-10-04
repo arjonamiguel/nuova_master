@@ -943,7 +943,7 @@ function disabledSubmit() {
 	if ( !validaRequerido() ) {
 		retorno = false;
 	} else {
-		document.getElementById("btnSaveProfesional").disabled = true;				
+		document.getElementById("btn_submit").disabled = true;				
 
 	}
 	

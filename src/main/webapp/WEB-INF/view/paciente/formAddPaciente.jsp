@@ -20,6 +20,8 @@
 		<script src="<c:url value="/resources/js/jquery/jquery.validate.min.js" />"></script>
 		<link href="<%=request.getContextPath()%>/resources/montrezorro-bootstrap-checkbox-fa865ff/css/bootstrap-checkbox.css" rel="stylesheet"/>
 		<script src="<%=request.getContextPath()%>/resources/montrezorro-bootstrap-checkbox-fa865ff/js/bootstrap-checkbox.js" /></script>
+		<script src="<%=request.getContextPath()%>/resources/js/validateForm.js" /></script>
+		
 		
 <style>
 label.error {
@@ -288,8 +290,10 @@ label.error {
 
 <div class="mainContainer"> 
 <div class="panelContainer">
-<form:form method="post" action="addPaciente" commandName="paciente" onsubmit="javascript:disabledSubmit()">
+<form:form method="post" action="addPaciente" commandName="paciente" onsubmit="return disabledSubmit()">
 	<div class="panel panel-info">
+	<div id="validacion_requeridos"></div>
+	
 	<div id="messageAlert"></div>
 	<div class="panel-heading">
 		<input id="flagDni" type="hidden" value="${dniRepetido}">
@@ -504,7 +508,7 @@ label.error {
 				<div class="row-fluid">
 					<div class="span12">
 					<div style="float:right;"><input type="button" value="Cancelar" onclick="location.href='/nuova/mainPaciente';" class="btn"/></div>
-						<div style="float:right;padding-right:2%;"><input type="submit" value="Guardar" class="btn btn-info"/></div> 
+						<div style="float:right;padding-right:2%;"><input type="submit" value="Guardar" class="btn btn-info" id="btnSubmit"/></div> 
 			 			
 					</div>
 				</div>
@@ -556,9 +560,6 @@ label.error {
 </html>
 <script>
 
-function disabledSubmit() {
-	document.getElementById("btn_submit").disabled = true;
-}
 
 		document.getElementById("mainPaciente").parentNode.classList.add("active");
 		showEmpresas();
@@ -649,55 +650,37 @@ function disabledSubmit() {
 		}
 
 		
-			$("#paciente").validate({
-    
-        // Specify the validation rules
-        rules: {
-        	 dni: {
-                required: true,
-                minlength: 7,
-                maxlength:10
-            },
-            apellido: "required",
-            nombre: "required",
-            localidadString: "required",
+	        
 
-            email: {
-                required: true,
-                email: true
-            },
-            fechaNacimiento: "required",
-            credencialSufijo: "required"
-        },
-        
-        // Specify the validation error messages
-        messages: {
-        	 dni: {
-                required: "Ingrese DNI",
-                minlength: "DNI debe tener al menos 7 caracteres de largo",
-                maxlength: "DNI deber ser menor a 10 caracteres de largo"
-            },
-            apellido: "Ingrese apellido",
-            nombre: "Ingrese nombre",
-            localidadString : "Seleccione Localidad",
-
-			fechaNacimiento : "Ingrese fecha de nacimiento",
-			credencialSufijo : "Ingrese Nro Credencial"
-        },
-        submitHandler: function(form) {
-        	var dni = document.getElementById("dni");            
-            if (callExistDni(dni.value)){
-                $("#message").css("visibility","visible");
-                dni.focus();
-            } else {
-            	form.submit();
-            }        
-            
-        }
-    });
 	$("#coseguro").click();	
 	$("#razonCoseguro").val("NONE");
 	$("#razonCoseguro").prop("disabled", true);
 	validateDniRepetido();
 	validateCredencialRepetido();
+	
+
+	function validaRequerido() {
+		window.scrollTo(0,0);
+		var requireds = ['dni: Dni, de 7 a 10 caracteres'
+						, 'apellido: Apellido'
+						, 'nombre: Nombre'
+						, 'localidadId: Localidad'
+						, 'crdencial: Credencial. Ejem. 99999-00'
+						];
+				
+		return isValidForm("validacion_requeridos", requireds);			
+	}
+
+	
+	function disabledSubmit() {
+		var retorno = true;
+		if ( !validaRequerido() ) {
+			retorno = false;
+		} else {
+			document.getElementById("btnSubmit").disabled = true;				
+
+		}
+		
+		return retorno;
+	}
 </script>
