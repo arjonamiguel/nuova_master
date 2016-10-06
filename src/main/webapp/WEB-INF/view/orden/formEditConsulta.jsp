@@ -20,7 +20,7 @@
 		<link href="<%=request.getContextPath()%>/resources/montrezorro-bootstrap-checkbox-fa865ff/css/bootstrap-checkbox.css" rel="stylesheet"/>
 		<script src="<%=request.getContextPath()%>/resources/montrezorro-bootstrap-checkbox-fa865ff/js/bootstrap-checkbox.js" /></script>
 		<script src="<c:url value="/resources/js/jquery/jquery.validate.min.js" />"></script>
-		
+		<script src="<%=request.getContextPath()%>/resources/js/validateForm.js" /></script>
 	
 <script type="text/javascript">
 
@@ -262,12 +262,14 @@
 <body style="background-color:#e5e5e5;">
 <jsp:include page="../sec_menu.jsp"></jsp:include>
 
-<form:form method="post" action="/nuova/editOrden" commandName="ordenDto"  onsubmit="javascript:disabledSubmit()">
+<form:form method="post" action="/nuova/editOrden" commandName="ordenDto"  onsubmit="return disabledSubmit()">
 <form:hidden path="ordenId"/>
 <div class="mainContainer">
 	
 	<div class="panelContainer">		
 		<div class="panel panel-info">
+			<div id="validacion_requeridos"></div>
+			
 			<div class="panel-heading">
           			<div class="panel-title">
 	          		Editar Consultas
@@ -359,7 +361,7 @@
 															<b>Presentó la orden de Práctica del médico solicitante?</b>
 														</td>
 														<td  style="text-align:left" colspan="2">			    
-														    <form:checkbox path="reqOrdenMedico" type="checkbox" class="largerCheckbox"/>
+														    <form:checkbox path="reqOrdenMedico" id ="reqOrdenMedico" type="checkbox" class="largerCheckbox"/>
 														</td>
 													</tr>
 													<tr>
@@ -368,7 +370,7 @@
 															<b>Presentó la credencial de la prestadora OSPSIP?</b>
 														</td>
 														<td  style="text-align:left" colspan="2">				    
-														    <form:checkbox path="reqCredecial" type="checkbox" class="largerCheckbox"/>
+														    <form:checkbox path="reqCredecial" id="reqCredecial" type="checkbox" class="largerCheckbox"/>
 														</td>
 													</tr>
 										
@@ -380,7 +382,7 @@
 															<b>Presentó fotocopia de los 3 último recibos como Monotributista o Ama de Casa?</b>
 														</td>
 														<td  style="text-align:left" colspan="2">				    
-														    <form:checkbox path="reqMonotributista" type="checkbox" class="largerCheckbox"/>
+														    <form:checkbox path="reqMonotributista" id="reqMonotributista" type="checkbox" class="largerCheckbox"/>
 														</td>
 													</tr>	
 													<tr>
@@ -560,37 +562,31 @@
 <script>
 document.getElementById("mainOrden").parentNode.classList.add("active");
 $(".checkbox").checkbox();
-$("#ordenDto").validate({
 
-	// Specify the validation rules
-	rules : {
-		dni : {
-			required : true,
-			minlength : 7
-		},
-		apellido : "required",
-		nombre : "required"
-	},
-
-	// Specify the validation error messages
-	messages : {
-		apellido : "Ingrese apellido",
-		nombre : "Ingrese nombre",
-		dni : {
-			required : "Ingrese DNI",
-			minlength : "DNI debe tener al menos 7 caracteres de largo"
-		}
-	},
-	submitHandler : function(form) {
-		if (validatedSelects()) {
-			form.submit();
-		}
-	}
-});
+function validaRequerido() {
+	window.scrollTo(0,0);
+	var requireds = ['reqOrdenMedico: Presentó la orden Práctica del médico solicitante?'
+					, 'reqCredecial: Presentó la credencial de la prestadora OSPSIP?'
+					, 'reqMonotributista: Presentó fotocopia de los 3 último recibos como Monotributista o Ama de Casa?'
+					,'especialidad:Especialidad','profesionalId: Profesional'
+							];
+			
+	
+	return isValidForm("validacion_requeridos", requireds);			
+}
 
 function disabledSubmit() {
-	document.getElementById("btn_submit").disabled = true;
+	var retorno = true;
+	if ( !validaRequerido() ) {
+		retorno = false;
+	} else {
+		document.getElementById("btn_submit").disabled = true;				
+
+	}
+	
+	return retorno;
 }
+
 
 function showReport(id){
 	$("#myModal").css("visibility", "visible");
