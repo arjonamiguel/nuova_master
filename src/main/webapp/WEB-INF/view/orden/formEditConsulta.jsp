@@ -12,6 +12,37 @@
 		
         <link href="<%=request.getContextPath()%>/resources/css/bootstrap/bootstrap.min.css" rel="stylesheet"/>   
 		<script src="<c:url value="/resources/js/jquery/jquery-2.0.3.min.js" />"></script>
+		<!-- Scripts Toaster ------------------------------------------- -->
+<link href="<%=request.getContextPath()%>/resources/css/bootstrap-combined.min.css" rel="stylesheet" />
+<link href="<%=request.getContextPath()%>/resources/css/toastr.css" rel="stylesheet" />
+<style>
+.row {margin-left: 0;}
+</style>
+
+<script src="<%=request.getContextPath()%>/resources/js/toastr.js" /></script>
+<script type="text/javascript">
+toastr.options = {
+  "closeButton": false,
+  "debug": false,
+  "newestOnTop": false,
+  "progressBar": false,
+  "rtl": false,
+  "positionClass": "toast-bottom-right",
+  "preventDuplicates": false,
+  "onclick": null,
+  "showDuration": 300,
+  "hideDuration": 1000,
+  "timeOut": 3000,
+  "extendedTimeOut": 1000,
+  "showEasing": "swing",
+  "hideEasing": "linear",
+  "showMethod": "fadeIn",
+  "hideMethod": "fadeOut"
+}
+</script>
+<!-- Fin Scripts Toaster ---------------------------------------- -->
+		
+		
 		<script src="<c:url value="/resources/js/bootstrap/bootstrap.min.js" />"></script>
 		<script src="<%=request.getContextPath()%>/resources/js/jquery/bootstrap-collapse.js" /></script>
 		<link href="<%=request.getContextPath()%>/resources/css/nuova.css" rel="stylesheet"/>
@@ -23,38 +54,104 @@
 		<script src="<%=request.getContextPath()%>/resources/js/validateForm.js" /></script>
 	
 <script type="text/javascript">
+$(document).ready(function() {
+	var especialidadTH = $('#especialidadString.typeahead');
+	var profesionalTH = $('#apellidoRazonSocial.typeahead');
+	var especialidadProfTH = $('#especialidadStringProf.typeahead');
 
-	$(document).ready(function() {
-		var map = new Object();
-		var objects = [];
 
-		$('input.typeahead').typeahead({
-			source : function(query, process) {
-				$.ajax({
-					url : '/nuova/ajaxGetAutoCompleteEspecialidades',
-					type : 'POST',
-					dataType : 'JSON',
-					data : 'query=' + query,
-					success : function(data) {
-						console.log(data);
-						$.each(data, function(i, object) {
-							map[object.value] = object;
-							if (objects[i] == null) {
-								objects.push(object.value);
-							}
-						});
-						process(objects);
-						objects = [];
-					}
-				});
-			},
-			updater : function(item) {
-				$('#especialidad').val(map[item].id);
-				findProfesinoales($('#especialidad'));
-				return item;
-			}
-		});
+	var map = new Object();
+	var objects = [];
+
+	especialidadTH.typeahead({
+		source : function(query, process) {
+			$.ajax({
+				url : '/nuova/ajaxGetAutoCompleteEspecialidades',
+				type : 'POST',
+				dataType : 'JSON',
+				data : 'query=' + query,
+				success : function(data) {
+					console.log(data);
+					$.each(data, function(i, object) {
+						map[object.value] = object;
+						if (objects[i] == null) {
+							objects.push(object.value);
+						}
+					});
+					process(objects);
+					objects = [];
+				}
+			});
+		},
+		updater : function(item) {
+			$('#especialidad').val(map[item].id);
+			findProfesinoales($('#especialidad'));
+			return item;
+		}
 	});
+
+	var mapProf = new Object();
+	var objectsProf = [];
+
+	profesionalTH.typeahead({
+		source : function(query, process) {
+			$.ajax({
+				url : '/nuova/ajaxGetAutocompleteProfesional?query='+query,
+				type : 'POST',
+				//dataType : 'JSON',
+				minLength : 3,
+				//data : 'query=' + query,
+				success : function(data) {
+					console.log(data);
+					$.each(data, function(i, object) {
+						mapProf[object.value] = object;
+						if (objectsProf[i] == null) {
+							objectsProf.push(object.value);
+						}
+					});
+					process(objectsProf);
+					objectsProf = [];
+				}
+			});
+		},
+		updater : function(item) {
+			$('#profesional').val(mapProf[item].id);
+			return item;
+		}
+	});
+
+	var mapEsp = new Object();
+	var objectsEsp = [];
+
+	especialidadProfTH.typeahead({
+		source : function(query, process) {
+			$.ajax({
+				url : '/nuova/ajaxGetAutoCompleteEspecialidades',
+				type : 'POST',
+				dataType : 'JSON',
+				data : 'query=' + query,
+				success : function(data) {
+					console.log(data);
+					$.each(data, function(i, object) {
+						mapEsp[object.value] = object;
+						if (objectsEsp[i] == null) {
+							objectsEsp.push(object.value);
+						}
+					});
+					process(objectsEsp);
+					objectsEsp = [];
+				}
+			});
+		},
+		updater : function(item) {
+			$('#especialidadProf').val(mapEsp[item].id);				
+			return item;
+		}
+	});
+
+	
+});
+
 </script>	
 	
 	
@@ -240,6 +337,100 @@
 			document.getElementById("fechaCaja").value=document.getElementById("fechaCajaId").value;
 		}
 
+		function getJsonEspecialidad(especialidad, tipo) {
+			return '{"nombre": "'+especialidad+'", "tipo": '+tipo+'}';	
+		}
+
+		function getJsonProfesional(apellidoRazonSocial, tipo, profesional, especialidadProf) {
+			return '{"apellido": "'+apellidoRazonSocial+'", "tipo": '+tipo+', "profesionalId": '+profesional+', "especialidadId" :'+especialidadProf +'}';	
+		}
+
+		$(function() {
+			  $('#btnEspecialidad').click(function() {
+				  document.getElementById("especialidadNombre").value="";
+				$('#modalEspecialidad').css("visibility", "visible");  
+			    $('#modalEspecialidad').modal('show');
+			  });
+			  
+			  $('#btnSaveEspecialidad').click(function() {
+			    var especialidad = document.getElementById("especialidadNombre").value;
+			    var resp = callNuevaEspecialidad(getJsonEspecialidad(especialidad, 0));
+			    $('#modalEspecialidad').modal('hide');
+			    if (resp > 0) {
+					toastr["success"]("Se agrego una nueva Especialidad");				
+				}
+			    
+			  });
+			});
+			
+		$(function() {
+			  $('#btnProfesional').click(function() {
+				 document.getElementById("apellidoRazonSocial").value="";
+				 document.getElementById("profesional").value="";
+				 document.getElementById("tipo").value="-1";
+				 document.getElementById("especialidadProf").value="";
+				 document.getElementById("especialidadStringProf").value="";		 
+				    
+				$('#modalProfesional').css("visibility", "visible");  
+			    $('#modalProfesional').modal('show');
+			  });
+			  
+			  $('#btnSaveProfesional').click(function() {
+			    var apellidoRazonSocial = document.getElementById("apellidoRazonSocial").value;
+				var profesional = document.getElementById("profesional").value;
+			    var tipo = document.getElementById("tipo").value;
+			    var especialidadProf = document.getElementById("especialidadProf").value;
+			    if (profesional == "") {
+			    	profesional = 0;
+			    }
+			    if (especialidadProf == "") {
+			    	especialidadProf = 0;
+			    }
+			    
+			    var resp = callNuevoProfesional(getJsonProfesional(apellidoRazonSocial, tipo, profesional, especialidadProf));
+			    $('#modalProfesional').modal('hide');
+			    if (resp > 0) {
+					toastr["success"]("Se agrego un nuevo Profesional / Institucion");				
+				}
+			  });
+			});
+			
+		function callNuevaEspecialidad(jsonEspecialidad) {
+			var retorno;
+			$.ajax({
+				url : "/nuova/ajaxPostSaveEspecialidad",
+				type : "POST",
+				contentType : "application/json; charset=utf-8",
+				data: jsonEspecialidad, //Stringified Json Object
+				async : false, //Cross-domain requests and dataType: "jsonp" requests do not support synchronous operation
+				cache : false, //This will force requested pages not to be cached by the browser          
+				processData : false, //To avoid making query String instead of JSON
+				success : function(result) {
+					retorno = result;
+				}
+			});
+
+			return retorno;
+		}
+
+		function callNuevoProfesional(jsonProfesional) {
+			var retorno;
+			$.ajax({
+				url : "/nuova/ajaxPostSaveProfesional",
+				type : "POST",
+				contentType : "application/json; charset=utf-8",
+				data: jsonProfesional, //Stringified Json Object
+				async : false, //Cross-domain requests and dataType: "jsonp" requests do not support synchronous operation
+				cache : false, //This will force requested pages not to be cached by the browser          
+				processData : false, //To avoid making query String instead of JSON
+				success : function(result) {
+					retorno = result;
+				}
+			});
+
+			return retorno;
+		}
+
 	</script>
 	
 	<style>
@@ -401,38 +592,38 @@
 										  		</div>
 										  		<div id="tb_profesional" class="tab-pane fade">
 									    		<table class="table"  style="width: 100%">			
-												<tr>		
-													<td style="width: 15%"><form:label
-																path="especialidad">Especialidad</form:label></td>
-														<td style="text-align: left" colspan="5">
-															<input type="hidden" name="especialidad" id="especialidad" value="${ordenDto.especialidad}">										
-															<input
-																data-provide="typeahead" 
-																class="typeahead"
-																name="especialidadString"
-																type="text"
-																id="especialidadString"
-																placeholder="Ingrese Especialidad ..."
-																autocomplete="off"
-																value ="${especialidadView}"
-																>
-															<a href="/nuova/formAddEspecialidad" title="Nueva Especialidad">
-																<img src="/nuova/resources/img/list_add_16x16.png">
-															</a>
-														</td>
-														<td style="width: 15%"><form:label path="profesionalId">Profesional</form:label></td>
-														<td style="text-align: left" colspan="5"><form:select
-																path="profesionalId" style="width:80%; margin-bottom:0px"
-																>
-																<form:option value="-1" label="Seleccione Profesional ..." />																
-																<form:options items="${profesionales}" itemLabel="value"
-																	itemValue="id" />
-															</form:select>
-												
-															
-														</td>
+																									<tr>
+															<td style="width: 15%"><form:label
+																	path="especialidad">Especialidad*</form:label></td>
+															<td style="text-align: left" colspan="5"><input
+																type="hidden" name="especialidad" id="especialidad"
+																value="${ordenDto.especialidad}"> <input
+																data-provide="typeahead" class="typeahead"
+																name="especialidadString" id="especialidadString"
+																type="text" placeholder="Ingrese Especialidad ..."
+																autocomplete="off" value="${especialidadView}">
 
-												</tr>		
+																<a href="#" title="Nueva Especialidad" id="btnEspecialidad">
+																	<img src="/nuova/resources/img/list_add_16x16.png">
+																</a>
+															</a></td>
+															<td style="width: 15%"><form:label
+																	path="profesionalId">Profesional*</form:label>
+															</td>
+															<td style="text-align: left" colspan="5">
+																<form:select
+																	path="profesionalId"
+																	style="width:80%; ">
+																	<form:option value="-1"
+																		label="Seleccione Profesional ..." />
+																	<form:options items="${profesionales}"
+																		itemLabel="value" itemValue="id" />
+																</form:select>
+																<a href="#" title="Nuevo Profesional" id="btnProfesional">
+																	<img src="/nuova/resources/img/list_add_16x16.png">
+																</a>
+															</td>
+														</tr>
 												</table>
 									  			</div>
 									  	
@@ -536,21 +727,22 @@
 </form:form>
 
 </body>
-
-<!-- Modal -->
-<div id="myModal" class="modal fade" role="dialog" style="visibility: hidden;">
+<!-- Modal Nuevo Especialidad -->
+<div id="modalEspecialidad" class="modal fade" role="dialog" style="visibility: hidden;">
   <div class="modal-dialog">
 
     <!-- Modal content-->
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal">&times;</button>
-        <h4 class="modal-title">Comprobante de Orden</h4>
+        <h4 class="modal-title">Nueva Especialidad</h4>
       </div>
       <div class="modal-body custom-height-modal">
-        <div id="iframeReport" style="height: 800px">	</div>
+        <p>Nombre Especialidad: </p>
+        <input type="text" id="especialidadNombre" name="especialidadNombre">
       </div>
       <div class="modal-footer">
+      	<button type="button" id="btnSaveEspecialidad" class="btn btn-info">Guardar</button>
         <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
       </div>
     </div>
@@ -558,6 +750,72 @@
   </div>
 </div>
 <!-- Fin Modal -->
+
+<!-- Modal Nuevo Profesional -->
+<div id="modalProfesional" class="modal fade" role="dialog" style="visibility: hidden;">
+  <div class="modal-dialog">
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Nuevo Profesional</h4>
+      </div>
+      <div class="modal-body custom-height-modal">
+      <div class="panel-body">
+		<div class="container-fluid">
+		  		<div class="row-fluid">
+			   		<div class="span12">
+				   		<div class="formLabel">Tipo:</div>
+	        			<div class="formInput">
+	        			<select id="tipo" name="tipo" style="width: 100%">
+							<option value="-1">Seleccione Tipo ...</option>
+							<option value="0">PROFESIONAL</option>
+							<option value="1">INSTITUCION</option>
+						</select>
+	        			</div>
+	  				</div>
+	  			</div>
+	  			<div class="row-fluid">
+			   		<div class="span12">
+			   			<div class="formLabel">Apellido o Intitucion:</div>
+	        			<div class="formInput">
+							<input type="hidden" name="profesional" id="profesional">	
+							<input data-provide="typeahead" class="typeahead"
+								name="apellidoRazonSocial" id="apellidoRazonSocial" type="text"
+								placeholder="Ingrese Profesional ..." autocomplete="off"
+								style="width: 96%">
+	        			</div>
+	  				</div>
+	  			</div>
+	  			<div class="row-fluid">
+			   		<div class="span12">
+			   			<div class="formLabel">Especialidad:</div>
+	        			<div class="formInput">
+		        			<input
+							type="hidden" name="especialidadProf" id="especialidadProf"	> 
+							<input
+							data-provide="typeahead" class="typeahead"
+							name="especialidadStringProf" id="especialidadStringProf"
+							type="text" placeholder="Ingrese Especialidad ..."
+							autocomplete="off" style="width: 96%">
+	        			</div>
+	  				</div>
+	  			</div>
+	  			<br><br><br><br><br><br><br><br>
+	  	</div>
+	  </div>		   		
+      
+      </div>
+      <div class="modal-footer">
+      	<button type="button" id="btnSaveProfesional" class="btn btn-info">Guardar</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+<!-- Fin Modal -->
+
 </html>
 <script>
 document.getElementById("mainOrden").parentNode.classList.add("active");
