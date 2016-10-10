@@ -462,7 +462,7 @@ function callNuevoProfesional(jsonProfesional) {
 						<div class="row-fluid">
 							<div class="span12">
 								<div class="tableContainer">
-											<table class="table" style="width: 100%">
+											<table class="table" style="width: 100%;">
 												<tr>
 													<td style="width: 15%">
 														

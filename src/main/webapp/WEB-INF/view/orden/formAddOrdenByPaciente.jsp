@@ -559,7 +559,7 @@ function callNuevoProfesional(jsonProfesional) {
 				<div class="panel panel-info">
 				<div id="validacion_requeridos"></div>
 				
-					<div class="panel-heading">
+					<div class="panel-heading" style = "background-color: #fdf293">
 						<div class="panel-title">Nueva Práctica</div>
 						<div class="label-error" id="message2"
 							style="float: left; margin-left: 8%; visibility: hidden;">Faltan
@@ -570,7 +570,7 @@ function callNuevoProfesional(jsonProfesional) {
 							<div class="row-fluid">
 								<div class="span12">
 									<div class="tableContainer">
-									<table class="table" style="width: 100%">
+									<table class="table" style="width: 100%;">
 												<tr>
 													<td style="width: 15%">
 														

@@ -479,7 +479,7 @@ $(document).ready(function() {
 		    				<div class="span12">
 		    					<div class="tableContainer">
 		    					<div class="tab-content">
-											<table class="table" style="width: 100%">
+											<table class="table" style="width: 100%; ">
 												<tr>
 													<td style="width: 15%">
 														<span class="badge" style="padding: 5px 5px 5px 5px"><b>Nro de Consulta: ${ordenDto.nroOrden}</b></span>

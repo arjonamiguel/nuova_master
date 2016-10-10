@@ -4,7 +4,8 @@
 <%@taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 <%@taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<%@taglib uri="http://www.springframework.org/security/tags"  prefix="sec" %>
+<%@taglib uri="http://www.springframework.org/security/tags"
+	prefix="sec"%>
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
@@ -15,10 +16,15 @@
 
 <script src="<c:url value="/resources/js/jquery/jquery-2.0.3.min.js" />"></script>
 <!-- Scripts Toaster ------------------------------------------- -->
-<link href="<%=request.getContextPath()%>/resources/css/bootstrap-combined.min.css" rel="stylesheet" />
-<link href="<%=request.getContextPath()%>/resources/css/toastr.css" rel="stylesheet" />
+<link
+	href="<%=request.getContextPath()%>/resources/css/bootstrap-combined.min.css"
+	rel="stylesheet" />
+<link href="<%=request.getContextPath()%>/resources/css/toastr.css"
+	rel="stylesheet" />
 <style>
-.row {margin-left: 0;}
+.row {
+	margin-left: 0;
+}
 </style>
 
 <script src="<%=request.getContextPath()%>/resources/js/toastr.js" /></script>
@@ -277,6 +283,7 @@ var observacionCount = 0;
 
 		hideMessage();
 	}
+	
 	function hideMessage() {
 		$("#message").css("visibility", "hidden");
 	}
@@ -324,6 +331,7 @@ var observacionCount = 0;
 	function setObservacionVisible() {
 		$("#addObservacion").css("visibility", "visible");
 	}
+	
 	function setObservacionInvisible() {
 		$("#addObservacion").css("visibility", "hidden");
 	}
@@ -395,10 +403,6 @@ var observacionCount = 0;
 			cell2.innerHTML = "<input type='text' name='ordenpracticaListEdit[" + index + "].piezaDental' placeholder='pieza dental'>";
 		}
 		
-// 		var cell3 = row.insertCell(3);
-// 		cell3.innerHTML = "<input type='hidden' name='ordenpracticaListEdit[" + index + "].valor' value='0.00'>";
-
-
 		var cell3 = row.insertCell(3);
 		cell3.innerHTML = createSelectEstados("ordenpracticaListEdit[" + index
 				+ "].estado");
@@ -418,6 +422,7 @@ var observacionCount = 0;
 				.getElementById("nomencladorString")
 				.focus();
 	}
+	
 	function bindElement(){
 		$('.myFile').bind('change', function() {
 		  if(this.files[0].size>4000000){
@@ -450,6 +455,7 @@ var observacionCount = 0;
 		index++;
 		bindElement();
 	}
+	
 	function eliminarHC(i) {
 		document.getElementById("tabla_historiaclinica").deleteRow(i);
 	}
@@ -505,7 +511,6 @@ var observacionCount = 0;
 				// $(".largerCheckbox")[5].checked=true;
 			}
 		}
-	
 		
 		function callRemoveObservaciones(observacionId) {
 			var retorno;
@@ -582,33 +587,31 @@ var observacionCount = 0;
 <body style="background-color: #e5e5e5;">
 	<jsp:include page="../sec_menu.jsp"></jsp:include>
 
-	<form:form method="post" action="/nuova/editOrden" 
-		commandName="ordenDto" enctype="multipart/form-data" onsubmit="javascript:disabledSubmit()">
+	<form:form method="post" action="/nuova/editOrden"
+		commandName="ordenDto" enctype="multipart/form-data"
+		onsubmit="javascript:disabledSubmit()">
 		<form:hidden path="ordenId" />
 		<div class="mainContainer">
 
 			<div class="panelContainer">
 				<div class="panel panel-info">
 					<!-- Cabecera y Titulo -->
-					<div class="panel-heading">
-						<div class="panel-title">
-							<b>Editar Prácticas</b>
-						
-						<a class="btn btn-default btn-xs" 
-	          			data-toggle="modal" 
-	          			data-target="#myModal" 
-	          			style="float:right; padding: 1px 3px 1px 4px"
-	          			onclick="showReport(${ordenDto.ordenId})" 
-	          			data-original-title="" title="">
-	          			<span class="icon icon-print"></span> Imprimir
-	          			
-	          		</a>
-	          		<div style = "float:right; padding-right:5%">	
-	          			<span style="font-size: 14px;">Entregado</span>
-						<form:checkbox path="ordenEntregada" id="ordenEntregada" cssClass="largerCheckbox" 
-						onchange="javascript:checkOrdenEntregada()"/>
-						
-						</div>
+					<div class="panel-heading" style = "background-color: #fdf293">
+						<div class="panel-title" >
+							<b>Editar Prácticas</b> <a class="btn btn-default btn-xs"
+								data-toggle="modal" data-target="#myModal"
+								style="float: right; padding: 1px 3px 1px 4px"
+								onclick="showReport(${ordenDto.ordenId})" data-original-title=""
+								title=""> <span class="icon icon-print"></span> Imprimir
+
+							</a>
+							<div style="float: right; padding-right: 5%">
+								<span style="font-size: 14px;">Entregado</span>
+								<form:checkbox path="ordenEntregada" id="ordenEntregada"
+									cssClass="largerCheckbox"
+									onchange="javascript:checkOrdenEntregada()" />
+
+							</div>
 						</div>
 					</div>
 					<!-- Fin Cabecera y Titulo -->
@@ -619,45 +622,46 @@ var observacionCount = 0;
 								<div class="span12">
 									<div class="tableContainer">
 										<jsp:include page="../message.jsp"></jsp:include>
-										
+
 										<div class="tab-content">
-											<table class="table" style="width: 100%">
+											<table class="table" style="width: 100%;" >
 												<tr>
-													<td style="width: 15%">
-														<span class="badge" style="padding: 5px 5px 5px 5px"><b>Nro de Orden: ${ordenDto.nroOrden}</b></span>
-													</td>
-													<td style="text-align: right" >
-														<b>Fecha de Creación:</b> ${ordenDto.fecha}
-													</td>
-												
-										
+													<td style="width: 15%"><span class="badge"
+														style="padding: 5px 5px 5px 5px"><b>Nro de
+																Orden: ${ordenDto.nroOrden}</b></span></td>
+													<td style="text-align: right"><b>Fecha de
+															Creación:</b> ${ordenDto.fecha}</td>
+
+
 												</tr>
-										
+
 											</table>
 										</div>
-										
+
 										<!-- Declaracion de tabs -->
 										<ul class="nav nav-tabs">
 											<li class="active"><a data-toggle="tab"
 												href="#tb_paciente" onclick="setObservacionInvisible()">Paciente</a></li>
 											<li><a data-toggle="tab" href="#tb_requisitos">Requisitos</a></li>
-											<li><a data-toggle="tab" href="#tb_profesional">Medico Solicitante</a></li>
+											<li><a data-toggle="tab" href="#tb_profesional">Medico
+													Solicitante</a></li>
 											<sec:authorize access="hasRole('ROLE_ADMIN')">
-												<li><a data-toggle="tab" href="#tb_autorizacion">Autorizaci&oacute;n</a></li>
-												<li><a data-toggle="tab" href="#tb_prestador">Prestador Derivado</a></li>
+												<li><a data-toggle="tab" href="#tb_autorizacion">Autorizaci&oacute;n</a></li>												
 											</sec:authorize>
 											
+											<li><a data-toggle="tab" href="#tb_prestador">Prestador
+														Derivado</a></li>
 											<li><a data-toggle="tab" href="#tb_observacion">
 													Observaciones <c:if test="${observacionCount > 0}">
 														<span class="badge" id="observacionCount">${observacionCount}</span>
 													</c:if>
 											</a></li>
 											<sec:authorize access="hasRole('ROLE_ADMIN')">
-											<li><a data-toggle="tab" href="#tb_historiaclinica">Historia
-													Cl&iacute;nica</a></li>
-											</sec:authorize>		
-											<li><a data-toggle="tab" href="#tb_coseguro">Coseguro</a></li>													
-											
+												<li><a data-toggle="tab" href="#tb_historiaclinica">Historia
+														Cl&iacute;nica</a></li>
+											</sec:authorize>
+											<li><a data-toggle="tab" href="#tb_coseguro">Coseguro</a></li>
+
 										</ul>
 										<!-- Fin Declaracion de tabs -->
 
@@ -678,32 +682,31 @@ var observacionCount = 0;
 												<jsp:include page="formEditOrdenTabProfesional.jsp"></jsp:include>
 											</div>
 											<sec:authorize access="hasRole('ROLE_ADMIN')">
-											<!-- ** Tab Autorizaciones -->
-											<div id="tb_autorizacion" class="tab-pane fade">
-												<jsp:include page="formEditOrdenTabAutorizacion.jsp"></jsp:include>
-											</div>
-											
+												<!-- ** Tab Autorizaciones -->
+												<div id="tb_autorizacion" class="tab-pane fade">
+													<jsp:include page="formEditOrdenTabAutorizacion.jsp"></jsp:include>
+												</div>												
+											</sec:authorize>
+
 											<!-- ** Tab Prestador -->
 											<div id="tb_prestador" class="tab-pane fade">
 												<jsp:include page="formEditOrdenTabPrestador.jsp"></jsp:include>
 											</div>
-											</sec:authorize>
-
 											<!-- ** Tab Observaciones -->
 											<div id="tb_observacion" class="tab-pane fade" style="">
 												<jsp:include page="formEditOrdenTabObservaciones.jsp"></jsp:include>
 											</div>
 											<sec:authorize access="hasRole('ROLE_ADMIN')">
-											<!-- ** Tab Historia Clinica -->
-											<div id="tb_historiaclinica" class="tab-pane fade">
-												<jsp:include page="formEditOrdenTabHistoriaClinica.jsp"></jsp:include>
-											</div>
+												<!-- ** Tab Historia Clinica -->
+												<div id="tb_historiaclinica" class="tab-pane fade">
+													<jsp:include page="formEditOrdenTabHistoriaClinica.jsp"></jsp:include>
+												</div>
 											</sec:authorize>
 											<!-- ** Tab Coseguro -->
 											<div id="tb_coseguro" class="tab-pane fade">
 												<jsp:include page="formEditOrdenTabCoseguro.jsp"></jsp:include>
 											</div>
-											
+
 
 										</div>
 										<!-- Fin Contenedor de Tabs -->
@@ -728,7 +731,7 @@ var observacionCount = 0;
 								</div>
 								<div style="float: right; padding-right: 2%;">
 									<input class="btn btn-lg btn-primary btn-block btn-info"
-										type="submit" value="  Guardar  " id="btn_submit"/>
+										type="submit" value="  Guardar  " id="btn_submit" />
 								</div>
 							</div>
 						</div>
@@ -738,31 +741,32 @@ var observacionCount = 0;
 
 			</div>
 		</div>
-		
+
 		<script>
 		observacionCount = ${observacionCount};
 		</script>
 	</form:form>
 </body>
 <!-- Modal -->
-<div id="myModal" class="modal fade" role="dialog" style="visibility: hidden;">
-  <div class="modal-dialog">
+<div id="myModal" class="modal fade" role="dialog"
+	style="visibility: hidden;">
+	<div class="modal-dialog">
 
-    <!-- Modal content-->
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal">&times;</button>
-        <h4 class="modal-title">Comprobante de Orden</h4>
-      </div>
-      <div class="modal-body custom-height-modal">
-        <div id="iframeReport" style="height: 800px">	</div>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
-      </div>
-    </div>
+		<!-- Modal content-->
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal">&times;</button>
+				<h4 class="modal-title">Comprobante de Orden</h4>
+			</div>
+			<div class="modal-body custom-height-modal">
+				<div id="iframeReport" style="height: 800px"></div>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+			</div>
+		</div>
 
-  </div>
+	</div>
 </div>
 <!-- Fin Modal -->
 </html>
