@@ -70,6 +70,9 @@ toastr.options = {
 <script
 	src="<%=request.getContextPath()%>/resources/montrezorro-bootstrap-checkbox-fa865ff/js/bootstrap-checkbox.js" /></script>
 
+<script src="<%=request.getContextPath()%>/resources/js/validateForm.js" /></script>
+	
+
 
 
 <script type="text/javascript">
@@ -589,12 +592,13 @@ var observacionCount = 0;
 
 	<form:form method="post" action="/nuova/editOrden"
 		commandName="ordenDto" enctype="multipart/form-data"
-		onsubmit="javascript:disabledSubmit()">
+		onsubmit="return disabledSubmit()">
 		<form:hidden path="ordenId" />
 		<div class="mainContainer">
 
 			<div class="panelContainer">
 				<div class="panel panel-info">
+				<div id="validacion_requeridos"></div>
 					<!-- Cabecera y Titulo -->
 					<div class="panel-heading" style = "background-color: #fdf293">
 						<div class="panel-title" >
@@ -771,9 +775,6 @@ var observacionCount = 0;
 <!-- Fin Modal -->
 </html>
 <script>
-function disabledSubmit() {
-	document.getElementById("btn_submit").disabled = true;
-}
 
 document.getElementById("mainOrden").parentNode.classList.add("active");
 $(".checkbox").checkbox();
@@ -783,4 +784,33 @@ function showReport(id){
 	var iframe = "<iframe src='/nuova/reporteOrdenEmitida/"+id+"' width='100%' height='150%' >";
 	document.getElementById("iframeReport").innerHTML = iframe;
 }	
+
+function validaRequerido() {
+	window.scrollTo(0,0);
+	var requireds = ['reqOrdenMedico: Presentó la orden Práctica del médico solicitante?'
+					, 'reqCredecial: Presentó la credencial de la prestadora OSPSIP?'
+					, 'reqMonotributista: Presentó fotocopia de los 3 último recibos como Monotributista o Ama de Casa?'
+					];
+	
+	if ($("#fueraCartilla").is(':checked')) {
+		requireds.push('entidad:Entidad o Procedencia');
+
+	}else {
+		requireds.push('especialidad:Especialidad','profesionalId: Profesional');	
+	}	
+	
+	return isValidForm("validacion_requeridos", requireds);			
+}
+
+function disabledSubmit() {
+	var retorno = true;
+	if ( !validaRequerido() ) {
+		retorno = false;
+	} else {
+		document.getElementById("btn_submit").disabled = true;				
+
+	}
+	
+	return retorno;
+}
 </script>

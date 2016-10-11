@@ -12,7 +12,7 @@
 		<b>Presentó la orden de Práctica del médico solicitante?</b>
 	</td>
 	<td  style="text-align:left" colspan="2">			    
-		<form:checkbox path="reqOrdenMedico" type="checkbox" class="largerCheckbox"/>
+		<form:checkbox path="reqOrdenMedico" id = "reqOrdenMedico" type="checkbox" class="largerCheckbox"/>
 	</td>
 </tr>
 <tr>
@@ -20,7 +20,7 @@
 		<b>Presentó la credencial de la prestadora OSPSIP?</b>
 	</td>
 	<td  style="text-align:left" colspan="2">				    
-		<form:checkbox path="reqCredecial" type="checkbox" class="largerCheckbox"/>
+		<form:checkbox path="reqCredecial" id = "reqCredecial" type="checkbox" class="largerCheckbox"/>
 	</td>
 </tr>
 </table>
@@ -31,7 +31,7 @@
 		<b>Presentó fotocopia de los 3 último recibos como Monotributista o Ama de Casa?</b>
 	</td>
 	<td  style="text-align:left" colspan="2">				    
-		<form:checkbox path="reqMonotributista" type="checkbox" class="largerCheckbox"/>
+		<form:checkbox path="reqMonotributista" id = "reqMonotributista" type="checkbox" class="largerCheckbox"/>
 	</td>
 </tr>	
 <tr>
@@ -39,7 +39,7 @@
 		<b>Presentó fotocopia del último recibo de sueldo?</b>
 	</td>
 	<td  style="text-align:left" colspan="2">				    
-		<form:checkbox path="reqReciboSueldo" type="checkbox" class="largerCheckbox"/>
+		<form:checkbox path="reqReciboSueldo" id = "reqReciboSueldo" type="checkbox" class="largerCheckbox"/>
 	</td>
 </tr>
 </table>
