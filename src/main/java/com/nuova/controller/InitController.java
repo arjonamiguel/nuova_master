@@ -2,6 +2,7 @@ package com.nuova.controller;
 
 import com.nuova.dto.OrdenAlarmaDTO;
 import com.nuova.dto.UsuarioDTO;
+import com.nuova.model.LogIngresos;
 import com.nuova.model.UserDetails;
 import com.nuova.service.EspecialidadManager;
 import com.nuova.service.LogIngresosManager;
@@ -21,6 +22,7 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -64,10 +66,9 @@ public class InitController {
   }
 
   @RequestMapping(value = ConstantControllers.HOME, method = RequestMethod.GET)
-  public String init(ModelMap map, HttpSession session) {
+  public String home(ModelMap map, HttpSession session) {
     // Datos del Usuario
     User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-
     // Obtengo informacion del usuario en session
     UserDetails userSession = userManager.findUserByUserName(user.getUsername());
     UsuarioDTO usuario = new UsuarioDTO();
@@ -75,12 +76,17 @@ public class InitController {
     usuario.setUsername(userSession.getUsername());
     session.setAttribute("userSession", usuario);
 
-    // guardo en log quien y cuando hace el log in
-    // LogIngresos log = new LogIngresos();
-    // log.setUsuario(usuario.getUsername());
-    // log.setFecha(new Date());
-    // logIngresosManager.add(log);
+    Boolean isLogued = session.getAttribute("IS_LOGUED") == null ? false
+        : (Boolean) session.getAttribute("IS_LOGUED");
+    if (!isLogued) {
 
+      // guardo en log quien y cuando hace el log in
+      LogIngresos log = new LogIngresos();
+      log.setUsuario(usuario.getUsername());
+      log.setFecha(new Date());
+      logIngresosManager.add(log);
+      session.setAttribute("IS_LOGUED", true);
+    }
 
     // Alarmas de practicas
     List<OrdenAlarmaDTO> alarmas = ordenManager.findAlarmaOrdenes();
