@@ -22,6 +22,7 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -86,6 +87,7 @@ public class InitController {
       log.setFecha(new Date());
       logIngresosManager.add(log);
       session.setAttribute("IS_LOGUED", true);
+
     }
 
     // Alarmas de practicas
@@ -103,6 +105,42 @@ public class InitController {
     map.addAttribute("cantProfesional", cantProfesional.getCantidad());
     map.addAttribute("cantEspecialidad", cantEspecialidad.getCantidad());
     map.addAttribute("cantObrasocial", cantObrasocial.getCantidad());
+
+    if (!validaAcceso(usuario)) {
+      session.invalidate();
+      map.addAttribute("error", "true");
+      map.addAttribute("errortHorario",
+          "Usted Solo esta autorizaso a ingresar al Sistema de 8:00 a 21:00 Hs.");
+      return "denied";
+    }
+
     return ConstantRedirect.VIEW_INIT_HOME;
+
+  }
+
+  private boolean validaAcceso(UsuarioDTO u) {
+    boolean retorno = true;
+    Date acceso = new Date();
+    System.out.println("**dia: " + acceso.getDay());
+    System.out.println("**hora: " + acceso.getHours());
+    System.out.println("**min: " + acceso.getMinutes());
+    int hora = acceso.getHours();
+    int min = acceso.getMinutes();
+    List<String> usuariosAuth = new ArrayList<String>();
+    usuariosAuth.add("arjonamiguel@gmail.com");
+    usuariosAuth.add("virginia.gottardi@nuovamed.com");
+    usuariosAuth.add("carlos.gottardi@nuovamed.com");
+    usuariosAuth.add("virginia.rouco@nuovamed.com");
+
+    if (!usuariosAuth.contains(u.getUsername())) {
+
+      if (hora < 8) {
+        retorno = false;
+      } else if (hora > 21) {
+        retorno = false;
+      }
+    }
+
+    return retorno;
   }
 }

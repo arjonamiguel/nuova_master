@@ -50,8 +50,8 @@
 	
 		<c:if test="${not empty error}">
 			<div style="color:red">
-				Los datos ingresados son invalidos, intente de nuevo !!<br /> 
-				Causa : ${sessionScope["SPRING_SECURITY_LAST_EXCEPTION"].message}
+				Los datos ingresados son invalidos o usted no esta autorizado a ingresar en este horario.<br />Intente de nuevo !!<br /> <br /> 
+				<b>Causa</b> : ${sessionScope["SPRING_SECURITY_LAST_EXCEPTION"].message} ${errortHorario}
 			</div>
 		</c:if>
 	
