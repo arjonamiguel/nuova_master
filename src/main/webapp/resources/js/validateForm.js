@@ -33,3 +33,14 @@ function createWarning(requireds) {
 	
 	return warning;
 }
+
+function createInfo(title, msj) {
+	var warning ="<div class='alert alert-info'>" 
+		+ "<button type='button' class='close' data-dismiss='alert'>&times;</button>"
+		+ "<strong><u>"+title+"</u></strong><br>"
+		+ msj 
+		+ "</div>";
+	
+	return warning;
+}
+

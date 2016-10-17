@@ -451,7 +451,7 @@
 			<div class="panelContainer">
 				<div class="panel panel-info">
 					<!-- Cabecera y Titulo -->
-					<div class="panel-heading">
+					<div class="panel-heading" style = "background-color: #fdf293">
 						<div class="panel-title">
 							<b>Elimiar Prácticas</b>
 						</div>
@@ -464,6 +464,20 @@
 								<div class="span12">
 									<div class="tableContainer">
 										<jsp:include page="../message.jsp"></jsp:include>
+																				<div class="tab-content">
+											<table class="table" style="width: 100%;" >
+												<tr>
+													<td style="width: 15%"><span class="badge"
+														style="padding: 5px 5px 5px 5px"><b>Nro de
+																Orden: ${ordenDto.nroOrden}</b></span></td>
+													<td style="text-align: right"><b>Fecha de
+															Creación:</b> ${ordenDto.fecha}</td>
+
+
+												</tr>
+
+											</table>
+										</div>
 										<!-- Declaracion de tabs -->
 										<ul class="nav nav-tabs">
 											<li class="active"><a data-toggle="tab"

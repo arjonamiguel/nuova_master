@@ -343,20 +343,20 @@ var observacionCount = 0;
 		document.getElementById("tb_practicas").deleteRow(i);
 	}
 	
-	function callCantidadSesiones(ordenId, nomencladorId) {
+	function callCantidadSesiones(nomencladorId, pacienteId) {
 		var retorno;
 		$.ajax({
-			url : "/nuova/ajaxGetCantidadSesiones?ordenId="
-					+ ordenId+"&nomencladorId="+nomencladorId,
+			url : "/nuova/ajaxGetCantidadSesiones?nomencladorId="
+					+ nomencladorId+"&pacienteId="+pacienteId,
 			type : "GET",
 			contentType : "application/json; charset=utf-8",
 			//    data: jsonString, //Stringified Json Object
 			async : false, //Cross-domain requests and dataType: "jsonp" requests do not support synchronous operation
 			cache : false, //This will force requested pages not to be cached by the browser          
 			processData : false, //To avoid making query String instead of JSON
-			success : function(page) {
+			success : function(data) {
 				// Success Message Handler
-				retorno = page;
+				retorno = data;
 			}
 		});
 
@@ -371,10 +371,11 @@ var observacionCount = 0;
 		}
 		
 		var ordenId = document.getElementById("ordenId").value;
-		var cantSesion = callCantidadSesiones(ordenId, document.getElementById("nomencladorId").value);
-		if (cantSesion != "0") {
-			alert(cantSesion);
-		}
+		var msjSesion = callCantidadSesiones(document.getElementById("nomencladorId").value
+				, document.getElementById("paciente.pacienteId").value);
+		var arrMsjSesion = msjSesion.split(";;");
+		//	alert(arrMsjSesion[1]);
+		document.getElementById("valida_sesion").innerHTML = createInfo("Información de Práctica Agregada:",arrMsjSesion[1]);
 	  
 
 		var index = document.getElementById(tableID).getElementsByTagName('tr').length;
