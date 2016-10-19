@@ -49,14 +49,13 @@
 								<hr />
 	
 		<c:if test="${not empty error}">
-			<div style="color:red">
-				Los datos ingresados son invalidos o usted no esta autorizado a ingresar en este horario.<br />Intente de nuevo !!<br /> <br /> 
-				<b>Causa</b> : ${sessionScope["SPRING_SECURITY_LAST_EXCEPTION"].message} ${errortHorario}
+			<div>
+				Los datos ingresados son invalidos o usted no esta autorizado a ingresar en este Dia u Horario.<br />Intente de nuevo !!<br /> <br /> 
+				<span  style="color:red"><b>Causa</b> :</span> ${sessionScope["SPRING_SECURITY_LAST_EXCEPTION"].message} ${errortAcceso}
 			</div>
 		</c:if>
-	
-		<p class="message">Acceso denegado !</p>
-		<a href="/nuova/login">Ir a la pagina de login</a> 
+		<br><br>
+		<a href="/nuova/login">Click Aqui, Volver a la página de acceso al Sistema ...</a> 
 		    				</div>
 		    		</div>
 		    	</div>

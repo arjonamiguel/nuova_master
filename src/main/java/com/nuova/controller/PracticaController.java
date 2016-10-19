@@ -1,12 +1,7 @@
 package com.nuova.controller;
 
-import com.nuova.dto.PracticaDTO;
-import com.nuova.model.Nomenclador;
-import com.nuova.model.OrdenPractica;
-import com.nuova.service.OrdenManager;
-import com.nuova.service.PracticaManager;
-import com.nuova.utils.ConstantControllers;
-import com.nuova.utils.ConstantRedirect;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -23,8 +18,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import java.util.ArrayList;
-import java.util.List;
+import com.nuova.dto.PracticaDTO;
+import com.nuova.model.Nomenclador;
+import com.nuova.service.OrdenManager;
+import com.nuova.service.PracticaManager;
+import com.nuova.utils.ConstantControllers;
+import com.nuova.utils.ConstantRedirect;
 
 @Controller
 public class PracticaController {
@@ -141,27 +140,9 @@ public class PracticaController {
       method = RequestMethod.GET)
   public @ResponseBody String getCantidadSesiones(
       @RequestParam(required = false, defaultValue = "0") Integer nomencladorId,
-      @RequestParam(required = false, defaultValue = "0") Integer ordenId) {
-    String retorno = "";
-    Nomenclador n = practicaManager.findPracticaById(nomencladorId);
-    Integer cantidadSesion = (n.getCantidadSesion() == null ? 0 : n.getCantidadSesion());
-    List<OrdenPractica> practicas = ordenManager.getAllOrdenPracticaByOrden(ordenId, nomencladorId);
-    int sesionesUsadas = 0;
-    for (OrdenPractica op : practicas) {
-      sesionesUsadas =
-          sesionesUsadas + (op.getCantidad() == null ? 1 : op.getCantidad().intValue());
-    }
-    Integer cantidadSesionUsadas = sesionesUsadas;
+      @RequestParam(required = false, defaultValue = "0") Integer pacienteId) {
 
-    if (cantidadSesion.intValue() == 0) {
-      return "0";
-    }
-
-    Integer cantidadSesionDisponible = cantidadSesion.intValue() - cantidadSesionUsadas.intValue();
-    retorno = "Codigo: " + n.getCodigo() + "\nPractica: " + n.getNombre() + "\nSesiones: "
-        + n.getCantidadSesion() + "\nUsadas: " + cantidadSesionUsadas + "\nDisponibles: "
-        + cantidadSesionDisponible;
-    return retorno;
+    return ordenManager.validarSesion(nomencladorId, pacienteId);
   }
 
   private PracticaDTO transformPrestadoresToDto(Nomenclador p) {

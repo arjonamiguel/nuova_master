@@ -141,11 +141,6 @@ function updateDate(i){
 	<!-- Fin Autocompletar Nomenclador de codigos -->
 </div>
 <br>
-<div style="float: right; padding-right: 20px">
-	<a href="#"> <img alt="Imprimir Orden"
-		src="/nuova/resources/img/print_16x16.png" /> Imprimir
-	</a>
-</div>
 <br>
 
 <div class="tab-content" style="height: 400px">

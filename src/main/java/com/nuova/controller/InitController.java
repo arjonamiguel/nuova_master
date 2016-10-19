@@ -1,5 +1,21 @@
 package com.nuova.controller;
 
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
+import java.util.List;
+
+import javax.servlet.http.HttpSession;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+
 import com.nuova.dto.OrdenAlarmaDTO;
 import com.nuova.dto.UsuarioDTO;
 import com.nuova.model.LogIngresos;
@@ -13,20 +29,6 @@ import com.nuova.service.ProfesionalManager;
 import com.nuova.service.UserManager;
 import com.nuova.utils.ConstantControllers;
 import com.nuova.utils.ConstantRedirect;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-
-import javax.servlet.http.HttpSession;
 
 @Controller
 public class InitController {
@@ -44,6 +46,8 @@ public class InitController {
   UserManager userManager;
   @Autowired
   LogIngresosManager logIngresosManager;
+
+  private String msjAcceso;
 
   @RequestMapping(value = "/", method = RequestMethod.GET)
   public String defaultPage(ModelMap map) {
@@ -109,8 +113,7 @@ public class InitController {
     if (!validaAcceso(usuario)) {
       session.invalidate();
       map.addAttribute("error", "true");
-      map.addAttribute("errortHorario",
-          "Usted Solo esta autorizaso a ingresar al Sistema de 8:00 a 21:00 Hs.");
+      map.addAttribute("errortAcceso", msjAcceso);
       return "denied";
     }
 
@@ -119,6 +122,9 @@ public class InitController {
   }
 
   private boolean validaAcceso(UsuarioDTO u) {
+    String msjHorario = "Usted Solo esta autorizaso a ingresar al Sistema de 8:00 a 21:00 Hs.";
+    String msjDia = "Usted no esta autorizado a ingresar los Sábados y Domingos al Sistema";
+
     boolean retorno = true;
     Date acceso = new Date();
     System.out.println("**dia: " + acceso.getDay());
@@ -136,11 +142,26 @@ public class InitController {
 
       if (hora < 8) {
         retorno = false;
+        msjAcceso = msjHorario;
       } else if (hora > 21) {
         retorno = false;
+        msjAcceso = msjHorario;
       }
+
+      int diaDeLaSemana = getDayOfTheWeek(acceso);
+      if (diaDeLaSemana == 1 || diaDeLaSemana == 7) {
+        retorno = false;
+        msjAcceso = msjDia;
+      }
+
     }
 
     return retorno;
+  }
+
+  public static int getDayOfTheWeek(Date d) {
+    GregorianCalendar cal = new GregorianCalendar();
+    cal.setTime(d);
+    return cal.get(Calendar.DAY_OF_WEEK);
   }
 }

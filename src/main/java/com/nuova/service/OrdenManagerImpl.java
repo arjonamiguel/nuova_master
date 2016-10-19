@@ -184,4 +184,10 @@ public class OrdenManagerImpl implements OrdenManager {
   public void updateOrdenEntregada(Integer ordenEntregada, Integer ordenId) {
     ordenDAO.updateOrdenEntregada(ordenEntregada, ordenId);
   }
+
+
+  @Override
+  public String validarSesion(Integer nomencladorId, Integer pacienteId) {
+    return ordenDAO.validarSesion(nomencladorId, pacienteId);
+  }
 }

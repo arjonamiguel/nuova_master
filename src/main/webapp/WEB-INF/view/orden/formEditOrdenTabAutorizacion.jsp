@@ -197,6 +197,8 @@ function automaticoTodos() {
 	</tr>
 </table>
 
+<div id="valida_sesion"></div>
+
 <div class="tab-content" style="height: 400px">
 	<table class="scroll" style="width: 100%">
 		<tr>

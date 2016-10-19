@@ -15,6 +15,7 @@ import com.nuova.dto.GridOrdenPracticaDTO;
 import com.nuova.dto.HistoriaClinicaDTO;
 import com.nuova.dto.OrdenAlarmaDTO;
 import com.nuova.dto.PracticasListDTO;
+import com.nuova.dto.ValidaSesionDto;
 import com.nuova.model.CajaOrden;
 import com.nuova.model.Orden;
 import com.nuova.model.OrdenDocument;
@@ -329,6 +330,20 @@ public class OrdenDAOImpl implements OrdenDAO {
         .setInteger("ordenEntregada", ordenEntregada).setInteger("ordenId", ordenId);
     query.executeUpdate();
 
+  }
+
+
+  @Override
+  public String validarSesion(Integer nomencladorId, Integer pacienteId) {
+    Query query = sessionFactory.getCurrentSession()
+        .createSQLQuery("CALL zp_validaSesiones(:nomencladorId, :pacienteId);")
+        .setInteger("nomencladorId", nomencladorId).setInteger("pacienteId", pacienteId)
+        .setResultTransformer(Transformers.aliasToBean(ValidaSesionDto.class));
+    List<ValidaSesionDto> result = query.list();
+
+    ValidaSesionDto vs = result.get(0);
+
+    return vs.getValidaSesion();
   }
 
 

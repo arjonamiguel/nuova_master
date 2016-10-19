@@ -88,4 +88,6 @@ public interface OrdenDAO {
   public List<OrdenDocument> getAllOrdenDocumentByOrden(Integer ordenId);
 
   public void updateOrdenEntregada(Integer ordenEntregada, Integer ordenId);
+
+  public String validarSesion(Integer nomencladorId, Integer pacienteId);
 }
