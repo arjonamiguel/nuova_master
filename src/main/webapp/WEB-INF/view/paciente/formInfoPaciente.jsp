@@ -113,7 +113,7 @@ $(document).ready(function() {
 
 	$("#consultasGrid").simplePagingGrid(
 			{
-				columnNames : [ "NRO.ORDEN","PACIENTE","TIPO" , "FECHA", "MEDICO SOLICITANTE" ,"ESPECIALIDAD", "" ],
+				columnNames : [ "NRO.ORDEN","PACIENTE","TIPO" , "FECHA", "MEDICO SOLICITANTE", "ESPECIALIDAD", "" ],
 				columnKeys : [ "nroOrden", "botonpaciente","ordenTipoDesc" , "fecha","apellidoNombreProfesional"
 								, "especialidadView", "acciones"],
 				columnWidths : [ "10%", "20%"],
@@ -125,8 +125,8 @@ $(document).ready(function() {
 
 	$("#practicasGrid").simplePagingGrid(
 			{
-				columnNames : [ "","NRO.ORDEN","FECHA","SOLICITANTE","PRACTICAS", ""],
-				columnKeys : [ "alarmas","nroOrden","fecha","apellidoNombreProfesional","practicas"
+				columnNames : [ "","NRO.ORDEN","FECHA","SOLICITANTE","PRESTADOR","PRACTICAS", ""],
+				columnKeys : [ "alarmas","nroOrden","fecha","apellidoNombreProfesional", "prestador","practicas"
 				 					, "acciones"],
 				columnWidths : [ "3%", "10%", "10%"],
 
