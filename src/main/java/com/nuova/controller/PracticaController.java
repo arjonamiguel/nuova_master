@@ -154,6 +154,7 @@ public class PracticaController {
     retorno.setCantidadSesion(p.getCantidadSesion());
     retorno.setValidaCada(p.getValidaCada());
     retorno.setMesAno(p.getMesAno());
+    retorno.setValidar(p.getValidar());
     return retorno;
   }
 
@@ -166,6 +167,7 @@ public class PracticaController {
     retorno.setCantidadSesion(dto.getCantidadSesion());
     retorno.setValidaCada(dto.getValidaCada());
     retorno.setMesAno(dto.getMesAno());
+    retorno.setValidar(dto.getValidar());
     return retorno;
   }
 

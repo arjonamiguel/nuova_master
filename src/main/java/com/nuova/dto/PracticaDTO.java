@@ -9,6 +9,7 @@ public class PracticaDTO {
   private Integer cantidadSesion;
   private Integer validaCada;
   private Integer mesAno;
+  private Integer validar;
 
   public PracticaDTO() {
 
@@ -90,5 +91,15 @@ public class PracticaDTO {
   public void setMesAno(Integer mesAno) {
     this.mesAno = mesAno;
   }
+
+  public Integer getValidar() {
+    return validar;
+  }
+
+  public void setValidar(Integer validar) {
+    this.validar = validar;
+  }
+
+
 
 }
