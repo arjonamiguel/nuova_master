@@ -76,6 +76,17 @@
         						</form:select>
         					</div>
 						</div>
+						
+						<div class="span4">
+							<div class="formLabel"><form:label path="validar">Validar:</form:label></div>
+        					<div class="formInput">
+        						<form:select path="validar" cssStyle="width:25%">
+        							<form:option value="1">No</form:option>
+        							<form:option value="2">Si</form:option>
+        						</form:select>
+        					
+        					</div>
+						</div>
 						</div>
 						
 				</div>
