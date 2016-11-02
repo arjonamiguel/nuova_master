@@ -376,7 +376,7 @@ var observacionCount = 0;
 		var arrMsjSesion = msjSesion.split(";;");
 		//	alert(arrMsjSesion[1]);
 		if (arrMsjSesion[0] == 2) {
-			document.getElementById("valida_sesion").innerHTML = createInfo("Información de Práctica Agregada:",arrMsjSesion[1]);
+			document.getElementById("valida_sesion").innerHTML = createInfo("Información de Práctica Agregada:",arrMsjSesion[2]);
 		}
 
 		var index = document.getElementById(tableID).getElementsByTagName('tr').length;
