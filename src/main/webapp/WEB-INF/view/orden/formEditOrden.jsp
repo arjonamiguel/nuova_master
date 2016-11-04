@@ -160,7 +160,8 @@ var observacionCount = 0;
 	$(document).ready(function() {
 		var especialidadTH = $('#especialidadString.typeahead');
 		var nomencladorTH = $('#nomencladorString.typeahead');
-		var especialidadPrestadorTH = $('#especialidadPrestadorString.typeahead')
+		var especialidadPrestadorTH = $('#especialidadPrestadorString.typeahead');
+		var especialidadProfTH = $('#especialidadStringProf.typeahead');
 
 		var map = new Object();
 		var objects = [];
@@ -253,6 +254,36 @@ var observacionCount = 0;
 	        }
 	      });
 	  	
+	  	var mapEsp = new Object();
+		var objectsEsp = [];
+
+		especialidadProfTH.typeahead({
+			source : function(query, process) {
+				$.ajax({
+					url : '/nuova/ajaxGetAutoCompleteEspecialidades',
+					type : 'POST',
+					dataType : 'JSON',
+					data : 'query=' + query,
+					success : function(data) {
+						console.log(data);
+						$.each(data, function(i, object) {
+							mapEsp[object.value] = object;
+							if (objectsEsp[i] == null) {
+								objectsEsp.push(object.value);
+							}
+						});
+						process(objectsEsp);
+						objectsEsp = [];
+					}
+				});
+			},
+			updater : function(item) {
+				$('#especialidadProf').val(mapEsp[item].id);				
+				return item;
+			}
+		});
+
+	  	
 	});
 
 	function findPrestadores(especialidadPrestador) {
@@ -291,6 +322,15 @@ var observacionCount = 0;
 		$("#message").css("visibility", "hidden");
 	}
 
+	
+	function getJsonEspecialidad(especialidad, tipo) {
+		return '{"nombre": "'+especialidad+'", "tipo": '+tipo+'}';	
+	}
+
+	function getJsonProfesional(apellidoRazonSocial, tipo, profesional, especialidadProf) {
+		return '{"apellido": "'+apellidoRazonSocial+'", "tipo": '+tipo+', "profesionalId": '+profesional+', "especialidadId" :'+especialidadProf +'}';	
+	}
+	
 	function callProfesionalByEspecialidad(especialidadId) {
 		var retorno;
 		$.ajax({
@@ -375,6 +415,7 @@ var observacionCount = 0;
 				, document.getElementById("paciente.pacienteId").value);
 		var arrMsjSesion = msjSesion.split(";;");
 		//	alert(arrMsjSesion[1]);
+		document.getElementById("valida_sesion").innerHTML = "";
 		if (arrMsjSesion[0] == 2) {
 			document.getElementById("valida_sesion").innerHTML = createInfo("Información de Práctica Agregada:",arrMsjSesion[2]);
 		}
@@ -578,6 +619,94 @@ var observacionCount = 0;
 
 			return retorno;
 		}
+		
+
+		$(function() {
+			  $('#btnEspecialidad').click(function() {
+				  document.getElementById("especialidadNombre").value="";
+				$('#modalEspecialidad').css("visibility", "visible");  
+			    $('#modalEspecialidad').modal('show');
+			  });
+			  
+			  $('#btnSaveEspecialidad').click(function() {
+			    var especialidad = document.getElementById("especialidadNombre").value;
+			    var resp = callNuevaEspecialidad(getJsonEspecialidad(especialidad, 0));
+			    $('#modalEspecialidad').modal('hide');
+			    if (resp > 0) {
+					toastr["success"]("Se agrego una nueva especialidad");				
+				}
+			    
+			  });
+			});
+			
+		$(function() {
+			  $('#btnProfesional').click(function() {
+				 document.getElementById("apellidoRazonSocial").value="";
+				 document.getElementById("profesional").value="";
+				 document.getElementById("tipo").value="-1";
+				 document.getElementById("especialidadProf").value="";
+				 document.getElementById("especialidadStringProf").value="";		 
+				    
+				$('#modalProfesional').css("visibility", "visible");  
+			    $('#modalProfesional').modal('show');
+			  });
+			  
+			  $('#btnSaveProfesional').click(function() {
+			    var apellidoRazonSocial = document.getElementById("apellidoRazonSocial").value;
+				var profesional = document.getElementById("profesional").value;
+			    var tipo = document.getElementById("tipo").value;
+			    var especialidadProf = document.getElementById("especialidadProf").value;
+			    if (profesional == "") {
+			    	profesional = 0;
+			    }
+			    if (especialidadProf == "") {
+			    	especialidadProf = 0;
+			    }
+			    
+			    var resp = callNuevoProfesional(getJsonProfesional(apellidoRazonSocial, tipo, profesional, especialidadProf));
+			    $('#modalProfesional').modal('hide');
+			    if (resp > 0) {
+					toastr["success"]("Se agrego un nuevo Profesional / Institucion");				
+				}
+			  });
+			});
+			
+		function callNuevaEspecialidad(jsonEspecialidad) {
+			var retorno;
+			$.ajax({
+				url : "/nuova/ajaxPostSaveEspecialidad",
+				type : "POST",
+				contentType : "application/json; charset=utf-8",
+				data: jsonEspecialidad, //Stringified Json Object
+				async : false, //Cross-domain requests and dataType: "jsonp" requests do not support synchronous operation
+				cache : false, //This will force requested pages not to be cached by the browser          
+				processData : false, //To avoid making query String instead of JSON
+				success : function(result) {
+					retorno = result;
+				}
+			});
+
+			return retorno;
+		}
+
+		function callNuevoProfesional(jsonProfesional) {
+			var retorno;
+			$.ajax({
+				url : "/nuova/ajaxPostSaveProfesional",
+				type : "POST",
+				contentType : "application/json; charset=utf-8",
+				data: jsonProfesional, //Stringified Json Object
+				async : false, //Cross-domain requests and dataType: "jsonp" requests do not support synchronous operation
+				cache : false, //This will force requested pages not to be cached by the browser          
+				processData : false, //To avoid making query String instead of JSON
+				success : function(result) {
+					retorno = result;
+				}
+			});
+
+			return retorno;
+		}
+	
 				
 </script>
 
@@ -753,6 +882,97 @@ var observacionCount = 0;
 		</script>
 	</form:form>
 </body>
+
+<!-- Modal Nuevo Especialidad -->
+<div id="modalEspecialidad" class="modal fade" role="dialog" style="visibility: hidden;">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Nueva Especialidad</h4>
+      </div>
+      <div class="modal-body custom-height-modal">
+        <p>Nombre Especialidad: </p>
+        <input type="text" id="especialidadNombre" name="especialidadNombre">
+      </div>
+      <div class="modal-footer">
+      	<button type="button" id="btnSaveEspecialidad" class="btn btn-info">Guardar</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+<!-- Fin Modal -->
+
+<!-- Modal Nuevo Profesional -->
+<div id="modalProfesional" class="modal fade" role="dialog" style="visibility: hidden;">
+  <div class="modal-dialog">
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Nuevo Profesional</h4>
+      </div>
+      <div class="modal-body custom-height-modal">
+      <div class="panel-body">
+		<div class="container-fluid">
+		  		<div class="row-fluid">
+			   		<div class="span12">
+				   		<div class="formLabel">Tipo:</div>
+	        			<div class="formInput">
+	        			<select id="tipo" name="tipo" style="width: 100%">
+							<option value="-1">Seleccione Tipo ...</option>
+							<option value="0">PROFESIONAL</option>
+							<option value="1">INSTITUCION</option>
+						</select>
+	        			</div>
+	  				</div>
+	  			</div>
+	  			<div class="row-fluid">
+			   		<div class="span12">
+			   			<div class="formLabel">Apellido o Intitucion:</div>
+	        			<div class="formInput">
+							<input type="hidden" name="profesional" id="profesional">	
+							<input data-provide="typeahead" class="typeahead"
+								name="apellidoRazonSocial" id="apellidoRazonSocial" type="text"
+								placeholder="Ingrese Profesional ..." autocomplete="off"
+								style="width: 96%">
+	        			</div>
+	  				</div>
+	  			</div>
+	  			<div class="row-fluid">
+			   		<div class="span12">
+			   			<div class="formLabel">Especialidad:</div>
+	        			<div class="formInput">
+		        			<input
+							type="hidden" name="especialidadProf" id="especialidadProf"	> 
+							<input
+							data-provide="typeahead" class="typeahead"
+							name="especialidadStringProf" id="especialidadStringProf"
+							type="text" placeholder="Ingrese Especialidad ..."
+							autocomplete="off" style="width: 96%">
+	        			</div>
+	  				</div>
+	  			</div>
+	  			<br><br><br><br><br><br><br><br>
+	  	</div>
+	  </div>		   		
+      
+      </div>
+      <div class="modal-footer">
+      	<button type="button" id="btnSaveProfesional" class="btn btn-info">Guardar</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+<!-- Fin Modal -->
+
+
 <!-- Modal -->
 <div id="myModal" class="modal fade" role="dialog"
 	style="visibility: hidden;">
