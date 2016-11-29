@@ -1,5 +1,7 @@
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
+<%@taglib uri="http://www.springframework.org/security/tags"  prefix="sec" %>
+
 <script>
 var nuevoNomActive = false;
 function showNuevoNomenclador() {
@@ -172,6 +174,8 @@ function automaticoTodos() {
 </div>
 <br>
 
+<sec:authorize access="hasRole('ROLE_ADMIN')">
+
 <table class="table" style="background: rgb(245, 245, 245); width: 100%">
 	<tr>
 		<td style="width: 80%;"><div style="float: right;">
@@ -196,7 +200,7 @@ function automaticoTodos() {
 		</td>
 	</tr>
 </table>
-
+</sec:authorize>
 <div id="valida_sesion"></div>
 
 <div class="tab-content" style="height: 400px">
@@ -211,8 +215,10 @@ function automaticoTodos() {
 								<td style="width: 40%"><b>Nomenclador</b></td>
 								<td style="width: 8%"><b>Cantidad</b></td>
 								<td style="width: 10%"><b>Pieza Dental</b></td>
+								<sec:authorize access="hasRole('ROLE_ADMIN')">								
 								<td style="width: 35%"><b>Estados</b></td>
 								<td style="width: 20%"><b>Automatico</b></td>
+								</sec:authorize>
 								<td></td>
 							</tr>
 							</thead>
@@ -239,7 +245,9 @@ function automaticoTodos() {
 										<input type="text" style="text-align: center"
 										name="ordenpracticaListEdit[<%=index%>].piezaDental"
 										value="${pa.piezaDental}" />
-									</td>									
+									</td>	
+									
+									<sec:authorize access="hasRole('ROLE_ADMIN')">																	
 									<td>
 										<select
 										name="ordenpracticaListEdit[<%=index%>].estado"
@@ -290,6 +298,8 @@ function automaticoTodos() {
 										</div>
 
 									</td>
+									</sec:authorize>
+									
 									<td><button type='button' class='btn btn-link'
 											onClick='Eliminar(this.parentNode.parentNode.rowIndex)'>Eliminar</button></td>
 									

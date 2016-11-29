@@ -6,6 +6,8 @@
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@taglib uri="http://www.springframework.org/security/tags"
 	prefix="sec"%>
+<%@page import="org.springframework.security.core.context.SecurityContextHolder" %>
+
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
@@ -76,6 +78,7 @@ toastr.options = {
 
 
 <script type="text/javascript">
+var usr = "<%=SecurityContextHolder.getContext().getAuthentication().getName()%>";
 var observacionCount = 0;
 
 
@@ -438,6 +441,7 @@ var observacionCount = 0;
 		
 		var cell1 = row.insertCell(1);
 		cell1.innerHTML = "<input type='text' name='ordenpracticaListEdit[" + index + "].cantidad' placeholder='Cantidad' value='1' style='width:60px'>";
+
 		
 		var cell2 = row.insertCell(2);
 		var str1 = document.getElementById("nomencladorString").value;
@@ -448,18 +452,28 @@ var observacionCount = 0;
 		if(str1.indexOf(str2) != -1 || str1.indexOf(str3) != -1 || str1.indexOf(str4) != -1){
 			cell2.innerHTML = "<input type='text' name='ordenpracticaListEdit[" + index + "].piezaDental' placeholder='pieza dental'>";
 		}
+
+		if (usr == "mesa.entrada@nuovamed.com.ar") {			
+
+			var cell3 = row.insertCell(3);
+			row.valign = "BASELINE";
+			cell3.innerHTML = "<button type='button' class='btn btn-link' onClick='Eliminar(this.parentNode.parentNode.rowIndex)'>Eliminar</button>";				
+
+		} else {
+			
+			var cell3 = row.insertCell(3);
+			cell3.innerHTML = createSelectEstados("ordenpracticaListEdit[" + index
+					+ "].estado");
+	
+			var cell4 = row.insertCell(4);
+			cell4.innerHTML = createDatePicker(index);
+
+			var cell5 = row.insertCell(5);
+			row.valign = "BASELINE";
+			cell5.innerHTML = "<button type='button' class='btn btn-link' onClick='Eliminar(this.parentNode.parentNode.rowIndex)'>Eliminar</button>";
+
+		}			
 		
-		var cell3 = row.insertCell(3);
-		cell3.innerHTML = createSelectEstados("ordenpracticaListEdit[" + index
-				+ "].estado");
-
-		var cell4 = row.insertCell(4);
-		cell4.innerHTML = createDatePicker(index);
-
-		var cell5 = row.insertCell(5);
-		row.valign = "BASELINE";
-		cell5.innerHTML = "<button type='button' class='btn btn-link' onClick='Eliminar(this.parentNode.parentNode.rowIndex)'>Eliminar</button>";
-
 	
 		index++;
 		document
@@ -780,9 +794,7 @@ var observacionCount = 0;
 											<li><a data-toggle="tab" href="#tb_requisitos">Requisitos</a></li>
 											<li><a data-toggle="tab" href="#tb_profesional">Medico
 													Solicitante</a></li>
-											<sec:authorize access="hasRole('ROLE_ADMIN')">
 												<li><a data-toggle="tab" href="#tb_autorizacion">Autorizaci&oacute;n</a></li>												
-											</sec:authorize>
 											
 											<li><a data-toggle="tab" href="#tb_prestador">Prestador
 														Derivado</a></li>
@@ -816,12 +828,10 @@ var observacionCount = 0;
 											<div id="tb_profesional" class="tab-pane fade">
 												<jsp:include page="formEditOrdenTabProfesional.jsp"></jsp:include>
 											</div>
-											<sec:authorize access="hasRole('ROLE_ADMIN')">
-												<!-- ** Tab Autorizaciones -->
+											<!-- ** Tab Autorizaciones -->
 												<div id="tb_autorizacion" class="tab-pane fade">
 													<jsp:include page="formEditOrdenTabAutorizacion.jsp"></jsp:include>
 												</div>												
-											</sec:authorize>
 
 											<!-- ** Tab Prestador -->
 											<div id="tb_prestador" class="tab-pane fade">
