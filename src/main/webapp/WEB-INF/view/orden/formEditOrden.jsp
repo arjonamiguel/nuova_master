@@ -453,7 +453,7 @@ var observacionCount = 0;
 			cell2.innerHTML = "<input type='text' name='ordenpracticaListEdit[" + index + "].piezaDental' placeholder='pieza dental'>";
 		}
 
-		if (usr == "mesa.entrada@nuovamed.com.ar") {			
+		if (usr == "mesa.entrada@nuovamed.com") {			
 
 			var cell3 = row.insertCell(3);
 			row.valign = "BASELINE";
