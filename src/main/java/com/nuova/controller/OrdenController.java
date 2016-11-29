@@ -1,5 +1,42 @@
 package com.nuova.controller;
 
+import java.io.IOException;
+import java.math.BigDecimal;
+import java.math.BigInteger;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.nio.charset.CharsetEncoder;
+import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.Date;
+import java.util.Formatter;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
+import javax.servlet.http.HttpServletResponse;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+
 import com.google.common.base.Charsets;
 import com.google.common.io.ByteSource;
 import com.nuova.dto.ComboItemDTO;
@@ -49,43 +86,6 @@ import com.nuova.utils.ConstantControllers;
 import com.nuova.utils.ConstantOrdenEstado;
 import com.nuova.utils.ConstantRedirect;
 import com.nuova.utils.Util;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.ModelMap;
-import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
-
-import java.io.IOException;
-import java.math.BigDecimal;
-import java.math.BigInteger;
-import java.net.URI;
-import java.net.URISyntaxException;
-import java.nio.charset.CharsetEncoder;
-import java.nio.charset.StandardCharsets;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.Date;
-import java.util.Formatter;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-
-import javax.servlet.http.HttpServletResponse;
 
 @Controller
 public class OrdenController {
@@ -720,31 +720,31 @@ public class OrdenController {
       }
 
       // Persiste Practicas
-      if (isRolAdmin) {
-        for (OrdenPractica o : orden.getOrdenPracticas()) {
-          ordenManager.deleteOrdenPractica(o.getOrden().getOrdenId());
-        }
-
-        Set<OrdenPractica> persistOrdenPracticaList = new HashSet<OrdenPractica>();
-        for (OrdenPracticaDTO opdto : practicas) {
-          if (opdto.getPracticaId() != null) {
-            Nomenclador p = new Nomenclador();
-            p.setNomencladorId(opdto.getPracticaId());
-            OrdenPractica op = new OrdenPractica();
-            op.setFecha(new Date());
-            op.setOrden(orden);
-            op.setNomenclador(p);
-            op.setEstado(opdto.getEstado());
-            op.setValor(opdto.getValor() == null ? new BigDecimal(0) : opdto.getValor());
-            op.setAutorizarAutomatico(Util.parseToDate(opdto.getAutorizarAutomatico()));
-            op.setPiezaDental(opdto.getPiezaDental());
-            op.setCantidad(opdto.getCantidad());
-
-            persistOrdenPracticaList.add(op);
-          }
-        }
-        orden.setOrdenPracticas(persistOrdenPracticaList);
+      // if (isRolAdmin) { USUARIO MESA DE ENTRADA PUEDE CARGAR PRACTICAS
+      for (OrdenPractica o : orden.getOrdenPracticas()) {
+        ordenManager.deleteOrdenPractica(o.getOrden().getOrdenId());
       }
+
+      Set<OrdenPractica> persistOrdenPracticaList = new HashSet<OrdenPractica>();
+      for (OrdenPracticaDTO opdto : practicas) {
+        if (opdto.getPracticaId() != null) {
+          Nomenclador p = new Nomenclador();
+          p.setNomencladorId(opdto.getPracticaId());
+          OrdenPractica op = new OrdenPractica();
+          op.setFecha(new Date());
+          op.setOrden(orden);
+          op.setNomenclador(p);
+          op.setEstado(opdto.getEstado());
+          op.setValor(opdto.getValor() == null ? new BigDecimal(0) : opdto.getValor());
+          op.setAutorizarAutomatico(Util.parseToDate(opdto.getAutorizarAutomatico()));
+          op.setPiezaDental(opdto.getPiezaDental());
+          op.setCantidad(opdto.getCantidad());
+
+          persistOrdenPracticaList.add(op);
+        }
+      }
+      orden.setOrdenPracticas(persistOrdenPracticaList);
+      // }
 
       // Persiste Estado
       if (dto.getEstado() != null && !orden.getEstado().equals(dto.getEstado())) {
@@ -1368,6 +1368,7 @@ public class OrdenController {
     }
 
     Collections.sort(retorno, new Comparator<ObservacionesDTO>() {
+      @Override
       public int compare(ObservacionesDTO a1, ObservacionesDTO a2) {
         return a2.getFecha().compareTo(a1.getFecha());
       }
@@ -1387,6 +1388,7 @@ public class OrdenController {
 
     Collections.sort(retorno, new Comparator<OrdenWorkflowDTO>() {
 
+      @Override
       public int compare(OrdenWorkflowDTO a1, OrdenWorkflowDTO a2) {
         return a2.getFecha().compareTo(a1.getFecha());
       }
@@ -1415,6 +1417,7 @@ public class OrdenController {
     }
 
     Collections.sort(retorno, new Comparator<OrdenPracticaDTO>() {
+      @Override
       public int compare(OrdenPracticaDTO a1, OrdenPracticaDTO a2) {
         return a1.getPracticaId().compareTo(a2.getPracticaId());
       }
