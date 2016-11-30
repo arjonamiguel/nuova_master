@@ -1,5 +1,6 @@
 package com.nuova.controller;
 
+import java.awt.print.Pageable;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.math.BigInteger;
@@ -22,7 +23,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
@@ -754,17 +754,17 @@ public class OrdenController {
         orden.setEstado(dto.getEstado());
       }
 
-      if (isRolAdmin) {
-        // Prestador
-        if (dto.getEspecialidadPrestador() != null && dto.getPrestadorId() != null) {
-          Set<OrdenPrestador> ordenPrestadores = new HashSet<OrdenPrestador>();
-          OrdenPrestador opr = transformDtoToOrdenPrestador(dto);
-          opr.setOrden(orden);
-          ordenPrestadores.add(opr);
-          ordenManager.deleteOrdenPrestador(orden.getOrdenId());
-          orden.setOrdenPrestadors(ordenPrestadores);
-        }
+      // if (isRolAdmin) {
+      // Prestador
+      if (dto.getEspecialidadPrestador() != null && dto.getPrestadorId() != null) {
+        Set<OrdenPrestador> ordenPrestadores = new HashSet<OrdenPrestador>();
+        OrdenPrestador opr = transformDtoToOrdenPrestador(dto);
+        opr.setOrden(orden);
+        ordenPrestadores.add(opr);
+        ordenManager.deleteOrdenPrestador(orden.getOrdenId());
+        orden.setOrdenPrestadors(ordenPrestadores);
       }
+      // }
 
       // requisitos
       orden.setReqCredecial(Util.getByteFlag(dto.isReqCredecial()));
