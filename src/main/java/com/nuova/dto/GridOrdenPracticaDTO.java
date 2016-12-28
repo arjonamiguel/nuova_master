@@ -139,6 +139,10 @@ public class GridOrdenPracticaDTO {
             "<a class='btn btn-default btn-xs' data-toggle='modal' data-target='#myModal' onClick='showReport("
                 + getOrdenId() + ")'><span class='icon icon-print'></span></a>";
       }
+    } else if (getOrdenTipoCodigo().intValue() == 100) {
+      botonPrint =
+          "<a class='btn btn-default btn-xs' data-toggle='modal' data-target='#myModal' onClick='showReport("
+              + getOrdenId() + ")'><span class='icon icon-print'></span></a>";
     }
     // String botonPrint = "<button type='button' class='btn btn-info btn-lg' data-toggle='modal'
     // data-target='#myModal'>Open Modal</button>";

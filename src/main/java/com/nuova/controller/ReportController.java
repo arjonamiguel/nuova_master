@@ -1,5 +1,31 @@
 package com.nuova.controller;
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.text.DecimalFormat;
+import java.text.Normalizer;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+
+import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServletResponse;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+
 import com.google.common.io.ByteSource;
 import com.nuova.dto.ComboItemDTO;
 import com.nuova.dto.EspecialidadDTO;
@@ -34,32 +60,6 @@ import com.nuova.service.report.ReportManager;
 import com.nuova.utils.ConstantControllers;
 import com.nuova.utils.ConstantRedirect;
 import com.nuova.utils.Util;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
-
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.text.DecimalFormat;
-import java.text.Normalizer;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-
-import javax.servlet.ServletContext;
-import javax.servlet.http.HttpServletResponse;
 
 import net.sf.jasperreports.engine.JREmptyDataSource;
 import net.sf.jasperreports.engine.JRException;
@@ -374,7 +374,13 @@ public class ReportController {
     // Empresas e = pacienteManager.findEmpresaById(dto.getPaciente().getEmpresaId());
     // parameters.put("empresa", e == null ? "" : e.getNombre());
     parameters.put("coseguro", "");
-    parameters.put("tipo_orden", "PRÁCTICA");
+    if (dto.getOrdenTipo().getCodigo().intValue() == 100) {
+      parameters.put("tipo_orden", "CONSULTA");
+
+    } else {
+      parameters.put("tipo_orden", "PRÁCTICA");
+
+    }
 
     ByteSource source = ByteSource.wrap(createReport(ORDEN_EMITIDA_REPORT_JRXML, parameters, null));
     source.copyTo(response.getOutputStream());
@@ -527,7 +533,7 @@ public class ReportController {
     // dto.getPaciente().getApellido().toUpperCase() + ", " + dto.getPaciente().getNombre();
     // dto.setBotonpaciente(botonpaciente);
     //
-    // dto.setOrdenTipo(transformOrdenTipoToDto(orden.getOrdenTipo()));
+    dto.setOrdenTipo(transformOrdenTipoToDto(orden.getOrdenTipo()));
     // dto.setOrdenTipoDesc(dto.getOrdenTipo().getNombre());
     //
     // // botones de acciones
