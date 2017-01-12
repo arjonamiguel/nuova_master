@@ -1,14 +1,5 @@
 package com.nuova.utils;
 
-import com.nuova.dto.CalendarDTO;
-import com.nuova.dto.ComboItemDTO;
-import com.nuova.dto.ObraSocialDTO;
-import com.nuova.dto.OrdenDTO;
-import com.nuova.model.Calendario;
-import com.nuova.model.Nomenclador;
-import com.nuova.model.Obrasocial;
-import com.nuova.model.Paciente;
-
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -18,6 +9,15 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+
+import com.nuova.dto.CalendarDTO;
+import com.nuova.dto.ComboItemDTO;
+import com.nuova.dto.ObraSocialDTO;
+import com.nuova.dto.OrdenDTO;
+import com.nuova.model.Calendario;
+import com.nuova.model.Nomenclador;
+import com.nuova.model.Obrasocial;
+import com.nuova.model.Paciente;
 
 public class Util {
 
@@ -282,6 +282,7 @@ public class Util {
         ConstantOrdenEstado.RECHAZADA_POR_AUDITORIA));
     retorno.add(new ComboItemDTO(ConstantOrdenEstado.RECHAZADA, ConstantOrdenEstado.RECHAZADA));
     retorno.add(new ComboItemDTO(ConstantOrdenEstado.ANULADO, ConstantOrdenEstado.ANULADO));
+    retorno.add(new ComboItemDTO(ConstantOrdenEstado.VENCIDA, ConstantOrdenEstado.VENCIDA));
     return retorno;
   }
 

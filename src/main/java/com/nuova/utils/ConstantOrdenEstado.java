@@ -19,4 +19,5 @@ public class ConstantOrdenEstado {
   static public final String RECHAZADA_POR_AUDITORIA = "RECHAZADA POR AUDITORIA";
   static public final String RECHAZADA = "RECHAZADA";
   static public final String ANULADO = "ANULADO";
+  static public final String VENCIDA = "VENCIDA";
 }

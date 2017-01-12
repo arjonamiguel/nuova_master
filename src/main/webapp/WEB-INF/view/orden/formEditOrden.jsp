@@ -114,6 +114,7 @@ var observacionCount = 0;
 				+ ' <option value="RECHAZADA POR AFILIACIONES">RECHAZADA POR AFILIACIONES</option>'
 				+ ' <option value="RECHAZADA POR AUDITORIA">RECHAZADA POR AUDITORIA</option>'
 				+ ' <option value="RECHAZADA">RECHAZADA</option><option value="ANULADO">ANULADO</option>'
+				+ ' <option value="VENCIDA">VENCIDA</option>'
 				+ ' </select>';
 
 		return selectEstado;

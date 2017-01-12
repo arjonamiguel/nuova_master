@@ -200,6 +200,7 @@ function updateDate(i){
 												POR AUDITORIA</option>
 											<option value="RECHAZADA">RECHAZADA</option>
 											<option value="ANULADO">ANULADO</option>
+											<option value="VENCIDA">VENCIDA</option>
 									</select> <script>
 				document.getElementById('ordenpracticaListEdit[<%=index%>].estado').value ='${pa.estado}'; 
 				</script></td>

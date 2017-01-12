@@ -273,6 +273,7 @@ function automaticoTodos() {
 												POR AUDITORIA</option>
 											
 											<option value="ANULADO">ANULADO</option>
+											<option value="VENCIDA">VENCIDA</option>
 									</select> <script>
 									document.getElementById('ordenpracticaListEdit[<%=index%>].estado').value ='${pa.estado}'; 
 									</script>
