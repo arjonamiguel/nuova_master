@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="reporteOrdenEmitida" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="863c5a1a-ff63-4ec5-9d35-c4a00e5423ed">
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="1"/>
+	<property name="ireport.y" value="16"/>
 	<parameter name="nro_orden" class="java.lang.String" isForPrompting="false">
 		<defaultValueExpression><![CDATA[""]]></defaultValueExpression>
 	</parameter>
@@ -26,6 +26,8 @@
 	<parameter name="trabaja_en" class="java.lang.String"/>
 	<parameter name="coseguro" class="java.lang.String"/>
 	<parameter name="tipo_orden" class="java.lang.String"/>
+	<parameter name="isConsulta" class="java.lang.Boolean"/>
+	<parameter name="profesional" class="java.lang.String"/>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
@@ -68,7 +70,7 @@
 				<text><![CDATA[RESOLUCION NOTA 300.06]]></text>
 			</staticText>
 			<textField pattern="EEEEE dd MMMMM yyyy">
-				<reportElement x="357" y="-1" width="194" height="13" uuid="99bded4c-908c-4322-9214-20901de6156e"/>
+				<reportElement x="357" y="0" width="194" height="13" uuid="99bded4c-908c-4322-9214-20901de6156e"/>
 				<textElement textAlignment="Right">
 					<font size="9"/>
 				</textElement>
@@ -314,7 +316,7 @@
 				<text><![CDATA[APELLIDO Y NOMBRE]]></text>
 			</staticText>
 			<textField pattern="EEEEE dd MMMMM yyyy">
-				<reportElement x="357" y="410" width="194" height="13" uuid="1712ecd7-31cd-4ceb-bf68-8e39ae5556a9"/>
+				<reportElement x="357" y="411" width="194" height="13" uuid="1712ecd7-31cd-4ceb-bf68-8e39ae5556a9"/>
 				<textElement textAlignment="Right">
 					<font size="9"/>
 				</textElement>
@@ -482,12 +484,6 @@
 				</textElement>
 				<text><![CDATA[Duplicado]]></text>
 			</staticText>
-			<line>
-				<reportElement x="3" y="402" width="550" height="1" uuid="1a9c99e4-b767-4cf2-8a1f-15262430dd34"/>
-				<graphicElement>
-					<pen lineStyle="Dashed"/>
-				</graphicElement>
-			</line>
 			<textField>
 				<reportElement x="411" y="25" width="142" height="20" uuid="67cb8e1b-a2ec-4e94-971c-933a394e6fb6"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
@@ -533,6 +529,46 @@
 				<reportElement x="138" y="527" width="41" height="20" uuid="9cda5b28-4ff3-40f9-b215-aeb7345e56d7"/>
 				<text><![CDATA[CRED.:]]></text>
 			</staticText>
+			<rectangle>
+				<reportElement mode="Opaque" x="269" y="335" width="286" height="18" backcolor="#C0C0C0" uuid="f5809f66-2a67-4189-983d-6104321a6a87">
+					<printWhenExpression><![CDATA[$P{isConsulta}]]></printWhenExpression>
+				</reportElement>
+			</rectangle>
+			<staticText>
+				<reportElement x="272" y="335" width="279" height="18" uuid="8355a095-460c-483c-9efa-c4efc29d7e79">
+					<printWhenExpression><![CDATA[$P{isConsulta}]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle" rotation="None"/>
+				<text><![CDATA[PROFESIONAL]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement mode="Opaque" x="269" y="745" width="286" height="18" backcolor="#C0C0C0" uuid="9d08f869-92f9-4164-ad45-53558494dc96">
+					<printWhenExpression><![CDATA[$P{isConsulta}]]></printWhenExpression>
+				</reportElement>
+			</rectangle>
+			<staticText>
+				<reportElement x="272" y="745" width="279" height="18" uuid="e8d80b7d-a38e-48c6-9a11-8a99ec5f9461">
+					<printWhenExpression><![CDATA[$P{isConsulta}]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle" rotation="None"/>
+				<text><![CDATA[PROFESIONAL]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="272" y="358" width="282" height="20" uuid="7ff8e546-f68e-48f6-ae36-cd43f82c5bf0"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$P{profesional}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="272" y="768" width="282" height="20" uuid="d1d46507-f553-45ae-861d-8c3eed2388b6"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$P{profesional}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement mode="Transparent" x="3" y="402" width="550" height="1" uuid="1a9c99e4-b767-4cf2-8a1f-15262430dd34"/>
+				<graphicElement>
+					<pen lineStyle="Dashed"/>
+				</graphicElement>
+			</line>
 		</band>
 	</title>
 	<pageHeader>

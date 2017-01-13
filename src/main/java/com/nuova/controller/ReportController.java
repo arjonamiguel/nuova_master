@@ -46,6 +46,7 @@ import com.nuova.model.Obrasocial;
 import com.nuova.model.Observaciones;
 import com.nuova.model.Orden;
 import com.nuova.model.OrdenPractica;
+import com.nuova.model.OrdenProfesional;
 import com.nuova.model.OrdenTipo;
 import com.nuova.model.OrdenWorkflow;
 import com.nuova.model.Paciente;
@@ -376,10 +377,17 @@ public class ReportController {
     parameters.put("coseguro", "");
     if (dto.getOrdenTipo().getCodigo().intValue() == 100) {
       parameters.put("tipo_orden", "CONSULTA");
+      parameters.put("isConsulta", true);
+      if (dto.getProfesional() != null && dto.getProfesional().getApellido() != null
+          && dto.getProfesional().getNombre() != null) {
+        parameters.put("profesional", dto.getProfesional().getApellido().toUpperCase() + " "
+            + dto.getProfesional().getNombre().toUpperCase());
+      }
 
     } else {
+      parameters.put("isConsulta", false);
       parameters.put("tipo_orden", "PRÁCTICA");
-
+      parameters.put("profesional", "");
     }
 
     ByteSource source = ByteSource.wrap(createReport(ORDEN_EMITIDA_REPORT_JRXML, parameters, null));
@@ -513,11 +521,11 @@ public class ReportController {
     // dto.setOrdenWorkflows(getOrdenWorkflowToDto(orden.getOrdenWorkflows()));
 
     // Profesional
-    // for (OrdenProfesional op : orden.getOrdenProfesionals()) {
-    // if (op.getProfesional() != null) {
-    // dto.setProfesional(transformProfesionalToDto(op.getProfesional()));
-    // }
-    // }
+    for (OrdenProfesional op : orden.getOrdenProfesionals()) {
+      if (op.getProfesional() != null) {
+        dto.setProfesional(transformProfesionalToDto(op.getProfesional()));
+      }
+    }
 
     // Historia Clinica
     // List<OrdenDocument> documents = ordenManager.finAllOrdenDocumentByOrdenId(dto.getOrdenId());
