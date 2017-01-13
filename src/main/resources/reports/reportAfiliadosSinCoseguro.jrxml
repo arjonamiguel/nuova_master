@@ -4,7 +4,7 @@
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
 	<parameter name="totalPacientes" class="java.lang.Integer"/>
-	<field name="dni" class="java.lang.Integer"/>
+	<field name="dni" class="java.lang.String"/>
 	<field name="apellido" class="java.lang.String"/>
 	<field name="nombre" class="java.lang.String"/>
 	<field name="credencialCompleta" class="java.lang.String"/>

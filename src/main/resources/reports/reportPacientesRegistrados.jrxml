@@ -6,7 +6,7 @@
 	<parameter name="fechaDesde" class="java.lang.String"/>
 	<parameter name="fechaHasta" class="java.lang.String"/>
 	<parameter name="totalPacientes" class="java.lang.Integer"/>
-	<field name="dni" class="java.lang.Integer"/>
+	<field name="dni" class="java.lang.String"/>
 	<field name="apellido" class="java.lang.String"/>
 	<field name="nombre" class="java.lang.String"/>
 	<field name="credencialCompleta" class="java.lang.String"/>
