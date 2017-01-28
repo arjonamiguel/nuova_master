@@ -135,6 +135,7 @@ public class ConstantControllers {
   public final static String AJAX_GET_AFILIADOS_SIN_COBERTURA =
       "/ajaxGetReportAfiliadosSinCobertura";
   public final static String AJAX_GET_FILTRO_AFILIADO = "/ajaxGetReportFiltroAfiliado";
+  public final static String AJAX_GET_ORDENES_POR_TIPO_FECHA = "/ajaxGetReportOrdenesPorTipoYFecha";
 
   // Calendario
   public final static String MAIN_CALENDARIO = "/mainCalendario";

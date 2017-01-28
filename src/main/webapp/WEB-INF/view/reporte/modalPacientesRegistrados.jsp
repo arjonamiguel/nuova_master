@@ -1,5 +1,5 @@
 
-<div class="modal fade" id="pacienteregistrado">
+<div class="modal fade" id="pacienteregistrado" style="visibility: hidden;">
 	<div class="modal-dialog">
 		<div class="modal-content">
 			<div class="modal-header">

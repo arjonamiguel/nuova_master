@@ -1,14 +1,15 @@
 package com.nuova.service.report;
 
-import com.nuova.dao.ReportDAO;
-import com.nuova.model.Paciente;
+import java.util.Date;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Date;
-import java.util.List;
+import com.nuova.dao.ReportDAO;
+import com.nuova.dto.report.ReporteDetalleOrdenConsultaDto;
+import com.nuova.model.Paciente;
 
 @Service
 @Transactional
@@ -37,10 +38,16 @@ public class ReportManagerImpl implements ReportManager {
     return reportDAO.getAfiliadosSinCobertura();
   }
 
-@Override
-public List<Paciente> getFiltroAfiliado(Date fechaDesdeAfiliado, Date fechaHastaAfiliado, Date fechaNacimiento,
-		Integer localidadId, String zonaAfiliacion) {
-	return reportDAO.getFiltroAfiliado(fechaDesdeAfiliado, fechaHastaAfiliado, fechaNacimiento, localidadId, zonaAfiliacion);
-}
+  @Override
+  public List<Paciente> getFiltroAfiliado(Date fechaDesdeAfiliado, Date fechaHastaAfiliado,
+      Date fechaNacimiento, Integer localidadId, String zonaAfiliacion) {
+    return reportDAO.getFiltroAfiliado(fechaDesdeAfiliado, fechaHastaAfiliado, fechaNacimiento,
+        localidadId, zonaAfiliacion);
+  }
+
+  public List<ReporteDetalleOrdenConsultaDto> getOrdenesPorTipoYFecha(Integer tipoOrden,
+      Date fechaDesde, Date fechaHasta) {
+    return reportDAO.getOrdenesPorTipoYFecha(tipoOrden, fechaDesde, fechaHasta);
+  }
 
 }

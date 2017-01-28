@@ -99,8 +99,7 @@
 											</div>
 											<div class="panel-body">
 											<ul>
-												<li><a href="#" onclick="">Listado de Ordenes.</a></li>
-												<li><a href="#" onclick="">Listado de Practicas.</a></li>
+												<li><a href="#" id="lnk_cantidad_ordenes_por_tipo_fecha">Cantidad de Ordenes por Tipo y Fecha.</a></li>
 												
 											</ul>
 											</div>
@@ -140,12 +139,10 @@
 
 </body>
 
+<jsp:include page="modalOrdenesPorTipoYFecha.jsp"></jsp:include>
 <jsp:include page="modalAfiliadosAtendidos.jsp"></jsp:include>
 <jsp:include page="modalFiltroAfiliados.jsp"></jsp:include>
 <jsp:include page="modalPacientesRegistrados.jsp"></jsp:include>
-
-
-
 
 </html>
 
@@ -183,9 +180,40 @@ function updatefechaNacimiento(){
 function updatefechaNacimiento(){
 	document.getElementById("fechaNacimiento").value=document.getElementById("fecha_nacimiento").value;
 }
+
+function updatefechaDesdeOrden(){
+	document.getElementById("fechaDesdeOrden").value=document.getElementById("fecha_desde_orden").value;
+}
+
+function updatefechaHastaOrden(){
+	document.getElementById("fechaHastaOrden").value=document.getElementById("fecha_hasta_orden").value;
+}
 //----------------------------------------------------------------------------
 
 //Actions Modal
+
+$(function() {
+	  $('#lnk_cantidad_ordenes_por_tipo_fecha').click(function() {
+		  $("#modal_ordenes_por_tipo_fecha").css("visibility", "visible");
+	
+		  document.getElementById("fecha_desde_orden").value="";
+		  document.getElementById("fecha_hasta_orden").value="";
+		
+	    $('#modal_ordenes_por_tipo_fecha').modal('show');
+	  });
+	  
+	  $('#btn_modal_ordenes_por_tipo_fecha_aceptar').click(function() {
+		  var orden = document.getElementById("tipo_orden").value;
+		  var fechaDesdeOrden = document.getElementById("fecha_desde_orden").value;
+		  var fechaHastaOrden = document.getElementById("fecha_hasta_orden").value;	 
+	    
+		resp = callReportOrdenesPorTipoYFecha(orden, fechaDesdeOrden, fechaHastaOrden);
+ 	    $('#modal_ordenes_por_tipo_fecha').modal('hide');
+	  });
+	});
+
+
+
 $(function() {
 	  $('#lnk_filtro_afiliados').click(function() {
 		  $("#filtroafiliados").css("visibility", "visible");
@@ -218,6 +246,7 @@ $(function() {
 
 $(function() {
 	  $('#lnk_afiliados_atendidos').click(function() {
+		  $('#afiliadosAtendidos').css("visibility", "visible");
 		  $("#msj_afiliadoatendido").css("visibility","hidden");
 		  document.getElementById("especialidad").value="";
 		  document.getElementById("especialidadString").value="";
@@ -247,6 +276,7 @@ $(function() {
 
 $(function() {
 	  $('#lnk_pacientes_registrados').click(function() {
+		  $('#pacienteregistrado').css("visibility", "visible");
 		  $("#msj_pacienteregistrado").css("visibility","hidden");
 	    $('#pacienteregistrado').modal('show');
 	  });
@@ -379,4 +409,11 @@ function callReportFiltroAfiliado(fechaDesdeAfiliado, fechaHastaAfiliado
 	var url = "/nuova/ajaxGetReportFiltroAfiliado?"+parameters;
 	window.open(url, '_blank');
 }
+
+function callReportOrdenesPorTipoYFecha(tipoOrden, fechaDesde, fechaHasta) {
+	var parameters = "tipoOrden="+tipoOrden+"&fechaDesdeOrden="+fechaDesde+"&fechaHastaOrden="+fechaHasta
+	var url = "/nuova/ajaxGetReportOrdenesPorTipoYFecha?"+parameters;
+	window.open(url, '_blank');
+}
+
 </script>

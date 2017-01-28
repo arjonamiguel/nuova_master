@@ -1,9 +1,10 @@
 package com.nuova.dao;
 
-import com.nuova.model.Paciente;
-
 import java.util.Date;
 import java.util.List;
+
+import com.nuova.dto.report.ReporteDetalleOrdenConsultaDto;
+import com.nuova.model.Paciente;
 
 public interface ReportDAO {
 
@@ -15,7 +16,10 @@ public interface ReportDAO {
   public List<Paciente> getAfiliadosSinCoseguro();
 
   public List<Paciente> getAfiliadosSinCobertura();
-  
+
   public List<Paciente> getFiltroAfiliado(Date fechaDesdeAfiliado, Date fechaHastaAfiliado,
-		  Date fechaNacimiento, Integer localidadId, String zonaAfiliacion);
+      Date fechaNacimiento, Integer localidadId, String zonaAfiliacion);
+
+  public List<ReporteDetalleOrdenConsultaDto> getOrdenesPorTipoYFecha(Integer tipoOrden,
+      Date fechaDesde, Date fechaHasta);
 }

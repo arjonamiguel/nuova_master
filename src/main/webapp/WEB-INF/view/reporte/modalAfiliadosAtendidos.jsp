@@ -1,5 +1,5 @@
 
-<div class="modal fade" id="afiliadosAtendidos">
+<div class="modal fade" id="afiliadosAtendidos" style="visibility: hidden;">
 	<div class="modal-dialog">
 		<div class="modal-content">
 			<div class="modal-header">
