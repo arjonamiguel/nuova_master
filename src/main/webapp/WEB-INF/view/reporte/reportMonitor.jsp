@@ -174,38 +174,86 @@
 											</div>
 											<div class="panel-body">
 												<div>
-												<div class="row-fluid">
-		 			<div class="span3">		 				
-    					<div class="formLabel"><label>Grafico</label></div>
-    					<div class="formInput"> 
-    					<select id="grafico" style="width: 100px">
-    					<option value="1">Circular</option>
-    					<option value="2">Lineal</option>
-    					</select>
-    					</div>
-		 			</div>
-		 			<div class="span3">		 				
-    					<div class="formLabel"><label>Tipo</label></div>
-    					<div class="formInput"> 
-    					<select id="grafico" style="width: 100px">
-    					<option value="1">Ordenes</option>
-    					<option value="2">Pacientes</option>
-    					<option value="3">Nomenclador</option>
-    					<option value="2">Caja</option>
-    					</select>
-    					</div>
-		 			</div>
-		 			<div class="span3">		 				
-    					<div class="formLabel"><label>Filtro</label></div>
-    					<div class="formInput"> 
-    					<select id="grafico" style="width: 330px">
-    					<option value="-1">Seleccione ...</option>
-    				
-    					</select>
-    					</div>
-		 			</div>
-		 			
-		 		</div>
+													<div class="row-fluid" style="color: rgb(132, 183, 97)">
+														<div class="span4">
+															<div class="formLabel">
+																<label>Grafico</label>
+															</div>
+															<div class="formInput">
+																<select id="grafico" style="width: 150px">
+																	<option value="1">Circular</option>
+																	<option value="2">Lineal</option>
+																</select>
+															</div>
+														</div>
+														<div class="span4">
+															<div class="formLabel">
+																<label>Tipo</label>
+															</div>
+															<div class="formInput">
+																<select id="grafico" style="width: 150px">
+																	<option value="1">Ordenes</option>
+																	<option value="2">Pacientes</option>
+																	<option value="3">Nomenclador</option>
+																	<option value="2">Caja</option>
+																</select>
+															</div>
+														</div>
+														<div class="span3">
+															<div class="formLabel">
+																<label>Filtro</label>
+															</div>
+															<div class="formInput">
+																<select id="grafico" style="width: 200px">
+																	<option value="-1">Seleccione ...</option>
+
+																</select>
+															</div>
+														</div>
+
+													</div>
+													<div class="row-fluid">
+														<div class="span4">
+															<div class="formLabel">
+																<label style="color: #31708f">Desde</label>
+															</div>
+															<div class="formInput">
+																<input id="fechaDesdeFiltro" class="date" type="hidden" />
+																<div id="calendar">
+																	<div class="input-group registration-date-time"
+																		style="padding-top: 0%; width: 101%;">
+																		<input class="form-control" name="fecha-desde-filtro"
+																			id="fecha-desde-filtro" type="date" 
+																			onchange="javascript:updateDateFiltro();">
+																	</div>
+																</div>
+															</div>
+														</div>
+														<div class="span4">
+															<div class="formLabel">
+																<label style="color: #31708f">Hasta</label>
+															</div>
+															<div class="formInput">
+																<input id="fechaDesdeFiltro" class="date" type="hidden" />
+																<div id="calendar">
+																	<div class="input-group registration-date-time"
+																		style="padding-top: 0%; width: 101%;">
+																		<input class="form-control" name="fecha-desde-filtro"
+																			id="fecha-desde-filtro" type="date"
+																			onchange="javascript:updateDateFiltro();">
+																	</div>
+																</div>
+															</div>
+														</div>
+														
+														<div class="span3">															
+															<div class="formInput">
+																<button type="button" id="btn_filtrar" class="btn btn-success">Filtrar</button>
+															</div>
+														</div>
+														
+													</div>
+
 												</div>
 												<div id="chartdiv"></div>
 											</div>
@@ -530,70 +578,69 @@
 </script>
 
 <script>
-var chart = AmCharts.makeChart("chartdiv", {
-  "type": "pie",
-  "startDuration": 0,
-   "theme": "light",
-  "addClassNames": true,
-  "legend":{
-   	"position":"right",
-    "marginRight":100,
-    "autoMargins":false
-  },
-  "innerRadius": "30%",
-  "defs": {
-    "filter": [{
-      "id": "shadow",
-      "width": "200%",
-      "height": "200%",
-      "feOffset": {
-        "result": "offOut",
-        "in": "SourceAlpha",
-        "dx": 0,
-        "dy": 0
-      },
-      "feGaussianBlur": {
-        "result": "blurOut",
-        "in": "offOut",
-        "stdDeviation": 5
-      },
-      "feBlend": {
-        "in": "SourceGraphic",
-        "in2": "blurOut",
-        "mode": "normal"
-      }
-    }]
-  },
-  "dataProvider": [{
-    "country": "Lithuania",
-    "litres": 501.9
-  }, {
-    "country": "Czech Republic",
-    "litres": 301.9
-  }, {
-    "country": "Ireland",
-    "litres": 201.1
-  }],
-  "valueField": "litres",
-  "titleField": "country",
-  "export": {
-    "enabled": true
-  }
-});
+	var chart = AmCharts.makeChart("chartdiv", {
+		"type" : "pie",
+		"startDuration" : 0,
+		"theme" : "light",
+		"addClassNames" : true,
+		"legend" : {
+			"position" : "right",
+			"marginRight" : 100,
+			"autoMargins" : false
+		},
+		"innerRadius" : "30%",
+		"defs" : {
+			"filter" : [ {
+				"id" : "shadow",
+				"width" : "200%",
+				"height" : "200%",
+				"feOffset" : {
+					"result" : "offOut",
+					"in" : "SourceAlpha",
+					"dx" : 0,
+					"dy" : 0
+				},
+				"feGaussianBlur" : {
+					"result" : "blurOut",
+					"in" : "offOut",
+					"stdDeviation" : 5
+				},
+				"feBlend" : {
+					"in" : "SourceGraphic",
+					"in2" : "blurOut",
+					"mode" : "normal"
+				}
+			} ]
+		},
+		"dataProvider" : [ {
+			"country" : "Lithuania",
+			"litres" : 501.9
+		}, {
+			"country" : "Czech Republic",
+			"litres" : 301.9
+		}, {
+			"country" : "Ireland",
+			"litres" : 201.1
+		} ],
+		"valueField" : "litres",
+		"titleField" : "country",
+		"export" : {
+			"enabled" : true
+		}
+	});
 
-chart.addListener("init", handleInit);
+	chart.addListener("init", handleInit);
 
-chart.addListener("rollOverSlice", function(e) {
-  handleRollOver(e);
-});
+	chart.addListener("rollOverSlice", function(e) {
+		handleRollOver(e);
+	});
 
-function handleInit(){
-  chart.legend.addListener("rollOverItem", handleRollOver);
-}
+	function handleInit() {
+		chart.legend.addListener("rollOverItem", handleRollOver);
+	}
 
-function handleRollOver(e){
-  var wedge = e.dataItem.wedge.node;
-  wedge.parentNode.appendChild(wedge);
-}
-
+	function handleRollOver(e) {
+		var wedge = e.dataItem.wedge.node;
+		wedge.parentNode.appendChild(wedge);
+	}
 </script>
