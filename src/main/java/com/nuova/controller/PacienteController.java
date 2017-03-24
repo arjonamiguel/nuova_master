@@ -138,6 +138,7 @@ public class PacienteController {
     public String formEditPaciente(ModelMap map, @PathVariable("pacienteId") Integer pacienteId) {
         if (pacienteId != null) {
             PacienteDTO dto = transformPacienteToDto(pacienteManager.fin1dPacienteById(pacienteId));
+            dto.setAdherentes(pacienteManager.getAdherentes(pacienteId));
             List<Empresas> empresas = pacienteManager.findAllEmpresas();
 
             map.addAttribute("provinciaList", Util.getProvincias());
