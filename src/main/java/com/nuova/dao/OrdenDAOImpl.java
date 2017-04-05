@@ -1,5 +1,6 @@
 package com.nuova.dao;
 
+import java.util.Date;
 import java.util.List;
 
 import org.hibernate.Query;
@@ -30,11 +31,13 @@ public class OrdenDAOImpl implements OrdenDAO {
   private SessionFactory sessionFactory;
 
 
+  @Override
   public void add(Orden orden) {
     this.sessionFactory.getCurrentSession().save(orden);
   }
 
 
+  @Override
   public Orden findOrdenById(Integer ordenId) {
     Orden o = (Orden) this.sessionFactory.getCurrentSession()
         .createQuery(" SELECT o FROM Orden o WHERE o.ordenId = :ordenId")
@@ -54,12 +57,14 @@ public class OrdenDAOImpl implements OrdenDAO {
   }
 
 
+  @Override
   @SuppressWarnings("unchecked")
   public List<Orden> findAll() {
     return this.sessionFactory.getCurrentSession().createQuery("FROM Orden").list();
   }
 
 
+  @Override
   public void delete(Integer ordenId) {
     Query query = sessionFactory.getCurrentSession()
         .createSQLQuery("CALL zp_deleteOrden(:ordenId);").setInteger("ordenId", ordenId);
@@ -71,11 +76,13 @@ public class OrdenDAOImpl implements OrdenDAO {
   }
 
 
+  @Override
   public void edit(Orden orden) {
     this.sessionFactory.getCurrentSession().saveOrUpdate(orden);
   }
 
 
+  @Override
   public void deleteOrdenPractica(Integer ordenId) {
     this.sessionFactory.getCurrentSession()
         .createQuery(" DELETE FROM OrdenPractica o WHERE o.orden.ordenId = :ordenId ")
@@ -83,6 +90,7 @@ public class OrdenDAOImpl implements OrdenDAO {
   }
 
 
+  @Override
   public Page<GridOrdenPracticaDTO> findOrdenesByPageable(Pageable pageable,
       Integer codigoOrdenTipo) {
     Query query = sessionFactory.getCurrentSession()
@@ -95,6 +103,7 @@ public class OrdenDAOImpl implements OrdenDAO {
   }
 
 
+  @Override
   public Page<GridOrdenPracticaDTO> findOrdenesBySearch(Integer typeSearch, Integer codigoOrdenTipo,
       Integer ordenId, String paciente, Pageable pageable) {
     // Query query = this.sessionFactory.getCurrentSession()
@@ -121,6 +130,7 @@ public class OrdenDAOImpl implements OrdenDAO {
   }
 
 
+  @Override
   @SuppressWarnings("unchecked")
   public List<OrdenAlarmaDTO> findAlarmaOrdenes() {
     return this.sessionFactory.getCurrentSession()
@@ -130,12 +140,14 @@ public class OrdenDAOImpl implements OrdenDAO {
   }
 
 
+  @Override
   @SuppressWarnings("unchecked")
   public List<OrdenTipo> finAllOrdenTipo() {
     return this.sessionFactory.getCurrentSession().createQuery("FROM OrdenTipo").list();
   }
 
 
+  @Override
   public OrdenTipo findOrdenTipoByCodigo(Integer codigo) {
     return (OrdenTipo) this.sessionFactory.getCurrentSession()
         .createQuery(" SELECT ot " + " FROM OrdenTipo ot " + " WHERE ot.codigo = " + codigo).list()
@@ -143,6 +155,7 @@ public class OrdenDAOImpl implements OrdenDAO {
   }
 
 
+  @Override
   public void deleteOrdenProfesional(Integer ordenId) {
     this.sessionFactory.getCurrentSession()
         .createQuery(" DELETE FROM OrdenProfesional o WHERE o.orden.ordenId = :ordenId ")
@@ -150,6 +163,7 @@ public class OrdenDAOImpl implements OrdenDAO {
   }
 
 
+  @Override
   public OrdenTipo findOrdenTipoById(Integer id) {
     // return (OrdenTipo) this.sessionFactory.getCurrentSession().get(OrdenTipo.class, id);
     Query query = sessionFactory.getCurrentSession()
@@ -162,23 +176,27 @@ public class OrdenDAOImpl implements OrdenDAO {
 
   // Orden Document
 
+  @Override
   public void add(OrdenDocument document) {
     this.sessionFactory.getCurrentSession().save(document);
   }
 
 
+  @Override
   public OrdenDocument findOrdenDocumentById(Integer documentId) {
     return (OrdenDocument) this.sessionFactory.getCurrentSession().get(OrdenDocument.class,
         documentId);
   }
 
 
+  @Override
   public void deleteOrdenDocument(Integer documentId) {
     this.sessionFactory.getCurrentSession()
         .createQuery(" DELETE FROM OrdenDocument o WHERE o.documentId = :documentId ")
         .setInteger("documentId", documentId).executeUpdate();
   }
 
+  @Override
   @SuppressWarnings("unchecked")
 
   public List<OrdenDocument> finAllOrdenDocumentByOrdenId(Integer ordenId) {
@@ -187,6 +205,7 @@ public class OrdenDAOImpl implements OrdenDAO {
   }
 
 
+  @Override
   public Page<GridOrdenPracticaDTO> findConsultasByPageableANDPaciente(Pageable pageable,
       Integer pacienteId, Integer tipo) {
     Query query = sessionFactory.getCurrentSession()
@@ -199,6 +218,7 @@ public class OrdenDAOImpl implements OrdenDAO {
   }
 
 
+  @Override
   public Page<GridOrdenPracticaDTO> findPracticasByPageableANDPaciente(Pageable pageable,
       Integer pacienteId, Integer tipo) {
     Query query = sessionFactory.getCurrentSession()
@@ -211,12 +231,14 @@ public class OrdenDAOImpl implements OrdenDAO {
   }
 
 
+  @Override
   public void add(OrdenFueraCartilla ofc) {
     this.sessionFactory.getCurrentSession().save(ofc);
 
   }
 
 
+  @Override
   public void deleteOrdenPrestador(Integer ordenId) {
     this.sessionFactory.getCurrentSession()
         .createQuery(" DELETE FROM OrdenPrestador o WHERE o.orden.ordenId = :ordenId ")
@@ -225,10 +247,12 @@ public class OrdenDAOImpl implements OrdenDAO {
   }
 
 
+  @Override
   public CajaOrden findCajaOrdenByOrdenId(Orden orden) {
     return (CajaOrden) this.sessionFactory.getCurrentSession().get(CajaOrden.class, orden);
   }
 
+  @Override
   public OrdenFueraCartilla findOrdenFueraCartilla(Integer ordenId) {
     OrdenFueraCartilla retorno = null;
     @SuppressWarnings("unchecked")
@@ -244,17 +268,20 @@ public class OrdenDAOImpl implements OrdenDAO {
 
   }
 
+  @Override
   public void deleteOrdenFueraCartilla(Integer id) {
     this.sessionFactory.getCurrentSession()
         .createQuery(" DELETE FROM OrdenFueraCartilla o WHERE o.id = :id ").setInteger("id", id)
         .executeUpdate();
   }
 
+  @Override
   public void editFueraCartilla(OrdenFueraCartilla ofc) {
     this.sessionFactory.getCurrentSession().saveOrUpdate(ofc);
   }
 
 
+  @Override
   public OrdenProfesional getOrdenProfesional(Integer ordenId) {
     // TODO Auto-generated method stub
     return (OrdenProfesional) this.sessionFactory.getCurrentSession().get(OrdenProfesional.class,
@@ -262,12 +289,14 @@ public class OrdenDAOImpl implements OrdenDAO {
   }
 
 
+  @Override
   public OrdenFueraCartilla getOrdenFueraCartilla(Integer ordenId) {
     // TODO Auto-generated method stub
     return (OrdenFueraCartilla) this.sessionFactory.getCurrentSession()
         .get(OrdenFueraCartilla.class, ordenId);
   }
 
+  @Override
   public List<OrdenPractica> getAllOrdenPracticaByOrden(Integer ordenId, Integer nomencladorId) {
     return this.sessionFactory.getCurrentSession()
         .createQuery("FROM OrdenPractica od " + " WHERE od.orden.ordenId = " + ordenId
@@ -276,6 +305,7 @@ public class OrdenDAOImpl implements OrdenDAO {
   }
 
 
+  @Override
   public List<PracticasListDTO> getAllPracticasByOrden(Integer ordenId) {
     Query query = sessionFactory.getCurrentSession()
         .createSQLQuery("CALL zp_getPracticasByOrden(:ordenId);").setInteger("ordenId", ordenId)
@@ -286,6 +316,7 @@ public class OrdenDAOImpl implements OrdenDAO {
   }
 
 
+  @Override
   public Page<HistoriaClinicaDTO> findHistoriaClinica(Pageable pageable, Integer pacienteId) {
     Query query = sessionFactory.getCurrentSession()
         .createSQLQuery("CALL zp_getGridAllHistoriaClinica(:pacienteId);")
@@ -297,6 +328,7 @@ public class OrdenDAOImpl implements OrdenDAO {
   }
 
 
+  @Override
   public List<OrdenPractica> getAllOrdenPracticaByOrden(Integer ordenId) {
     Query query = sessionFactory.getCurrentSession()
         .createSQLQuery("CALL zp_getAllOrdenPracticaByOrden(:ordenId);")
@@ -312,6 +344,7 @@ public class OrdenDAOImpl implements OrdenDAO {
   }
 
 
+  @Override
   public List<OrdenDocument> getAllOrdenDocumentByOrden(Integer ordenId) {
     Query query = sessionFactory.getCurrentSession()
         .createSQLQuery("CALL zp_getAllOrdenDocumentByOrden(:ordenId);")
@@ -324,10 +357,13 @@ public class OrdenDAOImpl implements OrdenDAO {
 
 
   @Override
-  public void updateOrdenEntregada(Integer ordenEntregada, Integer ordenId) {
+  public void updateOrdenEntregada(Integer ordenEntregada, Integer ordenId,
+      Date fechaOrdenEntregada) {
     Query query = sessionFactory.getCurrentSession()
-        .createSQLQuery("CALL zp_updateOrdenEntregada(:ordenEntregada, :ordenId);")
-        .setInteger("ordenEntregada", ordenEntregada).setInteger("ordenId", ordenId);
+        .createSQLQuery(
+            "CALL zp_updateOrdenEntregada(:ordenEntregada, :ordenId, :fechaOrdenEntregada);")
+        .setInteger("ordenEntregada", ordenEntregada).setInteger("ordenId", ordenId)
+        .setDate("fechaOrdenEntregada", fechaOrdenEntregada);
     query.executeUpdate();
 
   }

@@ -128,7 +128,9 @@
 													<li><a href="#" id="lnk_filtro_afiliados">Filtrar
 															Afiliados.</a></li>
 													<li><a href="#" id="lnk_afiliados_atendidos">Cantidad
-															de Afiliados Atendidos.</a></li>
+															de Afiliados Atendidos por Especialidad y Profesional.</a></li>
+													<li><a href="#" id="lnk_afiliados_atendidos">Cantidad
+															de Afiliados Atendidos por Especialidad y Prestador.</a></li>		
 													<li><a href="#" id="lnk_pacientes_registrados">Total
 															de Pacientes Registrados.</a></li>
 													<li><a href="#" id="lnk_afiliados_sincoseguro">Total
@@ -191,7 +193,7 @@
 																<label>Tipo</label>
 															</div>
 															<div class="formInput">
-																<select id="grafico" style="width: 150px">
+																<select id="tipo" style="width: 150px">
 																	<option value="1">Ordenes</option>
 																	<option value="2">Pacientes</option>
 																	<option value="3">Nomenclador</option>
@@ -204,7 +206,7 @@
 																<label>Filtro</label>
 															</div>
 															<div class="formInput">
-																<select id="grafico" style="width: 200px">
+																<select id="tipo_filtro" style="width: 200px">
 																	<option value="-1">Seleccione ...</option>
 
 																</select>
@@ -222,9 +224,9 @@
 																<div id="calendar">
 																	<div class="input-group registration-date-time"
 																		style="padding-top: 0%; width: 101%;">
-																		<input class="form-control" name="fecha-desde-filtro"
-																			id="fecha-desde-filtro" type="date" 
-																			onchange="javascript:updateDateFiltro();">
+																		<input class="form-control" name="fecha_desde_filtro"
+																			id="fecha_desde_filtro" type="date" 
+																			onchange="javascript:updateFechaDesdeFiltro();">
 																	</div>
 																</div>
 															</div>
@@ -234,13 +236,13 @@
 																<label style="color: #31708f">Hasta</label>
 															</div>
 															<div class="formInput">
-																<input id="fechaDesdeFiltro" class="date" type="hidden" />
+																<input id="fechaHastaFiltro" class="date" type="hidden" />
 																<div id="calendar">
 																	<div class="input-group registration-date-time"
 																		style="padding-top: 0%; width: 101%;">
-																		<input class="form-control" name="fecha-desde-filtro"
-																			id="fecha-desde-filtro" type="date"
-																			onchange="javascript:updateDateFiltro();">
+																		<input class="form-control" name="fecha-hasta-filtro"
+																			id="fecha-hasta-filtro" type="date"
+																			onchange="javascript:updateFechaHastaFiltro();">
 																	</div>
 																</div>
 															</div>
@@ -332,7 +334,50 @@
 		document.getElementById("fechaHastaOrden").value = document
 				.getElementById("fecha_hasta_orden").value;
 	}
+			 
+	function updateFechaDesdeFiltro() {
+		document.getElementById("fechaDesdeFiltro").value = document
+				.getElementById("fecha_desde_filtro").value;
+	}
+
+	function updateFechaHastaFiltro() {
+		document.getElementById("fechaHastaFiltro").value = document
+				.getElementById("fecha-hasta-filtro").value;
+	}
+	
+	
 	//----------------------------------------------------------------------------
+	
+	function showCircular(jsonData){
+	
+	}
+	function showLineal(jsonData){
+		
+	}
+	function getJsonFiltro(grafico, tipo, tipoFiltro, fechaDesdeFiltro, fechaHastaFiltro) { 
+		return '{"grafico":'+grafico+', "tipo":'+tipo+', "tipoFiltro":'+tipoFiltro+', "fechaDesdeFiltro": "'+fechaDesdeFiltro+'", "fechaHastaFiltro": "'+fechaHastaFiltro+'"}';
+	}
+	
+	$(function() {
+		$('#btn_filtrar').click(function() {
+
+			var grafico = document.getElementById("grafico").value;
+			var tipo = document.getElementById("tipo").value;
+			var tipoFiltro = document.getElementById("tipo_filtro").value;
+			var fechaDesdeFiltro = document.getElementById("fechaDesdeFiltro").value;
+			var fechaHastaFiltro = document.getElementById("fechaHastaFiltro").value;
+			var jsonData = callJsonDataByFiltro(getJsonFiltro(grafico, tipo, tipoFiltro, fechaDesdeFiltro, fechaHastaFiltro));
+			if (grafico == 1) { // Circular
+				showCircular(jsonData);
+			} else if (grafico == 2) { // Lineal
+				showLineal(jsonData);
+			}
+			
+
+		});
+
+	
+	});
 
 	//Actions Modal
 
@@ -417,6 +462,9 @@
 							var especialidad = document
 									.getElementById("especialidad").value;
 
+							var profesionalId = document
+							.getElementById("profesionalId").value;
+
 							if (especialidad == "") {
 								especialidad = 0;
 							}
@@ -429,7 +477,7 @@
 							}
 
 							callReportAfiliadosAtendidos(fechaDesdeAA,
-									fechaHastaAA, especialidad);
+									fechaHastaAA, especialidad, profesionalId);
 							$('#afiliadosAtendidos').modal('hide');
 						});
 	});
@@ -501,6 +549,7 @@
 			},
 			updater : function(item) {
 				$('#especialidad').val(map[item].id);
+				findProfesinoales($('#especialidad'));
 				return item;
 			}
 		});
@@ -533,12 +582,48 @@
 
 	});
 
+	function callProfesionalByEspecialidad(especialidadId) {
+		var retorno;
+		$.ajax({
+			url : "/nuova/ajaxGetProfesionalByEspecialidad?especialidadId="
+					+ especialidadId,
+			type : "GET",
+			contentType : "application/json; charset=utf-8",
+			//    data: jsonString, //Stringified Json Object
+			async : false, //Cross-domain requests and dataType: "jsonp" requests do not support synchronous operation
+			cache : false, //This will force requested pages not to be cached by the browser          
+			processData : false, //To avoid making query String instead of JSON
+			success : function(page) {
+				// Success Message Handler
+				retorno = page;
+			}
+		});
+
+		return retorno;
+	}
+
+	function findProfesinoales(especialidad) {
+		var especialidades = callProfesionalByEspecialidad(especialidad
+				.attr('value'));
+		$('#profesionalId')
+				.empty()
+				.append(
+						'<option selected="selected" value="-1">Seleccione Profesional ...</option>');
+		$.each(especialidades, function(key, value) {
+			$('#profesionalId').append($('<option>', {
+				value : value.id
+			}).text(value.value));
+		});
+
+		
+	}
+
 	//----------------------------------------------------------------------------
 	//Call Ajax Reports
 
-	function callReportAfiliadosAtendidos(fd, fh, esp) {
+	function callReportAfiliadosAtendidos(fd, fh, esp, profesionalId) {
 		var url = "/nuova/ajaxGetReportAfiliadosAtendidos?fd=" + fd + "&fh="
-				+ fh + "&esp=" + esp;
+				+ fh + "&esp=" + esp + "&profesionalId=" + profesionalId;
 		window.open(url, '_blank');
 	}
 
@@ -574,6 +659,24 @@
 				+ fechaDesde + "&fechaHastaOrden=" + fechaHasta
 		var url = "/nuova/ajaxGetReportOrdenesPorTipoYFecha?" + parameters;
 		window.open(url, '_blank');
+	}
+
+	function callJsonDataByFiltro(jsonFiltro) {
+		var retorno;
+		$.ajax({
+			url : "get-dataprovider",
+			type : "POST",
+			contentType : "application/json; charset=utf-8",
+			data : jsonFiltro,
+			async : false, 
+			cache : false,           
+			processData : false, 
+			success : function(result) {
+				retorno = result;
+			}
+		});
+
+		return retorno;
 	}
 </script>
 

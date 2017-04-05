@@ -1,5 +1,6 @@
 package com.nuova.service;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.data.domain.Page;
@@ -87,7 +88,7 @@ public interface OrdenManager {
 
   public List<OrdenDocument> getAllOrdenDocumentByOrden(Integer ordenId);
 
-  public void updateOrdenEntregada(Integer ordenEntregada, Integer ordenId);
+  public void updateOrdenEntregada(Integer ordenEntregada, Integer ordenId, Date fechaOrdenEntrega);
 
   public String validarSesion(Integer nomencladorId, Integer pacienteId);
 }

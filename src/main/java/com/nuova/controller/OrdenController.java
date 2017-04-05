@@ -456,7 +456,8 @@ public class OrdenController {
       @RequestParam(required = false, defaultValue = "") String ordenId) {
     String retorno = "ERROR";
     try {
-      ordenManager.updateOrdenEntregada(Integer.valueOf(entregada), Integer.valueOf(ordenId));
+      ordenManager.updateOrdenEntregada(Integer.valueOf(entregada), Integer.valueOf(ordenId),
+          new Date());
       retorno = "OK";
     } catch (Exception e) {
 
@@ -1387,6 +1388,7 @@ public class OrdenController {
     }
 
     Collections.sort(retorno, new Comparator<ObservacionesDTO>() {
+      @Override
       public int compare(ObservacionesDTO a1, ObservacionesDTO a2) {
         return a2.getFecha().compareTo(a1.getFecha());
       }
@@ -1406,6 +1408,7 @@ public class OrdenController {
 
     Collections.sort(retorno, new Comparator<OrdenWorkflowDTO>() {
 
+      @Override
       public int compare(OrdenWorkflowDTO a1, OrdenWorkflowDTO a2) {
         return a2.getFecha().compareTo(a1.getFecha());
       }
@@ -1434,6 +1437,7 @@ public class OrdenController {
     }
 
     Collections.sort(retorno, new Comparator<OrdenPracticaDTO>() {
+      @Override
       public int compare(OrdenPracticaDTO a1, OrdenPracticaDTO a2) {
         return a1.getPracticaId().compareTo(a2.getPracticaId());
       }

@@ -55,6 +55,8 @@ public class Orden implements java.io.Serializable {
 
   private Integer ordenEntregada;
 
+  private Date fechaOrdenEntregada;
+
   public Orden() {}
 
   public Orden(Paciente paciente, Date fecha, Byte reqOrdenMedico, Byte reqCredecial,
@@ -249,5 +251,16 @@ public class Orden implements java.io.Serializable {
   public void setOrdenEntregada(Integer ordenEntregada) {
     this.ordenEntregada = ordenEntregada;
   }
+
+  @Temporal(TemporalType.DATE)
+  @Column(name = "fecha_orden_entregada", length = 10)
+  public Date getFechaOrdenEntregada() {
+    return fechaOrdenEntregada;
+  }
+
+  public void setFechaOrdenEntregada(Date fechaOrdenEntregada) {
+    this.fechaOrdenEntregada = fechaOrdenEntregada;
+  }
+
 
 }

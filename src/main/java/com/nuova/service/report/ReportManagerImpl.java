@@ -19,8 +19,8 @@ public class ReportManagerImpl implements ReportManager {
 
   @Override
   public List<Paciente> getAfiliadosAtendidos(Date fechaDesde, Date fechaHasta,
-      Integer especialidadId) {
-    return reportDAO.getAfiliadosAtendidos(fechaDesde, fechaHasta, especialidadId);
+      Integer especialidadId, Integer profesionalId) {
+    return reportDAO.getAfiliadosAtendidos(fechaDesde, fechaHasta, especialidadId, profesionalId);
   }
 
   @Override
@@ -45,6 +45,7 @@ public class ReportManagerImpl implements ReportManager {
         localidadId, zonaAfiliacion);
   }
 
+  @Override
   public List<ReporteDetalleOrdenConsultaDto> getOrdenesPorTipoYFecha(Integer tipoOrden,
       Date fechaDesde, Date fechaHasta) {
     return reportDAO.getOrdenesPorTipoYFecha(tipoOrden, fechaDesde, fechaHasta);

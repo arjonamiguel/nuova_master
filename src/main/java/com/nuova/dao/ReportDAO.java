@@ -9,7 +9,7 @@ import com.nuova.model.Paciente;
 public interface ReportDAO {
 
   public List<Paciente> getAfiliadosAtendidos(Date fechaDesde, Date fechaHasta,
-      Integer especialidadId);
+      Integer especialidadId, Integer profesionalId);
 
   public List<Paciente> getPacientesRegistrados(Date fechaDesde, Date fechaHasta);
 
