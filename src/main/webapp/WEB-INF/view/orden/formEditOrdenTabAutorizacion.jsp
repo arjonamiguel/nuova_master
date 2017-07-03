@@ -215,10 +215,10 @@ function automaticoTodos() {
 								<td style="width: 40%"><b>Nomenclador</b></td>
 								<td style="width: 8%"><b>Cantidad</b></td>
 								<td style="width: 10%"><b>Pieza Dental</b></td>
-								<sec:authorize access="hasRole('ROLE_ADMIN')">								
+<%-- 								<sec:authorize access="hasRole('ROLE_ADMIN')">								 --%>
 								<td style="width: 35%"><b>Estados</b></td>
 								<td style="width: 20%"><b>Automatico</b></td>
-								</sec:authorize>
+<%-- 								</sec:authorize> --%>
 								<td></td>
 							</tr>
 							</thead>
@@ -291,6 +291,60 @@ function automaticoTodos() {
 											<div class="input-group registration-date-time"
 												style="padding-top: 0%;">
 												<input class="form-control"
+													name="autorizar_automatico_<%=index%>"
+													id="autorizar_automatico_<%=index%>" type="date"
+													value="${pa.autorizarAutomatico}"
+													onchange="javascript:updateDate(<%=index%>);">
+											</div>
+										</div>
+
+									</td>
+									</sec:authorize>
+									
+									<sec:authorize access="hasRole('ROLE_USER')">																	
+									<td>
+										<select
+										name="ordenpracticaListEdit[<%=index%>].estado"
+										id="ordenpracticaListEdit[<%=index%>].estado"
+										style="width: 70%; margin-bottom: 0px; visibility: hidden;">
+											<option value="NONE">Seleccione Estado ...</option>
+											<option value="AUTORIZACION DIRECTA">AUTORIZACION
+												DIRECTA</option>
+											<option value="AUTORIZADA POR AFILIACIONES">AUTORIZADA
+												POR AFILIACIONES</option>	
+											<option value="AUTORIZADA POR AUDITORIA">AUTORIZADA
+												POR AUDITORIA</option>
+											
+											<option value="PENDIENTE AFILIACIONES">PENDIENTE
+												AFILIACIONES</option>
+											<option value="PENDIENTE AUDITORIA">PENDIENTE
+												AUDITORIA</option>
+												
+											<option value="RECHAZADA">RECHAZADA</option>
+											<option value="RECHAZADA POR AFILIACIONES">RECHAZADA
+												POR AFILIACIONES</option>											
+											<option value="RECHAZADA POR AUDITORIA">RECHAZADA
+												POR AUDITORIA</option>
+											
+											<option value="ANULADO">ANULADO</option>
+											<option value="VENCIDA">VENCIDA</option>
+									</select> <script>
+									document.getElementById('ordenpracticaListEdit[<%=index%>].estado').value ='${pa.estado}'; 
+									</script>
+									</td>
+
+									<td align="left">
+										<div style="visibility: hidden; height: 0px; visibility: hidden;">
+											<input type="text"
+												name="ordenpracticaListEdit[<%=index%>].autorizarAutomatico"
+												id="ordenpracticaListEdit[<%=index%>].autorizarAutomatico"
+												value="${pa.autorizarAutomatico}" class="date" />
+										</div>
+
+										<div id="calendar">
+											<div class="input-group registration-date-time"
+												style="padding-top: 0%; visibility: hidden;">
+												<input class="form-control" 
 													name="autorizar_automatico_<%=index%>"
 													id="autorizar_automatico_<%=index%>" type="date"
 													value="${pa.autorizarAutomatico}"
