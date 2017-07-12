@@ -607,15 +607,17 @@ public class PacienteController {
         osdto.setCredencial(p.getNroCredencial());
         osdto.setCredencialSufijo(p.getNroCredencialSufijo());
         dto.setObrasocial(osdto);
-        if (p.getPaciente() != null && p.getPaciente().getPacienteId() != null) {
+        if (p.getTitularId() != null) {
             dto.setPacienteTitular(transformPacienteToDto(
-                    pacienteManager.fin1dPacienteById(p.getPaciente().getPacienteId())));
+                    pacienteManager.fin1dPacienteById(p.getTitularId())));
         }
 
         dto.setParentesco(p.getParentesco().intValue());
         for (ComboItemDTO item : Util.getParentescos()) {
-            if (dto.getParentesco() == Integer.valueOf(item.getId()).intValue())
+            if (dto.getParentesco() == Integer.valueOf(item.getId()).intValue()) {
                 dto.setParentescoDescription(item.getValue());
+                break;
+            }
         }
 
         dto.setTrabajaEn(p.getTrabajaEn());
