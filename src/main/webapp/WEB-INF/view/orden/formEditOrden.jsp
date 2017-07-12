@@ -53,35 +53,20 @@ toastr.options = {
 <!-- Fin Scripts Toaster ---------------------------------------- -->
 
 <script src="<c:url value="/resources/js/bootstrap/bootstrap.min.js" />"></script>
-
-<link
-	href="<%=request.getContextPath()%>/resources/css/bootstrap/bootstrap.min.css"
-	rel="stylesheet" />
-<script
-	src="<%=request.getContextPath()%>/resources/js/jquery/bootstrap-collapse.js" /></script>
-<link href="<%=request.getContextPath()%>/resources/css/nuova.css"
-	rel="stylesheet" />
-<link href="<%=request.getContextPath()%>/resources/css/panel.css"
-	rel="stylesheet" />
-<link
-	href="<%=request.getContextPath()%>/resources/css/bootstrap/bootstrap-responsive.css"
-	rel="stylesheet" />
-<link
-	href="<%=request.getContextPath()%>/resources/montrezorro-bootstrap-checkbox-fa865ff/css/bootstrap-checkbox.css"
-	rel="stylesheet" />
-<script
-	src="<%=request.getContextPath()%>/resources/montrezorro-bootstrap-checkbox-fa865ff/js/bootstrap-checkbox.js" /></script>
-
+<link href="<%=request.getContextPath()%>/resources/css/bootstrap/bootstrap.min.css" rel="stylesheet" />
+<script src="<%=request.getContextPath()%>/resources/js/jquery/bootstrap-collapse.js" /></script>
+<link href="<%=request.getContextPath()%>/resources/css/nuova.css" 	rel="stylesheet" />
+<link href="<%=request.getContextPath()%>/resources/css/panel.css" 	rel="stylesheet" />
+<link href="<%=request.getContextPath()%>/resources/css/bootstrap/bootstrap-responsive.css" rel="stylesheet" />
+<link href="<%=request.getContextPath()%>/resources/montrezorro-bootstrap-checkbox-fa865ff/css/bootstrap-checkbox.css" 	rel="stylesheet" />
+<script src="<%=request.getContextPath()%>/resources/montrezorro-bootstrap-checkbox-fa865ff/js/bootstrap-checkbox.js" /></script>
 <script src="<%=request.getContextPath()%>/resources/js/validateForm.js" /></script>
-	
-
-
 
 <script type="text/javascript">
 var usr = "<%=SecurityContextHolder.getContext().getAuthentication().getName()%>";
 var observacionCount = 0;
 
-
+ 
 	function createDatePicker(idx) {
 		return '	<div style="visibility:hidden;height:0px;"> '
 				+ ' <input type="text"' + 
@@ -602,15 +587,18 @@ var observacionCount = 0;
 		}
 
 		function checkOrdenEntregada(){	
+			var mensaje = "";
 			var resp;		
 			if ($("#ordenEntregada").is(':checked')) {
 				resp = callOrdenEntregada(1);
+				mensaje = "El comprobante se marco\n[ENTREGADO]";
 			}else {
-				resp = callOrdenEntregada(0)		
+				resp = callOrdenEntregada(0);
+				mensaje = "El comprobante \n se marco [NO_ENTREGADO]";		
 			}	
 
 			if (resp == "OK") {
-				toastr["success"]("El proceso finalizo CORRECTAMENTE");				
+				toastr["success"](mensaje);				
 			}
 		}
 		
@@ -1031,6 +1019,8 @@ function validaRequerido() {
 	}else {
 		requireds.push('especialidad:Especialidad','profesionalId: Profesional');	
 	}	
+
+	requireds.push('especialidadPrestadorString: Prestador Derivado/Especialidad', 'prestadorId: Prestador Derivado/Profesional');
 	
 	return isValidForm("validacion_requeridos", requireds);			
 }

@@ -44,6 +44,7 @@ toastr.options = {
 		
 		
 		<script src="<c:url value="/resources/js/bootstrap/bootstrap.min.js" />"></script>
+		<link href="<%=request.getContextPath()%>/resources/css/bootstrap/bootstrap.min.css" rel="stylesheet" />		
 		<script src="<%=request.getContextPath()%>/resources/js/jquery/bootstrap-collapse.js" /></script>
 		<link href="<%=request.getContextPath()%>/resources/css/nuova.css" rel="stylesheet"/>
 		<link href="<%=request.getContextPath()%>/resources/css/panel.css" rel="stylesheet"/>
@@ -431,6 +432,45 @@ $(document).ready(function() {
 			return retorno;
 		}
 
+		function checkOrdenEntregada(){	
+			var mensaje = "";
+			var resp;		
+			if ($("#ordenEntregada").is(':checked')) {
+				resp = callOrdenEntregada(1);
+				mensaje = "El comprobante se marco\n[ENTREGADO]";
+			}else {
+				resp = callOrdenEntregada(0);
+				mensaje = "El comprobante \n se marco [NO_ENTREGADO]";		
+			}	
+
+			if (resp == "OK") {
+				toastr["success"](mensaje);				
+			}
+		}
+
+		function callOrdenEntregada(ordenEntregada) {
+			var retorno;
+			var ordenId = document.getElementById("ordenId").value;
+			$.ajax({
+				url : "/nuova/ajaxPosOrdenEntregada?entregada="
+						+ ordenEntregada + "&ordenId=" + ordenId,
+				type : "POST",
+				contentType : "application/json; charset=utf-8",
+				//    data: jsonString, //Stringified Json Object
+				async : false, //Cross-domain requests and dataType: "jsonp" requests do not support synchronous operation
+				cache : false, //This will force requested pages not to be cached by the browser          
+				processData : false, //To avoid making query String instead of JSON
+				success : function(data) {
+					// Success Message Handler
+					retorno = data;
+				}
+			});
+
+			return retorno;
+		}
+		
+		
+
 	</script>
 	
 	<style>
@@ -464,6 +504,23 @@ $(document).ready(function() {
 			<div class="panel-heading">
           			<div class="panel-title">
 	          		Editar Consultas
+	          		
+	          		 <a class="btn btn-default btn-xs"
+								data-toggle="modal" data-target="#myModal"
+								style="float: right; padding: 1px 3px 1px 4px"
+								onclick="showReport(${ordenDto.ordenId})" data-original-title=""
+								title=""> <span class="icon icon-print"></span> Imprimir
+
+							</a>
+							<div style="float: right; padding-right: 5%">
+								<span style="font-size: 14px;">Entregado</span>
+								<form:checkbox path="ordenEntregada" id="ordenEntregada"
+									cssClass="largerCheckbox"
+									onchange="javascript:checkOrdenEntregada()" />
+
+							</div>
+	          		
+	          		
 	          		
           			</div>
           			<div class="label-error" id="message"
@@ -816,6 +873,29 @@ $(document).ready(function() {
 </div>
 <!-- Fin Modal -->
 
+<!-- Modal -->
+<div id="myModal" class="modal fade" role="dialog"
+	style="visibility: hidden;">
+	<div class="modal-dialog">
+
+		<!-- Modal content-->
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal">&times;</button>
+				<h4 class="modal-title">Comprobante de Orden</h4>
+			</div>
+			<div class="modal-body custom-height-modal">
+				<div id="iframeReport" style="height: 800px"></div>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+			</div>
+		</div>
+
+	</div>
+</div>
+<!-- Fin Modal -->
+
 </html>
 <script>
 document.getElementById("mainOrden").parentNode.classList.add("active");
@@ -851,4 +931,5 @@ function showReport(id){
 	var iframe = "<iframe src='/nuova/reporteOrdenEmitida/"+id+"' width='100%' height='150%' >";
 	document.getElementById("iframeReport").innerHTML = iframe;
 }
+
 </script>
