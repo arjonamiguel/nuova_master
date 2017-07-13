@@ -102,11 +102,13 @@ $(document).ready(function() {
 	var rowsConsultas = [];
 	var rowsPracticas = [];
 	var rowsReintegros = [];
+	var rowsInfoSesiones = [];
 	
 	// var rowsObservaciones = [];
 	rowsConsultas = callConsultas();
 	rowsPracticas = callPracticas();
 	rowsReintegros = callReintegros();
+	rowsInfoSesiones = callInfoSesiones();
 	
 	// rowsObservaciones = callObservaciones();
 	//rowsObservaciones= [{'observacionId':'1', 'observacion':'hola gus','fecha':'24/05/2016'}];
@@ -146,6 +148,18 @@ $(document).ready(function() {
 				pageSize : 5,
 				minimumVisibleRows: 5
 			});
+
+	$("#infoSesionesGrid").simplePagingGrid(
+			{
+				columnNames : [ "CODIGO", "PRACTICA" ,"CANT. SESIONES" , "SESIONES USADAS", "DISPONIBLES" ],
+				columnKeys : [ "codigoPractica", "nombrePractica","cantSesiones","cantSesionesUsadas" , "disponibles"],
+				columnWidths : [ "10%", "50%"],
+				sortable : [ true, true,],
+				data : rowsInfoSesiones,
+				pageSize : 5,
+				minimumVisibleRows: 5
+			});
+	
 	
 	showHcGrid();	
 	
@@ -371,6 +385,7 @@ function procesarSubmit()
 							<li><a data-toggle="tab" href="#tb_reintegros" onclick="storageCurrentTab()"><b>Reintegros</b></a></li>
 							<li><a data-toggle="tab" href="#tb_historia_clinica" onclick="storageCurrentTab()"><b>Historia
 										Clinica</b></a></li>
+							<li><a data-toggle="tab" href="#tb_info_sesiones" onclick="storageCurrentTab()"><b>Info. Sesiones</b></a></li>			
 						</ul>
 						<!-- Fin Declaracion de tabs -->
 
@@ -407,6 +422,11 @@ function procesarSubmit()
 							<!-- ** Tab Historia clinica -->
 							<div id="tb_historia_clinica" class="tab-pane fade">
 								<jsp:include page="formInfoPacienteHistoriaClinica.jsp"></jsp:include>
+							</div>
+							
+							<!-- ** Tab Info Sesiones -->
+							<div id="tb_info_sesiones" class="tab-pane fade">
+								<jsp:include page="formInfoPacienteTabInfoSesiones.jsp"></jsp:include>
 							</div>
 						</div>
 						<!-- Fin Contenedor de Tabs -->
@@ -633,4 +653,22 @@ function callNuevoAdjunto(formData) {
 	return retorno;
 }		
 
+function callInfoSesiones() {
+	var retorno;
+	$.ajax({
+		url : "/nuova/ajaxGetNomencladorSesionesPaginados?pacienteId=${paciente.pacienteId}",
+		type : "GET",
+		contentType : "application/json; charset=utf-8",
+		//    data: jsonString, //Stringified Json Object
+		async : false, //Cross-domain requests and dataType: "jsonp" requests do not support synchronous operation
+		cache : false, //This will force requested pages not to be cached by the browser          
+		processData : false, //To avoid making query String instead of JSON
+		success : function(page) {
+			// Success Message Handler
+			retorno = page.content;
+		}
+	});
+
+	return retorno;
+}
 </script>

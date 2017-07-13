@@ -1,17 +1,19 @@
 package com.nuova.dao;
 
-import com.nuova.model.Nomenclador;
-import com.nuova.model.NomencladorTipo;
+import java.util.List;
 
 import org.hibernate.Query;
 import org.hibernate.SessionFactory;
+import org.hibernate.transform.Transformers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
 
-import java.util.List;
+import com.nuova.dto.InformacionSesiones;
+import com.nuova.model.Nomenclador;
+import com.nuova.model.NomencladorTipo;
 
 @Repository
 public class PracticaDAOImpl implements PracticaDAO {
@@ -78,5 +80,24 @@ public class PracticaDAOImpl implements PracticaDAO {
 
   public List<NomencladorTipo> findNomecladorTipo() {
     return this.sessionFactory.getCurrentSession().createQuery("FROM NomencladorTipo").list();
+  }
+
+  @Override
+  public List<Nomenclador> findNomencladorWithSesiones() {
+    Query query = this.sessionFactory.getCurrentSession().createQuery(
+        "FROM Nomenclador p where p.eliminado = 0 AND p.validar = 2 ORDER BY p.nombre ");
+    List<Nomenclador> result = query.list();
+
+    return result;
+  }
+
+  @Override
+  public InformacionSesiones getInfoSesiones(Integer nomencladorId, Integer pacienteId) {
+    Query query = sessionFactory.getCurrentSession()
+        .createSQLQuery("CALL zp_infoSesionesByCodAndPaciente(:nomencladorId, :pacienteId);")
+        .setInteger("nomencladorId", nomencladorId).setInteger("pacienteId", pacienteId)
+        .setResultTransformer(Transformers.aliasToBean(InformacionSesiones.class));
+    List<InformacionSesiones> result = query.list();
+    return result.isEmpty() ? null : result.get(0);
   }
 }

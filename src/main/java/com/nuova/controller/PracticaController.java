@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.nuova.dto.InformacionSesiones;
 import com.nuova.dto.PracticaDTO;
 import com.nuova.model.Nomenclador;
 import com.nuova.service.OrdenManager;
@@ -143,6 +144,25 @@ public class PracticaController {
       @RequestParam(required = false, defaultValue = "0") Integer pacienteId) {
 
     return ordenManager.validarSesion(nomencladorId, pacienteId);
+  }
+
+  @RequestMapping(value = ConstantControllers.AJAX_GET_NOMENCLADOR_SESIONES_PAGINADOS,
+      method = RequestMethod.GET)
+  public @ResponseBody Page<InformacionSesiones> getNomencladorSesionesPaginados(
+      @RequestParam(required = false, defaultValue = "") Integer pacienteId,
+      @RequestParam(required = false, defaultValue = "0") Integer start,
+      @RequestParam(required = false, defaultValue = "50") Integer limit) {
+
+    // Sort and Pagination
+    // Sort sort = new Sort(Sort.Direction.DESC, "creationDate");
+    Pageable pageable = new PageRequest(start, limit);
+    List<Nomenclador> sesiones = practicaManager.findNomencladorWithSesiones();
+    List<InformacionSesiones> infoSesiones = new ArrayList<>();
+    for (Nomenclador n : sesiones) {
+      infoSesiones.add(practicaManager.getInfoSesiones(n.getNomencladorId(), pacienteId));
+    }
+
+    return new PageImpl<InformacionSesiones>(infoSesiones, pageable, sesiones.size());
   }
 
   private PracticaDTO transformPrestadoresToDto(Nomenclador p) {
