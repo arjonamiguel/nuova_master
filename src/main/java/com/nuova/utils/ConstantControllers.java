@@ -172,6 +172,7 @@ public class ConstantControllers {
   public final static String AJAX_GET_AUTOCOMPLETE_ESPECIALIADPRESTADOR =
       "/ajaxGetAutoCompleteEspecialidadesPrestador";
   public final static String AJAX_GET_CANTIDAD_SESIONES = "/ajaxGetCantidadSesiones";
+  public final static String AJAX_GET_NOMENCLADOR_SESIONES_PAGINADOS = "/ajaxGetNomencladorSesionesPaginados";
 
   // Caja
   public final static String MAIN_CAJA = "/mainCaja/{fechaCaja}";
