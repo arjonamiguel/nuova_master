@@ -227,8 +227,9 @@ function automaticoTodos() {
 							%>
 							<c:forEach items="${ordenDto.practicasListEdit}" var="pa"
 								varStatus="loop">
-								<tr>
-
+								<tr>								
+									
+									<sec:authorize access="hasRole('ROLE_ADMIN')">		
 									<td>
 										<input type="hidden"
 										name="ordenpracticaListEdit[<%=index%>].orddenPracticaId"
@@ -245,9 +246,7 @@ function automaticoTodos() {
 										<input type="text" style="text-align: center"
 										name="ordenpracticaListEdit[<%=index%>].piezaDental"
 										value="${pa.piezaDental}" />
-									</td>	
-									
-									<sec:authorize access="hasRole('ROLE_ADMIN')">																	
+									</td>																
 									<td>
 										<select
 										name="ordenpracticaListEdit[<%=index%>].estado"
@@ -299,14 +298,34 @@ function automaticoTodos() {
 										</div>
 
 									</td>
+									<td><button type='button' class='btn btn-link'
+											onClick='Eliminar(this.parentNode.parentNode.rowIndex)'>Eliminar</button>
+									</td>
 									</sec:authorize>
 									
-									<sec:authorize access="hasRole('ROLE_USER')">																	
+									<sec:authorize access="hasRole('ROLE_USER')">
 									<td>
-										<select
+										<input type="hidden"
+										name="ordenpracticaListEdit[<%=index%>].orddenPracticaId"
+										value="${pa.orddenPracticaId}" /> <input type="hidden"
+										name="ordenpracticaListEdit[<%=index%>].practicaId"
+										value="${pa.practicaId}" /> ${pa.nombre}
+									</td>
+									<td>
+										<input type="text" disabled="disabled"
+										name="ordenpracticaListEdit[<%=index%>].cantidad"
+										value="${pa.cantidad}" />
+									</td>	
+									<td>
+										<input type="text" style="text-align: center" disabled="disabled"
+										name="ordenpracticaListEdit[<%=index%>].piezaDental"
+										value="${pa.piezaDental}" />
+									</td>																	
+									<td>
+										<select disabled="disabled"
 										name="ordenpracticaListEdit[<%=index%>].estado"
 										id="ordenpracticaListEdit[<%=index%>].estado"
-										style="width: 70%; margin-bottom: 0px; visibility: hidden;">
+										style="width: 70%; margin-bottom: 0px">
 											<option value="NONE">Seleccione Estado ...</option>
 											<option value="AUTORIZACION DIRECTA">AUTORIZACION
 												DIRECTA</option>
@@ -334,7 +353,7 @@ function automaticoTodos() {
 									</td>
 
 									<td align="left">
-										<div style="visibility: hidden; height: 0px; visibility: hidden;">
+										<div style="visibility: hidden; height: 0px;">
 											<input type="text"
 												name="ordenpracticaListEdit[<%=index%>].autorizarAutomatico"
 												id="ordenpracticaListEdit[<%=index%>].autorizarAutomatico"
@@ -343,8 +362,8 @@ function automaticoTodos() {
 
 										<div id="calendar">
 											<div class="input-group registration-date-time"
-												style="padding-top: 0%; visibility: hidden;">
-												<input class="form-control" 
+												style="padding-top: 0%;">
+												<input class="form-control" disabled="disabled"
 													name="autorizar_automatico_<%=index%>"
 													id="autorizar_automatico_<%=index%>" type="date"
 													value="${pa.autorizarAutomatico}"
@@ -353,10 +372,11 @@ function automaticoTodos() {
 										</div>
 
 									</td>
-									</sec:authorize>
+									<td><button type='button' class='btn btn-link' disabled="disabled"
+											onClick='Eliminar(this.parentNode.parentNode.rowIndex)'>Eliminar</button>
+									</td>
+									</sec:authorize>								
 									
-									<td><button type='button' class='btn btn-link'
-											onClick='Eliminar(this.parentNode.parentNode.rowIndex)'>Eliminar</button></td>
 									
 									<%
 									  index++;

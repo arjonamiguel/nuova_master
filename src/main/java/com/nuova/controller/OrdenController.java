@@ -721,31 +721,31 @@ public class OrdenController {
       }
 
       // Persiste Practicas
-      // if (isRolAdmin) { USUARIO MESA DE ENTRADA PUEDE CARGAR PRACTICAS
-      for (OrdenPractica o : orden.getOrdenPracticas()) {
-        ordenManager.deleteOrdenPractica(o.getOrden().getOrdenId());
-      }
-
-      Set<OrdenPractica> persistOrdenPracticaList = new HashSet<OrdenPractica>();
-      for (OrdenPracticaDTO opdto : practicas) {
-        if (opdto.getPracticaId() != null) {
-          Nomenclador p = new Nomenclador();
-          p.setNomencladorId(opdto.getPracticaId());
-          OrdenPractica op = new OrdenPractica();
-          op.setFecha(new Date());
-          op.setOrden(orden);
-          op.setNomenclador(p);
-          op.setEstado(opdto.getEstado());
-          op.setValor(opdto.getValor() == null ? new BigDecimal(0) : opdto.getValor());
-          op.setAutorizarAutomatico(Util.parseToDate(opdto.getAutorizarAutomatico()));
-          op.setPiezaDental(opdto.getPiezaDental());
-          op.setCantidad(opdto.getCantidad());
-
-          persistOrdenPracticaList.add(op);
+      if (isRolAdmin) {// USUARIO MESA DE ENTRADA PUEDE CARGAR PRACTICAS
+        for (OrdenPractica o : orden.getOrdenPracticas()) {
+          ordenManager.deleteOrdenPractica(o.getOrden().getOrdenId());
         }
+
+        Set<OrdenPractica> persistOrdenPracticaList = new HashSet<OrdenPractica>();
+        for (OrdenPracticaDTO opdto : practicas) {
+          if (opdto.getPracticaId() != null) {
+            Nomenclador p = new Nomenclador();
+            p.setNomencladorId(opdto.getPracticaId());
+            OrdenPractica op = new OrdenPractica();
+            op.setFecha(new Date());
+            op.setOrden(orden);
+            op.setNomenclador(p);
+            op.setEstado(opdto.getEstado());
+            op.setValor(opdto.getValor() == null ? new BigDecimal(0) : opdto.getValor());
+            op.setAutorizarAutomatico(Util.parseToDate(opdto.getAutorizarAutomatico()));
+            op.setPiezaDental(opdto.getPiezaDental());
+            op.setCantidad(opdto.getCantidad());
+
+            persistOrdenPracticaList.add(op);
+          }
+        }
+        orden.setOrdenPracticas(persistOrdenPracticaList);
       }
-      orden.setOrdenPracticas(persistOrdenPracticaList);
-      // }
 
       // Persiste Estado
       if (dto.getEstado() != null && !orden.getEstado().equals(dto.getEstado())) {
