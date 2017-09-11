@@ -322,10 +322,13 @@ function automaticoTodos() {
 										value="${pa.piezaDental}" />
 									</td>																	
 									<td>
+										<input type="hidden" name="ordenpracticaListEdit[<%=index%>].estado"
+										id="ordenpracticaListEdit[<%=index%>].estado">
+										
 										<select disabled="disabled"
-										name="ordenpracticaListEdit[<%=index%>].estado"
-										id="ordenpracticaListEdit[<%=index%>].estado"
-										style="width: 70%; margin-bottom: 0px">
+										name="ordenpracticaListEdit[<%=index%>].estadoView"
+										id="ordenpracticaListEdit[<%=index%>].estadoView"
+										style="width: 70%; margin-bottom: 0px;">
 											<option value="NONE">Seleccione Estado ...</option>
 											<option value="AUTORIZACION DIRECTA">AUTORIZACION
 												DIRECTA</option>
@@ -347,8 +350,10 @@ function automaticoTodos() {
 											
 											<option value="ANULADO">ANULADO</option>
 											<option value="VENCIDA">VENCIDA</option>
-									</select> <script>
-									document.getElementById('ordenpracticaListEdit[<%=index%>].estado').value ='${pa.estado}'; 
+									</select> 
+									<script>
+										document.getElementById('ordenpracticaListEdit[<%=index%>].estadoView').value ='${pa.estado}';
+										document.getElementById('ordenpracticaListEdit[<%=index%>].estado').value ='${pa.estado}'; 
 									</script>
 									</td>
 
