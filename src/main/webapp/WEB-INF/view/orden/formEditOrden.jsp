@@ -439,11 +439,17 @@ var observacionCount = 0;
 			cell2.innerHTML = "<input type='text' name='ordenpracticaListEdit[" + index + "].piezaDental' placeholder='pieza dental'>";
 		}
 
-		if (usr == "mesa.entrada@nuovamed.com") {			
+		if (usr == "mesa.entrada@nuovamed.com" || usr == "celeste.juarez@nuovamed.com") {			
 
 			var cell3 = row.insertCell(3);
+			cell3.innerHTML = "";
+	
+			var cell4 = row.insertCell(4);
+			cell4.innerHTML = "";
+			
+			var cell5 = row.insertCell(3);
 			row.valign = "BASELINE";
-			cell3.innerHTML = "<button type='button' class='btn btn-link' onClick='Eliminar(this.parentNode.parentNode.rowIndex)'>Eliminar</button>";				
+			cell5.innerHTML = "<button type='button' class='btn btn-link' onClick='Eliminar(this.parentNode.parentNode.rowIndex)'>Eliminar</button>";				
 
 		} else {
 			
