@@ -174,7 +174,7 @@ function automaticoTodos() {
 </div>
 <br>
 
-<sec:authorize access="hasRole('ROLE_ADMIN')">
+<sec:authorize access="hasRole('ROLE_ADMIN') OR hasRole('ROLE_USER_CONF')">
 
 <table class="table" style="background: rgb(245, 245, 245); width: 100%">
 	<tr>
@@ -215,7 +215,7 @@ function automaticoTodos() {
 								<td style="width: 40%"><b>Nomenclador</b></td>
 								<td style="width: 8%"><b>Cantidad</b></td>
 								<td style="width: 10%"><b>Pieza Dental</b></td>
-<%-- 								<sec:authorize access="hasRole('ROLE_ADMIN')">								 --%>
+<%-- 								<sec:authorize access="hasRole('ROLE_ADMIN') OR hasRole('ROLE_USER_CONF')">								 --%>
 								<td style="width: 35%"><b>Estados</b></td>
 								<td style="width: 20%"><b>Automatico</b></td>
 <%-- 								</sec:authorize> --%>
@@ -229,7 +229,7 @@ function automaticoTodos() {
 								varStatus="loop">
 								<tr>								
 									
-									<sec:authorize access="hasRole('ROLE_ADMIN')">		
+									<sec:authorize access="hasRole('ROLE_ADMIN') OR hasRole('ROLE_USER_CONF')">		
 									<td>
 										<input type="hidden"
 										name="ordenpracticaListEdit[<%=index%>].orddenPracticaId"
