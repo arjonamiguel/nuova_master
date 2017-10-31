@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="reporteOrdenEmitida" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="863c5a1a-ff63-4ec5-9d35-c4a00e5423ed">
 	<property name="ireport.zoom" value="3.0"/>
 	<property name="ireport.x" value="84"/>
-	<property name="ireport.y" value="1163"/>
+	<property name="ireport.y" value="1079"/>
 	<parameter name="nro_orden" class="java.lang.String" isForPrompting="false">
 		<defaultValueExpression><![CDATA[""]]></defaultValueExpression>
 	</parameter>
@@ -128,7 +128,7 @@
 				<text><![CDATA[Válido por 30 dias desde fecha de autorización]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="6" y="0" width="98" height="13" uuid="fb0d5edb-8048-40de-950c-f439d475bfc8"/>
+				<reportElement x="6" y="0" width="103" height="13" uuid="fb0d5edb-8048-40de-950c-f439d475bfc8"/>
 				<textElement>
 					<font size="8" isBold="true"/>
 				</textElement>
@@ -478,7 +478,7 @@
 				<text><![CDATA[BENEFICIARIO]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="6" y="411" width="100" height="13" uuid="6273484f-5956-4652-b70a-62340c94859e"/>
+				<reportElement x="6" y="411" width="107" height="13" uuid="6273484f-5956-4652-b70a-62340c94859e"/>
 				<textElement>
 					<font size="8" isBold="true"/>
 				</textElement>
@@ -570,7 +570,7 @@
 				</graphicElement>
 			</line>
 			<staticText>
-				<reportElement x="106" y="0" width="181" height="13" uuid="979b0375-a217-4e44-be49-befdee03665c">
+				<reportElement x="110" y="0" width="181" height="13" uuid="979b0375-a217-4e44-be49-befdee03665c">
 					<printWhenExpression><![CDATA[!$P{isConsulta}]]></printWhenExpression>
 				</reportElement>
 				<textElement>
@@ -579,7 +579,7 @@
 				<text><![CDATA[- No válido para prestador -]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="109" y="411" width="181" height="13" uuid="d21aca7c-b1fb-456e-be06-72ffca35af8e">
+				<reportElement x="113" y="411" width="181" height="13" uuid="d21aca7c-b1fb-456e-be06-72ffca35af8e">
 					<printWhenExpression><![CDATA[!$P{isConsulta}]]></printWhenExpression>
 				</reportElement>
 				<textElement>
