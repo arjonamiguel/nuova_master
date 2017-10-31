@@ -478,7 +478,7 @@
 				<text><![CDATA[BENEFICIARIO]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="6" y="411" width="107" height="13" uuid="6273484f-5956-4652-b70a-62340c94859e"/>
+				<reportElement x="6" y="411" width="110" height="13" uuid="6273484f-5956-4652-b70a-62340c94859e"/>
 				<textElement>
 					<font size="8" isBold="true"/>
 				</textElement>
@@ -579,7 +579,7 @@
 				<text><![CDATA[- No válido para prestador -]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="113" y="411" width="181" height="13" uuid="d21aca7c-b1fb-456e-be06-72ffca35af8e">
+				<reportElement x="117" y="411" width="181" height="13" uuid="d21aca7c-b1fb-456e-be06-72ffca35af8e">
 					<printWhenExpression><![CDATA[!$P{isConsulta}]]></printWhenExpression>
 				</reportElement>
 				<textElement>
